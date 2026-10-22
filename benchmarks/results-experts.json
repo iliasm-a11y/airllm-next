@@ -1,0 +1,89 @@
+{
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "experts": 128,
+  "active": 8,
+  "shape": {
+    "hidden": 128,
+    "intermediate": 256
+  },
+  "repeats": 8,
+  "all_checksums_match": true,
+  "runs": [
+    {
+      "mode": "full_bank",
+      "seconds": [
+        0.021880493000026036,
+        0.014699058000132936,
+        0.015288310999949317,
+        0.01413340099998095,
+        0.01592063699990831,
+        0.01400741299994479,
+        0.01634039800001119,
+        0.014908027000046786
+      ],
+      "median_seconds": 0.015098168999998052,
+      "checkpoint_counters": {
+        "manifest_hit": 0,
+        "header_bytes": 192,
+        "file_opens": 1,
+        "tensor_reads": 16,
+        "logical_bytes": 402653184,
+        "materialized_bytes": 402653184
+      },
+      "cache_counters": {},
+      "cache_peak_bytes": 0
+    },
+    {
+      "mode": "selected",
+      "seconds": [
+        0.001683433999914996,
+        0.0008781710000675957,
+        0.0008377309998195415,
+        0.0008477960000163876,
+        0.000834515999940777,
+        0.0008831580000787653,
+        0.0007883369999035494,
+        0.0006813889999648381
+      ],
+      "median_seconds": 0.0008427634999179645,
+      "checkpoint_counters": {
+        "manifest_hit": 0,
+        "header_bytes": 192,
+        "file_opens": 1,
+        "tensor_reads": 128,
+        "logical_bytes": 25165824,
+        "materialized_bytes": 25165824
+      },
+      "cache_counters": {},
+      "cache_peak_bytes": 0
+    },
+    {
+      "mode": "selected_cached",
+      "seconds": [
+        0.0012156499999491643,
+        4.911299993182183e-05,
+        4.190199979348108e-05,
+        4.1270999872722314e-05,
+        4.001000002062938e-05,
+        4.235300002619624e-05,
+        4.337399991527491e-05,
+        4.325400004745461e-05
+      ],
+      "median_seconds": 4.2803500036825426e-05,
+      "checkpoint_counters": {
+        "manifest_hit": 0,
+        "header_bytes": 192,
+        "file_opens": 1,
+        "tensor_reads": 16,
+        "logical_bytes": 3145728,
+        "materialized_bytes": 3145728
+      },
+      "cache_counters": {
+        "misses": 8,
+        "hits": 56
+      },
+      "cache_peak_bytes": 3145728
+    }
+  ],
+  "limitations": "Real CPU tensor loads on a warm host filesystem; no SSD/Metal/GLM-5.3 timing."
+}

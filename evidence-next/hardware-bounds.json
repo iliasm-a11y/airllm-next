@@ -1,0 +1,140 @@
+{
+  "kind": "theoretical lower time bounds; not benchmarks",
+  "active_routed_expert_parameters_per_token": 22649241600,
+  "total_routed_expert_parameters": 724775731200,
+  "formats": {
+    "official_fp8": {
+      "active_bytes": 22654771200,
+      "expert_storage_bytes": 724952678400,
+      "resident_bytes_per_active_parameter": 2
+    },
+    "affine_int8_g64_f32_scales": {
+      "active_bytes": 25480396800.0,
+      "expert_storage_bytes": 815372697600.0,
+      "resident_bytes_per_active_parameter": 1.125
+    },
+    "affine_int4_g64_f32_scales": {
+      "active_bytes": 14155776000.0,
+      "expert_storage_bytes": 452984832000.0,
+      "resident_bytes_per_active_parameter": 0.625
+    }
+  },
+  "ssd_bounds": [
+    {
+      "format": "official_fp8",
+      "ssd_sustained_GB_s_assumed": 0.5,
+      "expert_only_active_GB": 22.6547712,
+      "optimistic_expert_GB_after_cache": 21.580767232,
+      "optimistic_tokens_s_io_bound": 0.023168777765166713,
+      "optimistic_seconds_per_token": 43.161534464
+    },
+    {
+      "format": "official_fp8",
+      "ssd_sustained_GB_s_assumed": 1.0,
+      "expert_only_active_GB": 22.6547712,
+      "optimistic_expert_GB_after_cache": 21.580767232,
+      "optimistic_tokens_s_io_bound": 0.046337555530333426,
+      "optimistic_seconds_per_token": 21.580767232
+    },
+    {
+      "format": "official_fp8",
+      "ssd_sustained_GB_s_assumed": 2.0,
+      "expert_only_active_GB": 22.6547712,
+      "optimistic_expert_GB_after_cache": 21.580767232,
+      "optimistic_tokens_s_io_bound": 0.09267511106066685,
+      "optimistic_seconds_per_token": 10.790383616
+    },
+    {
+      "format": "official_fp8",
+      "ssd_sustained_GB_s_assumed": 3.0,
+      "expert_only_active_GB": 22.6547712,
+      "optimistic_expert_GB_after_cache": 21.580767232,
+      "optimistic_tokens_s_io_bound": 0.13901266659100028,
+      "optimistic_seconds_per_token": 7.193589077333334
+    },
+    {
+      "format": "affine_int8_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 0.5,
+      "expert_only_active_GB": 25.4803968,
+      "optimistic_expert_GB_after_cache": 23.332913152,
+      "optimistic_tokens_s_io_bound": 0.021428957316336733,
+      "optimistic_seconds_per_token": 46.665826304
+    },
+    {
+      "format": "affine_int8_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 1.0,
+      "expert_only_active_GB": 25.4803968,
+      "optimistic_expert_GB_after_cache": 23.332913152,
+      "optimistic_tokens_s_io_bound": 0.042857914632673466,
+      "optimistic_seconds_per_token": 23.332913152
+    },
+    {
+      "format": "affine_int8_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 2.0,
+      "expert_only_active_GB": 25.4803968,
+      "optimistic_expert_GB_after_cache": 23.332913152,
+      "optimistic_tokens_s_io_bound": 0.08571582926534693,
+      "optimistic_seconds_per_token": 11.666456576
+    },
+    {
+      "format": "affine_int8_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 3.0,
+      "expert_only_active_GB": 25.4803968,
+      "optimistic_expert_GB_after_cache": 23.332913152,
+      "optimistic_tokens_s_io_bound": 0.1285737438980204,
+      "optimistic_seconds_per_token": 7.7776377173333335
+    },
+    {
+      "format": "affine_int4_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 0.5,
+      "expert_only_active_GB": 14.155776,
+      "optimistic_expert_GB_after_cache": 12.008292352,
+      "optimistic_tokens_s_io_bound": 0.04163789366076886,
+      "optimistic_seconds_per_token": 24.016584704
+    },
+    {
+      "format": "affine_int4_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 1.0,
+      "expert_only_active_GB": 14.155776,
+      "optimistic_expert_GB_after_cache": 12.008292352,
+      "optimistic_tokens_s_io_bound": 0.08327578732153772,
+      "optimistic_seconds_per_token": 12.008292352
+    },
+    {
+      "format": "affine_int4_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 2.0,
+      "expert_only_active_GB": 14.155776,
+      "optimistic_expert_GB_after_cache": 12.008292352,
+      "optimistic_tokens_s_io_bound": 0.16655157464307543,
+      "optimistic_seconds_per_token": 6.004146176
+    },
+    {
+      "format": "affine_int4_g64_f32_scales",
+      "ssd_sustained_GB_s_assumed": 3.0,
+      "expert_only_active_GB": 14.155776,
+      "optimistic_expert_GB_after_cache": 12.008292352,
+      "optimistic_tokens_s_io_bound": 0.24982736196461316,
+      "optimistic_seconds_per_token": 4.002764117333333
+    }
+  ],
+  "full_decode_no_cache_estimates": {
+    "fp8_original_approx_bytes_per_token": 41372848128,
+    "experts_int4_only_approx_bytes_per_token": 32873852928.0,
+    "mixed_int4_approx_bytes_per_token": 25851506688.0,
+    "mixed_expert4_linear8_approx_bytes_per_token": 33945858048.0
+  },
+  "full_decode_estimate_assumptions": "architecture-derived: major linear weights FP8, router/head BF16; normalization/scale overhead excluded; actual headers and cache locality must be measured",
+  "latent_kv_bytes_per_token_bf16": 95232,
+  "latent_kv_1M_tokens_GB": 99.857989632,
+  "exclusions": [
+    "attention/shared/dense/output weights IO",
+    "dequantization",
+    "compute",
+    "OS/filesystem overhead",
+    "thermal throttling",
+    "imperfect cache reuse",
+    "Python/GPU synchronizations"
+  ],
+  "apple_M5_memory_bandwidth_GB_s_specification": 153,
+  "memory_bandwidth_is_not_external_USB_throughput": true
+}

@@ -1,0 +1,16 @@
+{
+  "scope": "actual MLX CPU fixture, 40x128 weight matrix; not Metal or full-model quality",
+  "production_policy": "keep affine scales, biases and accumulation FP32; general activations/KV may be BF16",
+  "measurements": [
+    {
+      "bits": 4,
+      "direct_BF16_max_abs_error_vs_FP32_dequantized_rounded_scales": 0.7720909118652344,
+      "chosen_FP32_max_abs_error_vs_FP32_dequantized_original_scales": 1.1444091796875e-05
+    },
+    {
+      "bits": 8,
+      "direct_BF16_max_abs_error_vs_FP32_dequantized_rounded_scales": 0.6882476806640625,
+      "chosen_FP32_max_abs_error_vs_FP32_dequantized_original_scales": 9.5367431640625e-06
+    }
+  ]
+}

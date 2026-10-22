@@ -1,0 +1,139 @@
+"""Measured read-only storage tuning; no implicit huge disk benchmark files."""
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
+from hashlib import sha256
+import json
+import os
+import platform
+from time import perf_counter
+from pathlib import Path
+import psutil
+import resource
+import sys
+from ..ultra.checkpoint import atomic_json
+from .config import NextConfig,GiB,MiB
+from .storage import physical_read_bytes
+
+
+def process_rss():
+    # In nested PID namespaces, os.getpid() may not address the /proc mount's
+    # namespace. /proc/self is resolved by the kernel and remains authoritative.
+    if sys.platform.startswith('linux'):
+        try:
+            for line in Path('/proc/self/status').read_text().splitlines():
+                if line.startswith('VmRSS:'):return int(line.split()[1])*1024
+        except (OSError,ValueError):pass
+        return None
+    try:return psutil.Process().memory_info().rss
+    except (psutil.Error,OSError):return None
+
+
+def telemetry():
+    vm=psutil.virtual_memory();swap=psutil.swap_memory()
+    return {'available_bytes':vm.available,'total_bytes':vm.total,'rss_bytes':process_rss(),
+            'swap_used_bytes':swap.used,'cpu_percent':psutil.cpu_percent(interval=None),
+            'gpu_utilization':None,'temperature_c':None,'thermal_throttled':None,
+            'memory_pressure_source':'available physical memory (not macOS pressure level)',
+            'physical_read_bytes':physical_read_bytes(),
+            'process_peak_rss_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if sys.platform=='darwin' else 1024),
+            'rss_peak_scope':'process lifetime, not isolated per model'}
+
+
+def auto_config(profile='balanced',**kwargs):
+    if profile not in ('balanced','performance'):raise ValueError('Unknown profile')
+    vm=psutil.virtual_memory();physical=vm.total
+    # Available memory, not just installed RAM: apps already open are respected.
+    reserve=min(4*GiB,int(physical*.3));usable=max(0,min(int(physical*.6),vm.available-reserve))
+    if usable<384*MiB:raise MemoryError('Not enough currently available memory for inference')
+    cache=int(usable*(.48 if profile=='balanced' else .55))
+    options=dict(profile=profile,reserve_bytes=reserve,cache_bytes=cache,
+       kv_bytes=min(768*MiB,int(usable*.15)),io_bytes=min(384*MiB,int(usable*.10)),
+       workspace_bytes=min(GiB,int(usable*.20)),max_tensor_bytes=min(256*MiB,int(usable*.10)),
+       io_workers=2 if profile=='balanced' else 3)
+    options.update(kwargs);return NextConfig(**options)
+
+
+def measure_storage(cp,config,samples=12):
+    """Read up to ~12 MiB per candidate, process/cache state always disclosed."""
+    matrices=[(k,d) for k,d in cp.tensors.items() if len(d['shape'])==2 and d['shape'][0]>0]
+    if not matrices:raise ValueError('No matrices to benchmark')
+    requests=[]
+    for i in range(samples):
+        k,d=matrices[(i*7919)%len(matrices)]
+        row=(i*131)%d['shape'][0];count=min(d['shape'][0]-row,max(1,MiB//max(1,d['shape'][1]*4)))
+        requests.append((k,(row,row+count)))
+    candidates=[]
+    for mode in ('pread','mmap'):
+        for workers in (1,2,4):
+            begin=perf_counter();before=cp.stats['logical_bytes'];physical=physical_read_bytes()
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                list(pool.map(lambda x:cp.read_array(x[0],rows=x[1],mode=mode),requests))
+            elapsed=perf_counter()-begin;n=cp.stats['logical_bytes']-before;end=physical_read_bytes()
+            candidates.append({'mode':mode,'workers':workers,'seconds':elapsed,'logical_bytes':n,
+              'logical_bytes_per_second':n/elapsed,'physical_read_bytes':end-physical if physical is not None and end is not None else None})
+    # Only pread feeds the runtime. mmap numbers remain a diagnostic comparison.
+    eligible=[v for v in candidates if v['mode']=='pread'];best=max(eligible,key=lambda v:v['logical_bytes_per_second'])
+    result={'device':platform.platform(),'source_fingerprint':cp.fingerprint,'cache_state':'OS page cache uncontrolled; repeated reads can be RAM hits',
+            'candidates':candidates,'selected_io_workers':best['workers'],'selected_mode':'pread',
+            'physical_ssd_throughput_certified':False,'config':replace(config,io_workers=best['workers']).as_dict()}
+    path=config.metadata_dir()/(cp.fingerprint+'.tuning.json');atomic_json(path,result)
+    return result
+
+
+def runtime_tuning_key(model):
+    """Tie measured prefetch choice to model, sidecar, dtype and local machine."""
+    manifest=None
+    if model.options.quantized_dir:
+        p=Path(model.options.quantized_dir)/'manifest.json'
+        manifest=sha256(p.read_bytes()).hexdigest()
+    identity={'engine_schema_version':2,'checkpoint':model.checkpoint.fingerprint,'quantized_manifest':manifest,
+      'platform':platform.platform(),'machine':platform.machine(),'device':model.device,
+      'dtype':model.options.dtype,'profile':model.options.profile,'prefill_chunk':model.options.prefill_chunk,
+      'cache_bucket_256MiB':model.options.cache_bytes//(256*MiB),
+      'io_bucket_64MiB':model.options.io_bytes//(64*MiB)}
+    return sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
+
+
+def calibrate_prefetch(model,input_ids,tokens=8):
+    """ABBA measurement, warmup excluded. Caller explicitly requests generation.
+
+    A benefit smaller than 5% does not justify concurrent lookahead. No gain is
+    asserted from IO alone: the entire actual generation wall time is measured.
+    """
+    import statistics
+    reader=model.reader;old=reader.prefetch_enabled;rows=[]
+    try:
+        reader.prefetch_enabled=False;model.generate(input_ids,max_new_tokens=tokens,eos_token_id=-1)
+        for enabled in (False,True,True,False):
+            reader.io.drain();reader.prefetch_enabled=enabled
+            begin=perf_counter();model.generate(input_ids,max_new_tokens=tokens,eos_token_id=-1)
+            rows.append({'prefetch':enabled,'generation_seconds':perf_counter()-begin,
+              'decode_tokens_s':model.stats['decode_tokens_per_second']})
+        off=statistics.median(x['generation_seconds'] for x in rows if not x['prefetch'])
+        on=statistics.median(x['generation_seconds'] for x in rows if x['prefetch'])
+        choice=on<off*.95
+        cache_report=calibrate_cache(reader.cache)
+        report={'key':runtime_tuning_key(model),'measurements':rows,'warmup_excluded':True,
+            'cache_policy':cache_report['selected_policy'],'cache_replay':cache_report,
+            'prefetch_enabled':choice,'minimum_gain_fraction':.05,'tokens_per_request':tokens,
+            'scope':'actual local checkpoint, short workload; sustained thermal validation separate'}
+        atomic_json(model.options.metadata_dir()/(model.checkpoint.fingerprint+'.runtime-tuning.json'),report)
+        reader.prefetch_enabled=choice
+        return report
+    except BaseException:
+        reader.prefetch_enabled=old;raise
+
+
+def calibrate_cache(cache):
+    """Replay actual recent weighted requests; do not infer time gains from hits."""
+    from .cache import WeightCache
+    from types import SimpleNamespace
+    trace=list(cache.trace);rows=[]
+    for policy in ('slru','lru','lfu'):
+        candidate=WeightCache(cache.capacity,policy);miss_bytes=0
+        for key,n in trace:
+            if candidate.get(key) is None:
+                miss_bytes+=n;candidate.put(key,SimpleNamespace(nbytes=n))
+        rows.append({'policy':policy,'replayed_requests':len(trace),'miss_weight_bytes':miss_bytes})
+    best=min(rows,key=lambda x:x['miss_weight_bytes'])['policy']
+    return {'selected_policy':best,'scope':'recent actual software weight requests, not physical SSD reads','policies':rows}

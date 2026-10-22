@@ -1,0 +1,4 @@
+# For offline miniature correctness validation. No CUDA or full model needed.
+--extra-index-url https://download.pytorch.org/whl/cpu
+-r requirements-linux-tested.txt
+mlx[cpu]==0.32.4

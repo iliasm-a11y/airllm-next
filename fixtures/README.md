@@ -1,0 +1,1 @@
+GLM miniature à poids aléatoires, 251 200 paramètres. Checkpoint fonctionnel pour tests numériques et installation ; aucune compétence linguistique revendiquée. Régénération : benchmarks/benchmark_next.py. Lancer avec airllm-next run fixtures/glm-mini --token-ids 1,8,9 --max-new-tokens 4 --device cpu --float32. Aucun poids de GLM-5.3 complet n’est inclus.

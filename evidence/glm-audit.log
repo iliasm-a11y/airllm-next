@@ -1,0 +1,35 @@
+{
+  "config_url": "https://huggingface.co/zai-org/GLM-5.3/resolve/main/config.json",
+  "index_url": "https://huggingface.co/zai-org/GLM-5.3/resolve/main/model.safetensors.index.json",
+  "retrieved_utc_date": "2026-10-22",
+  "config_sha256": "3ac72612095574542f7fff847ada8e59d9199dd8af44bdf625d7e02615572e69",
+  "index_sha256": "e0fe7f28c1f853d4824e4d796374e3dacf1fe470988773952c79b063768134bf",
+  "transformers": "5.20.2",
+  "architecture": [
+    "GlmMoeDsaForCausalLM"
+  ],
+  "native_meta_model_parameters": 743377000704,
+  "native_meta_model_created": true,
+  "layers": 78,
+  "experts_per_sparse_layer": 256,
+  "selected_experts_per_token": 8,
+  "checkpoint_bytes": 755617140416,
+  "checkpoint_tensor_entries": 118629,
+  "checkpoint_files": 141,
+  "fp8_expert_weights_with_scale": 58368,
+  "missing_model_keys": [],
+  "missing_expert_scale_keys": [],
+  "quantization": {
+    "quant_method": "fp8",
+    "weight_block_size": [
+      128,
+      128
+    ],
+    "fmt": "e4m3",
+    "activation_scheme": "dynamic"
+  },
+  "full_weights_downloaded": false,
+  "full_model_inference_tested": false,
+  "m5_mps_or_mlx_tested": false,
+  "conclusion": "Native config/meta skeleton and tensor-name layout verified; no full-weight or hardware validation."
+}

@@ -1,0 +1,23 @@
+{
+  "checked_at_utc": "2026-10-22T12:46:47.405885+00:00",
+  "base_tag": "v4.0.0",
+  "base_sha": "ff35db207a0c559af9aa95d686057c3fe84f1d40",
+  "upstream_head": "25778b37fcd63f62ad25e9eeef7fc0b891d3f40f",
+  "fixes": [
+    "default device CUDA/MPS/CPU",
+    "compression excludes per-expert subset streaming",
+    "MLX input normalization and RoPE theta",
+    "macOS architecture guard",
+    "LoRA examples/data fixes"
+  ],
+  "remote_writes": false,
+  "local_regression_adjustments": [
+    "public compression helper exports restored",
+    "historical AutoModel test now uses mocked offline configs and current generic dispatch expectations",
+    "CUDA-only compression test explicitly skipped when CUDA unavailable"
+  ],
+  "additional_engine_changes": [
+    "lazy public API and checkpoint import path; no Torch/Transformers on metadata-only startup",
+    "native MLX GLM DSA; sparse expert reads; packed qmm; absorbed latent attention"
+  ]
+}

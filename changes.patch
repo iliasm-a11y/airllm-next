@@ -1,0 +1,3164 @@
+diff --git a/NOTICE_ULTRA.txt b/NOTICE_ULTRA.txt
+new file mode 100644
+index 0000000..1a947e1
+--- /dev/null
++++ b/NOTICE_ULTRA.txt
+@@ -0,0 +1,7 @@
++AirLLM Ultra, local development delivery dated 2026-10-22.
++Derived from lyogavin/airllm v4.0.0, commit ff35db207a0c559af9aa95d686057c3fe84f1d40.
++Original code and license are preserved; see LICENSE and upstream source files.
++Local additions: air_llm/airllm/ultra, tests_ultra, benchmarks, scripts, evidence and docs.
++Modified upstream files: air_llm/airllm/auto_model.py and air_llm/setup.py.
++This local derivative is not an official upstream AirLLM release.
++No model weights are bundled. Model metadata and links identify their original publishers.
+diff --git a/README_ULTRA.md b/README_ULTRA.md
+new file mode 100644
+index 0000000..f15e385
+--- /dev/null
++++ b/README_ULTRA.md
+@@ -0,0 +1,163 @@
++# AirLLM Ultra — moteur de streaming direct
++
++Livraison du 22 octobre 2026. Développement local basé sur **AirLLM v4.0.0**, commit
++`ff35db207a0c559af9aa95d686057c3fe84f1d40`. Aucun changement publié sur un dépôt distant.
++Le README d'origine est conservé dans `README.md` ; commencez par ce document pour les ajouts.
++
++Le nouveau moteur fonctionne et a été testé sur **Linux x86-64 / CPU**. Il charge
++les poids depuis les safetensors d'origine, sans découpage préalable du modèle.
++Les résultats CPU réels sont dans `benchmarks/`. Apple Silicon, Metal et le GLM 5.3
++complet restent à valider sur le matériel cible : aucune vitesse M5 n'est annoncée.
++
++## Ce qui est implémenté
++
++- Accès direct aux tenseurs et aux tranches d'experts dans les fichiers d'origine ;
++  aucune seconde copie intégrale du checkpoint.
++- Construction des banques d'experts directement sur `meta`, y compris leurs
++  tenseurs 3D : évite une allocation CPU temporaire de plusieurs gigaoctets.
++- Experts MoE chargés après le routage réel, individuellement ; prise en charge
++  des banques 3D et des checkpoints à fichiers/tenseurs par expert.
++- Cache à deux segments, borné en octets et résistant aux lectures séquentielles ;
++  cache supplémentaire sur l'accélérateur pour éviter des transferts répétés.
++- Préchargement sur un worker d'E/S, futures dédupliquées, réservations mémoire
++  bornées ; lecture effective des pages plutôt que simple ouverture d'un mmap.
++- Préchargement du prochain expert réellement sélectionné et prédictions
++  facultatives fondées sur les fréquences de routage des sessions précédentes.
++- Déquantification FP8 par blocs sur CPU, poids sélectionnés seulement, sans
++  nécessiter un noyau de multiplication FP8 natif sur Metal.
++- Réutilisation du squelette, des mappings et des métadonnées ; aucun
++  `gc.collect()`, `malloc_trim()` ou `empty_cache()` à chaque couche dans ce moteur.
++- Backend natif MLX/Metal pour **Llama simple, sans quantification ni RoPE modifié**,
++  livré avec un test matériel dédié. Ce backend ne prétend pas prendre en charge GLM.
++
++Les budgets concernent les poids retenus par le moteur. Ils ne plafonnent pas la
++RAM du processus entier : activations, cache KV, pages mmap, allocations temporaires,
++allocateur Metal et macOS s'y ajoutent. Le contrôle de pression réduit les caches ;
++ce n'est pas une garantie contre un manque de mémoire.
++
++## Démarrage sur le Mac
++
++Il faut Python **3.12 ou 3.13**, macOS Apple Silicon, et une connexion pour installer
++les dépendances. L'archive contient leurs versions et un wheel du logiciel ; elle
++ne contient ni les frameworks binaires multi-plateformes ni les poids des modèles.
++
++Depuis le dossier extrait :
++
++```bash
++./scripts/setup_macos.sh
++./scripts/validate_macos.sh
++```
++
++La validation génère de petits modèles localement ; elle ne télécharge pas GLM.
++Les tests MLX et MPS ignorés sur Linux doivent réellement s'exécuter sur le Mac.
++Le SSD n'est pas nécessaire pour cette première étape.
++
++Quand le SSD sera disponible et qu'un petit checkpoint sera téléchargé :
++
++```bash
++./scripts/launch_macos.sh \
++  --model '/Volumes/VOTRE_SSD/modeles/petit-modele' \
++  --prompt 'Bonjour, présente-toi.' \
++  --device mps --max-new-tokens 8 \
++  --metrics validation-local/petit-modele-mps.json
++```
++
++Le launcher installe les dépendances au premier lancement si nécessaire. Il ne
++télécharge jamais implicitement un checkpoint. Les fichiers originaux doivent
++rester présents pendant toute l'utilisation ; il ne faut pas débrancher le SSD.
++
++Pour Llama simple sur le backend natif MLX, après réussite du test dédié :
++
++```bash
++./scripts/launch_macos.sh \
++  --model '/Volumes/VOTRE_SSD/modeles/llama-compatible' \
++  --backend mlx-ultra --max-new-tokens 8
++```
++
++## GLM 5.3 : portée exacte
++
++Les véritables `config.json` et index officiel sont inclus dans `evidence/`, pas
++les poids. La configuration est `GlmMoeDsaForCausalLM` / `glm_moe_dsa`, 78 couches,
++256 experts routés par couche sparse et 8 sélectionnés par token, FP8 par blocs
++128 × 128. L'index annonce **755 617 140 416 octets**, répartis sur 141 fichiers.
++
++L'audit crée le véritable graphe principal sur `meta` avec Transformers 5.20.2,
++compte 743 377 000 704 paramètres dans ce graphe et vérifie ses noms de tenseurs
++contre l'index. Les poids supplémentaires du prédicteur MTP, notamment la couche
++78, ne sont pas utilisés : la génération est autorégressive standard, sans MTP.
++
++Un petit GLM-MoE-DSA, puis un petit checkpoint FP8 de cette architecture, ont été
++comparés à une référence Transformers. Les logits et séquences correspondent.
++**Le chargement et l'inférence du GLM 5.3 complet n'ont pas été testés.**
++Le backend envisagé pour ce modèle est `ultra` sur PyTorch/MPS ; son bon
++fonctionnement sur M5 reste une condition à vérifier, pas une capacité certifiée.
++
++Le SSD de 2 To peut contenir le checkpoint d'origine en capacité nominale ; son
++espace réellement libre, sa connexion et son débit restent à mesurer. Il ne
++remplace pas la RAM. Sans cache, les seules matrices des experts actifs du graphe
++principal représentent environ **22,65 Go de FP8 par token**, avant les échelles,
++l'attention et les couches denses. C'est un calcul de volume, pas un benchmark.
++Les mesures des petits modèles ne se transposent pas à ce modèle géant.
++
++## Utilisation Python
++
++```python
++from airllm import AutoModel
++from airllm.ultra import UltraConfig
++
++config = UltraConfig(
++    cache_bytes=512 * 1024**2,
++    device_cache_bytes=256 * 1024**2,
++    prefetch_bytes=256 * 1024**2,
++    max_group_bytes=2 * 1024**3,
++    cache_dir='/Users/votre_nom/Library/Caches/airllm-ultra',
++)
++with AutoModel.from_pretrained(
++    '/Volumes/VOTRE_SSD/modeles/modele', device='mps', ultra=config
++) as model:
++    ids = model.tokenizer('Bonjour', return_tensors='pt')['input_ids'].to(model.device)
++    tokens = model.generate(ids, max_new_tokens=8, do_sample=False)
++    print(model.tokenizer.decode(tokens[0], skip_special_tokens=True))
++    print(model.metrics())
++```
++
++`close()` / le contexte `with` attend le worker, ferme les mappings et enregistre
++les fréquences de routage. Une instance sérialise ses requêtes ; ce moteur n'est
++pas un serveur d'inférence multi-requêtes. L'entraînement reste sur le chemin
++AirLLM d'origine. L'appel historique sans `ultra` conserve son comportement.
++
++## Reproduire les validations CPU
++
++```bash
++python3.12 -m venv .venv
++.venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu \
++  -r requirements-linux-tested.txt
++.venv/bin/python -m pip install --no-deps -e air_llm
++.venv/bin/python -m pytest tests_ultra -q
++.venv/bin/python benchmarks/benchmark.py --repeats 3 --tokens 8
++.venv/bin/python benchmarks/benchmark_experts.py
++.venv/bin/python scripts/audit_glm_metadata.py
++```
++
++`requirements-linux-tested.txt` est le gel exact de l'environnement exécuté ;
++utiliser `requirements-macos.txt` sur Mac. Le benchmark principal prend plusieurs
++minutes car il mesure aussi le chemin stable d'origine, avec ses nettoyages mémoire.
++
++Une validation facultative d'un modèle entraîné est reproductible par
++`benchmarks/validate_pretrained.py`. Son téléchargement est explicite et plafonné
++à 350 Mo ; les instructions et résultats sont dans le rapport de validation.
++
++## Contenu et reprise
++
++- `air_llm/airllm/ultra/` : moteur, stockage, cache, experts, FP8, MLX et CLI.
++- `tests_ultra/` : tests CPU, erreurs, concurrence, budgets et tests matériels Mac.
++- `benchmarks/` : scripts, résultats JSON bruts, latences individuelles et journaux.
++- `evidence/` : environnement, rapports de tests, index/config GLM et audit du graphe.
++- `docs/VALIDATION.md` : résultats, limites, protocole M5/SSD et prochaines étapes.
++- `scripts/*macos.sh` : installation, lancement et validation.
++- `changes.patch` : modifications par rapport au tag stable, sans les résultats binaires.
++- `dist/` : wheel installable et archive source du paquet.
++
++Le code source officiel complet et sa licence Apache-2.0 sont conservés. Cette
++version locale `4.0.0+ultra.1` est un travail dérivé, pas une version publiée par
++les mainteneurs d'AirLLM. Les modèles ont leurs propres licences.
+diff --git a/air_llm/airllm/auto_model.py b/air_llm/airllm/auto_model.py
+index f6608df..16c69c5 100644
+--- a/air_llm/airllm/auto_model.py
++++ b/air_llm/airllm/auto_model.py
+@@ -53,7 +53,20 @@ class AutoModel:
+ 
+     @classmethod
+     def from_pretrained(cls, pretrained_model_name_or_path, *inputs, **kwargs):
+-
++        # Opt in explicitly; preserve all upstream defaults and model overrides.
++        ultra = kwargs.pop('ultra', None)
++        backend = kwargs.pop('backend', None)
++        if backend == 'mlx-ultra':
++            from .ultra.mlx_runtime import MlxLlamaUltra
++            return MlxLlamaUltra(pretrained_model_name_or_repo_id=pretrained_model_name_or_path,
++                                 ultra=ultra, **kwargs)
++        if ultra is not None or backend == 'ultra':
++            if inputs:
++                raise TypeError('Ultra accepts keyword options after the local checkpoint path')
++            from .ultra.runtime import AirLLMUltraModel
++            return AirLLMUltraModel(pretrained_model_name_or_path, ultra=ultra, **kwargs)
++        if backend not in (None, 'upstream'):
++            raise ValueError(f'Unknown AirLLM backend: {backend}')
+         if is_on_mac_os:
+             return AirLLMLlamaMlx(pretrained_model_name_or_path, *inputs, **kwargs)
+ 
+diff --git a/air_llm/airllm/ultra/__init__.py b/air_llm/airllm/ultra/__init__.py
+new file mode 100644
+index 0000000..e183a6a
+--- /dev/null
++++ b/air_llm/airllm/ultra/__init__.py
+@@ -0,0 +1,10 @@
++from .config import UltraConfig
++
++__all__ = ['UltraConfig', 'AirLLMUltraModel']
++
++
++def __getattr__(name):
++    if name == 'AirLLMUltraModel':
++        from .runtime import AirLLMUltraModel
++        return AirLLMUltraModel
++    raise AttributeError(name)
+diff --git a/air_llm/airllm/ultra/cache.py b/air_llm/airllm/ultra/cache.py
+new file mode 100644
+index 0000000..f235f3a
+--- /dev/null
++++ b/air_llm/airllm/ultra/cache.py
+@@ -0,0 +1,154 @@
++"""Byte-budgeted, scan-resistant two-segment cache and bounded I/O scheduler."""
++from collections import OrderedDict, defaultdict
++from concurrent.futures import ThreadPoolExecutor
++from threading import RLock
++
++
++def tensor_bytes(state):
++    return sum(t.numel() * t.element_size() if hasattr(t, 'numel') else t.nbytes
++               for t in state.values())
++
++
++class AdaptiveCache:
++    """Promote reused entries; don't let a scan evict the entire hot expert set.
++
++    Budgets count materialized tensor storage, excluding Python object overhead.
++    This is a host-weight budget, not a bound on model activations or the KV cache.
++    """
++    def __init__(self, capacity):
++        self.capacity = max(0, int(capacity))
++        self.probation = OrderedDict()
++        self.protected = OrderedDict()
++        self.sizes = {}
++        self.bytes = 0
++        self.peak_bytes = 0
++        self.lock = RLock()
++        self.stats = defaultdict(int)
++
++    def get(self, key):
++        with self.lock:
++            if key in self.protected:
++                self.protected.move_to_end(key)
++                self.stats['hits'] += 1
++                return self.protected[key]
++            if key in self.probation:
++                value = self.probation.pop(key)
++                self.protected[key] = value
++                self.stats['hits'] += 1
++                return value
++            self.stats['misses'] += 1
++            return None
++
++    def contains(self, key):
++        with self.lock:
++            return key in self.sizes
++
++    def put(self, key, value):
++        size = tensor_bytes(value)
++        with self.lock:
++            if key in self.sizes or size > self.capacity or self.capacity == 0:
++                return False
++            while self.bytes + size > self.capacity:
++                source = self.probation if self.probation else self.protected
++                victim, _ = source.popitem(last=False)
++                self.bytes -= self.sizes.pop(victim)
++                self.stats['evictions'] += 1
++            self.probation[key] = value
++            self.sizes[key] = size
++            self.bytes += size
++            self.peak_bytes = max(self.peak_bytes, self.bytes)
++            return True
++
++    def resize(self, capacity):
++        with self.lock:
++            self.capacity = max(0, int(capacity))
++            while self.bytes > self.capacity:
++                source = self.probation if self.probation else self.protected
++                key, _ = source.popitem(last=False)
++                self.bytes -= self.sizes.pop(key)
++                self.stats['evictions'] += 1
++
++    def clear(self):
++        with self.lock:
++            self.probation.clear()
++            self.protected.clear()
++            self.sizes.clear()
++            self.bytes = 0
++
++
++class BoundedPrefetch:
++    """One sequential I/O worker, deduplicated futures, hard byte reservations.
++
++    Completed speculative results still occupy reservations until consumed or
++    discarded. This prevents futures from retaining unbounded host tensors.
++    """
++    def __init__(self, budget, max_tasks=8):
++        self.budget = max(0, int(budget))
++        self.max_tasks = max_tasks
++        self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix='airllm-io')
++        self.pending = OrderedDict()
++        self.bytes = 0
++        self.peak_bytes = 0
++        self.closed = False
++        self.stats = defaultdict(int)
++
++    def submit(self, key, size, loader):
++        if self.closed or key in self.pending or size > self.budget or size <= 0:
++            return False
++        # Drop only completed speculation; do not abandon a running read and lose
++        # track of its memory reservation.
++        for old in list(self.pending):
++            if len(self.pending) < self.max_tasks and self.bytes + size <= self.budget:
++                break
++            future, amount = self.pending[old]
++            if future.done() or future.cancel():
++                self.pending.pop(old)
++                self.bytes -= amount
++                self.stats['discarded'] += 1
++        if len(self.pending) >= self.max_tasks or self.bytes + size > self.budget:
++            self.stats['rejected'] += 1
++            return False
++        self.pending[key] = (self.executor.submit(loader), size)
++        self.bytes += size
++        self.peak_bytes = max(self.peak_bytes, self.bytes)
++        self.stats['submitted'] += 1
++        return True
++
++    def take(self, key):
++        item = self.pending.pop(key, None)
++        if item is None:
++            return None
++        future, size = item
++        try:
++            result = future.result()
++            if tensor_bytes(result) > size:
++                raise RuntimeError('Prefetch loader exceeded its reserved tensor bytes')
++            self.stats['consumed'] += 1
++            return result
++        finally:
++            self.bytes -= size
++
++    def drain(self):
++        for future, _ in self.pending.values():
++            future.cancel()
++        error = None
++        for future, _ in self.pending.values():
++            if not future.cancelled():
++                try:
++                    future.result()
++                except BaseException as exc:
++                    if error is None:
++                        error = exc
++        self.pending.clear()
++        self.bytes = 0
++        if error is not None:
++            raise error
++
++    def close(self):
++        if self.closed:
++            return
++        try:
++            self.drain()
++        finally:
++            self.executor.shutdown(wait=True, cancel_futures=True)
++            self.closed = True
+diff --git a/air_llm/airllm/ultra/checkpoint.py b/air_llm/airllm/ultra/checkpoint.py
+new file mode 100644
+index 0000000..55bb8aa
+--- /dev/null
++++ b/air_llm/airllm/ultra/checkpoint.py
+@@ -0,0 +1,184 @@
++"""Direct indexed safetensors access. No repartitioning or duplicated model weights.
++
++Only headers are read at construction. Cached manifests are invalidated by index
++digest, relative paths, sizes and nanosecond mtimes. Tensor reads are sorted by
++file/offset; safe_open mappings are reused with a bounded, thread-safe handle LRU.
++"""
++from collections import OrderedDict, defaultdict
++from hashlib import sha256
++import json
++import math
++import os
++from pathlib import Path
++import struct
++import tempfile
++from threading import RLock
++
++import torch
++from safetensors import safe_open
++
++
++def atomic_json(path, obj):
++    path = Path(path)
++    path.parent.mkdir(parents=True, exist_ok=True)
++    fd, tmp = tempfile.mkstemp(prefix=path.name + '.', dir=path.parent)
++    try:
++        with os.fdopen(fd, 'w') as f:
++            json.dump(obj, f, separators=(',', ':'))
++            f.flush()
++            os.fsync(f.fileno())
++        os.replace(tmp, path)
++    finally:
++        if os.path.exists(tmp):
++            os.unlink(tmp)
++
++
++class DirectCheckpoint:
++    VERSION = 1
++
++    def __init__(self, root, cache_dir=None, max_open_files=8):
++        self.root = Path(root).resolve()
++        if max_open_files < 1:
++            raise ValueError('max_open_files must be positive')
++        self.max_open_files = max_open_files
++        self.lock = RLock()
++        self.handles = OrderedDict()
++        self.closed = False
++        self.stats = defaultdict(int)
++        index_path = self.root / 'model.safetensors.index.json'
++        if index_path.exists():
++            index_raw = index_path.read_bytes()
++            weight_map = json.loads(index_raw)['weight_map']
++            files = sorted(set(weight_map.values()))
++        else:
++            # Single file and non-indexed sharded checkpoints are supported too.
++            index_raw = b''
++            weight_map = None
++            files = sorted(p.name for p in self.root.glob('*.safetensors'))
++        if not files:
++            raise FileNotFoundError(f'No local safetensors checkpoint in {self.root}')
++        identities = {}
++        for name in files:
++            rel = Path(name)
++            if rel.is_absolute() or '..' in rel.parts:
++                raise ValueError(f'Invalid checkpoint path: {name}')
++            p = self.root / rel
++            st = p.stat()  # Missing/moved external drive fails before inference.
++            identities[name] = [st.st_size, st.st_mtime_ns]
++        identity = {'version': self.VERSION, 'root': str(self.root),
++                    'index_sha256': sha256(index_raw).hexdigest(), 'files': identities}
++        self.fingerprint = sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
++        self.manifest_path = Path(cache_dir) / (self.fingerprint + '.manifest.json') if cache_dir else None
++        cached = None
++        if self.manifest_path and self.manifest_path.exists():
++            try:
++                c = json.loads(self.manifest_path.read_text())
++                if c['identity'] == identity:
++                    cached = c['tensors']
++            except (ValueError, KeyError, OSError):
++                pass
++        self.stats['manifest_hit'] = int(cached is not None)
++        if cached is None:
++            cached = {}
++            for name in files:
++                p = self.root / name
++                with p.open('rb') as f:
++                    raw = f.read(8)
++                    if len(raw) != 8:
++                        raise ValueError(f'Truncated safetensors file: {p}')
++                    length = struct.unpack('<Q', raw)[0]
++                    if length > min(100_000_000, identities[name][0] - 8):
++                        raise ValueError(f'Invalid safetensors header length: {p}')
++                    header = json.loads(f.read(length))
++                self.stats['header_bytes'] += 8 + length
++                for key, desc in header.items():
++                    if key == '__metadata__':
++                        continue
++                    if weight_map is not None and weight_map.get(key) != name:
++                        continue
++                    if key in cached:
++                        raise ValueError(f'Duplicate tensor: {key}')
++                    a, b = desc['data_offsets']
++                    if not (0 <= a <= b <= identities[name][0] - 8 - length):
++                        raise ValueError(f'Invalid offsets for {key}')
++                    cached[key] = {'file': name, 'offset': 8 + length + a,
++                                   'bytes': b - a, 'shape': desc['shape'], 'dtype': desc['dtype']}
++            if weight_map is not None and set(cached) != set(weight_map):
++                raise ValueError('Checkpoint index has missing tensor entries')
++            if self.manifest_path:
++                atomic_json(self.manifest_path, {'identity': identity, 'tensors': cached})
++        self.tensors = cached
++        self.total_bytes = sum(d['bytes'] for d in cached.values())
++
++    def keys(self, prefix=''):
++        return tuple(k for k in self.tensors if not prefix or k == prefix or k.startswith(prefix + '.'))
++
++    def nbytes(self, keys, dtype=None):
++        if dtype is None:
++            return sum(self.tensors[k]['bytes'] for k in keys)
++        elem = torch.empty((), dtype=dtype).element_size()
++        return sum(math.prod(self.tensors[k]['shape']) * elem for k in keys)
++
++    def _handle(self, filename):
++        if self.closed:
++            raise RuntimeError('Checkpoint is closed')
++        if filename in self.handles:
++            self.handles.move_to_end(filename)
++            return self.handles[filename]
++        handle = safe_open(str(self.root / filename), framework='pt', device='cpu')
++        handle.__enter__()
++        self.stats['file_opens'] += 1
++        self.handles[filename] = handle
++        while len(self.handles) > self.max_open_files:
++            _, old = self.handles.popitem(last=False)
++            old.__exit__(None, None, None)
++        return handle
++
++    def read(self, keys, *, copy=True, dtype=None):
++        # copy=True deliberately faults the selected pages NOW, including on prefetch
++        # workers. Merely opening an mmap would not overlap I/O with compute.
++        out = {}
++        order = sorted(keys, key=lambda k: (self.tensors[k]['file'], self.tensors[k]['offset']))
++        with self.lock:
++            for key in order:
++                d = self.tensors[key]
++                value = self._handle(d['file']).get_tensor(key)
++                target = dtype if dtype is not None and value.is_floating_point() else value.dtype
++                converted = value.dtype != target
++                if converted:
++                    value = value.to(dtype=target)
++                elif copy:
++                    value = value.clone()
++                out[key] = value
++                self.stats['tensor_reads'] += 1
++                self.stats['logical_bytes'] += d['bytes']
++                if copy or converted:
++                    self.stats['materialized_bytes'] += value.numel() * value.element_size()
++        return out
++
++    def read_expert_slice(self, key, expert, dtype):
++        d = self.tensors[key]
++        if len(d['shape']) != 3 or not 0 <= expert < d['shape'][0]:
++            raise ValueError(f'Invalid expert slice {expert} of {key}')
++        if d['dtype'].startswith('F8_'):
++            raise NotImplementedError('Packed 3D FP8 expert slices need explicit scale-layout support')
++        with self.lock:
++            value = self._handle(d['file']).get_slice(key)[expert]
++            value = value.to(dtype=dtype, copy=True)
++            self.stats['tensor_reads'] += 1
++            self.stats['logical_bytes'] += d['bytes'] // d['shape'][0]
++            self.stats['materialized_bytes'] += value.numel() * value.element_size()
++            return value
++
++    def close(self):
++        with self.lock:
++            for handle in self.handles.values():
++                handle.__exit__(None, None, None)
++            self.handles.clear()
++            self.closed = True
++
++    def __enter__(self):
++        return self
++
++    def __exit__(self, *_):
++        self.close()
+diff --git a/air_llm/airllm/ultra/cli.py b/air_llm/airllm/ultra/cli.py
+new file mode 100644
+index 0000000..15cbd84
+--- /dev/null
++++ b/air_llm/airllm/ultra/cli.py
+@@ -0,0 +1,206 @@
++"""Local-only launcher, compatibility audit and disposable SSD benchmark."""
++import argparse
++import json
++import os
++from pathlib import Path
++import platform
++import shutil
++import sys
++import tempfile
++import time
++
++
++def doctor(args):
++    import psutil
++    import torch
++    import transformers
++    path = Path(args.directory).expanduser().resolve()
++    if not path.is_dir():
++        raise FileNotFoundError(path)
++    report = {'platform': platform.platform(), 'machine': platform.machine(),
++              'python': sys.version, 'torch': torch.__version__,
++              'transformers': transformers.__version__,
++              'mps_available': torch.backends.mps.is_available(),
++              'cuda_available': torch.cuda.is_available(),
++              'memory_total_bytes': psutil.virtual_memory().total,
++              'memory_available_bytes': psutil.virtual_memory().available,
++              'directory': str(path), 'disk_free_bytes': shutil.disk_usage(path).free,
++              'tested_hardware': 'See benchmarks/ and docs/VALIDATION.md; detection is not validation'}
++    print(json.dumps(report, indent=2))
++
++
++def audit(args):
++    import transformers
++    root = Path(args.model).expanduser().resolve()
++    cfg = json.loads((root / 'config.json').read_text())
++    index_path = root / 'model.safetensors.index.json'
++    index = json.loads(index_path.read_text()) if index_path.exists() else None
++    files = sorted(set(index['weight_map'].values())) if index else [p.name for p in root.glob('*.safetensors')]
++    report = {'model_type': cfg.get('model_type'), 'architectures': cfg.get('architectures'),
++              'layers': cfg.get('num_hidden_layers'),
++              'routed_experts': cfg.get('n_routed_experts', cfg.get('num_local_experts')),
++              'active_experts_per_token': cfg.get('num_experts_per_tok'),
++              'quantization': cfg.get('quantization_config', {}).get('quant_method'),
++              'checkpoint_bytes_from_index': index.get('metadata', {}).get('total_size') if index else None,
++              'checkpoint_files': len(files), 'missing_files': [f for f in files if not (root / f).is_file()],
++              'installed_transformers': transformers.__version__,
++              'checkpoint_transformers_version': cfg.get('transformers_version'),
++              'full_model_hardware_validation': False,
++              'note': 'Config/index inspection does not establish successful inference or device compatibility.'}
++    try:
++        from transformers import AutoConfig
++        AutoConfig.from_pretrained(root, local_files_only=True, trust_remote_code=False)
++        report['native_transformers_config_recognized'] = True
++    except Exception as e:
++        report['native_transformers_config_recognized'] = False
++        report['error'] = str(e)
++    print(json.dumps(report, indent=2))
++
++
++def io_bench(args):
++    import numpy as np
++    directory = Path(args.directory).expanduser().resolve()
++    if not directory.is_dir():
++        raise FileNotFoundError(directory)
++    if not 1 <= args.size_mib <= 8192 or not 1 <= args.repeats <= 20:
++        raise ValueError('Use 1..8192 MiB and 1..20 repeats')
++    size = args.size_mib * 1024**2
++    if shutil.disk_usage(directory).free < size + 128*1024**2:
++        raise OSError('Insufficient free space for disposable I/O benchmark')
++    rng = np.random.default_rng(521)
++    block = rng.integers(0, 256, 1024**2, dtype=np.uint8).tobytes()
++    fd, filename = tempfile.mkstemp(prefix='airllm-io-', suffix='.tmp', dir=directory)
++    try:
++        begin = time.perf_counter()
++        with os.fdopen(fd, 'wb') as f:
++            for _ in range(args.size_mib):
++                f.write(block)
++            f.flush()
++            os.fsync(f.fileno())
++        write_seconds = time.perf_counter() - begin
++        trials = []
++        for _ in range(args.repeats):
++            with open(filename, 'rb', buffering=0) as f:
++                # Linux can advise discard; macOS uses F_NOCACHE on this temporary
++                # file only. Neither guarantees a fully cold device/controller cache.
++                method = 'buffered OS cache; not cold SSD'
++                if hasattr(os, 'posix_fadvise'):
++                    os.posix_fadvise(f.fileno(), 0, 0, os.POSIX_FADV_DONTNEED)
++                    method = 'POSIX_FADV_DONTNEED advice (not guaranteed cold)'
++                elif sys.platform == 'darwin':
++                    import fcntl
++                    fcntl.fcntl(f.fileno(), 48, 1)  # F_NOCACHE, Darwin fcntl.h
++                    method = 'Darwin F_NOCACHE (not guaranteed cold)'
++                read = 0
++                start = time.perf_counter()
++                while data := f.read(4*1024**2):
++                    read += len(data)
++                elapsed = time.perf_counter() - start
++                trials.append({'bytes': read, 'seconds': elapsed,
++                               'MiB_per_second': read / 1024**2 / elapsed, 'method': method})
++        print(json.dumps({'size_bytes': size, 'write_seconds_fsync': write_seconds,
++                          'write_MiB_per_second': args.size_mib / write_seconds,
++                          'read_trials': trials, 'directory': str(directory)}, indent=2))
++    finally:
++        os.unlink(filename)
++
++
++def run(args):
++    import torch
++    from .config import UltraConfig
++    cfg = UltraConfig(cache_bytes=args.cache_mib*1024**2,
++                      device_cache_bytes=args.device_cache_mib*1024**2,
++                      prefetch_bytes=args.prefetch_mib*1024**2,
++                      max_group_bytes=args.max_group_mib*1024**2,
++                      reserve_bytes=args.reserve_mib*1024**2,
++                      cache_dir=args.cache_dir, prefetch=not args.no_prefetch)
++    start = time.perf_counter()
++    if args.backend == 'mlx-ultra':
++        from .mlx_runtime import MlxLlamaUltra
++        with MlxLlamaUltra(args.model, ultra=cfg) as model:
++            import mlx.core as mx
++            construction = time.perf_counter() - start
++            ids = model.tokenizer.encode(args.prompt, add_special_tokens=True)
++            input_ids = mx.array([ids], dtype=mx.int32)
++            tokens = model.generate(input_ids, max_new_tokens=args.max_new_tokens)
++            new_ids = tokens.tolist()[0][len(ids):]
++            print(model.tokenizer.decode(new_ids, skip_special_tokens=True))
++            metrics = {'backend': args.backend, 'construction_seconds': construction,
++                       'total_seconds': time.perf_counter() - start, 'new_tokens': len(new_ids),
++                       'hardware_validation': 'This run only; compare reference with tests_ultra/test_mlx.py'}
++    else:
++        from .runtime import AirLLMUltraModel
++        dtype = getattr(torch, args.dtype) if args.dtype else None
++        device = None if args.device == 'auto' else args.device
++        with AirLLMUltraModel(args.model, device=device, dtype=dtype, ultra=cfg) as model:
++            construction = time.perf_counter() - start
++            ids = model.tokenizer(args.prompt, return_tensors='pt')['input_ids'].to(model.device)
++            if ids.shape[-1] + args.max_new_tokens > args.max_context:
++                raise ValueError('Prompt + new tokens exceeds --max-context (KV/activation guard)')
++            current, kv, output = ids, None, []
++            eos = getattr(model.generation_config, 'eos_token_id', None) or model.config.eos_token_id
++            eos = eos if isinstance(eos, list) else [eos]
++            latencies = []
++            ttft = None
++            with torch.inference_mode():
++                for _ in range(args.max_new_tokens):
++                    begin = time.perf_counter()
++                    result = model(current, past_key_values=kv, use_cache=True, logits_to_keep=1)
++                    token = result.logits[:, -1].argmax(-1)[:, None]
++                    value = token.item()  # also synchronizes device work for the measurement
++                    kv, current = result.past_key_values, token
++                    output.append(value)
++                    latencies.append(time.perf_counter() - begin)
++                    if ttft is None:
++                        ttft = time.perf_counter() - start
++                    if value in eos:
++                        break
++            print(model.tokenizer.decode(output, skip_special_tokens=True))
++            metrics = {**model.metrics(), 'backend': 'ultra', 'device': str(model.device),
++                       'construction_seconds': construction, 'ttft_including_construction_seconds': ttft,
++                       'token_seconds': latencies, 'new_tokens': len(output),
++                       'decode_tokens_per_second': ((len(latencies)-1)/sum(latencies[1:])) if len(latencies)>1 else None}
++    if args.metrics:
++        Path(args.metrics).write_text(json.dumps(metrics, indent=2) + '\n')
++    print(json.dumps(metrics, indent=2), file=sys.stderr)
++
++
++def main(argv=None):
++    p = argparse.ArgumentParser(description=__doc__)
++    sub = p.add_subparsers(dest='command', required=True)
++    d = sub.add_parser('doctor')
++    d.add_argument('--directory', default='.')
++    d.set_defaults(func=doctor)
++    a = sub.add_parser('audit')
++    a.add_argument('--model', required=True)
++    a.set_defaults(func=audit)
++    io = sub.add_parser('io-bench')
++    io.add_argument('--directory', required=True)
++    io.add_argument('--size-mib', type=int, default=256)
++    io.add_argument('--repeats', type=int, default=3)
++    io.set_defaults(func=io_bench)
++    r = sub.add_parser('run')
++    r.add_argument('--model', required=True)
++    r.add_argument('--prompt', default='Bonjour, présente-toi brièvement.')
++    r.add_argument('--backend', choices=['ultra', 'mlx-ultra'], default='ultra')
++    r.add_argument('--device', default='auto', choices=['auto', 'cpu', 'mps', 'cuda:0'])
++    r.add_argument('--dtype', choices=['float32', 'float16', 'bfloat16'])
++    r.add_argument('--max-new-tokens', type=int, default=32)
++    r.add_argument('--max-context', type=int, default=512)
++    r.add_argument('--cache-mib', type=int, default=512)
++    r.add_argument('--device-cache-mib', type=int, default=256)
++    r.add_argument('--prefetch-mib', type=int, default=256)
++    r.add_argument('--max-group-mib', type=int, default=2048)
++    r.add_argument('--reserve-mib', type=int, default=2048)
++    r.add_argument('--no-prefetch', action='store_true')
++    r.add_argument('--cache-dir')
++    r.add_argument('--metrics')
++    r.set_defaults(func=run)
++    args = p.parse_args(argv)
++    if getattr(args, 'max_new_tokens', 1) < 1:
++        p.error('--max-new-tokens must be positive')
++    args.func(args)
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/air_llm/airllm/ultra/config.py b/air_llm/airllm/ultra/config.py
+new file mode 100644
+index 0000000..b07b993
+--- /dev/null
++++ b/air_llm/airllm/ultra/config.py
+@@ -0,0 +1,31 @@
++"""Explicit, conservative budgets for out-of-core inference (bytes, not model size)."""
++from dataclasses import dataclass
++from pathlib import Path
++from typing import Optional
++
++
++@dataclass(frozen=True)
++class UltraConfig:
++    cache_bytes: int = 512 * 1024**2
++    device_cache_bytes: int = 256 * 1024**2
++    prefetch_bytes: int = 256 * 1024**2
++    max_group_bytes: int = 2 * 1024**3
++    reserve_bytes: int = 2 * 1024**3
++    max_open_files: int = 8
++    prefetch: bool = True
++    expert_prediction: int = 2
++    cache_dir: Optional[str] = None
++    memory_check_interval: int = 32
++    load_tokenizer: bool = True
++
++    def __post_init__(self):
++        for key in ('cache_bytes', 'device_cache_bytes', 'prefetch_bytes', 'reserve_bytes', 'expert_prediction'):
++            if getattr(self, key) < 0:
++                raise ValueError(f'{key} must be nonnegative')
++        for key in ('max_group_bytes', 'max_open_files', 'memory_check_interval'):
++            if getattr(self, key) <= 0:
++                raise ValueError(f'{key} must be positive')
++
++    def metadata_dir(self):
++        # Keep small metadata off the external SSD by default; never copy weights here.
++        return Path(self.cache_dir or Path.home() / '.cache' / 'airllm-ultra')
+diff --git a/air_llm/airllm/ultra/experts.py b/air_llm/airllm/ultra/experts.py
+new file mode 100644
+index 0000000..41d49e0
+--- /dev/null
++++ b/air_llm/airllm/ultra/experts.py
+@@ -0,0 +1,99 @@
++"""Route-aware expert execution, for both 3D and per-expert checkpoints.
++
++Unlike a hook on a fused expert bank, this never materializes all experts. The
++real router/attention/KV cache remain owned by Transformers. Only the expert
++matrix multiplications are replaced, preserving its eager scatter semantics.
++"""
++import math
++import torch
++from torch import nn
++from torch.nn import functional as F
++
++
++class ExpertSource:
++    def __init__(self, owner, prefix, original):
++        self.owner = owner
++        self.prefix = prefix
++        self.num_experts = original.num_experts
++        self.act_fn = original.act_fn
++        cp = owner.checkpoint
++        storage_prefix = prefix
++        if owner.config.model_type == 'mixtral' and not cp.keys(prefix):
++            storage_prefix = prefix.replace('.mlp.', '.block_sparse_moe.')
++        self.storage_prefix = storage_prefix
++        self.fused = storage_prefix + '.gate_up_proj' in cp.tensors
++        if self.fused:
++            self.keys = (storage_prefix + '.gate_up_proj', storage_prefix + '.down_proj')
++            for key in self.keys:
++                d = cp.tensors[key]
++                if len(d['shape']) != 3 or d['shape'][0] != self.num_experts:
++                    raise ValueError(f'Unrecognized fused expert layout: {key}')
++                if d['dtype'].startswith('F8_'):
++                    raise NotImplementedError('3D FP8 banks are not supported; per-expert FP8 is supported')
++            self.size = sum(math.prod(cp.tensors[k]['shape'][1:]) for k in self.keys)
++            self.size *= torch.empty((), dtype=owner.dtype).element_size()
++        else:
++            self.per_expert = {}
++            candidates = [('gate_proj', 'up_proj', 'down_proj'), ('w1', 'w3', 'w2')]
++            for expert in range(self.num_experts):
++                found = None
++                for names in candidates:
++                    keys = tuple(f'{storage_prefix}.{expert}.{n}.weight' for n in names)
++                    if all(k in cp.tensors for k in keys):
++                        found = keys
++                        break
++                if found is None:
++                    raise NotImplementedError(f'No recognized weights for {prefix} expert {expert}')
++                self.per_expert[expert] = found
++            self.size = max(owner.reader.nbytes(keys) for keys in self.per_expert.values())
++
++    def load(self, expert):
++        if self.fused:
++            cp = self.owner.checkpoint
++            return {'gate_up': cp.read_expert_slice(self.keys[0], expert, self.owner.dtype),
++                    'down': cp.read_expert_slice(self.keys[1], expert, self.owner.dtype)}
++        keys = self.per_expert[expert]
++        state = self.owner.reader.load(keys)
++        return dict(zip(('gate', 'up', 'down'), (state[k] for k in keys)))
++
++
++class DiskExperts(nn.Module):
++    def __init__(self, source):
++        super().__init__()
++        # Avoid registering the owner model as a child (and creating a cycle).
++        object.__setattr__(self, 'source', source)
++        self.num_experts = source.num_experts
++        self.act_fn = source.act_fn
++
++    def forward(self, hidden_states, top_k_index, top_k_weights):
++        source = self.source
++        owner = source.owner
++        # One host sync for the whole routed set, not one .item() per expert.
++        selected = torch.unique(top_k_index).detach().cpu().tolist()
++        selected = [int(e) for e in selected if int(e) != self.num_experts]
++        if any(e < 0 or e >= self.num_experts for e in selected):
++            raise ValueError('Router returned an invalid expert id')
++        owner.record_routes(source.prefix, selected)
++        result = torch.zeros_like(hidden_states)
++        for pos, expert in enumerate(selected):
++            key = ('expert', source.prefix, expert)
++            weights = owner.get_device_weights(key, source.size, lambda e=expert: source.load(e))
++            # Routing is known now: overlap reading the following ACTUAL expert.
++            if pos + 1 < len(selected):
++                nxt = selected[pos + 1]
++                owner.prefetch_weights(('expert', source.prefix, nxt), source.size,
++                                       lambda e=nxt: source.load(e))
++            token_idx, top_pos = torch.where(top_k_index == expert)
++            current = hidden_states[token_idx]
++            device_weights = weights
++            if 'gate_up' in device_weights:
++                gate, up = F.linear(current, device_weights['gate_up']).chunk(2, dim=-1)
++            else:
++                gate = F.linear(current, device_weights['gate'])
++                up = F.linear(current, device_weights['up'])
++            value = F.linear(self.act_fn(gate) * up, device_weights['down'])
++            value *= top_k_weights[token_idx, top_pos, None]
++            result.index_add_(0, token_idx, value.to(result.dtype))
++            # CPU cache owns weights; accelerator temporaries die after this expert.
++            del device_weights, weights
++        return result
+diff --git a/air_llm/airllm/ultra/mlx_runtime.py b/air_llm/airllm/ultra/mlx_runtime.py
+new file mode 100644
+index 0000000..510a37f
+--- /dev/null
++++ b/air_llm/airllm/ultra/mlx_runtime.py
+@@ -0,0 +1,204 @@
++"""Native MLX/Metal Llama inference with selective direct checkpoint reads.
++
++Hardware-gated: the implementation is shipped for Mac validation, not reported
++as tested on Linux. Plain Llama, default RoPE, no checkpoint quantization only.
++GLM's DSA and MoE are handled by the separate Transformers/MPS backend.
++"""
++import json
++from pathlib import Path
++import sys
++from threading import RLock
++
++import numpy as np
++
++from .cache import AdaptiveCache, BoundedPrefetch
++from .checkpoint import DirectCheckpoint
++from .config import UltraConfig
++
++
++def validate_mlx_config(cfg):
++    if cfg.get('model_type') != 'llama':
++        raise NotImplementedError('mlx-ultra currently supports plain Llama only; use ultra for GLM/MoE')
++    if cfg.get('quantization_config') or cfg.get('quantization'):
++        raise NotImplementedError('mlx-ultra does not implement checkpoint quantization')
++    rope = cfg.get('rope_parameters') or cfg.get('rope_scaling') or {}
++    if rope.get('rope_type', rope.get('type', 'default')) != 'default':
++        raise NotImplementedError('mlx-ultra currently implements default RoPE only')
++    if cfg.get('attention_bias') or cfg.get('mlp_bias'):
++        raise NotImplementedError('mlx-ultra currently implements bias-free Llama only')
++    if cfg.get('hidden_act', 'silu') != 'silu':
++        raise NotImplementedError('mlx-ultra currently implements SiLU only')
++
++
++class MlxLlamaUltra:
++    def __init__(self, pretrained_model_name_or_repo_id, ultra=None):
++        path = Path(pretrained_model_name_or_repo_id).resolve()
++        cfg = json.loads((path / 'config.json').read_text())
++        validate_mlx_config(cfg)
++        if sys.platform != 'darwin':
++            raise RuntimeError('mlx-ultra requires macOS/Apple Silicon; not validated on this host')
++        import mlx.core as mx
++        self.mx = mx
++        self.config = cfg
++        self.ultra = ultra if isinstance(ultra, UltraConfig) else UltraConfig(**(ultra or {}))
++        self.lock = RLock()
++        self.closed = False
++        self.checkpoint = DirectCheckpoint(path, self.ultra.metadata_dir(), self.ultra.max_open_files)
++        self.cache = AdaptiveCache(self.ultra.cache_bytes)
++        self.prefetch = BoundedPrefetch(self.ultra.prefetch_bytes if self.ultra.prefetch else 0)
++        self.names = ['model.embed_tokens'] + [f'model.layers.{i}' for i in range(cfg['num_hidden_layers'])]
++        self.names += ['model.norm', 'lm_head']
++        self.keys = {name: self.checkpoint.keys(name) for name in self.names}
++        if cfg.get('tie_word_embeddings') and not self.keys['lm_head']:
++            self.keys['lm_head'] = self.keys['model.embed_tokens']
++        for name, keys in self.keys.items():
++            if not keys:
++                raise ValueError(f'Missing MLX weights for {name}')
++            if self.checkpoint.nbytes(keys) > self.ultra.max_group_bytes:
++                raise MemoryError(f'MLX group {name} exceeds max_group_bytes')
++            if any(self.checkpoint.tensors[k]['dtype'] not in ('F32', 'F16', 'BF16') for k in keys):
++                raise NotImplementedError('Unsupported MLX weight dtype')
++        self.tokenizer = None
++        if self.ultra.load_tokenizer:
++            from transformers import AutoTokenizer
++            self.tokenizer = AutoTokenizer.from_pretrained(path, local_files_only=True,
++                                                          trust_remote_code=False)
++
++    def _read(self, name):
++        mx = self.mx
++        out = {}
++        # A dedicated CPU stream forces the selected pages on the I/O worker;
++        # unified memory lets Metal consume those arrays without a CUDA-style copy.
++        with mx.stream(mx.cpu):
++            for key in self.keys[name]:
++                d = self.checkpoint.tensors[key]
++                dt = {'F32': np.float32, 'F16': np.float16, 'BF16': np.uint16}[d['dtype']]
++                data = np.memmap(self.checkpoint.root / d['file'], mode='r', dtype=dt,
++                                 offset=d['offset'], shape=tuple(d['shape']))
++                value = mx.array(data)
++                if d['dtype'] == 'BF16':
++                    value = value.view(mx.bfloat16)
++                mx.eval(value)
++                out[key] = value
++                self.checkpoint.stats['logical_bytes'] += d['bytes']
++                self.checkpoint.stats['tensor_reads'] += 1
++        return out
++
++    def _weights(self, index):
++        name = self.names[index]
++        state = self.cache.get(name)
++        if state is None:
++            state = self.prefetch.take(name)
++            if state is None:
++                state = self._read(name)
++            self.cache.put(name, state)
++        if self.ultra.prefetch and index + 1 < len(self.names):
++            nxt = self.names[index + 1]
++            if not self.cache.contains(nxt):
++                self.prefetch.submit(nxt, self.checkpoint.nbytes(self.keys[nxt]), lambda: self._read(nxt))
++        return state
++
++    def forward(self, ids, cache=None):
++        with self.lock:
++            if self.closed:
++                raise RuntimeError('Model is closed')
++            mx = self.mx
++            cfg = self.config
++            if not isinstance(ids, mx.array):
++                ids = mx.array(ids, dtype=mx.int32)
++            if ids.ndim != 2:
++                raise ValueError('MLX input_ids must have [batch, sequence] shape')
++            old_cache = cache or [None] * cfg['num_hidden_layers']
++            if len(old_cache) != cfg['num_hidden_layers']:
++                raise ValueError('Wrong MLX KV cache layer count')
++            weights = self._weights(0)
++            x = weights['model.embed_tokens.weight'][ids]
++            mx.eval(x)
++            del weights
++            result_cache = []
++            h = cfg['num_attention_heads']
++            kvh = cfg.get('num_key_value_heads', h)
++            dim = cfg.get('head_dim') or cfg['hidden_size'] // h
++            rope = cfg.get('rope_parameters') or {}
++            theta = rope.get('rope_theta', cfg.get('rope_theta', 10000.0))
++            eps = cfg.get('rms_norm_eps', 1e-5)
++            for i in range(cfg['num_hidden_layers']):
++                w = self._weights(i + 1)
++                p = f'model.layers.{i}.'
++                normed = mx.fast.rms_norm(x, w[p + 'input_layernorm.weight'], eps)
++                batch, length, _ = x.shape
++                q = (normed @ w[p + 'self_attn.q_proj.weight'].T).reshape(batch, length, h, dim).transpose(0, 2, 1, 3)
++                k = (normed @ w[p + 'self_attn.k_proj.weight'].T).reshape(batch, length, kvh, dim).transpose(0, 2, 1, 3)
++                v = (normed @ w[p + 'self_attn.v_proj.weight'].T).reshape(batch, length, kvh, dim).transpose(0, 2, 1, 3)
++                previous = old_cache[i]
++                offset = previous[0].shape[2] if previous is not None else 0
++                if offset + length > cfg.get('max_position_embeddings', 2048):
++                    raise ValueError('Input exceeds configured context length')
++                q = mx.fast.rope(q, dims=dim, traditional=False, base=theta, scale=1.0, offset=offset)
++                k = mx.fast.rope(k, dims=dim, traditional=False, base=theta, scale=1.0, offset=offset)
++                if previous is not None:
++                    k = mx.concatenate([previous[0], k], axis=2)
++                    v = mx.concatenate([previous[1], v], axis=2)
++                mask = None
++                if length > 1:
++                    mask = mx.arange(k.shape[2])[None, :] <= (mx.arange(length)[:, None] + offset)
++                a = mx.fast.scaled_dot_product_attention(q, k, v, scale=dim**-0.5, mask=mask)
++                a = a.transpose(0, 2, 1, 3).reshape(batch, length, h * dim)
++                x = x + a @ w[p + 'self_attn.o_proj.weight'].T
++                n = mx.fast.rms_norm(x, w[p + 'post_attention_layernorm.weight'], eps)
++                gate = n @ w[p + 'mlp.gate_proj.weight'].T
++                up = n @ w[p + 'mlp.up_proj.weight'].T
++                x = x + ((gate * mx.sigmoid(gate)) * up) @ w[p + 'mlp.down_proj.weight'].T
++                # Evaluation before dropping references is essential for bounded
++                # weights: lazy graphs must not retain all preceding layers.
++                mx.eval(x, k, v)
++                result_cache.append((k, v))
++                del w
++            w = self._weights(len(self.names) - 2)
++            x = mx.fast.rms_norm(x[:, -1:, :], w['model.norm.weight'], eps)
++            mx.eval(x)
++            del w
++            w = self._weights(len(self.names) - 1)
++            head = w.get('lm_head.weight', w.get('model.embed_tokens.weight'))
++            logits = x @ head.T
++            mx.eval(logits)
++            return logits, result_cache
++
++    __call__ = forward
++
++    def generate(self, ids, max_new_tokens=32, eos_token_id=None):
++        if max_new_tokens < 0:
++            raise ValueError('max_new_tokens must be nonnegative')
++        with self.lock:
++            mx = self.mx
++            tokens = ids if isinstance(ids, mx.array) else mx.array(ids, dtype=mx.int32)
++            if tokens.shape[0] != 1:
++                raise NotImplementedError('MLX generate currently supports batch size one')
++            current, cache = tokens, None
++            eos = self.config.get('eos_token_id') if eos_token_id is None else eos_token_id
++            eos_ids = eos if isinstance(eos, list) else [eos]
++            for _ in range(max_new_tokens):
++                logits, cache = self.forward(current, cache=cache)
++                token = mx.argmax(logits[:, -1], axis=-1)[:, None]
++                tokens = mx.concatenate([tokens, token], axis=1)
++                mx.eval(tokens)
++                if token.item() in eos_ids:
++                    break
++                current = token
++            return tokens
++
++    def close(self):
++        with self.lock:
++            if not self.closed:
++                try:
++                    self.prefetch.close()
++                finally:
++                    self.cache.clear()
++                    self.checkpoint.close()
++                    self.closed = True
++
++    def __enter__(self):
++        return self
++
++    def __exit__(self, *_):
++        self.close()
+diff --git a/air_llm/airllm/ultra/runtime.py b/air_llm/airllm/ultra/runtime.py
+new file mode 100644
+index 0000000..852b663
+--- /dev/null
++++ b/air_llm/airllm/ultra/runtime.py
+@@ -0,0 +1,343 @@
++"""AirLLM's real Transformers model with direct, bounded out-of-core weights.
++
++Opt-in backend: legacy inference/training stays intact. No gc.collect(), allocator
++trim or empty_cache() in the layer/token hot path. Python model skeleton and
++checkpoint mappings survive generation calls. This wrapper is single-request;
++calls on one instance are serialized because hooks mutate parameter residency.
++"""
++from collections import Counter, defaultdict
++import json
++from pathlib import Path
++from threading import RLock
++import time
++
++import psutil
++import torch
++from accelerate.utils.modeling import set_module_tensor_to_device
++from transformers import AutoConfig, AutoTokenizer, GenerationConfig
++
++from ..airllm_base import AirLLMBaseModel, restore_relocated_transformers_symbols
++from .cache import AdaptiveCache, BoundedPrefetch
++from .checkpoint import DirectCheckpoint, atomic_json
++from .config import UltraConfig
++from .experts import DiskExperts, ExpertSource
++from .weights import WeightReader
++
++
++class AirLLMUltraModel(AirLLMBaseModel):
++    def __init__(self, model_local_path_or_repo_id, device=None, dtype=None,
++                 ultra=None, **kwargs):
++        if kwargs:
++            raise TypeError(f'Ultra does not silently ignore options: {sorted(kwargs)}')
++        self.ultra = ultra if isinstance(ultra, UltraConfig) else UltraConfig(**(ultra or {}))
++        self._lock = RLock()
++        self.closed = False
++        self.hooks = []
++        self.stats = defaultdict(int)
++        self.routes = {}
++        self.expert_sources = {}
++        self._active_names = {}
++        self.model_local_path = Path(model_local_path_or_repo_id).resolve()
++        if not (self.model_local_path / 'config.json').is_file():
++            raise FileNotFoundError('Ultra expects a downloaded local checkpoint directory with config.json; '
++                                    'it never starts an implicit giant download')
++        self.running_device = device or ('mps' if torch.backends.mps.is_available() else
++                                         'cuda:0' if torch.cuda.is_available() else 'cpu')
++        self.device = torch.device(self.running_device)
++        if self.device.type == 'mps' and not torch.backends.mps.is_available():
++            raise RuntimeError('MPS is not available in this environment')
++        self.config = AutoConfig.from_pretrained(self.model_local_path, trust_remote_code=False,
++                                                local_files_only=True)
++        self.trust_remote_code = False
++        if self.config.model_type not in {'llama', 'mistral', 'mixtral', 'qwen2', 'qwen3',
++                                          'qwen3_moe', 'glm_moe_dsa', 'deepseek_v3'}:
++            raise NotImplementedError(f'Ultra model_type={self.config.model_type!r} is not validated; '
++                                      'use the upstream backend for other families')
++        cfg_dtype = getattr(self.config, 'dtype', None) or getattr(self.config, 'torch_dtype', None)
++        if isinstance(cfg_dtype, str):
++            cfg_dtype = getattr(torch, cfg_dtype)
++        self.dtype = dtype or cfg_dtype or torch.float32
++        self.running_dtype = self.dtype
++        self.hf_quantizer = None
++        self.compression = None
++        self.set_layer_names_dict()
++        restore_relocated_transformers_symbols()
++        self.generation_config = self.get_generation_config()
++        self.checkpoint = DirectCheckpoint(self.model_local_path,
++                                           cache_dir=self.ultra.metadata_dir(),
++                                           max_open_files=self.ultra.max_open_files)
++        self.checkpoint_path = self.model_local_path
++        self.reader = WeightReader(self.checkpoint, self.dtype,
++                                   getattr(self.config, 'quantization_config', None))
++        self.cache = AdaptiveCache(self.ultra.cache_bytes)
++        self.device_cache = AdaptiveCache(self.ultra.device_cache_bytes if self.device.type != 'cpu' else 0)
++        self.prefetch = BoundedPrefetch(self.ultra.prefetch_bytes if self.ultra.prefetch else 0)
++        self.profile_path = self.ultra.metadata_dir() / (self.checkpoint.fingerprint + '.routes.json')
++        self.tokenizer = None
++        try:
++            # Eager expert implementations have stable routing semantics. Attention
++            # uses SDPA when the model supports it, preserving its DSA/cache code.
++            self.config._experts_implementation = 'eager'
++            self.model = self._instantiate_on_meta('sdpa')
++            self.model.eval()
++            self.model.requires_grad_(False)
++            self.model.tie_weights()
++            self.model.generation_config = self.generation_config
++            self._patch_device_property()
++            self._restore_computed_buffers()
++            for name, buf in self.model.named_buffers():
++                if buf.device.type != 'meta':
++                    set_module_tensor_to_device(self.model, name, self.device, value=buf)
++            self._replace_experts()
++            self._build_groups()
++            self._load_route_profile()
++            if self.ultra.load_tokenizer:
++                self.tokenizer = AutoTokenizer.from_pretrained(self.model_local_path,
++                                                               trust_remote_code=False,
++                                                               local_files_only=True)
++        except BaseException:
++            self.close(save_profile=False)
++            raise
++
++    def _instantiate_on_meta(self, attn_implementation):
++        # init_empty_weights alone moves Parameters to meta AFTER their factory
++        # runs. A fused GLM expert bank allocates >12 GiB in torch.empty first.
++        # The default-device context prevents that temporary CPU allocation too.
++        with torch.device('meta'):
++            return super()._instantiate_on_meta(attn_implementation)
++
++    def _restore_computed_buffers(self):
++        # Rotary frequencies are derived, non-persistent buffers, absent from
++        # the checkpoint. Reconstruct these small modules outside the meta
++        # context instead of materializing uninitialized buffer contents.
++        for name, module in list(self.model.named_modules()):
++            if type(module).__name__.endswith('RotaryEmbedding'):
++                rebuilt = type(module)(config=module.config)
++                parent, _, attr = name.rpartition('.')
++                setattr(self.model.get_submodule(parent), attr, rebuilt)
++        # Persistent buffers (notably GLM's learned routing correction) must be
++        # loaded from the checkpoint by the same groups as parameters.
++        persistent = set(self.model.state_dict())
++        for name, buffer in self.model.named_buffers():
++            if buffer.device.type == 'meta' and name not in persistent:
++                raise NotImplementedError(f'Cannot reconstruct derived meta buffer {name}')
++
++    def _replace_experts(self):
++        # New Transformers uses 3D banks; older versions expose ModuleLists.
++        for name, module in list(self.model.named_modules()):
++            if not name.endswith('.experts'):
++                continue
++            if hasattr(module, 'gate_up_proj') and hasattr(module, 'down_proj'):
++                source = ExpertSource(self, name, module)
++                self._check_size(('expert', name), source.size)
++                self.expert_sources[name] = source
++                parent, _, attr = name.rpartition('.')
++                setattr(self.model.get_submodule(parent), attr, DiskExperts(source))
++            elif isinstance(module, torch.nn.ModuleList):
++                for expert_idx, expert in enumerate(module):
++                    prefix = f'{name}.{expert_idx}'
++                    keys = self.checkpoint.keys(prefix)
++                    if not keys:
++                        raise ValueError(f'No checkpoint tensors for {prefix}')
++                    key = ('module_expert', name, expert_idx)
++                    self._install_group(prefix, expert, keys, key)
++                # Exclude this entire bank from its parent layer group.
++                self.expert_sources[name] = None
++
++    def _source_key(self, name):
++        if name in self.checkpoint.tensors:
++            return name
++        if self.config.model_type == 'mixtral':
++            legacy = name.replace('.mlp.', '.block_sparse_moe.')
++            if legacy in self.checkpoint.tensors:
++                return legacy
++        if getattr(self.config, 'tie_word_embeddings', False):
++            aliases = {'lm_head.weight': 'model.embed_tokens.weight',
++                       'model.embed_tokens.weight': 'lm_head.weight'}
++            if aliases.get(name) in self.checkpoint.tensors:
++                return aliases[name]
++        raise ValueError(f'Missing checkpoint tensor for model parameter: {name}')
++
++    def _build_groups(self):
++        names = ['model.embed_tokens'] + [f'model.layers.{i}' for i in range(len(self.model.model.layers))]
++        names += ['model.norm', 'lm_head']
++        self.group_names = names
++        self.groups = {}
++        covered = set()
++        for name in names:
++            module = self.model.get_submodule(name)
++            keys = []
++            mapping = {}
++            for local_name, _ in module.state_dict(keep_vars=True).items():
++                full = name + '.' + local_name
++                if any(full.startswith(p + '.') for p in self.expert_sources):
++                    continue
++                source = self._source_key(full)
++                keys.append(source)
++                mapping[source] = full
++                covered.add(full)
++            key = ('layer', name)
++            self.groups[key] = (tuple(dict.fromkeys(keys)), mapping)
++            self._install_group(name, module, self.groups[key][0], key)
++        # Fail closed on any non-expert parameter outside the streaming plan.
++        missing = [name for name, _ in self.model.named_parameters(remove_duplicate=False)
++                   if name not in covered and not any(name.startswith(p + '.') for p in self.expert_sources)]
++        if missing:
++            raise NotImplementedError(f'Parameters outside streaming plan: {missing[:8]}')
++
++    def _install_group(self, name, module, keys, key):
++        size = self.reader.nbytes(keys)
++        self._check_size(key, size)
++        def before(mod, args):
++            self._memory_pressure()
++            state = self.get_device_weights(key, size, lambda: self.reader.load(keys))
++            mapping = getattr(self, 'groups', {}).get(key, (None, {}))[1]
++            moved = []
++            try:
++                for source, value in state.items():
++                    target = mapping.get(source, source)
++                    set_module_tensor_to_device(self.model, target, self.device, value=value,
++                                                dtype=value.dtype)
++                    moved.append(target)
++                self._active_names[key] = moved
++            except BaseException:
++                for target in moved:
++                    set_module_tensor_to_device(self.model, target, 'meta')
++                raise
++            if key[0] == 'layer':
++                idx = self.group_names.index(name)
++                if idx + 1 < len(self.group_names):
++                    next_name = self.group_names[idx + 1]
++                    next_key = ('layer', next_name)
++                    next_keys = self.groups[next_key][0]
++                    self.prefetch_weights(next_key, self.reader.nbytes(next_keys),
++                                          lambda ks=next_keys: self.reader.load(ks))
++                    # Persistent routing frequencies are hints only. Actual routing
++                    # determines execution and wrong predictions never change output.
++                    for prefix, source in self.expert_sources.items():
++                        if source is not None and prefix.startswith(next_name + '.'):
++                            for expert, _ in self.routes.get(prefix, Counter()).most_common(self.ultra.expert_prediction):
++                                self.prefetch_weights(('expert', prefix, expert), source.size,
++                                                      lambda e=expert, s=source: s.load(e))
++        def after(mod, args, output):
++            for target in self._active_names.pop(key, []):
++                set_module_tensor_to_device(self.model, target, 'meta')
++            return output
++        self.hooks.append(module.register_forward_pre_hook(before))
++        self.hooks.append(module.register_forward_hook(after, always_call=True))
++
++    def _check_size(self, key, size):
++        if size > self.ultra.max_group_bytes:
++            raise MemoryError(f'{key}: {size:,} runtime weight bytes exceeds max_group_bytes='
++                              f'{self.ultra.max_group_bytes:,}; increase only after checking free memory')
++
++    def _memory_pressure(self):
++        self.stats['group_calls'] += 1
++        if self.stats['group_calls'] % self.ultra.memory_check_interval:
++            return
++        available = psutil.virtual_memory().available
++        if available < self.ultra.reserve_bytes:
++            shortage = self.ultra.reserve_bytes - available
++            self.cache.resize(max(0, self.cache.bytes - shortage))
++            self.device_cache.resize(max(0, self.device_cache.bytes - shortage))
++            self.stats['pressure_shrinks'] += 1
++
++    def get_weights(self, key, size, loader):
++        self._check_size(key, size)
++        value = self.cache.get(key)
++        if value is not None:
++            return value
++        value = self.prefetch.take(key)
++        if value is None:
++            start = time.perf_counter()
++            value = loader()
++            self.stats['sync_load_ns'] += int((time.perf_counter() - start) * 1e9)
++        self.cache.put(key, value)
++        return value
++
++    def prefetch_weights(self, key, size, loader):
++        if self.ultra.prefetch and not self.cache.contains(key) and not self.device_cache.contains(key):
++            return self.prefetch.submit(key, size, loader)
++        return False
++
++    def get_device_weights(self, key, size, loader):
++        if self.device.type == 'cpu':
++            return self.get_weights(key, size, loader)
++        state = self.device_cache.get(key)
++        if state is None:
++            host = self.get_weights(key, size, loader)
++            # Metal uses unified RAM, but PyTorch CPU/MPS storages are distinct.
++            # Keeping hot weights on MPS avoids repeating this real copy.
++            state = {k: v.to(self.device) for k, v in host.items()}
++            self.device_cache.put(key, state)
++            self.stats['device_transfer_bytes'] += sum(v.numel()*v.element_size() for v in state.values())
++        return state
++
++    def record_routes(self, prefix, selected):
++        counts = self.routes.setdefault(prefix, Counter())
++        counts.update(selected)
++        if sum(counts.values()) > 1_000_000:
++            self.routes[prefix] = Counter({e: max(1, v // 2) for e, v in counts.items()})
++        self.stats['expert_calls'] += len(selected)
++
++    def _load_route_profile(self):
++        try:
++            obj = json.loads(self.profile_path.read_text())
++            if obj.get('fingerprint') == self.checkpoint.fingerprint:
++                for prefix, counts in obj.get('routes', {}).items():
++                    source = self.expert_sources.get(prefix)
++                    if source is not None:
++                        self.routes[prefix] = Counter({int(e): int(v) for e, v in counts.items()
++                                                       if 0 <= int(e) < source.num_experts and int(v) > 0})
++        except (ValueError, TypeError, OSError):
++            pass
++
++    def metrics(self):
++        return {'runtime': dict(self.stats), 'checkpoint': dict(self.checkpoint.stats),
++                'cache': {**self.cache.stats, 'bytes': self.cache.bytes,
++                          'peak_bytes': self.cache.peak_bytes, 'capacity': self.cache.capacity},
++                'device_cache': {**self.device_cache.stats, 'bytes': self.device_cache.bytes,
++                                 'peak_bytes': self.device_cache.peak_bytes, 'capacity': self.device_cache.capacity},
++                'prefetch': {**self.prefetch.stats, 'bytes': self.prefetch.bytes,
++                             'peak_bytes': self.prefetch.peak_bytes, 'budget': self.prefetch.budget},
++                'expert_banks': len(self.expert_sources)}
++
++    @torch.inference_mode()
++    def generate(self, *args, **kwargs):
++        with self._lock:
++            if self.closed:
++                raise RuntimeError('Model is closed')
++            return self.model.generate(*args, **kwargs)
++
++    @torch.inference_mode()
++    def forward(self, *args, **kwargs):
++        with self._lock:
++            if self.closed:
++                raise RuntimeError('Model is closed')
++            return self.model(*args, **kwargs)
++
++    __call__ = forward
++
++    def close(self, save_profile=True):
++        with self._lock:
++            if self.closed:
++                return
++            try:
++                self.prefetch.close()
++                if save_profile and self.routes:
++                    atomic_json(self.profile_path, {'fingerprint': self.checkpoint.fingerprint,
++                                                    'routes': self.routes})
++            finally:
++                for hook in self.hooks:
++                    hook.remove()
++                self.hooks.clear()
++                self.cache.clear()
++                self.device_cache.clear()
++                self.checkpoint.close()
++                self.closed = True
++
++    def __enter__(self):
++        return self
++
++    def __exit__(self, *_):
++        self.close()
+diff --git a/air_llm/airllm/ultra/weights.py b/air_llm/airllm/ultra/weights.py
+new file mode 100644
+index 0000000..51ff241
+--- /dev/null
++++ b/air_llm/airllm/ultra/weights.py
+@@ -0,0 +1,65 @@
++"""Load one weight at a time, including block-scaled FP8 without native FP8 kernels."""
++import math
++import torch
++
++
++def dequantize_fp8(weight, scales, block_size, dtype):
++    if weight.ndim != 2 or len(block_size) != 2:
++        raise ValueError('Only two-dimensional block-scaled FP8 weights are supported')
++    rows, cols = weight.shape
++    br, bc = block_size
++    if br <= 0 or bc <= 0:
++        raise ValueError('Invalid FP8 block size')
++    expected = (math.ceil(rows / br), math.ceil(cols / bc))
++    if tuple(scales.shape) != expected:
++        raise ValueError(f'FP8 scale shape {tuple(scales.shape)} != {expected}')
++    out = torch.empty(weight.shape, dtype=dtype, device='cpu')
++    # Avoid a second full-size fp32 tensor and an expanded scale matrix.
++    for start in range(0, rows, br):
++        stop = min(start + br, rows)
++        scale_row = scales[start // br].float().repeat_interleave(bc)[:cols]
++        out[start:stop] = weight[start:stop].float() * scale_row
++    return out
++
++
++class WeightReader:
++    def __init__(self, checkpoint, dtype, quantization=None):
++        self.checkpoint = checkpoint
++        self.dtype = dtype
++        self.quantization = quantization or {}
++        method = self.quantization.get('quant_method')
++        if method not in (None, 'fp8'):
++            raise NotImplementedError(f'Ultra does not implement {method!r}; use the upstream backend')
++        self.block_size = self.quantization.get('weight_block_size', [128, 128])
++
++    @staticmethod
++    def is_scale(key):
++        return key.endswith(('.weight_scale_inv', '.weight_scale'))
++
++    def dtype_for(self, key):
++        # GLM's router correction bias and indexer head projection are explicitly
++        # retained in fp32 by its native Transformers implementation.
++        return torch.float32 if any(s in key for s in ('e_score_correction_bias',
++                                                       'indexer.weights_proj')) else self.dtype
++
++    def load(self, keys):
++        out = {}
++        for key in sorted(keys, key=lambda k: (self.checkpoint.tensors[k]['file'],
++                                               self.checkpoint.tensors[k]['offset'])):
++            if self.is_scale(key):
++                continue
++            raw_dtype = self.checkpoint.tensors[key]['dtype']
++            target_dtype = self.dtype_for(key)
++            if raw_dtype.startswith('F8_'):
++                # GLM/DeepSeek block FP8 stores the dequant multiplier as weight_scale_inv.
++                scale = key + '_scale_inv'
++                if self.quantization.get('quant_method') != 'fp8' or scale not in self.checkpoint.tensors:
++                    raise NotImplementedError(f'FP8 weight has no supported block scales: {key}')
++                values = self.checkpoint.read([key, scale], copy=False)
++                out[key] = dequantize_fp8(values[key], values[scale], self.block_size, target_dtype)
++            else:
++                out.update(self.checkpoint.read([key], copy=True, dtype=target_dtype))
++        return out
++
++    def nbytes(self, keys):
++        return sum(self.checkpoint.nbytes([k], self.dtype_for(k)) for k in keys if not self.is_scale(k))
+diff --git a/air_llm/pyproject.toml b/air_llm/pyproject.toml
+new file mode 100644
+index 0000000..cb60049
+--- /dev/null
++++ b/air_llm/pyproject.toml
+@@ -0,0 +1,3 @@
++[build-system]
++requires = ["setuptools>=77", "wheel"]
++build-backend = "setuptools.build_meta"
+diff --git a/air_llm/setup.py b/air_llm/setup.py
+index 692b8f2..95b6fe4 100644
+--- a/air_llm/setup.py
++++ b/air_llm/setup.py
+@@ -15,7 +15,7 @@ for _readme in (os.path.join(here, "README.md"), os.path.join(here, os.pardir, "
+ 
+ setuptools.setup(
+     name="airllm",
+-    version="4.0.0",
++    version="4.0.0+ultra.1",
+     author="Gavin Li",
+     author_email="gavinli@animaai.cloud",
+     description="AirLLM runs 70B large language models on a single 4GB GPU without quantization, "
+@@ -36,10 +36,17 @@ setuptools.setup(
+         'huggingface-hub',
+         'scipy',
+         'sentencepiece',
++        'psutil>=5.9',
+         # 'bitsandbytes' is optional (used only for --compression); we fall back gracefully when absent.
+         # 'compressed-tensors' is optional too: only checkpoints stored in that format (Kimi K3's
+         # MXFP4 weights) need it, and transformers raises a clear error naming it when it is missing.
+     ],
++    extras_require={
++        'ultra': ['transformers==5.20.2', 'safetensors>=0.8.0'],
++        'macos': ['mlx==0.32.4; sys_platform == "darwin" and platform_machine == "arm64"'],
++        'test': ['pytest>=8'],
++    },
++    entry_points={'console_scripts': ['airllm-ultra=airllm.ultra.cli:main']},
+     classifiers=[
+         "Programming Language :: Python :: 3",
+         "License :: OSI Approved :: Apache Software License",
+diff --git a/benchmarks/benchmark.py b/benchmarks/benchmark.py
+new file mode 100644
+index 0000000..10e03a8
+--- /dev/null
++++ b/benchmarks/benchmark.py
+@@ -0,0 +1,184 @@
++#!/usr/bin/env python3
++"""Reproducible real timings on deterministic small models, no remote downloads.
++
++Runs each engine in a fresh Python process, reports import and construction
++separately, saves per-token latencies/OS counters. NOT a giant-model projection.
++"""
++import argparse
++import contextlib
++import io
++import json
++import os
++from pathlib import Path
++import platform
++import statistics
++import subprocess
++import sys
++import tempfile
++import time
++
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'air_llm'))
++
++
++def os_counters():
++    try:
++        return {k: int(v) for k, v in (line.split(':', 1) for line in Path('/proc/self/io').read_text().splitlines())}
++    except (OSError, ValueError):
++        return {}
++
++
++def current_rss():
++    try:
++        for line in Path('/proc/self/status').read_text().splitlines():
++            if line.startswith('VmRSS:'):
++                return int(line.split()[1]) * 1024
++    except (OSError, ValueError):
++        pass
++    return None
++
++
++def worker(args):
++    start = time.perf_counter()
++    import psutil
++    import torch
++    torch.set_num_threads(args.threads)
++    # Both paths import the same public package, so import costs are comparable.
++    from airllm.airllm_base import AirLLMBaseModel
++    from airllm.ultra import AirLLMUltraModel, UltraConfig
++    imported = time.perf_counter()
++    before = os_counters()
++    construct_start = time.perf_counter()
++    with contextlib.redirect_stdout(sys.stderr):
++        if args.engine == 'upstream':
++            model = AirLLMBaseModel(args.model, device='cpu', dtype=torch.float32,
++                                    prefetching=True,
++                                    layer_shards_saving_path=args.split_dir)
++        else:
++            model = AirLLMUltraModel(args.model, device='cpu', dtype=torch.float32,
++                                     ultra=UltraConfig(cache_bytes=args.cache_mib * 1024**2,
++                                                       prefetch_bytes=4*1024**2, reserve_bytes=0,
++                                                       cache_dir=args.meta_dir, load_tokenizer=False))
++    constructed = time.perf_counter()
++    ids = torch.tensor([[1, 11, 12, 13, 14, 15, 16, 17]])
++    current, kv = ids, None
++    latencies, tokens = [], []
++    with torch.inference_mode():
++        for _ in range(args.tokens):
++            t = time.perf_counter()
++            out = model(current, use_cache=True, past_key_values=kv, logits_to_keep=1)
++            current = out.logits[:, -1].argmax(-1)[:, None]
++            tokens.append(current.item())
++            kv = out.past_key_values
++            latencies.append(time.perf_counter() - t)
++    after = os_counters()
++    result = {'engine': args.engine, 'cache_mib': args.cache_mib,
++              'import_seconds': imported-start, 'construction_seconds': constructed-construct_start,
++              'first_forward_seconds': latencies[0],
++              'ttft_from_worker_start_seconds': constructed-start+latencies[0],
++              'ttft_excluding_import_seconds': constructed-construct_start+latencies[0],
++              'decode_tokens_per_second': (len(latencies)-1)/sum(latencies[1:]),
++              'token_seconds': latencies, 'generated_token_ids': tokens,
++              'rss_after_bytes': current_rss(),
++              'os_read_bytes_delta': after.get('read_bytes', 0)-before.get('read_bytes', 0) if after and before else None,
++              'os_write_bytes_delta': after.get('write_bytes', 0)-before.get('write_bytes', 0) if after and before else None,
++              'torch': torch.__version__}
++    import resource
++    result['peak_rss_bytes'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if sys.platform == 'darwin' else 1024)
++    if args.engine == 'ultra':
++        result['metrics'] = model.metrics()
++        model.close()
++    if args.split_dir:
++        result['split_output_bytes'] = sum(p.stat().st_size for p in Path(args.split_dir).rglob('*') if p.is_file())
++    print(json.dumps(result))
++
++
++def create_model(path):
++    import torch
++    from transformers import LlamaConfig, LlamaForCausalLM, PreTrainedTokenizerFast
++    from tokenizers import Tokenizer
++    from tokenizers.models import WordLevel
++    torch.manual_seed(521)
++    cfg = LlamaConfig(vocab_size=512, hidden_size=256, intermediate_size=768,
++                       num_hidden_layers=4, num_attention_heads=8, num_key_value_heads=2,
++                       max_position_embeddings=512, bos_token_id=1, eos_token_id=2,
++                       pad_token_id=0, tie_word_embeddings=False)
++    model = LlamaForCausalLM(cfg).eval()
++    model.save_pretrained(path, max_shard_size='4MB')
++    tok = Tokenizer(WordLevel({'[UNK]': 0, 'hello': 1}, unk_token='[UNK]'))
++    PreTrainedTokenizerFast(tokenizer_object=tok, unk_token='[UNK]').save_pretrained(path)
++    return {'parameters': sum(p.numel() for p in model.parameters()),
++            'weight_bytes': sum(p.stat().st_size for p in Path(path).glob('*.safetensors')),
++            'config': cfg.to_dict(), 'weights': 'deterministic randomly initialized; not trained'}
++
++
++def main(args):
++    import torch
++    torch.set_num_threads(args.threads)
++    output = Path(args.output).resolve()
++    output.parent.mkdir(parents=True, exist_ok=True)
++    results = []
++    logs = []
++    with tempfile.TemporaryDirectory(prefix='airllm-bench-') as temp:
++        temp = Path(temp)
++        model_dir = temp / 'model'
++        info = create_model(model_dir)
++        env = dict(os.environ, OMP_NUM_THREADS=str(args.threads), MKL_NUM_THREADS=str(args.threads),
++                   TOKENIZERS_PARALLELISM='false', HF_HUB_OFFLINE='1')
++        # Stable engine-specific paths make all repeats reproducible. First use
++        # includes preprocessing; reused runs retain split files/manifests only.
++        specs = [('upstream_first', 'upstream', 0), ('upstream_reopen', 'upstream', 0),
++                 ('ultra_first_cache0', 'ultra', 0), ('ultra_reopen_cache0', 'ultra', 0),
++                 ('ultra_cache64', 'ultra', 64)]
++        for trial in range(args.repeats):
++            split = temp / f'split-{trial}'
++            meta = temp / f'meta-{trial}'
++            for label, engine, cache in specs:
++                cmd = [sys.executable, str(Path(__file__).resolve()), '--worker', '--engine', engine,
++                       '--model', str(model_dir), '--tokens', str(args.tokens),
++                       '--threads', str(args.threads), '--cache-mib', str(cache),
++                       '--meta-dir', str(meta), '--split-dir', str(split)]
++                proc = subprocess.run(cmd, env=env, text=True, capture_output=True, timeout=240)
++                logs.append({'label': label, 'trial': trial, 'stderr': proc.stderr, 'returncode': proc.returncode})
++                if proc.returncode:
++                    raise RuntimeError(f'{label} failed:\n{proc.stderr}\n{proc.stdout}')
++                row = json.loads(proc.stdout.strip().splitlines()[-1])
++                row.update(label=label, trial=trial)
++                results.append(row)
++                print(f'{label} trial={trial} construct={row["construction_seconds"]:.4f}s '
++                      f'TTFT={row["ttft_excluding_import_seconds"]:.4f}s '
++                      f'decode={row["decode_tokens_per_second"]:.2f}tok/s', flush=True)
++        assert all(r['generated_token_ids'] == results[0]['generated_token_ids'] for r in results)
++    summary = {}
++    for label, _, _ in specs:
++        rows = [r for r in results if r['label'] == label]
++        summary[label] = {k: statistics.median(r[k] for r in rows) if all(r[k] is not None for r in rows) else None
++                          for k in ('construction_seconds', 'ttft_excluding_import_seconds',
++                                    'ttft_from_worker_start_seconds', 'decode_tokens_per_second',
++                                    'peak_rss_bytes', 'os_write_bytes_delta')}
++    report = {'platform': platform.platform(), 'python': sys.version, 'threads': args.threads,
++              'repeats': args.repeats, 'new_tokens_per_run': args.tokens,
++              'model': info, 'all_generated_sequences_match': True,
++              'limitations': ['Small synthetic dense Llama model on CPU; not representative giant-model tok/s.',
++                              'No OS page-cache flush: fresh processes are not cold physical disk runs.',
++                              'OS I/O counters differ from logical bytes and can be zero on warm cache.',
++                              'Baseline uses the untouched v4.0.0 AirLLMBaseModel path, same dependencies.'],
++              'summary_medians': summary, 'runs': results}
++    output.write_text(json.dumps(report, indent=2) + '\n')
++    output.with_suffix('.logs.json').write_text(json.dumps(logs, indent=2) + '\n')
++
++
++if __name__ == '__main__':
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--output', default=str(ROOT / 'benchmarks/results-cpu.json'))
++    p.add_argument('--repeats', type=int, default=3)
++    p.add_argument('--tokens', type=int, default=8)
++    p.add_argument('--threads', type=int, default=1)
++    p.add_argument('--worker', action='store_true')
++    p.add_argument('--engine', choices=['upstream', 'ultra'])
++    p.add_argument('--model')
++    p.add_argument('--cache-mib', type=int, default=0)
++    p.add_argument('--meta-dir')
++    p.add_argument('--split-dir')
++    a = p.parse_args()
++    worker(a) if a.worker else main(a)
+diff --git a/benchmarks/benchmark_experts.py b/benchmarks/benchmark_experts.py
+new file mode 100644
+index 0000000..fd1cef2
+--- /dev/null
++++ b/benchmarks/benchmark_experts.py
+@@ -0,0 +1,66 @@
++#!/usr/bin/env python3
++"""Measure actual whole-bank vs selected-slice reads on a local 48 MiB MoE bank."""
++import json
++from pathlib import Path
++import platform
++import statistics
++import sys
++import tempfile
++import time
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'air_llm'))
++import torch
++from safetensors.torch import save_file
++from airllm.ultra.checkpoint import DirectCheckpoint
++from airllm.ultra.cache import AdaptiveCache
++
++
++def main():
++    torch.set_num_threads(1)
++    torch.manual_seed(521)
++    experts, hidden, intermediate = 128, 128, 256
++    with tempfile.TemporaryDirectory(prefix='airllm-experts-') as d:
++        d = Path(d)
++        tensors = {'experts.gate_up_proj': torch.randn(experts, 2*intermediate, hidden),
++                   'experts.down_proj': torch.randn(experts, hidden, intermediate)}
++        save_file(tensors, d / 'model.safetensors')
++        selected = (3, 7, 11, 23, 31, 43, 59, 83)
++        expected = sum(float(tensors['experts.down_proj'][e].sum()) for e in selected)
++        del tensors
++        cases = []
++        for mode in ['full_bank', 'selected', 'selected_cached']:
++            with DirectCheckpoint(d, max_open_files=2) as cp:
++                cache = AdaptiveCache(4*1024**2)
++                times = []
++                for repeat in range(8):
++                    start = time.perf_counter()
++                    check = 0.0
++                    if mode == 'full_bank':
++                        w = cp.read(cp.keys(), copy=True)
++                        check = sum(float(w['experts.down_proj'][e].sum()) for e in selected)
++                        del w
++                    else:
++                        for e in selected:
++                            w = cache.get(e) if mode == 'selected_cached' else None
++                            if w is None:
++                                w = {k: cp.read_expert_slice(k, e, torch.float32) for k in cp.keys()}
++                                if mode == 'selected_cached':
++                                    cache.put(e, w)
++                            check += float(w['experts.down_proj'].sum())
++                            del w
++                    assert abs(check - expected) < 1e-6
++                    times.append(time.perf_counter()-start)
++                cases.append({'mode': mode, 'seconds': times,
++                              'median_seconds': statistics.median(times),
++                              'checkpoint_counters': dict(cp.stats), 'cache_counters': dict(cache.stats),
++                              'cache_peak_bytes': cache.peak_bytes})
++    report = {'platform': platform.platform(), 'experts': experts, 'active': len(selected),
++              'shape': {'hidden': hidden, 'intermediate': intermediate}, 'repeats': 8,
++              'all_checksums_match': True, 'runs': cases,
++              'limitations': 'Real CPU tensor loads on a warm host filesystem; no SSD/Metal/GLM-5.3 timing.'}
++    out = Path(__file__).with_name('results-experts.json')
++    out.write_text(json.dumps(report, indent=2)+'\n')
++    print(json.dumps(report, indent=2))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/benchmarks/validate_pretrained.py b/benchmarks/validate_pretrained.py
+new file mode 100644
+index 0000000..02ef0d9
+--- /dev/null
++++ b/benchmarks/validate_pretrained.py
+@@ -0,0 +1,73 @@
++#!/usr/bin/env python3
++"""Optional trained-model check. Download is explicit and bounded to ~270 MB.
++
++The distributed archive contains no model weights. Metadata pins the reference
++model revision; local directories can be checked without any network access.
++"""
++import argparse
++import json
++from pathlib import Path
++import sys
++import time
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'air_llm'))
++
++
++def main():
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--model-dir')
++    p.add_argument('--download-dir')
++    p.add_argument('--metadata', default='evidence/trained-model-metadata.json')
++    p.add_argument('--output', default='benchmarks/results-pretrained.json')
++    args = p.parse_args()
++    import torch
++    from transformers import AutoModelForCausalLM, AutoTokenizer
++    from airllm.ultra import AirLLMUltraModel, UltraConfig
++    torch.set_num_threads(1)
++    metadata = json.loads(Path(args.metadata).read_text())
++    if args.model_dir:
++        root = Path(args.model_dir)
++    elif args.download_dir:
++        from huggingface_hub import snapshot_download
++        selected = [f for f in metadata['files'] if f['name'].endswith(('.json', '.txt', '.model', '.safetensors'))]
++        if sum(f['bytes'] or 0 for f in selected) > 350_000_000:
++            raise ValueError('Refusing a download larger than 350 MB')
++        root = Path(snapshot_download(metadata['model_id'], revision=metadata['revision'],
++                                      local_dir=args.download_dir, allow_patterns=[f['name'] for f in selected]))
++    else:
++        p.error('Pass --model-dir for local validation or --download-dir for explicit download')
++    tok = AutoTokenizer.from_pretrained(root, local_files_only=True)
++    text = tok.apply_chat_template([{'role': 'user', 'content': 'What is the capital of France?'}],
++                                  tokenize=False, add_generation_prompt=True)
++    ids = tok(text, return_tensors='pt')['input_ids']
++    with torch.inference_mode():
++        ref = AutoModelForCausalLM.from_pretrained(root, local_files_only=True, dtype=torch.float32).eval()
++        expected = ref(ids, use_cache=False, logits_to_keep=1).logits
++        expected_ids = ref.generate(ids, max_new_tokens=8, do_sample=False)
++        del ref
++        start = time.perf_counter()
++        cfg = UltraConfig(cache_bytes=128*1024**2, device_cache_bytes=0, prefetch_bytes=32*1024**2,
++                          max_group_bytes=256*1024**2, reserve_bytes=0,
++                          cache_dir=str(root / '.ultra-metadata'), load_tokenizer=False)
++        with AirLLMUltraModel(root, device='cpu', dtype=torch.float32, ultra=cfg) as model:
++            construction = time.perf_counter()-start
++            begin = time.perf_counter()
++            actual = model(ids, use_cache=False, logits_to_keep=1).logits
++            forward_seconds = time.perf_counter()-begin
++            torch.testing.assert_close(actual, expected, rtol=5e-5, atol=5e-6)
++            actual_ids = model.generate(ids, max_new_tokens=8, do_sample=False)
++            assert torch.equal(actual_ids, expected_ids)
++            result = {'model_id': metadata['model_id'], 'revision': metadata['revision'],
++                      'torch': torch.__version__, 'device': 'cpu', 'dtype': 'float32',
++                      'max_absolute_logit_difference': (actual-expected).abs().max().item(),
++                      'generated_token_ids_match_reference': True,
++                      'output': tok.decode(actual_ids[0][ids.shape[1]:], skip_special_tokens=True),
++                      'input_tokens': ids.shape[1], 'new_tokens': actual_ids.shape[1]-ids.shape[1],
++                      'construction_seconds': construction, 'first_forward_seconds': forward_seconds,
++                      'metrics': model.metrics(),
++                      'limitation': 'One small trained Llama-family model on CPU; not a GLM-5.3/M5 validation.'}
++    Path(args.output).write_text(json.dumps(result, indent=2)+'\n')
++    print(json.dumps(result, indent=2))
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+new file mode 100644
+index 0000000..0fbfa54
+--- /dev/null
++++ b/docs/ARCHITECTURE.md
+@@ -0,0 +1,76 @@
++# Moteur et choix d'implémentation
++
++`AutoModel.from_pretrained(..., ultra=UltraConfig(...))` active `AirLLMUltraModel`.
++Les autres appels empruntent le chemin stable conservé. Le modèle Transformers
++réel gère l'attention, RoPE, le routage et son cache KV ; le nouveau moteur gère
++la résidence des poids. Aucun appel à une API d'inférence distante n'est effectué.
++
++## Stockage
++
++`DirectCheckpoint` lit l'index et les en-têtes safetensors pour connaître les
++fichiers, formes, types et offsets. Le manifeste persistant dépend du chemin
++résolu, de l'index, des tailles et des dates de modification des fichiers. Une
++modification invalide ce manifeste. Cette validation n'est pas un hachage intégral
++des centaines de gigaoctets de poids et ne protège pas contre un remplacement
++conservant artificiellement taille et date.
++
++Un LRU limite les handles de fichiers, avec verrou pour partager les mappings
++entre le calcul et le worker. Les valeurs mises en cache sont matérialisées,
++pas seulement mappées : un préchargement doit réellement lire les pages.
++Les compteurs `logical_bytes` comptent le payload demandé, pas les lectures
++physiques du SSD, qui peuvent différer à cause des pages et caches système.
++
++## Résidence
++
++Le modèle est construit dans un contexte de périphérique `meta`, avant même
++la création des `Parameter`. Les petits buffers RoPE calculés sont reconstruits
++hors de ce contexte. Les buffers persistants, dont le biais de routage GLM,
++chargent leurs valeurs réelles depuis le checkpoint.
++
++Des hooks chargent les embeddings, les couches hors experts, la norme finale et
++la tête. Ils ne gardent pas l'embedding entier résident même si ses poids sont
++liés à la tête. Les banques MoE 3D sont remplacées par un exécuteur qui reçoit les
++indices et probabilités déjà calculés par le vrai routeur. Il applique les mêmes
++projections, activation et accumulation que l'implémentation eager de référence.
++
++Les checkpoints par expert (GLM/ancien Mixtral) et les tenseurs 3D sont reconnus
++explicitement ; les formats inconnus échouent sans annoncer un support générique.
++Le premier axe des tenseurs 3D est découpé avec `safe_open.get_slice`, sans lecture
++de toute la banque. Les poids FP8 2D accompagnés de `weight_scale_inv` utilisent
++une déquantification par rangées de blocs. Les banques 3D FP8 et les formats
++GPTQ/AWQ/MXFP4 ne sont pas implémentés dans le nouveau moteur.
++
++## Cache et préchargement
++
++Le cache hôte sépare les entrées nouvelles et réutilisées. Les scans remplacent
++d'abord les entrées nouvelles pour protéger des experts fréquemment rappelés.
++Un cache distinct conserve éventuellement des poids MPS/CUDA déjà transférés.
++Sur Apple Silicon, ces deux caches partagent la RAM physique avec tout le système.
++
++Un seul worker favorise les lectures séquentielles du SSD. Les réservations
++bornent le payload conservé dans les futures ; les prédictions terminées peuvent
++être écartées. Une erreur du worker remonte au demandeur. Les prédictions ne
++changent jamais la sélection des experts, uniquement leur disponibilité anticipée.
++Les fréquences persistent après fermeture ; les poids mis en cache en RAM et le
++cache KV ne sont pas sérialisés entre processus. Le cache disque du système peut
++survivre à une session, sans garantie de résidence.
++
++## MLX
++
++Le backend `mlx-ultra` exécute un décodeur Llama simple directement en MLX : RMSNorm,
++RoPE, attention groupée et projections sur Metal. Il lit les régions de poids
++à partir de leurs offsets et utilise un stream CPU pour matérialiser les lectures
++anticipées. Les sorties et le cache KV sont évalués avant de libérer les poids
++d'une couche pour ne pas retenir tout le modèle dans un graphe paresseux.
++
++Il est volontairement limité aux configurations implémentées. GLM reste sur
++le chemin Transformers, qui possède déjà son attention DSA et ses règles de cache.
++La présence du code MLX n'est pas une validation sur un GPU Apple.
++
++## Limites opérationnelles
++
++Ce moteur traite une requête à la fois par instance et vise l'inférence seulement.
++Le cache KV et les activations restent en RAM ; les contextes très longs sont
++inadaptés aux 16 Go cibles. Une taille maximale par groupe de poids empêche les
++allocations individuelles trop grandes, mais ne borne pas la RAM totale. Le
++backend de référence demeure nécessaire pour les modèles et formats non pris en charge.
+diff --git a/docs/VALIDATION.md b/docs/VALIDATION.md
+new file mode 100644
+index 0000000..6fa91b5
+--- /dev/null
++++ b/docs/VALIDATION.md
+@@ -0,0 +1,188 @@
++# Validation réelle et reprise sur Mac M5
++
++Rapport du 22 octobre 2026. Base stable : AirLLM v4.0.0,
++`ff35db207a0c559af9aa95d686057c3fe84f1d40`.
++
++## Périmètre exécuté
++
++Linux x86-64, Python 3.12.14, PyTorch 2.14.1+cpu, Transformers 5.20.2,
++safetensors 0.8.0, un thread CPU pour les benchmarks. L'environnement dispose
++d'environ 9,73 Gio de RAM totale. Ni GPU CUDA, ni MPS, ni MLX matériel disponible.
++Le fichier `evidence/environment.json` contient la détection réelle.
++
++| Suite | Réussis | Ignorés | Échecs |
++| --- | ---: | ---: | ---: |
++| Nouveau moteur (`tests_ultra`) | 34 | 4 | 0 |
++| Tests existants AirLLM sélectionnés | 44 | 0 | 0 |
++
++Les quatre tests matériels ignorés couvrent MLX natif et MPS pour Llama, Mixtral,
++GLM-MoE-DSA. Les autres tests vérifient notamment les logits, la génération et le
++cache KV ; les poids liés ; les formats MoE individuels et 3D ; le checkpoint FP8 ;
++les limites de cache et de préchargement ; la réutilisation/invalidation du manifeste ;
++les erreurs de calcul/E/S ; la fermeture ; les requêtes concurrentes sérialisées ;
++la construction des banques sur meta et les biais de routage persistants.
++
++Les 44 tests d'origine concernent découpage Kimi K3, Qwen3.8 et Flash-Next,
++données LoRA, composants et gradients LoRA. Les tests CUDA/bitsandbytes et les
++anciens tests qui téléchargent des modèles distants ne font pas partie de cette
++validation. Aucun résultat GPU d'origine n'est revendiqué ici.
++
++## Démarrage et génération mesurés
++
++**Petit Llama synthétique de 3,279,104 paramètres**, poids float32
++de 13,120,640 octets, quatre couches, huit tokens générés.
++Trois essais par configuration dans des processus Python neufs. Même version de
++dépendances et même squelette de modèle. Toutes les séquences produites sont identiques.
++
++| Chemin | Construction (s) | Premier token hors import Python (s) | Premier token depuis début du worker (s) | Décodage (tokens/s) |
++| --- | ---: | ---: | ---: | ---: |
++| AirLLM stable, premier découpage | 1.586 | 2.883 | 6.211 | 0.72 |
++| AirLLM stable, fichiers découpés réutilisés | 0.347 | 1.795 | 5.121 | 0.71 |
++| Ultra, premier manifeste, cache hôte désactivé | 0.329 | 0.343 | 3.535 | 112.37 |
++| Ultra, manifeste réutilisé, cache hôte désactivé | 0.329 | 0.341 | 3.645 | 103.92 |
++| Ultra, cache hôte 64 Mio | 0.401 | 0.414 | 3.910 | 180.08 |
++
++Valeurs médianes. Le temps depuis le début du worker inclut les imports Python
++mesurés dans le worker, pas le coût initial de lancement de l'interpréteur par le
++processus parent. Le benchmark ne purge pas le cache de pages du système :
++« premier » signifie sans fichiers de préparation propres au moteur, pas SSD
++physiquement froid. Le chemin stable est le `AirLLMBaseModel` d'origine, non modifié.
++
++Le gain important sur ce petit modèle vient notamment de la suppression des
++collectes globales et vidages d'allocateur par couche. Quand le modèle tient dans
++64 Mio de cache, le test favorise aussi la réutilisation de tous ses poids.
++**Ces tokens/s ne décrivent ni un modèle géant ni le Mac M5.**
++
++Les mesures brutes comprennent les latences par token, les séquences, compteurs
++logiques et OS, RSS après exécution et RSS maximale. La RAM maximale est légèrement
++plus élevée pour Ultra sur ce test : environ 450 Mio contre 431 Mio pour le chemin
++stable ; ce n'est pas un gain universel de mémoire. Le nouveau moteur vise à éviter
++la résidence du modèle complet, pas à minimiser le coût fixe de Python/PyTorch.
++
++Reproduire : `python benchmarks/benchmark.py --repeats 3 --tokens 8`.
++
++## Lectures sélectives des experts
++
++Vraie banque locale de 128 experts, 48 Mio de poids float32, huit experts consultés
++à chaque passage. Huit passages, comparaison des sommes numériques pour détecter
++une lecture incorrecte. Le jeu de routage est fixe et volontairement favorable au cache.
++
++| Mode | Temps médian par passage (ms) | Payload logique cumulé sur huit passages (Mio) |
++| --- | ---: | ---: |
++| full_bank | 15.098 | 384 |
++| selected | 0.843 | 24 |
++| selected_cached | 0.043 | 3 |
++
++La sélection seule divise ici le payload par 16 ; le cache réutilise ensuite les
++3 Mio nécessaires à ces huit experts. Les temps sont ceux de lectures et copies
++CPU sur un système déjà chaud, pas d'inférence complète ou de SSD externe.
++
++Reproduire : `python benchmarks/benchmark_experts.py`.
++
++## Vérification d'un petit modèle entraîné
++
++Modèle entraîné **HuggingFaceTB/SmolLM2-135M-Instruct**, révision `12fd25f77366fa6b3b4b768ec3050bf629380bac`, testé sur CPU en float32. Écart absolu maximal des logits : **0**. Les **8 tokens générés** correspondent à la référence.
++
++Sortie observée : « The capital of France is Paris. ».
++
++Reproduction locale :
++
++```bash
++python benchmarks/validate_pretrained.py --model-dir /chemin/SmolLM2-135M-Instruct
++```
++
++Téléchargement explicite de la révision utilisée (~270 Mo de poids) :
++
++```bash
++python benchmarks/validate_pretrained.py --download-dir /chemin/test-smollm2
++```
++
++
++Les poids du modèle de contrôle ne sont pas inclus dans l'archive. Le résultat
++établit le fonctionnement sur ce petit modèle, pas une qualité de réponse générale.
++
++## GLM 5.3 : vérification structurelle réelle
++
++Configuration et index officiels téléchargés, empreintes conservées dans
++`evidence/glm-5.3-layout-audit.json`. Architecture `GlmMoeDsaForCausalLM`,
++78 couches ; 256 experts par couche sparse, 8 experts choisis par token ; FP8
++par blocs 128 × 128. L'index contient 118,629 entrées,
++141 fichiers et 755,617,140,416 octets.
++
++Le graphe principal a réellement été construit sur meta :
++743,377,000,704 paramètres, sans allouer les banques sur CPU.
++Tous les paramètres et buffers persistants du graphe ont trouvé leurs clés dans
++l'index ; les compagnons d'échelle attendus des experts sont présents. Le graphe
++principal n'utilise pas le prédicteur MTP supplémentaire contenu dans le checkpoint.
++
++Le petit GLM-MoE-DSA et son checkpoint FP8 vérifient l'exécution. **Aucune inférence
++du GLM 5.3 complet n'a été effectuée.** L'ensemble des poids n'a pas été téléchargé.
++Les kernels et capacités mémoire MPS doivent être vérifiés sur le Mac. MLX natif
++ne prend pas en charge cette architecture dans cette livraison.
++
++Reproduire l'audit sans poids : `python scripts/audit_glm_metadata.py`.
++
++## SSD externe et protocole M5
++
++1. Extraire l'archive sur le Mac et installer avec `scripts/setup_macos.sh`.
++   L'installation télécharge les frameworks binaires ; Python 3.12 ou 3.13 est requis.
++2. Exécuter `scripts/validate_macos.sh`. Les quatre tests matériels doivent
++   s'exécuter et réussir. S'ils échouent, conserver les rapports avant de poursuivre.
++3. Mesurer le vrai volume, sans toucher aux fichiers existants :
++
++   ```bash
++   .venv-macos/bin/python -m airllm.ultra.cli doctor --directory '/Volumes/VOTRE_SSD'
++   .venv-macos/bin/python -m airllm.ultra.cli io-bench \
++     --directory '/Volumes/VOTRE_SSD' --size-mib 256 --repeats 3
++   ```
++
++   Le benchmark crée puis supprime uniquement son propre fichier temporaire.
++   Le rapport indique le mode de cache utilisé ; même `F_NOCACHE` ne garantit pas
++   un contrôleur SSD froid. Le test `results-host-io.json` de cette livraison mesure
++   le volume éphémère Linux, dont le matériel n'est pas identifié, pas le futur SSD.
++4. Exécuter un petit modèle entraîné sur MPS, comparer sa sortie au CPU, et garder
++   les métriques. Tester séparément `mlx-ultra` sur un Llama admissible, si souhaité.
++5. Placer le checkpoint géant complet sur le SSD, conserver ses fichiers d'origine,
++   vérifier le répertoire avec `python -m airllm.ultra.cli audit --model /chemin`.
++   Aucun découpage supplémentaire n'est nécessaire pour Ultra.
++6. Commencer GLM avec un contexte court (128 à 256 tokens) et 1 à 8 nouveaux tokens,
++   observer la pression mémoire macOS, puis mesurer les performances soutenues.
++   Le MacBook Air est sans ventilateur : une mesure courte ne couvre pas la tenue
++   thermique d'une longue génération.
++
++Exemple de premier essai GLM, **après** les validations précédentes :
++
++```bash
++./scripts/launch_macos.sh \
++  --model '/Volumes/VOTRE_SSD/modeles/GLM-5.3' \
++  --device mps --dtype bfloat16 --max-context 256 --max-new-tokens 8 \
++  --cache-mib 512 --device-cache-mib 256 --prefetch-mib 256 \
++  --metrics validation-local/glm-premier-essai.json
++```
++
++Sans réutilisation d'experts, les seules matrices FP8 sélectionnées représentent
++3 × 6144 × 2048 × 8 × 75 = **22 649 241 600 octets par token**. Les échelles,
++l'attention et les couches denses s'ajoutent ; le cache peut retrancher une partie
++des lectures. C'est une borne de volume sous ces hypothèses, pas une prévision de
++temps. Le logiciel ne peut supprimer le coût des octets réellement nécessaires.
++
++## Reprise du développement
++
++Le source complet, patch depuis le tag stable, dépendances, wheel et sdist sont
++inclus. Les scripts de test recréent leurs petits checkpoints. Le chemin d'origine
++est conservé pour les autres modèles et l'entraînement ; le nouveau moteur refuse
++les formats non implémentés plutôt que de les charger approximativement.
++
++Priorités après les mesures Mac : corriger d'éventuels écarts MPS/MLX révélés par
++les tests, mesurer séparément lecture/déquantification/calcul/transferts sur le
++vrai SSD, ajuster les budgets à la RAM disponible, puis envisager des kernels
++quantifiés natifs pour le format réellement utilisé. Le MTP de GLM, la quantification
++4 bits et l'offload du cache KV ne sont pas implémentés dans ce moteur.
++
++## Sources primaires
++
++- [Sources AirLLM et tag stable](https://github.com/lyogavin/airllm/releases/tag/v4.0.0)
++- [Configuration officielle GLM 5.3](https://huggingface.co/zai-org/GLM-5.3/blob/main/config.json)
++- [Index officiel GLM 5.3](https://huggingface.co/zai-org/GLM-5.3/blob/main/model.safetensors.index.json)
++- [Implémentation native GLM-MoE-DSA](https://github.com/huggingface/transformers/tree/v5.20.2/src/transformers/models/glm_moe_dsa)
++- [MLX : attention native](https://ml-explore.github.io/mlx/build/html/python/_autosummary/mlx.core.fast.scaled_dot_product_attention.html)
+diff --git a/requirements-linux-tested.txt b/requirements-linux-tested.txt
+new file mode 100644
+index 0000000..c1fe77c
+--- /dev/null
++++ b/requirements-linux-tested.txt
+@@ -0,0 +1,49 @@
++accelerate==1.15.0
++annotated-doc==0.0.5
++anyio==4.15.1
++build==1.6.1
++certifi==2026.10.19
++charset-normalizer==3.5.2
++click==8.5.0
++filelock==3.32.3
++fsspec==2026.7.0
++h11==0.16.0
++hf-xet==1.7.0
++httpcore2==2.16.0
++httpx2==2.16.0
++huggingface_hub==2.2.0
++idna==3.20
++iniconfig==2.3.1
++Jinja2==3.1.6
++markdown-it-py==4.2.0
++MarkupSafe==3.0.3
++mdurl==0.1.2
++mpmath==1.3.0
++networkx==3.6.1
++numpy==2.5.4
++packaging==26.3
++pluggy==1.7.0
++psutil==7.2.2
++Pygments==2.21.0
++pyproject_hooks==1.3.3
++pytest==9.1.1
++PyYAML==6.0.3
++regex==2026.9.29
++requests==2.34.2
++rich==15.0.0
++safetensors==0.8.0
++scipy==1.18.1
++sentencepiece==0.2.2
++setuptools==78.1.0
++shellingham==1.5.4
++socksio==1.0.0
++sympy==1.14.0
++tokenizers==0.23.3
++torch==2.14.1+cpu
++tqdm==4.70.1
++transformers==5.20.2
++truststore==0.10.5
++typer==0.27.3
++typing_extensions==4.16.0
++urllib3==2.8.0
++wheel==0.48.0
+diff --git a/requirements-macos.txt b/requirements-macos.txt
+new file mode 100644
+index 0000000..263edd7
+--- /dev/null
++++ b/requirements-macos.txt
+@@ -0,0 +1,13 @@
++# Direct dependencies. Hardware validation on the target M5 remains required.
++torch==2.14.1
++transformers==5.20.2
++accelerate==1.15.0
++safetensors==0.8.0
++huggingface-hub==2.2.0
++numpy==2.5.4
++scipy==1.18.1
++sentencepiece==0.2.2
++psutil==7.2.2
++tqdm==4.70.1
++pytest==9.1.1
++mlx==0.32.4
+diff --git a/scripts/audit_glm_metadata.py b/scripts/audit_glm_metadata.py
+new file mode 100644
+index 0000000..96f4bc6
+--- /dev/null
++++ b/scripts/audit_glm_metadata.py
+@@ -0,0 +1,77 @@
++#!/usr/bin/env python3
++"""Verify the real GLM-5.3 config/index against a native meta model, no weights."""
++import argparse
++from collections import Counter
++from hashlib import sha256
++import json
++from pathlib import Path
++import sys
++import tempfile
++
++
++def main():
++    p = argparse.ArgumentParser(description=__doc__)
++    p.add_argument('--config', default='evidence/glm-5.3.config.json')
++    p.add_argument('--index', default='evidence/glm-5.3.index.json')
++    p.add_argument('--output', default='evidence/glm-5.3-layout-audit.json')
++    args = p.parse_args()
++    import torch
++    import transformers
++    from transformers import AutoConfig, AutoModelForCausalLM
++    from accelerate import init_empty_weights
++    raw = Path(args.config).read_bytes()
++    idxraw = Path(args.index).read_bytes()
++    config_dict = json.loads(raw)
++    index = json.loads(idxraw)
++    keys = set(index['weight_map'])
++    missing = []
++    mappings = []
++    with tempfile.TemporaryDirectory() as d:
++        (Path(d) / 'config.json').write_bytes(raw)
++        cfg = AutoConfig.from_pretrained(d, local_files_only=True, trust_remote_code=False)
++        cfg._experts_implementation = 'eager'
++        with torch.device('meta'), init_empty_weights(include_buffers=False):
++            model = AutoModelForCausalLM.from_config(cfg, trust_remote_code=False,
++                                                     attn_implementation='sdpa', dtype=torch.bfloat16)
++        count = sum(p.numel() for p in model.parameters())
++        for name, parameter in model.state_dict(keep_vars=True).items():
++            if name.endswith('.experts.gate_up_proj') or name.endswith('.experts.down_proj'):
++                prefix, attr = name.rsplit('.', 1)
++                targets = ('gate_proj', 'up_proj') if attr == 'gate_up_proj' else ('down_proj',)
++                expected = [f'{prefix}.{e}.{target}.weight' for e in range(cfg.n_routed_experts)
++                            for target in targets]
++                missing.extend(k for k in expected if k not in keys)
++                mappings.append({'native': name, 'checkpoint_tensors': len(expected),
++                                 'native_shape': list(parameter.shape)})
++            elif name not in keys:
++                missing.append(name)
++        expert_keys = [k for k in keys if '.mlp.experts.' in k]
++        quant = config_dict['quantization_config']
++        fp8_experts = [k for k in expert_keys if k.endswith('.weight')]
++        scales_missing = [k + '_scale_inv' for k in fp8_experts if k + '_scale_inv' not in keys]
++    report = {'config_url': 'https://huggingface.co/zai-org/GLM-5.3/resolve/main/config.json',
++              'index_url': 'https://huggingface.co/zai-org/GLM-5.3/resolve/main/model.safetensors.index.json',
++              'retrieved_utc_date': '2026-10-22', 'config_sha256': sha256(raw).hexdigest(),
++              'index_sha256': sha256(idxraw).hexdigest(), 'transformers': transformers.__version__,
++              'architecture': cfg.architectures, 'native_meta_model_parameters': count,
++              'native_meta_model_created': True, 'layers': cfg.num_hidden_layers,
++              'experts_per_sparse_layer': cfg.n_routed_experts,
++              'selected_experts_per_token': cfg.num_experts_per_tok,
++              'checkpoint_bytes': index['metadata']['total_size'],
++              'checkpoint_tensor_entries': len(keys),
++              'checkpoint_files': len(set(index['weight_map'].values())),
++              'fp8_expert_weights_with_scale': len(fp8_experts)-len(scales_missing),
++              'missing_model_keys': missing, 'missing_expert_scale_keys': scales_missing,
++              'packed_to_individual_mappings': mappings,
++              'quantization': {k: quant.get(k) for k in ('quant_method','weight_block_size','fmt','activation_scheme')},
++              'full_weights_downloaded': False, 'full_model_inference_tested': False,
++              'm5_mps_or_mlx_tested': False,
++              'conclusion': 'Native config/meta skeleton and tensor-name layout verified; no full-weight or hardware validation.'}
++    Path(args.output).write_text(json.dumps(report, indent=2)+'\n')
++    print(json.dumps({k: v for k, v in report.items() if k != 'packed_to_individual_mappings'}, indent=2))
++    if missing or scales_missing:
++        raise SystemExit('Official layout has unresolved keys; support is incomplete')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/scripts/build_validation_report.py b/scripts/build_validation_report.py
+new file mode 100644
+index 0000000..70b710b
+--- /dev/null
++++ b/scripts/build_validation_report.py
+@@ -0,0 +1,221 @@
++#!/usr/bin/env python3
++"""Regenerate the human-readable report from saved measurements, no new claims."""
++import json
++from pathlib import Path
++import xml.etree.ElementTree as ET
++
++root = Path(__file__).resolve().parents[1]
++cpu = json.loads((root / 'benchmarks/results-cpu.json').read_text())
++expert = json.loads((root / 'benchmarks/results-experts.json').read_text())
++glm = json.loads((root / 'evidence/glm-5.3-layout-audit.json').read_text())
++
++
++def count(path):
++    tree = ET.parse(path)
++    cases = tree.findall('.//testcase')
++    skipped = sum(c.find('skipped') is not None for c in cases)
++    failed = sum(c.find('failure') is not None or c.find('error') is not None for c in cases)
++    return len(cases)-skipped-failed, skipped, failed
++
++
++new = count(root / 'evidence/tests-ultra.xml')
++old = count(root / 'evidence/tests-upstream.xml')
++summaries = cpu['summary_medians']
++labels = {'upstream_first': 'AirLLM stable, premier découpage',
++          'upstream_reopen': 'AirLLM stable, fichiers découpés réutilisés',
++          'ultra_first_cache0': 'Ultra, premier manifeste, cache hôte désactivé',
++          'ultra_reopen_cache0': 'Ultra, manifeste réutilisé, cache hôte désactivé',
++          'ultra_cache64': 'Ultra, cache hôte 64 Mio'}
++rows = '\n'.join(f'| {labels[label]} | {s["construction_seconds"]:.3f} | '
++                 f'{s["ttft_excluding_import_seconds"]:.3f} | '
++                 f'{s["ttft_from_worker_start_seconds"]:.3f} | '
++                 f'{s["decode_tokens_per_second"]:.2f} |'
++                 for label, s in summaries.items())
++expert_rows = '\n'.join(f'| {r["mode"]} | {r["median_seconds"]*1000:.3f} | '
++                        f'{r["checkpoint_counters"]["logical_bytes"]/1024**2:.0f} |'
++                        for r in expert['runs'])
++trained_path = root / 'benchmarks/results-pretrained.json'
++if trained_path.exists():
++    trained = json.loads(trained_path.read_text())
++    trained_text = (f'Modèle entraîné **{trained["model_id"]}**, révision '
++                    f'`{trained["revision"]}`, testé sur CPU en float32. '
++                    f'Écart absolu maximal des logits : **{trained["max_absolute_logit_difference"]:.8g}**. '
++                    f'Les **{trained["new_tokens"]} tokens générés** correspondent à la référence.\n\n'
++                    f'Sortie observée : « {trained["output"].strip()} ».\n\n'
++                    'Reproduction locale :\n\n```bash\n'
++                    'python benchmarks/validate_pretrained.py --model-dir /chemin/SmolLM2-135M-Instruct\n```\n\n'
++                    'Téléchargement explicite de la révision utilisée (~270 Mo de poids) :\n\n```bash\n'
++                    'python benchmarks/validate_pretrained.py --download-dir /chemin/test-smollm2\n```\n')
++else:
++    trained_text = 'Aucun résultat de modèle pré-entraîné n’est enregistré. Ne pas considérer ce test comme validé.\n'
++
++report = f'''# Validation réelle et reprise sur Mac M5
++
++Rapport du 22 octobre 2026. Base stable : AirLLM v4.0.0,
++`ff35db207a0c559af9aa95d686057c3fe84f1d40`.
++
++## Périmètre exécuté
++
++Linux x86-64, Python 3.12.14, PyTorch 2.14.1+cpu, Transformers 5.20.2,
++safetensors 0.8.0, un thread CPU pour les benchmarks. L'environnement dispose
++d'environ 9,73 Gio de RAM totale. Ni GPU CUDA, ni MPS, ni MLX matériel disponible.
++Le fichier `evidence/environment.json` contient la détection réelle.
++
++| Suite | Réussis | Ignorés | Échecs |
++| --- | ---: | ---: | ---: |
++| Nouveau moteur (`tests_ultra`) | {new[0]} | {new[1]} | {new[2]} |
++| Tests existants AirLLM sélectionnés | {old[0]} | {old[1]} | {old[2]} |
++
++Les quatre tests matériels ignorés couvrent MLX natif et MPS pour Llama, Mixtral,
++GLM-MoE-DSA. Les autres tests vérifient notamment les logits, la génération et le
++cache KV ; les poids liés ; les formats MoE individuels et 3D ; le checkpoint FP8 ;
++les limites de cache et de préchargement ; la réutilisation/invalidation du manifeste ;
++les erreurs de calcul/E/S ; la fermeture ; les requêtes concurrentes sérialisées ;
++la construction des banques sur meta et les biais de routage persistants.
++
++Les 44 tests d'origine concernent découpage Kimi K3, Qwen3.8 et Flash-Next,
++données LoRA, composants et gradients LoRA. Les tests CUDA/bitsandbytes et les
++anciens tests qui téléchargent des modèles distants ne font pas partie de cette
++validation. Aucun résultat GPU d'origine n'est revendiqué ici.
++
++## Démarrage et génération mesurés
++
++**Petit Llama synthétique de {cpu['model']['parameters']:,} paramètres**, poids float32
++de {cpu['model']['weight_bytes']:,} octets, quatre couches, huit tokens générés.
++Trois essais par configuration dans des processus Python neufs. Même version de
++dépendances et même squelette de modèle. Toutes les séquences produites sont identiques.
++
++| Chemin | Construction (s) | Premier token hors import Python (s) | Premier token depuis début du worker (s) | Décodage (tokens/s) |
++| --- | ---: | ---: | ---: | ---: |
++{rows}
++
++Valeurs médianes. Le temps depuis le début du worker inclut les imports Python
++mesurés dans le worker, pas le coût initial de lancement de l'interpréteur par le
++processus parent. Le benchmark ne purge pas le cache de pages du système :
++« premier » signifie sans fichiers de préparation propres au moteur, pas SSD
++physiquement froid. Le chemin stable est le `AirLLMBaseModel` d'origine, non modifié.
++
++Le gain important sur ce petit modèle vient notamment de la suppression des
++collectes globales et vidages d'allocateur par couche. Quand le modèle tient dans
++64 Mio de cache, le test favorise aussi la réutilisation de tous ses poids.
++**Ces tokens/s ne décrivent ni un modèle géant ni le Mac M5.**
++
++Les mesures brutes comprennent les latences par token, les séquences, compteurs
++logiques et OS, RSS après exécution et RSS maximale. La RAM maximale est légèrement
++plus élevée pour Ultra sur ce test : environ 450 Mio contre 431 Mio pour le chemin
++stable ; ce n'est pas un gain universel de mémoire. Le nouveau moteur vise à éviter
++la résidence du modèle complet, pas à minimiser le coût fixe de Python/PyTorch.
++
++Reproduire : `python benchmarks/benchmark.py --repeats 3 --tokens 8`.
++
++## Lectures sélectives des experts
++
++Vraie banque locale de 128 experts, 48 Mio de poids float32, huit experts consultés
++à chaque passage. Huit passages, comparaison des sommes numériques pour détecter
++une lecture incorrecte. Le jeu de routage est fixe et volontairement favorable au cache.
++
++| Mode | Temps médian par passage (ms) | Payload logique cumulé sur huit passages (Mio) |
++| --- | ---: | ---: |
++{expert_rows}
++
++La sélection seule divise ici le payload par 16 ; le cache réutilise ensuite les
++3 Mio nécessaires à ces huit experts. Les temps sont ceux de lectures et copies
++CPU sur un système déjà chaud, pas d'inférence complète ou de SSD externe.
++
++Reproduire : `python benchmarks/benchmark_experts.py`.
++
++## Vérification d'un petit modèle entraîné
++
++{trained_text}
++
++Les poids du modèle de contrôle ne sont pas inclus dans l'archive. Le résultat
++établit le fonctionnement sur ce petit modèle, pas une qualité de réponse générale.
++
++## GLM 5.3 : vérification structurelle réelle
++
++Configuration et index officiels téléchargés, empreintes conservées dans
++`evidence/glm-5.3-layout-audit.json`. Architecture `{glm['architecture'][0]}`,
++78 couches ; 256 experts par couche sparse, 8 experts choisis par token ; FP8
++par blocs 128 × 128. L'index contient {glm['checkpoint_tensor_entries']:,} entrées,
++141 fichiers et {glm['checkpoint_bytes']:,} octets.
++
++Le graphe principal a réellement été construit sur meta :
++{glm['native_meta_model_parameters']:,} paramètres, sans allouer les banques sur CPU.
++Tous les paramètres et buffers persistants du graphe ont trouvé leurs clés dans
++l'index ; les compagnons d'échelle attendus des experts sont présents. Le graphe
++principal n'utilise pas le prédicteur MTP supplémentaire contenu dans le checkpoint.
++
++Le petit GLM-MoE-DSA et son checkpoint FP8 vérifient l'exécution. **Aucune inférence
++du GLM 5.3 complet n'a été effectuée.** L'ensemble des poids n'a pas été téléchargé.
++Les kernels et capacités mémoire MPS doivent être vérifiés sur le Mac. MLX natif
++ne prend pas en charge cette architecture dans cette livraison.
++
++Reproduire l'audit sans poids : `python scripts/audit_glm_metadata.py`.
++
++## SSD externe et protocole M5
++
++1. Extraire l'archive sur le Mac et installer avec `scripts/setup_macos.sh`.
++   L'installation télécharge les frameworks binaires ; Python 3.12 ou 3.13 est requis.
++2. Exécuter `scripts/validate_macos.sh`. Les quatre tests matériels doivent
++   s'exécuter et réussir. S'ils échouent, conserver les rapports avant de poursuivre.
++3. Mesurer le vrai volume, sans toucher aux fichiers existants :
++
++   ```bash
++   .venv-macos/bin/python -m airllm.ultra.cli doctor --directory '/Volumes/VOTRE_SSD'
++   .venv-macos/bin/python -m airllm.ultra.cli io-bench \\
++     --directory '/Volumes/VOTRE_SSD' --size-mib 256 --repeats 3
++   ```
++
++   Le benchmark crée puis supprime uniquement son propre fichier temporaire.
++   Le rapport indique le mode de cache utilisé ; même `F_NOCACHE` ne garantit pas
++   un contrôleur SSD froid. Le test `results-host-io.json` de cette livraison mesure
++   le volume éphémère Linux, dont le matériel n'est pas identifié, pas le futur SSD.
++4. Exécuter un petit modèle entraîné sur MPS, comparer sa sortie au CPU, et garder
++   les métriques. Tester séparément `mlx-ultra` sur un Llama admissible, si souhaité.
++5. Placer le checkpoint géant complet sur le SSD, conserver ses fichiers d'origine,
++   vérifier le répertoire avec `python -m airllm.ultra.cli audit --model /chemin`.
++   Aucun découpage supplémentaire n'est nécessaire pour Ultra.
++6. Commencer GLM avec un contexte court (128 à 256 tokens) et 1 à 8 nouveaux tokens,
++   observer la pression mémoire macOS, puis mesurer les performances soutenues.
++   Le MacBook Air est sans ventilateur : une mesure courte ne couvre pas la tenue
++   thermique d'une longue génération.
++
++Exemple de premier essai GLM, **après** les validations précédentes :
++
++```bash
++./scripts/launch_macos.sh \\
++  --model '/Volumes/VOTRE_SSD/modeles/GLM-5.3' \\
++  --device mps --dtype bfloat16 --max-context 256 --max-new-tokens 8 \\
++  --cache-mib 512 --device-cache-mib 256 --prefetch-mib 256 \\
++  --metrics validation-local/glm-premier-essai.json
++```
++
++Sans réutilisation d'experts, les seules matrices FP8 sélectionnées représentent
++3 × 6144 × 2048 × 8 × 75 = **22 649 241 600 octets par token**. Les échelles,
++l'attention et les couches denses s'ajoutent ; le cache peut retrancher une partie
++des lectures. C'est une borne de volume sous ces hypothèses, pas une prévision de
++temps. Le logiciel ne peut supprimer le coût des octets réellement nécessaires.
++
++## Reprise du développement
++
++Le source complet, patch depuis le tag stable, dépendances, wheel et sdist sont
++inclus. Les scripts de test recréent leurs petits checkpoints. Le chemin d'origine
++est conservé pour les autres modèles et l'entraînement ; le nouveau moteur refuse
++les formats non implémentés plutôt que de les charger approximativement.
++
++Priorités après les mesures Mac : corriger d'éventuels écarts MPS/MLX révélés par
++les tests, mesurer séparément lecture/déquantification/calcul/transferts sur le
++vrai SSD, ajuster les budgets à la RAM disponible, puis envisager des kernels
++quantifiés natifs pour le format réellement utilisé. Le MTP de GLM, la quantification
++4 bits et l'offload du cache KV ne sont pas implémentés dans ce moteur.
++
++## Sources primaires
++
++- [Sources AirLLM et tag stable](https://github.com/lyogavin/airllm/releases/tag/v4.0.0)
++- [Configuration officielle GLM 5.3](https://huggingface.co/zai-org/GLM-5.3/blob/main/config.json)
++- [Index officiel GLM 5.3](https://huggingface.co/zai-org/GLM-5.3/blob/main/model.safetensors.index.json)
++- [Implémentation native GLM-MoE-DSA](https://github.com/huggingface/transformers/tree/v5.20.2/src/transformers/models/glm_moe_dsa)
++- [MLX : attention native](https://ml-explore.github.io/mlx/build/html/python/_autosummary/mlx.core.fast.scaled_dot_product_attention.html)
++'''
++(root / 'docs/VALIDATION.md').write_text(report)
++print('Wrote docs/VALIDATION.md from saved evidence.')
+diff --git a/scripts/launch_macos.sh b/scripts/launch_macos.sh
+new file mode 100644
+index 0000000..f43879f
+--- /dev/null
++++ b/scripts/launch_macos.sh
+@@ -0,0 +1,8 @@
++#!/bin/bash
++set -euo pipefail
++task_root="$(cd "$(dirname "$0")/.." && pwd)"
++task_python="$task_root/.venv-macos/bin/python"
++if [[ ! -x "$task_python" ]]; then
++  "$task_root/scripts/setup_macos.sh"
++fi
++exec "$task_python" -m airllm.ultra.cli run "$@"
+diff --git a/scripts/setup_macos.sh b/scripts/setup_macos.sh
+new file mode 100644
+index 0000000..2486e42
+--- /dev/null
++++ b/scripts/setup_macos.sh
+@@ -0,0 +1,13 @@
++#!/bin/bash
++set -euo pipefail
++task_root="$(cd "$(dirname "$0")/.." && pwd)"
++if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
++  echo 'Ce script nécessite macOS sur Apple Silicon.' >&2
++  exit 1
++fi
++task_python="${AIRLLM_PYTHON:-python3}"
++"$task_python" -c 'import sys; assert (3,12) <= sys.version_info[:2] <= (3,13), "Python 3.12 ou 3.13 requis"'
++"$task_python" -m venv "$task_root/.venv-macos"
++"$task_root/.venv-macos/bin/python" -m pip install -r "$task_root/requirements-macos.txt"
++"$task_root/.venv-macos/bin/python" -m pip install --no-deps -e "$task_root/air_llm"
++echo 'Installation terminée. Lancez scripts/validate_macos.sh avant un modèle géant.'
+diff --git a/scripts/validate_macos.sh b/scripts/validate_macos.sh
+new file mode 100644
+index 0000000..987662d
+--- /dev/null
++++ b/scripts/validate_macos.sh
+@@ -0,0 +1,10 @@
++#!/bin/bash
++set -euo pipefail
++task_root="$(cd "$(dirname "$0")/.." && pwd)"
++task_python="$task_root/.venv-macos/bin/python"
++cd "$task_root"
++mkdir -p validation-local
++"$task_python" -m airllm.ultra.cli doctor > validation-local/doctor.json
++"$task_python" -m pytest tests_ultra -q --junitxml=validation-local/tests.xml
++echo 'Rapports disponibles dans validation-local/. Pour le SSD :'
++echo '  .venv-macos/bin/python -m airllm.ultra.cli io-bench --directory /Volumes/VOTRE_SSD'
+diff --git a/tests_ultra/conftest.py b/tests_ultra/conftest.py
+new file mode 100644
+index 0000000..dc89fb7
+--- /dev/null
++++ b/tests_ultra/conftest.py
+@@ -0,0 +1,54 @@
++from pathlib import Path
++import sys
++import pytest
++import torch
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'air_llm'))
++torch.set_num_threads(1)
++
++
++def save_tiny(root, kind='llama', *, tied=False):
++    from transformers import (LlamaConfig, LlamaForCausalLM, MixtralConfig, MixtralForCausalLM,
++                              GlmMoeDsaConfig, GlmMoeDsaForCausalLM, PreTrainedTokenizerFast)
++    from tokenizers import Tokenizer
++    from tokenizers.models import WordLevel
++    from tokenizers.pre_tokenizers import Whitespace
++    torch.manual_seed(521)
++    common = dict(vocab_size=96, hidden_size=48, intermediate_size=96,
++                  num_hidden_layers=3, num_attention_heads=4, num_key_value_heads=2,
++                  max_position_embeddings=128, pad_token_id=0, bos_token_id=1,
++                  eos_token_id=2, tie_word_embeddings=tied)
++    if kind == 'mixtral':
++        cfg = MixtralConfig(**common, num_local_experts=8, num_experts_per_tok=2)
++        model = MixtralForCausalLM(cfg)
++    elif kind == 'glm':
++        common['num_key_value_heads'] = common['num_attention_heads']
++        cfg = GlmMoeDsaConfig(**common, n_routed_experts=8, num_experts_per_tok=2,
++                             n_shared_experts=1, first_k_dense_replace=1,
++                             moe_intermediate_size=24, kv_lora_rank=8, q_lora_rank=16,
++                             qk_rope_head_dim=8, qk_nope_head_dim=8, v_head_dim=8,
++                             index_head_dim=8, index_n_heads=2, index_topk=4,
++                             indexer_types=['full', 'shared', 'full'],
++                             rope_parameters={'rope_type': 'default', 'rope_theta': 10000.0})
++        model = GlmMoeDsaForCausalLM(cfg)
++    else:
++        cfg = LlamaConfig(**common, attention_bias=False, mlp_bias=False)
++        model = LlamaForCausalLM(cfg)
++    model.eval()
++    root = Path(root)
++    root.mkdir(parents=True, exist_ok=True)
++    model.save_pretrained(root, safe_serialization=True, max_shard_size='100KB')
++    tokens = {'[PAD]': 0, '[BOS]': 1, '[EOS]': 2, '[UNK]': 3}
++    tokens.update({f't{i}': i for i in range(4, 96)})
++    tokenizer = Tokenizer(WordLevel(tokens, unk_token='[UNK]'))
++    tokenizer.pre_tokenizer = Whitespace()
++    PreTrainedTokenizerFast(tokenizer_object=tokenizer, pad_token='[PAD]', bos_token='[BOS]',
++                           eos_token='[EOS]', unk_token='[UNK]').save_pretrained(root)
++    return model
++
++
++@pytest.fixture(params=['llama', 'mixtral', 'glm'])
++def tiny(request, tmp_path):
++    root = tmp_path / request.param
++    model = save_tiny(root, request.param)
++    return root, model
+diff --git a/tests_ultra/test_failures.py b/tests_ultra/test_failures.py
+new file mode 100644
+index 0000000..3fa646e
+--- /dev/null
++++ b/tests_ultra/test_failures.py
+@@ -0,0 +1,51 @@
++from concurrent.futures import ThreadPoolExecutor
++import json
++import pytest
++import torch
++from safetensors.torch import save_file
++from conftest import save_tiny
++from test_runtime import options
++from airllm.ultra import AirLLMUltraModel
++
++
++@pytest.mark.parametrize('kind', ['mixtral', 'glm'])
++def test_fused_3d_checkpoint_matches_reference(tmp_path, kind):
++    root = tmp_path / 'fused'
++    ref = save_tiny(root, kind)
++    # Save raw native state rather than Transformers' backwards-compatible
++    # save_pretrained conversion. This exercises on-disk first-axis slicing.
++    for path in root.glob('*.safetensors*'):
++        path.unlink()
++    save_file({k: v.contiguous() for k, v in ref.state_dict().items()}, root / 'model.safetensors')
++    ids = torch.tensor([[1, 7, 8], [1, 8, 9]])
++    with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model, torch.inference_mode():
++        assert all(source.fused for source in model.expert_sources.values())
++        torch.testing.assert_close(model(ids).logits, ref(ids).logits, rtol=4e-5, atol=4e-6)
++
++
++def test_forward_failure_releases_materialized_parameters(tmp_path):
++    root = tmp_path / 'failure'
++    save_tiny(root)
++    with AirLLMUltraModel(root, ultra=options(tmp_path, prefetch=False)) as model:
++        layer = model.model.model.layers[0]
++        original = layer.forward
++        def fail(*args, **kwargs):
++            raise RuntimeError('injected compute error')
++        layer.forward = fail
++        with pytest.raises(RuntimeError, match='injected'):
++            model(torch.tensor([[1]]))
++        assert all(p.device.type == 'meta' for p in model.model.parameters())
++        layer.forward = original
++        assert model(torch.tensor([[1]])).logits.isfinite().all()
++
++
++def test_concurrent_requests_are_serialized(tmp_path):
++    root = tmp_path / 'concurrency'
++    save_tiny(root)
++    with AirLLMUltraModel(root, ultra=options(tmp_path)) as model:
++        def run(_):
++            return model(torch.tensor([[1, 7, 8]])).logits.clone()
++        with ThreadPoolExecutor(max_workers=2) as executor:
++            outputs = list(executor.map(run, range(4)))
++        for output in outputs[1:]:
++            torch.testing.assert_close(output, outputs[0])
+diff --git a/tests_ultra/test_fp8_runtime.py b/tests_ultra/test_fp8_runtime.py
+new file mode 100644
+index 0000000..3cc090f
+--- /dev/null
++++ b/tests_ultra/test_fp8_runtime.py
+@@ -0,0 +1,46 @@
++import json
++import math
++import torch
++from safetensors.torch import load_file, save_file
++from conftest import save_tiny
++from test_runtime import options
++from airllm.ultra import AirLLMUltraModel
++
++
++def test_glm_fp8_unfused_checkpoint_end_to_end(tmp_path):
++    root = tmp_path / 'glm-fp8'
++    ref = save_tiny(root, 'glm')
++    # Build an actual block-FP8 checkpoint, using the same per-expert key layout
++    # as the official 5.3 index, at tiny dimensions. Unit scales make an exact
++    # dequantized reference possible without unsupported CPU FP8 matmul.
++    with torch.no_grad():
++        for p in ref.parameters():
++            if p.ndim >= 2:
++                p.copy_(p.to(torch.float8_e4m3fn).float())
++    ref.save_pretrained(root, max_shard_size='100KB')
++    index_path = root / 'model.safetensors.index.json'
++    index = json.loads(index_path.read_text())
++    for file in sorted(set(index['weight_map'].values())):
++        state = load_file(root / file)
++        out = {}
++        for key, value in state.items():
++            if value.ndim == 2:
++                out[key] = value.to(torch.float8_e4m3fn)
++                sk = key + '_scale_inv'
++                out[sk] = torch.ones(math.ceil(value.shape[0]/16), math.ceil(value.shape[1]/16))
++                index['weight_map'][sk] = file
++            else:
++                out[key] = value
++        save_file(out, root / file)
++    index_path.write_text(json.dumps(index))
++    config_path = root / 'config.json'
++    cfg = json.loads(config_path.read_text())
++    cfg['quantization_config'] = {'quant_method': 'fp8', 'weight_block_size': [16, 16],
++                                  'fmt': 'e4m3', 'activation_scheme': 'dynamic'}
++    config_path.write_text(json.dumps(cfg))
++    ids = torch.tensor([[1, 7, 8]])
++    with AirLLMUltraModel(root, device='cpu', dtype=torch.float32,
++                         ultra=options(tmp_path)) as model, torch.inference_mode():
++        torch.testing.assert_close(model(ids).logits, ref(ids).logits, rtol=3e-5, atol=3e-6)
++        assert torch.equal(model.generate(ids, max_new_tokens=4), ref.generate(ids, max_new_tokens=4))
++        assert model.expert_sources
+diff --git a/tests_ultra/test_meta.py b/tests_ultra/test_meta.py
+new file mode 100644
+index 0000000..7bb3b56
+--- /dev/null
++++ b/tests_ultra/test_meta.py
+@@ -0,0 +1,39 @@
++import pytest
++import torch
++from conftest import save_tiny
++from test_runtime import options
++from airllm.ultra import AirLLMUltraModel
++
++
++def test_meta_factory_never_allocates_expert_bank_on_cpu(tmp_path, monkeypatch):
++    root = tmp_path / 'meta'
++    save_tiny(root, 'glm')
++    original = torch.empty
++    sizes = []
++    def checked_empty(*args, **kwargs):
++        result = original(*args, **kwargs)
++        # Native expert tensors have [experts, out, in] shapes. The actual
++        # allocation, before nn.Parameter wrapping, must already be on meta.
++        if result.ndim == 3:
++            sizes.append(tuple(result.shape))
++            assert result.device.type == 'meta'
++        return result
++    monkeypatch.setattr(torch, 'empty', checked_empty)
++    with AirLLMUltraModel(root, ultra=options(tmp_path)):
++        assert sizes
++
++
++def test_learned_glm_routing_buffer_is_loaded(tmp_path):
++    root = tmp_path / 'router'
++    ref = save_tiny(root, 'glm')
++    with torch.no_grad():
++        for name, buf in ref.named_buffers():
++            if name.endswith('e_score_correction_bias'):
++                buf.copy_(torch.linspace(-2, 2, buf.numel()))
++    ref.save_pretrained(root, max_shard_size='100KB')
++    with AirLLMUltraModel(root, ultra=options(tmp_path)) as model, torch.inference_mode():
++        ids = torch.tensor([[1, 7, 8]])
++        torch.testing.assert_close(model(ids).logits, ref(ids).logits, atol=3e-6, rtol=3e-5)
++        # Persistent routing buffers also leave the active device between layers.
++        assert all(buf.device.type == 'meta' for name, buf in model.model.named_buffers()
++                   if name.endswith('e_score_correction_bias'))
+diff --git a/tests_ultra/test_mlx.py b/tests_ultra/test_mlx.py
+new file mode 100644
+index 0000000..659166a
+--- /dev/null
++++ b/tests_ultra/test_mlx.py
+@@ -0,0 +1,35 @@
++import sys
++import pytest
++import torch
++from conftest import save_tiny
++from airllm.ultra import UltraConfig
++from airllm.ultra.mlx_runtime import validate_mlx_config, MlxLlamaUltra
++
++
++@pytest.mark.parametrize('cfg', [
++    {'model_type': 'glm_moe_dsa'},
++    {'model_type': 'llama', 'quantization_config': {'quant_method': 'fp8'}},
++    {'model_type': 'llama', 'rope_scaling': {'rope_type': 'llama3'}},
++    {'model_type': 'llama', 'attention_bias': True},
++])
++def test_unsupported_mlx_configs_are_explicit(cfg):
++    with pytest.raises(NotImplementedError):
++        validate_mlx_config(cfg)
++
++
++@pytest.mark.skipif(sys.platform != 'darwin', reason='Apple Silicon/MLX hardware unavailable')
++def test_native_mlx_logits_and_decode_match_transformers(tmp_path):
++    import mlx.core as mx
++    import numpy as np
++    root = tmp_path / 'mlx'
++    ref = save_tiny(root)
++    cfg = UltraConfig(cache_dir=str(tmp_path / 'meta'), load_tokenizer=False, reserve_bytes=0)
++    with MlxLlamaUltra(root, ultra=cfg) as model, torch.inference_mode():
++        ids = torch.tensor([[1, 8, 9]])
++        expected = ref(ids, use_cache=True)
++        got, cache = model(mx.array(ids.tolist()))
++        np.testing.assert_allclose(np.array(got), expected.logits[:, -1:].numpy(), atol=5e-5, rtol=5e-4)
++        token = expected.logits[:, -1].argmax(-1)[:, None]
++        expected = ref(token, past_key_values=expected.past_key_values)
++        got, _ = model(mx.array(token.tolist()), cache=cache)
++        np.testing.assert_allclose(np.array(got), expected.logits.numpy(), atol=5e-5, rtol=5e-4)
+diff --git a/tests_ultra/test_mps.py b/tests_ultra/test_mps.py
+new file mode 100644
+index 0000000..cdd2ff9
+--- /dev/null
++++ b/tests_ultra/test_mps.py
+@@ -0,0 +1,17 @@
++import pytest
++import torch
++from conftest import save_tiny
++from test_runtime import options
++from airllm.ultra import AirLLMUltraModel
++
++
++@pytest.mark.skipif(not torch.backends.mps.is_available(), reason='MPS hardware unavailable')
++@pytest.mark.parametrize('kind', ['llama', 'mixtral', 'glm'])
++def test_mps_logits_match_cpu_reference(tmp_path, kind):
++    root = tmp_path / kind
++    ref = save_tiny(root, kind)
++    with AirLLMUltraModel(root, device='mps', dtype=torch.float32,
++                         ultra=options(tmp_path)) as model, torch.inference_mode():
++        ids = torch.tensor([[1, 7, 9]])
++        torch.testing.assert_close(model(ids.to('mps')).logits.cpu(), ref(ids).logits,
++                                   rtol=1e-3, atol=1e-4)
+diff --git a/tests_ultra/test_runtime.py b/tests_ultra/test_runtime.py
+new file mode 100644
+index 0000000..76f5d15
+--- /dev/null
++++ b/tests_ultra/test_runtime.py
+@@ -0,0 +1,98 @@
++import json
++import pytest
++import torch
++from airllm.ultra import UltraConfig, AirLLMUltraModel
++from conftest import save_tiny
++
++
++def options(tmp_path, **kwargs):
++    defaults = dict(cache_bytes=2**20, prefetch_bytes=2**20, reserve_bytes=0,
++                    max_group_bytes=4**12, cache_dir=str(tmp_path / 'meta'), load_tokenizer=False)
++    defaults.update(kwargs)
++    return UltraConfig(**defaults)
++
++
++def test_logits_decode_and_kv_match_reference(tiny, tmp_path):
++    path, ref = tiny
++    ids = torch.tensor([[1, 8, 9, 10]])
++    with AirLLMUltraModel(path, device='cpu', dtype=torch.float32,
++                         ultra=options(tmp_path)) as model, torch.inference_mode():
++        expected = ref(ids, use_cache=True)
++        actual = model(ids, use_cache=True)
++        torch.testing.assert_close(actual.logits, expected.logits, atol=3e-6, rtol=3e-5)
++        next_id = actual.logits[:, -1].argmax(-1)[:, None]
++        expected2 = ref(next_id, use_cache=True, past_key_values=expected.past_key_values)
++        actual2 = model(next_id, use_cache=True, past_key_values=actual.past_key_values)
++        torch.testing.assert_close(actual2.logits, expected2.logits, atol=3e-6, rtol=3e-5)
++        expected_ids = ref.generate(ids, max_new_tokens=4, do_sample=False)
++        actual_ids = model.generate(ids, max_new_tokens=4, do_sample=False)
++        assert torch.equal(actual_ids, expected_ids)
++        assert all(p.device.type == 'meta' for p in model.model.parameters())
++        assert model.cache.peak_bytes <= model.ultra.cache_bytes
++        assert model.prefetch.peak_bytes <= model.ultra.prefetch_bytes
++
++
++def test_tied_embeddings_stream_instead_of_pinning_table(tmp_path):
++    root = tmp_path / 'tied'
++    ref = save_tiny(root, tied=True)
++    ids = torch.tensor([[1, 9]])
++    with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model:
++        with torch.inference_mode():
++            torch.testing.assert_close(model(ids).logits, ref(ids).logits)
++        assert all(p.device.type == 'meta' for p in model.model.parameters())
++
++
++def test_no_split_and_cached_second_request(tiny, tmp_path):
++    root, ref = tiny
++    with AirLLMUltraModel(root, dtype=torch.float32,
++                         ultra=options(tmp_path, cache_bytes=16*2**20, prefetch=False)) as model:
++        ids = torch.tensor([[1]])
++        model(ids)
++        reads = model.checkpoint.stats['tensor_reads']
++        model(ids)
++        assert model.checkpoint.stats['tensor_reads'] == reads
++        assert model.cache.stats['hits'] > 0
++        assert not (root / 'splitted_model').exists()
++    with pytest.raises(RuntimeError, match='closed'):
++        model(ids)
++
++
++def test_reopen_reuses_valid_manifest_and_routes(tiny, tmp_path):
++    root, _ = tiny
++    cfg = options(tmp_path)
++    with AirLLMUltraModel(root, ultra=cfg) as model:
++        model(torch.tensor([[1, 8]]))
++        assert model.checkpoint.stats['manifest_hit'] == 0
++    with AirLLMUltraModel(root, ultra=cfg) as model:
++        assert model.checkpoint.stats['manifest_hit'] == 1
++        assert model.checkpoint.stats['header_bytes'] == 0
++        if model.expert_sources:
++            assert model.routes
++
++
++def test_memory_guard_rejects_before_materialization(tmp_path):
++    root = tmp_path / 'small'
++    save_tiny(root)
++    with pytest.raises(MemoryError, match='max_group_bytes'):
++        AirLLMUltraModel(root, ultra=options(tmp_path, max_group_bytes=100))
++
++
++def test_auto_entry_point(tmp_path):
++    from airllm import AutoModel
++    root = tmp_path / 'entry'
++    save_tiny(root)
++    with AutoModel.from_pretrained(root, ultra=options(tmp_path)) as model:
++        assert model(torch.tensor([[1]])).logits.shape[-1] == 96
++
++
++def test_only_routed_expert_slices_are_read(tmp_path):
++    root = tmp_path / 'experts'
++    save_tiny(root, 'mixtral')
++    with AirLLMUltraModel(root, dtype=torch.float32,
++                         ultra=options(tmp_path, prefetch=False, cache_bytes=0)) as model:
++        bank = next(m for m in model.model.modules() if m.__class__.__name__ == 'DiskExperts')
++        before = model.checkpoint.stats['logical_bytes']
++        bank(torch.randn(1, 48), torch.tensor([[2, 5]]), torch.tensor([[0.4, 0.6]]))
++        delta = model.checkpoint.stats['logical_bytes'] - before
++        assert delta == 2 * bank.source.size  # f32 checkpoint/runtime
++        assert delta < model.checkpoint.nbytes(model.checkpoint.keys(bank.source.storage_prefix))
+diff --git a/tests_ultra/test_storage.py b/tests_ultra/test_storage.py
+new file mode 100644
+index 0000000..a20aa06
+--- /dev/null
++++ b/tests_ultra/test_storage.py
+@@ -0,0 +1,128 @@
++import json
++import os
++import struct
++import time
++import pytest
++import torch
++from safetensors.torch import save_file
++from airllm.ultra.checkpoint import DirectCheckpoint
++from airllm.ultra.cache import AdaptiveCache, BoundedPrefetch
++from airllm.ultra.weights import dequantize_fp8, WeightReader
++
++
++def test_random_access_single_file_and_bounded_handles(tmp_path):
++    for i in range(5):
++        save_file({f'model.layers.{i}.weight': torch.full((8, 8), float(i))},
++                  tmp_path / f'shard{i}.safetensors')
++    with DirectCheckpoint(tmp_path, max_open_files=2) as cp:
++        assert cp.stats['tensor_reads'] == 0
++        for i in range(5):
++            k = f'model.layers.{i}.weight'
++            assert cp.read([k])[k][0, 0].item() == i
++            assert len(cp.handles) <= 2
++        assert len(cp.keys('model.layers.1')) == 1
++        assert len(cp.keys('model.layers.10')) == 0
++    with pytest.raises(RuntimeError):
++        cp.read(['model.layers.0.weight'])
++
++
++def test_manifest_invalidates_on_weight_change(tmp_path):
++    root = tmp_path / 'weights'
++    root.mkdir()
++    dest = root / 'model.safetensors'
++    save_file({'w': torch.ones(4)}, dest)
++    with DirectCheckpoint(root, tmp_path / 'meta') as cp:
++        first = cp.fingerprint
++    save_file({'w': torch.zeros(5)}, dest)
++    with DirectCheckpoint(root, tmp_path / 'meta') as cp:
++        assert cp.fingerprint != first
++        assert cp.stats['manifest_hit'] == 0
++        assert cp.read(['w'])['w'].numel() == 5
++
++
++@pytest.mark.parametrize('value', [b'', struct.pack('<Q', 10**12)])
++def test_corrupt_header_rejected(tmp_path, value):
++    (tmp_path / 'model.safetensors').write_bytes(value)
++    with pytest.raises(ValueError):
++        DirectCheckpoint(tmp_path)
++
++
++def test_traversal_index_rejected(tmp_path):
++    (tmp_path / 'model.safetensors.index.json').write_text(json.dumps({'weight_map': {'w': '../outside'}}))
++    with pytest.raises(ValueError, match='path'):
++        DirectCheckpoint(tmp_path)
++
++
++def test_cache_budget_and_scan_resistance():
++    cache = AdaptiveCache(3 * 64)
++    state = {'w': torch.ones(16)}
++    cache.put('hot', state)
++    assert cache.get('hot') is state
++    for i in range(100):
++        cache.put(i, state)
++        assert cache.bytes <= cache.capacity
++    assert cache.get('hot') is state
++    assert not cache.put('oversize', {'w': torch.ones(1000)})
++    cache.resize(0)
++    assert cache.bytes == 0
++
++
++def test_prefetch_bound_dedup_and_exception_propagation():
++    state = {'w': torch.ones(16)}
++    scheduler = BoundedPrefetch(64, max_tasks=1)
++    try:
++        assert scheduler.submit('a', 64, lambda: state)
++        assert not scheduler.submit('a', 64, lambda: state)
++        assert not scheduler.submit('big', 65, lambda: state)
++        assert scheduler.take('a') is state
++        assert scheduler.bytes == 0
++        def fail():
++            raise IOError('test I/O failure')
++        scheduler.submit('bad', 64, fail)
++        with pytest.raises(IOError):
++            scheduler.take('bad')
++        assert scheduler.bytes == 0
++    finally:
++        scheduler.close()
++    assert not scheduler.submit('a', 64, lambda: state)
++
++
++def test_fp8_dequant_edges_and_reader(tmp_path):
++    w = torch.randn(7, 11).to(torch.float8_e4m3fn)
++    scale = torch.rand(2, 3) + 0.1
++    expected = w.float() * scale.repeat_interleave(4, 0).repeat_interleave(4, 1)[:7, :11]
++    torch.testing.assert_close(dequantize_fp8(w, scale, [4, 4], torch.float32), expected)
++    save_file({'layer.weight': w, 'layer.weight_scale_inv': scale}, tmp_path / 'model.safetensors')
++    with DirectCheckpoint(tmp_path) as cp:
++        reader = WeightReader(cp, torch.float32, {'quant_method': 'fp8', 'weight_block_size': [4, 4]})
++        got = reader.load(cp.keys())
++        assert set(got) == {'layer.weight'}
++        torch.testing.assert_close(got['layer.weight'], expected)
++
++
++def test_prefetch_reservation_violation_rejected():
++    with pytest.raises(RuntimeError, match='reserved'):
++        scheduler = BoundedPrefetch(16)
++        try:
++            scheduler.submit('bad', 8, lambda: {'w': torch.ones(4)})
++            scheduler.take('bad')
++        finally:
++            scheduler.close()
++
++
++def test_close_releases_all_pending_results_after_worker_failure():
++    scheduler = BoundedPrefetch(1024)
++    def fail():
++        raise OSError('worker failure during shutdown')
++    scheduler.submit('bad', 64, fail)
++    # Ensure the failure is actually running/completed, not merely cancellable.
++    try:
++        scheduler.pending['bad'][0].result()
++    except OSError:
++        pass
++    scheduler.submit('good', 64, lambda: {'w': torch.ones(16)})
++    with pytest.raises(OSError, match='shutdown'):
++        scheduler.close()
++    assert not scheduler.pending
++    assert scheduler.bytes == 0
++    assert scheduler.closed

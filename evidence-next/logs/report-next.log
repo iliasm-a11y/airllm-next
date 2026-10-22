@@ -1,0 +1,56 @@
+{
+  "next": {
+    "tests": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed_main": 35,
+    "passed_subtests": 0
+  },
+  "ultra": {
+    "tests": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "passed_main": 34,
+    "passed_subtests": 0
+  },
+  "upstream": {
+    "tests": 75,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "passed_main": 66,
+    "passed_subtests": 5
+  },
+  "environment": {
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "mlx": "0.32.4",
+    "torch": "2.14.1+cpu",
+    "transformers": "5.20.2",
+    "metal_available": false,
+    "telemetry": {
+      "available_bytes": 9543094272,
+      "total_bytes": 10451439616,
+      "rss_bytes": 289841152,
+      "swap_used_bytes": 0,
+      "cpu_percent": 16.1,
+      "gpu_utilization": null,
+      "temperature_c": null,
+      "thermal_throttled": null,
+      "memory_pressure_source": "available physical memory (not macOS pressure level)",
+      "physical_read_bytes": 0,
+      "process_peak_rss_bytes": 289669120,
+      "rss_peak_scope": "process lifetime, not isolated per model"
+    }
+  },
+  "not_executed": [
+    "M5 Metal/TensorOps",
+    "Fanxiang USB throughput",
+    "full GLM-5.3 inference",
+    "semantic quality of GLM-5.3 quantizations",
+    "MTP/speculative decoding"
+  ]
+}

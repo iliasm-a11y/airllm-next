@@ -1,0 +1,92 @@
+[
+  {
+    "label": "upstream_first",
+    "trial": 0,
+    "stderr": "found local checkpoint...\n\n  0%|          | 0/7 [00:00<?, ?it/s]Loading shard 1/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.embed_tokens.safetensors\n\n 14%|\u2588\u258d        | 1/7 [00:00<00:01,  3.42it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.layers.0.safetensors\n\n 29%|\u2588\u2588\u258a       | 2/7 [00:00<00:01,  4.44it/s]Loading shard 2/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.layers.1.safetensors\n\n 43%|\u2588\u2588\u2588\u2588\u258e     | 3/7 [00:00<00:00,  4.99it/s]Loading shard 3/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.layers.2.safetensors\n\n 57%|\u2588\u2588\u2588\u2588\u2588\u258b    | 4/7 [00:00<00:00,  5.29it/s]Loading shard 4/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.layers.3.safetensors\n\n 71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f  | 5/7 [00:01<00:00,  5.29it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/model.norm.safetensors\n\n 86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c | 6/7 [00:01<00:00,  5.39it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-0/splitted_model/lm_head.safetensors\n\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  5.60it/s]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  5.20it/s]\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "upstream_reopen",
+    "trial": 0,
+    "stderr": "found local checkpoint...\nfound_layers:{'model.embed_tokens.': True, 'model.layers.0.': True, 'model.layers.1.': True, 'model.layers.2.': True, 'model.layers.3.': True, 'model.norm.': True, 'lm_head.': True}\nsaved layers already found in /tmp/airllm-bench-vjco9v9b/split-0/splitted_model\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_first_cache0",
+    "trial": 0,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_reopen_cache0",
+    "trial": 0,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_cache64",
+    "trial": 0,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "upstream_first",
+    "trial": 1,
+    "stderr": "found local checkpoint...\n\n  0%|          | 0/7 [00:00<?, ?it/s]Loading shard 1/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.embed_tokens.safetensors\n\n 14%|\u2588\u258d        | 1/7 [00:00<00:00,  6.09it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.layers.0.safetensors\n\n 29%|\u2588\u2588\u258a       | 2/7 [00:00<00:00,  6.08it/s]Loading shard 2/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.layers.1.safetensors\n\n 43%|\u2588\u2588\u2588\u2588\u258e     | 3/7 [00:00<00:00,  6.22it/s]Loading shard 3/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.layers.2.safetensors\n\n 57%|\u2588\u2588\u2588\u2588\u2588\u258b    | 4/7 [00:00<00:00,  6.20it/s]Loading shard 4/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.layers.3.safetensors\n\n 71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f  | 5/7 [00:00<00:00,  6.26it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/model.norm.safetensors\n\n 86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c | 6/7 [00:00<00:00,  6.29it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-1/splitted_model/lm_head.safetensors\n\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  6.29it/s]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  6.25it/s]\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "upstream_reopen",
+    "trial": 1,
+    "stderr": "found local checkpoint...\nfound_layers:{'model.embed_tokens.': True, 'model.layers.0.': True, 'model.layers.1.': True, 'model.layers.2.': True, 'model.layers.3.': True, 'model.norm.': True, 'lm_head.': True}\nsaved layers already found in /tmp/airllm-bench-vjco9v9b/split-1/splitted_model\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_first_cache0",
+    "trial": 1,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_reopen_cache0",
+    "trial": 1,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_cache64",
+    "trial": 1,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "upstream_first",
+    "trial": 2,
+    "stderr": "found local checkpoint...\n\n  0%|          | 0/7 [00:00<?, ?it/s]Loading shard 1/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.embed_tokens.safetensors\n\n 14%|\u2588\u258d        | 1/7 [00:00<00:01,  5.44it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.layers.0.safetensors\n\n 29%|\u2588\u2588\u258a       | 2/7 [00:00<00:00,  5.51it/s]Loading shard 2/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.layers.1.safetensors\n\n 43%|\u2588\u2588\u2588\u2588\u258e     | 3/7 [00:00<00:00,  5.61it/s]Loading shard 3/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.layers.2.safetensors\n\n 57%|\u2588\u2588\u2588\u2588\u2588\u258b    | 4/7 [00:00<00:00,  5.72it/s]Loading shard 4/4\nsaved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.layers.3.safetensors\n\n 71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f  | 5/7 [00:00<00:00,  5.68it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/model.norm.safetensors\n\n 86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c | 6/7 [00:01<00:00,  5.64it/s]saved as: /tmp/airllm-bench-vjco9v9b/split-2/splitted_model/lm_head.safetensors\n\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  5.62it/s]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 7/7 [00:01<00:00,  5.62it/s]\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "upstream_reopen",
+    "trial": 2,
+    "stderr": "found local checkpoint...\nfound_layers:{'model.embed_tokens.': True, 'model.layers.0.': True, 'model.layers.1.': True, 'model.layers.2.': True, 'model.layers.3.': True, 'model.norm.': True, 'lm_head.': True}\nsaved layers already found in /tmp/airllm-bench-vjco9v9b/split-2/splitted_model\nbuilt empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_first_cache0",
+    "trial": 2,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_reopen_cache0",
+    "trial": 2,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  },
+  {
+    "label": "ultra_cache64",
+    "trial": 2,
+    "stderr": "built empty LlamaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n",
+    "returncode": 0
+  }
+]

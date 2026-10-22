@@ -1,0 +1,317 @@
+* Getting build dependencies for sdist...
+running egg_info
+writing airllm.egg-info/PKG-INFO
+writing dependency_links to airllm.egg-info/dependency_links.txt
+writing entry points to airllm.egg-info/entry_points.txt
+writing requirements to airllm.egg-info/requires.txt
+writing top-level names to airllm.egg-info/top_level.txt
+reading manifest file 'airllm.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'airllm.egg-info/SOURCES.txt'
+WARNING License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building sdist...
+running sdist
+running egg_info
+writing airllm.egg-info/PKG-INFO
+writing dependency_links to airllm.egg-info/dependency_links.txt
+writing entry points to airllm.egg-info/entry_points.txt
+writing requirements to airllm.egg-info/requires.txt
+writing top-level names to airllm.egg-info/top_level.txt
+reading manifest file 'airllm.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'airllm.egg-info/SOURCES.txt'
+warning: sdist: standard file not found: should have one of README, README.rst, README.txt, README.md
+
+running check
+creating airllm-4.0.0+ultra.1
+creating airllm-4.0.0+ultra.1/airllm
+creating airllm-4.0.0+ultra.1/airllm.egg-info
+creating airllm-4.0.0+ultra.1/airllm/persist
+creating airllm-4.0.0+ultra.1/airllm/ultra
+creating airllm-4.0.0+ultra.1/tests
+copying files to airllm-4.0.0+ultra.1...
+copying LICENSE -> airllm-4.0.0+ultra.1
+copying pyproject.toml -> airllm-4.0.0+ultra.1
+copying setup.py -> airllm-4.0.0+ultra.1
+copying airllm/__init__.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_baichuan.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_base.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_chatglm.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_internlm.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_kimi_k3.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_llama_mlx.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_lora.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_mistral.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_mixtral.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_qwen.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_qwen2.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_qwen3_5.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/airllm_qwen4_exp.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/auto_model.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/chunked_ce.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/lora_data.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/lora_linear.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/profiler.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/tokenization_baichuan.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm/utils.py -> airllm-4.0.0+ultra.1/airllm
+copying airllm.egg-info/PKG-INFO -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm.egg-info/SOURCES.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm.egg-info/dependency_links.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm.egg-info/entry_points.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm.egg-info/requires.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm.egg-info/top_level.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+copying airllm/persist/__init__.py -> airllm-4.0.0+ultra.1/airllm/persist
+copying airllm/persist/mlx_model_persister.py -> airllm-4.0.0+ultra.1/airllm/persist
+copying airllm/persist/model_persister.py -> airllm-4.0.0+ultra.1/airllm/persist
+copying airllm/persist/safetensor_model_persister.py -> airllm-4.0.0+ultra.1/airllm/persist
+copying airllm/ultra/__init__.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/cache.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/checkpoint.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/cli.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/config.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/experts.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/mlx_runtime.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/runtime.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying airllm/ultra/weights.py -> airllm-4.0.0+ultra.1/airllm/ultra
+copying tests/__init__.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_automodel.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_compression.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_kimi_k3_split.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_lora_data.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_qwen38_flash_next_split.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_qwen3_8_split.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_streamed_lora.py -> airllm-4.0.0+ultra.1/tests
+copying tests/test_streaming_gpu.py -> airllm-4.0.0+ultra.1/tests
+copying airllm.egg-info/SOURCES.txt -> airllm-4.0.0+ultra.1/airllm.egg-info
+Writing airllm-4.0.0+ultra.1/setup.cfg
+Creating tar archive
+removing 'airllm-4.0.0+ultra.1' (and everything under it)
+WARNING License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building wheel from sdist
+* Getting build dependencies for wheel...
+running egg_info
+writing airllm.egg-info/PKG-INFO
+writing dependency_links to airllm.egg-info/dependency_links.txt
+writing entry points to airllm.egg-info/entry_points.txt
+writing requirements to airllm.egg-info/requires.txt
+writing top-level names to airllm.egg-info/top_level.txt
+reading manifest file 'airllm.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'airllm.egg-info/SOURCES.txt'
+WARNING License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+* Building wheel...
+running bdist_wheel
+running build
+running build_py
+creating build/lib/airllm
+copying airllm/profiler.py -> build/lib/airllm
+copying airllm/airllm_llama_mlx.py -> build/lib/airllm
+copying airllm/auto_model.py -> build/lib/airllm
+copying airllm/airllm_mistral.py -> build/lib/airllm
+copying airllm/airllm_baichuan.py -> build/lib/airllm
+copying airllm/utils.py -> build/lib/airllm
+copying airllm/airllm_qwen3_5.py -> build/lib/airllm
+copying airllm/airllm_mixtral.py -> build/lib/airllm
+copying airllm/chunked_ce.py -> build/lib/airllm
+copying airllm/lora_data.py -> build/lib/airllm
+copying airllm/__init__.py -> build/lib/airllm
+copying airllm/airllm_qwen4_exp.py -> build/lib/airllm
+copying airllm/airllm_lora.py -> build/lib/airllm
+copying airllm/airllm_base.py -> build/lib/airllm
+copying airllm/airllm_chatglm.py -> build/lib/airllm
+copying airllm/airllm_qwen.py -> build/lib/airllm
+copying airllm/tokenization_baichuan.py -> build/lib/airllm
+copying airllm/airllm.py -> build/lib/airllm
+copying airllm/airllm_qwen2.py -> build/lib/airllm
+copying airllm/lora_linear.py -> build/lib/airllm
+copying airllm/airllm_kimi_k3.py -> build/lib/airllm
+copying airllm/airllm_internlm.py -> build/lib/airllm
+creating build/lib/tests
+copying tests/test_streamed_lora.py -> build/lib/tests
+copying tests/test_streaming_gpu.py -> build/lib/tests
+copying tests/test_lora_data.py -> build/lib/tests
+copying tests/test_compression.py -> build/lib/tests
+copying tests/test_automodel.py -> build/lib/tests
+copying tests/__init__.py -> build/lib/tests
+copying tests/test_qwen38_flash_next_split.py -> build/lib/tests
+copying tests/test_qwen3_8_split.py -> build/lib/tests
+copying tests/test_kimi_k3_split.py -> build/lib/tests
+creating build/lib/airllm/persist
+copying airllm/persist/safetensor_model_persister.py -> build/lib/airllm/persist
+copying airllm/persist/mlx_model_persister.py -> build/lib/airllm/persist
+copying airllm/persist/model_persister.py -> build/lib/airllm/persist
+copying airllm/persist/__init__.py -> build/lib/airllm/persist
+creating build/lib/airllm/ultra
+copying airllm/ultra/runtime.py -> build/lib/airllm/ultra
+copying airllm/ultra/experts.py -> build/lib/airllm/ultra
+copying airllm/ultra/config.py -> build/lib/airllm/ultra
+copying airllm/ultra/cli.py -> build/lib/airllm/ultra
+copying airllm/ultra/__init__.py -> build/lib/airllm/ultra
+copying airllm/ultra/weights.py -> build/lib/airllm/ultra
+copying airllm/ultra/mlx_runtime.py -> build/lib/airllm/ultra
+copying airllm/ultra/cache.py -> build/lib/airllm/ultra
+copying airllm/ultra/checkpoint.py -> build/lib/airllm/ultra
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/airllm
+copying build/lib/airllm/profiler.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_llama_mlx.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/auto_model.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_mistral.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_baichuan.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/utils.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_qwen3_5.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_mixtral.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/chunked_ce.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/lora_data.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/__init__.py -> build/bdist.linux-x86_64/wheel/./airllm
+creating build/bdist.linux-x86_64/wheel/airllm/persist
+copying build/lib/airllm/persist/safetensor_model_persister.py -> build/bdist.linux-x86_64/wheel/./airllm/persist
+copying build/lib/airllm/persist/mlx_model_persister.py -> build/bdist.linux-x86_64/wheel/./airllm/persist
+copying build/lib/airllm/persist/model_persister.py -> build/bdist.linux-x86_64/wheel/./airllm/persist
+copying build/lib/airllm/persist/__init__.py -> build/bdist.linux-x86_64/wheel/./airllm/persist
+copying build/lib/airllm/airllm_qwen4_exp.py -> build/bdist.linux-x86_64/wheel/./airllm
+creating build/bdist.linux-x86_64/wheel/airllm/ultra
+copying build/lib/airllm/ultra/runtime.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/experts.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/config.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/cli.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/__init__.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/weights.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/mlx_runtime.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/cache.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/ultra/checkpoint.py -> build/bdist.linux-x86_64/wheel/./airllm/ultra
+copying build/lib/airllm/airllm_lora.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_base.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_chatglm.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_qwen.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/tokenization_baichuan.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_qwen2.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/lora_linear.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_kimi_k3.py -> build/bdist.linux-x86_64/wheel/./airllm
+copying build/lib/airllm/airllm_internlm.py -> build/bdist.linux-x86_64/wheel/./airllm
+creating build/bdist.linux-x86_64/wheel/tests
+copying build/lib/tests/test_streamed_lora.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_streaming_gpu.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_lora_data.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_compression.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_automodel.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/__init__.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_qwen38_flash_next_split.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_qwen3_8_split.py -> build/bdist.linux-x86_64/wheel/./tests
+copying build/lib/tests/test_kimi_k3_split.py -> build/bdist.linux-x86_64/wheel/./tests
+running install_egg_info
+running egg_info
+writing airllm.egg-info/PKG-INFO
+writing dependency_links to airllm.egg-info/dependency_links.txt
+writing entry points to airllm.egg-info/entry_points.txt
+writing requirements to airllm.egg-info/requires.txt
+writing top-level names to airllm.egg-info/top_level.txt
+reading manifest file 'airllm.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'airllm.egg-info/SOURCES.txt'
+Copying airllm.egg-info to build/bdist.linux-x86_64/wheel/./airllm-4.0.0+ultra.1-py3.12.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/airllm-4.0.0+ultra.1.dist-info/WHEEL
+creating '/workspace/scratch/c9ddbab729e0/airllm-ultra/dist/.tmp-kr2pdtvy/airllm-4.0.0+ultra.1-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'airllm/__init__.py'
+adding 'airllm/airllm.py'
+adding 'airllm/airllm_baichuan.py'
+adding 'airllm/airllm_base.py'
+adding 'airllm/airllm_chatglm.py'
+adding 'airllm/airllm_internlm.py'
+adding 'airllm/airllm_kimi_k3.py'
+adding 'airllm/airllm_llama_mlx.py'
+adding 'airllm/airllm_lora.py'
+adding 'airllm/airllm_mistral.py'
+adding 'airllm/airllm_mixtral.py'
+adding 'airllm/airllm_qwen.py'
+adding 'airllm/airllm_qwen2.py'
+adding 'airllm/airllm_qwen3_5.py'
+adding 'airllm/airllm_qwen4_exp.py'
+adding 'airllm/auto_model.py'
+adding 'airllm/chunked_ce.py'
+adding 'airllm/lora_data.py'
+adding 'airllm/lora_linear.py'
+adding 'airllm/profiler.py'
+adding 'airllm/tokenization_baichuan.py'
+adding 'airllm/utils.py'
+adding 'airllm/persist/__init__.py'
+adding 'airllm/persist/mlx_model_persister.py'
+adding 'airllm/persist/model_persister.py'
+adding 'airllm/persist/safetensor_model_persister.py'
+adding 'airllm/ultra/__init__.py'
+adding 'airllm/ultra/cache.py'
+adding 'airllm/ultra/checkpoint.py'
+adding 'airllm/ultra/cli.py'
+adding 'airllm/ultra/config.py'
+adding 'airllm/ultra/experts.py'
+adding 'airllm/ultra/mlx_runtime.py'
+adding 'airllm/ultra/runtime.py'
+adding 'airllm/ultra/weights.py'
+adding 'airllm-4.0.0+ultra.1.dist-info/licenses/LICENSE'
+adding 'tests/__init__.py'
+adding 'tests/test_automodel.py'
+adding 'tests/test_compression.py'
+adding 'tests/test_kimi_k3_split.py'
+adding 'tests/test_lora_data.py'
+adding 'tests/test_qwen38_flash_next_split.py'
+adding 'tests/test_qwen3_8_split.py'
+adding 'tests/test_streamed_lora.py'
+adding 'tests/test_streaming_gpu.py'
+adding 'airllm-4.0.0+ultra.1.dist-info/METADATA'
+adding 'airllm-4.0.0+ultra.1.dist-info/WHEEL'
+adding 'airllm-4.0.0+ultra.1.dist-info/entry_points.txt'
+adding 'airllm-4.0.0+ultra.1.dist-info/top_level.txt'
+adding 'airllm-4.0.0+ultra.1.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+WARNING License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+Successfully built airllm-4.0.0+ultra.1.tar.gz and airllm-4.0.0+ultra.1-py3-none-any.whl

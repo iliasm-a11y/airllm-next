@@ -1,0 +1,974 @@
+{
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "threads": 1,
+  "repeats": 3,
+  "new_tokens_per_run": 8,
+  "model": {
+    "parameters": 3279104,
+    "weight_bytes": 13120640,
+    "config": {
+      "transformers_version": "5.20.2",
+      "architectures": [
+        "LlamaForCausalLM"
+      ],
+      "output_hidden_states": false,
+      "return_dict": true,
+      "dtype": "float32",
+      "chunk_size_feed_forward": 0,
+      "is_encoder_decoder": false,
+      "id2label": {
+        "0": "LABEL_0",
+        "1": "LABEL_1"
+      },
+      "label2id": {
+        "LABEL_0": 0,
+        "LABEL_1": 1
+      },
+      "problem_type": null,
+      "vocab_size": 512,
+      "hidden_size": 256,
+      "intermediate_size": 768,
+      "num_hidden_layers": 4,
+      "num_attention_heads": 8,
+      "num_key_value_heads": 2,
+      "hidden_act": "silu",
+      "max_position_embeddings": 512,
+      "initializer_range": 0.02,
+      "rms_norm_eps": 1e-06,
+      "use_cache": true,
+      "pad_token_id": 0,
+      "bos_token_id": 1,
+      "eos_token_id": 2,
+      "pretraining_tp": 1,
+      "tie_word_embeddings": false,
+      "rope_parameters": {
+        "rope_theta": 10000.0,
+        "rope_type": "default"
+      },
+      "attention_bias": false,
+      "attention_dropout": 0.0,
+      "mlp_bias": false,
+      "head_dim": 32,
+      "_name_or_path": "",
+      "model_type": "llama",
+      "output_attentions": false
+    },
+    "weights": "deterministic randomly initialized; not trained"
+  },
+  "all_generated_sequences_match": true,
+  "limitations": [
+    "Small synthetic dense Llama model on CPU; not representative giant-model tok/s.",
+    "No OS page-cache flush: fresh processes are not cold physical disk runs.",
+    "OS I/O counters differ from logical bytes and can be zero on warm cache.",
+    "Baseline uses the untouched v4.0.0 AirLLMBaseModel path, same dependencies."
+  ],
+  "summary_medians": {
+    "upstream_first": {
+      "construction_seconds": 1.5856646739998723,
+      "ttft_excluding_import_seconds": 2.88309473299978,
+      "ttft_from_worker_start_seconds": 6.210684967999896,
+      "decode_tokens_per_second": 0.7210334077245222,
+      "peak_rss_bytes": 452186112,
+      "os_write_bytes_delta": 13201408
+    },
+    "upstream_reopen": {
+      "construction_seconds": 0.34733891400037464,
+      "ttft_excluding_import_seconds": 1.7951657180001348,
+      "ttft_from_worker_start_seconds": 5.121484885999962,
+      "decode_tokens_per_second": 0.7120059971369772,
+      "peak_rss_bytes": 451469312,
+      "os_write_bytes_delta": 0
+    },
+    "ultra_first_cache0": {
+      "construction_seconds": 0.32906615499996406,
+      "ttft_excluding_import_seconds": 0.34258914100018956,
+      "ttft_from_worker_start_seconds": 3.5346561049996126,
+      "decode_tokens_per_second": 112.37270339754124,
+      "peak_rss_bytes": 471584768,
+      "os_write_bytes_delta": 16384
+    },
+    "ultra_reopen_cache0": {
+      "construction_seconds": 0.32887968099976206,
+      "ttft_excluding_import_seconds": 0.34082696699988446,
+      "ttft_from_worker_start_seconds": 3.6445069599999442,
+      "decode_tokens_per_second": 103.92100329235453,
+      "peak_rss_bytes": 472719360,
+      "os_write_bytes_delta": 0
+    },
+    "ultra_cache64": {
+      "construction_seconds": 0.40076375900025596,
+      "ttft_excluding_import_seconds": 0.41351061800014577,
+      "ttft_from_worker_start_seconds": 3.909923317999983,
+      "decode_tokens_per_second": 180.0759447168776,
+      "peak_rss_bytes": 472174592,
+      "os_write_bytes_delta": 0
+    }
+  },
+  "runs": [
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.337805668000101,
+      "construction_seconds": 1.7085865750000266,
+      "first_forward_seconds": 1.321892521999871,
+      "ttft_from_worker_start_seconds": 6.368368207999993,
+      "ttft_excluding_import_seconds": 3.0304790969998976,
+      "decode_tokens_per_second": 0.693790517835821,
+      "token_seconds": [
+        1.321892521999871,
+        1.4113471199998457,
+        1.3215463379997345,
+        1.3790778669999781,
+        1.51053324600025,
+        1.4441943090000677,
+        1.514581490999717,
+        1.5082204509999428
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 448323584,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 13144064,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 452845568,
+      "split_output_bytes": 13120536,
+      "label": "upstream_first",
+      "trial": 0
+    },
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.4303593419999743,
+      "construction_seconds": 0.29721507200019914,
+      "first_forward_seconds": 1.3938087419996918,
+      "ttft_from_worker_start_seconds": 5.121484885999962,
+      "ttft_excluding_import_seconds": 1.691023813999891,
+      "decode_tokens_per_second": 0.7120059971369772,
+      "token_seconds": [
+        1.3938087419996918,
+        1.4174672720000672,
+        1.4055619619998652,
+        1.3802010610002071,
+        1.3353457190000881,
+        1.5128266370002166,
+        1.3973093810000137,
+        1.382665832999919
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 446124032,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 450740224,
+      "split_output_bytes": 13120536,
+      "label": "upstream_reopen",
+      "trial": 0
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.2291966150000917,
+      "construction_seconds": 0.2930151529999421,
+      "first_forward_seconds": 0.01236140399987562,
+      "ttft_from_worker_start_seconds": 3.5346561049996126,
+      "ttft_excluding_import_seconds": 0.3053765569998177,
+      "decode_tokens_per_second": 112.37270339754124,
+      "token_seconds": [
+        0.01236140399987562,
+        0.008218725000006089,
+        0.008873918000062986,
+        0.009079852000013489,
+        0.009369702000185498,
+        0.00899515600031009,
+        0.008706559000074776,
+        0.009048796000115544
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 466329600,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 28672,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 471584768,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 1038671
+        },
+        "checkpoint": {
+          "manifest_hit": 0,
+          "header_bytes": 4224,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_first_cache0",
+      "trial": 0
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.5399407099998825,
+      "construction_seconds": 0.39267161599991596,
+      "first_forward_seconds": 0.015152844000112964,
+      "ttft_from_worker_start_seconds": 3.947849503999805,
+      "ttft_excluding_import_seconds": 0.4078244600000289,
+      "decode_tokens_per_second": 101.99503304586412,
+      "token_seconds": [
+        0.015152844000112964,
+        0.01183003899996038,
+        0.010367867999775626,
+        0.00960134900014964,
+        0.009606782999981078,
+        0.009157306999895809,
+        0.00900149600010991,
+        0.009065951000138739
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 467812352,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 473911296,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 1167585
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_reopen_cache0",
+      "trial": 0
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 64,
+      "import_seconds": 3.5353816239999105,
+      "construction_seconds": 0.3914033470000504,
+      "first_forward_seconds": 0.013494657000137522,
+      "ttft_from_worker_start_seconds": 3.940357773999949,
+      "ttft_excluding_import_seconds": 0.40489800400018794,
+      "decode_tokens_per_second": 180.0759447168776,
+      "token_seconds": [
+        0.013494657000137522,
+        0.004749254999751429,
+        0.0051761979998445895,
+        0.005643121000048268,
+        0.004755575000217505,
+        0.007082351999997627,
+        0.006152374999601307,
+        0.005313612000009016
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 470642688,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 470298624,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 393433
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 39,
+          "logical_bytes": 13116416,
+          "materialized_bytes": 13116416
+        },
+        "cache": {
+          "misses": 7,
+          "hits": 49,
+          "bytes": 13116416,
+          "peak_bytes": 13116416,
+          "capacity": 67108864
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 6,
+          "consumed": 6,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_cache64",
+      "trial": 0
+    },
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.2529611730001307,
+      "construction_seconds": 1.4359822280002845,
+      "first_forward_seconds": 1.2831000280002627,
+      "ttft_from_worker_start_seconds": 5.9721129320005275,
+      "ttft_excluding_import_seconds": 2.719082256000547,
+      "decode_tokens_per_second": 0.7210334077245222,
+      "token_seconds": [
+        1.2831000280002627,
+        1.2870936089998395,
+        1.3894165579999935,
+        1.4346631339999476,
+        1.35934201200007,
+        1.3893640969999979,
+        1.4374691719999646,
+        1.4109394460001567
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 446390272,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 13201408,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 450834432,
+      "split_output_bytes": 13120536,
+      "label": "upstream_first",
+      "trial": 1
+    },
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.549277779000022,
+      "construction_seconds": 0.36867799799983914,
+      "first_forward_seconds": 1.469690079999964,
+      "ttft_from_worker_start_seconds": 5.387725193999813,
+      "ttft_excluding_import_seconds": 1.838368077999803,
+      "decode_tokens_per_second": 0.7256853028492,
+      "token_seconds": [
+        1.469690079999964,
+        1.392026696999892,
+        1.296886731000086,
+        1.397920152000097,
+        1.3229558829998496,
+        1.3903487640000094,
+        1.3623770149997654,
+        1.4835392840000168
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 446353408,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 451469312,
+      "split_output_bytes": 13120536,
+      "label": "upstream_reopen",
+      "trial": 1
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.166922572000203,
+      "construction_seconds": 0.32906615499996406,
+      "first_forward_seconds": 0.013522986000225501,
+      "ttft_from_worker_start_seconds": 3.5095812260001367,
+      "ttft_excluding_import_seconds": 0.34258914100018956,
+      "decode_tokens_per_second": 113.9370520244529,
+      "token_seconds": [
+        0.013522986000225501,
+        0.007209791999684967,
+        0.008852312000271922,
+        0.008795261000159371,
+        0.00889848399992843,
+        0.009326869000233273,
+        0.009245457999895734,
+        0.00910925700009102
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 465747968,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 16384,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 471687168,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 2242888
+        },
+        "checkpoint": {
+          "manifest_hit": 0,
+          "header_bytes": 4224,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_first_cache0",
+      "trial": 1
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.270221049000156,
+      "construction_seconds": 0.32054000700009055,
+      "first_forward_seconds": 0.011098653999852104,
+      "ttft_from_worker_start_seconds": 3.6019395779999286,
+      "ttft_excluding_import_seconds": 0.33163866099994266,
+      "decode_tokens_per_second": 107.67919236742631,
+      "token_seconds": [
+        0.011098653999852104,
+        0.008168221999767411,
+        0.009427338000023155,
+        0.010047176999705698,
+        0.009969530000034865,
+        0.009183417000258487,
+        0.009025481999742624,
+        0.009186751000015647
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 472834048,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 472719360,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 972679
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_reopen_cache0",
+      "trial": 1
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 64,
+      "import_seconds": 3.346704726000098,
+      "construction_seconds": 0.45159155300007114,
+      "first_forward_seconds": 0.01848448600003394,
+      "ttft_from_worker_start_seconds": 3.81686591100015,
+      "ttft_excluding_import_seconds": 0.4700760390001051,
+      "decode_tokens_per_second": 196.37562414874978,
+      "token_seconds": [
+        0.01848448600003394,
+        0.005352063999907841,
+        0.005836852000356885,
+        0.0051724169998124125,
+        0.0049308800003018405,
+        0.004863188999934209,
+        0.004535374000170123,
+        0.004955196000082651
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 472535040,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 472174592,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 487120
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 39,
+          "logical_bytes": 13116416,
+          "materialized_bytes": 13116416
+        },
+        "cache": {
+          "misses": 7,
+          "hits": 49,
+          "bytes": 13116416,
+          "peak_bytes": 13116416,
+          "capacity": 67108864
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 6,
+          "consumed": 6,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_cache64",
+      "trial": 1
+    },
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.3275156240001706,
+      "construction_seconds": 1.5856646739998723,
+      "first_forward_seconds": 1.2974300589999075,
+      "ttft_from_worker_start_seconds": 6.210684967999896,
+      "ttft_excluding_import_seconds": 2.88309473299978,
+      "decode_tokens_per_second": 0.7325525022792901,
+      "token_seconds": [
+        1.2974300589999075,
+        1.34828426499962,
+        1.328875156000322,
+        1.3655949839999266,
+        1.3726807560001362,
+        1.3488145360001909,
+        1.3303938549997838,
+        1.460985537000397
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 447410176,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 13205504,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 452186112,
+      "split_output_bytes": 13120536,
+      "label": "upstream_first",
+      "trial": 2
+    },
+    {
+      "engine": "upstream",
+      "cache_mib": 0,
+      "import_seconds": 3.2662721060000877,
+      "construction_seconds": 0.34733891400037464,
+      "first_forward_seconds": 1.4478268039997602,
+      "ttft_from_worker_start_seconds": 5.061514576999798,
+      "ttft_excluding_import_seconds": 1.7951657180001348,
+      "decode_tokens_per_second": 0.7086891385953537,
+      "token_seconds": [
+        1.4478268039997602,
+        1.4674208100000214,
+        1.3958136809997086,
+        1.444267249999939,
+        1.4102141069997742,
+        1.3797285679997913,
+        1.350914130000092,
+        1.4290328500001124
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 447086592,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 452206592,
+      "split_output_bytes": 13120536,
+      "label": "upstream_reopen",
+      "trial": 2
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.2450733290002063,
+      "construction_seconds": 0.34581488000003446,
+      "first_forward_seconds": 0.012138719000176934,
+      "ttft_from_worker_start_seconds": 3.6031022400002257,
+      "ttft_excluding_import_seconds": 0.3579535990002114,
+      "decode_tokens_per_second": 107.10501792327526,
+      "token_seconds": [
+        0.012138719000176934,
+        0.008368488000087382,
+        0.007717318999766576,
+        0.010205136999957176,
+        0.009228685999914887,
+        0.008611809000285575,
+        0.010727846000008867,
+        0.01049713000020347
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 465592320,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 8192,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 471429120,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 1152571
+        },
+        "checkpoint": {
+          "manifest_hit": 0,
+          "header_bytes": 4224,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_first_cache0",
+      "trial": 2
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 0,
+      "import_seconds": 3.3035997839997435,
+      "construction_seconds": 0.32887968099976206,
+      "first_forward_seconds": 0.011947286000122403,
+      "ttft_from_worker_start_seconds": 3.6445069599999442,
+      "ttft_excluding_import_seconds": 0.34082696699988446,
+      "decode_tokens_per_second": 103.92100329235453,
+      "token_seconds": [
+        0.011947286000122403,
+        0.010094688000208407,
+        0.009881106999728217,
+        0.009303532000103587,
+        0.009380245999636827,
+        0.009216923999701976,
+        0.00990943899978447,
+        0.00957292100019913
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 466477056,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 471527424,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 1013707
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 312,
+          "logical_bytes": 104931328,
+          "materialized_bytes": 104931328
+        },
+        "cache": {
+          "misses": 56,
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 48,
+          "consumed": 48,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_reopen_cache0",
+      "trial": 2
+    },
+    {
+      "engine": "ultra",
+      "cache_mib": 64,
+      "import_seconds": 3.496334293000018,
+      "construction_seconds": 0.40076375900025596,
+      "first_forward_seconds": 0.01274685899988981,
+      "ttft_from_worker_start_seconds": 3.909923317999983,
+      "ttft_excluding_import_seconds": 0.41351061800014577,
+      "decode_tokens_per_second": 157.08231537190827,
+      "token_seconds": [
+        0.01274685899988981,
+        0.0052824539998255204,
+        0.004271657000117557,
+        0.005570561000240559,
+        0.007418366999900172,
+        0.009133909000411222,
+        0.006376553999871248,
+        0.0065091210003629385
+      ],
+      "generated_token_ids": [
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        480,
+        426
+      ],
+      "rss_after_bytes": 472752128,
+      "os_read_bytes_delta": 0,
+      "os_write_bytes_delta": 0,
+      "torch": "2.14.1+cpu",
+      "peak_rss_bytes": 472535040,
+      "metrics": {
+        "runtime": {
+          "group_calls": 56,
+          "sync_load_ns": 420062
+        },
+        "checkpoint": {
+          "manifest_hit": 1,
+          "file_opens": 4,
+          "tensor_reads": 39,
+          "logical_bytes": 13116416,
+          "materialized_bytes": 13116416
+        },
+        "cache": {
+          "misses": 7,
+          "hits": 49,
+          "bytes": 13116416,
+          "peak_bytes": 13116416,
+          "capacity": 67108864
+        },
+        "device_cache": {
+          "bytes": 0,
+          "peak_bytes": 0,
+          "capacity": 0
+        },
+        "prefetch": {
+          "submitted": 6,
+          "consumed": 6,
+          "bytes": 0,
+          "peak_bytes": 3016704,
+          "budget": 4194304
+        },
+        "expert_banks": 0
+      },
+      "split_output_bytes": 13120536,
+      "label": "ultra_cache64",
+      "trial": 2
+    }
+  ]
+}

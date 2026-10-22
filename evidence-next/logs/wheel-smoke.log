@@ -1,0 +1,63 @@
+Installed wheel: /workspace/scratch/5c989e66d6d3/wheel-check/airllm/__init__.py
+[[1, 8, 9, 36, 20, 85]]
+{
+  "compute_device": "cpu",
+  "metal_validated": false,
+  "runtime": {
+    "startup_seconds": 0.012186001000372926,
+    "sampled_rss_peak_bytes": 55021568,
+    "swap_growth_bytes": 0,
+    "ttft_seconds": 0.0417990389996703,
+    "generation_seconds": 0.05909509999946749,
+    "tokens_generated": 3,
+    "prefill_tokens": 3,
+    "prefill_tokens_per_second": 71.77198499763746,
+    "decode_tokens_per_second": 115.63326470827383,
+    "logical_bytes_per_token_including_prefill": 212512.0,
+    "decode_logical_bytes_per_token": 12544.0,
+    "gpu_time_seconds": null,
+    "kv_peak_bytes": 65536,
+    "physical_read_bytes": 0
+  },
+  "telemetry": {
+    "available_bytes": 9684738048,
+    "total_bytes": 10451439616,
+    "rss_bytes": 55058432,
+    "swap_used_bytes": 0,
+    "cpu_percent": 81.2,
+    "gpu_utilization": null,
+    "temperature_c": null,
+    "thermal_throttled": null,
+    "memory_pressure_source": "available physical memory (not macOS pressure level)",
+    "physical_read_bytes": 0,
+    "process_peak_rss_bytes": 54738944,
+    "rss_peak_scope": "process lifetime, not isolated per model"
+  },
+  "io": {
+    "manifest_hit": 1,
+    "logical_bytes": 637536,
+    "fd_opens": 12,
+    "read_calls": 101,
+    "io_seconds": 0.003382179005711805
+  },
+  "weights": {
+    "dequant_seconds": 0.0,
+    "loads": 101,
+    "speculative_reads": 0
+  },
+  "cache": {
+    "misses": 96,
+    "hits": 165,
+    "bytes": 636256,
+    "peak_bytes": 636256,
+    "capacity": 2147483648
+  },
+  "prefetch": {
+    "submitted": 96,
+    "consumed": 96,
+    "wait_seconds": 0.010345961009079474,
+    "peak_bytes": 32768,
+    "budget": 268435456,
+    "enabled": true
+  }
+}

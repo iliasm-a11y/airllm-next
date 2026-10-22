@@ -1,0 +1,42 @@
+{
+  "scope": "fresh Python process + dependencies + miniature GLM token; software/OS cache warm, no tokenizer; not M5 or full GLM-5.3",
+  "model": "/workspace/scratch/5c989e66d6d3/airllm-next/.benchmark-next/run-1792674802960682524/tiny64",
+  "measurements": [
+    {
+      "backend": "ultra",
+      "run": 0,
+      "seconds_process_to_first_token": 4.740882751999379,
+      "stdout": "built empty GlmMoeDsaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n[[1, 8, 9, 36]]"
+    },
+    {
+      "backend": "ultra",
+      "run": 1,
+      "seconds_process_to_first_token": 4.923961098000291,
+      "stdout": "built empty GlmMoeDsaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n[[1, 8, 9, 36]]"
+    },
+    {
+      "backend": "ultra",
+      "run": 2,
+      "seconds_process_to_first_token": 4.514722676000019,
+      "stdout": "built empty GlmMoeDsaForCausalLM via AutoModelForCausalLM (attn=sdpa)\n[[1, 8, 9, 36]]"
+    },
+    {
+      "backend": "next",
+      "run": 0,
+      "seconds_process_to_first_token": 0.16438112200012256,
+      "stdout": "[[1, 8, 9, 36]]"
+    },
+    {
+      "backend": "next",
+      "run": 1,
+      "seconds_process_to_first_token": 0.17754822700044315,
+      "stdout": "[[1, 8, 9, 36]]"
+    },
+    {
+      "backend": "next",
+      "run": 2,
+      "seconds_process_to_first_token": 0.17946220900012122,
+      "stdout": "[[1, 8, 9, 36]]"
+    }
+  ]
+}

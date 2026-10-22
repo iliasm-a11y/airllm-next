@@ -1,0 +1,49 @@
+{
+  "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac",
+  "torch": "2.14.1+cpu",
+  "device": "cpu",
+  "dtype": "float32",
+  "max_absolute_logit_difference": 0.0,
+  "generated_token_ids_match_reference": true,
+  "output": "The capital of France is Paris.",
+  "input_tokens": 37,
+  "new_tokens": 8,
+  "construction_seconds": 0.03518480799993995,
+  "first_forward_seconds": 0.3147826489998806,
+  "metrics": {
+    "runtime": {
+      "group_calls": 297,
+      "sync_load_ns": 593217145
+    },
+    "checkpoint": {
+      "manifest_hit": 0,
+      "header_bytes": 30536,
+      "file_opens": 1,
+      "tensor_reads": 2457,
+      "logical_bytes": 2930878080,
+      "materialized_bytes": 5861756160
+    },
+    "cache": {
+      "misses": 297,
+      "evictions": 294,
+      "bytes": 127408896,
+      "peak_bytes": 127445760,
+      "capacity": 134217728
+    },
+    "device_cache": {
+      "bytes": 0,
+      "peak_bytes": 0,
+      "capacity": 0
+    },
+    "prefetch": {
+      "submitted": 279,
+      "consumed": 279,
+      "bytes": 0,
+      "peak_bytes": 14160384,
+      "budget": 33554432
+    },
+    "expert_banks": 0
+  },
+  "limitation": "One small trained Llama-family model on CPU; not a GLM-5.3/M5 validation."
+}

@@ -1,0 +1,1387 @@
+{
+  "config_url": "https://huggingface.co/zai-org/GLM-5.3/resolve/main/config.json",
+  "index_url": "https://huggingface.co/zai-org/GLM-5.3/resolve/main/model.safetensors.index.json",
+  "retrieved_utc_date": "2026-10-22",
+  "config_sha256": "3ac72612095574542f7fff847ada8e59d9199dd8af44bdf625d7e02615572e69",
+  "index_sha256": "e0fe7f28c1f853d4824e4d796374e3dacf1fe470988773952c79b063768134bf",
+  "transformers": "5.20.2",
+  "architecture": [
+    "GlmMoeDsaForCausalLM"
+  ],
+  "native_meta_model_parameters": 743377000704,
+  "native_meta_model_created": true,
+  "layers": 78,
+  "experts_per_sparse_layer": 256,
+  "selected_experts_per_token": 8,
+  "checkpoint_bytes": 755617140416,
+  "checkpoint_tensor_entries": 118629,
+  "checkpoint_files": 141,
+  "fp8_expert_weights_with_scale": 58368,
+  "missing_model_keys": [],
+  "missing_expert_scale_keys": [],
+  "packed_to_individual_mappings": [
+    {
+      "native": "model.layers.3.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.3.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.4.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.4.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.5.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.5.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.6.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.6.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.7.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.7.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.8.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.8.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.9.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.9.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.10.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.10.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.11.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.11.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.12.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.12.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.13.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.13.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.14.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.14.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.15.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.15.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.16.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.16.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.17.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.17.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.18.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.18.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.19.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.19.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.20.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.20.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.21.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.21.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.22.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.22.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.23.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.23.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.24.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.24.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.25.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.25.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.26.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.26.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.27.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.27.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.28.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.28.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.29.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.29.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.30.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.30.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.31.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.31.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.32.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.32.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.33.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.33.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.34.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.34.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.35.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.35.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.36.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.36.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.37.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.37.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.38.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.38.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.39.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.39.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.40.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.40.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.41.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.41.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.42.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.42.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.43.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.43.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.44.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.44.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.45.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.45.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.46.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.46.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.47.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.47.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.48.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.48.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.49.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.49.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.50.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.50.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.51.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.51.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.52.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.52.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.53.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.53.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.54.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.54.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.55.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.55.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.56.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.56.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.57.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.57.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.58.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.58.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.59.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.59.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.60.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.60.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.61.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.61.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.62.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.62.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.63.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.63.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.64.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.64.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.65.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.65.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.66.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.66.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.67.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.67.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.68.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.68.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.69.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.69.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.70.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.70.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.71.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.71.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.72.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.72.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.73.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.73.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.74.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.74.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.75.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.75.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.76.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.76.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    },
+    {
+      "native": "model.layers.77.mlp.experts.gate_up_proj",
+      "checkpoint_tensors": 512,
+      "native_shape": [
+        256,
+        4096,
+        6144
+      ]
+    },
+    {
+      "native": "model.layers.77.mlp.experts.down_proj",
+      "checkpoint_tensors": 256,
+      "native_shape": [
+        256,
+        6144,
+        2048
+      ]
+    }
+  ],
+  "quantization": {
+    "quant_method": "fp8",
+    "weight_block_size": [
+      128,
+      128
+    ],
+    "fmt": "e4m3",
+    "activation_scheme": "dynamic"
+  },
+  "full_weights_downloaded": false,
+  "full_model_inference_tested": false,
+  "m5_mps_or_mlx_tested": false,
+  "conclusion": "Native config/meta skeleton and tensor-name layout verified; no full-weight or hardware validation."
+}
