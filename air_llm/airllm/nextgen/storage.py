@@ -29,6 +29,8 @@ def physical_read_bytes():
 
 class OffsetCheckpoint(DirectCheckpoint):
     def __init__(self, root, cache_dir=None, max_open_files=16, max_read_bytes=512*1024**2):
+        if not isinstance(max_read_bytes,int) or isinstance(max_read_bytes,bool) or max_read_bytes < 1:
+            raise ValueError('max_read_bytes must be a positive integer')
         super().__init__(root, cache_dir, max_open_files)
         self.fds = OrderedDict()
         self.io_lock = RLock()
@@ -101,7 +103,8 @@ class OffsetCheckpoint(DirectCheckpoint):
             self.stats['io_seconds']+=perf_counter()-t
         return data
 
-    def read_array(self,key,*,rows=None,expert=None,mode='pread'):
+    def _region(self,key,*,rows=None,expert=None):
+        """Validate one tensor selection without touching its data pages."""
         d=self.tensors[key]; shape=list(d['shape']);offset=d['offset']
         dt=np.dtype(_DT[d['dtype']]);item=dt.itemsize
         if expert is not None:
@@ -113,8 +116,66 @@ class OffsetCheckpoint(DirectCheckpoint):
             if not 0<=a<=b<=shape[0]: raise ValueError('Invalid matrix row range')
             offset+=a*shape[1]*item;shape[0]=b-a
         size=int(np.prod(shape,dtype=object))*item
-        data=self._bytes(d['file'],offset,size,mode)
+        return d['file'],offset,size,dt,tuple(shape)
+
+    def read_array(self,key,*,rows=None,expert=None,mode='pread'):
+        filename,offset,size,dt,shape=self._region(key,rows=rows,expert=expert)
+        data=self._bytes(filename,offset,size,mode)
+        with self.io_lock:self.stats['requested_bytes']+=size
         return np.frombuffer(data,dtype=dt).reshape(shape)
+
+    def read_arrays(self,requests,*,mode='pread',max_gap_bytes=0,max_batch_bytes=None,coalesce=True):
+        """Read selected regions in file order, combining adjacent offsets.
+
+        Each request is a key or a dict with key/rows/expert. Returned arrays are
+        views into byte-bounded shared read buffers, in the original request
+        order. Gaps are opt-in and charged as logical IO rather than hidden.
+        The total backing allocation, including gaps, is validated before IO;
+        callers must consume/release one bounded batch before requesting another.
+        """
+        if mode not in ('pread','mmap'):raise ValueError('mode must be pread or mmap')
+        if not isinstance(max_gap_bytes,int) or isinstance(max_gap_bytes,bool) or max_gap_bytes<0:
+            raise ValueError('max_gap_bytes must be a nonnegative integer')
+        budget=self.max_read_bytes if max_batch_bytes is None else max_batch_bytes
+        if not isinstance(budget,int) or isinstance(budget,bool) or budget<1:
+            raise ValueError('max_batch_bytes must be a positive integer')
+        regions=[]
+        for i,request in enumerate(requests):
+            if isinstance(request,str):request={'key':request}
+            if not isinstance(request,dict) or set(request)-{'key','rows','expert'}:
+                raise ValueError('Expected tensor key or key/rows/expert request')
+            filename,offset,size,dt,shape=self._region(**request)
+            if size>self.max_read_bytes:raise MemoryError('Read exceeds max_tensor_bytes; use row tiles')
+            regions.append((filename,offset,size,dt,shape,i))
+        groups=[]
+        for region in sorted(regions,key=lambda r:(r[0],r[1])):
+            filename,offset,size,_,_,_=region
+            end=offset+size
+            if (coalesce and groups and filename==groups[-1][0] and offset<=groups[-1][2]+max_gap_bytes
+                and max(end,groups[-1][2])-groups[-1][1]<=self.max_read_bytes):
+                groups[-1][2]=max(end,groups[-1][2]);groups[-1][3].append(region)
+            else:groups.append([filename,offset,end,[region]])
+        allocated=sum(end-start for _,start,end,_ in groups)
+        if allocated>budget:raise MemoryError('Coalesced batch exceeds max_batch_bytes; split the request batch')
+        output=[None]*len(regions)
+        requested=sum(r[2] for r in regions)
+        for filename,start,end,entries in groups:
+            data=self._bytes(filename,start,end-start,mode)
+            for _,offset,size,dt,shape,i in entries:
+                output[i]=np.frombuffer(data,dtype=dt,count=size//dt.itemsize,offset=offset-start).reshape(shape)
+        with self.io_lock:
+            self.stats['requested_bytes']+=requested
+            self.stats['coalesced_batches']+=1
+            self.stats['coalesced_groups']+=len(groups)
+            # Overlapping requests can share bytes; never count sharing as a gap.
+            gaps=0
+            for _,start,_,entries in groups:
+                covered=start
+                for _,offset,size,_,_,_ in entries:
+                    gaps+=max(0,offset-covered);covered=max(covered,offset+size)
+            self.stats['coalesced_gap_bytes']+=gaps
+            self.stats['coalesced_backing_bytes']+=allocated
+        return output
 
     def close(self):
         with self.io_lock:

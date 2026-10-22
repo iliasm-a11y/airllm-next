@@ -1,0 +1,1098 @@
+{
+  "schema_version": 1,
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "numpy": "2.5.4",
+  "pid": 2,
+  "checkpoint_fingerprint": "ee037462f41c7d8b3502c09d0dbf73a00cc58348856f9ddf44d1e790514b1aa7",
+  "baseline_storage_sha256": "dca0e9060de6b0423f1c57c50fcdf7b4d3c2f19afdf55f178dd04cdbd16c795b",
+  "baseline_scope": "archive baseline storage module",
+  "metadata_seconds": 0.020465675999730593,
+  "metadata_stats": {
+    "manifest_hit": 0,
+    "header_bytes": 23480
+  },
+  "input_tensor_count": 256,
+  "input_tensor_bytes": 16777216,
+  "input_order_sha256": "ddc411f5bdce839d35839f68071098d821f62c2735e5a3703b9b4803adf14c18",
+  "group_count": 32,
+  "max_read_bytes": 4194304,
+  "cache_state": "cold-hint",
+  "cache_state_explanation": "best-effort eviction advisory before each candidate; no verified cold-cache claim",
+  "physical_counters_scope": "process-level Linux storage bytes, including readahead; unavailable platforms return null",
+  "physical_ssd_bandwidth_certified": false,
+  "inference_performed": false,
+  "scope": "bounded offset-I/O microbenchmark; no model, Metal, quality, TTFT or full-checkpoint throughput claim",
+  "peak_rss_process_lifetime_bytes": 34287616,
+  "seed": 20261022,
+  "summary": {
+    "separate_pread": {
+      "median_read_seconds": 0.006642163993092254,
+      "median_read_calls": 256,
+      "read_time_speedup_vs_separate_pread": 1.0
+    },
+    "separate_mmap": {
+      "median_read_seconds": 0.011690040013490943,
+      "median_read_calls": 256,
+      "read_time_speedup_vs_separate_pread": 0.5681900135009662
+    },
+    "coalesced_pread": {
+      "median_read_seconds": 0.005704808008886175,
+      "median_read_calls": 32,
+      "read_time_speedup_vs_separate_pread": 1.1643098212500742
+    },
+    "coalesced_mmap": {
+      "median_read_seconds": 0.008464239996101242,
+      "median_read_calls": 32,
+      "read_time_speedup_vs_separate_pread": 0.784732474049854
+    }
+  },
+  "raw_measurements": [
+    {
+      "repeat": 0,
+      "order": 0,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.021061578998342156,
+      "read_seconds": 0.009459385015361477,
+      "cpu_seconds_including_sha256": 0.020156915000000053,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1773605363.6420128,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 1,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.0065883280149137136
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 0,
+      "order": 1,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.026091716001246823,
+      "read_seconds": 0.014478621003945591,
+      "cpu_seconds_including_sha256": 0.02445396099999997,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1158757867.5778594,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.011046699026337592
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 0,
+      "order": 2,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.0201104990010208,
+      "read_seconds": 0.009524503991997335,
+      "cpu_seconds_including_sha256": 0.018615433000000015,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1761479234.414362,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.006056525005988078,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 0,
+      "order": 3,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.017003603003104217,
+      "read_seconds": 0.006295191004028311,
+      "cpu_seconds_including_sha256": 0.016240694000000055,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2665084504.8647785,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.003203142994607333,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 1,
+      "order": 0,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.019422820001636865,
+      "read_seconds": 0.008980673996120458,
+      "cpu_seconds_including_sha256": 0.01784626300000003,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1868146645.4797883,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.005762202981713926,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 1,
+      "order": 1,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.016479447000165237,
+      "read_seconds": 0.0060062309821660165,
+      "cpu_seconds_including_sha256": 0.015785049999999856,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2793301831.0177712,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.0030594840136473067,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 1,
+      "order": 2,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.017205173000547802,
+      "read_seconds": 0.006833960003859829,
+      "cpu_seconds_including_sha256": 0.01657715400000015,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2454977200.7041607,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.004106645999854663
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 1,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.022706376999849454,
+      "read_seconds": 0.012237156002811389,
+      "cpu_seconds_including_sha256": 0.020952775000000035,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1371006138.6931381,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.009172933983791154
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 2,
+      "order": 0,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.01935244500054978,
+      "read_seconds": 0.008828259004076244,
+      "cpu_seconds_including_sha256": 0.01793512499999994,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1900399160.497388,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.005744206991948886,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 2,
+      "order": 1,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.016519567001523683,
+      "read_seconds": 0.005357262009056285,
+      "cpu_seconds_including_sha256": 0.015869429999999962,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3131677332.868663,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.002955310006655054,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 2,
+      "order": 2,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.021956726002827054,
+      "read_seconds": 0.00847546801014687,
+      "cpu_seconds_including_sha256": 0.021370962999999854,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1979503194.3857543,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.006560587993590161
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 2,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.028335360999335535,
+      "read_seconds": 0.011279936006758362,
+      "cpu_seconds_including_sha256": 0.026814115999999943,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1487350281.9473398,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.007934839002700755
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 3,
+      "order": 0,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.018284493002283853,
+      "read_seconds": 0.007489432009606389,
+      "cpu_seconds_including_sha256": 0.01674642500000001,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2240118606.922467,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.004848528013098985,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 3,
+      "order": 1,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.015287079000700032,
+      "read_seconds": 0.004724654005258344,
+      "cpu_seconds_including_sha256": 0.01464944800000012,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3550993571.45045,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.002700533008464845,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 3,
+      "order": 2,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.016653856000630185,
+      "read_seconds": 0.004912834989227122,
+      "cpu_seconds_including_sha256": 0.016108879999999992,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3414976492.5524926,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.0031755049676576164
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 3,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.018967855998198502,
+      "read_seconds": 0.008103262993245153,
+      "cpu_seconds_including_sha256": 0.017572207000000173,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2070427186.4291482,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.006016590017679846
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 4,
+      "order": 0,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.015838657000131207,
+      "read_seconds": 0.004694221985118929,
+      "cpu_seconds_including_sha256": 0.015114567000000134,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3574014193.0196652,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.0025329550007882062,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 4,
+      "order": 1,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.01615975299864658,
+      "read_seconds": 0.005175802987650968,
+      "cpu_seconds_including_sha256": 0.015478758000000203,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3241471137.914065,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.003316949019790627
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 4,
+      "order": 2,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.017672255002253223,
+      "read_seconds": 0.006906136000907281,
+      "cpu_seconds_including_sha256": 0.016274915999999973,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2429320244.749875,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.00458048099608277,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 4,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.017472057999839308,
+      "read_seconds": 0.00741100201048539,
+      "cpu_seconds_including_sha256": 0.016058104000000073,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2263825590.1513596,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.005875572009244934
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 5,
+      "order": 0,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.020187054000416538,
+      "read_seconds": 0.008826854013022967,
+      "cpu_seconds_including_sha256": 0.018741169000000113,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1900701651.4884267,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.006643285996688064,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 5,
+      "order": 1,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.017142949996923562,
+      "read_seconds": 0.005704808008886175,
+      "cpu_seconds_including_sha256": 0.016446811000000006,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2940890556.503695,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.0030749069919693284,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 5,
+      "order": 2,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.01611747900096816,
+      "read_seconds": 0.005054230005043792,
+      "cpu_seconds_including_sha256": 0.015504204000000188,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3319440544.505777,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.0033050159763661213
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 5,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.024423017999652075,
+      "read_seconds": 0.011690040013490943,
+      "cpu_seconds_including_sha256": 0.022906293000000133,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1435171819.8259525,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.008947314978286158
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 6,
+      "order": 0,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.019083266000961885,
+      "read_seconds": 0.006698178003716748,
+      "cpu_seconds_including_sha256": 0.01859608300000004,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2504743228.7840815,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.004279175987903727
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 6,
+      "order": 1,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.02113173299949267,
+      "read_seconds": 0.00803619300131686,
+      "cpu_seconds_including_sha256": 0.01977383899999996,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2087706952.4401395,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.0051117080001858994,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 6,
+      "order": 2,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.019397030999243725,
+      "read_seconds": 0.0060992819926468655,
+      "cpu_seconds_including_sha256": 0.018700398000000007,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2750687051.398209,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.003440470009081764,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 6,
+      "order": 3,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.023053365999658126,
+      "read_seconds": 0.011868536999827484,
+      "cpu_seconds_including_sha256": 0.021452378999999855,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1413587538.2318702,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.008798833980108611
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 7,
+      "order": 0,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.02345365499786567,
+      "read_seconds": 0.012878341003670357,
+      "cpu_seconds_including_sha256": 0.021800370000000013,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1302746681.0529752,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.009153745988442097
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 7,
+      "order": 1,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.018211488997621927,
+      "read_seconds": 0.006947129986656364,
+      "cpu_seconds_including_sha256": 0.016577163000000006,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2414985185.569391,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.004790994007635163,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 7,
+      "order": 2,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.015151579002122162,
+      "read_seconds": 0.0045524110028054565,
+      "cpu_seconds_including_sha256": 0.014183529000000084,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3685347388.3752847,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.002754142009507632,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 7,
+      "order": 3,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.016633215000183554,
+      "read_seconds": 0.005044213998189662,
+      "cpu_seconds_including_sha256": 0.01606457399999983,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 3326031767.490682,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.0032391130334872287
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 8,
+      "order": 0,
+      "mode": "coalesced_mmap",
+      "wall_seconds_including_sha256": 0.020590704996720888,
+      "read_seconds": 0.008464239996101242,
+      "cpu_seconds_including_sha256": 0.019032069999999957,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1982129052.074119,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.005230985010712175,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 8,
+      "order": 1,
+      "mode": "separate_mmap",
+      "wall_seconds_including_sha256": 0.022257731998251984,
+      "read_seconds": 0.011624989001575159,
+      "cpu_seconds_including_sha256": 0.020778626000000022,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 1443202741.759732,
+      "physical_read_bytes": 16801792,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.008375570039788727
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 8,
+      "order": 2,
+      "mode": "separate_pread",
+      "wall_seconds_including_sha256": 0.01724270799968508,
+      "read_seconds": 0.006642163993092254,
+      "cpu_seconds_including_sha256": 0.01663355799999988,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2525865970.404832,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 256,
+        "io_seconds": 0.003940780014090706
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    },
+    {
+      "repeat": 8,
+      "order": 3,
+      "mode": "coalesced_pread",
+      "wall_seconds_including_sha256": 0.01673563699660008,
+      "read_seconds": 0.006173614001454553,
+      "cpu_seconds_including_sha256": 0.0160685599999999,
+      "requested_tensor_bytes": 16777216,
+      "logical_bytes_per_second_read_timing": 2717568023.534862,
+      "physical_read_bytes": 16781312,
+      "counter_delta": {
+        "manifest_hit": 0,
+        "header_bytes": 0,
+        "fd_opens": 0,
+        "logical_bytes": 16777216,
+        "read_calls": 32,
+        "io_seconds": 0.003027314003702486,
+        "requested_bytes": 16777216,
+        "coalesced_batches": 32,
+        "coalesced_groups": 32,
+        "coalesced_gap_bytes": 0,
+        "coalesced_backing_bytes": 16777216
+      },
+      "payload_sha256_verified": true,
+      "cache_hint": {
+        "requested": true,
+        "available": true,
+        "failures": [],
+        "guaranteed_cold": false,
+        "method": "POSIX_FADV_DONTNEED advisory only"
+      }
+    }
+  ],
+  "input_kind": "deterministic synthetic float32 tensor bytes"
+}

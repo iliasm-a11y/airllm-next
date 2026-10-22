@@ -86,11 +86,12 @@ def runtime_tuning_key(model):
     if model.options.quantized_dir:
         p=Path(model.options.quantized_dir)/'manifest.json'
         manifest=sha256(p.read_bytes()).hexdigest()
-    identity={'engine_schema_version':2,'checkpoint':model.checkpoint.fingerprint,'quantized_manifest':manifest,
+    identity={'engine_schema_version':3,'checkpoint':model.checkpoint.fingerprint,'quantized_manifest':manifest,
       'platform':platform.platform(),'machine':platform.machine(),'device':model.device,
       'dtype':model.options.dtype,'profile':model.options.profile,'prefill_chunk':model.options.prefill_chunk,
       'cache_bucket_256MiB':model.options.cache_bytes//(256*MiB),
-      'io_bucket_64MiB':model.options.io_bytes//(64*MiB)}
+      'io_bucket_64MiB':model.options.io_bytes//(64*MiB),
+      'cache_policy':model.options.policy,'coalesce_reads':model.options.coalesce_reads,'selective_fp8_scales':model.options.selective_fp8_scales}
     return sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
 
 
@@ -125,15 +126,36 @@ def calibrate_prefetch(model,input_ids,tokens=8):
 
 
 def calibrate_cache(cache):
-    """Replay actual recent weighted requests; do not infer time gains from hits."""
+    """Replay real requests and load costs; service sums are not wall-time gains.
+
+    Unknown first-request costs use the actually observed subsequent load of the
+    same matrix. All policies see identical sizes and service observations.
+    """
     from .cache import WeightCache
     from types import SimpleNamespace
     trace=list(cache.trace);rows=[]
-    for policy in ('slru','lru','lfu'):
-        candidate=WeightCache(cache.capacity,policy);miss_bytes=0
+    costs={}
+    for key,seconds in cache.load_trace:
+        costs.setdefault(key,[]).append(seconds)
+    import statistics
+    costs={key:statistics.median(values) for key,values in costs.items()}
+    costs.update({key:value for key,value in cache.costs.items() if key not in costs})
+    known=sum(key in costs for key,_ in trace)
+    for policy in ('slru','lru','lfu','cost'):
+        candidate=WeightCache(cache.capacity,policy);miss_bytes=0;service=0.;unknown=0
         for key,n in trace:
-            if candidate.get(key) is None:
-                miss_bytes+=n;candidate.put(key,SimpleNamespace(nbytes=n))
-        rows.append({'policy':policy,'replayed_requests':len(trace),'miss_weight_bytes':miss_bytes})
-    best=min(rows,key=lambda x:x['miss_weight_bytes'])['policy']
-    return {'selected_policy':best,'scope':'recent actual software weight requests, not physical SSD reads','policies':rows}
+            if candidate.get(key,n) is None:
+                miss_bytes+=n
+                if key in costs:
+                    service+=costs[key];candidate.record_load(key,costs[key])
+                else:unknown+=1
+                candidate.put(key,SimpleNamespace(nbytes=n))
+        rows.append({'policy':policy,'replayed_requests':len(trace),'miss_weight_bytes':miss_bytes,
+            'replayed_observed_service_seconds':service,'misses_without_cost_observation':unknown})
+    # Preserve the existing byte-oriented auto-selection rule. Cost policy stays
+    # explicit until end-to-end calibration demonstrates a latency improvement.
+    eligible=[row for row in rows if row['policy']!='cost']
+    best=min(eligible,key=lambda x:x['miss_weight_bytes'])['policy']
+    return {'selected_policy':best,'scope':'recent actual weight requests and observed IO+conversion durations',
+        'cost_observation_request_coverage':known/len(trace) if trace else 0.,
+        'cost_policy_auto_enabled':False,'wall_time_gain_measured':False,'policies':rows}

@@ -48,6 +48,18 @@ class LatentKV:
 
     def reset(self):self.layers.clear();self.position=0;self.bytes=0
 
+    def truncate(self,position):
+        """Discard an uncommitted tail without copying latent KV buffers.
+
+        Attention only reads through position+new_input_length, and append
+        overwrites the discarded tail before reading it. This contract applies
+        to this append-only GLM cache; recurrent architecture states need their
+        own snapshot/recompute mechanism and cannot use position rollback.
+        """
+        if not isinstance(position,int) or isinstance(position,bool) or not 0<=position<=self.position:
+            raise ValueError('KV truncate position must be within the committed prefix')
+        self.position=position
+
 
 class DSAAttention:
     def __init__(self,mx,reader,config,layer):

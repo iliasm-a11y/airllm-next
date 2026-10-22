@@ -1,0 +1,23 @@
+{
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "machine": "x86_64",
+  "versions": {
+    "numpy": "2.5.4",
+    "pytest": "9.1.1",
+    "torch": "2.14.1+cpu",
+    "transformers": "5.20.2",
+    "mlx": "0.32.4",
+    "mlx-cpu": "0.32.4",
+    "psutil": "7.2.2",
+    "safetensors": "0.8.0",
+    "accelerate": "1.15.0"
+  },
+  "source_archive_sha256": "7433255c37830b6d1603e276452154a81e67c7bdbd6eae826216230b1bb93e2d",
+  "scope": "CPU Linux baseline, no Metal or full checkpoint validation",
+  "metal_validated": false,
+  "source_tree": "fresh extraction of unmodified requested archive",
+  "benchmark_command": "PYTHONPATH=<deps> OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 benchmarks/benchmark_next.py --tokens 32 --work-dir <fresh-fixtures> --output <result>",
+  "test_command": "PYTHONPATH=<deps> OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest tests_next -q --junitxml=<result>",
+  "cache_condition": "Software cache newly constructed at case start; OS file cache not dropped. No cold SSD claim."
+}

@@ -1,0 +1,1155 @@
+{
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "torch": "2.14.1+cpu",
+  "mlx": "0.32.4",
+  "device": "cpu",
+  "metal_available": false,
+  "telemetry_begin": {
+    "available_bytes": 9308487680,
+    "total_bytes": 10451439616,
+    "rss_bytes": 498741248,
+    "swap_used_bytes": 0,
+    "cpu_percent": 15.8,
+    "gpu_utilization": null,
+    "temperature_c": null,
+    "thermal_throttled": null,
+    "memory_pressure_source": "available physical memory (not macOS pressure level)",
+    "physical_read_bytes": 0,
+    "process_peak_rss_bytes": 498622464,
+    "rss_peak_scope": "process lifetime, not isolated per model"
+  },
+  "scope": "synthetic GLM DSA fixtures; not full GLM-5.3 and not SSD Fanxiang",
+  "cases": [
+    {
+      "label": "tiny64",
+      "parameter_count": 251200,
+      "checkpoint_bytes": 1004896,
+      "construction_seconds": 0.010055334998469334,
+      "first_prefill_seconds": 0.029986221001308877,
+      "quality_vs_original": {
+        "max_abs_logit_error": 1.4901161193847656e-07,
+        "rms_logit_error": 3.8082379916204445e-08,
+        "argmax_agreement": 1.0,
+        "mean_KL_ref_to_candidate": 7.64574214520422e-16,
+        "scope": "random miniature weights; not a linguistic quality evaluation of GLM-5.3"
+      },
+      "runs": [
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.009998211000493029,
+            "sampled_rss_peak_bytes": 538619904,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.00943197300148313,
+            "generation_seconds": 0.21321430800162489,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 848.1788485550204,
+            "decode_tokens_per_second": 152.1230974214641,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9322356736,
+            "total_bytes": 10451439616,
+            "rss_bytes": 538632192,
+            "swap_used_bytes": 0,
+            "cpu_percent": 11.8,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 538214400,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 15304,
+            "fd_opens": 12,
+            "logical_bytes": 697440,
+            "read_calls": 149,
+            "io_seconds": 0.0072980039949470665
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 149,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 2706,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015285208985005738,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.009998211000493029,
+            "sampled_rss_peak_bytes": 538914816,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007580415000120411,
+            "generation_seconds": 0.19841787399855093,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1055.3511911779137,
+            "decode_tokens_per_second": 162.44190298223867,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9322356736,
+            "total_bytes": 10451439616,
+            "rss_bytes": 538914816,
+            "swap_used_bytes": 0,
+            "cpu_percent": 13.5,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 538476544,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 15304,
+            "fd_opens": 12,
+            "logical_bytes": 707424,
+            "read_calls": 188,
+            "io_seconds": 0.008203512978070648
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 188,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 5412,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015285208985005738,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.009998211000493029,
+            "sampled_rss_peak_bytes": 538914816,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007491363001463469,
+            "generation_seconds": 0.19562991400016472,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1067.8964560170382,
+            "decode_tokens_per_second": 164.77218430482117,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9322356736,
+            "total_bytes": 10451439616,
+            "rss_bytes": 538918912,
+            "swap_used_bytes": 0,
+            "cpu_percent": 12.6,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 538476544,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 15304,
+            "fd_opens": 12,
+            "logical_bytes": 717408,
+            "read_calls": 227,
+            "io_seconds": 0.009059592975972919
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 227,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 8118,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015285208985005738,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        }
+      ],
+      "cache_state": "first request has software cache empty; OS page cache not flushed",
+      "full_GLM53_result": false,
+      "M5_result": false
+    },
+    {
+      "label": "affine_int4_tiny64",
+      "parameter_count": 251200,
+      "checkpoint_bytes": 1004896,
+      "construction_seconds": 0.011123235002742149,
+      "first_prefill_seconds": 0.02890808099982678,
+      "quality_vs_original": {
+        "max_abs_logit_error": 0.013617992401123047,
+        "rms_logit_error": 0.004431980662047863,
+        "argmax_agreement": 1.0,
+        "mean_KL_ref_to_candidate": 9.628173523552496e-06,
+        "scope": "random miniature weights; not a linguistic quality evaluation of GLM-5.3"
+      },
+      "runs": [
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.01099148100183811,
+            "sampled_rss_peak_bytes": 541106176,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.010091388998262119,
+            "generation_seconds": 0.20736691799902474,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 792.7550906399223,
+            "decode_tokens_per_second": 157.14062538329406,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9319456768,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541122560,
+            "swap_used_bytes": 0,
+            "cpu_percent": 14.1,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 540827648,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 457824,
+            "read_calls": 113,
+            "io_seconds": 0.0026005750114563853,
+            "quantized_logical_bytes": 55296
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 113,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 2706,
+            "bytes": 445792,
+            "peak_bytes": 445792,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015049440971779404,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.01099148100183811,
+            "sampled_rss_peak_bytes": 541364224,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007235744000354316,
+            "generation_seconds": 0.20014656100102002,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1105.62231051959,
+            "decode_tokens_per_second": 160.69601737207418,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9319456768,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541364224,
+            "swap_used_bytes": 0,
+            "cpu_percent": 22.8,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 541089792,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 467808,
+            "read_calls": 152,
+            "io_seconds": 0.003465917019639164,
+            "quantized_logical_bytes": 55296
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 152,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 5412,
+            "bytes": 445792,
+            "peak_bytes": 445792,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015049440971779404,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.01099148100183811,
+            "sampled_rss_peak_bytes": 541368320,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007135106003261171,
+            "generation_seconds": 0.1992968380000093,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1121.216699001181,
+            "decode_tokens_per_second": 161.32244270427682,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9319456768,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541368320,
+            "swap_used_bytes": 0,
+            "cpu_percent": 14.0,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 541089792,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 477792,
+            "read_calls": 191,
+            "io_seconds": 0.004305649028538028,
+            "quantized_logical_bytes": 55296
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 191,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 8118,
+            "bytes": 445792,
+            "peak_bytes": 445792,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.015049440971779404,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        }
+      ],
+      "cache_state": "first request has software cache empty; OS page cache not flushed",
+      "full_GLM53_result": false,
+      "M5_result": false
+    },
+    {
+      "label": "affine_int8_tiny64",
+      "parameter_count": 251200,
+      "checkpoint_bytes": 1004896,
+      "construction_seconds": 0.015881462997640483,
+      "first_prefill_seconds": 0.03410686699862708,
+      "quality_vs_original": {
+        "max_abs_logit_error": 0.0007238090038299561,
+        "rms_logit_error": 0.00023127849271986634,
+        "argmax_agreement": 1.0,
+        "mean_KL_ref_to_candidate": 2.6243967024290462e-08,
+        "scope": "random miniature weights; not a linguistic quality evaluation of GLM-5.3"
+      },
+      "runs": [
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.015814893999049673,
+            "sampled_rss_peak_bytes": 541536256,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.010187261999817565,
+            "generation_seconds": 0.29199386300024344,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 785.2944196530201,
+            "decode_tokens_per_second": 110.00452044043196,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9311277056,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541540352,
+            "swap_used_bytes": 0,
+            "cpu_percent": 19.8,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 541089792,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 494688,
+            "read_calls": 113,
+            "io_seconds": 0.004225960969051812,
+            "quantized_logical_bytes": 92160
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 113,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 2706,
+            "bytes": 482656,
+            "peak_bytes": 482656,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.016666088988131378,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.015814893999049673,
+            "sampled_rss_peak_bytes": 541560832,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007579156001156662,
+            "generation_seconds": 0.19783654899947578,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1055.5264990955607,
+            "decode_tokens_per_second": 162.93716376253445,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9310687232,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541560832,
+            "swap_used_bytes": 0,
+            "cpu_percent": 13.0,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 541089792,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 504672,
+            "read_calls": 152,
+            "io_seconds": 0.005037936960434308,
+            "quantized_logical_bytes": 92160
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 152,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 5412,
+            "bytes": 482656,
+            "peak_bytes": 482656,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.016666088988131378,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.015814893999049673,
+            "sampled_rss_peak_bytes": 541564928,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007343165001657326,
+            "generation_seconds": 0.21712689500054694,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1089.4484868846648,
+            "decode_tokens_per_second": 147.7712308774569,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9310687232,
+            "total_bytes": 10451439616,
+            "rss_bytes": 541569024,
+            "swap_used_bytes": 0,
+            "cpu_percent": 12.4,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 541220864,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 1,
+            "fd_opens": 9,
+            "logical_bytes": 514656,
+            "read_calls": 191,
+            "io_seconds": 0.005902448963752249,
+            "quantized_logical_bytes": 92160
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 191,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 8118,
+            "bytes": 482656,
+            "peak_bytes": 482656,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.016666088988131378,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        }
+      ],
+      "cache_state": "first request has software cache empty; OS page cache not flushed",
+      "full_GLM53_result": false,
+      "M5_result": false
+    },
+    {
+      "label": "larger128",
+      "parameter_count": 2517312,
+      "checkpoint_bytes": 10069568,
+      "construction_seconds": 0.017505179999716347,
+      "first_prefill_seconds": 0.0739372940006433,
+      "quality_vs_original": {
+        "max_abs_logit_error": 5.960464477539062e-07,
+        "rms_logit_error": 1.206290249911035e-07,
+        "argmax_agreement": 1.0,
+        "mean_KL_ref_to_candidate": 7.313394750571519e-15,
+        "scope": "random miniature weights; not a linguistic quality evaluation of GLM-5.3"
+      },
+      "runs": [
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0174472139988211,
+            "sampled_rss_peak_bytes": 563437568,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.07616473199959728,
+            "generation_seconds": 0.7543737600026361,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 105.03549070509825,
+            "decode_tokens_per_second": 45.70862185553375,
+            "logical_bytes_per_token_including_prefill": 1917124.0,
+            "decode_logical_bytes_per_token": 1705804.3870967743,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 180224,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9286213632,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563437568,
+            "swap_used_bytes": 0,
+            "cpu_percent": 19.1,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563109888,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 37632,
+            "fd_opens": 16,
+            "logical_bytes": 69816000,
+            "read_calls": 2271,
+            "io_seconds": 0.11072478792993934
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 2271,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 2224,
+            "evictions": 2066,
+            "hits": 3128,
+            "bytes": 4171328,
+            "peak_bytes": 4194304,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 2224,
+            "consumed": 2224,
+            "wait_seconds": 0.28455409007074195,
+            "peak_bytes": 131072,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0174472139988211,
+            "sampled_rss_peak_bytes": 563445760,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.04972506999911275,
+            "generation_seconds": 0.6888179620000301,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 160.8846402859311,
+            "decode_tokens_per_second": 48.50625063743551,
+            "logical_bytes_per_token_including_prefill": 1733232.0,
+            "decode_logical_bytes_per_token": 1610372.1290322582,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 180224,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9286856704,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563445760,
+            "swap_used_bytes": 0,
+            "cpu_percent": 13.4,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563109888,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 37632,
+            "fd_opens": 16,
+            "logical_bytes": 125279424,
+            "read_calls": 4002,
+            "io_seconds": 0.20073410791519564
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 4002,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 3916,
+            "evictions": 3758,
+            "hits": 6499,
+            "bytes": 4171328,
+            "peak_bytes": 4194304,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 3916,
+            "consumed": 3916,
+            "wait_seconds": 0.4903287569213717,
+            "peak_bytes": 131072,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0174472139988211,
+            "sampled_rss_peak_bytes": 563445760,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.06259589000183041,
+            "generation_seconds": 0.7945988669998769,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 127.80391811293147,
+            "decode_tokens_per_second": 42.34955454297658,
+            "logical_bytes_per_token_including_prefill": 1733232.0,
+            "decode_logical_bytes_per_token": 1610372.1290322582,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 180224,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9282535424,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563449856,
+            "swap_used_bytes": 0,
+            "cpu_percent": 17.8,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563109888,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 37632,
+            "fd_opens": 16,
+            "logical_bytes": 180742848,
+            "read_calls": 5733,
+            "io_seconds": 0.307978863856988
+          },
+          "weights": {
+            "dequant_seconds": 0.0,
+            "loads": 5733,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 5608,
+            "evictions": 5450,
+            "hits": 9870,
+            "bytes": 4171328,
+            "peak_bytes": 4194304,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 5608,
+            "consumed": 5608,
+            "wait_seconds": 0.7407690148684196,
+            "peak_bytes": 131072,
+            "budget": 4194304,
+            "enabled": true
+          }
+        }
+      ],
+      "cache_state": "first request has software cache empty; OS page cache not flushed",
+      "full_GLM53_result": false,
+      "M5_result": false
+    },
+    {
+      "label": "fp8_tiny64",
+      "parameter_count": 251200,
+      "checkpoint_bytes": 302048,
+      "construction_seconds": 0.014514408001559786,
+      "first_prefill_seconds": 0.05689541199899395,
+      "quality_vs_original": {
+        "max_abs_logit_error": 2.086162567138672e-07,
+        "rms_logit_error": 3.951490512577038e-08,
+        "argmax_agreement": 1.0,
+        "mean_KL_ref_to_candidate": 8.160278316606914e-16,
+        "scope": "random miniature weights; not a linguistic quality evaluation of GLM-5.3"
+      },
+      "runs": [
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0144591060015955,
+            "sampled_rss_peak_bytes": 563724288,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.01112565900257323,
+            "generation_seconds": 0.22870802800025558,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 719.0585293104613,
+            "decode_tokens_per_second": 142.47477928843676,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9282519040,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563724288,
+            "swap_used_bytes": 0,
+            "cpu_percent": 16.5,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563367936,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 27296,
+            "fd_opens": 12,
+            "logical_bytes": 214624,
+            "read_calls": 221,
+            "io_seconds": 0.007310532011615578
+          },
+          "weights": {
+            "dequant_seconds": 0.018962640006066067,
+            "loads": 149,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 2706,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.03797595797368558,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0144591060015955,
+            "sampled_rss_peak_bytes": 563732480,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.008069221999903675,
+            "generation_seconds": 0.18715826599873253,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 991.4214778197327,
+            "decode_tokens_per_second": 173.09824938371284,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9282519040,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563732480,
+            "swap_used_bytes": 0,
+            "cpu_percent": 11.5,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563367936,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 27296,
+            "fd_opens": 12,
+            "logical_bytes": 224608,
+            "read_calls": 260,
+            "io_seconds": 0.00799887401444721
+          },
+          "weights": {
+            "dequant_seconds": 0.018962640006066067,
+            "loads": 188,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 5412,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.03797595797368558,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        },
+        {
+          "compute_device": "cpu",
+          "metal_validated": false,
+          "runtime": {
+            "startup_seconds": 0.0144591060015955,
+            "sampled_rss_peak_bytes": 563732480,
+            "swap_growth_bytes": 0,
+            "ttft_seconds": 0.007203964996733703,
+            "generation_seconds": 0.19204078699840466,
+            "tokens_generated": 32,
+            "prefill_tokens": 8,
+            "prefill_tokens_per_second": 1110.4995656735175,
+            "decode_tokens_per_second": 167.71549988951745,
+            "logical_bytes_per_token_including_prefill": 312.0,
+            "decode_logical_bytes_per_token": 256.0,
+            "gpu_time_seconds": null,
+            "kv_peak_bytes": 65536,
+            "physical_read_bytes": 0
+          },
+          "telemetry": {
+            "available_bytes": 9282519040,
+            "total_bytes": 10451439616,
+            "rss_bytes": 563732480,
+            "swap_used_bytes": 0,
+            "cpu_percent": 12.3,
+            "gpu_utilization": null,
+            "temperature_c": null,
+            "thermal_throttled": null,
+            "memory_pressure_source": "available physical memory (not macOS pressure level)",
+            "physical_read_bytes": 0,
+            "process_peak_rss_bytes": 563367936,
+            "rss_peak_scope": "process lifetime, not isolated per model"
+          },
+          "io": {
+            "manifest_hit": 0,
+            "header_bytes": 27296,
+            "fd_opens": 12,
+            "logical_bytes": 234592,
+            "read_calls": 299,
+            "io_seconds": 0.008691715018358082
+          },
+          "weights": {
+            "dequant_seconds": 0.018962640006066067,
+            "loads": 227,
+            "speculative_reads": 0
+          },
+          "cache": {
+            "misses": 102,
+            "hits": 8118,
+            "bytes": 685408,
+            "peak_bytes": 685408,
+            "capacity": 4194304
+          },
+          "prefetch": {
+            "submitted": 102,
+            "consumed": 102,
+            "wait_seconds": 0.03797595797368558,
+            "peak_bytes": 32768,
+            "budget": 4194304,
+            "enabled": true
+          }
+        }
+      ],
+      "cache_state": "first request has software cache empty; OS page cache not flushed",
+      "full_GLM53_result": false,
+      "M5_result": false
+    }
+  ],
+  "ultra_cpu_baseline": {
+    "construction_seconds": 0.014746644999831915,
+    "generation_seconds": 0.2535202250001021,
+    "tokens": 32,
+    "total_tokens_per_second_including_prefill": 126.22267118920045,
+    "logical_read_bytes": 709984,
+    "scope": "same tiny64 fixture; baseline CPU vs Next device specified above"
+  },
+  "storage_tuning": {
+    "device": "Linux-6.18.55-x86_64-with-glibc2.39",
+    "source_fingerprint": "16e36511cc9ef49ad7e54427f01f13afde7de99290ccb8a1d59adc58afd3509d",
+    "cache_state": "OS page cache uncontrolled; repeated reads can be RAM hits",
+    "candidates": [
+      {
+        "mode": "pread",
+        "workers": 1,
+        "seconds": 0.0011778760017477907,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 89000879.41722651,
+        "physical_read_bytes": 0
+      },
+      {
+        "mode": "pread",
+        "workers": 2,
+        "seconds": 0.0013581530001829378,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 77187179.93177466,
+        "physical_read_bytes": 0
+      },
+      {
+        "mode": "pread",
+        "workers": 4,
+        "seconds": 0.002196585999627132,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 47724969.574510224,
+        "physical_read_bytes": 0
+      },
+      {
+        "mode": "mmap",
+        "workers": 1,
+        "seconds": 0.001077468001312809,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 97294768.7284175,
+        "physical_read_bytes": 0
+      },
+      {
+        "mode": "mmap",
+        "workers": 2,
+        "seconds": 0.0020485070017457474,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 51174831.18713369,
+        "physical_read_bytes": 0
+      },
+      {
+        "mode": "mmap",
+        "workers": 4,
+        "seconds": 0.0021514899999601766,
+        "logical_bytes": 104832,
+        "logical_bytes_per_second": 48725302.00091118,
+        "physical_read_bytes": 0
+      }
+    ],
+    "selected_io_workers": 1,
+    "selected_mode": "pread",
+    "physical_ssd_throughput_certified": false,
+    "config": {
+      "cache_bytes": 2147483648,
+      "io_bytes": 268435456,
+      "kv_bytes": 536870912,
+      "workspace_bytes": 805306368,
+      "reserve_bytes": 4294967296,
+      "max_tensor_bytes": 536870912,
+      "io_workers": 1,
+      "max_open_files": 16,
+      "row_chunk": 128,
+      "prefill_chunk": 16,
+      "max_context": 4096,
+      "policy": "slru",
+      "device": "auto",
+      "dtype": "bfloat16",
+      "profile": "balanced",
+      "prefetch": true,
+      "cache_dir": "/workspace/scratch/4d96346afabf/baseline-fixtures-standalone/run-1792682952141625385/q-meta",
+      "quantized_dir": null,
+      "load_tokenizer": true,
+      "use_saved_tuning": true
+    }
+  },
+  "telemetry_end": {
+    "available_bytes": 9282519040,
+    "total_bytes": 10451439616,
+    "rss_bytes": 563724288,
+    "swap_used_bytes": 0,
+    "cpu_percent": 0.0,
+    "gpu_utilization": null,
+    "temperature_c": null,
+    "thermal_throttled": null,
+    "memory_pressure_source": "available physical memory (not macOS pressure level)",
+    "physical_read_bytes": 0,
+    "process_peak_rss_bytes": 563367936,
+    "rss_peak_scope": "process lifetime, not isolated per model"
+  }
+}

@@ -42,43 +42,64 @@ class NativeWeights:
         return v
 
     def _load(self,key,expert=None,rows=None):
+        start=perf_counter()
+        value=self._load_value(key,expert,rows)
+        elapsed=perf_counter()-start
+        if rows is None:self.cache.record_load(self.identity(key,expert),elapsed)
+        self.stats['loads']+=1
+        self.stats.setdefault('load_seconds',0.)
+        self.stats['load_seconds']+=elapsed
+        return value
+
+    def _load_value(self,key,expert=None,rows=None):
         ident=self.identity(key,expert)
         if self.sidecar and ident in self.sidecar.entries:
-            p=self.sidecar.load(ident,rows=rows)
+            p=self.sidecar.load(ident,rows=rows,max_bytes=self.cfg.max_tensor_bytes)
             if p.nbytes>self.cfg.max_tensor_bytes:raise MemoryError('Packed matrix tile exceeds max_tensor_bytes')
             with self.cp.io_lock:
                 self.cp.stats['logical_bytes']+=p.nbytes
                 self.cp.stats['quantized_logical_bytes']+=p.nbytes
             return PackedMatrix(self._array(p.weight),self._array(p.scales,self.mx.float32),
                                 self._array(p.biases,self.mx.float32),p.shape,p.bits,p.group_size)
-        d=self.cp.tensors[key];a=self.cp.read_array(key,expert=expert,rows=rows)
+        d=self.cp.tensors[key]
         if d['dtype'].startswith('F8_'):
             if d['dtype'] not in ('F8_E4M3','F8_E4M3FN'):raise NotImplementedError('Only FP8 E4M3FN is implemented')
             sk=key+'_scale_inv'
             if sk not in self.cp.tensors:raise ValueError(f'Missing FP8 block scales {sk}')
-            scales=self.cp.read_array(sk,expert=expert)
-            if self.cp.tensors[sk]['dtype']=='BF16':scales=(scales.astype(np.uint32)<<16).view(np.float32)
             br,bc=self.block
             shape=self.shape(key,expert)
-            if tuple(scales.shape)!=(math.ceil(shape[0]/br),math.ceil(shape[1]/bc)):
+            if tuple(self.shape(sk,expert))!=(math.ceil(shape[0]/br),math.ceil(shape[1]/bc)):
                 raise ValueError(f'Invalid FP8 scales for {key}')
+            # Output-head tiles only need the scale rows they intersect. Reading
+            # the full scale matrix for every tile causes O(number_of_tiles)
+            # redundant scale IO on a massive FP8 checkpoint.
+            offset=rows[0] if rows else 0
+            scale_rows=(offset//br,math.ceil(rows[1]/br)) if rows and self.cfg.selective_fp8_scales else None
+            requests=[{'key':key,'expert':expert,'rows':rows},
+                      {'key':sk,'expert':expert,'rows':scale_rows}]
+            # No hidden overread: only adjacent payload/scale ranges combine.
+            a,scales=self.cp.read_arrays(requests,max_batch_bytes=self.cp.max_read_bytes,
+                                         coalesce=self.cfg.coalesce_reads)
+            if self.cp.tensors[sk]['dtype']=='BF16':scales=(scales.astype(np.uint32)<<16).view(np.float32)
             t=perf_counter();offset=rows[0] if rows else 0;mx=self.mx
             # Decode on CPU stream while GPU executes a previous expert. The raw
             # FP8 buffer dies after evaluation. Cached result is reused directly.
             with mx.stream(mx.cpu):
                 raw=mx.array(a);s=mx.array(scales)
-                ri=(mx.arange(a.shape[0])+offset)//br;ci=mx.arange(a.shape[1])//bc
+                ri=(mx.arange(a.shape[0])+offset)//br-(scale_rows[0] if scale_rows else 0);ci=mx.arange(a.shape[1])//bc
                 v=(self.lut[raw.astype(mx.int32)]*s[ri[:,None],ci[None,:]]).astype(self.dtype)
                 mx.eval(v)
             self.stats['dequant_seconds']+=perf_counter()-t
         elif d['dtype']=='BF16':
+            a=self.cp.read_array(key,expert=expert,rows=rows)
             with self.mx.stream(self.mx.cpu):
                 v=self.mx.array(a).view(self.mx.bfloat16).astype(self.dtype);self.mx.eval(v)
         else:
+            a=self.cp.read_array(key,expert=expert,rows=rows)
             # Router scores, normalization weights and correction bias stay fp32.
             target=self.mx.float32 if d['dtype']=='F32' else self.dtype
             v=self._array(a,target)
-        self.stats['loads']+=1;return v
+        return v
 
     def get(self,key,expert=None):
         ident=self.identity(key,expert);v=self.cache.get(ident,self.estimate(key,expert))
@@ -123,7 +144,17 @@ class NativeWeights:
         shape=self.shape(key)
         if len(shape)!=2 or np.any(unique<0) or np.any(unique>=shape[0]):raise ValueError('Token id out of range')
         # Only selected rows (usually one during decode), never the ~1.9 GB table.
-        rows=[self._load(key,rows=(int(i),int(i)+1)) for i in unique]
+        # Consecutive token IDs share one bounded row read rather than one IO
+        # operation per token; sorted unique IDs preserve the gather mapping.
+        row_bytes=max(1,self.estimate(key)//max(1,shape[0]))
+        max_rows=max(1,self.cfg.max_tensor_bytes//row_bytes)
+        runs=[]
+        for i in unique:
+            i=int(i)
+            if self.cfg.coalesce_reads and runs and i==runs[-1][1] and runs[-1][1]-runs[-1][0]<max_rows:
+                runs[-1]=(runs[-1][0],i+1)
+            else:runs.append((i,i+1))
+        rows=[self._load(key,rows=run) for run in runs]
         values=mx.concatenate(rows,axis=0)[mx.array(reverse)]
         return values.reshape(tuple(host.shape)+(shape[1],))
 

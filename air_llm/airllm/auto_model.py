@@ -65,6 +65,11 @@ class AutoModel:
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *inputs, **kwargs):
+        if kwargs.get('backend') == 'next-qwen-experimental':
+            kwargs.pop('backend')
+            if inputs: raise TypeError('Experimental Next Qwen accepts keyword options after the local checkpoint path')
+            from .nextgen.qwen_runtime import ExperimentalQwenModel
+            return ExperimentalQwenModel(pretrained_model_name_or_path, **kwargs)
         if kwargs.get('backend') in ('next', 'mlx-next'):
             kwargs.pop('backend')
             if inputs: raise TypeError('Next accepts keyword options after the local checkpoint path')

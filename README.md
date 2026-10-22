@@ -1,465 +1,83 @@
-> **Livraison Next du 22 octobre 2026 :** commencer par [README_NEXT.md](README_NEXT.md).
-> Backend MLX GLM natif testé sur CPU Linux ; validation Metal/M5 encore requise.
-> Le texte ci-dessous est la documentation du projet officiel conservée.
+# AirLLM Next — out-of-core research engine
 
-![airllm_logo](https://github.com/lyogavin/airllm/blob/main/assets/airllm_logo_sm.png?v=3&raw=true)
+Local inference with selective safetensors reads, bounded weight/context caches,
+native MLX arithmetic and exact greedy draft verification. This branch extracts
+the verified source archive into a normal Git tree and develops its internals.
+It does not modify the official AirLLM repository.
 
-[**Quickstart**](#quickstart) | 
-[**Configurations**](#configurations) | 
-[**MacOS**](#macos) | 
-[**Example notebooks**](#example-python-notebook) | 
-[**FAQ**](#faq)
+**Validation boundary:** Linux CPU MLX miniature numerical tests and measured
+storage/conversion experiments are available. Full GLM-5.3, full Qwen3.8,
+M5/Metal performance and the external SSD remain unvalidated. No interactive
+trillion-parameter performance claim follows from these tests.
 
-**AirLLM** dramatically reduces inference memory usage, letting 70B large language models run on a single 4GB GPU card — without quantization, distillation, or pruning. You can even run **Kimi K3 (2.8T)** — the largest open-source model released to date — on **under 4GB**, **Qwen3.8-Flash-Next (125B)** on **6GB**, and **DeepSeek-V3 (671B)** on **~12GB**. We now also support training huge models on small VRAM: Qwen3.8-Flash-Next under **6GB**.
+## Changes in this branch
 
-<a href="https://github.com/lyogavin/airllm/stargazers">![GitHub Repo stars](https://img.shields.io/github/stars/lyogavin/airllm?style=social)</a>
-[![Downloads](https://static.pepy.tech/personalized-badge/airllm?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads)](https://pepy.tech/project/airllm)
+- Exact target-verified greedy speculative blocks, GLM KV rollback, accepted-token
+  byte accounting, adaptive depth and fallback when the draft costs too much.
+- Bounded grouped offset reads, optional consecutive embedding reads, selective
+  FP8 scale tiles, and measured transfer/conversion cost cache retention.
+- Tiled resumable quantization writes, content digests and explicit integrity
+  audits, early allocation guards, and scheduler concurrency fixes.
+- Experimental streamed Qwen hybrid backend, separate from GLM, with recurrent
+  state transactions. Only independently tested floating miniature variants are
+  eligible; newer swish-gate and NVIDIA ModelOpt/NVFP4 checkpoints fail explicitly.
+- Loopback-only OpenAI-shaped non-streaming text/chat API, without remote inference.
 
-[![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/LianjiaTech/BELLE/blob/main/LICENSE)
-[![Generic badge](https://img.shields.io/badge/wechat-Anima-brightgreen?logo=wechat)](https://static.aicompose.cn/static/wecom_barcode.png?t=1671918938)
-[![Discord](https://img.shields.io/discord/1175437549783760896?logo=discord&color=7289da
-)](https://discord.gg/2xffU5sn)
-[![PyPI - AirLLM](https://img.shields.io/pypi/format/airllm?logo=pypi&color=3571a3)
-](https://pypi.org/project/airllm/)
-[![Website](https://img.shields.io/website?up_message=blog&url=https%3A%2F%2Fmedium.com%2F%40lyo.gavin&logo=medium&color=black)](https://medium.com/@lyo.gavin)
-[![Website](https://img.shields.io/badge/Gavin_Li-Blog-blue)](https://gavinliblog.com)
-[![Support me on Patreon](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Dgavinli%26type%3Dpatrons&style=flat)](https://patreon.com/gavinli)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/lyogavin?logo=GitHub&color=lightgray)](https://github.com/sponsors/lyogavin)
+Read [the measured report](docs/OOC_REPORT_FR.md),
+[model status](docs/MODEL_STATUS.md),
+[speculative algorithm](docs/SPECULATIVE_STREAMING.md),
+[M5 installation/validation](docs/OOC_M5_GUIDE.md), and
+[local API limits](docs/OOC_API.md).
 
-## AI Agents Recommendation:
+## Install and run
 
-* [Best AI Game Sprite Generator](https://godmodeai.co)
-
-* [Best AI Facial Expression Editor](https://crazyfaceai.com)
-
-## Updates
-[2026/09] **Training** support: stream frozen weights one layer at a time and keep adapters on the GPU. **Qwen3.8-Flash-Next (125B)** trains under **6GB** (RTX 3060 Ti); **Qwen3.8-27B** trains in **~2GB** at seq 512. See [Training](#training).
-
-[2026/08] **Qwen3.8-Flash-Next** support: Qwen's 125B MoE flagship (`Qwen4ExpForConditionalGeneration`) with a ~51B n-gram embedding runs in **5.95GB** of VRAM, measured end to end on one RTX 4090. The n-gram table is file-mapped on the host (a 64GB machine is enough); decoder layers stream. Needs a `transformers` build with in-tree `qwen4_exp` (`pip install git+https://github.com/huggingface/transformers.git` today) and ~360GB of checkpoint disk (`delete_original=True` reclaims the originals after the split).
-
-[2026/08] **Qwen3.8-27B** support: Qwen's new dense VL (Gated DeltaNet + Gated Attention, native vision) runs in **3.33GB** of VRAM, measured end to end on one RTX 3090. Needs `transformers` 5.8+.
-
-[2026/07] **Kimi K3 (2.8T)** support: the largest open-source model runs on a single card in **3.72GB** of VRAM, measured end to end on one RTX 6000 Ada. Per-expert streaming loads only the experts a token actually routes to. K3 brings three requirements of its own: `pip install compressed-tensors flash-attn` (its model code mandates flash attention regardless of what you request), a CUDA 12 build of torch, since no prebuilt flash-attn wheel exists for CUDA 13 yet, and `transformers` 4.56.x, as its remote code does not load on 5.x.
-
-[2026/06] **v3.0**: FP8 model support + the latest models. Run **DeepSeek-V3 (671B) on ~12GB** and **Qwen3-235B on ~3GB**, plus Qwen3, Llama 3.x/4, DeepSeek V2/V3, Phi-4, Gemma and more — all through a single `AutoModel`.
-
-[2024/08/20] v2.11.0: Support Qwen2.5
-
-[2024/08/18] v2.10.1 Support CPU inference. Support non sharded models. Thanks @NavodPeiris for the great work! 
-
-[2024/07/30] Support Llama3.1 **405B** ([example notebook](https://colab.research.google.com/github/lyogavin/airllm/blob/main/air_llm/examples/run_llama3.1_405B.ipynb)). Support **8bit/4bit quantization**.
-
-[2024/04/20] AirLLM supports Llama3 natively already. Run Llama3 70B on 4GB single GPU.
-
-[2023/12/25] v2.8.2: Support MacOS running 70B large language models.
-
-[2023/12/20] v2.7: Support AirLLMMixtral. 
-
-[2023/12/20] v2.6: Added AutoModel, automatically detect model type, no need to provide model class to initialize model.
-
-[2023/12/18] v2.5: added prefetching to overlap the model loading and compute. 10% speed improvement.
-
-[2023/12/03] added support of **ChatGLM**, **QWen**, **Baichuan**, **Mistral**, **InternLM**!
-
-[2023/12/02] added support for safetensors. Now support all top 10 models in open llm leaderboard.
-
-[2023/12/01] airllm 2.0. Support compressions: **3x run time speed up!**
-
-[2023/11/20] airllm Initial version!
-
-## Star History
-
-<a href="https://star-history.com/#lyogavin/airllm&Timeline">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/star-history-dark.png">
-    <img alt="Star History Chart" src="assets/star-history.png">
-  </picture>
-</a>
-
-## Table of Contents
-
-* [Quick start](#quickstart)
-* [Model Compression](#model-compression---3x-inference-speed-up)
-* [Configurations](#configurations)
-* [Run on MacOS](#macos)
-* [Example notebooks](#example-python-notebook)
-* [Supported Models](#supported-models)
-* [Training](#training)
-* [Acknowledgement](#acknowledgement)
-* [FAQ](#faq)
-
-## Quickstart
-
-### 1. Install package
-
-First, install the airllm pip package.
+On native arm64 macOS:
 
 ```bash
-pip install airllm
+bash scripts/setup_next_macos.sh
+source .venv-next/bin/activate
+python -m airllm.nextgen.cli doctor
+python -m airllm.nextgen.cli inspect /Volumes/Models/GLM-5.3
+python -m airllm.nextgen.cli run /Volumes/Models/GLM-5.3 --prompt "Bonjour" --max-new-tokens 16
 ```
 
-### 2. Inference
-
-Then, initialize AirLLMLlama2, pass in the huggingface repo ID of the model being used, or the local path, and inference can be performed similar to a regular transformer model.
-
-(*You can also specify the path to save the splitted layered model through **layer_shards_saving_path** when init AirLLMLlama2.*
-
-```python
-from airllm import AutoModel
-
-MAX_LENGTH = 128
-# just pass a hugging face repo id — works with almost any popular model:
-model = AutoModel.from_pretrained("Qwen/Qwen3-32B")
-
-# go bigger with the exact same one line:
-#model = AutoModel.from_pretrained("Qwen/Qwen3.8-27B")          # 27B dense VL, 3.33GB
-#model = AutoModel.from_pretrained("Qwen/Qwen3.8-Flash-Next")    # 125B MoE + 51B PLE, 5.95GB
-#model = AutoModel.from_pretrained("Qwen/Qwen3-235B-A22B")     # 235B, runs in ~3GB
-#model = AutoModel.from_pretrained("deepseek-ai/DeepSeek-V3")  # 671B, runs in ~12GB
-
-# or use a model's local path...
-#model = AutoModel.from_pretrained("/home/ubuntu/.cache/huggingface/hub/models--Qwen--Qwen3-32B/snapshots/...")
-
-input_text = [
-        'What is the capital of United States?',
-        #'I like',
-    ]
-
-input_tokens = model.tokenizer(input_text,
-    return_tensors="pt", 
-    return_attention_mask=False, 
-    truncation=True, 
-    max_length=MAX_LENGTH, 
-    padding=False)
-           
-generation_output = model.generate(
-    input_tokens['input_ids'].cuda(), 
-    max_new_tokens=20,
-    use_cache=True,
-    return_dict_in_generate=True)
-
-output = model.tokenizer.decode(generation_output.sequences[0])
-
-print(output)
-
-```
- 
- 
-Note: During inference, the original model will first be decomposed and saved layer-wise. Please ensure there is sufficient disk space in the huggingface cache directory.
- 
-
-## Model Compression - 3x Inference Speed Up!
-
-We just added model compression based on block-wise quantization-based model compression. Which can further **speed up the inference speed** for up to **3x** , with **almost ignorable accuracy loss!** (see more performance evaluation and why we use block-wise quantization in [this paper](https://arxiv.org/abs/2212.09720))
-
-![speed_improvement](https://github.com/lyogavin/airllm/blob/main/assets/airllm2_time_improvement.png?v=2&raw=true)
-
-#### How to enable model compression speed up:
-
-* Step 1. make sure you have [bitsandbytes](https://github.com/TimDettmers/bitsandbytes) installed by `pip install -U bitsandbytes `
-* Step 2. make sure airllm verion later than 2.0.0: `pip install -U airllm` 
-* Step 3. when initialize the model, passing the argument compression ('4bit' or '8bit'):
-
-```python
-model = AutoModel.from_pretrained("garage-bAInd/Platypus2-70B-instruct",
-                     compression='4bit' # specify '8bit' for 8-bit block-wise quantization 
-                    )
-```
-
-#### What are the differences between model compression and quantization?
-
-Quantization normally needs to quantize both weights and activations to really speed things up. Which makes it harder to maintain accuracy and avoid the impact of outliers in all kinds of inputs.
-
-While in our case the bottleneck is mainly at the disk loading, we only need to make the model loading size smaller. So, we get to only quantize the weights' part, which is easier to ensure the accuracy.
-
-## Configurations
- 
-When initialize the model, we support the following configurations:
-
-* **compression**: supported options: 4bit, 8bit for 4-bit or 8-bit block-wise quantization, or by default None for no compression
-* **profiling_mode**: supported options: True to output time consumptions or by default False
-* **layer_shards_saving_path**: optionally another path to save the splitted model
-* **hf_token**: huggingface token can be provided here if downloading gated models like: *meta-llama/Llama-2-7b-hf*
-* **prefetching**: prefetching to overlap the model loading and compute. By default, turned on. For now, only AirLLMLlama2 supports this.
-* **delete_original**: if you don't have too much disk space, you can set delete_original to true to delete the original downloaded hugging face model, only keep the transformed one to save half of the disk space. 
-
-## MacOS
-
-Just install airllm and run the code the same as on linux. See more in [Quick Start](#quickstart).
-
-* make sure you installed [mlx](https://github.com/ml-explore/mlx?tab=readme-ov-file#installation) and torch
-* you probably need to install python native see more [here](https://stackoverflow.com/a/65432861/21230266)
-* only [Apple silicon](https://support.apple.com/en-us/HT211814) is supported
-
-Example [python notebook] (https://github.com/lyogavin/airllm/blob/main/air_llm/examples/run_on_macos.ipynb)
-
-
-## Example Python Notebook
-
-Example colabs here:
-
-<a target="_blank" href="https://colab.research.google.com/github/lyogavin/airllm/blob/main/air_llm/examples/run_all_types_of_models.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
-
-#### example of other models (ChatGLM, QWen, Baichuan, Mistral, etc):
-
-<details>
-
-
-* ChatGLM:
-
-```python
-from airllm import AutoModel
-MAX_LENGTH = 128
-model = AutoModel.from_pretrained("THUDM/chatglm3-6b-base")
-input_text = ['What is the capital of China?',]
-input_tokens = model.tokenizer(input_text,
-    return_tensors="pt", 
-    return_attention_mask=False, 
-    truncation=True, 
-    max_length=MAX_LENGTH, 
-    padding=True)
-generation_output = model.generate(
-    input_tokens['input_ids'].cuda(), 
-    max_new_tokens=5,
-    use_cache= True,
-    return_dict_in_generate=True)
-model.tokenizer.decode(generation_output.sequences[0])
-```
-
-* QWen:
-
-```python
-from airllm import AutoModel
-MAX_LENGTH = 128
-model = AutoModel.from_pretrained("Qwen/Qwen-7B")
-input_text = ['What is the capital of China?',]
-input_tokens = model.tokenizer(input_text,
-    return_tensors="pt", 
-    return_attention_mask=False, 
-    truncation=True, 
-    max_length=MAX_LENGTH)
-generation_output = model.generate(
-    input_tokens['input_ids'].cuda(), 
-    max_new_tokens=5,
-    use_cache=True,
-    return_dict_in_generate=True)
-model.tokenizer.decode(generation_output.sequences[0])
-```
-
-
-* Baichuan, InternLM, Mistral, etc:
-
-```python
-from airllm import AutoModel
-MAX_LENGTH = 128
-model = AutoModel.from_pretrained("baichuan-inc/Baichuan2-7B-Base")
-#model = AutoModel.from_pretrained("internlm/internlm-20b")
-#model = AutoModel.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
-input_text = ['What is the capital of China?',]
-input_tokens = model.tokenizer(input_text,
-    return_tensors="pt", 
-    return_attention_mask=False, 
-    truncation=True, 
-    max_length=MAX_LENGTH)
-generation_output = model.generate(
-    input_tokens['input_ids'].cuda(), 
-    max_new_tokens=5,
-    use_cache=True,
-    return_dict_in_generate=True)
-model.tokenizer.decode(generation_output.sequences[0])
-```
-
-
-</details>
-
-
-#### To request other model support: [here](https://docs.google.com/forms/d/e/1FAIpQLSe0Io9ANMT964Zi-OQOq1TJmnvP-G3_ZgQDhP7SatN0IEdbOg/viewform?usp=sf_link)
-
-
-
-## Supported Models
-
-AirLLM works out of the box with **virtually every popular open LLM** — just pass its Hugging Face ID to `AutoModel.from_pretrained(...)`. That covers all the major families:
-
-**Llama** (2 / 3 / 3.1 / 3.3 / 4) · **Qwen** (1 / 2 / 2.5 / 3 / 3.5 / 3.8, including MoE, Flash-Next, FP8, and native VL) · **DeepSeek** (V2 / V3 / R1) · **Mistral & Mixtral** · **Phi** · **Gemma** · **ChatGLM** · **Baichuan** · **InternLM** · **Yi** · **Kimi K3** — and most new models the day they're released.
-
-### Tiny GPU, huge models
-
-The trick: AirLLM only ever keeps **one layer on the GPU at a time**, so the VRAM you need depends on the model's layer size — not its total size. That's how a 671B model fits on a hobbyist card:
-
-| Model | Size | GPU VRAM |
-|---|---|---|
-| Qwen3 / Mistral / Phi (≈8B) | 8B | **~1–2 GB** |
-| Qwen3-30B / Mixtral (MoE) | 30–47B | **~1–3 GB** |
-| Qwen3.8-27B (dense VL) | 27B | **3.33 GB** |
-| Qwen3.8-Flash-Next (MoE + PLE) | ~180B | **5.95 GB** |
-| Qwen3-235B (MoE) | 235B | **~3 GB** |
-| Llama 3.x 70B (full precision) | 70B | **~4 GB** |
-| Llama 3.1 405B | 405B | **~8 GB** |
-| DeepSeek-V3 | **671B** | **~12 GB** |
-
-Same one line of code for all of them — no special setup.
-
-## Training
-
-AirLLM can fine-tune huge models on a small GPU. Frozen base weights stream from disk one decoder layer at a time; only the adapters stay resident. **Qwen3.8-Flash-Next** trains under **6GB**; **Qwen3.8-27B** trains in **~2GB** at seq 512.
-
-This is not Hugging Face Trainer / bitsandbytes QLoRA. Flash-Next needs a `transformers` build with in-tree `qwen4_exp` (`pip install git+https://github.com/huggingface/transformers.git` today).
-
-### 1. Prepare a dataset
-
-One JSON object per line (`.jsonl`). The usual field is `text` — next-token prediction over the whole string:
-
-```json
-{"text": "Your first training document. Can be a few sentences or a few paragraphs."}
-{"text": "Your second training document."}
-```
-
-Instruction pairs work too. Loss is applied on the completion only:
-
-```json
-{"prompt": "What is AirLLM?", "completion": "A library that runs and trains huge models on small VRAM."}
-{"instruction": "Translate to English", "input": "bonjour", "output": "hello"}
-```
-
-A `.txt` file is also fine: one example per blank-line-separated block. A two-line starter file lives at `air_llm/examples/sft_example.jsonl`.
-
-### 2. Run training
-
-From the repo root, point `--data` at your file:
+A local checkpoint and tokenizer must already exist. No command implicitly
+downloads model shards. `inspect` reads metadata and does not run inference.
+For reproducible CPU correctness validation, use `requirements-next-linux.txt`.
 
 ```bash
-python air_llm/examples/train_qwen38_flash_next_lora.py \
-  --data my_data.jsonl \
-  --seq-len 512 \
-  --epochs 1 \
-  --save-adapter qwen38-flash-next-lora.pt
+python -m pytest tests_next -q
+python -m pytest tests_ultra -q
+python benchmarks/benchmark_ooc.py --output io.json
 ```
 
-For the 27B dense model:
+## Explicit optimization controls
 
-```bash
-python air_llm/examples/train_qwen38_lora.py \
-  --data my_data.jsonl \
-  --seq-len 512 \
-  --epochs 1 \
-  --save-adapter qwen38-27b-lora.pt
-```
+| Control | Behavior |
+|---|---|
+| No `--draft-model` | Ordinary autoregressive GLM generation |
+| `--draft-model /local/draft --speculative-depth 4` | Greedy proposal/target verification; compatible local draft |
+| `--no-adaptive-speculation` | Fixed speculative depth for controlled experiments |
+| `--coalesce-reads` | Opt in to grouped reads; default disabled after no warm-path gain |
+| `--no-selective-fp8-scales` | Reproduce full scale-matrix reads for comparison |
+| `--cache-policy lru/slru/lfu/cost` | Explicit cache policy, overrides saved tuning |
+| `--no-prefetch` | Disable predicted prefetch, without changing exact MoE selection |
+| `--backend qwen-experimental` | Explicit floating Qwen research backend; no full Qwen3.8 claim |
 
-`--steps N` stops after N examples (useful for a smoke test). Omit `--data` and the script overfits a built-in snippet.
+Quantization changes the weights and is opt-in. FP8 checkpoint decoding does
+not reproduce production dynamic activation-quantization kernels. INT4 is not
+NVFP4. Read the model-status document before interpreting numerical parity.
 
-### Python API
+## Reproducibility and provenance
 
-```python
-from airllm import AirLLMLoRAQwen4Exp
+Raw measurements, source hashes, failed/excluded timing windows and reference
+versions live in `evidence-ooc/`. Historical input reports and old wheels remain
+under their original names; build the current source with
+`python -m pip wheel --no-deps ./air_llm -w dist-ooc`.
+The original archive SHA-256 is
+`7433255c37830b6d1603e276452154a81e67c7bdbd6eae826216230b1bb93e2d`.
+Its Git blob hash matches the public repository's source ZIP.
 
-trainer = AirLLMLoRAQwen4Exp(
-    "Qwen/Qwen3.8-Flash-Next",
-    max_seq_len=512,
-    lora_r=16,
-    delete_original=True,
-)
-
-tok = trainer.tokenizer
-if tok.pad_token_id is None:
-    tok.pad_token = tok.eos_token
-
-encoded = tok(
-    "Your training text here.",
-    return_tensors="pt",
-    truncation=True,
-    max_length=512,
-)
-loss = trainer.train_step(
-    encoded["input_ids"].cuda(),
-    attention_mask=encoded.get("attention_mask"),
-)
-print(loss)
-trainer.save_adapter("qwen38-flash-next-lora.pt")
-```
-
-`AirLLMLoRA` is the same API for `Qwen/Qwen3.8-27B`.
-
-## Acknowledgement
-
-A lot of the code are based on SimJeg's great work in the Kaggle exam competition. Big shoutout to SimJeg:
-
-[GitHub account @SimJeg](https://github.com/SimJeg), 
-[the code on Kaggle](https://www.kaggle.com/code/simjeg/platypus2-70b-with-wikipedia-rag), 
-[the associated discussion](https://www.kaggle.com/competitions/kaggle-llm-science-exam/discussion/446414).
-
-
-## FAQ
-
-### 1. MetadataIncompleteBuffer
-
-safetensors_rust.SafetensorError: Error while deserializing header: MetadataIncompleteBuffer
-
-If you run into this error, most possible cause is you run out of disk space. The process of splitting model is very disk-consuming. See [this](https://huggingface.co/TheBloke/guanaco-65B-GPTQ/discussions/12). You may need to extend your disk space, clear huggingface [.cache](https://huggingface.co/docs/datasets/cache) and rerun. 
-
-### 2. ValueError: max() arg is an empty sequence
-
-Most likely you are loading QWen or ChatGLM model with Llama2 class. Try the following:
-
-For QWen model: 
-
-```python
-from airllm import AutoModel #<----- instead of AirLLMLlama2
-AutoModel.from_pretrained(...)
-```
-
-For ChatGLM model: 
-
-```python
-from airllm import AutoModel #<----- instead of AirLLMLlama2
-AutoModel.from_pretrained(...)
-```
-
-### 3. 401 Client Error....Repo model ... is gated.
-
-Some models are gated models, needs huggingface api token. You can provide hf_token:
-
-```python
-model = AutoModel.from_pretrained("meta-llama/Llama-2-7b-hf", #hf_token='HF_API_TOKEN')
-```
-
-### 4. ValueError: Asking to pad but the tokenizer does not have a padding token.
-
-Some model's tokenizer doesn't have padding token, so you can set a padding token or simply turn the padding config off:
-
- ```python
-input_tokens = model.tokenizer(input_text,
-    return_tensors="pt", 
-    return_attention_mask=False, 
-    truncation=True, 
-    max_length=MAX_LENGTH, 
-    padding=False  #<-----------   turn off padding 
-)
-```
-
-## Citing AirLLM
-
-If you find
-AirLLM useful in your research and wish to cite it, please use the following
-BibTex entry:
-
-```
-@software{airllm2023,
-  author = {Gavin Li},
-  title = {AirLLM: scaling large language models on low-end commodity computers},
-  url = {https://github.com/lyogavin/airllm/},
-  version = {0.0},
-  year = {2023},
-}
-```
-
-
-## Contribution 
-
-Welcomed contributions, ideas and discussions!
-
-If you find it useful, please ⭐ or buy me a coffee! 🙏
-
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://bmc.link/lyogavinQ)
+Apache-2.0 source notices are preserved. Model weights have their own licenses.
+The [upstream README](docs/README_UPSTREAM.md) and archived source/evidence are
+retained for technical history; their historical claims are not new validations.

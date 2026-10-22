@@ -1,0 +1,44 @@
+running baseline
+running candidate
+[
+  {
+    "case": "tiny64",
+    "baseline_median_decode_tokens_per_second": 153.8034010794686,
+    "candidate_median_decode_tokens_per_second": 170.1199498214837,
+    "speed_ratio": 1.1060870476692806,
+    "max_abs_logit_change": 0.0,
+    "generated_tokens_identical": true
+  },
+  {
+    "case": "affine_int4_tiny64",
+    "baseline_median_decode_tokens_per_second": 169.30692995681233,
+    "candidate_median_decode_tokens_per_second": 155.50354145897649,
+    "speed_ratio": 0.9184712137810491,
+    "max_abs_logit_change": 0.0,
+    "generated_tokens_identical": true
+  },
+  {
+    "case": "affine_int8_tiny64",
+    "baseline_median_decode_tokens_per_second": 162.64369925052634,
+    "candidate_median_decode_tokens_per_second": 167.59472606601128,
+    "speed_ratio": 1.0304409383105502,
+    "max_abs_logit_change": 0.0,
+    "generated_tokens_identical": true
+  },
+  {
+    "case": "larger128",
+    "baseline_median_decode_tokens_per_second": 44.45615473726843,
+    "candidate_median_decode_tokens_per_second": 51.50144582242426,
+    "speed_ratio": 1.1584772935669498,
+    "max_abs_logit_change": 0.0,
+    "generated_tokens_identical": true
+  },
+  {
+    "case": "fp8_tiny64",
+    "baseline_median_decode_tokens_per_second": 168.39656565212394,
+    "candidate_median_decode_tokens_per_second": 171.54822924290752,
+    "speed_ratio": 1.0187157236763031,
+    "max_abs_logit_change": 0.0,
+    "generated_tokens_identical": true
+  }
+]

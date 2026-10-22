@@ -1,0 +1,22 @@
+{
+  "scope": "CPU Linux conversion microbenchmark; no model inference",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "source_module": "/workspace/scratch/4d96346afabf/baseline/airllm-next/air_llm/airllm/nextgen/sidecar.py",
+  "shape": [
+    32768,
+    4096
+  ],
+  "tile_rows": 64,
+  "seed": 197,
+  "input_tile_sha256": "dcb425cd2dcedc0aa4fe7b6df1397e43d959f55379dc75b17684a83b6f1880c7",
+  "first_packed_row_sha256": "ef01a1f31a175e83332643660388eba055d6bcdf0322ad550f2044db5ce2a30d",
+  "seconds": 3.340413082998566,
+  "packed_payload_bytes": 83886080,
+  "relative_l2_error": 0.08961400896716708,
+  "max_abs_error": 0.29648923873901367,
+  "process_peak_rss_bytes": 125534208,
+  "rss_scope": "fresh process lifetime; includes interpreter and deterministic tile generation",
+  "cache_state": "temporary output; OS page cache uncontrolled",
+  "physical_ssd_throughput_certified": false
+}

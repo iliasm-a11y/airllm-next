@@ -25,12 +25,13 @@ from .tuning import process_rss,auto_config,runtime_tuning_key,telemetry
 
 def normalize_config(cfg):
     c=dict(cfg)
+    from .adapters import get_adapter,validated_default_rope
+    get_adapter(c).require_runtime(c)
     if c.get('model_type')!='glm_moe_dsa':raise NotImplementedError('Native Next currently implements glm_moe_dsa; use Ultra/upstream for other models')
     if c.get('hidden_act','silu')!='silu' or c.get('attention_bias',False):raise NotImplementedError('Only official bias-free SiLU GLM is implemented')
     q=c.get('quantization_config',{})
     if q and (q.get('quant_method')!='fp8' or q.get('fmt','e4m3')!='e4m3'):raise NotImplementedError('Only official block E4M3 FP8 is supported')
-    rope=c.get('rope_parameters',{})
-    if rope.get('rope_type','default')!='default':raise NotImplementedError('Only default GLM RoPE is supported')
+    rope=validated_default_rope(c)
     if not c.get('rope_interleave',True) or not c.get('indexer_rope_interleave',True):raise NotImplementedError('Only official interleaved GLM RoPE is supported')
     c.setdefault('rope_parameters',{'rope_theta':10000.,'rope_type':'default'})
     L=c['num_hidden_layers'];dense=c.get('first_k_dense_replace',1)
@@ -195,10 +196,16 @@ class AirLLMNextModel:
 
     __call__=forward
 
-    def generate(self,input_ids,max_new_tokens=32,eos_token_id=None,temperature=0.,**kwargs):
+    def generate(self,input_ids,max_new_tokens=32,eos_token_id=None,temperature=0.,
+                 draft_model=None,speculative_depth=4,speculative_adaptive=True,**kwargs):
         if kwargs:raise TypeError(f'Unsupported generate options {sorted(kwargs)}')
         if max_new_tokens<0 or temperature<0:raise ValueError('Invalid generation length or temperature')
+        if draft_model is not None:
+            if temperature!=0:raise NotImplementedError('Speculative decoding currently supports exact greedy decoding only')
+            return self.generate_speculative(input_ids,draft_model,max_new_tokens=max_new_tokens,
+                      eos_token_id=eos_token_id,max_depth=speculative_depth,adaptive=speculative_adaptive)
         with self.lock:
+            self.stats.pop('speculative',None)
             host=np.asarray(input_ids.detach().cpu().numpy() if hasattr(input_ids,'detach') else input_ids,dtype=np.int32)
             if host.ndim!=2 or host.shape[0]!=1 or host.shape[1]<1:raise ValueError('Expected unpadded batch size one')
             tokens=host.tolist()[0];current=host;cache=None;mx=self.mx
@@ -229,9 +236,61 @@ class AirLLMNextModel:
             self.stats['physical_read_bytes']=(physical_end-physical) if physical is not None and physical_end is not None else None
             return mx.array([tokens],dtype=mx.int32)
 
+    def generate_speculative(self,input_ids,draft_model,*,max_new_tokens=32,
+                             eos_token_id=None,max_depth=4,adaptive=True):
+        """Verify local draft proposals with the actual GLM target in blocks.
+
+        An already loaded draft model with generate(), a propose(prefix,count)
+        object, or a callable returning candidate token ids is accepted. No
+        checkpoint is fetched. The draft's tokenizer must match the target's.
+        Stochastic sampling and MTP are not implemented by this greedy path.
+        """
+        from .speculative import LocalModelDraft,greedy_speculative_generate
+        if draft_model is self:raise ValueError('Draft and target must be distinct local models')
+        eos=self.config.get('eos_token_id') if eos_token_id is None else eos_token_id
+        eos=[] if eos is None else list(eos) if isinstance(eos,(list,tuple,set)) else [eos]
+        if hasattr(draft_model,'generate'):
+            draft_config=getattr(draft_model,'config',{})
+            draft_vocab=(draft_config.get('vocab_size') if isinstance(draft_config,dict)
+                         else getattr(draft_config,'vocab_size',None))
+            if draft_vocab is not None and draft_vocab!=self.config['vocab_size']:
+                raise ValueError('Draft and target vocabularies differ')
+            other_tokenizer=getattr(draft_model,'tokenizer',None)
+            if self.tokenizer is not None and other_tokenizer is not None:
+                if self.tokenizer.get_vocab()!=other_tokenizer.get_vocab():
+                    raise ValueError('Draft and target token mappings differ')
+            propose=LocalModelDraft(draft_model,eos)
+        elif hasattr(draft_model,'propose'):propose=draft_model.propose
+        elif callable(draft_model):propose=draft_model
+        else:raise TypeError('Supply a loaded local draft model or a candidate proposal callable')
+        host=input_ids.detach().cpu().numpy() if hasattr(input_ids,'detach') else input_ids
+        with self.lock:
+            physical=physical_read_bytes()
+            def target_argmax(logits):
+                with self.mx.stream(self.stream):return self.mx.argmax(logits,axis=-1).tolist()
+            result=greedy_speculative_generate(self,propose,host,max_new_tokens,
+                       eos_token_ids=eos,max_depth=max_depth,adaptive=adaptive,
+                       argmax_tokens=target_argmax,vocab_size=self.config['vocab_size'],
+                       bytes_read=lambda:self.checkpoint.stats['logical_bytes'])
+            measured=result.metrics
+            self.stats.update({'ttft_seconds':measured['ttft_seconds'],
+                'generation_seconds':measured['generation_seconds'],
+                'tokens_generated':measured['tokens_generated'],'prefill_tokens':len(host[0]),
+                'prefill_tokens_per_second':len(host[0])/measured['ttft_seconds'] if measured['ttft_seconds'] else 0.,
+                'decode_tokens_per_second':measured['decode_tokens_per_second'],
+                'logical_bytes_per_token_including_prefill':measured['logical_bytes_per_accepted_token'],
+                'decode_logical_bytes_per_token':measured['decode_logical_bytes_per_accepted_token'],
+                'gpu_time_seconds':None,'kv_peak_bytes':result.cache.peak_bytes if result.cache else 0,
+                'speculative':measured})
+            end=physical_read_bytes()
+            self.stats['physical_read_bytes']=end-physical if physical is not None and end is not None else None
+            with self.mx.stream(self.stream):return self.mx.array([result.tokens],dtype=self.mx.int32)
+
     def metrics(self):
         r=self.reader
-        return {'compute_device':self.device,'metal_validated':False,'runtime':dict(self.stats),'telemetry':telemetry(),
+        return {'compute_device':self.device,'metal_validated':False,
+           'numerics':{'compute_dtype':self.options.dtype,'dynamic_fp8_activation_kernels_reproduced':False,
+               'full_checkpoint_quality_validated':False},'runtime':dict(self.stats),'telemetry':telemetry(),
            'io':dict(self.checkpoint.stats),'weights':dict(r.stats),
            'cache':dict(r.cache.stats)|{'bytes':r.cache.bytes,'peak_bytes':r.cache.peak_bytes,'capacity':r.cache.capacity},
            'prefetch':dict(r.io.stats)|{'peak_bytes':r.io.peak_bytes,'budget':r.io.budget,'enabled':r.prefetch_enabled}}

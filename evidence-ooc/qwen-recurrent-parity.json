@@ -1,0 +1,123 @@
+{
+  "kind": "numerical_primitive_validation",
+  "compute_device": "CPU Linux",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cpu",
+  "source_revision": "a672eb5f474b8b30173e9f96eab66adf292da635",
+  "source_copy_sha256": "6434cd57d4a239faf492e1e61ec23d7b47a9bf6b6f075143985f18729066761d",
+  "full_qwen_generation_validated": false,
+  "metal_validated": false,
+  "cases": [
+    {
+      "sequence_length": 1,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": false,
+      "output_max_abs_error": 2.9802322387695312e-08,
+      "state_max_abs_error": 0.0,
+      "passed": true
+    },
+    {
+      "sequence_length": 1,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": true,
+      "output_max_abs_error": 1.1920928955078125e-07,
+      "state_max_abs_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 1,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": false,
+      "output_max_abs_error": 2.9802322387695312e-08,
+      "state_max_abs_error": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 1,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": true,
+      "output_max_abs_error": 7.450580596923828e-08,
+      "state_max_abs_error": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 7,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": false,
+      "output_max_abs_error": 5.7220458984375e-06,
+      "state_max_abs_error": 1.1444091796875e-05,
+      "passed": true
+    },
+    {
+      "sequence_length": 7,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": true,
+      "output_max_abs_error": 1.9073486328125e-06,
+      "state_max_abs_error": 1.430511474609375e-06,
+      "passed": true
+    },
+    {
+      "sequence_length": 7,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": false,
+      "output_max_abs_error": 5.960464477539063e-08,
+      "state_max_abs_error": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 7,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": true,
+      "output_max_abs_error": 1.4901161193847656e-07,
+      "state_max_abs_error": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 64,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": false,
+      "output_max_abs_error": 0.0001220703125,
+      "state_max_abs_error": 1.6689300537109375e-06,
+      "passed": true
+    },
+    {
+      "sequence_length": 64,
+      "batch_size": 2,
+      "normalized_qk": false,
+      "initial_state": true,
+      "output_max_abs_error": 3.814697265625e-05,
+      "state_max_abs_error": 3.933906555175781e-06,
+      "passed": true
+    },
+    {
+      "sequence_length": 64,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": false,
+      "output_max_abs_error": 1.1920928955078125e-07,
+      "state_max_abs_error": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "sequence_length": 64,
+      "batch_size": 2,
+      "normalized_qk": true,
+      "initial_state": true,
+      "output_max_abs_error": 1.1920928955078125e-07,
+      "state_max_abs_error": 1.1920928955078125e-07,
+      "passed": true
+    }
+  ],
+  "rtol": 2e-05,
+  "atol": 2e-05
+}

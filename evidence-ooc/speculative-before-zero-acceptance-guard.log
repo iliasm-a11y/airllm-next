@@ -1,0 +1,152 @@
+1/3 same_checkpoint_local_draft depth=4 adaptive=False
+1/3 wrong_zero_draft depth=4 adaptive=False
+1/3 wrong_zero_draft depth=2 adaptive=False
+1/3 wrong_zero_draft depth=8 adaptive=False
+1/3 wrong_zero_draft depth=4 adaptive=True
+1/3 same_checkpoint_local_draft depth=1 adaptive=False
+1/3 autoregressive depth=0 adaptive=False
+1/3 same_checkpoint_local_draft depth=2 adaptive=False
+1/3 same_checkpoint_local_draft depth=8 adaptive=False
+1/3 wrong_zero_draft depth=1 adaptive=False
+2/3 wrong_zero_draft depth=4 adaptive=False
+2/3 wrong_zero_draft depth=2 adaptive=False
+2/3 autoregressive depth=0 adaptive=False
+2/3 wrong_zero_draft depth=1 adaptive=False
+2/3 same_checkpoint_local_draft depth=1 adaptive=False
+2/3 same_checkpoint_local_draft depth=2 adaptive=False
+2/3 wrong_zero_draft depth=8 adaptive=False
+2/3 same_checkpoint_local_draft depth=4 adaptive=False
+2/3 wrong_zero_draft depth=4 adaptive=True
+2/3 same_checkpoint_local_draft depth=8 adaptive=False
+3/3 same_checkpoint_local_draft depth=4 adaptive=False
+3/3 same_checkpoint_local_draft depth=8 adaptive=False
+3/3 wrong_zero_draft depth=2 adaptive=False
+3/3 wrong_zero_draft depth=4 adaptive=False
+3/3 autoregressive depth=0 adaptive=False
+3/3 wrong_zero_draft depth=1 adaptive=False
+3/3 wrong_zero_draft depth=8 adaptive=False
+3/3 same_checkpoint_local_draft depth=1 adaptive=False
+3/3 same_checkpoint_local_draft depth=2 adaptive=False
+3/3 wrong_zero_draft depth=4 adaptive=True
+[
+  {
+    "variant": "autoregressive",
+    "depth": 0,
+    "adaptive": false,
+    "median_generation_seconds": 0.3825616579997586,
+    "measured_wall_speedup_vs_autoregressive": 1.0,
+    "median_target_logical_read_bytes": 12991232,
+    "median_total_logical_read_bytes": 12991232,
+    "target_read_reduction_factor": 1.0,
+    "total_read_reduction_factor": 1.0,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "same_checkpoint_local_draft",
+    "depth": 1,
+    "adaptive": false,
+    "median_generation_seconds": 0.36629807999997865,
+    "measured_wall_speedup_vs_autoregressive": 1.0443998450654748,
+    "median_target_logical_read_bytes": 7712736,
+    "median_total_logical_read_bytes": 8438592,
+    "target_read_reduction_factor": 1.684386967218896,
+    "total_read_reduction_factor": 1.5395023245584099,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "same_checkpoint_local_draft",
+    "depth": 2,
+    "adaptive": false,
+    "median_generation_seconds": 0.31391113700010465,
+    "measured_wall_speedup_vs_autoregressive": 1.218694123616363,
+    "median_target_logical_read_bytes": 6123456,
+    "median_total_logical_read_bytes": 6834720,
+    "target_read_reduction_factor": 2.1215522737486805,
+    "total_read_reduction_factor": 1.9007701851721797,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "same_checkpoint_local_draft",
+    "depth": 4,
+    "adaptive": false,
+    "median_generation_seconds": 0.29073965800125734,
+    "measured_wall_speedup_vs_autoregressive": 1.3158220678587444,
+    "median_target_logical_read_bytes": 4386720,
+    "median_total_logical_read_bytes": 5093632,
+    "target_read_reduction_factor": 2.961491045701572,
+    "total_read_reduction_factor": 2.5504849977383524,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "same_checkpoint_local_draft",
+    "depth": 8,
+    "adaptive": false,
+    "median_generation_seconds": 0.2409979839976586,
+    "measured_wall_speedup_vs_autoregressive": 1.587406050680803,
+    "median_target_logical_read_bytes": 3138528,
+    "median_total_logical_read_bytes": 3838272,
+    "target_read_reduction_factor": 4.139275482009401,
+    "total_read_reduction_factor": 3.38465642872626,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "wrong_zero_draft",
+    "depth": 1,
+    "adaptive": false,
+    "median_generation_seconds": 0.3615656330002821,
+    "measured_wall_speedup_vs_autoregressive": 1.0580697474625862,
+    "median_target_logical_read_bytes": 13637792,
+    "median_total_logical_read_bytes": 13637792,
+    "target_read_reduction_factor": 0.9525905659801821,
+    "total_read_reduction_factor": 0.9525905659801821,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "wrong_zero_draft",
+    "depth": 2,
+    "adaptive": false,
+    "median_generation_seconds": 0.3556122369991499,
+    "measured_wall_speedup_vs_autoregressive": 1.0757831654726582,
+    "median_target_logical_read_bytes": 13662368,
+    "median_total_logical_read_bytes": 13662368,
+    "target_read_reduction_factor": 0.9508770368357813,
+    "total_read_reduction_factor": 0.9508770368357813,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "wrong_zero_draft",
+    "depth": 4,
+    "adaptive": false,
+    "median_generation_seconds": 0.41222582000045804,
+    "measured_wall_speedup_vs_autoregressive": 0.9280390490807527,
+    "median_target_logical_read_bytes": 13662368,
+    "median_total_logical_read_bytes": 13662368,
+    "target_read_reduction_factor": 0.9508770368357813,
+    "total_read_reduction_factor": 0.9508770368357813,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "wrong_zero_draft",
+    "depth": 8,
+    "adaptive": false,
+    "median_generation_seconds": 0.3887154259973613,
+    "measured_wall_speedup_vs_autoregressive": 0.9841689637559059,
+    "median_target_logical_read_bytes": 13711520,
+    "median_total_logical_read_bytes": 13711520,
+    "target_read_reduction_factor": 0.9474684061285693,
+    "total_read_reduction_factor": 0.9474684061285693,
+    "all_outputs_equal": true
+  },
+  {
+    "variant": "wrong_zero_draft",
+    "depth": 4,
+    "adaptive": true,
+    "median_generation_seconds": 0.5166729199991096,
+    "measured_wall_speedup_vs_autoregressive": 0.7404329570832121,
+    "median_target_logical_read_bytes": 13361920,
+    "median_total_logical_read_bytes": 13361920,
+    "target_read_reduction_factor": 0.9722578791071942,
+    "total_read_reduction_factor": 0.9722578791071942,
+    "all_outputs_equal": true
+  }
+]

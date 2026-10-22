@@ -1,0 +1,290 @@
+{
+  "kind": "random_miniature_qwen_hybrid_generation_validation",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "compute_device": "cpu",
+  "torch": "2.14.1+cpu",
+  "mlx": "0.32.4",
+  "numpy": "2.5.4",
+  "checkpoint_sha256": "ef9a786d26085982c648348a3146072f1220eb15fc46f2356f482277f8543ffd",
+  "fixture_sha256": "f3dcefb38fe638fb55326942306fd45ec67ad0c0c6b4bbce6c0c9a66ed079cf4",
+  "layers": 4,
+  "layer_types": [
+    "linear_attention",
+    "linear_attention",
+    "linear_attention",
+    "full_attention"
+  ],
+  "hidden_size": 32,
+  "num_experts": 4,
+  "experts_per_token": 2,
+  "dtype": "float32",
+  "full_qwen3_8_checkpoint_validated": false,
+  "miniature_metal_numerics_validated": false,
+  "full_checkpoint_metal_validated": false,
+  "trained_generation_quality_validated": false,
+  "cases": [
+    {
+      "input_ids": [
+        [
+          1,
+          8,
+          12,
+          5
+        ]
+      ],
+      "expected_tokens": [
+        [
+          1,
+          8,
+          12,
+          5,
+          26,
+          3,
+          60,
+          30,
+          5,
+          26,
+          3,
+          60
+        ]
+      ],
+      "actual_tokens": [
+        [
+          1,
+          8,
+          12,
+          5,
+          26,
+          3,
+          60,
+          30,
+          5,
+          26,
+          3,
+          60
+        ]
+      ],
+      "logit_max_abs_error": 4.470348358154297e-08,
+      "greedy_8_tokens_identical": true,
+      "metrics": {
+        "compute_device": "cpu",
+        "experimental": true,
+        "full_qwen_checkpoint_validated": false,
+        "metal_validated": false,
+        "mtp_execution": false,
+        "runtime": {
+          "startup_seconds": 0.005972949002170935,
+          "tokens_generated": 8,
+          "generation_seconds": 0.10388938000323833,
+          "ttft_seconds": 0.018647588000021642,
+          "decode_tokens_per_second": 82.1193435226684,
+          "logical_bytes_per_generated_token": 162352.0,
+          "physical_read_bytes": 0,
+          "context_payload_peak_bytes": 13440
+        },
+        "io": {
+          "manifest_hit": 0,
+          "header_bytes": 7504,
+          "fd_opens": 1,
+          "logical_bytes": 1499136,
+          "read_calls": 754,
+          "io_seconds": 0.007475339989468921,
+          "requested_bytes": 1499136
+        },
+        "telemetry": {
+          "available_bytes": 8967102464,
+          "total_bytes": 10451439616,
+          "rss_bytes": 551571456,
+          "swap_used_bytes": 0,
+          "cpu_percent": 26.8,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": 0,
+          "process_peak_rss_bytes": 550965248,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "cache": {
+          "misses": 739,
+          "bytes": 0,
+          "peak_bytes": 0
+        }
+      }
+    },
+    {
+      "input_ids": [
+        [
+          7,
+          3,
+          9,
+          10,
+          2
+        ]
+      ],
+      "expected_tokens": [
+        [
+          7,
+          3,
+          9,
+          10,
+          2,
+          5,
+          26,
+          3,
+          60,
+          30,
+          5,
+          26,
+          3
+        ]
+      ],
+      "actual_tokens": [
+        [
+          7,
+          3,
+          9,
+          10,
+          2,
+          5,
+          26,
+          3,
+          60,
+          30,
+          5,
+          26,
+          3
+        ]
+      ],
+      "logit_max_abs_error": 5.960464477539063e-08,
+      "greedy_8_tokens_identical": true,
+      "metrics": {
+        "compute_device": "cpu",
+        "experimental": true,
+        "full_qwen_checkpoint_validated": false,
+        "metal_validated": false,
+        "mtp_execution": false,
+        "runtime": {
+          "startup_seconds": 0.005972949002170935,
+          "tokens_generated": 8,
+          "generation_seconds": 0.12092427800234873,
+          "ttft_seconds": 0.02378610000232584,
+          "decode_tokens_per_second": 72.06229460056736,
+          "logical_bytes_per_generated_token": 161600.0,
+          "physical_read_bytes": 0,
+          "context_payload_peak_bytes": 13696
+        },
+        "io": {
+          "manifest_hit": 0,
+          "header_bytes": 7504,
+          "fd_opens": 1,
+          "logical_bytes": 2986240,
+          "read_calls": 1506,
+          "io_seconds": 0.014823021963820793,
+          "requested_bytes": 2986240
+        },
+        "telemetry": {
+          "available_bytes": 8967102464,
+          "total_bytes": 10451439616,
+          "rss_bytes": 551993344,
+          "swap_used_bytes": 0,
+          "cpu_percent": 32.5,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": 0,
+          "process_peak_rss_bytes": 551489536,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "cache": {
+          "misses": 1474,
+          "bytes": 0,
+          "peak_bytes": 0
+        }
+      }
+    },
+    {
+      "input_ids": [
+        [
+          13
+        ]
+      ],
+      "expected_tokens": [
+        [
+          13,
+          62,
+          37,
+          24,
+          39,
+          22,
+          63,
+          7,
+          37
+        ]
+      ],
+      "actual_tokens": [
+        [
+          13,
+          62,
+          37,
+          24,
+          39,
+          22,
+          63,
+          7,
+          37
+        ]
+      ],
+      "logit_max_abs_error": 5.960464477539063e-08,
+      "greedy_8_tokens_identical": true,
+      "metrics": {
+        "compute_device": "cpu",
+        "experimental": true,
+        "full_qwen_checkpoint_validated": false,
+        "metal_validated": false,
+        "mtp_execution": false,
+        "runtime": {
+          "startup_seconds": 0.005972949002170935,
+          "tokens_generated": 8,
+          "generation_seconds": 0.1195188749989029,
+          "ttft_seconds": 0.015896961998805637,
+          "decode_tokens_per_second": 67.55327900570056,
+          "logical_bytes_per_generated_token": 156928.0,
+          "physical_read_bytes": 0,
+          "context_payload_peak_bytes": 12672
+        },
+        "io": {
+          "manifest_hit": 0,
+          "header_bytes": 7504,
+          "fd_opens": 1,
+          "logical_bytes": 4398592,
+          "read_calls": 2226,
+          "io_seconds": 0.02191389297877322,
+          "requested_bytes": 4398592
+        },
+        "telemetry": {
+          "available_bytes": 8967102464,
+          "total_bytes": 10451439616,
+          "rss_bytes": 553881600,
+          "swap_used_bytes": 0,
+          "cpu_percent": 25.0,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": 0,
+          "process_peak_rss_bytes": 553394176,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "cache": {
+          "misses": 2185,
+          "bytes": 0,
+          "peak_bytes": 0
+        }
+      }
+    }
+  ],
+  "rtol": 0.0004,
+  "atol": 1e-05
+}
