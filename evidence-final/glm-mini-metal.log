@@ -1,0 +1,9 @@
+W1022 23:02:17.689000 46566 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Writing model shards:   0%|          | 0/12 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 12/12 [00:00<00:00, 2668.42it/s]
+benchmark tiny64
+built empty GlmMoeDsaForCausalLM via AutoModelForCausalLM (attn=sdpa)
+Writing model shards:   0%|          | 0/16 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 16/16 [00:00<00:00, 2987.80it/s]
+benchmark larger128
+Writing model shards:   0%|          | 0/12 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 12/12 [00:00<00:00, 5176.56it/s]
+benchmark fp8_tiny64
+wrote evidence-final/glm-mini-metal.json

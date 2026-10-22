@@ -16,7 +16,8 @@ def test_cli_local_draft_performs_real_target_verification(tiny_glm, tmp_path, c
         expected = reference.generate(torch.tensor(ids), max_new_tokens=4, do_sample=False).tolist()[0]
     main(['run', str(root), '--device', 'cpu', '--float32', '--token-ids', '1,8,12',
           '--max-new-tokens', '4', '--draft-model', str(root), '--cache-mib', '1',
-          '--io-mib', '1', '--kv-mib', '1', '--cache-dir', str(tmp_path/'metadata'),
+          '--io-mib', '1', '--kv-mib', '1', '--workspace-mib', '1', '--reserve-mib', '0',
+          '--cache-dir', str(tmp_path/'metadata'),
           '--json-report', str(report)])
     result = ast.literal_eval(capsys.readouterr().out.strip())
     assert result == expected

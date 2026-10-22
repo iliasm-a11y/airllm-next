@@ -1,0 +1,41 @@
+{
+  "adapter": {
+    "model_type": "llama",
+    "family": "Llama full causal GQA",
+    "runtime": "mlx-next-llama",
+    "attention": [
+      "full_causal_attention"
+    ],
+    "recurrent": false,
+    "mtp_execution": false,
+    "full_checkpoint_validated": false,
+    "metal_validated": false,
+    "experimental_runtime": null
+  },
+  "quantization": {
+    "format": "bfloat16",
+    "direct_next_read": true,
+    "lossless_conversion_certified": false
+  },
+  "runtime_available": true,
+  "runtime_rejection_reason": null,
+  "storage_representation": {
+    "kind": "original_safetensors",
+    "base_checkpoint_required": false,
+    "integrity_verified": false
+  },
+  "generation_validated": false,
+  "declared_tensor_payload_bytes": null,
+  "storage_budget_bytes": 2000000000000,
+  "declared_payload_fits_budget": null,
+  "context_estimate": {
+    "kv_bytes": 94371840,
+    "recurrent_bytes": 0,
+    "convolution_bytes": 0,
+    "payload_bytes": 94371840,
+    "rollback_snapshot_bytes": 0
+  },
+  "mtp_layers_declared": 0,
+  "mtp_execution_available": false,
+  "downloads_performed": false
+}

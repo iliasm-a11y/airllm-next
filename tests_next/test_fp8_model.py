@@ -156,7 +156,7 @@ def test_default_bfloat16_quantized_model_generates(tmp_path):
     with AirLLMNextModel(root,next_config=options(tmp_path,dtype='bfloat16',quantized_dir=str(tmp_path/'quant'))) as model:
         logits=model([[1,8,9]]).logits
         assert np.isfinite(np.array(logits.astype(model.mx.float32))).all()
-        assert model.generate([[1,8,9]],max_new_tokens=8,eos_token_id=-1).shape==(1,11)
+        assert model.generate([[1,8,9]],max_new_tokens=8,eos_token_id=[]).shape==(1,11)
 
 
 def test_resume_refuses_silent_mixed_precision_change(tmp_path):

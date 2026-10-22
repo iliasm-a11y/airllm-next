@@ -1,11 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 task_root="$(cd "$(dirname "$0")/.." && pwd)"
-task_python="$task_root/.venv-next/bin/python"
+task_python="${AIRLLM_PYTHON:-$task_root/.venv-next/bin/python}"
 if [[ ! -x "$task_python" ]]; then echo 'Installez avec setup_next_macos.sh' >&2;exit 1;fi
 cd "$task_root"
+mkdir -p evidence-next
+export PYTHONPATH="$task_root/air_llm${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
+export MLX_ENABLE_TF32="${MLX_ENABLE_TF32:-0}"
 "$task_python" -m airllm.nextgen.cli doctor > evidence-next/macos-environment.json
 "$task_python" - <<'PY'
 import mlx.core as mx,platform

@@ -1,3 +1,5 @@
+> Historical delivery document. Current candidate status, installation and evidence: [README](README.md) and [FINAL_VALIDATION](FINAL_VALIDATION.md). The original report below is preserved.
+
 # AirLLM Ultra — moteur de streaming direct
 
 Livraison du 22 octobre 2026. Développement local basé sur **AirLLM v4.0.0**, commit

@@ -1,0 +1,46 @@
+{
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "mlx": "0.32.4",
+  "metal_available": true,
+  "mlx_import_error": null,
+  "telemetry": {
+    "available_bytes": 4046159872,
+    "total_bytes": 17179869184,
+    "rss_bytes": 34783232,
+    "swap_used_bytes": 4827316224,
+    "cpu_percent": 0.0,
+    "gpu_utilization": null,
+    "temperature_c": null,
+    "thermal_throttled": null,
+    "memory_pressure_source": "available physical memory (not macOS pressure level)",
+    "physical_read_bytes": null,
+    "process_peak_rss_bytes": 35012608,
+    "rss_peak_scope": "process lifetime, not isolated per model"
+  },
+  "working_directory_free_bytes": 27329695744,
+  "checkpoint_generation_tested": false,
+  "validation": "Hardware visibility only; run the validation scripts and real local checkpoints separately",
+  "backends": {
+    "glm": {
+      "architecture": "glm_moe_dsa",
+      "experimental": false,
+      "sampling": true,
+      "speculation": "exact greedy local GLM draft verification"
+    },
+    "qwen-experimental": {
+      "architecture": "qwen3_5_moe_text",
+      "experimental": true,
+      "sampling": false,
+      "speculation": false,
+      "nvfp4": false
+    },
+    "llama": {
+      "architecture": "llama",
+      "experimental": false,
+      "sampling": true,
+      "scope": "Bias-free SiLU Llama with default RoPE; checkpoint validation is separate"
+    }
+  }
+}

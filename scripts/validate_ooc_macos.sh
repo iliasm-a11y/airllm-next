@@ -8,6 +8,11 @@ task_ssd_file=""
 task_seconds=300
 task_qwen_miniature=0
 while [[ $# -gt 0 ]]; do
+  if [[ "$1" == --model || "$1" == --ssd-file || "$1" == --seconds ]]; then
+    if [[ $# -lt 2 || -z "$2" || "$2" == --* ]]; then
+      echo "Missing value for $1" >&2; exit 2
+    fi
+  fi
   case "$1" in
     --model) task_model="$2"; shift 2 ;;
     --ssd-file) task_ssd_file="$2"; shift 2 ;;
@@ -16,6 +21,9 @@ while [[ $# -gt 0 ]]; do
     *) echo "Usage: $0 [--model /local/checkpoint] [--ssd-file /Volumes/SSD/existing-shard.safetensors] [--seconds 300] [--qwen-miniature]" >&2; exit 2 ;;
   esac
 done
+if [[ ! "$task_seconds" =~ ^[1-9][0-9]*$ ]]; then
+  echo '--seconds must be a positive integer.' >&2; exit 2
+fi
 if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
   echo 'This validation requires a real Apple Silicon Mac.' >&2
   exit 1
@@ -28,8 +36,9 @@ cd "$task_root"
 export PYTHONPATH="$task_root/air_llm${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
-task_report="$task_root/evidence-ooc/macos-$(date +%Y%m%d-%H%M%S)"
-mkdir -p "$task_report"
+export MLX_ENABLE_TF32="${MLX_ENABLE_TF32:-0}"
+mkdir -p "$task_root/evidence-ooc"
+task_report="$(mktemp -d "$task_root/evidence-ooc/macos-$(date +%Y%m%d-%H%M%S)-XXXXXX")"
 "$task_python" - <<'PY' > "$task_report/hardware.json"
 import json,platform,subprocess
 import mlx.core as mx

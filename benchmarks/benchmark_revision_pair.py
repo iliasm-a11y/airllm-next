@@ -50,7 +50,7 @@ def worker(args):
                 runs = []
                 for _ in range(args.repeats):
                     tokens = model.generate(ids, max_new_tokens=args.tokens,
-                                            eos_token_id=-1).tolist()[0]
+                                            eos_token_id=[]).tolist()[0]
                     runs.append({'tokens': tokens, 'metrics': model.metrics()})
                 reports.append({'label': label, 'construction_seconds': construction,
                     'first_prefill_seconds': first_prefill,

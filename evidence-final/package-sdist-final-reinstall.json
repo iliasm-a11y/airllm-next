@@ -1,0 +1,95 @@
+{
+  "version": "1",
+  "pip_version": "26.1.2",
+  "install": [
+    {
+      "download_info": {
+        "url": "file:///Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/dist-final/airllm-4.1.0rc1.tar.gz",
+        "archive_info": {
+          "hashes": {
+            "sha256": "327a1347481e3299bd638fc9c9d01e8638327422e0756008a1a0ef338654ce8d"
+          },
+          "hash": "sha256=327a1347481e3299bd638fc9c9d01e8638327422e0756008a1a0ef338654ce8d"
+        }
+      },
+      "is_direct": true,
+      "is_yanked": false,
+      "requested": true,
+      "metadata": {
+        "metadata_version": "2.4",
+        "name": "airllm",
+        "version": "4.1.0rc1",
+        "dynamic": [
+          "author",
+          "author-email",
+          "classifier",
+          "description",
+          "description-content-type",
+          "home-page",
+          "license",
+          "license-file",
+          "provides-extra",
+          "requires-dist",
+          "requires-python",
+          "summary"
+        ],
+        "summary": "Local out-of-core inference with selective reads, bounded caches and native MLX backends",
+        "description": "# AirLLM Next 4.1.0rc1\n\nRelease candidate of the AirLLM derivative maintained at\n[iliasm-a11y/airllm-next](https://github.com/iliasm-a11y/airllm-next).\nThe original AirLLM copyright and Apache 2.0 license are preserved. This is a\nderivative release candidate, with separate model licenses for any user-supplied\nweights. Model weights are not included.\n\nThe Next engine runs local checkpoints through selective Safetensors reads,\nbounded weight and context caches, native MLX compute, and an optional verified\nlossless transport. It implements GLM DSA/MoE and a separate bias-free Llama\npath with default RoPE. Qwen hybrid execution is explicitly experimental.\nFull GLM-5.3 and Qwen3.8 generation on 16 GB has not been certified.\n\nPython 3.12 or newer is required. The macOS setup requires native ARM64\nPython 3.12/3.13 and MLX 0.32.4; this candidate's execution checks use Python\n3.12. From a repository checkout:\n\n```sh\npython3.12 -m venv .venv-next\n.venv-next/bin/python -m pip install './air_llm[next]'\n.venv-next/bin/airllm-next doctor\n.venv-next/bin/airllm-next --help\n```\n\nFor a downloaded wheel, install the wheel's `next` extra with pip. The extra\nselects Metal MLX on macOS and CPU MLX on Linux. Other operating systems have\nno Next MLX installation profile in this release.\n\n```sh\nairllm-next inspect /absolute/path/to/local/checkpoint\nMLX_ENABLE_TF32=0 airllm-next run /absolute/path/to/local/llama \\\n  --backend llama --device gpu --prompt 'The capital of France is' \\\n  --max-new-tokens 16\n```\n\nAutomatic budgets preserve a system memory reserve. The CLI exposes explicit\ncache, IO, KV, workspace and reserve limits for smaller workloads. Check\n`airllm-next run --help` before changing them. Checkpoint downloads are never\nimplicit in the Next engine.\n\nSee the repository README, usage guide, compatibility table and final validation\nreport for installation profiles, the loopback OpenAI API subset, reproducible\nmeasurements, numerical precision settings and remaining limits. The bundled\n`NOTICE_NEXT.txt` and `NOTICE_ULTRA.txt` retain the inherited provenance notices.\n",
+        "description_content_type": "text/markdown",
+        "home_page": "https://github.com/iliasm-a11y/airllm-next",
+        "author": "Gavin Li",
+        "author_email": "gavinli@animaai.cloud",
+        "license": "Apache-2.0",
+        "license_file": [
+          "LICENSE",
+          "NOTICE_NEXT.txt",
+          "NOTICE_ULTRA.txt"
+        ],
+        "classifier": [
+          "Programming Language :: Python :: 3",
+          "Operating System :: OS Independent"
+        ],
+        "requires_dist": [
+          "tqdm",
+          "torch>=2.4",
+          "transformers<6,>=4.49",
+          "accelerate>=1.0",
+          "safetensors",
+          "huggingface-hub",
+          "scipy",
+          "sentencepiece",
+          "psutil>=5.9",
+          "numpy<3,>=2.2",
+          "transformers==5.20.2; extra == \"ultra\"",
+          "safetensors>=0.8.0; extra == \"ultra\"",
+          "transformers==5.20.2; extra == \"next\"",
+          "safetensors>=0.8.0; extra == \"next\"",
+          "mlx==0.32.4; sys_platform == \"darwin\" and extra == \"next\"",
+          "mlx[cpu]==0.32.4; sys_platform == \"linux\" and extra == \"next\"",
+          "mlx==0.32.4; (sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"macos\"",
+          "pytest>=8; extra == \"test\""
+        ],
+        "requires_python": ">=3.12",
+        "provides_extra": [
+          "ultra",
+          "next",
+          "macos",
+          "test"
+        ]
+      }
+    }
+  ],
+  "environment": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.13",
+    "os_name": "posix",
+    "platform_machine": "arm64",
+    "platform_release": "27.2.0",
+    "platform_system": "Darwin",
+    "platform_version": "Darwin Kernel Version 27.2.0: Wed Oct 14 23:48:06 PDT 2026; root:xnu-13432.41.4~25/RELEASE_ARM64_T8142",
+    "python_full_version": "3.12.13",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.12",
+    "sys_platform": "darwin"
+  }
+}

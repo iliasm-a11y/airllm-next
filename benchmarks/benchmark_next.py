@@ -60,7 +60,7 @@ def run_case(root,reference,kind,device,count,sidecar=None):
           'scope':'random miniature weights; not a linguistic quality evaluation of GLM-5.3'}
         records=[]
         for repeat in range(3):
-            model.generate(ids,max_new_tokens=count,eos_token_id=-1)
+            model.generate(ids,max_new_tokens=count,eos_token_id=[])
             records.append(model.metrics())
         return {'label':kind,'parameter_count':sum(p.numel() for p in reference.parameters()),
          'checkpoint_bytes':model.checkpoint.total_bytes,'construction_seconds':construction,

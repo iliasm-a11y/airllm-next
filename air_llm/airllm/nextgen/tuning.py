@@ -43,14 +43,23 @@ def auto_config(profile='balanced',**kwargs):
     if profile not in ('balanced','performance'):raise ValueError('Unknown profile')
     vm=psutil.virtual_memory();physical=vm.total
     # Available memory, not just installed RAM: apps already open are respected.
-    reserve=min(4*GiB,int(physical*.3));usable=max(0,min(int(physical*.6),vm.available-reserve))
-    if usable<384*MiB:raise MemoryError('Not enough currently available memory for inference')
+    reserve=kwargs.get('reserve_bytes',min(4*GiB,int(physical*.3)))
+    if type(reserve) is not int or reserve<0:raise ValueError('reserve_bytes must be a nonnegative integer')
+    usable=max(0,min(int(physical*.6),vm.available-reserve))
+    explicit_budgets=all(key in kwargs for key in ('cache_bytes','io_bytes','kv_bytes','workspace_bytes'))
+    if usable<384*MiB and not explicit_budgets:
+        raise MemoryError('Not enough currently available memory for inference; explicitly configure all cache/IO/KV/workspace budgets and reserve for a smaller workload')
     cache=int(usable*(.48 if profile=='balanced' else .55))
     options=dict(profile=profile,reserve_bytes=reserve,cache_bytes=cache,
        kv_bytes=min(768*MiB,int(usable*.15)),io_bytes=min(384*MiB,int(usable*.10)),
-       workspace_bytes=min(GiB,int(usable*.20)),max_tensor_bytes=min(256*MiB,int(usable*.10)),
+       workspace_bytes=min(GiB,int(usable*.20)),max_tensor_bytes=max(1,min(256*MiB,int(usable*.10))),
        io_workers=2 if profile=='balanced' else 3)
-    options.update(kwargs);return NextConfig(**options)
+    options.update(kwargs)
+    config=NextConfig(**options)
+    requested=sum(getattr(config,key) for key in ('cache_bytes','io_bytes','kv_bytes','workspace_bytes'))
+    if requested+config.reserve_bytes>vm.available:
+        raise MemoryError('Requested inference budgets plus reserve exceed currently available memory')
+    return config
 
 
 def measure_storage(cp,config,samples=12):
@@ -104,10 +113,10 @@ def calibrate_prefetch(model,input_ids,tokens=8):
     import statistics
     reader=model.reader;old=reader.prefetch_enabled;rows=[]
     try:
-        reader.prefetch_enabled=False;model.generate(input_ids,max_new_tokens=tokens,eos_token_id=-1)
+        reader.prefetch_enabled=False;model.generate(input_ids,max_new_tokens=tokens,eos_token_id=[])
         for enabled in (False,True,True,False):
             reader.io.drain();reader.prefetch_enabled=enabled
-            begin=perf_counter();model.generate(input_ids,max_new_tokens=tokens,eos_token_id=-1)
+            begin=perf_counter();model.generate(input_ids,max_new_tokens=tokens,eos_token_id=[])
             rows.append({'prefetch':enabled,'generation_seconds':perf_counter()-begin,
               'decode_tokens_s':model.stats['decode_tokens_per_second']})
         off=statistics.median(x['generation_seconds'] for x in rows if not x['prefetch'])

@@ -1,0 +1,51 @@
+{
+  "scope": "Full trained SmolLM2-135M Next Llama Metal through installed CLI HTTP server outside source checkout",
+  "installed_package": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/.venv-next",
+  "status": 200,
+  "models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "airllm-next",
+        "object": "model",
+        "created": 0,
+        "owned_by": "local"
+      }
+    ]
+  },
+  "chat_response": {
+    "id": "chatcmpl-795e99275a154928b764f4dacac62f9e",
+    "object": "chat.completion",
+    "created": 1792703933,
+    "model": "airllm-next",
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "logprobs": null,
+        "message": {
+          "role": "assistant",
+          "content": "The capital of France is Paris."
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 37,
+      "completion_tokens": 8,
+      "total_tokens": 45
+    }
+  },
+  "invalid_model_status": 400,
+  "invalid_model_response": {
+    "error": {
+      "message": "Unknown model; inspect /v1/models for the local model ID",
+      "type": "invalid_request_error",
+      "param": null,
+      "code": null
+    }
+  },
+  "healthy_after_invalid_request": true,
+  "bind": "127.0.0.1",
+  "port_ephemeral": true,
+  "remote_inference": false
+}

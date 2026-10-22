@@ -1,0 +1,33 @@
+{
+  "scope": "Same trained SmolLM2 checkpoint, M5 Metal, float32, TF32=0, 3 prompts x3 repetitions x16 tokens, sequential fresh processes, no prefetch, warm OS cache uncontrolled",
+  "raw_reports": [
+    "tiles128.json",
+    "tiles2048.json"
+  ],
+  "row128": {
+    "all_generated_sequences_match_reference": true,
+    "last_logits_within_atol_1e4_rtol_5e4": true,
+    "max_abs_last_logit_error": 6.389617919921875e-05,
+    "median_generation_seconds": 1.9921929159972933,
+    "p50_generation_seconds": 1.9921929159972933,
+    "p95_generation_seconds": 2.0900100834012845,
+    "median_ttft_seconds": 0.22095316600098158,
+    "median_decode_tokens_per_second": 8.46027863927744,
+    "process_peak_rss_bytes": 530284544
+  },
+  "row2048": {
+    "all_generated_sequences_match_reference": true,
+    "last_logits_within_atol_1e4_rtol_5e4": true,
+    "max_abs_last_logit_error": 6.389617919921875e-05,
+    "median_generation_seconds": 1.030409332997806,
+    "p50_generation_seconds": 1.030409332997806,
+    "p95_generation_seconds": 1.050772499798768,
+    "median_ttft_seconds": 0.16201345799709088,
+    "median_decode_tokens_per_second": 17.26643300382977,
+    "process_peak_rss_bytes": 535904256
+  },
+  "max_abs_logit_change": 0.0,
+  "all_sequences_equal_across_tile_policies": true,
+  "generation_speedup": 1.9333995259935552,
+  "decode_speedup": 2.04088230896665
+}

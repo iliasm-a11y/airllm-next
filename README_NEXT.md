@@ -1,3 +1,5 @@
+> Historical delivery document. Current candidate status, installation and evidence: [README](README.md) and [FINAL_VALIDATION](FINAL_VALIDATION.md). The original report below is preserved.
+
 # AirLLM Next — livraison du 22 octobre 2026
 
 Évolution réelle d’AirLLM v4.0.0 et de la livraison Ultra fournie. Le nouveau

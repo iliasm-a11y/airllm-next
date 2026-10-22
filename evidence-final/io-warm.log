@@ -1,0 +1,25 @@
+{
+  "output": "evidence-final/io-warm.json",
+  "summary": {
+    "separate_pread": {
+      "median_read_seconds": 0.001718664982035989,
+      "median_read_calls": 256,
+      "read_time_speedup_vs_separate_pread": 1.0
+    },
+    "separate_mmap": {
+      "median_read_seconds": 0.0028773300073225982,
+      "median_read_calls": 256,
+      "read_time_speedup_vs_separate_pread": 0.5973124311991013
+    },
+    "coalesced_pread": {
+      "median_read_seconds": 0.0014057919870538171,
+      "median_read_calls": 32,
+      "read_time_speedup_vs_separate_pread": 1.2225599504503324
+    },
+    "coalesced_mmap": {
+      "median_read_seconds": 0.0018201280036009848,
+      "median_read_calls": 32,
+      "read_time_speedup_vs_separate_pread": 0.9442550076894268
+    }
+  }
+}

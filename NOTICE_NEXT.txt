@@ -14,3 +14,14 @@ No GLM weights are included. GLM-5.3 model license is separate from the AirLLM
 software license and is reproduced for reference in evidence-next/sources/.
 Quantized derivative weights remain subject to the model's applicable terms.
 No source repository was modified remotely and no code was published.
+
+Release candidate addendum, 22 October 2026:
+The preceding publication statement is historical and applies to the original
+archive delivery. Subsequent research and candidate source changes use the
+iliasm-a11y/airllm-next repository; see FINAL_VALIDATION.md for verified state.
+The candidate adds an independent bounded Llama backend, standalone reversible
+weight transport, and reliability changes. Llama and Qwen formulas follow their
+official Transformers implementations (Hugging Face contributors, Apache-2.0).
+No model weights are embedded in the Python distribution. External checkpoints
+retain their own licenses. No full GLM-5.3/Qwen3.8 compatibility follows from this
+software notice.

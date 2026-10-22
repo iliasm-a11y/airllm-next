@@ -1,0 +1,2403 @@
+{
+  "evidence": "simulation only",
+  "rows": [
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 31383447104.0,
+          "ota_bytes": 31383447104.0,
+          "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+          "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 53330268992.0,
+          "ota_bytes": 53330268992.0,
+          "transfer_only_seconds_per_token_at_3GBps": 17.776756330666668,
+          "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 74591253080.0,
+          "ota_bytes": 74591253080.0,
+          "transfer_only_seconds_per_token_at_3GBps": 24.863751026666666,
+          "transfer_only_round_latency_seconds_at_3GBps": 24.863751026666666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 115140767817.52344,
+          "ota_bytes": 115140767817.52344,
+          "transfer_only_seconds_per_token_at_3GBps": 38.38025593917448,
+          "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 188909050449.7573,
+          "ota_bytes": 188909050449.7573,
+          "transfer_only_seconds_per_token_at_3GBps": 62.96968348325243,
+          "transfer_only_round_latency_seconds_at_3GBps": 62.96968348325243
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 311101664070.9786,
+          "ota_bytes": 311101664070.9786,
+          "transfer_only_seconds_per_token_at_3GBps": 103.70055469032619,
+          "transfer_only_round_latency_seconds_at_3GBps": 103.70055469032619
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 479411075584.5982,
+          "ota_bytes": 479411075584.5982,
+          "transfer_only_seconds_per_token_at_3GBps": 159.80369186153274,
+          "transfer_only_round_latency_seconds_at_3GBps": 159.80369186153274
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 641622099059.0302,
+          "ota_bytes": 641622099059.0302,
+          "transfer_only_seconds_per_token_at_3GBps": 213.87403301967672,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.87403301967672
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 721615325674.8463,
+          "ota_bytes": 721615325674.8463,
+          "transfer_only_seconds_per_token_at_3GBps": 240.53844189161543,
+          "transfer_only_round_latency_seconds_at_3GBps": 240.53844189161543
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 733477142151.0999,
+          "ota_bytes": 733477142151.0999,
+          "transfer_only_seconds_per_token_at_3GBps": 244.49238071703329,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.49238071703329
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 733687584536.2795,
+          "ota_bytes": 733687584536.2795,
+          "transfer_only_seconds_per_token_at_3GBps": 244.56252817875983,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1,
+        "encoded_bytes_per_pass": 31383447104.0,
+        "ota_bytes": 31383447104.0,
+        "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+        "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.3186393122100803
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.5,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 31383447104.0,
+          "ota_bytes": 31383447104.0,
+          "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+          "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.5,
+          "encoded_bytes_per_pass": 53330268992.0,
+          "ota_bytes": 35553512661.333336,
+          "transfer_only_seconds_per_token_at_3GBps": 11.851170887111111,
+          "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1.75,
+          "encoded_bytes_per_pass": 74591253080.0,
+          "ota_bytes": 42623573188.57143,
+          "transfer_only_seconds_per_token_at_3GBps": 14.207857729523809,
+          "transfer_only_round_latency_seconds_at_3GBps": 24.863751026666666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1.9375,
+          "encoded_bytes_per_pass": 115140767817.52344,
+          "ota_bytes": 59427493067.10887,
+          "transfer_only_seconds_per_token_at_3GBps": 19.809164355702958,
+          "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1.99609375,
+          "encoded_bytes_per_pass": 188909050449.7573,
+          "ota_bytes": 94639367739.99582,
+          "transfer_only_seconds_per_token_at_3GBps": 31.54645591333194,
+          "transfer_only_round_latency_seconds_at_3GBps": 62.96968348325243
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1.9999847412109375,
+          "encoded_bytes_per_pass": 311101664070.9786,
+          "ota_bytes": 155552018803.21088,
+          "transfer_only_seconds_per_token_at_3GBps": 51.850672934403626,
+          "transfer_only_round_latency_seconds_at_3GBps": 103.70055469032619
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1.9999999997671694,
+          "encoded_bytes_per_pass": 479411075584.5982,
+          "ota_bytes": 239705537820.2045,
+          "transfer_only_seconds_per_token_at_3GBps": 79.90184594006817,
+          "transfer_only_round_latency_seconds_at_3GBps": 159.80369186153274
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 641622099059.0302,
+          "ota_bytes": 320811049529.5151,
+          "transfer_only_seconds_per_token_at_3GBps": 106.93701650983836,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.87403301967672
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 721615325674.8463,
+          "ota_bytes": 360807662837.42316,
+          "transfer_only_seconds_per_token_at_3GBps": 120.26922094580772,
+          "transfer_only_round_latency_seconds_at_3GBps": 240.53844189161543
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 733477142151.0999,
+          "ota_bytes": 366738571075.5499,
+          "transfer_only_seconds_per_token_at_3GBps": 122.24619035851664,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.49238071703329
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 733687584536.2795,
+          "ota_bytes": 366843792268.1398,
+          "transfer_only_seconds_per_token_at_3GBps": 122.28126408937992,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1.0,
+        "encoded_bytes_per_pass": 31383447104.0,
+        "ota_bytes": 31383447104.0,
+        "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+        "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.3186393122100803
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.8,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 31383447104.0,
+          "ota_bytes": 31383447104.0,
+          "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+          "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.8,
+          "encoded_bytes_per_pass": 53330268992.0,
+          "ota_bytes": 29627927217.77778,
+          "transfer_only_seconds_per_token_at_3GBps": 9.87597573925926,
+          "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.4400000000000004,
+          "encoded_bytes_per_pass": 74591253080.0,
+          "ota_bytes": 30570185688.524586,
+          "transfer_only_seconds_per_token_at_3GBps": 10.190061896174862,
+          "transfer_only_round_latency_seconds_at_3GBps": 24.863751026666666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 3.3616,
+          "encoded_bytes_per_pass": 115140767817.52344,
+          "ota_bytes": 34251775290.791122,
+          "transfer_only_seconds_per_token_at_3GBps": 11.417258430263708,
+          "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 4.328911360000001,
+          "encoded_bytes_per_pass": 188909050449.7573,
+          "ota_bytes": 43638927836.52591,
+          "transfer_only_seconds_per_token_at_3GBps": 14.546309278841969,
+          "transfer_only_round_latency_seconds_at_3GBps": 62.96968348325243
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 4.887410009315738,
+          "encoded_bytes_per_pass": 311101664070.9786,
+          "ota_bytes": 63653686406.09187,
+          "transfer_only_seconds_per_token_at_3GBps": 21.21789546869729,
+          "transfer_only_round_latency_seconds_at_3GBps": 103.70055469032619
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 4.99683087349943,
+          "encoded_bytes_per_pass": 479411075584.5982,
+          "ota_bytes": 95943026234.31645,
+          "transfer_only_seconds_per_token_at_3GBps": 31.98100874477215,
+          "transfer_only_round_latency_seconds_at_3GBps": 159.80369186153274
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 4.999997489159307,
+          "encoded_bytes_per_pass": 641622099059.0302,
+          "ota_bytes": 128324484252.27342,
+          "transfer_only_seconds_per_token_at_3GBps": 42.77482808409114,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.87403301967672
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 4.999999999998425,
+          "encoded_bytes_per_pass": 721615325674.8463,
+          "ota_bytes": 144323065135.0147,
+          "transfer_only_seconds_per_token_at_3GBps": 48.10768837833824,
+          "transfer_only_round_latency_seconds_at_3GBps": 240.53844189161543
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 733477142151.0999,
+          "ota_bytes": 146695428430.21994,
+          "transfer_only_seconds_per_token_at_3GBps": 48.89847614340665,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.49238071703329
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 733687584536.2795,
+          "ota_bytes": 146737516907.2559,
+          "transfer_only_seconds_per_token_at_3GBps": 48.91250563575196,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+        }
+      ],
+      "best": {
+        "K": 1,
+        "positions": 2,
+        "expected_tokens_emitted": 1.8,
+        "encoded_bytes_per_pass": 53330268992.0,
+        "ota_bytes": 29627927217.77778,
+        "transfer_only_seconds_per_token_at_3GBps": 9.87597573925926,
+        "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.396771593227369
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.95,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 31383447104.0,
+          "ota_bytes": 31383447104.0,
+          "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+          "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.95,
+          "encoded_bytes_per_pass": 53330268992.0,
+          "ota_bytes": 27348855893.333332,
+          "transfer_only_seconds_per_token_at_3GBps": 9.116285297777777,
+          "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.8525,
+          "encoded_bytes_per_pass": 74591253080.0,
+          "ota_bytes": 26149431404.03155,
+          "transfer_only_seconds_per_token_at_3GBps": 8.716477134677184,
+          "transfer_only_round_latency_seconds_at_3GBps": 24.863751026666666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 4.524381249999999,
+          "encoded_bytes_per_pass": 115140767817.52344,
+          "ota_bytes": 25448953449.16467,
+          "transfer_only_seconds_per_token_at_3GBps": 8.48298448305489,
+          "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 7.395011805507811,
+          "encoded_bytes_per_pass": 188909050449.7573,
+          "ota_bytes": 25545469759.636852,
+          "transfer_only_seconds_per_token_at_3GBps": 8.515156586545617,
+          "transfer_only_round_latency_seconds_at_3GBps": 62.96968348325243
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 11.637593295616448,
+          "encoded_bytes_per_pass": 311101664070.9786,
+          "ota_bytes": 26732474332.829777,
+          "transfer_only_seconds_per_token_at_3GBps": 8.910824777609925,
+          "transfer_only_round_latency_seconds_at_3GBps": 103.70055469032619
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 16.319481795288468,
+          "encoded_bytes_per_pass": 479411075584.5982,
+          "ota_bytes": 29376611438.912666,
+          "transfer_only_seconds_per_token_at_3GBps": 9.79220381297089,
+          "transfer_only_round_latency_seconds_at_3GBps": 159.80369186153274
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 19.28704135498878,
+          "encoded_bytes_per_pass": 641622099059.0302,
+          "ota_bytes": 33267004889.42895,
+          "transfer_only_seconds_per_token_at_3GBps": 11.089001629809651,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.87403301967672
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 19.973246840552815,
+          "encoded_bytes_per_pass": 721615325674.8463,
+          "ota_bytes": 36129094655.24202,
+          "transfer_only_seconds_per_token_at_3GBps": 12.04303155174734,
+          "transfer_only_round_latency_seconds_at_3GBps": 240.53844189161543
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 19.999962329918908,
+          "encoded_bytes_per_pass": 733477142151.0999,
+          "ota_bytes": 36673926183.043655,
+          "transfer_only_seconds_per_token_at_3GBps": 12.224642061014551,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.49238071703329
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 19.999999999925297,
+          "encoded_bytes_per_pass": 733687584536.2795,
+          "ota_bytes": 36684379226.951,
+          "transfer_only_seconds_per_token_at_3GBps": 12.228126408983666,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+        }
+      ],
+      "best": {
+        "K": 4,
+        "positions": 5,
+        "expected_tokens_emitted": 4.524381249999999,
+        "encoded_bytes_per_pass": 115140767817.52344,
+        "ota_bytes": 25448953449.16467,
+        "transfer_only_seconds_per_token_at_3GBps": 8.48298448305489,
+        "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.626135518172295
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 1,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 31383447104.0,
+          "ota_bytes": 31383447104.0,
+          "transfer_only_seconds_per_token_at_3GBps": 10.461149034666667,
+          "transfer_only_round_latency_seconds_at_3GBps": 10.461149034666667
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 2,
+          "encoded_bytes_per_pass": 53330268992.0,
+          "ota_bytes": 26665134496.0,
+          "transfer_only_seconds_per_token_at_3GBps": 8.888378165333334,
+          "transfer_only_round_latency_seconds_at_3GBps": 17.776756330666668
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 3,
+          "encoded_bytes_per_pass": 74591253080.0,
+          "ota_bytes": 24863751026.666668,
+          "transfer_only_seconds_per_token_at_3GBps": 8.28791700888889,
+          "transfer_only_round_latency_seconds_at_3GBps": 24.863751026666666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 5,
+          "encoded_bytes_per_pass": 115140767817.52344,
+          "ota_bytes": 23028153563.50469,
+          "transfer_only_seconds_per_token_at_3GBps": 7.676051187834896,
+          "transfer_only_round_latency_seconds_at_3GBps": 38.38025593917448
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 9,
+          "encoded_bytes_per_pass": 188909050449.7573,
+          "ota_bytes": 20989894494.417477,
+          "transfer_only_seconds_per_token_at_3GBps": 6.996631498139159,
+          "transfer_only_round_latency_seconds_at_3GBps": 62.96968348325243
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 17,
+          "encoded_bytes_per_pass": 311101664070.9786,
+          "ota_bytes": 18300097886.528152,
+          "transfer_only_seconds_per_token_at_3GBps": 6.100032628842717,
+          "transfer_only_round_latency_seconds_at_3GBps": 103.70055469032619
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 33,
+          "encoded_bytes_per_pass": 479411075584.5982,
+          "ota_bytes": 14527608351.048431,
+          "transfer_only_seconds_per_token_at_3GBps": 4.842536117016143,
+          "transfer_only_round_latency_seconds_at_3GBps": 159.80369186153274
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 65,
+          "encoded_bytes_per_pass": 641622099059.0302,
+          "ota_bytes": 9871109216.292772,
+          "transfer_only_seconds_per_token_at_3GBps": 3.2903697387642574,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.87403301967672
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 129,
+          "encoded_bytes_per_pass": 721615325674.8463,
+          "ota_bytes": 5593917253.293383,
+          "transfer_only_seconds_per_token_at_3GBps": 1.8646390844311276,
+          "transfer_only_round_latency_seconds_at_3GBps": 240.53844189161543
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 257,
+          "encoded_bytes_per_pass": 733477142151.0999,
+          "ota_bytes": 2853996662.0665364,
+          "transfer_only_seconds_per_token_at_3GBps": 0.9513322206888455,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.49238071703329
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 513,
+          "encoded_bytes_per_pass": 733687584536.2795,
+          "ota_bytes": 1430190223.2676015,
+          "transfer_only_seconds_per_token_at_3GBps": 0.47673007442253384,
+          "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+        }
+      ],
+      "best": {
+        "K": 512,
+        "positions": 513,
+        "expected_tokens_emitted": 513,
+        "encoded_bytes_per_pass": 733687584536.2795,
+        "ota_bytes": 1430190223.2676015,
+        "transfer_only_seconds_per_token_at_3GBps": 0.47673007442253384,
+        "transfer_only_round_latency_seconds_at_3GBps": 244.56252817875983
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 28.935624388097068
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 23537585328.0,
+          "ota_bytes": 23537585328.0,
+          "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+          "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 39997701744.0,
+          "ota_bytes": 39997701744.0,
+          "transfer_only_seconds_per_token_at_3GBps": 13.332567248,
+          "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 55943439810.0,
+          "ota_bytes": 55943439810.0,
+          "transfer_only_seconds_per_token_at_3GBps": 18.64781327,
+          "transfer_only_round_latency_seconds_at_3GBps": 18.64781327
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 86355575863.14258,
+          "ota_bytes": 86355575863.14258,
+          "transfer_only_seconds_per_token_at_3GBps": 28.78519195438086,
+          "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 141681787837.31796,
+          "ota_bytes": 141681787837.31796,
+          "transfer_only_seconds_per_token_at_3GBps": 47.22726261243932,
+          "transfer_only_round_latency_seconds_at_3GBps": 47.22726261243932
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 233326248053.23395,
+          "ota_bytes": 233326248053.23395,
+          "transfer_only_seconds_per_token_at_3GBps": 77.77541601774465,
+          "transfer_only_round_latency_seconds_at_3GBps": 77.77541601774465
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 359558306688.44867,
+          "ota_bytes": 359558306688.44867,
+          "transfer_only_seconds_per_token_at_3GBps": 119.85276889614956,
+          "transfer_only_round_latency_seconds_at_3GBps": 119.85276889614956
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 481216574294.2726,
+          "ota_bytes": 481216574294.2726,
+          "transfer_only_seconds_per_token_at_3GBps": 160.40552476475753,
+          "transfer_only_round_latency_seconds_at_3GBps": 160.40552476475753
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 541211494256.13477,
+          "ota_bytes": 541211494256.13477,
+          "transfer_only_seconds_per_token_at_3GBps": 180.40383141871158,
+          "transfer_only_round_latency_seconds_at_3GBps": 180.40383141871158
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 550107856613.325,
+          "ota_bytes": 550107856613.325,
+          "transfer_only_seconds_per_token_at_3GBps": 183.36928553777497,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.36928553777497
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 550265688402.2097,
+          "ota_bytes": 550265688402.2097,
+          "transfer_only_seconds_per_token_at_3GBps": 183.4218961340699,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1,
+        "encoded_bytes_per_pass": 23537585328.0,
+        "ota_bytes": 23537585328.0,
+        "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+        "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.7581857496134405
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.5,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 23537585328.0,
+          "ota_bytes": 23537585328.0,
+          "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+          "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.5,
+          "encoded_bytes_per_pass": 39997701744.0,
+          "ota_bytes": 26665134496.0,
+          "transfer_only_seconds_per_token_at_3GBps": 8.888378165333334,
+          "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1.75,
+          "encoded_bytes_per_pass": 55943439810.0,
+          "ota_bytes": 31967679891.42857,
+          "transfer_only_seconds_per_token_at_3GBps": 10.655893297142857,
+          "transfer_only_round_latency_seconds_at_3GBps": 18.64781327
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1.9375,
+          "encoded_bytes_per_pass": 86355575863.14258,
+          "ota_bytes": 44570619800.33165,
+          "transfer_only_seconds_per_token_at_3GBps": 14.856873266777217,
+          "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1.99609375,
+          "encoded_bytes_per_pass": 141681787837.31796,
+          "ota_bytes": 70979525804.99687,
+          "transfer_only_seconds_per_token_at_3GBps": 23.65984193499896,
+          "transfer_only_round_latency_seconds_at_3GBps": 47.22726261243932
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1.9999847412109375,
+          "encoded_bytes_per_pass": 233326248053.23395,
+          "ota_bytes": 116664014102.40816,
+          "transfer_only_seconds_per_token_at_3GBps": 38.88800470080272,
+          "transfer_only_round_latency_seconds_at_3GBps": 77.77541601774465
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1.9999999997671694,
+          "encoded_bytes_per_pass": 359558306688.44867,
+          "ota_bytes": 179779153365.15338,
+          "transfer_only_seconds_per_token_at_3GBps": 59.92638445505113,
+          "transfer_only_round_latency_seconds_at_3GBps": 119.85276889614956
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 481216574294.2726,
+          "ota_bytes": 240608287147.1363,
+          "transfer_only_seconds_per_token_at_3GBps": 80.20276238237876,
+          "transfer_only_round_latency_seconds_at_3GBps": 160.40552476475753
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 541211494256.13477,
+          "ota_bytes": 270605747128.06738,
+          "transfer_only_seconds_per_token_at_3GBps": 90.20191570935579,
+          "transfer_only_round_latency_seconds_at_3GBps": 180.40383141871158
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 550107856613.325,
+          "ota_bytes": 275053928306.6625,
+          "transfer_only_seconds_per_token_at_3GBps": 91.68464276888749,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.36928553777497
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 550265688402.2097,
+          "ota_bytes": 275132844201.10486,
+          "transfer_only_seconds_per_token_at_3GBps": 91.71094806703495,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1.0,
+        "encoded_bytes_per_pass": 23537585328.0,
+        "ota_bytes": 23537585328.0,
+        "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+        "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.7581857496134405
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.8,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 23537585328.0,
+          "ota_bytes": 23537585328.0,
+          "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+          "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.8,
+          "encoded_bytes_per_pass": 39997701744.0,
+          "ota_bytes": 22220945413.333332,
+          "transfer_only_seconds_per_token_at_3GBps": 7.406981804444444,
+          "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.4400000000000004,
+          "encoded_bytes_per_pass": 55943439810.0,
+          "ota_bytes": 22927639266.39344,
+          "transfer_only_seconds_per_token_at_3GBps": 7.642546422131146,
+          "transfer_only_round_latency_seconds_at_3GBps": 18.64781327
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 3.3616,
+          "encoded_bytes_per_pass": 86355575863.14258,
+          "ota_bytes": 25688831468.09334,
+          "transfer_only_seconds_per_token_at_3GBps": 8.56294382269778,
+          "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 4.328911360000001,
+          "encoded_bytes_per_pass": 141681787837.31796,
+          "ota_bytes": 32729195877.394432,
+          "transfer_only_seconds_per_token_at_3GBps": 10.909731959131477,
+          "transfer_only_round_latency_seconds_at_3GBps": 47.22726261243932
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 4.887410009315738,
+          "encoded_bytes_per_pass": 233326248053.23395,
+          "ota_bytes": 47740264804.56891,
+          "transfer_only_seconds_per_token_at_3GBps": 15.91342160152297,
+          "transfer_only_round_latency_seconds_at_3GBps": 77.77541601774465
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 4.99683087349943,
+          "encoded_bytes_per_pass": 359558306688.44867,
+          "ota_bytes": 71957269675.73734,
+          "transfer_only_seconds_per_token_at_3GBps": 23.985756558579112,
+          "transfer_only_round_latency_seconds_at_3GBps": 119.85276889614956
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 4.999997489159307,
+          "encoded_bytes_per_pass": 481216574294.2726,
+          "ota_bytes": 96243363189.20506,
+          "transfer_only_seconds_per_token_at_3GBps": 32.08112106306835,
+          "transfer_only_round_latency_seconds_at_3GBps": 160.40552476475753
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 4.999999999998425,
+          "encoded_bytes_per_pass": 541211494256.13477,
+          "ota_bytes": 108242298851.26105,
+          "transfer_only_seconds_per_token_at_3GBps": 36.08076628375368,
+          "transfer_only_round_latency_seconds_at_3GBps": 180.40383141871158
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 550107856613.325,
+          "ota_bytes": 110021571322.66498,
+          "transfer_only_seconds_per_token_at_3GBps": 36.673857107554994,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.36928553777497
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 550265688402.2097,
+          "ota_bytes": 110053137680.44193,
+          "transfer_only_seconds_per_token_at_3GBps": 36.684379226813974,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+        }
+      ],
+      "best": {
+        "K": 1,
+        "positions": 2,
+        "expected_tokens_emitted": 1.8,
+        "encoded_bytes_per_pass": 39997701744.0,
+        "ota_bytes": 22220945413.333332,
+        "transfer_only_seconds_per_token_at_3GBps": 7.406981804444444,
+        "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.862362124303159
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.95,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 23537585328.0,
+          "ota_bytes": 23537585328.0,
+          "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+          "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.95,
+          "encoded_bytes_per_pass": 39997701744.0,
+          "ota_bytes": 20511641920.0,
+          "transfer_only_seconds_per_token_at_3GBps": 6.837213973333333,
+          "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.8525,
+          "encoded_bytes_per_pass": 55943439810.0,
+          "ota_bytes": 19612073553.023663,
+          "transfer_only_seconds_per_token_at_3GBps": 6.537357851007887,
+          "transfer_only_round_latency_seconds_at_3GBps": 18.64781327
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 4.524381249999999,
+          "encoded_bytes_per_pass": 86355575863.14258,
+          "ota_bytes": 19086715086.8735,
+          "transfer_only_seconds_per_token_at_3GBps": 6.362238362291167,
+          "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 7.395011805507811,
+          "encoded_bytes_per_pass": 141681787837.31796,
+          "ota_bytes": 19159102319.72764,
+          "transfer_only_seconds_per_token_at_3GBps": 6.386367439909213,
+          "transfer_only_round_latency_seconds_at_3GBps": 47.22726261243932
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 11.637593295616448,
+          "encoded_bytes_per_pass": 233326248053.23395,
+          "ota_bytes": 20049355749.622334,
+          "transfer_only_seconds_per_token_at_3GBps": 6.6831185832074445,
+          "transfer_only_round_latency_seconds_at_3GBps": 77.77541601774465
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 16.319481795288468,
+          "encoded_bytes_per_pass": 359558306688.44867,
+          "ota_bytes": 22032458579.1845,
+          "transfer_only_seconds_per_token_at_3GBps": 7.344152859728167,
+          "transfer_only_round_latency_seconds_at_3GBps": 119.85276889614956
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 19.28704135498878,
+          "encoded_bytes_per_pass": 481216574294.2726,
+          "ota_bytes": 24950253667.071712,
+          "transfer_only_seconds_per_token_at_3GBps": 8.316751222357237,
+          "transfer_only_round_latency_seconds_at_3GBps": 160.40552476475753
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 19.973246840552815,
+          "encoded_bytes_per_pass": 541211494256.13477,
+          "ota_bytes": 27096820991.43152,
+          "transfer_only_seconds_per_token_at_3GBps": 9.032273663810507,
+          "transfer_only_round_latency_seconds_at_3GBps": 180.40383141871158
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 19.999962329918908,
+          "encoded_bytes_per_pass": 550107856613.325,
+          "ota_bytes": 27505444637.282745,
+          "transfer_only_seconds_per_token_at_3GBps": 9.168481545760915,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.36928553777497
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 19.999999999925297,
+          "encoded_bytes_per_pass": 550265688402.2097,
+          "ota_bytes": 27513284420.213253,
+          "transfer_only_seconds_per_token_at_3GBps": 9.17109480673775,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+        }
+      ],
+      "best": {
+        "K": 4,
+        "positions": 5,
+        "expected_tokens_emitted": 4.524381249999999,
+        "encoded_bytes_per_pass": 86355575863.14258,
+        "ota_bytes": 19086715086.8735,
+        "transfer_only_seconds_per_token_at_3GBps": 6.362238362291167,
+        "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 2.1681806908963934
+    },
+    {
+      "model": "GLM-5.3 FP8",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 1,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 13.794482368,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 23537585328.0,
+          "ota_bytes": 23537585328.0,
+          "transfer_only_seconds_per_token_at_3GBps": 7.845861776,
+          "transfer_only_round_latency_seconds_at_3GBps": 7.845861776
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 2,
+          "encoded_bytes_per_pass": 39997701744.0,
+          "ota_bytes": 19998850872.0,
+          "transfer_only_seconds_per_token_at_3GBps": 6.666283624,
+          "transfer_only_round_latency_seconds_at_3GBps": 13.332567248
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 3,
+          "encoded_bytes_per_pass": 55943439810.0,
+          "ota_bytes": 18647813270.0,
+          "transfer_only_seconds_per_token_at_3GBps": 6.2159377566666665,
+          "transfer_only_round_latency_seconds_at_3GBps": 18.64781327
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 5,
+          "encoded_bytes_per_pass": 86355575863.14258,
+          "ota_bytes": 17271115172.628517,
+          "transfer_only_seconds_per_token_at_3GBps": 5.757038390876172,
+          "transfer_only_round_latency_seconds_at_3GBps": 28.78519195438086
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 9,
+          "encoded_bytes_per_pass": 141681787837.31796,
+          "ota_bytes": 15742420870.813107,
+          "transfer_only_seconds_per_token_at_3GBps": 5.247473623604368,
+          "transfer_only_round_latency_seconds_at_3GBps": 47.22726261243932
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 17,
+          "encoded_bytes_per_pass": 233326248053.23395,
+          "ota_bytes": 13725073414.896114,
+          "transfer_only_seconds_per_token_at_3GBps": 4.575024471632038,
+          "transfer_only_round_latency_seconds_at_3GBps": 77.77541601774465
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 33,
+          "encoded_bytes_per_pass": 359558306688.44867,
+          "ota_bytes": 10895706263.286324,
+          "transfer_only_seconds_per_token_at_3GBps": 3.631902087762108,
+          "transfer_only_round_latency_seconds_at_3GBps": 119.85276889614956
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 65,
+          "encoded_bytes_per_pass": 481216574294.2726,
+          "ota_bytes": 7403331912.219578,
+          "transfer_only_seconds_per_token_at_3GBps": 2.4677773040731927,
+          "transfer_only_round_latency_seconds_at_3GBps": 160.40552476475753
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 129,
+          "encoded_bytes_per_pass": 541211494256.13477,
+          "ota_bytes": 4195437939.970037,
+          "transfer_only_seconds_per_token_at_3GBps": 1.3984793133233457,
+          "transfer_only_round_latency_seconds_at_3GBps": 180.40383141871158
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 257,
+          "encoded_bytes_per_pass": 550107856613.325,
+          "ota_bytes": 2140497496.5499024,
+          "transfer_only_seconds_per_token_at_3GBps": 0.7134991655166342,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.36928553777497
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 513,
+          "encoded_bytes_per_pass": 550265688402.2097,
+          "ota_bytes": 1072642667.4507012,
+          "transfer_only_seconds_per_token_at_3GBps": 0.3575475558169004,
+          "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+        }
+      ],
+      "best": {
+        "K": 512,
+        "positions": 513,
+        "expected_tokens_emitted": 513,
+        "encoded_bytes_per_pass": 550265688402.2097,
+        "ota_bytes": 1072642667.4507012,
+        "transfer_only_seconds_per_token_at_3GBps": 0.3575475558169004,
+        "transfer_only_round_latency_seconds_at_3GBps": 183.4218961340699
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 38.58083251746275
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 176507275008.0,
+          "ota_bytes": 176507275008.0,
+          "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+          "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 267308730112.0,
+          "ota_bytes": 267308730112.0,
+          "transfer_only_seconds_per_token_at_3GBps": 89.10291003733333,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.10291003733333
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 356336719616.0,
+          "ota_bytes": 356336719616.0,
+          "transfer_only_seconds_per_token_at_3GBps": 118.77890653866666,
+          "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 529210177300.5625,
+          "ota_bytes": 529210177300.5625,
+          "transfer_only_seconds_per_token_at_3GBps": 176.40339243352082,
+          "transfer_only_round_latency_seconds_at_3GBps": 176.40339243352082
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 855154983161.0605,
+          "ota_bytes": 855154983161.0605,
+          "transfer_only_seconds_per_token_at_3GBps": 285.05166105368687,
+          "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 1434736397689.1582,
+          "ota_bytes": 1434736397689.1582,
+          "transfer_only_seconds_per_token_at_3GBps": 478.24546589638607,
+          "transfer_only_round_latency_seconds_at_3GBps": 478.24546589638607
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 2352434566965.7827,
+          "ota_bytes": 2352434566965.7827,
+          "transfer_only_seconds_per_token_at_3GBps": 784.1448556552609,
+          "transfer_only_round_latency_seconds_at_3GBps": 784.1448556552609
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 3509944346379.1445,
+          "ota_bytes": 3509944346379.1445,
+          "transfer_only_seconds_per_token_at_3GBps": 1169.9814487930482,
+          "transfer_only_round_latency_seconds_at_3GBps": 1169.9814487930482
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 4453251226225.922,
+          "ota_bytes": 4453251226225.922,
+          "transfer_only_seconds_per_token_at_3GBps": 1484.4170754086406,
+          "transfer_only_round_latency_seconds_at_3GBps": 1484.4170754086406
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 4795732228565.733,
+          "ota_bytes": 4795732228565.733,
+          "transfer_only_seconds_per_token_at_3GBps": 1598.577409521911,
+          "transfer_only_round_latency_seconds_at_3GBps": 1598.577409521911
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 4825358144586.736,
+          "ota_bytes": 4825358144586.736,
+          "transfer_only_seconds_per_token_at_3GBps": 1608.4527148622453,
+          "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1,
+        "encoded_bytes_per_pass": 176507275008.0,
+        "ota_bytes": 176507275008.0,
+        "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+        "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.0566548885848857
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.5,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 176507275008.0,
+          "ota_bytes": 176507275008.0,
+          "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+          "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.5,
+          "encoded_bytes_per_pass": 267308730112.0,
+          "ota_bytes": 178205820074.66666,
+          "transfer_only_seconds_per_token_at_3GBps": 59.40194002488889,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.10291003733333
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1.75,
+          "encoded_bytes_per_pass": 356336719616.0,
+          "ota_bytes": 203620982637.7143,
+          "transfer_only_seconds_per_token_at_3GBps": 67.8736608792381,
+          "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1.9375,
+          "encoded_bytes_per_pass": 529210177300.5625,
+          "ota_bytes": 273140736671.25806,
+          "transfer_only_seconds_per_token_at_3GBps": 91.04691222375268,
+          "transfer_only_round_latency_seconds_at_3GBps": 176.40339243352082
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1.99609375,
+          "encoded_bytes_per_pass": 855154983161.0605,
+          "ota_bytes": 428414238139.3963,
+          "transfer_only_seconds_per_token_at_3GBps": 142.80474604646543,
+          "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1.9999847412109375,
+          "encoded_bytes_per_pass": 1434736397689.1582,
+          "ota_bytes": 717373671971.3489,
+          "transfer_only_seconds_per_token_at_3GBps": 239.12455732378297,
+          "transfer_only_round_latency_seconds_at_3GBps": 478.24546589638607
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1.9999999997671694,
+          "encoded_bytes_per_pass": 2352434566965.7827,
+          "ota_bytes": 1176217283619.821,
+          "transfer_only_seconds_per_token_at_3GBps": 392.0724278732737,
+          "transfer_only_round_latency_seconds_at_3GBps": 784.1448556552609
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 3509944346379.1445,
+          "ota_bytes": 1754972173189.5723,
+          "transfer_only_seconds_per_token_at_3GBps": 584.9907243965241,
+          "transfer_only_round_latency_seconds_at_3GBps": 1169.9814487930482
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 4453251226225.922,
+          "ota_bytes": 2226625613112.961,
+          "transfer_only_seconds_per_token_at_3GBps": 742.2085377043203,
+          "transfer_only_round_latency_seconds_at_3GBps": 1484.4170754086406
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 4795732228565.733,
+          "ota_bytes": 2397866114282.8667,
+          "transfer_only_seconds_per_token_at_3GBps": 799.2887047609555,
+          "transfer_only_round_latency_seconds_at_3GBps": 1598.577409521911
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 4825358144586.736,
+          "ota_bytes": 2412679072293.368,
+          "transfer_only_seconds_per_token_at_3GBps": 804.2263574311227,
+          "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1.0,
+        "encoded_bytes_per_pass": 176507275008.0,
+        "ota_bytes": 176507275008.0,
+        "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+        "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.0566548885848857
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.8,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 176507275008.0,
+          "ota_bytes": 176507275008.0,
+          "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+          "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.8,
+          "encoded_bytes_per_pass": 267308730112.0,
+          "ota_bytes": 148504850062.22223,
+          "transfer_only_seconds_per_token_at_3GBps": 49.50161668740741,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.10291003733333
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.4400000000000004,
+          "encoded_bytes_per_pass": 356336719616.0,
+          "ota_bytes": 146039639186.88522,
+          "transfer_only_seconds_per_token_at_3GBps": 48.679879728961744,
+          "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 3.3616,
+          "encoded_bytes_per_pass": 529210177300.5625,
+          "ota_bytes": 157428063214.11307,
+          "transfer_only_seconds_per_token_at_3GBps": 52.47602107137102,
+          "transfer_only_round_latency_seconds_at_3GBps": 176.40339243352082
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 4.328911360000001,
+          "encoded_bytes_per_pass": 855154983161.0605,
+          "ota_bytes": 197545043555.95312,
+          "transfer_only_seconds_per_token_at_3GBps": 65.84834785198437,
+          "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 4.887410009315738,
+          "encoded_bytes_per_pass": 1434736397689.1582,
+          "ota_bytes": 293557609235.65906,
+          "transfer_only_seconds_per_token_at_3GBps": 97.85253641188635,
+          "transfer_only_round_latency_seconds_at_3GBps": 478.24546589638607
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 4.99683087349943,
+          "encoded_bytes_per_pass": 2352434566965.7827,
+          "ota_bytes": 470785309032.9436,
+          "transfer_only_seconds_per_token_at_3GBps": 156.92843634431455,
+          "transfer_only_round_latency_seconds_at_3GBps": 784.1448556552609
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 4.999997489159307,
+          "encoded_bytes_per_pass": 3509944346379.1445,
+          "ota_bytes": 701989221792.4497,
+          "transfer_only_seconds_per_token_at_3GBps": 233.9964072641499,
+          "transfer_only_round_latency_seconds_at_3GBps": 1169.9814487930482
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 4.999999999998425,
+          "encoded_bytes_per_pass": 4453251226225.922,
+          "ota_bytes": 890650245245.4648,
+          "transfer_only_seconds_per_token_at_3GBps": 296.8834150818216,
+          "transfer_only_round_latency_seconds_at_3GBps": 1484.4170754086406
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 4795732228565.733,
+          "ota_bytes": 959146445713.1465,
+          "transfer_only_seconds_per_token_at_3GBps": 319.71548190438216,
+          "transfer_only_round_latency_seconds_at_3GBps": 1598.577409521911
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 4825358144586.736,
+          "ota_bytes": 965071628917.347,
+          "transfer_only_seconds_per_token_at_3GBps": 321.690542972449,
+          "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+        }
+      ],
+      "best": {
+        "K": 2,
+        "positions": 3,
+        "expected_tokens_emitted": 2.4400000000000004,
+        "encoded_bytes_per_pass": 356336719616.0,
+        "ota_bytes": 146039639186.88522,
+        "transfer_only_seconds_per_token_at_3GBps": 48.679879728961744,
+        "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.2771003547148512
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.95,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 176507275008.0,
+          "ota_bytes": 176507275008.0,
+          "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+          "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.95,
+          "encoded_bytes_per_pass": 267308730112.0,
+          "ota_bytes": 137081400057.4359,
+          "transfer_only_seconds_per_token_at_3GBps": 45.6938000191453,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.10291003733333
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.8525,
+          "encoded_bytes_per_pass": 356336719616.0,
+          "ota_bytes": 124920848243.99649,
+          "transfer_only_seconds_per_token_at_3GBps": 41.64028274799883,
+          "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 4.524381249999999,
+          "encoded_bytes_per_pass": 529210177300.5625,
+          "ota_bytes": 116968519684.44582,
+          "transfer_only_seconds_per_token_at_3GBps": 38.98950656148194,
+          "transfer_only_round_latency_seconds_at_3GBps": 176.40339243352082
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 7.395011805507811,
+          "encoded_bytes_per_pass": 855154983161.0605,
+          "ota_bytes": 115639434479.89365,
+          "transfer_only_seconds_per_token_at_3GBps": 38.54647815996455,
+          "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 11.637593295616448,
+          "encoded_bytes_per_pass": 1434736397689.1582,
+          "ota_bytes": 123284631215.76717,
+          "transfer_only_seconds_per_token_at_3GBps": 41.09487707192239,
+          "transfer_only_round_latency_seconds_at_3GBps": 478.24546589638607
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 16.319481795288468,
+          "encoded_bytes_per_pass": 2352434566965.7827,
+          "ota_bytes": 144148852057.603,
+          "transfer_only_seconds_per_token_at_3GBps": 48.049617352534334,
+          "transfer_only_round_latency_seconds_at_3GBps": 784.1448556552609
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 19.28704135498878,
+          "encoded_bytes_per_pass": 3509944346379.1445,
+          "ota_bytes": 181984591715.06174,
+          "transfer_only_seconds_per_token_at_3GBps": 60.661530571687244,
+          "transfer_only_round_latency_seconds_at_3GBps": 1169.9814487930482
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 19.973246840552815,
+          "encoded_bytes_per_pass": 4453251226225.922,
+          "ota_bytes": 222960806611.784,
+          "transfer_only_seconds_per_token_at_3GBps": 74.32026887059466,
+          "transfer_only_round_latency_seconds_at_3GBps": 1484.4170754086406
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 19.999962329918908,
+          "encoded_bytes_per_pass": 4795732228565.733,
+          "ota_bytes": 239787063068.1922,
+          "transfer_only_seconds_per_token_at_3GBps": 79.92902102273074,
+          "transfer_only_round_latency_seconds_at_3GBps": 1598.577409521911
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 19.999999999925297,
+          "encoded_bytes_per_pass": 4825358144586.736,
+          "ota_bytes": 241267907230.23798,
+          "transfer_only_seconds_per_token_at_3GBps": 80.42263574341266,
+          "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+        }
+      ],
+      "best": {
+        "K": 8,
+        "positions": 9,
+        "expected_tokens_emitted": 7.395011805507811,
+        "encoded_bytes_per_pass": 855154983161.0605,
+        "ota_bytes": 115639434479.89365,
+        "transfer_only_seconds_per_token_at_3GBps": 38.54647815996455,
+        "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.6128345477202088
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 1,
+      "lossless_ratio_assumed": 1.0,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 176507275008.0,
+          "ota_bytes": 176507275008.0,
+          "transfer_only_seconds_per_token_at_3GBps": 58.835758336,
+          "transfer_only_round_latency_seconds_at_3GBps": 58.835758336
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 2,
+          "encoded_bytes_per_pass": 267308730112.0,
+          "ota_bytes": 133654365056.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.551455018666665,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.10291003733333
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 3,
+          "encoded_bytes_per_pass": 356336719616.0,
+          "ota_bytes": 118778906538.66667,
+          "transfer_only_seconds_per_token_at_3GBps": 39.59296884622223,
+          "transfer_only_round_latency_seconds_at_3GBps": 118.77890653866666
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 5,
+          "encoded_bytes_per_pass": 529210177300.5625,
+          "ota_bytes": 105842035460.1125,
+          "transfer_only_seconds_per_token_at_3GBps": 35.28067848670417,
+          "transfer_only_round_latency_seconds_at_3GBps": 176.40339243352082
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 9,
+          "encoded_bytes_per_pass": 855154983161.0605,
+          "ota_bytes": 95017220351.22894,
+          "transfer_only_seconds_per_token_at_3GBps": 31.672406783742982,
+          "transfer_only_round_latency_seconds_at_3GBps": 285.05166105368687
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 17,
+          "encoded_bytes_per_pass": 1434736397689.1582,
+          "ota_bytes": 84396258687.59753,
+          "transfer_only_seconds_per_token_at_3GBps": 28.132086229199178,
+          "transfer_only_round_latency_seconds_at_3GBps": 478.24546589638607
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 33,
+          "encoded_bytes_per_pass": 2352434566965.7827,
+          "ota_bytes": 71285895968.66008,
+          "transfer_only_seconds_per_token_at_3GBps": 23.76196532288669,
+          "transfer_only_round_latency_seconds_at_3GBps": 784.1448556552609
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 65,
+          "encoded_bytes_per_pass": 3509944346379.1445,
+          "ota_bytes": 53999143790.44838,
+          "transfer_only_seconds_per_token_at_3GBps": 17.999714596816126,
+          "transfer_only_round_latency_seconds_at_3GBps": 1169.9814487930482
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 129,
+          "encoded_bytes_per_pass": 4453251226225.922,
+          "ota_bytes": 34521327335.08466,
+          "transfer_only_seconds_per_token_at_3GBps": 11.507109111694888,
+          "transfer_only_round_latency_seconds_at_3GBps": 1484.4170754086406
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 257,
+          "encoded_bytes_per_pass": 4795732228565.733,
+          "ota_bytes": 18660436687.0262,
+          "transfer_only_seconds_per_token_at_3GBps": 6.220145562342067,
+          "transfer_only_round_latency_seconds_at_3GBps": 1598.577409521911
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 513,
+          "encoded_bytes_per_pass": 4825358144586.736,
+          "ota_bytes": 9406156227.264593,
+          "transfer_only_seconds_per_token_at_3GBps": 3.135385409088198,
+          "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+        }
+      ],
+      "best": {
+        "K": 512,
+        "positions": 513,
+        "expected_tokens_emitted": 513,
+        "encoded_bytes_per_pass": 4825358144586.736,
+        "ota_bytes": 9406156227.264593,
+        "transfer_only_seconds_per_token_at_3GBps": 3.135385409088198,
+        "transfer_only_round_latency_seconds_at_3GBps": 1608.4527148622453
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 19.828213619011752
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 132380456256.0,
+          "ota_bytes": 132380456256.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+          "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 200481547584.0,
+          "ota_bytes": 200481547584.0,
+          "transfer_only_seconds_per_token_at_3GBps": 66.827182528,
+          "transfer_only_round_latency_seconds_at_3GBps": 66.827182528
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 267252539712.0,
+          "ota_bytes": 267252539712.0,
+          "transfer_only_seconds_per_token_at_3GBps": 89.084179904,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 396907632975.4219,
+          "ota_bytes": 396907632975.4219,
+          "transfer_only_seconds_per_token_at_3GBps": 132.30254432514062,
+          "transfer_only_round_latency_seconds_at_3GBps": 132.30254432514062
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 641366237370.7954,
+          "ota_bytes": 641366237370.7954,
+          "transfer_only_seconds_per_token_at_3GBps": 213.78874579026512,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 1076052298266.8687,
+          "ota_bytes": 1076052298266.8687,
+          "transfer_only_seconds_per_token_at_3GBps": 358.68409942228953,
+          "transfer_only_round_latency_seconds_at_3GBps": 358.68409942228953
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 1764325925224.337,
+          "ota_bytes": 1764325925224.337,
+          "transfer_only_seconds_per_token_at_3GBps": 588.1086417414457,
+          "transfer_only_round_latency_seconds_at_3GBps": 588.1086417414457
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 2632458259784.3584,
+          "ota_bytes": 2632458259784.3584,
+          "transfer_only_seconds_per_token_at_3GBps": 877.4860865947861,
+          "transfer_only_round_latency_seconds_at_3GBps": 877.4860865947861
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 3339938419669.4414,
+          "ota_bytes": 3339938419669.4414,
+          "transfer_only_seconds_per_token_at_3GBps": 1113.3128065564804,
+          "transfer_only_round_latency_seconds_at_3GBps": 1113.3128065564804
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 3596799171424.3,
+          "ota_bytes": 3596799171424.3,
+          "transfer_only_seconds_per_token_at_3GBps": 1198.9330571414332,
+          "transfer_only_round_latency_seconds_at_3GBps": 1198.9330571414332
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 3619018608440.0522,
+          "ota_bytes": 3619018608440.0522,
+          "transfer_only_seconds_per_token_at_3GBps": 1206.3395361466842,
+          "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1,
+        "encoded_bytes_per_pass": 132380456256.0,
+        "ota_bytes": 132380456256.0,
+        "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+        "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.4088731847798475
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.5,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 132380456256.0,
+          "ota_bytes": 132380456256.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+          "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.5,
+          "encoded_bytes_per_pass": 200481547584.0,
+          "ota_bytes": 133654365056.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.551455018666665,
+          "transfer_only_round_latency_seconds_at_3GBps": 66.827182528
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 1.75,
+          "encoded_bytes_per_pass": 267252539712.0,
+          "ota_bytes": 152715736978.2857,
+          "transfer_only_seconds_per_token_at_3GBps": 50.905245659428566,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 1.9375,
+          "encoded_bytes_per_pass": 396907632975.4219,
+          "ota_bytes": 204855552503.44354,
+          "transfer_only_seconds_per_token_at_3GBps": 68.28518416781452,
+          "transfer_only_round_latency_seconds_at_3GBps": 132.30254432514062
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 1.99609375,
+          "encoded_bytes_per_pass": 641366237370.7954,
+          "ota_bytes": 321310678604.54724,
+          "transfer_only_seconds_per_token_at_3GBps": 107.10355953484908,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 1.9999847412109375,
+          "encoded_bytes_per_pass": 1076052298266.8687,
+          "ota_bytes": 538030253978.51166,
+          "transfer_only_seconds_per_token_at_3GBps": 179.34341799283723,
+          "transfer_only_round_latency_seconds_at_3GBps": 358.68409942228953
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 1.9999999997671694,
+          "encoded_bytes_per_pass": 1764325925224.337,
+          "ota_bytes": 882162962714.8657,
+          "transfer_only_seconds_per_token_at_3GBps": 294.05432090495526,
+          "transfer_only_round_latency_seconds_at_3GBps": 588.1086417414457
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 2632458259784.3584,
+          "ota_bytes": 1316229129892.1792,
+          "transfer_only_seconds_per_token_at_3GBps": 438.74304329739306,
+          "transfer_only_round_latency_seconds_at_3GBps": 877.4860865947861
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 3339938419669.4414,
+          "ota_bytes": 1669969209834.7207,
+          "transfer_only_seconds_per_token_at_3GBps": 556.6564032782402,
+          "transfer_only_round_latency_seconds_at_3GBps": 1113.3128065564804
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 3596799171424.3,
+          "ota_bytes": 1798399585712.15,
+          "transfer_only_seconds_per_token_at_3GBps": 599.4665285707166,
+          "transfer_only_round_latency_seconds_at_3GBps": 1198.9330571414332
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 2.0,
+          "encoded_bytes_per_pass": 3619018608440.0522,
+          "ota_bytes": 1809509304220.0261,
+          "transfer_only_seconds_per_token_at_3GBps": 603.1697680733421,
+          "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+        }
+      ],
+      "best": {
+        "K": 0,
+        "positions": 1,
+        "expected_tokens_emitted": 1.0,
+        "encoded_bytes_per_pass": 132380456256.0,
+        "ota_bytes": 132380456256.0,
+        "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+        "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.4088731847798475
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.8,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 132380456256.0,
+          "ota_bytes": 132380456256.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+          "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.8,
+          "encoded_bytes_per_pass": 200481547584.0,
+          "ota_bytes": 111378637546.66666,
+          "transfer_only_seconds_per_token_at_3GBps": 37.12621251555555,
+          "transfer_only_round_latency_seconds_at_3GBps": 66.827182528
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.4400000000000004,
+          "encoded_bytes_per_pass": 267252539712.0,
+          "ota_bytes": 109529729390.16391,
+          "transfer_only_seconds_per_token_at_3GBps": 36.5099097967213,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 3.3616,
+          "encoded_bytes_per_pass": 396907632975.4219,
+          "ota_bytes": 118071047410.5848,
+          "transfer_only_seconds_per_token_at_3GBps": 39.35701580352826,
+          "transfer_only_round_latency_seconds_at_3GBps": 132.30254432514062
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 4.328911360000001,
+          "encoded_bytes_per_pass": 641366237370.7954,
+          "ota_bytes": 148158782666.96484,
+          "transfer_only_seconds_per_token_at_3GBps": 49.38626088898828,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 4.887410009315738,
+          "encoded_bytes_per_pass": 1076052298266.8687,
+          "ota_bytes": 220168206926.74426,
+          "transfer_only_seconds_per_token_at_3GBps": 73.38940230891475,
+          "transfer_only_round_latency_seconds_at_3GBps": 358.68409942228953
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 4.99683087349943,
+          "encoded_bytes_per_pass": 1764325925224.337,
+          "ota_bytes": 353088981774.70764,
+          "transfer_only_seconds_per_token_at_3GBps": 117.69632725823588,
+          "transfer_only_round_latency_seconds_at_3GBps": 588.1086417414457
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 4.999997489159307,
+          "encoded_bytes_per_pass": 2632458259784.3584,
+          "ota_bytes": 526491916344.3373,
+          "transfer_only_seconds_per_token_at_3GBps": 175.49730544811243,
+          "transfer_only_round_latency_seconds_at_3GBps": 877.4860865947861
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 4.999999999998425,
+          "encoded_bytes_per_pass": 3339938419669.4414,
+          "ota_bytes": 667987683934.0986,
+          "transfer_only_seconds_per_token_at_3GBps": 222.6625613113662,
+          "transfer_only_round_latency_seconds_at_3GBps": 1113.3128065564804
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 3596799171424.3,
+          "ota_bytes": 719359834284.8599,
+          "transfer_only_seconds_per_token_at_3GBps": 239.78661142828662,
+          "transfer_only_round_latency_seconds_at_3GBps": 1198.9330571414332
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 5.000000000000001,
+          "encoded_bytes_per_pass": 3619018608440.0522,
+          "ota_bytes": 723803721688.0104,
+          "transfer_only_seconds_per_token_at_3GBps": 241.2679072293368,
+          "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+        }
+      ],
+      "best": {
+        "K": 2,
+        "positions": 3,
+        "expected_tokens_emitted": 2.4400000000000004,
+        "encoded_bytes_per_pass": 267252539712.0,
+        "ota_bytes": 109529729390.16391,
+        "transfer_only_seconds_per_token_at_3GBps": 36.5099097967213,
+        "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 1.702800472953135
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 0.95,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1.0,
+          "encoded_bytes_per_pass": 132380456256.0,
+          "ota_bytes": 132380456256.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+          "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 1.95,
+          "encoded_bytes_per_pass": 200481547584.0,
+          "ota_bytes": 102811050043.07692,
+          "transfer_only_seconds_per_token_at_3GBps": 34.270350014358975,
+          "transfer_only_round_latency_seconds_at_3GBps": 66.827182528
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 2.8525,
+          "encoded_bytes_per_pass": 267252539712.0,
+          "ota_bytes": 93690636182.99738,
+          "transfer_only_seconds_per_token_at_3GBps": 31.230212060999126,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 4.524381249999999,
+          "encoded_bytes_per_pass": 396907632975.4219,
+          "ota_bytes": 87726389763.33437,
+          "transfer_only_seconds_per_token_at_3GBps": 29.242129921111456,
+          "transfer_only_round_latency_seconds_at_3GBps": 132.30254432514062
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 7.395011805507811,
+          "encoded_bytes_per_pass": 641366237370.7954,
+          "ota_bytes": 86729575859.92024,
+          "transfer_only_seconds_per_token_at_3GBps": 28.909858619973413,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 11.637593295616448,
+          "encoded_bytes_per_pass": 1076052298266.8687,
+          "ota_bytes": 92463473411.82538,
+          "transfer_only_seconds_per_token_at_3GBps": 30.821157803941794,
+          "transfer_only_round_latency_seconds_at_3GBps": 358.68409942228953
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 16.319481795288468,
+          "encoded_bytes_per_pass": 1764325925224.337,
+          "ota_bytes": 108111639043.20224,
+          "transfer_only_seconds_per_token_at_3GBps": 36.03721301440075,
+          "transfer_only_round_latency_seconds_at_3GBps": 588.1086417414457
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 19.28704135498878,
+          "encoded_bytes_per_pass": 2632458259784.3584,
+          "ota_bytes": 136488443786.29631,
+          "transfer_only_seconds_per_token_at_3GBps": 45.49614792876544,
+          "transfer_only_round_latency_seconds_at_3GBps": 877.4860865947861
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 19.973246840552815,
+          "encoded_bytes_per_pass": 3339938419669.4414,
+          "ota_bytes": 167220604958.838,
+          "transfer_only_seconds_per_token_at_3GBps": 55.740201652946006,
+          "transfer_only_round_latency_seconds_at_3GBps": 1113.3128065564804
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 19.999962329918908,
+          "encoded_bytes_per_pass": 3596799171424.3,
+          "ota_bytes": 179840297301.14413,
+          "transfer_only_seconds_per_token_at_3GBps": 59.94676576704804,
+          "transfer_only_round_latency_seconds_at_3GBps": 1198.9330571414332
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 19.999999999925297,
+          "encoded_bytes_per_pass": 3619018608440.0522,
+          "ota_bytes": 180950930422.6785,
+          "transfer_only_seconds_per_token_at_3GBps": 60.3169768075595,
+          "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+        }
+      ],
+      "best": {
+        "K": 8,
+        "positions": 9,
+        "expected_tokens_emitted": 7.395011805507811,
+        "encoded_bytes_per_pass": 641366237370.7954,
+        "ota_bytes": 86729575859.92024,
+        "transfer_only_seconds_per_token_at_3GBps": 28.909858619973413,
+        "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 2.150446063626945
+    },
+    {
+      "model": "Qwen3.8 BF16",
+      "routing": "hypothetical uniform IID",
+      "independent_acceptance_alpha": 1,
+      "lossless_ratio_assumed": 0.75,
+      "compact_stored_weight_residency_assumed_bytes": 10000000000.0,
+      "no_cache_naive_transfer_seconds_at_3GBps": 62.16909166933333,
+      "all_options": [
+        {
+          "K": 0,
+          "positions": 1,
+          "expected_tokens_emitted": 1,
+          "encoded_bytes_per_pass": 132380456256.0,
+          "ota_bytes": 132380456256.0,
+          "transfer_only_seconds_per_token_at_3GBps": 44.126818752,
+          "transfer_only_round_latency_seconds_at_3GBps": 44.126818752
+        },
+        {
+          "K": 1,
+          "positions": 2,
+          "expected_tokens_emitted": 2,
+          "encoded_bytes_per_pass": 200481547584.0,
+          "ota_bytes": 100240773792.0,
+          "transfer_only_seconds_per_token_at_3GBps": 33.413591264,
+          "transfer_only_round_latency_seconds_at_3GBps": 66.827182528
+        },
+        {
+          "K": 2,
+          "positions": 3,
+          "expected_tokens_emitted": 3,
+          "encoded_bytes_per_pass": 267252539712.0,
+          "ota_bytes": 89084179904.0,
+          "transfer_only_seconds_per_token_at_3GBps": 29.694726634666665,
+          "transfer_only_round_latency_seconds_at_3GBps": 89.084179904
+        },
+        {
+          "K": 4,
+          "positions": 5,
+          "expected_tokens_emitted": 5,
+          "encoded_bytes_per_pass": 396907632975.4219,
+          "ota_bytes": 79381526595.08438,
+          "transfer_only_seconds_per_token_at_3GBps": 26.460508865028128,
+          "transfer_only_round_latency_seconds_at_3GBps": 132.30254432514062
+        },
+        {
+          "K": 8,
+          "positions": 9,
+          "expected_tokens_emitted": 9,
+          "encoded_bytes_per_pass": 641366237370.7954,
+          "ota_bytes": 71262915263.4217,
+          "transfer_only_seconds_per_token_at_3GBps": 23.754305087807236,
+          "transfer_only_round_latency_seconds_at_3GBps": 213.78874579026512
+        },
+        {
+          "K": 16,
+          "positions": 17,
+          "expected_tokens_emitted": 17,
+          "encoded_bytes_per_pass": 1076052298266.8687,
+          "ota_bytes": 63297194015.69816,
+          "transfer_only_seconds_per_token_at_3GBps": 21.099064671899384,
+          "transfer_only_round_latency_seconds_at_3GBps": 358.68409942228953
+        },
+        {
+          "K": 32,
+          "positions": 33,
+          "expected_tokens_emitted": 33,
+          "encoded_bytes_per_pass": 1764325925224.337,
+          "ota_bytes": 53464421976.495056,
+          "transfer_only_seconds_per_token_at_3GBps": 17.821473992165018,
+          "transfer_only_round_latency_seconds_at_3GBps": 588.1086417414457
+        },
+        {
+          "K": 64,
+          "positions": 65,
+          "expected_tokens_emitted": 65,
+          "encoded_bytes_per_pass": 2632458259784.3584,
+          "ota_bytes": 40499357842.83628,
+          "transfer_only_seconds_per_token_at_3GBps": 13.499785947612093,
+          "transfer_only_round_latency_seconds_at_3GBps": 877.4860865947861
+        },
+        {
+          "K": 128,
+          "positions": 129,
+          "expected_tokens_emitted": 129,
+          "encoded_bytes_per_pass": 3339938419669.4414,
+          "ota_bytes": 25890995501.3135,
+          "transfer_only_seconds_per_token_at_3GBps": 8.630331833771166,
+          "transfer_only_round_latency_seconds_at_3GBps": 1113.3128065564804
+        },
+        {
+          "K": 256,
+          "positions": 257,
+          "expected_tokens_emitted": 257,
+          "encoded_bytes_per_pass": 3596799171424.3,
+          "ota_bytes": 13995327515.26965,
+          "transfer_only_seconds_per_token_at_3GBps": 4.66510917175655,
+          "transfer_only_round_latency_seconds_at_3GBps": 1198.9330571414332
+        },
+        {
+          "K": 512,
+          "positions": 513,
+          "expected_tokens_emitted": 513,
+          "encoded_bytes_per_pass": 3619018608440.0522,
+          "ota_bytes": 7054617170.448445,
+          "transfer_only_seconds_per_token_at_3GBps": 2.3515390568161485,
+          "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+        }
+      ],
+      "best": {
+        "K": 512,
+        "positions": 513,
+        "expected_tokens_emitted": 513,
+        "encoded_bytes_per_pass": 3619018608440.0522,
+        "ota_bytes": 7054617170.448445,
+        "transfer_only_seconds_per_token_at_3GBps": 2.3515390568161485,
+        "transfer_only_round_latency_seconds_at_3GBps": 1206.3395361466842
+      },
+      "best_ota_reduction_vs_no_cache_baseline": 26.437618158682334
+    }
+  ],
+  "omitted_costs": [
+    "Draft generation",
+    "DSA/attention and KV work",
+    "CPU/GPU compute",
+    "Decompression and hashing",
+    "Allocation and synchronization",
+    "First-token/prefill cost"
+  ],
+  "assumptions": [
+    "3 GB/s is hypothetical external SSD bandwidth.",
+    "10 GB cache stores original compact bytes, unlike the existing decoded-weight cache.",
+    "alpha and lossless ratios are assumptions, not measured on GLM or Qwen.",
+    "K+1 positions must fit ONE execution chunk for the stated union sharing."
+  ],
+  "preliminary_claims": {
+    "13.8s": "Reproduced arithmetically as GLM 41.383447104 GB / hypothetical 3 GB/s.",
+    "8.1s": "Not independently reproduced: original parameter set, MTP acceptance and measurements absent."
+  }
+}

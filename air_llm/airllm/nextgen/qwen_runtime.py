@@ -9,6 +9,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 import json
 import math
+import os
 from pathlib import Path
 from threading import RLock
 from time import perf_counter
@@ -18,9 +19,10 @@ import psutil
 from .adapters import qwen_layer_types,validated_default_rope
 from .cache import size_of
 from .config import NextConfig
-from .storage import OffsetCheckpoint, physical_read_bytes
+from .storage import physical_read_bytes, encoded_read_bytes
 from .tuning import auto_config, telemetry
 from .weights import NativeWeights
+from .generation import token_batch,eos_ids,generation_options,logits_suffix_start,check_logits_budget
 
 
 def normalize_qwen_config(config):
@@ -31,10 +33,13 @@ def normalize_qwen_config(config):
         raise NotImplementedError('Experimental Qwen requires unquantized floating checkpoints; ModelOpt/NVFP4 is unsupported')
     if c.get('hidden_act','silu')!='silu' or c.get('attention_bias',False):
         raise NotImplementedError('Experimental Qwen requires bias-free SiLU blocks')
-    # Current public Transformers uses sigmoid, without reading output_gate_type.
-    # Do not silently ignore the newer Qwen3.8 swish declaration.
-    if c.get('output_gate_type','sigmoid')!='sigmoid' or not c.get('attn_output_gate',True):
-        raise NotImplementedError('Only independently verified sigmoid attention gates are supported; swish Qwen3.8 requires separate validation')
+    # output_gate_type describes the DeltaNet RMS output gate, not the full
+    # attention gate. Official Transformers uses SiLU for the former and sigmoid
+    # for the latter; vLLM explicitly aliases the checkpoint's "swish" to SiLU.
+    # A declared sigmoid recurrent gate must not silently execute SiLU.
+    if c.get('output_gate_type','silu') not in ('silu','swish'):
+        raise NotImplementedError('Only SiLU/swish DeltaNet output gates are independently validated')
+    if not c.get('attn_output_gate',True):raise NotImplementedError('Ungated full attention is unsupported')
     rope=validated_default_rope(c)
     c['rope_parameters']=dict(rope)
     c['rope_parameters'].setdefault('rope_theta',c.get('rope_theta',10000000.))
@@ -48,11 +53,16 @@ def normalize_qwen_config(config):
         if type(c.get(name)) is not int or c[name]<1:raise ValueError(f'Invalid Qwen dimension {name}')
     if c['num_attention_heads']%c['num_key_value_heads'] or c['linear_num_value_heads']%c['linear_num_key_heads']:
         raise ValueError('Invalid Qwen grouped-query head ratios')
-    rd=int(c['head_dim']*c['partial_rotary_factor'])
+    factor=c['partial_rotary_factor']
+    if isinstance(factor,bool) or not isinstance(factor,(int,float)) or not math.isfinite(factor) or not 0<factor<=1:
+        raise ValueError('Invalid Qwen partial_rotary_factor')
+    rd=int(c['head_dim']*factor)
     if rd<2 or rd%2 or rd>c['head_dim']:raise ValueError('Invalid Qwen rotary dimension')
     if not 0<c['num_experts_per_tok']<=c['num_experts']:raise ValueError('Invalid Qwen top-k')
     if c.get('mamba_ssm_dtype','float32')!='float32':raise NotImplementedError('Experimental Qwen state must use FP32')
     c.setdefault('rms_norm_eps',1e-6)
+    eps=c['rms_norm_eps']
+    if isinstance(eps,bool) or not isinstance(eps,(int,float)) or not math.isfinite(eps) or eps<=0:raise ValueError('rms_norm_eps must be finite and positive')
     return c
 
 
@@ -135,6 +145,10 @@ class QwenFullAttention:
 
     def __call__(self,x,cache):
         mx=self.mx;c=self.c;B,S,_=x.shape;H=c['num_attention_heads'];KH=c['num_key_value_heads'];D=c['head_dim']
+        T=cache.position+S
+        # FP32 scores/softmax and expanded grouped K/V coexist with cache banks.
+        workspace=3*B*H*S*T*4+2*B*H*T*D*x.itemsize
+        if workspace>self.r.cfg.workspace_bytes:raise MemoryError('Qwen attention workspace exceeds workspace_bytes; reduce prefill_chunk/context')
         def linear(name):return self.r.linear(x,self.p+name+'.weight').astype(x.dtype)
         qg=linear('q_proj').reshape(B,S,H,2*D);q=qg[...,:D];gate=qg[...,D:].reshape(B,S,H*D)
         q=zero_centered_rms(mx,q,self.r.get(self.p+'q_norm.weight'),c['rms_norm_eps']).transpose(0,2,1,3)
@@ -144,13 +158,11 @@ class QwenFullAttention:
         dim=int(D*c['partial_rotary_factor']);theta=c['rope_parameters']['rope_theta']
         q=qwen_rope(mx,q,cache.position,theta,dim);k=qwen_rope(mx,k,cache.position,theta,dim)
         previous=cache.banks['kv'].get(self.layer)
-        T=cache.position+S;cache.reserve('kv',self.layer,2*B*KH*T*D*x.itemsize)
+        cache.reserve('kv',self.layer,2*B*KH*T*D*x.itemsize)
         if previous is not None:
             k=mx.concatenate([previous[0],k],axis=2);v=mx.concatenate([previous[1],v],axis=2)
         cache.store('kv',self.layer,(k,v))
         groups=H//KH;k=mx.repeat(k,groups,axis=1);v=mx.repeat(v,groups,axis=1)
-        workspace=B*H*S*T*4
-        if workspace>self.r.cfg.workspace_bytes:raise MemoryError('Qwen attention score workspace exceeds workspace_bytes; reduce prefill_chunk/context')
         score=(q@k.transpose(0,1,3,2))*D**-.5
         mask=mx.arange(T)[None,:]<=mx.arange(cache.position,T)[:,None]
         score=mx.where(mask[None,None],score,-float('inf'))
@@ -217,7 +229,8 @@ class ExperimentalQwenModel:
     """Local-only experimental constructor. No implicit architecture dispatch.
 
     Supports nonempty unpadded batch one, ordinary greedy generation and the
-    validated floating qwen3_5 schema. MTP, ModelOpt and swish-gate variants fail
+    validated floating qwen3_5 schema, including the SiLU/swish DeltaNet gate.
+    MTP and ModelOpt variants fail
     explicitly. Production/Qwen3.8 checkpoint compatibility remains unverified.
     """
     supports_sampling=False
@@ -236,7 +249,8 @@ class ExperimentalQwenModel:
             mx.set_cache_limit(min(256*1024**2,self.options.workspace_bytes//4))
             mx.set_memory_limit(self.options.cache_bytes+self.options.io_bytes+self.options.kv_bytes+self.options.workspace_bytes)
         try:
-            self.checkpoint=OffsetCheckpoint(self.root,self.options.metadata_dir(),self.options.max_open_files,self.options.max_tensor_bytes)
+            from .lossless import open_checkpoint
+            self.checkpoint=open_checkpoint(self.root,self.options)
             if any(d['dtype'] not in ('F32','F16','BF16') for d in self.checkpoint.tensors.values()):
                 raise NotImplementedError('Experimental Qwen accepts F32/F16/BF16 tensors only')
             self.reader=NativeWeights(self.checkpoint,mx,self.options,self.config)
@@ -284,9 +298,9 @@ class ExperimentalQwenModel:
     def forward(self,input_ids,past_key_values=None,use_cache=True,logits_to_keep=0):
         with self.lock,self.mx.stream(self.stream):
             if self.closed:raise RuntimeError('Model is closed')
-            if hasattr(input_ids,'detach'):input_ids=input_ids.detach().cpu().numpy()
-            ids=np.asarray(input_ids)
-            if ids.ndim!=2 or ids.shape[0]!=1 or ids.shape[1]<1 or ids.dtype.kind not in 'iu':raise ValueError('Expected nonempty unpadded integer batch one')
+            ids=token_batch(input_ids,self.config['vocab_size'])
+            keep_from=logits_suffix_start(ids.shape[1],logits_to_keep)
+            check_logits_budget(ids.shape[1]-keep_from,self.config['vocab_size'],self.options.workspace_bytes)
             cache=past_key_values if past_key_values is not None else self.new_session()
             if not isinstance(cache,QwenSession) or cache.owner is not self:raise ValueError('Cache belongs to another model')
             if cache.position+ids.shape[1]>cache.limit:raise MemoryError('Qwen context limit exceeded')
@@ -303,9 +317,9 @@ class ExperimentalQwenModel:
                         norm=zero_centered_rms(mx,x,self.reader.get(p+'post_attention_layernorm.weight'),self.config['rms_norm_eps'])
                         x=x+mlp(norm).astype(x.dtype);mx.eval(x)
                     x=zero_centered_rms(mx,x,self.reader.get('model.norm.weight'),self.config['rms_norm_eps'])
-                    if not logits_to_keep or start+part.shape[1]==ids.shape[1]:
+                    if start+part.shape[1]>keep_from:
                         head='model.embed_tokens.weight' if self.config.get('tie_word_embeddings',False) else 'lm_head.weight'
-                        logits=self.reader.output(x if not logits_to_keep else x[:,-logits_to_keep:],head);mx.eval(logits);outputs.append(logits)
+                        logits=self.reader.output(x[:,max(0,keep_from-start):],head);mx.eval(logits);outputs.append(logits)
                     cache.position+=part.shape[1]
                     for bank in cache.banks.values():
                         for value in bank.values():mx.eval(value)
@@ -321,18 +335,20 @@ class ExperimentalQwenModel:
         if any(name in kwargs for name in ('draft_model','proposal_depth','speculative_depth')):
             raise NotImplementedError('Experimental Qwen speculative verification requires recurrent snapshot integration and is not enabled')
         if kwargs:raise TypeError(f'Unsupported Qwen generation options: {sorted(kwargs)}')
-        if type(max_new_tokens) is not int or max_new_tokens<0 or temperature!=0:raise ValueError('Experimental Qwen supports nonnegative token count and greedy temperature=0 only')
-        if hasattr(input_ids,'detach'):input_ids=input_ids.detach().cpu().numpy()
-        host=np.asarray(input_ids)
-        if host.ndim!=2 or host.shape[0]!=1 or host.shape[1]<1 or host.dtype.kind not in 'iu':raise ValueError('Expected integer batch one')
+        max_new_tokens,temperature=generation_options(max_new_tokens,temperature)
+        if temperature!=0:raise ValueError('Experimental Qwen supports greedy temperature=0 only')
+        host=token_batch(input_ids,self.config['vocab_size'])
         with self.lock:
+            if self.closed:raise RuntimeError('Model is closed')
             tokens=host.tolist()[0];current=host;cache=None;begin=perf_counter();first=None
             logical=self.checkpoint.stats['logical_bytes'];physical=physical_read_bytes()
+            encoded_start=encoded_read_bytes(self.checkpoint)
             eos=self.config.get('eos_token_id') if eos_token_id is None else eos_token_id
-            eos=set(eos if isinstance(eos,list) else [eos])
+            eos=eos_ids(eos,self.config['vocab_size'])
             for i in range(max_new_tokens):
                 out=self.forward(current,past_key_values=cache,logits_to_keep=1);cache=out.past_key_values
-                token=int(self.mx.argmax(out.logits[0,-1]).item());tokens.append(token)
+                with self.mx.stream(self.stream):token=int(self.mx.argmax(out.logits[0,-1]).item())
+                tokens.append(token)
                 if first is None:first=perf_counter()
                 if token in eos:break
                 current=np.array([[token]],dtype=np.int32)
@@ -340,13 +356,17 @@ class ExperimentalQwenModel:
             self.stats.update({'tokens_generated':n,'generation_seconds':end-begin,'ttft_seconds':first-begin if first else 0.,
                                'decode_tokens_per_second':(n-1)/(end-first) if n>1 and end>first else 0.,
                                'logical_bytes_per_generated_token':(self.checkpoint.stats['logical_bytes']-logical)/n if n else 0.,
+                               'encoded_file_bytes_per_generated_token':(encoded_read_bytes(self.checkpoint)-encoded_start)/n if n else 0.,
                                'physical_read_bytes':physical_end-physical if physical is not None and physical_end is not None else None,
                                'context_payload_peak_bytes':cache.peak_bytes if cache else 0})
-            return self.mx.array([tokens],dtype=self.mx.int32)
+            with self.mx.stream(self.stream):return self.mx.array([tokens],dtype=self.mx.int32)
 
     def metrics(self):
         return {'compute_device':self.device,'experimental':True,'full_qwen_checkpoint_validated':False,'metal_validated':False,
+                'numerics':{'compute_dtype':self.options.dtype,'mlx_enable_tf32_environment':os.environ.get('MLX_ENABLE_TF32','1'),
+                            'tf32_environment_note':'Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision'},
                 'mtp_execution':False,'runtime':dict(self.stats),'io':dict(self.checkpoint.stats),'telemetry':telemetry(),
+                'lossless_transport':dict(getattr(self.checkpoint,'transport_stats',{})),
                 'cache':dict(self.reader.cache.stats)|{'bytes':self.reader.cache.bytes,'peak_bytes':self.reader.cache.peak_bytes}}
 
     def close(self):

@@ -1,0 +1,71 @@
+usage: airllm-next run [-h] [--cache-dir CACHE_DIR]
+                       [--profile {balanced,performance}]
+                       [--device {auto,cpu,gpu}] [--prompt PROMPT]
+                       [--token-ids TOKEN_IDS]
+                       [--max-new-tokens MAX_NEW_TOKENS]
+                       [--max-context MAX_CONTEXT] [--cache-mib CACHE_MIB]
+                       [--io-mib IO_MIB] [--kv-mib KV_MIB]
+                       [--workspace-mib WORKSPACE_MIB]
+                       [--reserve-mib RESERVE_MIB]
+                       [--max-tensor-mib MAX_TENSOR_MIB]
+                       [--row-chunk ROW_CHUNK] [--prefill-chunk PREFILL_CHUNK]
+                       [--io-workers IO_WORKERS]
+                       [--quantized-dir QUANTIZED_DIR | --lossless-dir LOSSLESS_DIR]
+                       [--lossless-native-library LOSSLESS_NATIVE_LIBRARY]
+                       [--no-prefetch] [--float32] [--json-report JSON_REPORT]
+                       [--cache-policy {lru,slru,lfu,cost}] [--coalesce-reads]
+                       [--no-selective-fp8-scales]
+                       [--backend {glm,qwen-experimental,llama}]
+                       [--draft-model DRAFT_MODEL | --prompt-lookup]
+                       [--speculative-depth SPECULATIVE_DEPTH]
+                       [--no-adaptive-speculation]
+                       model
+
+positional arguments:
+  model                 Local safetensors checkpoint directory
+
+options:
+  -h, --help            show this help message and exit
+  --cache-dir CACHE_DIR
+  --profile {balanced,performance}
+  --device {auto,cpu,gpu}
+  --prompt PROMPT
+  --token-ids TOKEN_IDS
+                        Comma-separated ids (no tokenizer required)
+  --max-new-tokens MAX_NEW_TOKENS
+  --max-context MAX_CONTEXT
+  --cache-mib CACHE_MIB
+                        cache memory budget in MiB
+  --io-mib IO_MIB       io memory budget in MiB
+  --kv-mib KV_MIB       kv memory budget in MiB
+  --workspace-mib WORKSPACE_MIB
+                        workspace memory budget in MiB
+  --reserve-mib RESERVE_MIB
+                        reserve memory budget in MiB
+  --max-tensor-mib MAX_TENSOR_MIB
+                        Largest individual tensor read in MiB
+  --row-chunk ROW_CHUNK
+  --prefill-chunk PREFILL_CHUNK
+  --io-workers IO_WORKERS
+  --quantized-dir QUANTIZED_DIR
+                        Lossy packed-weight sidecar
+  --lossless-dir LOSSLESS_DIR
+                        Explicit original-weight compressed overlay; hash
+                        verification remains enabled
+  --lossless-native-library LOSSLESS_NATIVE_LIBRARY
+                        Explicit native palette decoder library for
+                        --lossless-dir
+  --no-prefetch
+  --float32
+  --json-report JSON_REPORT
+  --cache-policy {lru,slru,lfu,cost}
+  --coalesce-reads      Opt in to workload-dependent read coalescing
+  --no-selective-fp8-scales
+  --backend {glm,qwen-experimental,llama}
+  --draft-model DRAFT_MODEL
+                        Explicit compatible local draft with the target
+                        architecture/tokenizer; no download
+  --prompt-lookup       Propose bounded spans from the known prefix; target
+                        verifies every token
+  --speculative-depth SPECULATIVE_DEPTH
+  --no-adaptive-speculation

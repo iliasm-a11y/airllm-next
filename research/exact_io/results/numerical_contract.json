@@ -1,0 +1,887 @@
+{
+  "evidence": "measured PyTorch CPU arithmetic on four retained trained Ling experts",
+  "python": "3.12.13",
+  "python_executable": "/Users/macbook/Models/ldp_tools/mflux-venv/bin/python",
+  "torch": "2.14.0",
+  "numpy": "2.5.3",
+  "torch_threads": 1,
+  "matmul_precision": "highest",
+  "pack_manifest_sha256": "35cf79c5aae0eb63ee0d32c360fe2b1e0665064ab75d91d4a0f4bf868cb66edd",
+  "source": "Existing retained expert pack; reconstructed blocks verified by SHA256",
+  "weight_sha256": {
+    "model.layers.1.mlp.experts.0.gate": "f62b64c07e08c1eda6a7cbed2abfaf1487cbbc61fa70c0943cd74051162083e7",
+    "model.layers.1.mlp.experts.0.up": "4a1f570d58ed0acccc0d7b1567bfb4e8c3c8916e65ed7574018c1d26ef1a753e",
+    "model.layers.1.mlp.experts.0.down": "ed4107c24d2261f2a21b5477ace288b699c2751a754e580352235e30988567c7",
+    "model.layers.1.mlp.experts.127.gate": "5fd383649f4b4ddcd38adef440152a570d2a85190c12303546eeea60aa7fac0a",
+    "model.layers.1.mlp.experts.127.up": "a0a70155e09c5e727bfaf123658d33b6b5099fbb7e2f017e2e000e1e6daa1e7a",
+    "model.layers.1.mlp.experts.127.down": "737437a6279c930cee23a38597a4aa904deaf4579b34c90e5f98971c9601e06b",
+    "model.layers.10.mlp.experts.0.gate": "96240cb133864516d46e48fc0607dbe6bf297e8cd1a0700a741b362346ce7b0e",
+    "model.layers.10.mlp.experts.0.up": "c2f6073b85a454284c3a797bfbaef52649f46a7d67b26715dcfce98e97456d71",
+    "model.layers.10.mlp.experts.0.down": "8ef2ed32938f82e59fd50cdabd58b41f3280a6a156f4e432726e123676979f97",
+    "model.layers.19.mlp.experts.255.gate": "10d094d9ae21b5eb531fc2908518d69ab89f30c738524450e275d096ce98e81e",
+    "model.layers.19.mlp.experts.255.up": "bfcab2979286fa6133951ec83120a0e84075cdeacfd68519a248e4792640896a",
+    "model.layers.19.mlp.experts.255.down": "3205f0a9fb067cb39a973875eca484574b8e114f6d340034cc887f0ebfed888e"
+  },
+  "numpy_reference_reproduction": [
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "output_sha256": "acb836d7fdcc0069b2f9c1a4f1fec24b9383b2f1fea74d01f1a126165643206f",
+      "bitwise_reproduced": true
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "output_sha256": "89a794203eba20b4bfa96d52ccdb6a4abf230c3bba872a47db309b5909723f30",
+      "bitwise_reproduced": true
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "output_sha256": "4b656236dab13a0cd74fd0406eb02e9a74ca3c62908585f35f127fec61986911",
+      "bitwise_reproduced": true
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "output_sha256": "5c4386a08aa8104c6e49d0fb9978611f8503806d9e59284d25d9a7ef7466064b",
+      "bitwise_reproduced": true
+    }
+  ],
+  "trials": [
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 3997,
+        "elements": 4096,
+        "max_abs_error": 2.86102294921875e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 8015,
+        "elements": 8192,
+        "max_abs_error": 2.86102294921875e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 16038,
+        "elements": 16384,
+        "max_abs_error": 3.5762786865234375e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 32076,
+        "elements": 32768,
+        "max_abs_error": 5.0067901611328125e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 64143,
+        "elements": 65536,
+        "max_abs_error": 5.0067901611328125e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 4009,
+        "elements": 4096,
+        "max_abs_error": 4.0531158447265625e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 8008,
+        "elements": 8192,
+        "max_abs_error": 4.0531158447265625e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 16032,
+        "elements": 16384,
+        "max_abs_error": 6.4373016357421875e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 32078,
+        "elements": 32768,
+        "max_abs_error": 6.794929504394531e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.float32",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 64190,
+        "elements": 65536,
+        "max_abs_error": 6.794929504394531e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "dtype": "torch.bfloat16",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 4011,
+        "elements": 4096,
+        "max_abs_error": 3.5762786865234375e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 8007,
+        "elements": 8192,
+        "max_abs_error": 4.0531158447265625e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 16022,
+        "elements": 16384,
+        "max_abs_error": 5.0067901611328125e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 32056,
+        "elements": 32768,
+        "max_abs_error": 5.0067901611328125e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.float32",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 64134,
+        "elements": 65536,
+        "max_abs_error": 5.0067901611328125e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "dtype": "torch.bfloat16",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 3999,
+        "elements": 4096,
+        "max_abs_error": 5.4836273193359375e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 7991,
+        "elements": 8192,
+        "max_abs_error": 5.4836273193359375e-06
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 16006,
+        "elements": 16384,
+        "max_abs_error": 1.52587890625e-05
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 32038,
+        "elements": 32768,
+        "max_abs_error": 1.52587890625e-05
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.float32",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": false,
+        "different_elements": 64125,
+        "elements": 65536,
+        "max_abs_error": 1.52587890625e-05
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 1,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 2048,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 2,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 4096,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 4,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 8192,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 8,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 16384,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 16,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 32768,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "dtype": "torch.bfloat16",
+      "positions": 32,
+      "singleton_vs_block": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      },
+      "singleton_vs_same_row_order": {
+        "bitwise_equal": true,
+        "different_elements": 0,
+        "elements": 65536,
+        "max_abs_error": 0.0
+      }
+    }
+  ],
+  "block_comparisons": 48,
+  "block_comparisons_with_bit_differences": 20,
+  "same_row_order_comparisons_bitwise_equal": true,
+  "arithmetic_counterexample": {
+    "evidence": "synthetic float32 scalar identity counterexample",
+    "contributions": [
+      16777216,
+      1,
+      -16777216
+    ],
+    "order_0_1_2": 0.0,
+    "order_0_2_1": 1.0
+  },
+  "full_model_logits_or_tokens_compared": false,
+  "metal_model_runtime_measured": false,
+  "inference_speed_measured": false,
+  "limitations": [
+    "Different block outputs do not establish a token change in a full model.",
+    "Observed CPU differences do not quantify MLX/Metal differences.",
+    "The rowwise control proves its own CPU contract only; no full-model invariance is inferred.",
+    "All routes, language quality, full-model KV states, and end-to-end generation remain untested here."
+  ]
+}

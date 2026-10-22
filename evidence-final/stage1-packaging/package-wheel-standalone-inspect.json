@@ -1,0 +1,47 @@
+{
+  "adapter": {
+    "model_type": "llama",
+    "family": "Llama full causal GQA",
+    "runtime": "mlx-next-llama",
+    "attention": [
+      "full_causal_attention"
+    ],
+    "recurrent": false,
+    "mtp_execution": false,
+    "full_checkpoint_validated": false,
+    "metal_validated": false,
+    "experimental_runtime": null
+  },
+  "quantization": {
+    "format": "bfloat16",
+    "direct_next_read": true,
+    "lossless_conversion_certified": false
+  },
+  "runtime_available": true,
+  "runtime_rejection_reason": null,
+  "storage_representation": {
+    "kind": "lossless_standalone",
+    "base_checkpoint_required": false,
+    "declared_encoded_weight_bytes": 194089363,
+    "declared_index_bytes": 23240,
+    "declared_asset_bytes": 3377021,
+    "weight_files_present": true,
+    "integrity_verified": false,
+    "declared_representation_bytes": 197530673,
+    "declared_representation_fits_budget": true
+  },
+  "generation_validated": false,
+  "declared_tensor_payload_bytes": 269030016,
+  "storage_budget_bytes": 2000000000000,
+  "declared_payload_fits_budget": true,
+  "context_estimate": {
+    "kv_bytes": 94371840,
+    "recurrent_bytes": 0,
+    "convolution_bytes": 0,
+    "payload_bytes": 94371840,
+    "rollback_snapshot_bytes": 0
+  },
+  "mtp_layers_declared": 0,
+  "mtp_execution_available": false,
+  "downloads_performed": false
+}

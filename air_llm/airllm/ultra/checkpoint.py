@@ -14,8 +14,6 @@ import struct
 import tempfile
 from threading import RLock
 
-from safetensors import safe_open
-
 
 def atomic_json(path, obj):
     path = Path(path)
@@ -120,6 +118,9 @@ class DirectCheckpoint:
         return sum(math.prod(self.tensors[k]['shape']) * elem for k in keys)
 
     def _handle(self, filename):
+        # OffsetCheckpoint only uses headers/pread. Keep the optional framework
+        # reader lazy so byte-exact transport research needs neither Torch nor MLX.
+        from safetensors import safe_open
         if self.closed:
             raise RuntimeError('Checkpoint is closed')
         if filename in self.handles:

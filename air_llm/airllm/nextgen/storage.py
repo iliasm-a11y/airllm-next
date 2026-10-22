@@ -27,6 +27,12 @@ def physical_read_bytes():
     except (OSError, StopIteration, ValueError): return None
 
 
+def encoded_read_bytes(checkpoint):
+    """Serialized file bytes requested, distinct from decoded bytes and NAND I/O."""
+    encoded=getattr(checkpoint,'encoded_read_bytes',None)
+    return int(encoded) if encoded is not None else int(checkpoint.stats['logical_bytes'])
+
+
 class OffsetCheckpoint(DirectCheckpoint):
     def __init__(self, root, cache_dir=None, max_open_files=16, max_read_bytes=512*1024**2):
         if not isinstance(max_read_bytes,int) or isinstance(max_read_bytes,bool) or max_read_bytes < 1:
@@ -70,6 +76,9 @@ class OffsetCheckpoint(DirectCheckpoint):
         finally: os.close(fd)
 
     def _bytes(self, filename, offset, size, mode='pread'):
+        if mode not in ('pread','mmap'): raise ValueError('mode must be pread or mmap')
+        if type(offset) is not int or type(size) is not int or offset < 0 or size < 0:
+            raise ValueError('Read offset and size must be nonnegative integers')
         if size > self.max_read_bytes: raise MemoryError('Read exceeds max_tensor_bytes; use row tiles')
         t=perf_counter()
         with self.descriptor(filename) as fd:
@@ -108,12 +117,16 @@ class OffsetCheckpoint(DirectCheckpoint):
         d=self.tensors[key]; shape=list(d['shape']);offset=d['offset']
         dt=np.dtype(_DT[d['dtype']]);item=dt.itemsize
         if expert is not None:
-            if len(shape)!=3 or not 0<=expert<shape[0]: raise ValueError('Invalid packed expert id')
+            if (not isinstance(expert,(int,np.integer)) or isinstance(expert,(bool,np.bool_)) or
+                len(shape)!=3 or not 0<=expert<shape[0]): raise ValueError('Invalid packed expert id')
+            expert=int(expert)
             stride=int(np.prod(shape[1:],dtype=object))*item;offset+=expert*stride;shape=shape[1:]
         if rows is not None:
             if len(shape)!=2: raise ValueError('Row slicing requires a matrix')
             a,b=rows
-            if not 0<=a<=b<=shape[0]: raise ValueError('Invalid matrix row range')
+            if (any(not isinstance(v,(int,np.integer)) or isinstance(v,(bool,np.bool_)) for v in (a,b)) or
+                not 0<=a<=b<=shape[0]): raise ValueError('Invalid matrix row range')
+            a,b=int(a),int(b)
             offset+=a*shape[1]*item;shape[0]=b-a
         size=int(np.prod(shape,dtype=object))*item
         return d['file'],offset,size,dt,tuple(shape)
@@ -179,6 +192,9 @@ class OffsetCheckpoint(DirectCheckpoint):
 
     def close(self):
         with self.io_lock:
+            # Close admission while holding the same lock as descriptor().
+            # A reader already in flight owns a duplicate and remains valid.
+            self.closed=True
             for fd in self.fds.values():os.close(fd)
             self.fds.clear()
         super().close()

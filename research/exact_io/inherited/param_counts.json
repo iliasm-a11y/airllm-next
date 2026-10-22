@@ -1,0 +1,39 @@
+{
+ "glm": {
+  "attn_per_layer": 165022208,
+  "indexer_per_layer": 9371904,
+  "expert": 37748736,
+  "total": 743911218432,
+  "routed_total": 724775731200,
+  "active_routed": 22649241600,
+  "always_active": 18183904512,
+  "emb": 951582720,
+  "head": 951582720,
+  "mtp_layer": 9952914432,
+  "attn_all": 13602740736,
+  "shared_all": 2831155200,
+  "dense_mlp_all": 679477248,
+  "Lm": 75,
+  "N": 256,
+  "k": 8
+ },
+ "qwen": {
+  "full_attn_layer": 419430912,
+  "linear_attn_layer": 438387072,
+  "n_full": 23,
+  "n_lin": 69,
+  "expert": 50331648,
+  "total": 2419804697984,
+  "routed_total": 2370821947392,
+  "active_routed": 46305116160,
+  "always_active": 46948513152,
+  "emb": 2034237440,
+  "head": 2034237440,
+  "attn_all": 39895618944,
+  "shared_all": 4631265280,
+  "mtp_layer": 26378019328,
+  "N": 512,
+  "k": 10,
+  "L": 92
+ }
+}

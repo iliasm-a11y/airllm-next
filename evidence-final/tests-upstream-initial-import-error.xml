@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="4" failures="0" skipped="0" tests="4" time="1.590" timestamp="2026-10-22T23:12:18.318055+02:00" hostname="macbook-air-de-macbook-3.home"><testcase classname="" name="tests.test_automodel" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/air_llm/tests/test_automodel.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+air_llm/tests/test_automodel.py:10: in &lt;module&gt;
+    from airllm.auto_model import AutoModel
+E   ModuleNotFoundError: No module named 'airllm'</error></testcase><testcase classname="" name="tests.test_compression" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/air_llm/tests/test_compression.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+air_llm/tests/test_compression.py:7: in &lt;module&gt;
+    from airllm import compress_layer_state_dict, uncompress_layer_state_dict
+E   ModuleNotFoundError: No module named 'airllm'</error></testcase><testcase classname="" name="tests.test_default_device" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/air_llm/tests/test_default_device.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+air_llm/tests/test_default_device.py:5: in &lt;module&gt;
+    import airllm.utils as utils
+E   ModuleNotFoundError: No module named 'airllm'</error></testcase><testcase classname="" name="tests.test_expert_streaming_compression" time="0.000"><error message="collection failure">ImportError while importing test module '/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/outputs/airllm-next/air_llm/tests/test_expert_streaming_compression.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+air_llm/tests/test_expert_streaming_compression.py:8: in &lt;module&gt;
+    from airllm.airllm_base import AirLLMBaseModel
+E   ModuleNotFoundError: No module named 'airllm'</error></testcase></testsuite></testsuites>

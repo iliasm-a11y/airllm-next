@@ -1,0 +1,84 @@
+{
+  "base_commit": "d43032f38a0325aafd2973847d7ed84b21280c61",
+  "branch": "research/exact-io-2026-10-22",
+  "tests": [
+    {
+      "file": "tests.xml",
+      "tests": 56,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "file": "inherited-controls.xml",
+      "tests": 41,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "passed": 97,
+  "complete_historical_mlx_suite_executed": false,
+  "full_glm_or_qwen_inference_measured": false,
+  "external_ssd_measured": false,
+  "metal_model_runtime_measured": false,
+  "exact_trained_expert_blocks": 4,
+  "palette_encoded_ratio": 0.7503754415629823,
+  "native_default_cache_replay": [
+    {
+      "capacity_expert_units": 32,
+      "misses": 524288,
+      "hits": 0,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 64,
+      "misses": 524288,
+      "hits": 0,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 128,
+      "misses": 456945,
+      "hits": 67343,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 256,
+      "misses": 270568,
+      "hits": 253720,
+      "requests": 524288
+    }
+  ],
+  "rejected_or_unproven": [
+    "8.1 seconds/token reproduction",
+    "universal 10x impossibility theorem",
+    "unconditional speed benefit of lossless transport",
+    "XOR inter-expert size benefit",
+    "tiny exact low rank on the tested matrices",
+    "full-model bitwise parity"
+  ],
+  "numerical_contract_experiment": {
+    "block_comparisons": 48,
+    "block_comparisons_with_bit_differences": 20,
+    "same_row_order_comparisons_bitwise_equal": true,
+    "full_model_logits_or_tokens_compared": false
+  },
+  "resumed_verification": [
+    {
+      "file": "tests-resumed.xml",
+      "tests": 56,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "file": "inherited-controls-resumed.xml",
+      "tests": 41,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    }
+  ],
+  "resumed_verification_passed": 97
+}

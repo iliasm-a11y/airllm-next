@@ -5,6 +5,7 @@ tool and multimodal options fail explicitly rather than silently changing them.
 No HTTP client, model download or remote inference path exists in this module.
 """
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from collections.abc import Mapping
 import ipaddress
 import json
 import math
@@ -47,6 +48,7 @@ def make_server(model, *, model_name='airllm-next', host='127.0.0.1', port=8080,
     if tokenizer is None:
         raise ValueError('A local tokenizer is required to serve text requests')
     context_limit = min(model.options.max_context, model.config['max_position_embeddings'])
+    vocab_size=model.config.get('vocab_size')
 
     def prepare(payload, chat):
         if not isinstance(payload, dict):
@@ -81,16 +83,33 @@ def make_server(model, *, model_name='airllm-next', host='127.0.0.1', port=8080,
                     raise RequestError('Each message must contain a supported role and text content')
             if not getattr(tokenizer, 'chat_template', None):
                 raise RequestError('The local tokenizer has no chat template; use /v1/completions')
-            ids = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True)
+            ids = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
+                                                return_dict=False)
         else:
             prompt = payload.get('prompt')
             if not isinstance(prompt, str) or not prompt:
                 raise RequestError('prompt must be a nonempty string')
             ids = tokenizer.encode(prompt)
+        attention_mask=None
+        if isinstance(ids,Mapping):
+            # Transformers versions and local tokenizer wrappers may return a
+            # BatchEncoding despite a request for IDs. Preserve only the one
+            # unpadded sequence this runtime can execute.
+            if 'input_ids' not in ids:
+                raise RequestError('The tokenizer mapping must include input_ids')
+            attention_mask=ids.get('attention_mask')
+            ids=ids['input_ids']
         if hasattr(ids, 'tolist'):
             ids = ids.tolist()
-        if not isinstance(ids, list) or not ids or any(type(value) is not int for value in ids):
+        if not isinstance(ids, list) or not ids or any(type(value) is not int or value < 0 or value>2**31-1 for value in ids):
             raise RequestError('The tokenizer must return a nonempty sequence of token IDs')
+        if attention_mask is not None:
+            if hasattr(attention_mask,'tolist'):attention_mask=attention_mask.tolist()
+            if (not isinstance(attention_mask,list) or len(attention_mask)!=len(ids)
+                    or any(type(value) not in (int,bool) or value!=1 for value in attention_mask)):
+                raise RequestError('Only an unpadded sequence with an all-ones attention mask is supported')
+        if vocab_size is not None and any(value>=vocab_size for value in ids):
+            raise RequestError('The tokenizer returned IDs outside the local model vocabulary')
         if len(ids)+count > context_limit:
             raise RequestError('Prompt plus requested completion exceeds the configured context limit')
         return ids, count, float(temperature)
@@ -157,7 +176,13 @@ def make_server(model, *, model_name='airllm-next', host='127.0.0.1', port=8080,
                     raise RequestError('Truncated request body')
                 def reject_constant(value):
                     raise RequestError('Nonfinite JSON numbers are invalid')
-                payload = json.loads(body, parse_constant=reject_constant)
+                def unique_fields(pairs):
+                    value={}
+                    for key,item in pairs:
+                        if key in value:raise RequestError('Duplicate JSON object fields are invalid')
+                        value[key]=item
+                    return value
+                payload = json.loads(body, parse_constant=reject_constant,object_pairs_hook=unique_fields)
                 chat = self.path == '/v1/chat/completions'
                 ids, count, temperature = prepare(payload, chat)
             except (RequestError, UnicodeError, json.JSONDecodeError, ValueError, TypeError, RecursionError) as error:
@@ -172,12 +197,19 @@ def make_server(model, *, model_name='airllm-next', host='127.0.0.1', port=8080,
                 return
             try:
                 generated = model.generate([ids], max_new_tokens=count, temperature=temperature)
-                sequences = generated.tolist()
+                sequences = generated.tolist() if hasattr(generated,'tolist') else generated
+                if (not isinstance(sequences,list) or len(sequences)!=1 or not isinstance(sequences[0],list)
+                        or sequences[0][:len(ids)]!=ids or not len(ids)<len(sequences[0])<=len(ids)+count
+                        or any(type(value) is not int or value<0 or value>2**31-1 for value in sequences[0])):
+                    raise RuntimeError('Invalid local backend generation result')
                 result = sequences[0][len(ids):]
+                if vocab_size is not None and any(value>=vocab_size for value in result):
+                    raise RuntimeError('Local backend generated IDs outside its vocabulary')
                 text = tokenizer.decode(result, skip_special_tokens=True)
+                if not isinstance(text,str):raise RuntimeError('Invalid local tokenizer response')
                 eos = model.config.get('eos_token_id')
                 eos = eos if isinstance(eos, (list, tuple)) else [eos]
-                reason = 'stop' if result and result[-1] in eos else 'length'
+                reason = 'stop' if len(result)<count or result and result[-1] in eos else 'length'
                 choice = {'index': 0, 'finish_reason': reason, 'logprobs': None}
                 if chat:
                     choice['message'] = {'role': 'assistant', 'content': text}

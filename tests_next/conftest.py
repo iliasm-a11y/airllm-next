@@ -1,5 +1,9 @@
 from pathlib import Path
+import os
 import sys
+# Official MLX defaults to TF32-eligible Metal matmul. Exact FP32 parity must
+# request full precision before MLX initializes its first GPU matmul pipeline.
+os.environ.setdefault('MLX_ENABLE_TF32','0')
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'air_llm'))
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests_ultra'))
 import torch

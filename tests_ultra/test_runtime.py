@@ -36,7 +36,7 @@ def test_tied_embeddings_stream_instead_of_pinning_table(tmp_path):
     root = tmp_path / 'tied'
     ref = save_tiny(root, tied=True)
     ids = torch.tensor([[1, 9]])
-    with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model:
+    with AirLLMUltraModel(root, device='cpu', dtype=torch.float32, ultra=options(tmp_path)) as model:
         with torch.inference_mode():
             torch.testing.assert_close(model(ids).logits, ref(ids).logits)
         assert all(p.device.type == 'meta' for p in model.model.parameters())
@@ -44,7 +44,7 @@ def test_tied_embeddings_stream_instead_of_pinning_table(tmp_path):
 
 def test_no_split_and_cached_second_request(tiny, tmp_path):
     root, ref = tiny
-    with AirLLMUltraModel(root, dtype=torch.float32,
+    with AirLLMUltraModel(root, device='cpu', dtype=torch.float32,
                          ultra=options(tmp_path, cache_bytes=16*2**20, prefetch=False)) as model:
         ids = torch.tensor([[1]])
         model(ids)
@@ -60,10 +60,10 @@ def test_no_split_and_cached_second_request(tiny, tmp_path):
 def test_reopen_reuses_valid_manifest_and_routes(tiny, tmp_path):
     root, _ = tiny
     cfg = options(tmp_path)
-    with AirLLMUltraModel(root, ultra=cfg) as model:
+    with AirLLMUltraModel(root, device='cpu', ultra=cfg) as model:
         model(torch.tensor([[1, 8]]))
         assert model.checkpoint.stats['manifest_hit'] == 0
-    with AirLLMUltraModel(root, ultra=cfg) as model:
+    with AirLLMUltraModel(root, device='cpu', ultra=cfg) as model:
         assert model.checkpoint.stats['manifest_hit'] == 1
         assert model.checkpoint.stats['header_bytes'] == 0
         if model.expert_sources:
@@ -74,21 +74,21 @@ def test_memory_guard_rejects_before_materialization(tmp_path):
     root = tmp_path / 'small'
     save_tiny(root)
     with pytest.raises(MemoryError, match='max_group_bytes'):
-        AirLLMUltraModel(root, ultra=options(tmp_path, max_group_bytes=100))
+        AirLLMUltraModel(root, device='cpu', ultra=options(tmp_path, max_group_bytes=100))
 
 
 def test_auto_entry_point(tmp_path):
     from airllm import AutoModel
     root = tmp_path / 'entry'
     save_tiny(root)
-    with AutoModel.from_pretrained(root, ultra=options(tmp_path)) as model:
+    with AutoModel.from_pretrained(root, device='cpu', ultra=options(tmp_path)) as model:
         assert model(torch.tensor([[1]])).logits.shape[-1] == 96
 
 
 def test_only_routed_expert_slices_are_read(tmp_path):
     root = tmp_path / 'experts'
     save_tiny(root, 'mixtral')
-    with AirLLMUltraModel(root, dtype=torch.float32,
+    with AirLLMUltraModel(root, device='cpu', dtype=torch.float32,
                          ultra=options(tmp_path, prefetch=False, cache_bytes=0)) as model:
         bank = next(m for m in model.model.modules() if m.__class__.__name__ == 'DiskExperts')
         before = model.checkpoint.stats['logical_bytes']

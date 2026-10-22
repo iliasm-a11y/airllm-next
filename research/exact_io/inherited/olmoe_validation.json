@@ -1,0 +1,28 @@
+{
+ "model": "olmoe",
+ "input_shape": [
+  2,
+  96
+ ],
+ "layers": [
+  {
+   "layer": 0,
+   "max_abs_diff": 5.960464477539063e-08,
+   "mean_abs_diff": 1.3703953249954992e-10,
+   "ref_max_abs": 0.5068471431732178,
+   "rel_max": 1.175988586510357e-07,
+   "router_logit_max_abs_diff": null,
+   "topk_set_agreement": 1.0
+  },
+  {
+   "layer": 1,
+   "max_abs_diff": 1.9073486328125e-06,
+   "mean_abs_diff": 2.3828603534781223e-09,
+   "ref_max_abs": 9.317670822143555,
+   "rel_max": 2.0470230310820625e-07,
+   "router_logit_max_abs_diff": null,
+   "topk_set_agreement": 1.0
+  }
+ ],
+ "peak_rss_gb": 5.559730176
+}

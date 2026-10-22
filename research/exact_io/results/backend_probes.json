@@ -1,0 +1,18 @@
+{
+  "evidence": "live subprocess import and arithmetic probes",
+  "python_executable": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+  "results": {
+    "torch_cpu": {
+      "returncode": 0,
+      "stdout": "{\"torch\": \"2.14.0\", \"result\": [[14.0, 38.0], [38.0, 126.0]]}\n",
+      "stderr": ""
+    },
+    "mlx_cpu": {
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nImportError: [metal::load_device] No Metal device available. This typically occurs in headless, sandboxed, or virtualized macOS sessions where the GPU is not accessible.\n"
+    }
+  },
+  "packages_installed_by_experiment": false,
+  "model_downloaded": false
+}

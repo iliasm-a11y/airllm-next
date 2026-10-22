@@ -1,0 +1,67 @@
+{
+  "model_dir": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/checkpoints/smollm2-135m",
+  "weight_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "tokens_per_run": 16,
+  "repeats_per_prompt": 3,
+  "cache_mib": 128,
+  "summary": {
+    "reference-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 0.0,
+      "median_generation_seconds": 0.17016108299867483,
+      "p50_generation_seconds": 0.17016108299867483,
+      "p95_generation_seconds": 0.17266626719792838,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1209942016
+    },
+    "next-cpu": {
+      "all_generated_sequences_match_reference": false,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.53131103515625e-05,
+      "median_generation_seconds": 0.9339179170019634,
+      "p50_generation_seconds": 0.9339179170019634,
+      "p95_generation_seconds": 0.9699063501982892,
+      "median_ttft_seconds": 0.1618964169974788,
+      "median_decode_tokens_per_second": 19.419589459357883,
+      "process_peak_rss_bytes": 548110336
+    },
+    "ultra-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.7220458984375e-05,
+      "median_generation_seconds": 0.48486754199984716,
+      "p50_generation_seconds": 0.48486754199984716,
+      "p95_generation_seconds": 0.49881037479935914,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1056292864
+    },
+    "next-gpu": {
+      "all_generated_sequences_match_reference": false,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 6.389617919921875e-05,
+      "median_generation_seconds": 1.0264782499980356,
+      "p50_generation_seconds": 1.0264782499980356,
+      "p95_generation_seconds": 1.0558241084007023,
+      "median_ttft_seconds": 0.16128245800064178,
+      "median_decode_tokens_per_second": 17.313152596358382,
+      "process_peak_rss_bytes": 540360704
+    },
+    "ultra-gpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.91278076171875e-05,
+      "median_generation_seconds": 4.216825875002542,
+      "p50_generation_seconds": 4.216825875002542,
+      "p95_generation_seconds": 5.424476949598465,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1043791872
+    }
+  },
+  "protocol": "Sequential fresh subprocess variants, same trained weights and prompts, greedy decoding, float32 arithmetic, no prefetch; TF32=0; OS page cache uncontrolled",
+  "full_GLM53_validated": false,
+  "full_Qwen38_validated": false
+}

@@ -1,0 +1,2326 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="15" skipped="0" tests="38" time="11.019" timestamp="2026-10-22T22:48:41.939299+02:00" hostname="macbook-air-de-macbook-3.home"><testcase classname="tests_ultra.test_failures" name="test_fused_3d_checkpoint_matches_reference[mixtral]" time="3.077"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_fused_3d_checkpoint_match0')
+kind = 'mixtral'
+
+    @pytest.mark.parametrize('kind', ['mixtral', 'glm'])
+    def test_fused_3d_checkpoint_matches_reference(tmp_path, kind):
+        root = tmp_path / 'fused'
+        ref = save_tiny(root, kind)
+        # Save raw native state rather than Transformers' backwards-compatible
+        # save_pretrained conversion. This exercises on-disk first-axis slicing.
+        for path in root.glob('*.safetensors*'):
+            path.unlink()
+        save_file({k: v.contiguous() for k, v in ref.state_dict().items()}, root / 'model.safetensors')
+        ids = torch.tensor([[1, 7, 8], [1, 8, 9]])
+        with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model, torch.inference_mode():
+            assert all(source.fused for source in model.expert_sources.values())
+&gt;           torch.testing.assert_close(model(ids).logits, ref(ids).logits, rtol=4e-5, atol=4e-6)
+                                       ^^^^^^^^^^
+
+tests_ultra/test_failures.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:600: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:436: in forward
+    inputs_embeds = self.embed_tokens(input_ids)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 7, 8],
+        [1, 8, 9]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0035,  0.0053,....0052,  0.0031, -0.0215],
+        [-0.0011, -0.0235, -0.0002,  ..., -0.0060, -0.0226, -0.0018]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_failures" name="test_fused_3d_checkpoint_matches_reference[glm]" time="0.022"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_fused_3d_checkpoint_match1')
+kind = 'glm'
+
+    @pytest.mark.parametrize('kind', ['mixtral', 'glm'])
+    def test_fused_3d_checkpoint_matches_reference(tmp_path, kind):
+        root = tmp_path / 'fused'
+        ref = save_tiny(root, kind)
+        # Save raw native state rather than Transformers' backwards-compatible
+        # save_pretrained conversion. This exercises on-disk first-axis slicing.
+        for path in root.glob('*.safetensors*'):
+            path.unlink()
+        save_file({k: v.contiguous() for k, v in ref.state_dict().items()}, root / 'model.safetensors')
+        ids = torch.tensor([[1, 7, 8], [1, 8, 9]])
+        with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model, torch.inference_mode():
+            assert all(source.fused for source in model.expert_sources.values())
+&gt;           torch.testing.assert_close(model(ids).logits, ref(ids).logits, rtol=4e-5, atol=4e-6)
+                                       ^^^^^^^^^^
+
+tests_ultra/test_failures.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:778: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:686: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 7, 8],
+        [1, 8, 9]])
+weight = Parameter containing:
+tensor([[ 0.0000e+00,  0.0000e+00,  0.0000e+00,  ...,  0.0000e+00,
+          0.0000e+00,  0.0000...        [ 3.6094e-04,  8.5393e-04, -4.4815e-02,  ..., -2.7029e-03,
+         -2.2675e-02, -4.2743e-02]], device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_failures" name="test_forward_failure_releases_materialized_parameters" time="0.011"><failure message="AssertionError: Regex pattern did not match.&#10;  Expected regex: 'injected'&#10;  Actual message: 'Passed CPU tensor to MPS op'">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_forward_failure_releases_0')
+
+    def test_forward_failure_releases_materialized_parameters(tmp_path):
+        root = tmp_path / 'failure'
+        save_tiny(root)
+        with AirLLMUltraModel(root, ultra=options(tmp_path, prefetch=False)) as model:
+            layer = model.model.model.layers[0]
+            original = layer.forward
+            def fail(*args, **kwargs):
+                raise RuntimeError('injected compute error')
+            layer.forward = fail
+&gt;           with pytest.raises(RuntimeError, match='injected'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: Regex pattern did not match.
+E             Expected regex: 'injected'
+E             Actual message: 'Passed CPU tensor to MPS op'
+
+tests_ultra/test_failures.py:35: AssertionError</failure></testcase><testcase classname="tests_ultra.test_failures" name="test_concurrent_requests_are_serialized" time="0.012"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_concurrent_requests_are_s0')
+
+    def test_concurrent_requests_are_serialized(tmp_path):
+        root = tmp_path / 'concurrency'
+        save_tiny(root)
+        with AirLLMUltraModel(root, ultra=options(tmp_path)) as model:
+            def run(_):
+                return model(torch.tensor([[1, 7, 8]])).logits.clone()
+            with ThreadPoolExecutor(max_workers=2) as executor:
+&gt;               outputs = list(executor.map(run, range(4)))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_ultra/test_failures.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:619: in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:317: in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/thread.py:59: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests_ultra/test_failures.py:47: in run
+    return model(torch.tensor([[1, 7, 8]])).logits.clone()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:456: in forward
+    outputs: BaseModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:370: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 7, 8]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0185, -0.0196,....0054, -0.0019,  0.0188],
+        [ 0.0121, -0.0022,  0.0568,  ..., -0.0128,  0.0042,  0.0151]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_fp8_runtime" name="test_glm_fp8_unfused_checkpoint_end_to_end" time="0.062" /><testcase classname="tests_ultra.test_meta" name="test_meta_factory_never_allocates_expert_bank_on_cpu" time="0.026" /><testcase classname="tests_ultra.test_meta" name="test_learned_glm_routing_buffer_is_loaded" time="0.027"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_learned_glm_routing_buffe0')
+
+    def test_learned_glm_routing_buffer_is_loaded(tmp_path):
+        root = tmp_path / 'router'
+        ref = save_tiny(root, 'glm')
+        with torch.no_grad():
+            for name, buf in ref.named_buffers():
+                if name.endswith('e_score_correction_bias'):
+                    buf.copy_(torch.linspace(-2, 2, buf.numel()))
+        ref.save_pretrained(root, max_shard_size='100KB')
+        with AirLLMUltraModel(root, ultra=options(tmp_path)) as model, torch.inference_mode():
+            ids = torch.tensor([[1, 7, 8]])
+&gt;           torch.testing.assert_close(model(ids).logits, ref(ids).logits, atol=3e-6, rtol=3e-5)
+                                       ^^^^^^^^^^
+
+tests_ultra/test_meta.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:778: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:686: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 7, 8]])
+weight = Parameter containing:
+tensor([[ 0.0000e+00,  0.0000e+00,  0.0000e+00,  ...,  0.0000e+00,
+          0.0000e+00,  0.0000...        [ 3.6094e-04,  8.5393e-04, -4.4815e-02,  ..., -2.7029e-03,
+         -2.2675e-02, -4.2743e-02]], device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_mlx" name="test_unsupported_mlx_configs_are_explicit[cfg0]" time="0.000" /><testcase classname="tests_ultra.test_mlx" name="test_unsupported_mlx_configs_are_explicit[cfg1]" time="0.000" /><testcase classname="tests_ultra.test_mlx" name="test_unsupported_mlx_configs_are_explicit[cfg2]" time="0.000" /><testcase classname="tests_ultra.test_mlx" name="test_unsupported_mlx_configs_are_explicit[cfg3]" time="0.000" /><testcase classname="tests_ultra.test_mlx" name="test_native_mlx_logits_and_decode_match_transformers" time="0.001"><failure message="ModuleNotFoundError: No module named 'mlx'">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_native_mlx_logits_and_dec0')
+
+    @pytest.mark.skipif(sys.platform != 'darwin', reason='Apple Silicon/MLX hardware unavailable')
+    def test_native_mlx_logits_and_decode_match_transformers(tmp_path):
+&gt;       import mlx.core as mx
+E       ModuleNotFoundError: No module named 'mlx'
+
+tests_ultra/test_mlx.py:22: ModuleNotFoundError</failure></testcase><testcase classname="tests_ultra.test_mps" name="test_mps_logits_match_cpu_reference[llama]" time="0.981" /><testcase classname="tests_ultra.test_mps" name="test_mps_logits_match_cpu_reference[mixtral]" time="0.648" /><testcase classname="tests_ultra.test_mps" name="test_mps_logits_match_cpu_reference[glm]" time="0.871" /><testcase classname="tests_ultra.test_runtime" name="test_logits_decode_and_kv_match_reference[llama]" time="0.028" /><testcase classname="tests_ultra.test_runtime" name="test_logits_decode_and_kv_match_reference[mixtral]" time="0.044" /><testcase classname="tests_ultra.test_runtime" name="test_logits_decode_and_kv_match_reference[glm]" time="0.050" /><testcase classname="tests_ultra.test_runtime" name="test_tied_embeddings_stream_instead_of_pinning_table" time="0.020"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_tied_embeddings_stream_in0')
+
+    def test_tied_embeddings_stream_instead_of_pinning_table(tmp_path):
+        root = tmp_path / 'tied'
+        ref = save_tiny(root, tied=True)
+        ids = torch.tensor([[1, 9]])
+        with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model:
+            with torch.inference_mode():
+&gt;               torch.testing.assert_close(model(ids).logits, ref(ids).logits)
+                                           ^^^^^^^^^^
+
+tests_ultra/test_runtime.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:456: in forward
+    outputs: BaseModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:370: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 9]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0185, -0.0196,....0054, -0.0019,  0.0188],
+        [ 0.0121, -0.0022,  0.0568,  ..., -0.0128,  0.0042,  0.0151]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_no_split_and_cached_second_request[llama]" time="0.020"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cach...1e-06)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cached_secon0')
+
+    def test_no_split_and_cached_second_request(tiny, tmp_path):
+        root, ref = tiny
+        with AirLLMUltraModel(root, dtype=torch.float32,
+                             ultra=options(tmp_path, cache_bytes=16*2**20, prefetch=False)) as model:
+            ids = torch.tensor([[1]])
+&gt;           model(ids)
+
+tests_ultra/test_runtime.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:456: in forward
+    outputs: BaseModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:370: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0185, -0.0196,....0054, -0.0019,  0.0188],
+        [ 0.0121, -0.0022,  0.0568,  ..., -0.0128,  0.0042,  0.0151]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_no_split_and_cached_second_request[mixtral]" time="0.023"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cach...-05)
+    (rotary_emb): MixtralRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cached_secon1')
+
+    def test_no_split_and_cached_second_request(tiny, tmp_path):
+        root, ref = tiny
+        with AirLLMUltraModel(root, dtype=torch.float32,
+                             ultra=options(tmp_path, cache_bytes=16*2**20, prefetch=False)) as model:
+            ids = torch.tensor([[1]])
+&gt;           model(ids)
+
+tests_ultra/test_runtime.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:600: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:436: in forward
+    inputs_embeds = self.embed_tokens(input_ids)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0035,  0.0053,....0052,  0.0031, -0.0215],
+        [-0.0011, -0.0235, -0.0002,  ..., -0.0060, -0.0226, -0.0018]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_no_split_and_cached_second_request[glm]" time="0.021"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cach...5)
+    (rotary_emb): GlmMoeDsaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_no_split_and_cached_secon2')
+
+    def test_no_split_and_cached_second_request(tiny, tmp_path):
+        root, ref = tiny
+        with AirLLMUltraModel(root, dtype=torch.float32,
+                             ultra=options(tmp_path, cache_bytes=16*2**20, prefetch=False)) as model:
+            ids = torch.tensor([[1]])
+&gt;           model(ids)
+
+tests_ultra/test_runtime.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:778: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:686: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1]])
+weight = Parameter containing:
+tensor([[ 0.0000e+00,  0.0000e+00,  0.0000e+00,  ...,  0.0000e+00,
+          0.0000e+00,  0.0000...        [ 3.6094e-04,  8.5393e-04, -4.4815e-02,  ..., -2.7029e-03,
+         -2.2675e-02, -4.2743e-02]], device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_reopen_reuses_valid_manifest_and_routes[llama]" time="0.018"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_val...1e-06)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_valid_manif0')
+
+    def test_reopen_reuses_valid_manifest_and_routes(tiny, tmp_path):
+        root, _ = tiny
+        cfg = options(tmp_path)
+        with AirLLMUltraModel(root, ultra=cfg) as model:
+&gt;           model(torch.tensor([[1, 8]]))
+
+tests_ultra/test_runtime.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:456: in forward
+    outputs: BaseModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:370: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 8]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0185, -0.0196,....0054, -0.0019,  0.0188],
+        [ 0.0121, -0.0022,  0.0568,  ..., -0.0128,  0.0042,  0.0151]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_reopen_reuses_valid_manifest_and_routes[mixtral]" time="0.023"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_val...-05)
+    (rotary_emb): MixtralRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_valid_manif1')
+
+    def test_reopen_reuses_valid_manifest_and_routes(tiny, tmp_path):
+        root, _ = tiny
+        cfg = options(tmp_path)
+        with AirLLMUltraModel(root, ultra=cfg) as model:
+&gt;           model(torch.tensor([[1, 8]]))
+
+tests_ultra/test_runtime.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:600: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/mixtral/modeling_mixtral.py:436: in forward
+    inputs_embeds = self.embed_tokens(input_ids)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 8]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0035,  0.0053,....0052,  0.0031, -0.0215],
+        [-0.0011, -0.0235, -0.0002,  ..., -0.0060, -0.0226, -0.0018]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_reopen_reuses_valid_manifest_and_routes[glm]" time="0.021"><failure message="RuntimeError: Passed CPU tensor to MPS op">tiny = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_val...5)
+    (rotary_emb): GlmMoeDsaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_reopen_reuses_valid_manif2')
+
+    def test_reopen_reuses_valid_manifest_and_routes(tiny, tmp_path):
+        root, _ = tiny
+        cfg = options(tmp_path)
+        with AirLLMUltraModel(root, ultra=cfg) as model:
+&gt;           model(torch.tensor([[1, 8]]))
+
+tests_ultra/test_runtime.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:778: in forward
+    outputs: MoeModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/glm_moe_dsa/modeling_glm_moe_dsa.py:686: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1, 8]])
+weight = Parameter containing:
+tensor([[ 0.0000e+00,  0.0000e+00,  0.0000e+00,  ...,  0.0000e+00,
+          0.0000e+00,  0.0000...        [ 3.6094e-04,  8.5393e-04, -4.4815e-02,  ..., -2.7029e-03,
+         -2.2675e-02, -4.2743e-02]], device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_memory_guard_rejects_before_materialization" time="0.014" /><testcase classname="tests_ultra.test_runtime" name="test_auto_entry_point" time="0.019"><failure message="RuntimeError: Passed CPU tensor to MPS op">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_auto_entry_point0')
+
+    def test_auto_entry_point(tmp_path):
+        from airllm import AutoModel
+        root = tmp_path / 'entry'
+        save_tiny(root)
+        with AutoModel.from_pretrained(root, ultra=options(tmp_path)) as model:
+&gt;           assert model(torch.tensor([[1]])).logits.shape[-1] == 96
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_ultra/test_runtime.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124: in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+air_llm/airllm/ultra/runtime.py:317: in forward
+    return self.model(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:943: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:456: in forward
+    outputs: BaseModelOutputWithPast = self.model(
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/generic.py:1081: in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/utils/output_capturing.py:287: in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/llama/modeling_llama.py:370: in forward
+    inputs_embeds: torch.Tensor = self.embed_tokens(input_ids)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1889: in _call_impl
+    return inner()
+           ^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1837: in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py:189: in forward
+    return F.embedding(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = tensor([[1]])
+weight = Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  ...,  0.0000,  0.0000,  0.0000],
+        [-0.0185, -0.0196,....0054, -0.0019,  0.0188],
+        [ 0.0121, -0.0022,  0.0568,  ..., -0.0128,  0.0042,  0.0151]],
+       device='mps:0')
+padding_idx = 0, max_norm = None, norm_type = 2.0, scale_grad_by_freq = False
+sparse = False
+
+    def embedding(
+        input: Tensor,
+        weight: Tensor,
+        padding_idx: int | None = None,
+        max_norm: float | None = None,
+        norm_type: float = 2.0,
+        scale_grad_by_freq: bool = False,
+        sparse: bool = False,
+    ) -&gt; Tensor:
+        r"""Generate a simple lookup table that looks up embeddings in a fixed dictionary and size.
+    
+        This module is often used to retrieve word embeddings using indices.
+        The input to the module is a list of indices, and the embedding matrix,
+        and the output is the corresponding word embeddings.
+    
+        See :class:`torch.nn.Embedding` for more details.
+    
+        .. note::
+            Note that the analytical gradients of this function with respect to
+            entries in :attr:`weight` at the row specified by :attr:`padding_idx`
+            are expected to differ from the numerical ones.
+    
+        .. note::
+            Note that `:class:`torch.nn.Embedding` differs from this function in
+            that it initializes the row of :attr:`weight` specified by
+            :attr:`padding_idx` to all zeros on construction.
+    
+        Args:
+            input (LongTensor): Tensor containing indices into the embedding matrix
+            weight (Tensor): The embedding matrix (must be 2-D) with number of rows equal to the maximum possible index + 1,
+                and number of columns equal to the embedding size
+            padding_idx (int, optional): If specified, the entries at :attr:`padding_idx` do not contribute to the gradient;
+                                         therefore, the embedding vector at :attr:`padding_idx` is not updated during training,
+                                         i.e. it remains as a fixed "pad".
+            max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                        is renormalized to have norm :attr:`max_norm`.
+                                        Note: this will modify :attr:`weight` in-place.
+            norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+            scale_grad_by_freq (bool, optional): If given, this will scale gradients by the inverse of frequency of
+                                                    the words in the mini-batch. Default ``False``.
+            sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` will be a sparse tensor. See Notes under
+                                     :class:`torch.nn.Embedding` for more details regarding sparse gradients.
+    
+        Shape:
+            - Input: LongTensor of arbitrary shape containing the indices to extract
+            - Weight: Embedding matrix of floating point type with shape `(V, embedding_dim)`,
+              where V = maximum index + 1 and embedding_dim = the embedding size
+            - Output: `(*, embedding_dim)`, where `*` is the input shape
+    
+        Examples::
+    
+            &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+            &gt;&gt;&gt; input = torch.tensor([[1, 2, 4, 5], [4, 3, 2, 9]])
+            &gt;&gt;&gt; # an embedding matrix containing 10 tensors of size 3
+            &gt;&gt;&gt; embedding_matrix = torch.rand(10, 3)
+            &gt;&gt;&gt; # xdoctest: +IGNORE_WANT("non-deterministic")
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix)
+            tensor([[[ 0.8490,  0.9625,  0.6753],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.6246,  0.9751,  0.3618],
+                     [ 0.4161,  0.2419,  0.7383]],
+    
+                    [[ 0.6246,  0.9751,  0.3618],
+                     [ 0.0237,  0.7794,  0.0528],
+                     [ 0.9666,  0.7761,  0.6108],
+                     [ 0.3385,  0.8612,  0.1867]]])
+    
+            &gt;&gt;&gt; # example with padding_idx
+            &gt;&gt;&gt; weights = torch.rand(10, 3)
+            &gt;&gt;&gt; weights[0, :].zero_()
+            &gt;&gt;&gt; embedding_matrix = weights
+            &gt;&gt;&gt; input = torch.tensor([[0, 2, 0, 5]])
+            &gt;&gt;&gt; F.embedding(input, embedding_matrix, padding_idx=0)
+            tensor([[[ 0.0000,  0.0000,  0.0000],
+                     [ 0.5609,  0.5384,  0.8720],
+                     [ 0.0000,  0.0000,  0.0000],
+                     [ 0.6262,  0.2438,  0.7471]]])
+        """
+        if has_torch_function_variadic(input, weight):
+            return handle_torch_function(
+                embedding,
+                (input, weight),
+                input,
+                weight,
+                padding_idx=padding_idx,
+                max_norm=max_norm,
+                norm_type=norm_type,
+                scale_grad_by_freq=scale_grad_by_freq,
+                sparse=sparse,
+            )
+        if padding_idx is not None:
+            if padding_idx &gt; 0:
+                if padding_idx &gt;= weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+            elif padding_idx &lt; 0:
+                if padding_idx &lt; -weight.size(0):
+                    raise AssertionError("Padding_idx must be within num_embeddings")
+                padding_idx = weight.size(0) + padding_idx
+        else:
+            padding_idx = -1
+        if max_norm is not None:
+            # Note [embedding_renorm contiguous]
+            # `embedding_renorm_` will call .contiguous() on input anyways, so we
+            # call it here and take advantage of the improved locality in the
+            # `embedding` call below too.
+            input = input.contiguous()
+            # Note [embedding_renorm set_grad_enabled]
+            # XXX: equivalent to
+            # with torch.no_grad():
+            #   torch.embedding_renorm_
+            # remove once script supports set_grad_enabled
+            _no_grad_embedding_renorm_(weight, input, max_norm, norm_type)
+&gt;       return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: Passed CPU tensor to MPS op
+
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/functional.py:2621: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_runtime" name="test_only_routed_expert_slices_are_read" time="0.023"><failure message="RuntimeError: Tensor for argument input is on cpu but expected on mps">tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-6/test_only_routed_expert_slices0')
+
+    def test_only_routed_expert_slices_are_read(tmp_path):
+        root = tmp_path / 'experts'
+        save_tiny(root, 'mixtral')
+        with AirLLMUltraModel(root, dtype=torch.float32,
+                             ultra=options(tmp_path, prefetch=False, cache_bytes=0)) as model:
+            bank = next(m for m in model.model.modules() if m.__class__.__name__ == 'DiskExperts')
+            before = model.checkpoint.stats['logical_bytes']
+&gt;           bank(torch.randn(1, 48), torch.tensor([[2, 5]]), torch.tensor([[0.4, 0.6]]))
+
+tests_ultra/test_runtime.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1783: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/torch/nn/modules/module.py:1794: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = DiskExperts(
+  (act_fn): SiLUActivation()
+)
+hidden_states = tensor([[ 0.8157, -0.2706,  2.1029, -0.9049,  0.7038,  0.4464, -1.0772, -1.1150,
+          0.0574, -0.0688, -1.3212,  ... -0.0438, -0.7110,  0.2259, -2.3411,
+         -0.6870,  0.0904,  0.6639,  0.2700, -0.4218,  0.9884,  0.9290, -0.4653]])
+top_k_index = tensor([[2, 5]]), top_k_weights = tensor([[0.4000, 0.6000]])
+
+    def forward(self, hidden_states, top_k_index, top_k_weights):
+        source = self.source
+        owner = source.owner
+        # One host sync for the whole routed set, not one .item() per expert.
+        selected = torch.unique(top_k_index).detach().cpu().tolist()
+        selected = [int(e) for e in selected if int(e) != self.num_experts]
+        if any(e &lt; 0 or e &gt;= self.num_experts for e in selected):
+            raise ValueError('Router returned an invalid expert id')
+        owner.record_routes(source.prefix, selected)
+        result = torch.zeros_like(hidden_states)
+        for pos, expert in enumerate(selected):
+            key = ('expert', source.prefix, expert)
+            weights = owner.get_device_weights(key, source.size, lambda e=expert: source.load(e))
+            # Routing is known now: overlap reading the following ACTUAL expert.
+            if pos + 1 &lt; len(selected):
+                nxt = selected[pos + 1]
+                owner.prefetch_weights(('expert', source.prefix, nxt), source.size,
+                                       lambda e=nxt: source.load(e))
+            token_idx, top_pos = torch.where(top_k_index == expert)
+            current = hidden_states[token_idx]
+            device_weights = weights
+            if 'gate_up' in device_weights:
+                gate, up = F.linear(current, device_weights['gate_up']).chunk(2, dim=-1)
+            else:
+&gt;               gate = F.linear(current, device_weights['gate'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               RuntimeError: Tensor for argument input is on cpu but expected on mps
+
+air_llm/airllm/ultra/experts.py:92: RuntimeError</failure></testcase><testcase classname="tests_ultra.test_storage" name="test_random_access_single_file_and_bounded_handles" time="0.002" /><testcase classname="tests_ultra.test_storage" name="test_manifest_invalidates_on_weight_change" time="0.002" /><testcase classname="tests_ultra.test_storage" name="test_corrupt_header_rejected[]" time="0.001" /><testcase classname="tests_ultra.test_storage" name="test_corrupt_header_rejected[\x00\x10\xa5\xd4\xe8\x00\x00\x00]" time="0.001" /><testcase classname="tests_ultra.test_storage" name="test_traversal_index_rejected" time="0.001" /><testcase classname="tests_ultra.test_storage" name="test_cache_budget_and_scan_resistance" time="0.000" /><testcase classname="tests_ultra.test_storage" name="test_prefetch_bound_dedup_and_exception_propagation" time="0.000" /><testcase classname="tests_ultra.test_storage" name="test_fp8_dequant_edges_and_reader" time="0.002" /><testcase classname="tests_ultra.test_storage" name="test_prefetch_reservation_violation_rejected" time="0.001" /><testcase classname="tests_ultra.test_storage" name="test_close_releases_all_pending_results_after_worker_failure" time="0.001" /></testsuite></testsuites>

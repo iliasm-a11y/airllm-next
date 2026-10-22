@@ -1,0 +1,67 @@
+{
+  "model_dir": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/checkpoints/smollm2-135m",
+  "weight_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "tokens_per_run": 16,
+  "repeats_per_prompt": 3,
+  "cache_mib": 128,
+  "summary": {
+    "reference-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 0.0,
+      "median_generation_seconds": 0.16912624999895343,
+      "p50_generation_seconds": 0.16912624999895343,
+      "p95_generation_seconds": 0.17729391640095854,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1209565184
+    },
+    "next-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.53131103515625e-05,
+      "median_generation_seconds": 0.9595986669992271,
+      "p50_generation_seconds": 0.9595986669992271,
+      "p95_generation_seconds": 0.9836190496011114,
+      "median_ttft_seconds": 0.1649689589976333,
+      "median_decode_tokens_per_second": 18.879053076984604,
+      "process_peak_rss_bytes": 546144256
+    },
+    "ultra-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.7220458984375e-05,
+      "median_generation_seconds": 0.4915967500019178,
+      "p50_generation_seconds": 0.4915967500019178,
+      "p95_generation_seconds": 0.5373163664000458,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1088159744
+    },
+    "next-gpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 6.389617919921875e-05,
+      "median_generation_seconds": 1.1022015839989763,
+      "p50_generation_seconds": 1.1022015839989763,
+      "p95_generation_seconds": 1.2905241913984355,
+      "median_ttft_seconds": 0.16616883299866458,
+      "median_decode_tokens_per_second": 16.08829613867621,
+      "process_peak_rss_bytes": 540688384
+    },
+    "ultra-gpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 5.91278076171875e-05,
+      "median_generation_seconds": 3.8979814170015743,
+      "p50_generation_seconds": 3.8979814170015743,
+      "p95_generation_seconds": 4.493434991998947,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 888504320
+    }
+  },
+  "protocol": "Sequential fresh subprocess variants, same trained weights and prompts, explicit all-ones attention mask for unpadded HF inputs, greedy decoding, float32 arithmetic, no prefetch; TF32=0; OS page cache uncontrolled",
+  "full_GLM53_validated": false,
+  "full_Qwen38_validated": false
+}

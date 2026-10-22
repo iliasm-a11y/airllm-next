@@ -18,6 +18,12 @@ def qwen_config():
                 head_dim=256, dtype='bfloat16', mtp_num_hidden_layers=1)
 
 
+def llama_config():
+    return dict(model_type='llama',num_hidden_layers=3,num_attention_heads=8,
+                num_key_value_heads=2,hidden_size=128,head_dim=16,
+                intermediate_size=256,vocab_size=96,max_position_embeddings=4096)
+
+
 class AdapterTests(unittest.TestCase):
     def test_qwen_recognition_does_not_claim_execution(self):
         c = qwen_config(); a = get_adapter(c)
@@ -35,7 +41,7 @@ class AdapterTests(unittest.TestCase):
         self.assertGreater(zero['payload_bytes'], 0)
 
     def test_unknown_and_malformed_schedules_fail(self):
-        with self.assertRaises(NotImplementedError): get_adapter({'model_type': 'llama'})
+        with self.assertRaises(NotImplementedError): get_adapter({'model_type': 'unimplemented_architecture'})
         c = qwen_config(); c['layer_types'] = ['linear_attention']
         with self.assertRaises(ValueError): qwen_layer_types(c)
 
@@ -62,6 +68,44 @@ class AdapterTests(unittest.TestCase):
                kv_lora_rank=4,qk_rope_head_dim=2,index_head_dim=4)
         a=get_adapter(c); self.assertIs(a.require_runtime(c),a)
         self.assertEqual(a.context_bytes(c,10)['payload_bytes'], (3*6+2*4)*10*2)
+
+    def test_llama_state_estimate_and_architecture_guards(self):
+        c=llama_config();adapter=get_adapter(c)
+        self.assertIs(adapter.require_runtime(c),adapter)
+        self.assertEqual(adapter.context_bytes(c,10)['kv_bytes'],3*2*2*16*10*2)
+        for changes in ({'attention_bias':True},{'rope_scaling':{'rope_type':'llama3'}},
+                        {'quantization_config':{'quant_method':'fp8','fmt':'e4m3'}}):
+            with self.assertRaises(NotImplementedError):adapter.require_runtime(c|changes)
+
+    def test_standalone_inspection_reads_metadata_without_binary_weights(self):
+        from airllm.nextgen.lossless import PACK_FORMAT
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            (root/'config.json').write_text(json.dumps(llama_config()))
+            manifest=dict(format=PACK_FORMAT,standalone=True,raw_bytes=100000,
+                          stored_bytes=10000,index_bytes=100,assets={})
+            (root/'manifest.json').write_text(json.dumps(manifest))
+            report=inspect_local_checkpoint(root,storage_budget_bytes=20000)
+            self.assertTrue(report['runtime_available'])
+            self.assertFalse(report['generation_validated'])
+            self.assertEqual(report['declared_tensor_payload_bytes'],100000)
+            self.assertFalse(report['declared_payload_fits_budget'])
+            storage=report['storage_representation']
+            self.assertEqual(storage['kind'],'lossless_standalone')
+            self.assertTrue(storage['declared_representation_fits_budget'])
+            self.assertFalse(storage['weight_files_present'])
+            self.assertFalse(storage['integrity_verified'])
+            manifest['stored_bytes']=-1
+            (root/'manifest.json').write_text(json.dumps(manifest))
+            with self.assertRaises(ValueError):inspect_local_checkpoint(root)
+
+    def test_llama_inspection_rejects_unsupported_runtime_semantics(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            (root/'config.json').write_text(json.dumps(llama_config()|{'attention_bias':True}))
+            report=inspect_local_checkpoint(root)
+            self.assertFalse(report['runtime_available'])
+            self.assertIn('bias-free',report['runtime_rejection_reason'])
 
 
 class RecurrentTests(unittest.TestCase):

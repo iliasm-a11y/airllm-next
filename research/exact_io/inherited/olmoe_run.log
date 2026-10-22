@@ -1,0 +1,19 @@
+== olmoe family=olmoe L=16 N=64 k=8 moe_layers=16 prefix=[50279] sep=[50279] threads=6
+layer   0 load   0.2s total    6.9s read  0.84GB rss  1.72GB peak  3.39GB reimpl_mismatch 0/49152
+layer   1 load   0.3s total    7.4s read  0.84GB rss  1.75GB peak  3.43GB reimpl_mismatch 0/49152
+layer   2 load   0.3s total    7.6s read  0.84GB rss  1.75GB peak  3.43GB reimpl_mismatch 0/49152
+layer   3 load   0.3s total    7.5s read  0.84GB rss  1.73GB peak  3.43GB reimpl_mismatch 0/49152
+layer   4 load   0.3s total    7.3s read  0.84GB rss  1.69GB peak  3.43GB reimpl_mismatch 0/49152
+layer   5 load   0.3s total    7.6s read  0.84GB rss  1.62GB peak  3.43GB reimpl_mismatch 0/49152
+layer   6 load   0.3s total    7.4s read  0.84GB rss  1.66GB peak  3.43GB reimpl_mismatch 0/49152
+layer   7 load   0.3s total    7.3s read  0.84GB rss  1.73GB peak  3.43GB reimpl_mismatch 0/49152
+layer   8 load   0.3s total    7.4s read  0.84GB rss  1.65GB peak  3.43GB reimpl_mismatch 0/49152
+layer   9 load   0.3s total    7.5s read  0.84GB rss  1.64GB peak  3.43GB reimpl_mismatch 0/49152
+layer  10 load   0.3s total    7.4s read  0.84GB rss  1.70GB peak  3.43GB reimpl_mismatch 0/49152
+layer  11 load   0.3s total    7.6s read  0.84GB rss  1.71GB peak  3.43GB reimpl_mismatch 0/49152
+layer  12 load   0.3s total    7.3s read  0.84GB rss  1.70GB peak  3.43GB reimpl_mismatch 0/49152
+layer  13 load   0.3s total    7.3s read  0.84GB rss  1.72GB peak  3.43GB reimpl_mismatch 0/49152
+layer  14 load   0.3s total    7.3s read  0.84GB rss  1.75GB peak  3.43GB reimpl_mismatch 0/49152
+layer  15 load   0.3s total    7.1s read  0.84GB rss  1.74GB peak  3.43GB reimpl_mismatch 0/49152
+forward done 118s
+RUN DONE {"model": "olmoe", "ce_long_per_cat": {"fr_prose": 2.219414472579956, "en_prose": 1.883203387260437, "chat": 2.11678147315979, "code": 1.8516039848327637, "math": 2.547295570373535, "json_tool": 1.0353914499282837, "translation": 1.8863834142684937, "copy_edit": 1.3119663000106812}, "acc_long_per_cat": {"fr_prose": 0.561904788017273, "en_prose": 0.5853480100631714, "chat": 0.5758242011070251, "code": 0.6590964794158936, "math": 0.6322344541549683, "json_tool": 0.7914530038833618, "translation": 0.6537240743637085, "copy_edit": 0.7819291949272156}, "ce_short_mean": 2.5487194061279297, "forward_s": 129.76145601272583, "peak_rss_gb": 3.4308096, "bytes_read_GB": 13.842583552, "n_tokens": 49152}

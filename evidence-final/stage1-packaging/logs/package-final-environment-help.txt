@@ -1,0 +1,14 @@
+usage: airllm-next [-h]
+                   {doctor,inspect,prepare,tune,calibrate,limits,convert,verify,pack,run,serve}
+                   ...
+
+Local streamed MLX GLM/Llama inference and explicit experimental Qwen backend
+
+positional arguments:
+  {doctor,inspect,prepare,tune,calibrate,limits,convert,verify,pack,run,serve}
+    doctor              Check local environment without model weights
+    inspect             Offline architecture, quantization and storage
+                        feasibility (no inference)
+
+options:
+  -h, --help            show this help message and exit

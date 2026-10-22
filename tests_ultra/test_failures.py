@@ -18,7 +18,7 @@ def test_fused_3d_checkpoint_matches_reference(tmp_path, kind):
         path.unlink()
     save_file({k: v.contiguous() for k, v in ref.state_dict().items()}, root / 'model.safetensors')
     ids = torch.tensor([[1, 7, 8], [1, 8, 9]])
-    with AirLLMUltraModel(root, dtype=torch.float32, ultra=options(tmp_path)) as model, torch.inference_mode():
+    with AirLLMUltraModel(root, device='cpu', dtype=torch.float32, ultra=options(tmp_path)) as model, torch.inference_mode():
         assert all(source.fused for source in model.expert_sources.values())
         torch.testing.assert_close(model(ids).logits, ref(ids).logits, rtol=4e-5, atol=4e-6)
 
@@ -26,7 +26,7 @@ def test_fused_3d_checkpoint_matches_reference(tmp_path, kind):
 def test_forward_failure_releases_materialized_parameters(tmp_path):
     root = tmp_path / 'failure'
     save_tiny(root)
-    with AirLLMUltraModel(root, ultra=options(tmp_path, prefetch=False)) as model:
+    with AirLLMUltraModel(root, device='cpu', ultra=options(tmp_path, prefetch=False)) as model:
         layer = model.model.model.layers[0]
         original = layer.forward
         def fail(*args, **kwargs):
@@ -42,7 +42,7 @@ def test_forward_failure_releases_materialized_parameters(tmp_path):
 def test_concurrent_requests_are_serialized(tmp_path):
     root = tmp_path / 'concurrency'
     save_tiny(root)
-    with AirLLMUltraModel(root, ultra=options(tmp_path)) as model:
+    with AirLLMUltraModel(root, device='cpu', ultra=options(tmp_path)) as model:
         def run(_):
             return model(torch.tensor([[1, 7, 8]])).logits.clone()
         with ThreadPoolExecutor(max_workers=2) as executor:

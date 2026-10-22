@@ -1,0 +1,303 @@
+{
+  "epochs": [
+    {
+      "elapsed": 1.5092750000003434,
+      "wall_seconds": 1.5092747919989051,
+      "metrics": {
+        "compute_device": "gpu",
+        "metal_validated": false,
+        "numerics": {
+          "compute_dtype": "bfloat16",
+          "dynamic_fp8_activation_kernels_reproduced": false,
+          "mlx_enable_tf32_environment": "0",
+          "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+          "full_checkpoint_quality_validated": false
+        },
+        "runtime": {
+          "startup_seconds": 1.4918689999976777,
+          "sampled_rss_peak_bytes": 517799936,
+          "swap_growth_bytes": 0,
+          "ttft_seconds": 0.08040783399701468,
+          "generation_seconds": 1.5091488749967539,
+          "tokens_generated": 32,
+          "prefill_tokens": 5,
+          "prefill_tokens_per_second": 62.18299575369281,
+          "decode_tokens_per_second": 21.69742389307179,
+          "logical_bytes_per_token_including_prefill": 269031312.0,
+          "decode_logical_bytes_per_token": 269031168.0,
+          "encoded_file_bytes_per_token_including_prefill": 269031312.0,
+          "decode_encoded_file_bytes_per_token": 269031168.0,
+          "gpu_time_seconds": null,
+          "kv_peak_bytes": 2949120,
+          "physical_read_bytes": null
+        },
+        "telemetry": {
+          "available_bytes": 4143677440,
+          "total_bytes": 17179869184,
+          "rss_bytes": 517849088,
+          "swap_used_bytes": 4827316224,
+          "cpu_percent": 14.4,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": null,
+          "process_peak_rss_bytes": 517849088,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "io": {
+          "manifest_hit": 1,
+          "logical_bytes": 8609001984,
+          "fd_opens": 1,
+          "read_calls": 9476,
+          "io_seconds": 0.4669325458162348,
+          "requested_bytes": 8609001984
+        },
+        "lossless_transport": {},
+        "weights": {
+          "dequant_seconds": 0.0,
+          "loads": 9476,
+          "speculative_reads": 0,
+          "load_seconds": 0.7619861638158909,
+          "output_tiles": 768,
+          "output_tile_peak_bytes": 2359296
+        },
+        "cache": {
+          "misses": 8672,
+          "evictions": 8502,
+          "bytes": 133860096,
+          "peak_bytes": 134082432,
+          "capacity": 134217728
+        },
+        "prefetch": {
+          "submitted": 8672,
+          "consumed": 8672,
+          "wait_seconds": 0.7122207700704166,
+          "peak_bytes": 1769472,
+          "budget": 33554432,
+          "enabled": true
+        }
+      },
+      "telemetry": {
+        "available_bytes": 4143677440,
+        "total_bytes": 17179869184,
+        "rss_bytes": 517849088,
+        "swap_used_bytes": 4827316224,
+        "cpu_percent": 0.0,
+        "gpu_utilization": null,
+        "temperature_c": null,
+        "thermal_throttled": null,
+        "memory_pressure_source": "available physical memory (not macOS pressure level)",
+        "physical_read_bytes": null,
+        "process_peak_rss_bytes": 517849088,
+        "rss_peak_scope": "process lifetime, not isolated per model"
+      },
+      "mlx_allocator": {
+        "active_bytes": 134498560,
+        "peak_bytes": 140115204,
+        "cache_bytes": 6360444,
+        "scope": "Process-wide MLX allocator; peak is since initialization, not isolated model RSS"
+      }
+    },
+    {
+      "elapsed": 2.9905116249974526,
+      "wall_seconds": 1.4807799579975836,
+      "metrics": {
+        "compute_device": "gpu",
+        "metal_validated": false,
+        "numerics": {
+          "compute_dtype": "bfloat16",
+          "dynamic_fp8_activation_kernels_reproduced": false,
+          "mlx_enable_tf32_environment": "0",
+          "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+          "full_checkpoint_quality_validated": false
+        },
+        "runtime": {
+          "startup_seconds": 1.4918689999976777,
+          "sampled_rss_peak_bytes": 519700480,
+          "swap_growth_bytes": 0,
+          "ttft_seconds": 0.04797658300230978,
+          "generation_seconds": 1.4806991250006831,
+          "tokens_generated": 32,
+          "prefill_tokens": 5,
+          "prefill_tokens_per_second": 104.21750960795355,
+          "decode_tokens_per_second": 21.63712728129547,
+          "logical_bytes_per_token_including_prefill": 269031312.0,
+          "decode_logical_bytes_per_token": 269031168.0,
+          "encoded_file_bytes_per_token_including_prefill": 269031312.0,
+          "decode_encoded_file_bytes_per_token": 269031168.0,
+          "gpu_time_seconds": null,
+          "kv_peak_bytes": 2949120,
+          "physical_read_bytes": null
+        },
+        "telemetry": {
+          "available_bytes": 4157079552,
+          "total_bytes": 17179869184,
+          "rss_bytes": 519700480,
+          "swap_used_bytes": 4827316224,
+          "cpu_percent": 12.8,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": null,
+          "process_peak_rss_bytes": 519700480,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "io": {
+          "manifest_hit": 1,
+          "logical_bytes": 17218003968,
+          "fd_opens": 1,
+          "read_calls": 18952,
+          "io_seconds": 0.9328043435234576,
+          "requested_bytes": 17218003968
+        },
+        "lossless_transport": {},
+        "weights": {
+          "dequant_seconds": 0.0,
+          "loads": 18952,
+          "speculative_reads": 0,
+          "load_seconds": 1.5147895638401678,
+          "output_tiles": 1536,
+          "output_tile_peak_bytes": 2359296
+        },
+        "cache": {
+          "misses": 17344,
+          "evictions": 17174,
+          "bytes": 133860096,
+          "peak_bytes": 134082432,
+          "capacity": 134217728
+        },
+        "prefetch": {
+          "submitted": 17344,
+          "consumed": 17344,
+          "wait_seconds": 1.4165672161470866,
+          "peak_bytes": 1769472,
+          "budget": 33554432,
+          "enabled": true
+        }
+      },
+      "telemetry": {
+        "available_bytes": 4157079552,
+        "total_bytes": 17179869184,
+        "rss_bytes": 519700480,
+        "swap_used_bytes": 4827316224,
+        "cpu_percent": 0.0,
+        "gpu_utilization": null,
+        "temperature_c": null,
+        "thermal_throttled": null,
+        "memory_pressure_source": "available physical memory (not macOS pressure level)",
+        "physical_read_bytes": null,
+        "process_peak_rss_bytes": 519700480,
+        "rss_peak_scope": "process lifetime, not isolated per model"
+      },
+      "mlx_allocator": {
+        "active_bytes": 134498560,
+        "peak_bytes": 140115204,
+        "cache_bytes": 6360444,
+        "scope": "Process-wide MLX allocator; peak is since initialization, not isolated model RSS"
+      }
+    },
+    {
+      "elapsed": 4.4740274579999095,
+      "wall_seconds": 1.4830339159998402,
+      "metrics": {
+        "compute_device": "gpu",
+        "metal_validated": false,
+        "numerics": {
+          "compute_dtype": "bfloat16",
+          "dynamic_fp8_activation_kernels_reproduced": false,
+          "mlx_enable_tf32_environment": "0",
+          "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+          "full_checkpoint_quality_validated": false
+        },
+        "runtime": {
+          "startup_seconds": 1.4918689999976777,
+          "sampled_rss_peak_bytes": 519766016,
+          "swap_growth_bytes": 0,
+          "ttft_seconds": 0.04782645799787133,
+          "generation_seconds": 1.482957540996722,
+          "tokens_generated": 32,
+          "prefill_tokens": 5,
+          "prefill_tokens_per_second": 104.54464347375549,
+          "decode_tokens_per_second": 21.6008142860528,
+          "logical_bytes_per_token_including_prefill": 269031312.0,
+          "decode_logical_bytes_per_token": 269031168.0,
+          "encoded_file_bytes_per_token_including_prefill": 269031312.0,
+          "decode_encoded_file_bytes_per_token": 269031168.0,
+          "gpu_time_seconds": null,
+          "kv_peak_bytes": 2949120,
+          "physical_read_bytes": null
+        },
+        "telemetry": {
+          "available_bytes": 4151312384,
+          "total_bytes": 17179869184,
+          "rss_bytes": 519766016,
+          "swap_used_bytes": 4827316224,
+          "cpu_percent": 13.3,
+          "gpu_utilization": null,
+          "temperature_c": null,
+          "thermal_throttled": null,
+          "memory_pressure_source": "available physical memory (not macOS pressure level)",
+          "physical_read_bytes": null,
+          "process_peak_rss_bytes": 519766016,
+          "rss_peak_scope": "process lifetime, not isolated per model"
+        },
+        "io": {
+          "manifest_hit": 1,
+          "logical_bytes": 25827005952,
+          "fd_opens": 1,
+          "read_calls": 28428,
+          "io_seconds": 1.4015659305041481,
+          "requested_bytes": 25827005952
+        },
+        "lossless_transport": {},
+        "weights": {
+          "dequant_seconds": 0.0,
+          "loads": 28428,
+          "speculative_reads": 0,
+          "load_seconds": 2.2719700328416366,
+          "output_tiles": 2304,
+          "output_tile_peak_bytes": 2359296
+        },
+        "cache": {
+          "misses": 26016,
+          "evictions": 25846,
+          "bytes": 133860096,
+          "peak_bytes": 134082432,
+          "capacity": 134217728
+        },
+        "prefetch": {
+          "submitted": 26016,
+          "consumed": 26016,
+          "wait_seconds": 2.123694141253509,
+          "peak_bytes": 1769472,
+          "budget": 33554432,
+          "enabled": true
+        }
+      },
+      "telemetry": {
+        "available_bytes": 4151312384,
+        "total_bytes": 17179869184,
+        "rss_bytes": 519766016,
+        "swap_used_bytes": 4827316224,
+        "cpu_percent": 0.0,
+        "gpu_utilization": null,
+        "temperature_c": null,
+        "thermal_throttled": null,
+        "memory_pressure_source": "available physical memory (not macOS pressure level)",
+        "physical_read_bytes": null,
+        "process_peak_rss_bytes": 519766016,
+        "rss_peak_scope": "process lifetime, not isolated per model"
+      },
+      "mlx_allocator": {
+        "active_bytes": 134498560,
+        "peak_bytes": 140115204,
+        "cache_bytes": 6360444,
+        "scope": "Process-wide MLX allocator; peak is since initialization, not isolated model RSS"
+      }
+    }
+  ],
+  "full_model_test": "user-supplied checkpoint",
+  "thermal_sensor_available": false
+}

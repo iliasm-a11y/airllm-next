@@ -1,0 +1,76 @@
+family,dtype,n,shape,numel,bytes
+lm_head.weight,BF16,1,"[248320, 8192]",2034237440,4068474880
+model.embed_tokens.weight,BF16,1,"[248320, 8192]",2034237440,4068474880
+model.layers.N.input_layernorm.weight,BF16,92,[8192],753664,1507328
+model.layers.N.linear_attn.A_log,BF16,69,[128],8832,17664
+model.layers.N.linear_attn.conv1d.weight,BF16,69,"[20480, 1, 4]",5652480,11304960
+model.layers.N.linear_attn.dt_bias,BF16,69,[128],8832,17664
+model.layers.N.linear_attn.in_proj_a.input_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_a.weight,F8_E4M3,69,"[128, 8192]",72351744,72351744
+model.layers.N.linear_attn.in_proj_a.weight_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_b.input_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_b.weight,F8_E4M3,69,"[128, 8192]",72351744,72351744
+model.layers.N.linear_attn.in_proj_b.weight_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_qkv.input_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_qkv.weight,F8_E4M3,69,"[20480, 8192]",11576279040,11576279040
+model.layers.N.linear_attn.in_proj_qkv.weight_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_z.input_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.in_proj_z.weight,F8_E4M3,69,"[16384, 8192]",9261023232,9261023232
+model.layers.N.linear_attn.in_proj_z.weight_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.norm.weight,BF16,69,[128],8832,17664
+model.layers.N.linear_attn.out_proj.input_scale,F32,69,[1],69,276
+model.layers.N.linear_attn.out_proj.weight,F8_E4M3,69,"[8192, 16384]",9261023232,9261023232
+model.layers.N.linear_attn.out_proj.weight_scale,F32,69,[1],69,276
+model.layers.N.mlp.experts.E.down_proj.input_scale,F32,47104,[1],47104,188416
+model.layers.N.mlp.experts.E.down_proj.weight,U8,47104,"[8192, 1024]",395136991232,395136991232
+model.layers.N.mlp.experts.E.down_proj.weight_scale,F8_E4M3,47104,"[8192, 128]",49392123904,49392123904
+model.layers.N.mlp.experts.E.down_proj.weight_scale_2,F32,47104,[1],47104,188416
+model.layers.N.mlp.experts.E.gate_proj.input_scale,F32,47104,[1],47104,188416
+model.layers.N.mlp.experts.E.gate_proj.weight,U8,47104,"[2048, 4096]",395136991232,395136991232
+model.layers.N.mlp.experts.E.gate_proj.weight_scale,F8_E4M3,47104,"[2048, 512]",49392123904,49392123904
+model.layers.N.mlp.experts.E.gate_proj.weight_scale_2,F32,47104,[1],47104,188416
+model.layers.N.mlp.experts.E.up_proj.input_scale,F32,47104,[1],47104,188416
+model.layers.N.mlp.experts.E.up_proj.weight,U8,47104,"[2048, 4096]",395136991232,395136991232
+model.layers.N.mlp.experts.E.up_proj.weight_scale,F8_E4M3,47104,"[2048, 512]",49392123904,49392123904
+model.layers.N.mlp.experts.E.up_proj.weight_scale_2,F32,47104,[1],47104,188416
+model.layers.N.mlp.gate.weight,BF16,92,"[512, 8192]",385875968,771751936
+model.layers.N.mlp.shared_expert.down_proj.weight,BF16,92,"[8192, 2048]",1543503872,3087007744
+model.layers.N.mlp.shared_expert.gate_proj.weight,BF16,92,"[2048, 8192]",1543503872,3087007744
+model.layers.N.mlp.shared_expert.up_proj.weight,BF16,92,"[2048, 8192]",1543503872,3087007744
+model.layers.N.mlp.shared_expert_gate.weight,BF16,92,"[1, 8192]",753664,1507328
+model.layers.N.post_attention_layernorm.weight,BF16,92,[8192],753664,1507328
+model.layers.N.self_attn.k_norm.weight,BF16,23,[256],5888,11776
+model.layers.N.self_attn.k_proj.input_scale,F32,23,[1],23,92
+model.layers.N.self_attn.k_proj.weight,F8_E4M3,23,"[1024, 8192]",192937984,192937984
+model.layers.N.self_attn.k_proj.weight_scale,F32,23,[1],23,92
+model.layers.N.self_attn.o_proj.input_scale,F32,23,[1],23,92
+model.layers.N.self_attn.o_proj.weight,F8_E4M3,23,"[8192, 16384]",3087007744,3087007744
+model.layers.N.self_attn.o_proj.weight_scale,F32,23,[1],23,92
+model.layers.N.self_attn.q_norm.weight,BF16,23,[256],5888,11776
+model.layers.N.self_attn.q_proj.input_scale,F32,23,[1],23,92
+model.layers.N.self_attn.q_proj.weight,F8_E4M3,23,"[32768, 8192]",6174015488,6174015488
+model.layers.N.self_attn.q_proj.weight_scale,F32,23,[1],23,92
+model.layers.N.self_attn.v_proj.input_scale,F32,23,[1],23,92
+model.layers.N.self_attn.v_proj.weight,F8_E4M3,23,"[1024, 8192]",192937984,192937984
+model.layers.N.self_attn.v_proj.weight_scale,F32,23,[1],23,92
+model.norm.weight,BF16,1,[8192],8192,16384
+mtp.fc.weight,BF16,1,"[8192, 16384]",134217728,268435456
+mtp.layers.N.input_layernorm.weight,BF16,1,[8192],8192,16384
+mtp.layers.N.mlp.experts.E.down_proj.weight,BF16,512,"[8192, 2048]",8589934592,17179869184
+mtp.layers.N.mlp.experts.E.gate_proj.weight,BF16,512,"[2048, 8192]",8589934592,17179869184
+mtp.layers.N.mlp.experts.E.up_proj.weight,BF16,512,"[2048, 8192]",8589934592,17179869184
+mtp.layers.N.mlp.gate.weight,BF16,1,"[512, 8192]",4194304,8388608
+mtp.layers.N.mlp.shared_expert.down_proj.weight,BF16,1,"[8192, 2048]",16777216,33554432
+mtp.layers.N.mlp.shared_expert.gate_proj.weight,BF16,1,"[2048, 8192]",16777216,33554432
+mtp.layers.N.mlp.shared_expert.up_proj.weight,BF16,1,"[2048, 8192]",16777216,33554432
+mtp.layers.N.mlp.shared_expert_gate.weight,BF16,1,"[1, 8192]",8192,16384
+mtp.layers.N.post_attention_layernorm.weight,BF16,1,[8192],8192,16384
+mtp.layers.N.self_attn.k_norm.weight,BF16,1,[256],256,512
+mtp.layers.N.self_attn.k_proj.weight,BF16,1,"[1024, 8192]",8388608,16777216
+mtp.layers.N.self_attn.o_proj.weight,BF16,1,"[8192, 16384]",134217728,268435456
+mtp.layers.N.self_attn.q_norm.weight,BF16,1,[256],256,512
+mtp.layers.N.self_attn.q_proj.weight,BF16,1,"[32768, 8192]",268435456,536870912
+mtp.layers.N.self_attn.v_proj.weight,BF16,1,"[1024, 8192]",8388608,16777216
+mtp.norm.weight,BF16,1,[8192],8192,16384
+mtp.pre_fc_norm_embedding.weight,BF16,1,[8192],8192,16384
+mtp.pre_fc_norm_hidden.weight,BF16,1,[8192],8192,16384

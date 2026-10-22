@@ -1,0 +1,1655 @@
+{
+ "meta": {
+  "engine": "AirLLM Next",
+  "repo": "https://github.com/iliasm-a11y/airllm-next",
+  "branch": "research/ooc-engine-2026-10-22",
+  "commit": "d43032f",
+  "glm_source": {
+   "repo": "zai-org/GLM-5.3",
+   "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+   "shards": 141,
+   "tensors": 118629
+  },
+  "qwen_source": {
+   "repo": "Qwen/Qwen3.8-2.4T-A95B",
+   "revision": "207bd685a7e3696cfaff12ded7c6a7ea0f88c996",
+   "shards": 213,
+   "tensors": 1609
+  },
+  "nvfp4_source": {
+   "repo": "nvidia/Qwen3.8-2.4T-A95B-NVFP4",
+   "revision": "74eb734297318ecf7c48016a4ac8ce1b47cc74a9",
+   "shards": 200,
+   "tensors": 569081,
+   "modelopt_producer_version": "0.42.0"
+  },
+  "method": "Exact shapes/dtypes/byte sizes from every safetensors header (HTTP Range on header only; no tensor payload downloaded). Sums verified equal to index total_size.",
+  "units": "bytes unless stated; GB = 1e9 bytes; GiB = 2^30 bytes",
+  "date": "2026-10-22"
+ },
+ "glm_5_3": {
+  "config": {
+   "num_hidden_layers": 78,
+   "hidden_size": 6144,
+   "n_routed_experts": 256,
+   "num_experts_per_tok": 8,
+   "n_shared_experts": 1,
+   "moe_intermediate_size": 2048,
+   "intermediate_size": 12288,
+   "q_lora_rank": 2048,
+   "kv_lora_rank": 512,
+   "num_attention_heads": 64,
+   "qk_nope_head_dim": 192,
+   "qk_rope_head_dim": 64,
+   "v_head_dim": 256,
+   "index_n_heads": 32,
+   "index_head_dim": 128,
+   "index_topk": 2048,
+   "vocab_size": 154880,
+   "num_nextn_predict_layers": 1,
+   "first_k_dense_replace": 3,
+   "indexer_full_layers": 21,
+   "indexer_shared_layers": 57,
+   "moe_layers": 75,
+   "dense_layers": 3
+  },
+  "checkpoint_total_tensor_bytes": 755617140416,
+  "params": {
+   "main_model_excl_mtp_excl_scales": 743377019904,
+   "repo_meta_count": 743377000704,
+   "difference": 19200,
+   "difference_explained": "75 x 256 e_score_correction_bias values (F32 buffers, not nn.Parameters)",
+   "mtp_layer_params": 9952920576,
+   "always_active_params_per_forward": 17649712128,
+   "routed_params_per_token": 22649241600,
+   "one_expert_params": 37748736
+  },
+  "components": [
+   {
+    "component": "attention_mla",
+    "tensors": 780,
+    "params": 12871532544,
+    "weight_bytes": 12871532544,
+    "scale_bytes": 3149952,
+    "total_bytes": 12874682496,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "dense_mlp",
+    "tensors": 18,
+    "params": 679477248,
+    "weight_bytes": 679477248,
+    "scale_bytes": 165888,
+    "total_bytes": 679643136,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "dsa_indexer",
+    "tensors": 147,
+    "params": 196809984,
+    "weight_bytes": 200944128,
+    "scale_bytes": 47040,
+    "total_bytes": 200991168,
+    "stored_dtypes": "BF16,F32,F8_E4M3",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2,
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "BF16": 4,
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "embedding",
+    "tensors": 1,
+    "params": 951582720,
+    "weight_bytes": 1903165440,
+    "scale_bytes": 0,
+    "total_bytes": 1903165440,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "selected rows only (1 row = 12288 B per new token)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": "rows not cached",
+     "float32_compute": "rows not cached"
+    }
+   },
+   {
+    "component": "final_norm",
+    "tensors": 1,
+    "params": 6144,
+    "weight_bytes": 12288,
+    "scale_bytes": 0,
+    "total_bytes": 12288,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "layer_norms",
+    "tensors": 312,
+    "params": 1158144,
+    "weight_bytes": 2316288,
+    "scale_bytes": 0,
+    "total_bytes": 2316288,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "lm_head",
+    "tensors": 1,
+    "params": 951582720,
+    "weight_bytes": 1903165440,
+    "scale_bytes": 0,
+    "total_bytes": 1903165440,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "always when logits are needed (row tiles of 128 rows, never cached)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": "not cached (tiles evaluated then released)",
+     "float32_compute": "not cached"
+    }
+   },
+   {
+    "component": "mtp.attention_mla",
+    "tensors": 10,
+    "params": 165019648,
+    "weight_bytes": 165019648,
+    "scale_bytes": 40384,
+    "total_bytes": 165060032,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.dsa_indexer",
+    "tensors": 7,
+    "params": 9371904,
+    "weight_bytes": 9568768,
+    "scale_bytes": 2240,
+    "total_bytes": 9571008,
+    "stored_dtypes": "BF16,F32,F8_E4M3",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2,
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "BF16": 4,
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.eh_proj",
+    "tensors": 1,
+    "params": 75497472,
+    "weight_bytes": 150994944,
+    "scale_bytes": 0,
+    "total_bytes": 150994944,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.enorm",
+    "tensors": 1,
+    "params": 6144,
+    "weight_bytes": 12288,
+    "scale_bytes": 0,
+    "total_bytes": 12288,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.hnorm",
+    "tensors": 1,
+    "params": 6144,
+    "weight_bytes": 12288,
+    "scale_bytes": 0,
+    "total_bytes": 12288,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.layer_norms",
+    "tensors": 4,
+    "params": 14848,
+    "weight_bytes": 29696,
+    "scale_bytes": 0,
+    "total_bytes": 29696,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.routed_experts",
+    "tensors": 1536,
+    "params": 9663676416,
+    "weight_bytes": 9663676416,
+    "scale_bytes": 2359296,
+    "total_bytes": 9666035712,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.router",
+    "tensors": 2,
+    "params": 1573120,
+    "weight_bytes": 3146752,
+    "scale_bytes": 0,
+    "total_bytes": 3146752,
+    "stored_dtypes": "BF16,F32",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2,
+      "F32": 4
+     },
+     "float32_compute": {
+      "BF16": 4,
+      "F32": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.shared_expert",
+    "tensors": 6,
+    "params": 37748736,
+    "weight_bytes": 37748736,
+    "scale_bytes": 9216,
+    "total_bytes": 37757952,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "mtp.shared_head.norm",
+    "tensors": 1,
+    "params": 6144,
+    "weight_bytes": 12288,
+    "scale_bytes": 0,
+    "total_bytes": 12288,
+    "stored_dtypes": "BF16",
+    "read_per_decode_forward": "never (MTP layer 78 not executed)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2
+     },
+     "float32_compute": {
+      "BF16": 4
+     }
+    }
+   },
+   {
+    "component": "routed_experts",
+    "tensors": 115200,
+    "params": 724775731200,
+    "weight_bytes": 724775731200,
+    "scale_bytes": 176947200,
+    "total_bytes": 724952678400,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "routed: 8 of 256 experts per MoE layer per token (union over tokens in a chunk)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   },
+   {
+    "component": "router",
+    "tensors": 150,
+    "params": 117984000,
+    "weight_bytes": 236006400,
+    "scale_bytes": 0,
+    "total_bytes": 236006400,
+    "stored_dtypes": "BF16,F32",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "BF16": 2,
+      "F32": 4
+     },
+     "float32_compute": {
+      "BF16": 4,
+      "F32": 4
+     }
+    }
+   },
+   {
+    "component": "shared_expert",
+    "tensors": 450,
+    "params": 2831155200,
+    "weight_bytes": 2831155200,
+    "scale_bytes": 691200,
+    "total_bytes": 2831846400,
+    "stored_dtypes": "F32,F8_E4M3",
+    "read_per_decode_forward": "always (every forward pass)",
+    "ram_bytes_per_param_as_implemented": {
+     "bfloat16_compute": {
+      "F32": 4,
+      "F8_E4M3": 2
+     },
+     "float32_compute": {
+      "F32": 4,
+      "F8_E4M3": 4
+     }
+    }
+   }
+  ],
+  "per_layer_examples": [
+   {
+    "layer": 0,
+    "mlp": "dense",
+    "indexer": "full",
+    "always_bytes_per_forward": 401208448,
+    "routed_bytes_per_token": 0,
+    "by_component": {
+     "attention_mla": 165060032,
+     "dense_mlp": 226547712,
+     "dsa_indexer": 9571008,
+     "layer_norms": 29696
+    }
+   },
+   {
+    "layer": 3,
+    "mlp": "sparse",
+    "indexer": "shared",
+    "always_bytes_per_forward": 205994432,
+    "routed_bytes_per_token": 302063616,
+    "by_component": {
+     "attention_mla": 165060032,
+     "layer_norms": 29696,
+     "router": 3146752,
+     "shared_expert": 37757952
+    }
+   },
+   {
+    "layer": 4,
+    "mlp": "sparse",
+    "indexer": "shared",
+    "always_bytes_per_forward": 205994432,
+    "routed_bytes_per_token": 302063616,
+    "by_component": {
+     "attention_mla": 165060032,
+     "layer_norms": 29696,
+     "router": 3146752,
+     "shared_expert": 37757952
+    }
+   }
+  ],
+  "one_expert_bytes": {
+   "official_fp8_incl_f32_block_scales": 37757952,
+   "int4_sidecar_affine_g64_f32_scale_bias": 23592960,
+   "bf16_decoded_ram": 75497472,
+   "fp32_decoded_ram": 150994944
+  },
+  "per_token_decode_no_cache": {
+   "official_fp8": {
+    "always_active_bytes_per_forward": 18728675904,
+    "routed_bytes_per_token": 22654771200,
+    "total_bytes_per_token": 41383447104
+   },
+   "sidecar_experts_int4_g64": {
+    "always_active_bytes_per_forward": 18728675904,
+    "routed_bytes_per_token": 14155776000,
+    "total_bytes_per_token": 32884451904
+   },
+   "sidecar_mixed_experts_int4_linear_int8_g64": {
+    "always_active_bytes_per_forward": 19796953536,
+    "routed_bytes_per_token": 14155776000,
+    "total_bytes_per_token": 33952729536
+   },
+   "sidecar_mixed_experts_int4_linear_int4_g64": {
+    "always_active_bytes_per_forward": 11702602176,
+    "routed_bytes_per_token": 14155776000,
+    "total_bytes_per_token": 25858378176
+   }
+  },
+  "per_token_decode_notes": [
+   "always-active includes attention(78), DSA indexer(21 full layers), norms, router(75), shared expert(75), dense MLP(3), final norm, lm_head (BF16, tiled, never cached), 1 embedding row",
+   "sidecar variants are NON-EXACT (affine round-to-nearest requantization of dequantized FP8); bytes are as implemented: uint32-packed weights + F32 scale + F32 bias per group of 64",
+   "mixed scope converts lm_head, q_a/q_b/kv_a/o_proj, shared and dense MLP; keeps embed_tokens, indexer.*, mlp.gate.*, kv_b_proj original; default linear_bits=8 makes always-active LARGER than FP8 (1.125 vs ~1.0002 B/param)"
+  ],
+  "mtp_draft_bytes_per_draft_token_no_cache": {
+   "total": 2571838592,
+   "of_which_lm_head": 1903165440,
+   "of_which_8_routed_experts": 302063616
+  },
+  "cross_check_theoretical_glm_json": {
+   "repo_fp8_original_approx_bytes_per_token": 41372848128,
+   "exact_bytes_per_token": 41383447104,
+   "gap_bytes": 10598976,
+   "gap_decomposition": {
+    "non_expert_fp8_scales": 4054080,
+    "layer_norms_bf16": 2316288,
+    "indexer_weights_proj_counted_1B_instead_of_2B": 4128768,
+    "indexer_k_norm_bf16": 10752,
+    "router_bias_f32": 76800,
+    "embedding_row_bf16": 12288
+   },
+   "routed_active_bytes_match": true,
+   "expert_storage_bytes_match": true,
+   "mixed_variants_gap_bytes": 6871488,
+   "mixed_gap_decomposition": {
+    "kv_b_and_indexer_fp8_scales(retained)": 326592,
+    "layer_norms": 2316288,
+    "weights_proj_extra": 4128768,
+    "k_norm": 10752,
+    "router_bias": 76800,
+    "emb_row": 12288
+   },
+   "latent_kv_bytes_per_token_match": true
+  },
+  "latent_kv": {
+   "bytes_per_token_bf16": 95232,
+   "bytes_4096_tokens": 390070272,
+   "growth_policy": "reallocate+copy every 128 tokens (attention.py LatentKV.append)"
+  },
+  "read_plan_per_decode_token_official_fp8_no_cache": {
+   "preads_per_token": 6669,
+   "size_classes_count": {
+    "<=64KiB": 2897,
+    "64KiB-4MiB": 1405,
+    "4-32MiB": 2280,
+    ">32MiB": 87
+   },
+   "size_classes_bytes": {
+    "<=64KiB": 12012096,
+    "64KiB-4MiB": 2439905280,
+    "4-32MiB": 30400315392,
+    ">32MiB": 8531214336
+   },
+   "scale_reads": 2466,
+   "lm_head_tiles": 1210,
+   "lm_head_tile_bytes": 1572864,
+   "main_thread_sync_points": {
+    "mx.eval after attention (per layer)": 78,
+    "mx.eval after MLP (per layer)": 78,
+    "router readback np.asarray(ids) (per MoE layer)": 75,
+    "mx.eval(out) per routed expert": 600,
+    "lm_head: mx.eval(tile conversion)+mx.eval(y) per tile": 2420,
+    "embedding mx.eval x2": 2,
+    "final mx.eval(logits)": 1,
+    "KV buffers mx.eval per layer": 78,
+    "token .item()": 1
+   },
+   "main_thread_sync_total": 3333,
+   "blocking_weight_waits_no_cache": 2992,
+   "get_calls_per_token": 2992
+  },
+  "layout": {
+   "shards_per_moe_layer": 3,
+   "shard_size_GB_median": 5.363339104,
+   "experts_with_contiguous_gate_up_down": "254-256 of 256 per layer (lexicographic expert order 0,1,10,100,...)",
+   "weight_to_scale_distance_MB_median": 2424.5,
+   "consequence": "each FP8 matrix = 1 large sequential pread + 1 tiny (<=24 KiB) distant pread; coalescing cannot merge them (gap > 0)"
+  }
+ },
+ "qwen3_8_2_4t_a95b": {
+  "config": {
+   "num_hidden_layers": 92,
+   "hidden_size": 8192,
+   "num_experts": 512,
+   "num_experts_per_tok": 10,
+   "moe_intermediate_size": 2048,
+   "shared_expert_intermediate_size": 2048,
+   "num_attention_heads": 64,
+   "num_key_value_heads": 4,
+   "head_dim": 256,
+   "linear_num_key_heads": 16,
+   "linear_num_value_heads": 128,
+   "linear_key_head_dim": 128,
+   "linear_value_head_dim": 128,
+   "linear_conv_kernel_dim": 4,
+   "vocab_size": 248320,
+   "mtp_num_hidden_layers": 1,
+   "output_gate_type": "swish",
+   "mamba_ssm_dtype": "float32",
+   "linear_attention_layers": 69,
+   "full_attention_layers": 23
+  },
+  "bf16": {
+   "checkpoint_total_tensor_bytes": 4892365451008,
+   "fits_2TB_disk": false,
+   "components": [
+    {
+     "component": "embedding",
+     "tensors": 1,
+     "params": 2034237440,
+     "weight_bytes": 4068474880,
+     "scale_bytes": 0,
+     "total_bytes": 4068474880,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "selected rows only",
+     "ram_bytes_per_param_as_implemented": "not cached"
+    },
+    {
+     "component": "final_norm",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "gated_deltanet",
+     "tensors": 621,
+     "params": 30248707968,
+     "weight_bytes": 60497415936,
+     "scale_bytes": 0,
+     "total_bytes": 60497415936,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "gated_full_attention",
+     "tensors": 138,
+     "params": 9646910976,
+     "weight_bytes": 19293821952,
+     "scale_bytes": 0,
+     "total_bytes": 19293821952,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "layer_norms",
+     "tensors": 184,
+     "params": 1507328,
+     "weight_bytes": 3014656,
+     "scale_bytes": 0,
+     "total_bytes": 3014656,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "lm_head",
+     "tensors": 1,
+     "params": 2034237440,
+     "weight_bytes": 4068474880,
+     "scale_bytes": 0,
+     "total_bytes": 4068474880,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always when logits needed (row tiles, never cached)",
+     "ram_bytes_per_param_as_implemented": "not cached"
+    },
+    {
+     "component": "mtp.fc",
+     "tensors": 1,
+     "params": 134217728,
+     "weight_bytes": 268435456,
+     "scale_bytes": 0,
+     "total_bytes": 268435456,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.gated_full_attention",
+     "tensors": 6,
+     "params": 419430912,
+     "weight_bytes": 838861824,
+     "scale_bytes": 0,
+     "total_bytes": 838861824,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.layer_norms",
+     "tensors": 2,
+     "params": 16384,
+     "weight_bytes": 32768,
+     "scale_bytes": 0,
+     "total_bytes": 32768,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.norm",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.pre_fc_norm_embedding",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.pre_fc_norm_hidden",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.routed_experts",
+     "tensors": 2,
+     "params": 25769803776,
+     "weight_bytes": 51539607552,
+     "scale_bytes": 0,
+     "total_bytes": 51539607552,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.router",
+     "tensors": 1,
+     "params": 4194304,
+     "weight_bytes": 8388608,
+     "scale_bytes": 0,
+     "total_bytes": 8388608,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.shared_expert",
+     "tensors": 3,
+     "params": 50331648,
+     "weight_bytes": 100663296,
+     "scale_bytes": 0,
+     "total_bytes": 100663296,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "mtp.shared_expert_gate",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "routed_experts",
+     "tensors": 184,
+     "params": 2370821947392,
+     "weight_bytes": 4741643894784,
+     "scale_bytes": 0,
+     "total_bytes": 4741643894784,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "routed: 10 of 512 experts per layer per token",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "router",
+     "tensors": 92,
+     "params": 385875968,
+     "weight_bytes": 771751936,
+     "scale_bytes": 0,
+     "total_bytes": 771751936,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "shared_expert",
+     "tensors": 276,
+     "params": 4630511616,
+     "weight_bytes": 9261023232,
+     "scale_bytes": 0,
+     "total_bytes": 9261023232,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    },
+    {
+     "component": "shared_expert_gate",
+     "tensors": 92,
+     "params": 753664,
+     "weight_bytes": 1507328,
+     "scale_bytes": 0,
+     "total_bytes": 1507328,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": {
+      "bfloat16_compute": 2,
+      "float32_compute": 4
+     }
+    }
+   ],
+   "params_main_excl_mtp": 2419804697984,
+   "params_incl_mtp": 2446182725504,
+   "one_expert_params": 50331648,
+   "one_expert_bytes": 100663296,
+   "expert_storage": "fused 3D banks gate_up_proj[512,4096,8192] and down_proj[512,8192,2048] per layer; per-expert slice contiguous (64 MiB + 32 MiB)",
+   "per_token_decode_no_cache": {
+    "always_active_bytes_per_forward": 93897042688,
+    "routed_bytes_per_token": 92610232320,
+    "total_bytes_per_token": 186507275008
+   },
+   "always_active_params": 46948521344,
+   "routed_params_per_token": 46305116160,
+   "mtp_draft_bytes_per_draft_token_no_cache": 6291571712
+  },
+  "nvfp4_modelopt": {
+   "checkpoint_total_tensor_bytes": 1444420107432,
+   "fits_2TB_disk": true,
+   "components": [
+    {
+     "component": "embedding",
+     "tensors": 1,
+     "params": 2034237440,
+     "weight_bytes": 4068474880,
+     "scale_bytes": 0,
+     "total_bytes": 4068474880,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "selected rows only",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "final_norm",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "gated_deltanet",
+     "tensors": 1311,
+     "params": 30248707968,
+     "weight_bytes": 30254386944,
+     "scale_bytes": 2760,
+     "total_bytes": 30254389704,
+     "stored_dtypes": "BF16,F32,F8_E4M3",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "gated_full_attention",
+     "tensors": 322,
+     "params": 9646910976,
+     "weight_bytes": 9646922752,
+     "scale_bytes": 736,
+     "total_bytes": 9646923488,
+     "stored_dtypes": "BF16,F32,F8_E4M3",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "layer_norms",
+     "tensors": 184,
+     "params": 1507328,
+     "weight_bytes": 3014656,
+     "scale_bytes": 0,
+     "total_bytes": 3014656,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "lm_head",
+     "tensors": 1,
+     "params": 2034237440,
+     "weight_bytes": 4068474880,
+     "scale_bytes": 0,
+     "total_bytes": 4068474880,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always when logits needed (row tiles, never cached)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.fc",
+     "tensors": 1,
+     "params": 134217728,
+     "weight_bytes": 268435456,
+     "scale_bytes": 0,
+     "total_bytes": 268435456,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.gated_full_attention",
+     "tensors": 6,
+     "params": 419430912,
+     "weight_bytes": 838861824,
+     "scale_bytes": 0,
+     "total_bytes": 838861824,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.layer_norms",
+     "tensors": 2,
+     "params": 16384,
+     "weight_bytes": 32768,
+     "scale_bytes": 0,
+     "total_bytes": 32768,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.norm",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.pre_fc_norm_embedding",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.pre_fc_norm_hidden",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.routed_experts",
+     "tensors": 1536,
+     "params": 25769803776,
+     "weight_bytes": 51539607552,
+     "scale_bytes": 0,
+     "total_bytes": 51539607552,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.router",
+     "tensors": 1,
+     "params": 4194304,
+     "weight_bytes": 8388608,
+     "scale_bytes": 0,
+     "total_bytes": 8388608,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.shared_expert",
+     "tensors": 3,
+     "params": 50331648,
+     "weight_bytes": 100663296,
+     "scale_bytes": 0,
+     "total_bytes": 100663296,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "mtp.shared_expert_gate",
+     "tensors": 1,
+     "params": 8192,
+     "weight_bytes": 16384,
+     "scale_bytes": 0,
+     "total_bytes": 16384,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "never (MTP not executed)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "routed_experts",
+     "tensors": 565248,
+     "params": 1185410973696,
+     "weight_bytes": 1185410973696,
+     "scale_bytes": 148177502208,
+     "total_bytes": 1333588475904,
+     "stored_dtypes": "F32,F8_E4M3,U8",
+     "read_per_decode_forward": "routed: 10 of 512 experts per layer per token",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "router",
+     "tensors": 92,
+     "params": 385875968,
+     "weight_bytes": 771751936,
+     "scale_bytes": 0,
+     "total_bytes": 771751936,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "shared_expert",
+     "tensors": 276,
+     "params": 4630511616,
+     "weight_bytes": 9261023232,
+     "scale_bytes": 0,
+     "total_bytes": 9261023232,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    },
+    {
+     "component": "shared_expert_gate",
+     "tensors": 92,
+     "params": 753664,
+     "weight_bytes": 1507328,
+     "scale_bytes": 0,
+     "total_bytes": 1507328,
+     "stored_dtypes": "BF16",
+     "read_per_decode_forward": "always (every forward pass)",
+     "ram_bytes_per_param_as_implemented": "not executable by the engine (normalize_qwen_config rejects quantization_config)"
+    }
+   ],
+   "expert_format": "per-expert tensors: weight U8 (2 FP4 E2M1 per byte), weight_scale F8_E4M3 per 16 values, weight_scale_2 F32 per tensor, input_scale F32 per tensor; W4A4 (activations FP4 group 16) per config_groups.group_1",
+   "projection_format": "linear_attn in_proj_qkv/z/a/b, out_proj and self_attn q/k/v/o: F8_E4M3 weight + F32 per-tensor weight_scale + static F32 input_scale (W8A8); conv1d stored BF16 despite FP8 entry in quantized_layers",
+   "unquantized": "embed_tokens, lm_head, router, shared experts, shared_expert_gate, norms, A_log, dt_bias, conv1d, entire MTP block (BF16); kv_cache_scheme FP8 static",
+   "one_expert_bytes": 28311576,
+   "bytes_per_param_expert": 0.5625004768371582,
+   "per_token_decode_no_cache": {
+    "always_active_bytes_per_forward": 54007117992,
+    "routed_bytes_per_token": 26046649920,
+    "total_bytes_per_token": 80053767912
+   },
+   "layout": {
+    "files_holding_one_layer_experts": 192,
+    "experts_split_across_files": "508-512 of 512",
+    "in_file_order": "grouped by dtype: F32 scalars, then F8 scales, then U8 payloads"
+   },
+   "equivalence": "NOT the original model: lossy NVIDIA quantization with activation quantization semantics; engine cannot execute it"
+  },
+  "state": {
+   "gated_deltanet_recurrent_fp32_bytes": 578813952,
+   "conv_state_bf16_bytes": 11304960,
+   "full_attention_kv_bytes_per_token_bf16": 94208,
+   "snapshot_accounting": "QwenSession.snapshot() charges the whole current state again; requires kv_bytes >= ~2x state",
+   "first_failing_kv_budget_MiB_tested": [
+    768,
+    1100
+   ],
+   "first_passing_kv_budget_MiB_tested": 1200
+  }
+ },
+ "ram_per_cached_param_as_implemented": {
+  "glm_fp8_weight_bfloat16_compute": 2,
+  "glm_fp8_weight_float32_compute": 4,
+  "glm_bf16_tensor_bfloat16_compute": 2,
+  "glm_bf16_tensor_float32_compute": 4,
+  "f32_tensors": 4,
+  "sidecar_int4_g64": 0.625,
+  "sidecar_int8_g64": 1.125,
+  "qwen_bf16_bfloat16_compute": 2,
+  "qwen_bf16_float32_compute": 4,
+  "reference_native_fp8_with_128x128_f32_scales": 1.000244140625,
+  "reference_native_nvfp4": 0.5625004768371582,
+  "not_cached": [
+   "lm_head tiles",
+   "embedding rows",
+   "FP8 scale tensors (folded into the decoded matrix)"
+  ]
+ },
+ "weight_budget_capacity": {
+  "9e9_bytes": {
+   "glm_routed_experts_bf16_decoded": 119,
+   "glm_routed_experts_fp32_decoded": 59,
+   "glm_routed_experts_native_fp8_with_scales": 238,
+   "glm_routed_experts_int4_sidecar": 381,
+   "glm_routed_experts_total_main_model": 19200,
+   "glm_fraction_always_active_cached_path_bf16_decoded": 0.26949105325347883,
+   "glm_fraction_always_active_native_incl_head": 0.48054651840484963,
+   "qwen_routed_experts_bf16": 89,
+   "qwen_routed_experts_nvfp4_native": 317,
+   "qwen_routed_experts_total": 47104,
+   "qwen_fraction_always_active_bf16": 0.09584966408266014,
+   "qwen_fraction_always_active_nvfp4_native": 0.16664470045102495
+  },
+  "10e9_bytes": {
+   "glm_routed_experts_bf16_decoded": 132,
+   "glm_routed_experts_fp32_decoded": 66,
+   "glm_routed_experts_native_fp8_with_scales": 264,
+   "glm_routed_experts_int4_sidecar": 423,
+   "glm_routed_experts_total_main_model": 19200,
+   "glm_fraction_always_active_cached_path_bf16_decoded": 0.2994345036149765,
+   "glm_fraction_always_active_native_incl_head": 0.5339405760053885,
+   "qwen_routed_experts_bf16": 99,
+   "qwen_routed_experts_nvfp4_native": 353,
+   "qwen_routed_experts_total": 47104,
+   "qwen_fraction_always_active_bf16": 0.10649962675851127,
+   "qwen_fraction_always_active_nvfp4_native": 0.1851607782789166
+  },
+  "auto_config_cache_bytes_16GiB_mac": {
+   "available_4_GiB": "Not enough currently available memory for inference",
+   "available_6_GiB": 1030792151,
+   "available_8_GiB": 2061584302,
+   "available_10_GiB": 3092376453,
+   "available_12_GiB": 4123168604,
+   "available_14_GiB": 4947802324
+  },
+  "auto_config_this_mac_observations": [
+   {
+    "available_GiB": 4.52,
+    "cache_MiB": 257.3,
+    "io_MiB": 53.6,
+    "kv_MiB": 80.4,
+    "workspace_MiB": 107.2,
+    "max_tensor_MiB": 53.6,
+    "note": "first observation (4 concurrent agents)"
+   },
+   {
+    "available_GiB": 5.78,
+    "available_after_GiB": 5.78,
+    "cache_MiB": 874.3,
+    "io_MiB": 182.1,
+    "kv_MiB": 273.2,
+    "workspace_MiB": 364.3,
+    "max_tensor_MiB": 182.1,
+    "note": "second observation"
+   }
+  ]
+ },
+ "simulations_and_measurements": {
+  "evidence_labels": {
+   "header": "exact from safetensors headers",
+   "code_exec": "engine pure-Python component executed on this Mac",
+   "synthetic": "synthetic trace/assumed distribution, provisional",
+   "model": "analytical model under stated assumption",
+   "proxy": "NumPy proxy of an MLX op chain, not MLX"
+  },
+  "cache_policy_replay": {
+   "evidence": "code_exec + synthetic",
+   "engine_class": "airllm.nextgen.cache.WeightCache",
+   "trace": "exact get() order of runtime.forward/DSAAttention/SparseMLP for one decode token (2992 calls), decoded sizes = NativeWeights.estimate (bf16), 20 warm-up + 50 measured tokens",
+   "routing_models": {
+    "uniform": "8 of 256 uniform per layer per token, independent",
+    "zipf": "popularity ~1/rank per layer (random permutation), sampled without replacement"
+   },
+   "metric": "SSD bytes saved per token (GB) in steady state",
+   "results": [
+    {
+     "routing": "uniform",
+     "capacity_GiB": 4.6,
+     "lru": 0.0,
+     "slru": 0.0,
+     "lfu": 0.9214075430399999,
+     "cost": 0.00013528064,
+     "belady_furthest_use": 2.484441024,
+     "static_pin_always_active_bf16": 2.593110144,
+     "static_pin_always_active_native_fp8": 4.93921239
+    },
+    {
+     "routing": "uniform",
+     "capacity_GiB": 9.0,
+     "lru": 0.0,
+     "slru": 0.0,
+     "lfu": 2.70779261568,
+     "cost": 0.00754419712,
+     "belady_furthest_use": 4.869056064,
+     "static_pin_always_active_bf16": 4.95612864,
+     "static_pin_always_active_native_fp8": 9.663676416
+    },
+    {
+     "routing": "zipf",
+     "capacity_GiB": 4.6,
+     "lru": 0.0,
+     "slru": 0.0,
+     "lfu": 1.71462601472,
+     "cost": 0.0,
+     "belady_furthest_use": 2.489944896,
+     "static_pin_always_active_bf16": 2.593110144,
+     "static_pin_always_active_native_fp8": 4.93921239
+    },
+    {
+     "routing": "zipf",
+     "capacity_GiB": 9.0,
+     "lru": 0.0,
+     "slru": 0.0,
+     "lfu": 2.6484859136,
+     "cost": 0.0028730367999999997,
+     "belady_furthest_use": 4.87229140736,
+     "static_pin_always_active_bf16": 4.95612864,
+     "static_pin_always_active_native_fp8": 9.663676416
+    }
+   ],
+   "reference_strategies": "static_pin = deterministic pinning of always-active tensors; native_fp8 requires keeping FP8 resident with fused dequant-matmul (not implemented)"
+  },
+  "auto_config": {
+   "evidence": "code_exec",
+   "simulated_16GiB_total": {
+    "4": {
+     "error": "Not enough currently available memory for inference"
+    },
+    "6": {
+     "cache_bytes": 1030792151,
+     "io_bytes": 214748364,
+     "kv_bytes": 322122547,
+     "workspace_bytes": 429496729,
+     "reserve_bytes": 4294967296,
+     "max_tensor_bytes": 214748364
+    },
+    "8": {
+     "cache_bytes": 2061584302,
+     "io_bytes": 402653184,
+     "kv_bytes": 644245094,
+     "workspace_bytes": 858993459,
+     "reserve_bytes": 4294967296,
+     "max_tensor_bytes": 268435456
+    },
+    "10": {
+     "cache_bytes": 3092376453,
+     "io_bytes": 402653184,
+     "kv_bytes": 805306368,
+     "workspace_bytes": 1073741824,
+     "reserve_bytes": 4294967296,
+     "max_tensor_bytes": 268435456
+    },
+    "12": {
+     "cache_bytes": 4123168604,
+     "io_bytes": 402653184,
+     "kv_bytes": 805306368,
+     "workspace_bytes": 1073741824,
+     "reserve_bytes": 4294967296,
+     "max_tensor_bytes": 268435456
+    },
+    "14": {
+     "cache_bytes": 4947802324,
+     "io_bytes": 402653184,
+     "kv_bytes": 805306368,
+     "workspace_bytes": 1073741824,
+     "reserve_bytes": 4294967296,
+     "max_tensor_bytes": 268435456
+    }
+   },
+   "largest_decoded_non_tiled_matrix_MiB": {
+    "glm_bf16_o_proj": 192.0,
+    "glm_fp32_o_proj": 384.0,
+    "glm_fp32_dense_mlp": 288.0,
+    "qwen_bf16_q_proj": 512.0,
+    "qwen_bf16_in_proj_qkv": 320.0,
+    "qwen_fp32_q_proj": 1024.0
+   },
+   "rule": "NativeWeights.get raises MemoryError if estimate > max_tensor_bytes (= min(256 MiB, 10% usable)); no row-tiling except lm_head",
+   "this_mac_observations": [
+    {
+     "available_GiB": 4.52,
+     "cache_MiB": 257.3,
+     "io_MiB": 53.6,
+     "kv_MiB": 80.4,
+     "workspace_MiB": 107.2,
+     "max_tensor_MiB": 53.6,
+     "note": "first observation (4 concurrent agents)"
+    },
+    {
+     "available_GiB": 5.78,
+     "available_after_GiB": 5.78,
+     "cache_MiB": 874.3,
+     "io_MiB": 182.1,
+     "kv_MiB": 273.2,
+     "workspace_MiB": 364.3,
+     "max_tensor_MiB": 182.1,
+     "note": "second observation"
+    }
+   ]
+  },
+  "qwen_session_snapshot": {
+   "evidence": "code_exec (QwenSession with real Qwen3.8 state sizes, fake arrays)",
+   "results": {
+    "805306368": [
+     [
+      0,
+      "ok",
+      591626240,
+      591626240
+     ],
+     [
+      1,
+      "MemoryError: Qwen rollback snapshot exceeds kv_bytes",
+      591626240,
+      591626240
+     ]
+    ],
+    "1153433600": [
+     [
+      0,
+      "ok",
+      591626240,
+      591626240
+     ],
+     [
+      1,
+      "MemoryError: Qwen rollback snapshot exceeds kv_bytes",
+      591626240,
+      591626240
+     ]
+    ],
+    "1258291200": [
+     [
+      0,
+      "ok",
+      591626240,
+      591626240
+     ],
+     [
+      1,
+      "ok",
+      591720448,
+      1183346688
+     ],
+     [
+      2,
+      "ok",
+      591814656,
+      1183535104
+     ]
+    ]
+   }
+  },
+  "qwen_router_bf16_tie_monte_carlo": {
+   "evidence": "synthetic (Gaussian logits, 20000 draws per sigma, BF16 rounding via ml_dtypes)",
+   "rows": [
+    {
+     "logit_sigma": 0.5,
+     "p_tie_per_layer": 0.1377,
+     "p_at_least_one_tie_per_token_92_layers": 0.9999987961523723,
+     "expected_tokens_before_abort": 1.0000012038490769
+    },
+    {
+     "logit_sigma": 1.0,
+     "p_tie_per_layer": 0.1392,
+     "p_at_least_one_tie_per_token_92_layers": 0.9999989743297338,
+     "expected_tokens_before_abort": 1.000001025671318
+    },
+    {
+     "logit_sigma": 2.0,
+     "p_tie_per_layer": 0.1391,
+     "p_at_least_one_tie_per_token_92_layers": 0.9999989633094989,
+     "expected_tokens_before_abort": 1.000001036691576
+    },
+    {
+     "logit_sigma": 4.0,
+     "p_tie_per_layer": 0.13835,
+     "p_at_least_one_tie_per_token_92_layers": 0.9999988768387899,
+     "expected_tokens_before_abort": 1.0000011231624717
+    }
+   ],
+   "fp32_logits_p_tie": 0.0,
+   "engine_behaviour": "qwen_moe.qwen_route raises ValueError on exact tie between k-th and (k+1)-th probability"
+  },
+  "fp8_dequant_proxy": {
+   "evidence": "proxy (NumPy single thread on this M5 CPU; MLX CPU kernels not measurable here)",
+   "matrix": "2048x6144 FP8 (one expert gate_proj)",
+   "numpy_engine_chain_s": 0.07728504099941347,
+   "numpy_blocked_chain_s": 0.024650333001773106,
+   "engine_chain_Gparam_per_s": 0.1628117399859501,
+   "blocked_chain_Gparam_per_s": 0.5104560656075076,
+   "bitwise_identical_outputs": true,
+   "engine_chain_transient_bytes_per_param_est": 19,
+   "offsetcheckpoint_small_read_us_per_call_warm": 8.24516675038467,
+   "op_breakdown_ms": {
+    "astype_int32": 4.110458001377992,
+    "lut_gather_int32_index": 17.75762499892153,
+    "lut_gather_uint8_index": 17.58187499945052,
+    "scale_full_gather": 48.43162500037579,
+    "multiply_f32": 4.4226249992789235,
+    "astype_bf16_ml_dtypes": 3.2583339998382144,
+    "memcpy_uint8_copy": 0.7848339992051478
+   }
+  },
+  "prefill_chunk_model": {
+   "evidence": "model (uniform independent routing; real routing is correlated and gives smaller unions)",
+   "rows": [
+    {
+     "prompt_tokens": 128,
+     "chunk": 16,
+     "forwards": 8,
+     "bytes_TB": 2.44643818216034,
+     "bytes_per_prompt_token_GB": 19.112798298127654
+    },
+    {
+     "prompt_tokens": 128,
+     "chunk": 64,
+     "forwards": 2,
+     "bytes_TB": 1.295401650574514,
+     "bytes_per_prompt_token_GB": 10.120325395113392
+    },
+    {
+     "prompt_tokens": 128,
+     "chunk": 256,
+     "forwards": 1,
+     "bytes_TB": 0.7312260359193252,
+     "bytes_per_prompt_token_GB": 5.712703405619728
+    },
+    {
+     "prompt_tokens": 128,
+     "chunk": 128,
+     "forwards": 1,
+     "bytes_TB": 0.7312260359193252,
+     "bytes_per_prompt_token_GB": 5.712703405619728
+    },
+    {
+     "prompt_tokens": 512,
+     "chunk": 16,
+     "forwards": 32,
+     "bytes_TB": 9.78004323232136,
+     "bytes_per_prompt_token_GB": 19.101646938127654
+    },
+    {
+     "prompt_tokens": 512,
+     "chunk": 64,
+     "forwards": 8,
+     "bytes_TB": 5.175897105978056,
+     "bytes_per_prompt_token_GB": 10.10917403511339
+    },
+    {
+     "prompt_tokens": 512,
+     "chunk": 256,
+     "forwards": 2,
+     "bytes_TB": 1.4850377163583999,
+     "bytes_per_prompt_token_GB": 2.9004642897624997
+    },
+    {
+     "prompt_tokens": 512,
+     "chunk": 512,
+     "forwards": 1,
+     "bytes_TB": 0.7436875702733208,
+     "bytes_per_prompt_token_GB": 1.4525147856900797
+    },
+    {
+     "prompt_tokens": 1024,
+     "chunk": 16,
+     "forwards": 64,
+     "bytes_TB": 19.558183299202717,
+     "bytes_per_prompt_token_GB": 19.099788378127656
+    },
+    {
+     "prompt_tokens": 1024,
+     "chunk": 64,
+     "forwards": 16,
+     "bytes_TB": 10.349891046516111,
+     "bytes_per_prompt_token_GB": 10.10731547511339
+    },
+    {
+     "prompt_tokens": 1024,
+     "chunk": 256,
+     "forwards": 4,
+     "bytes_TB": 2.9681722672768,
+     "bytes_per_prompt_token_GB": 2.8986057297624996
+    },
+    {
+     "prompt_tokens": 1024,
+     "chunk": 1024,
+     "forwards": 1,
+     "bytes_TB": 0.7436939249279945,
+     "bytes_per_prompt_token_GB": 0.7262635985624947
+    },
+    {
+     "prompt_tokens": 4096,
+     "chunk": 16,
+     "forwards": 256,
+     "bytes_TB": 78.22702370049088,
+     "bytes_per_prompt_token_GB": 19.098394458127654
+    },
+    {
+     "prompt_tokens": 4096,
+     "chunk": 64,
+     "forwards": 64,
+     "bytes_TB": 41.393854689744444,
+     "bytes_per_prompt_token_GB": 10.10592155511339
+    },
+    {
+     "prompt_tokens": 4096,
+     "chunk": 256,
+     "forwards": 16,
+     "bytes_TB": 11.8669795727872,
+     "bytes_per_prompt_token_GB": 2.8972118097624997
+    },
+    {
+     "prompt_tokens": 4096,
+     "chunk": 4096,
+     "forwards": 1,
+     "bytes_TB": 0.743731673664,
+     "bytes_per_prompt_token_GB": 0.181575115640625
+    }
+   ]
+  },
+  "verification_block_union_model": {
+   "evidence": "model (uniform independent)",
+   "rows": [
+    {
+     "tokens_per_forward_S": 1,
+     "E_union_experts_per_layer": 8.0,
+     "bytes_per_forward_GB": 41.383447104,
+     "bytes_per_token_if_all_accepted_GB": 41.383447104
+    },
+    {
+     "tokens_per_forward_S": 2,
+     "E_union_experts_per_layer": 15.75,
+     "bytes_per_forward_GB": 63.330256704,
+     "bytes_per_token_if_all_accepted_GB": 31.665128352
+    },
+    {
+     "tokens_per_forward_S": 3,
+     "E_union_experts_per_layer": 23.2578125,
+     "bytes_per_forward_GB": 84.591228504,
+     "bytes_per_token_if_all_accepted_GB": 28.197076168
+    },
+    {
+     "tokens_per_forward_S": 4,
+     "E_union_experts_per_layer": 30.531005859375,
+     "bytes_per_forward_GB": 105.18779493525,
+     "bytes_per_token_if_all_accepted_GB": 26.2969487338125
+    },
+    {
+     "tokens_per_forward_S": 5,
+     "E_union_experts_per_layer": 37.57691192626953,
+     "bytes_per_forward_GB": 125.14071866552344,
+     "bytes_per_token_if_all_accepted_GB": 25.028143733104688
+    },
+    {
+     "tokens_per_forward_S": 8,
+     "E_union_experts_per_layer": 57.42083078599535,
+     "bytes_per_forward_GB": 181.3356488503301,
+     "bytes_per_token_if_all_accepted_GB": 22.666956106291263
+    }
+   ]
+  }
+ },
+ "caveats": [
+  "No MLX/Metal execution was possible in this sandbox: all timings of the real engine are absent",
+  "Synthetic routing and Gaussian router logits are assumptions; real-routing measurements belong to the routing track",
+  "BF16 cache exactness depends on whether FP8 block scales are powers of two (not checked: no tensor payload downloaded)",
+  "NVFP4 bytes are exact for the published files, but the NVFP4 model is a lossy variant and is not executable by the engine"
+ ]
+}

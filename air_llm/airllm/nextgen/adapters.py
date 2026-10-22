@@ -7,16 +7,21 @@ from dataclasses import asdict, dataclass
 import argparse
 import json
 import math
+import numbers
 from pathlib import Path
 
 
 def validated_default_rope(config):
     """Reject unsupported scaling under either current or legacy spelling."""
-    parameters=config.get('rope_parameters') or {}
+    parameters=config.get('rope_parameters')
+    if parameters is None:parameters={}
     if not isinstance(parameters,dict):raise ValueError('rope_parameters must be an object')
     declared=[parameters[key] for key in ('rope_type','type') if key in parameters]
     if any(value!='default' for value in declared) or config.get('rope_scaling'):
         raise NotImplementedError('Only default RoPE is implemented; unsupported scaling/aliases cannot be ignored')
+    theta=parameters.get('rope_theta',config.get('rope_theta',10000.))
+    if not isinstance(theta,numbers.Real) or isinstance(theta,bool) or not math.isfinite(theta) or theta<=0:
+        raise ValueError('rope_theta must be finite and positive')
     return dict(parameters)
 
 
@@ -41,6 +46,16 @@ class ModelAdapter:
                 'has miniature floating-checkpoint validation only; full '
                 'checkpoint generation is not certified.')
         q = config.get('quantization_config') or {}
+        if self.model_type=='llama':
+            # Keep inspection aligned with this separate floating Llama path;
+            # GLM's FP8 implementation does not enable FP8 for every adapter.
+            if q or config.get('quantization'):
+                raise NotImplementedError('Next Llama accepts floating checkpoint weights only')
+            validated_default_rope(config)
+            if config.get('attention_bias') or config.get('mlp_bias') or config.get('hidden_act','silu')!='silu':
+                raise NotImplementedError('Next Llama requires bias-free SiLU layers')
+            if config.get('partial_rotary_factor',1.)!=1. or config.get('sliding_window') or config.get('pretraining_tp',1)!=1:
+                raise NotImplementedError('Next Llama requires full-head default RoPE, full causal attention and pretraining_tp=1')
         if q and not (q.get('quant_method') == 'fp8' and q.get('fmt', 'e4m3') == 'e4m3'):
             raise NotImplementedError(
                 f'Native {self.family} cannot execute quantization '
@@ -60,6 +75,17 @@ class ModelAdapter:
         if batch_size < 1 or element_bytes < 1:
             raise ValueError('batch_size and element_bytes must be positive')
         layers = int(config['num_hidden_layers'])
+        if layers<1:raise ValueError('num_hidden_layers must be positive')
+        if self.model_type=='llama':
+            heads=config['num_attention_heads'];kv_heads=config.get('num_key_value_heads',heads)
+            if any(type(value) is not int or value<1 for value in (heads,kv_heads)):
+                raise ValueError('Llama attention heads must be positive integers')
+            head_dim=config.get('head_dim',config['hidden_size']//heads)
+            if type(head_dim) is not int or head_dim<1 or head_dim%2 or heads%kv_heads:
+                raise ValueError('Invalid Llama grouped-query or rotary dimensions')
+            kv=batch_size*tokens*layers*2*kv_heads*head_dim*element_bytes
+            return {'kv_bytes':kv,'recurrent_bytes':0,'convolution_bytes':0,
+                    'payload_bytes':kv,'rollback_snapshot_bytes':0}
         if self.model_type == 'glm_moe_dsa':
             schedule = config.get('indexer_types')
             if schedule is None:
@@ -94,6 +120,8 @@ class ModelAdapter:
 
 
 ADAPTERS = {
+    'llama':ModelAdapter('llama','Llama full causal GQA','mlx-next-llama',
+                         ('full_causal_attention',),False),
     'glm_moe_dsa': ModelAdapter('glm_moe_dsa', 'GLM DSA MoE', 'mlx-next',
                                 ('latent_attention', 'dsa_indexer'), False),
     'qwen3_5_moe_text': ModelAdapter('qwen3_5_moe_text', 'Qwen hybrid MoE', None,
@@ -112,13 +140,13 @@ def get_adapter(config):
 
 
 def qwen_layer_types(config):
-    layers = int(config['num_hidden_layers'])
-    if layers < 1:
+    layers = config['num_hidden_layers']
+    if type(layers) is not int or layers < 1:
         raise ValueError('num_hidden_layers must be positive')
     schedule = config.get('layer_types')
     if schedule is None:
-        interval = int(config.get('full_attention_interval', 4))
-        if interval < 1:
+        interval = config.get('full_attention_interval', 4)
+        if type(interval) is not int or interval < 1:
             raise ValueError('full_attention_interval must be positive')
         schedule = ['full_attention' if (i + 1) % interval == 0 else 'linear_attention' for i in range(layers)]
     if len(schedule) != layers or any(x not in ('full_attention', 'linear_attention') for x in schedule):
@@ -167,9 +195,40 @@ def inspect_local_checkpoint(root, *, tokens=4096, storage_budget_bytes=2_000_00
             raise ValueError('Index total_size must be a nonnegative integer')
     if type(storage_budget_bytes) is not int or storage_budget_bytes < 0:
         raise ValueError('storage_budget_bytes must be a nonnegative integer')
+    representation={'kind':'original_safetensors','base_checkpoint_required':False,
+                    'integrity_verified':False}
+    manifest_path=root/'manifest.json'
+    if manifest_path.is_file():
+        from .lossless import PACK_FORMAT
+        manifest=json.loads(manifest_path.read_text())
+        if not isinstance(manifest,dict):raise ValueError('Checkpoint manifest must be an object')
+        if manifest.get('format')==PACK_FORMAT:
+            if manifest.get('standalone') is not True:
+                raise ValueError('A partial lossless overlay requires the original checkpoint for inspection')
+            for field in ('raw_bytes','stored_bytes','index_bytes'):
+                if type(manifest.get(field)) is not int or manifest[field]<0:
+                    raise ValueError('Lossless manifest byte counts must be nonnegative integers')
+            assets=manifest.get('assets',{})
+            if not isinstance(assets,dict) or any(not isinstance(entry,dict) or type(entry.get('bytes')) is not int or entry['bytes']<0 for entry in assets.values()):
+                raise ValueError('Invalid lossless asset inventory')
+            declared=manifest['raw_bytes']
+            representation={'kind':'lossless_standalone','base_checkpoint_required':False,
+                'declared_encoded_weight_bytes':manifest['stored_bytes'],
+                'declared_index_bytes':manifest['index_bytes'],
+                'declared_asset_bytes':sum(entry['bytes'] for entry in assets.values()),
+                'weight_files_present':(root/'weights.bin').is_file() and (root/'blocks.idx').is_file(),
+                'integrity_verified':False}
+            representation['declared_representation_bytes']=(manifest['stored_bytes']+manifest['index_bytes']+
+                representation['declared_asset_bytes']+manifest_path.stat().st_size)
+            representation['declared_representation_fits_budget']=representation['declared_representation_bytes']<=storage_budget_bytes
     quant = quantization_descriptor(config)
+    runtime_rejection=None
+    try:adapter.require_runtime(config)
+    except (NotImplementedError,ValueError) as error:runtime_rejection=str(error)
     return {'adapter': asdict(adapter), 'quantization': quant,
-            'runtime_available': adapter.runtime is not None and quant['direct_next_read'],
+            'runtime_available': runtime_rejection is None and quant['direct_next_read'],
+            'runtime_rejection_reason':runtime_rejection,
+            'storage_representation':representation,
             'generation_validated': False,
             'declared_tensor_payload_bytes': declared,
             'storage_budget_bytes': storage_budget_bytes,

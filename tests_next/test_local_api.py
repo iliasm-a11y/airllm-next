@@ -1,5 +1,6 @@
 """HTTP contract tests; stub cases do not certify model quality or performance."""
 from contextlib import contextmanager
+from collections.abc import Mapping
 from http.client import HTTPConnection
 import json
 from threading import Thread
@@ -77,6 +78,17 @@ def test_models_and_completions_contract():
         assert model.calls == [([[1, 8]], {'max_new_tokens': 4, 'temperature': 0.})]
 
 
+def test_configured_model_name_is_advertised_and_required():
+    with running(model_name='local-llama') as server:
+        status,data=request(server,'GET','/v1/models')
+        assert status==200 and data['data'][0]['id']=='local-llama'
+        assert set(data['data'][0])=={'id','object','created','owned_by'}
+        assert request(server,'POST','/v1/completions',
+            {'model':'airllm-next','prompt':'hello'})[0]==400
+        assert request(server,'POST','/v1/completions',
+            {'model':'local-llama','prompt':'hello'})[0]==200
+
+
 def test_chat_uses_local_template():
     model = ModelStub()
     with running(model) as server:
@@ -85,6 +97,52 @@ def test_chat_uses_local_template():
         assert status == 200
         assert data['choices'][0]['message'] == {'role': 'assistant', 'content': '7 2'}
         assert model.calls[0][0] == [[1, 8, 9]]
+
+
+@pytest.mark.parametrize('force_mapping',[False,True])
+def test_chat_with_real_fast_tokenizer_handles_transformers_batch_encoding(force_mapping):
+    from transformers import PreTrainedTokenizerFast
+    from tokenizers import Tokenizer
+    from tokenizers.models import WordLevel
+    from tokenizers.pre_tokenizers import Whitespace
+    vocabulary={'[PAD]':0,'[BOS]':1,'[EOS]':2,'[UNK]':3,
+                'hello':4,'assistant':5,'unused':6,'answer':7,'other':8}
+    backend=Tokenizer(WordLevel(vocabulary,unk_token='[UNK]'))
+    backend.pre_tokenizer=Whitespace()
+    tokenizer=PreTrainedTokenizerFast(tokenizer_object=backend,pad_token='[PAD]',
+        bos_token='[BOS]',eos_token='[EOS]',unk_token='[UNK]')
+    tokenizer.chat_template="{{ messages[0]['content'] }}{% if add_generation_prompt %} assistant{% endif %}"
+    messages=[{'role':'user','content':'hello'}]
+    # The pinned Transformers5.20.2 default changed to a mapping, which exposed
+    # the real trained-checkpoint API failure missed by the list-only stub.
+    assert isinstance(tokenizer.apply_chat_template(messages,tokenize=True,add_generation_prompt=True),Mapping)
+    original=tokenizer.apply_chat_template
+    def apply(*args,**kwargs):
+        assert kwargs['return_dict'] is False
+        if force_mapping:kwargs['return_dict']=True
+        return original(*args,**kwargs)
+    tokenizer.apply_chat_template=apply
+    model=ModelStub();model.tokenizer=tokenizer
+    model.config=dict(model.config,vocab_size=len(vocabulary))
+    with running(model) as server:
+        status,data=request(server,'POST','/v1/chat/completions',
+            {'model':'airllm-next','messages':messages,'max_tokens':4})
+        assert status==200,data
+        assert model.calls[0][0]==[[4,5]]
+        assert data['choices'][0]['message']['content']=='answer'
+
+
+@pytest.mark.parametrize('mask',[[],[1],[1,0],[1,1,1],[[1,1]],[1,1.0]])
+def test_chat_tokenizer_mapping_rejects_nontrivial_or_malformed_masks(mask):
+    from transformers import BatchEncoding
+    model=ModelStub();model.tokenizer=TokenizerStub()
+    model.tokenizer.apply_chat_template=lambda *args,**kwargs:BatchEncoding(
+        {'input_ids':[1,8],'attention_mask':mask})
+    with running(model) as server:
+        status,data=request(server,'POST','/v1/chat/completions',
+            {'model':'airllm-next','messages':[{'role':'user','content':'hello'}]})
+        assert status==400 and 'attention mask' in data['error']['message']
+        assert not model.calls
 
 
 def test_greedy_only_backend_rejects_sampling_as_request_error():
@@ -144,10 +202,61 @@ def test_internal_failure_does_not_expose_diagnostics():
         assert status == 500 and 'secret-path' not in json.dumps(data)
 
 
-def test_endpoint_matches_actual_tiny_glm_generation(tiny_glm, tmp_path):
-    """Real miniature GLM numerics over HTTP; no checkpoint-scale speed claim."""
+def test_duplicate_fields_fail_before_inference():
+    model=ModelStub()
+    with running(model) as server:
+        status,data=request(server,'POST','/v1/completions',
+            raw=b'{"model":"airllm-next","prompt":"hello","max_tokens":2,"max_tokens":32}')
+        assert status == 400 and 'Duplicate' in data['error']['message']
+        assert not model.calls
+
+
+@pytest.mark.parametrize('ids', [[-1],[True],[2**31],[128]])
+def test_invalid_tokenizer_ids_rejected_before_inference(ids):
+    model=ModelStub()
+    model.tokenizer=TokenizerStub()
+    model.tokenizer.encode=lambda text:ids
+    model.config=dict(model.config,vocab_size=128)
+    with running(model) as server:
+        assert request(server,'POST','/v1/completions',
+            {'model':'airllm-next','prompt':'hello'})[0] == 400
+        assert not model.calls
+
+
+@pytest.mark.parametrize('output', [[],[[8,1,7]],[[1,8]+[7]*33],[[1,8,-1]],[[1,8,True]],[[1,8],[1,8]]])
+def test_invalid_backend_output_is_not_reported_as_success(output):
+    model=ModelStub()
+    model.generate=lambda *args,**kwargs:output
+    with running(model) as server:
+        assert request(server,'POST','/v1/completions',
+            {'model':'airllm-next','prompt':'hello'})[0] == 500
+
+
+def test_memory_budget_error_leaves_server_available_for_next_request():
+    model=ModelStub()
+    original=model.generate
+    def out_of_memory(*args,**kwargs):raise MemoryError('private memory diagnostics')
+    model.generate=out_of_memory
+    with running(model) as server:
+        payload={'model':'airllm-next','prompt':'hello','max_tokens':4}
+        status,data=request(server,'POST','/v1/completions',payload)
+        assert status == 503 and 'private' not in json.dumps(data)
+        model.generate=original
+        assert request(server,'POST','/v1/completions',payload)[0] == 200
+
+
+@pytest.mark.parametrize('backend',['glm','llama'])
+def test_endpoint_matches_actual_tiny_generation(tiny_glm,tmp_path,backend):
+    """Real miniature backend numerics over HTTP; no checkpoint-scale speed claim."""
     from airllm.nextgen import AirLLMNextModel, NextConfig
     root, _ = tiny_glm
+    model_class=AirLLMNextModel
+    if backend=='llama':
+        from conftest import save_tiny
+        from airllm.nextgen import AirLLMNextLlamaModel
+        root=tmp_path/'llama'
+        save_tiny(root)
+        model_class=AirLLMNextLlamaModel
     options = NextConfig(cache_bytes=4*1024**2, io_bytes=1024**2, kv_bytes=1024**2,
         max_tensor_bytes=1024**2, reserve_bytes=0, workspace_bytes=1024**2,
         device='cpu', dtype='float32', prefill_chunk=2, max_context=128,
@@ -157,7 +266,7 @@ def test_endpoint_matches_actual_tiny_glm_generation(tiny_glm, tmp_path):
     results = Queue()
     def worker():
         try:
-            with AirLLMNextModel(root, next_config=options) as model:
+            with model_class(root,next_config=options) as model:
                 model.tokenizer = TokenizerStub()
                 expected = model.generate([[1, 8]], max_new_tokens=3).tolist()[0][2:]
                 with make_server(model, port=0, max_new_tokens=8) as server:

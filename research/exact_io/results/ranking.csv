@@ -1,0 +1,23 @@
+metric,method,value,evidence,inference_speedup_measured
+encoded_size_ratio_lower_is_better,raw,1.0,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,zlib1,0.791595600269459,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,zstd1,0.7697839148250627,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,shuffle2_zstd1,0.6739251878526475,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,palette16_numpy,0.7503754415629823,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,palette16_c_kernel,0.7503754415629823,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,palette16_c_hash,0.7503754415629823,measured Ling BF16 sample,False
+encoded_size_ratio_lower_is_better,palette16_c_alloc_hash,0.7503754415629823,measured Ling BF16 sample,False
+warm_transport_speedup_higher_is_better,offset_reference,1.0,"measured OffsetCheckpoint path, warm cache",False
+warm_transport_speedup_higher_is_better,palette_numpy_hash,0.04163799329708078,"measured OffsetCheckpoint path, warm cache",False
+warm_transport_speedup_higher_is_better,palette_c_hash,0.1291753434496191,"measured OffsetCheckpoint path, warm cache",False
+warm_transport_speedup_higher_is_better,palette_c_nohash,0.32136417062657446,"measured OffsetCheckpoint path, warm cache",False
+teacher_forced_expert_request_reduction,group_1,1.0,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_2,1.2509014993923397,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_4,1.6062480588746433,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_8,2.187210387714129,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_16,3.2476875260361417,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_32,5.321457978880646,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_64,9.420765960122996,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_128,17.524751813350267,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_256,33.616555394368795,inherited OLMoE trace replay,False
+teacher_forced_expert_request_reduction,group_512,65.6704191391755,inherited OLMoE trace replay,False

@@ -1,0 +1,117 @@
+{
+  "scope": "Complete local checkpoint, warm byte transport; no generation or external SSD claim",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "codec": "auto",
+  "block_bytes": 1048576,
+  "tile_bytes": 4194304,
+  "hash_verification": true,
+  "source_free_reader": true,
+  "tensor_count": 272,
+  "selections_per_pass": 285,
+  "source_tensor_payload_bytes": 269030016,
+  "source_weight_file_bytes": 269060552,
+  "standalone_payload_bytes": 194089363,
+  "standalone_total_bytes": 197530673,
+  "standalone_payload_ratio": 0.721441294491095,
+  "conversion_seconds": 8.668090874998597,
+  "transport_sha256": "89c73bfa20b36b9208e40787076e3c6f23317c8bfa2af174528ceefffba0c8cc",
+  "median_seconds": {
+    "original": 0.015038041001389502,
+    "standalone": 0.5874694589983847
+  },
+  "standalone_speed_ratio": 0.025597996238015244,
+  "samples": {
+    "original": [
+      {
+        "seconds": 0.015044915999169461,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.01494858300065971,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.015482625000004191,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.014886458000546554,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.014809457999945153,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.015939333999995142,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.015038041001389502,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 269030016,
+        "process_physical_read_bytes": null
+      }
+    ],
+    "standalone": [
+      {
+        "seconds": 0.5848909160013136,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5881738330026565,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5864975000004051,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5862992919974204,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5905080839984294,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5897694579980453,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      },
+      {
+        "seconds": 0.5874694589983847,
+        "requested_tensor_bytes": 269030016,
+        "encoded_file_bytes": 204006435,
+        "process_physical_read_bytes": null
+      }
+    ]
+  },
+  "process_lifetime_peak_rss_bytes": 60702720,
+  "rss_scope": "Entire benchmark process including conversion; not a per-reader memory comparison",
+  "cache_state": "Both readers warmed by integrity pass; OS page cache uncontrolled"
+}

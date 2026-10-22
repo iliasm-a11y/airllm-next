@@ -8,6 +8,7 @@ import sys
 import types
 import unittest
 from importlib.machinery import ModuleSpec
+from importlib import import_module
 from types import SimpleNamespace
 
 
@@ -20,10 +21,13 @@ def _mod(name, is_pkg=False):
 
 
 def _ensure_mlx_mocked():
-    if "mlx.core" in sys.modules and getattr(
-        sys.modules["mlx"], "__spec__", None
-    ) is not None:
+    # An installed backend may simply not have been imported yet. Replacing it
+    # with a metadata stub at collection time breaks unrelated real MLX tests.
+    try:
+        import_module('mlx.core')
         return
+    except ImportError:
+        pass
     mlx = _mod("mlx", is_pkg=True)
     core = _mod("mlx.core")
 

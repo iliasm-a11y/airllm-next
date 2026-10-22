@@ -15,7 +15,7 @@ opts=NextConfig(device='cpu',dtype='float32',load_tokenizer=False,max_context=25
 rows=[];start=perf_counter()
 with AirLLMNextModel(a.model,next_config=opts) as model:
     for i in range(a.requests):
-        t=perf_counter();out=model.generate([[1,8,9,10,11,12,13,14]],max_new_tokens=a.tokens,eos_token_id=-1)
+        t=perf_counter();out=model.generate([[1,8,9,10,11,12,13,14]],max_new_tokens=a.tokens,eos_token_id=[])
         assert out.shape[1]==8+a.tokens
         assert model.reader.cache.bytes<=opts.cache_bytes and model.reader.io.peak_bytes<=opts.io_bytes
         rows.append({'request':i,'seconds':perf_counter()-t,'rss_bytes':telemetry()['rss_bytes'],'metrics':model.metrics()})

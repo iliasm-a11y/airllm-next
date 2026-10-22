@@ -1,0 +1,65 @@
+{
+  "evidence": "measured trained BF16 expert blocks, FP32 NumPy reference arithmetic",
+  "results": [
+    {
+      "expert": "model.layers.1.mlp.experts.0",
+      "shape": [
+        4,
+        2048
+      ],
+      "weights_equal_bitwise": true,
+      "outputs_equal_bitwise": true,
+      "max_abs_difference": 0.0,
+      "singletons_equal_bitwise": true,
+      "output_sha256": "acb836d7fdcc0069b2f9c1a4f1fec24b9383b2f1fea74d01f1a126165643206f"
+    },
+    {
+      "expert": "model.layers.1.mlp.experts.127",
+      "shape": [
+        4,
+        2048
+      ],
+      "weights_equal_bitwise": true,
+      "outputs_equal_bitwise": true,
+      "max_abs_difference": 0.0,
+      "singletons_equal_bitwise": true,
+      "output_sha256": "89a794203eba20b4bfa96d52ccdb6a4abf230c3bba872a47db309b5909723f30"
+    },
+    {
+      "expert": "model.layers.10.mlp.experts.0",
+      "shape": [
+        4,
+        2048
+      ],
+      "weights_equal_bitwise": true,
+      "outputs_equal_bitwise": true,
+      "max_abs_difference": 0.0,
+      "singletons_equal_bitwise": true,
+      "output_sha256": "4b656236dab13a0cd74fd0406eb02e9a74ca3c62908585f35f127fec61986911"
+    },
+    {
+      "expert": "model.layers.19.mlp.experts.255",
+      "shape": [
+        4,
+        2048
+      ],
+      "weights_equal_bitwise": true,
+      "outputs_equal_bitwise": true,
+      "max_abs_difference": 0.0,
+      "singletons_equal_bitwise": true,
+      "output_sha256": "5c4386a08aa8104c6e49d0fb9978611f8503806d9e59284d25d9a7ef7466064b"
+    }
+  ],
+  "transport": {
+    "index_bytes": 5376,
+    "payload_bytes": 18880747,
+    "blocks": 96,
+    "io_seconds": 0.0061178740397735965,
+    "decode_and_hash_seconds": 0.00907011800154578,
+    "decoded_block_bytes": 25165824,
+    "requested_raw_bytes": 25165824
+  },
+  "whole_model_logits_validated": false,
+  "mlx_model_runtime_validated": false,
+  "limitation": "These are 4 experts of Ling-mini, not a full Ling/GLM/Qwen inference or a semantic quality evaluation."
+}

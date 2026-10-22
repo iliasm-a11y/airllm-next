@@ -1,83 +1,63 @@
-# AirLLM Next — out-of-core research engine
+# AirLLM Next 4.1.0rc1
 
-Local inference with selective safetensors reads, bounded weight/context caches,
-native MLX arithmetic and exact greedy draft verification. This branch extracts
-the verified source archive into a normal Git tree and develops its internals.
-It does not modify the official AirLLM repository.
+Local inference with selective Safetensors reads, bounded caches, native MLX
+arithmetic and optional reversible standalone storage. This is a **candidate for
+the tested configurations**, not a certification of giant models on 16 GB.
 
-**Validation boundary:** Linux CPU MLX miniature numerical tests and measured
-storage/conversion experiments are available. Full GLM-5.3, full Qwen3.8,
-M5/Metal performance and the external SSD remain unvalidated. No interactive
-trillion-parameter performance claim follows from these tests.
-
-## Changes in this branch
-
-- Exact target-verified greedy speculative blocks, GLM KV rollback, accepted-token
-  byte accounting, adaptive depth and fallback when the draft costs too much.
-- Bounded grouped offset reads, optional consecutive embedding reads, selective
-  FP8 scale tiles, and measured transfer/conversion cost cache retention.
-- Tiled resumable quantization writes, content digests and explicit integrity
-  audits, early allocation guards, and scheduler concurrency fixes.
-- Experimental streamed Qwen hybrid backend, separate from GLM, with recurrent
-  state transactions. Only independently tested floating miniature variants are
-  eligible; newer swish-gate and NVIDIA ModelOpt/NVFP4 checkpoints fail explicitly.
-- Loopback-only OpenAI-shaped non-streaming text/chat API, without remote inference.
-
-Read [the measured report](docs/OOC_REPORT_FR.md),
-[model status](docs/MODEL_STATUS.md),
-[speculative algorithm](docs/SPECULATIVE_STREAMING.md),
-[M5 installation/validation](docs/OOC_M5_GUIDE.md), and
-[local API limits](docs/OOC_API.md).
+A complete trained **SmolLM2-135M-Instruct** checkpoint has generated on the M5
+CPU and Metal GPU. Its recorded greedy sequences match independent Transformers
+results. GLM DSA and Qwen hybrid numerical/Metal tests use reduced random weights.
+**Full GLM-5.3 and Qwen3.8 remain unvalidated.**
 
 ## Install and run
 
-On native arm64 macOS:
-
 ```bash
-bash scripts/setup_next_macos.sh
-source .venv-next/bin/activate
-python -m airllm.nextgen.cli doctor
-python -m airllm.nextgen.cli inspect /Volumes/Models/GLM-5.3
-python -m airllm.nextgen.cli run /Volumes/Models/GLM-5.3 --prompt "Bonjour" --max-new-tokens 16
+AIRLLM_PYTHON=python3.12 bash scripts/setup_next_macos.sh
+export MLX_ENABLE_TF32=0
+.venv-next/bin/airllm-next doctor
+.venv-next/bin/airllm-next inspect /absolute/local/checkpoint
+.venv-next/bin/airllm-next run /absolute/local/SmolLM2-135M-Instruct \
+  --backend llama --device gpu --float32 \
+  --prompt 'The capital of France is' --max-new-tokens 16 \
+  --cache-mib 128 --io-mib 32 --kv-mib 32 --workspace-mib 128 \
+  --reserve-mib 512 --max-tensor-mib 32 --row-chunk 2048
 ```
 
-A local checkpoint and tokenizer must already exist. No command implicitly
-downloads model shards. `inspect` reads metadata and does not run inference.
-For reproducible CPU correctness validation, use `requirements-next-linux.txt`.
+Checkpoints must exist locally; model downloads are never implicit. Automatic
+configuration retains a conservative system reserve and may refuse inference
+when applications already occupy the available memory. Explicit budgets above
+were exercised on the accessible 16 GB Mac.
 
-```bash
-python -m pytest tests_next -q
-python -m pytest tests_ultra -q
-python benchmarks/benchmark_ooc.py --output io.json
-```
+MLX can use reduced-precision matrix units with float32 arrays. Set
+`MLX_ENABLE_TF32=0` before Python starts for the reference validation protocol.
 
-## Explicit optimization controls
+## Integrated functionality
 
-| Control | Behavior |
-|---|---|
-| No `--draft-model` | Ordinary autoregressive GLM generation |
-| `--draft-model /local/draft --speculative-depth 4` | Greedy proposal/target verification; compatible local draft |
-| `--no-adaptive-speculation` | Fixed speculative depth for controlled experiments |
-| `--coalesce-reads` | Opt in to grouped reads; default disabled after no warm-path gain |
-| `--no-selective-fp8-scales` | Reproduce full scale-matrix reads for comparison |
-| `--cache-policy lru/slru/lfu/cost` | Explicit cache policy, overrides saved tuning |
-| `--no-prefetch` | Disable predicted prefetch, without changing exact MoE selection |
-| `--backend qwen-experimental` | Explicit floating Qwen research backend; no full Qwen3.8 claim |
+- Separate GLM DSA, default-RoPE bias-free Llama and experimental Qwen hybrid
+  implementations; early rejection of unsupported architectures and formats.
+- Offset, row and expert reads; bounded asynchronous demand/prefetch; optional
+  coalescing; LRU/SLRU/LFU/cost caches; tiled vocabulary projection.
+- Target-verified greedy drafts or prompt lookup for GLM/Llama, adaptive depth
+  and append-only KV rollback. Numerical batch-invariance limits are explicit.
+- Lossless overlays and complete standalone packs, per-block hashes and bounded
+  local config/tokenizer assets. Quantized INT4/INT8 sidecars remain opt-in lossy
+  derivatives; they are different from FP8 and NVFP4.
+- Loopback text/chat API, diagnostic commands, controlled budgets and JSON metrics.
 
-Quantization changes the weights and is opt-in. FP8 checkpoint decoding does
-not reproduce production dynamic activation-quantization kernels. INT4 is not
-NVFP4. Read the model-status document before interpreting numerical parity.
+Compression saves storage in the measured example but slows warm reads. It is
+optional. No miniature result is extrapolated to interactive trillion-parameter
+inference.
 
-## Reproducibility and provenance
+## Documentation and evidence
 
-Raw measurements, source hashes, failed/excluded timing windows and reference
-versions live in `evidence-ooc/`. Historical input reports and old wheels remain
-under their original names; build the current source with
-`python -m pip wheel --no-deps ./air_llm -w dist-ooc`.
-The original archive SHA-256 is
-`7433255c37830b6d1603e276452154a81e67c7bdbd6eae826216230b1bb93e2d`.
-Its Git blob hash matches the public repository's source ZIP.
+- [Complete user guide](docs/USER_GUIDE.md)
+- [Candidate architecture](docs/RELEASE_ARCHITECTURE.md)
+- [Model compatibility](docs/RELEASE_COMPATIBILITY.md)
+- [Technical and scientific limits](docs/TECHNICAL_LIMITS.md)
+- [Final validation](FINAL_VALIDATION.md) and [release notes](RELEASE_NOTES.md)
 
-Apache-2.0 source notices are preserved. Model weights have their own licenses.
-The [upstream README](docs/README_UPSTREAM.md) and archived source/evidence are
-retained for technical history; their historical claims are not new validations.
+Raw results: `evidence-final/`. Original archive, earlier reports, experiments and
+wheels remain preserved. Their historical environments are distinct from this
+candidate. The [exact-I/O scientific report](research/exact_io/RAPPORT_SCIENTIFIQUE_FR.md)
+and its caveats remain available. Apache-2.0 software; model licenses are separate.
+No merge into `main` and no stable release publication.

@@ -1,0 +1,31 @@
+{
+  "evidence": "actual AirLLM WeightCache SLRU replay, unit-sized abstraction",
+  "results": [
+    {
+      "capacity_expert_units": 32,
+      "misses": 524288,
+      "hits": 0,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 64,
+      "misses": 524288,
+      "hits": 0,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 128,
+      "misses": 456945,
+      "hits": 67343,
+      "requests": 524288
+    },
+    {
+      "capacity_expert_units": 256,
+      "misses": 270568,
+      "hits": 253720,
+      "requests": 524288
+    }
+  ],
+  "excludes_attention_head_and_decoded_expansion": true,
+  "physical_io_measured": false
+}

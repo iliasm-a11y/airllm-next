@@ -73,6 +73,15 @@ class DSAAttention:
         mx=self.mx;c=self.c;B,S,_=x.shape;H=c['num_attention_heads']
         N=c['qk_nope_head_dim'];D=c['qk_rope_head_dim'];V=c['v_head_dim'];R=c['kv_lora_rank']
         theta=c['rope_parameters']['rope_theta'];offset=cache.position
+        T=offset+S;K=min(c['index_topk'],T)
+        index_heads=c['index_n_heads'] if c['indexer_types'][self.layer]=='full' else 0
+        # Bound the major temporary payloads before building the indexer graph:
+        # FP32 index/attention scores and probabilities, selected indices and
+        # gathered latent/RoPE keys. This excludes separately budgeted weights
+        # and KV banks and is deliberately conservative about live overlap.
+        workspace=4*B*S*(T*(index_heads+2)+K*(3*H+1))+B*S*K*(R+D)*x.itemsize
+        if workspace>self.r.cfg.workspace_bytes:
+            raise MemoryError('GLM attention workspace exceeds workspace_bytes; reduce prefill_chunk/context')
         qr=self.norm(self.linear(x,'q_a_proj'),'q_a_layernorm')
         q=self.linear(qr,'q_b_proj').reshape(B,S,H,N+D).transpose(0,2,1,3)
         qp=q[...,:N];qrot=rope(mx,q[...,N:],offset,theta,D)

@@ -114,12 +114,30 @@ def test_qwen_snapshot_budget_and_foreign_session(tmp_path):
         with pytest.raises(ValueError,match='another model'):model.forward([[3]],past_key_values=object())
 
 
-def test_qwen_unsupported_swish_and_modelopt_fail_before_mlx(tmp_path):
+def test_qwen_unsupported_gate_and_modelopt_fail_before_mlx(tmp_path):
     root,ref,opt=make_qwen(tmp_path);config=json.loads((root/'config.json').read_text())
-    config['output_gate_type']='swish'
-    with pytest.raises(NotImplementedError,match='swish'):normalize_qwen_config(config)
+    config['output_gate_type']='sigmoid'
+    with pytest.raises(NotImplementedError,match='DeltaNet'):normalize_qwen_config(config)
     config.pop('output_gate_type');config['quantization_config']={'quant_method':'modelopt'}
     with pytest.raises(NotImplementedError,match='ModelOpt'):normalize_qwen_config(config)
+
+
+@pytest.mark.parametrize('gate',['swish','silu'])
+@pytest.mark.parametrize('device',['cpu','gpu'])
+def test_qwen_declared_swish_is_deltanet_silu_and_preserves_official_attention(tmp_path,gate,device):
+    if device=='gpu' and not mx.metal.is_available():pytest.skip('Metal hardware unavailable')
+    root,ref,opt=make_qwen(tmp_path)
+    opt=replace(opt,device=device)
+    config=json.loads((root/'config.json').read_text());config['output_gate_type']=gate
+    (root/'config.json').write_text(json.dumps(config))
+    ids=torch.tensor([[1,8,12,5,21,3,11]])
+    with torch.inference_mode():expected=ref(ids,use_cache=True)
+    with ExperimentalQwenModel(root,opt) as model:
+        actual=model.forward(ids.numpy())
+        np.testing.assert_allclose(arr(actual.logits),expected.logits.numpy(),rtol=4e-4,atol=1e-5)
+        with torch.inference_mode():expected_next=ref(torch.tensor([[4]]),past_key_values=expected.past_key_values,use_cache=True)
+        actual_next=model.forward([[4]],past_key_values=actual.past_key_values)
+        np.testing.assert_allclose(arr(actual_next.logits),expected_next.logits.numpy(),rtol=4e-4,atol=1e-5)
 
 
 def test_qwen_split_prefill_matches_whole_block(tmp_path):

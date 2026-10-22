@@ -1,0 +1,85 @@
+[
+  {
+    "name": "GLM-5.3 FP8",
+    "evidence": "recomputed from inherited full safetensors headers",
+    "source_header_sha256": "303d17e8205b3523caea24d3fb71f818dc33aaec2309452541e6f863ee97237c",
+    "shards": 141,
+    "totals": {
+      "bytes": 755617140416,
+      "tensors": 118629,
+      "non_scale_elements": 753329940480,
+      "header_bytes": 14909904,
+      "files_bytes_including_headers": 755632050320
+    },
+    "components": {
+      "always": {
+        "stored_bytes": 18728663616,
+        "scales": 1013520,
+        "non_scale_elements": 17649705984
+      },
+      "routed": {
+        "stored_bytes": 724952678400,
+        "scales": 44236800,
+        "non_scale_elements": 724775731200
+      },
+      "embedding": {
+        "stored_bytes": 1903165440,
+        "non_scale_elements": 951582720
+      },
+      "mtp": {
+        "stored_bytes": 10032632960,
+        "scales": 602784,
+        "non_scale_elements": 9952920576
+      }
+    },
+    "main_non_scale_elements": 743377019904,
+    "checkpoint_non_scale_elements": 753329940480,
+    "active_routed_stored_bytes_per_position": 22654771200,
+    "always_stored_bytes_per_pass": 18728663616,
+    "selective_embedding_row_bytes": 12288,
+    "naive_decode_stored_bytes": 41383447104,
+    "weights_only_residency_10GB_best_case_bytes": 31383447104.0,
+    "storage_2TB_ratio_needed": 2.6468430810064913,
+    "note": "Non-scale elements include buffers. Counts are not nn.Parameter counts. No claim about runtime FP8 kernel equivalence."
+  },
+  {
+    "name": "Qwen3.8 BF16",
+    "evidence": "recomputed from inherited full safetensors headers",
+    "source_header_sha256": "b483495c4b7f477240a743128d9215cbb1f0e575778e6b914efd86561966fd5c",
+    "shards": 213,
+    "totals": {
+      "bytes": 4892365451008,
+      "tensors": 1609,
+      "non_scale_elements": 2446182725504,
+      "header_bytes": 198328,
+      "files_bytes_including_headers": 4892365649336
+    },
+    "components": {
+      "routed": {
+        "stored_bytes": 4741643894784,
+        "non_scale_elements": 2370821947392
+      },
+      "always": {
+        "stored_bytes": 93897026304,
+        "non_scale_elements": 46948513152
+      },
+      "embedding": {
+        "stored_bytes": 4068474880,
+        "non_scale_elements": 2034237440
+      },
+      "mtp": {
+        "stored_bytes": 52756055040,
+        "non_scale_elements": 26378027520
+      }
+    },
+    "main_non_scale_elements": 2419804697984,
+    "checkpoint_non_scale_elements": 2446182725504,
+    "active_routed_stored_bytes_per_position": 92610232320,
+    "always_stored_bytes_per_pass": 93897026304,
+    "selective_embedding_row_bytes": 16384,
+    "naive_decode_stored_bytes": 186507275008,
+    "weights_only_residency_10GB_best_case_bytes": 176507275008.0,
+    "storage_2TB_ratio_needed": 0.4088002051416518,
+    "note": "Non-scale elements include buffers. Counts are not nn.Parameter counts. No claim about runtime FP8 kernel equivalence."
+  }
+]

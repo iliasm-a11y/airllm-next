@@ -109,6 +109,28 @@ def test_empty_draft_still_generates_target_tokens():
     assert result.metrics['acceptance_rate'] is None
 
 
+def test_encoded_transport_bytes_remain_distinct_from_logical_weight_bytes():
+    target=ToyTarget()
+    result=greedy_speculative_generate(target,exact_draft(target),[[2,4]],12,
+        adaptive=False,bytes_read=lambda:target.bytes,
+        encoded_bytes_read=lambda:target.bytes//4)
+    metrics=result.metrics
+    assert metrics['logical_bytes']==target.bytes
+    assert metrics['encoded_file_bytes']==target.bytes//4
+    assert metrics['encoded_file_bytes_per_accepted_token']==metrics['logical_bytes_per_accepted_token']/4
+    assert metrics['decode_encoded_file_bytes_per_accepted_token']==metrics['decode_logical_bytes_per_accepted_token']/4
+
+
+def test_accepted_eos_preserves_the_lagging_cache_invariant():
+    target=ToyTarget()
+    prefix=[1,8,4];sequence=expected(target,prefix,8);eos=sequence[len(prefix)+3]
+    result=greedy_speculative_generate(target,exact_draft(target),[prefix],8,
+        adaptive=False,max_depth=4,eos_token_ids=(eos,))
+    assert result.tokens==expected(target,prefix,8,[eos])
+    assert result.cache.position==len(result.tokens)-1
+    assert result.cache.values[:result.cache.position]==result.tokens[:-1]
+
+
 @pytest.mark.parametrize('proposal', [[True], [-1], [1.2], [2**40]])
 def test_bad_draft_ids_rejected(proposal):
     with pytest.raises(ValueError, match='invalid token'):

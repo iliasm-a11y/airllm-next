@@ -1,4 +1,6 @@
 import importlib
+import json
+from pathlib import Path
 class AutoConfig:
     """Load Transformers config support only when upstream dispatch needs it."""
     @staticmethod
@@ -70,9 +72,16 @@ class AutoModel:
             if inputs: raise TypeError('Experimental Next Qwen accepts keyword options after the local checkpoint path')
             from .nextgen.qwen_runtime import ExperimentalQwenModel
             return ExperimentalQwenModel(pretrained_model_name_or_path, **kwargs)
-        if kwargs.get('backend') in ('next', 'mlx-next'):
-            kwargs.pop('backend')
+        if kwargs.get('backend') in ('next', 'mlx-next', 'next-llama'):
+            next_backend=kwargs.pop('backend')
             if inputs: raise TypeError('Next accepts keyword options after the local checkpoint path')
+            # Read only an existing local config; Next never resolves Hub IDs
+            # through Transformers or downloads weights during dispatch.
+            config_path=Path(pretrained_model_name_or_path)/'config.json'
+            local_config=json.loads(config_path.read_text()) if config_path.is_file() else {}
+            if next_backend=='next-llama' or local_config.get('model_type')=='llama':
+                from .nextgen.llama_runtime import AirLLMNextLlamaModel
+                return AirLLMNextLlamaModel(pretrained_model_name_or_path, **kwargs)
             from .nextgen.runtime import AirLLMNextModel
             return AirLLMNextModel(pretrained_model_name_or_path, **kwargs)
         # Opt in explicitly; preserve all upstream defaults and model overrides.

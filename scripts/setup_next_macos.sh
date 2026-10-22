@@ -6,9 +6,11 @@ if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
   exit 1
 fi
 task_python="${AIRLLM_PYTHON:-python3}"
+cd "$task_root"
 "$task_python" - <<'PY'
 import os,platform,shutil,sys,subprocess
 if not (3,12)<=sys.version_info[:2]<=(3,13):raise SystemExit('Python 3.12 ou 3.13 requis')
+if platform.machine()!='arm64':raise SystemExit('Interpréteur Python ARM64 natif requis')
 version=tuple(int(x) for x in platform.mac_ver()[0].split('.')[:2])
 if version<(14,0):raise SystemExit('macOS 14 minimum pour MLX')
 if version<(26,2):print('macOS 26.2+ recommandé pour les Neural Accelerators du M5 via MLX.')
@@ -19,6 +21,11 @@ print(f'RAM unifiée détectée : {memory/1024**3:.1f} Gio. Le moteur ajustera s
 print('Pré-vérification réussie. Aucun poids de grand modèle ne sera téléchargé.')
 PY
 if [[ ! -d "$task_root/.venv-next" ]]; then "$task_python" -m venv "$task_root/.venv-next"; fi
+"$task_root/.venv-next/bin/python" - <<'PY'
+import platform,sys
+if not (3,12)<=sys.version_info[:2]<=(3,13) or platform.machine()!='arm64':
+    raise SystemExit('Le .venv-next existant doit utiliser Python 3.12/3.13 ARM64 natif ; créez un nouvel environnement compatible.')
+PY
 "$task_root/.venv-next/bin/python" -m pip install -r "$task_root/requirements-next-macos.txt"
 "$task_root/.venv-next/bin/python" -m pip install --no-deps -e "$task_root/air_llm"
 "$task_root/.venv-next/bin/airllm-next" doctor

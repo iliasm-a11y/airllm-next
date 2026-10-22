@@ -1,0 +1,15 @@
+{
+  "scope": "Initial full trained HTTP chat smoke before tokenizer-return fix",
+  "observed_http_status": 400,
+  "response_body_captured": false,
+  "tokenizer_probe": {
+    "type": "transformers.tokenization_utils_base.BatchEncoding",
+    "keys": [
+      "input_ids",
+      "attention_mask"
+    ],
+    "chat_template_type": "str"
+  },
+  "diagnosis": "Server required list IDs while actual Transformers5.20.2 returned a mapping by default; explicit return_dict=False plus validated Mapping normalization added",
+  "resolved_by": "tests-api-tokenizer-fix.xml and later trained-api.json"
+}

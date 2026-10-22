@@ -1,0 +1,28 @@
+{
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7",
+  "hardware": {
+    "chip_type": "Apple M5",
+    "machine_model": "Mac17,3",
+    "machine_name": "MacBook Air",
+    "number_processors": "proc 10:4:0:6",
+    "physical_memory": "16 GB"
+  },
+  "metal": {
+    "metal_device_available": false
+  },
+  "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "modules": {
+    "numpy": true,
+    "torch": false,
+    "mlx": false,
+    "safetensors": false,
+    "pytest": true
+  },
+  "base_commit": "d43032f38a0325aafd2973847d7ed84b21280c61",
+  "network_cli": {
+    "github_dns_available": false,
+    "evidence": "git ls-remote: Could not resolve host: github.com"
+  },
+  "note": "Host M5 CPU experiments only. Native Metal device probe returned no device in this execution context."
+}

@@ -1,0 +1,39 @@
+{
+  "model_dir": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/checkpoints/smollm2-135m",
+  "weight_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "tokens_per_run": 16,
+  "repeats_per_prompt": 3,
+  "cache_mib": 128,
+  "row_chunk": 128,
+  "summary": {
+    "reference-cpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 0.0,
+      "median_generation_seconds": 0.17015112499939278,
+      "p50_generation_seconds": 0.17015112499939278,
+      "p95_generation_seconds": 0.18320530779965338,
+      "median_ttft_seconds": null,
+      "median_decode_tokens_per_second": null,
+      "process_peak_rss_bytes": 1209679872
+    },
+    "next-gpu": {
+      "all_generated_sequences_match_reference": true,
+      "last_logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_last_logit_error": 6.389617919921875e-05,
+      "median_generation_seconds": 1.9921929159972933,
+      "p50_generation_seconds": 1.9921929159972933,
+      "p95_generation_seconds": 2.0900100834012845,
+      "median_ttft_seconds": 0.22095316600098158,
+      "median_decode_tokens_per_second": 8.46027863927744,
+      "process_peak_rss_bytes": 530284544
+    }
+  },
+  "variant_order": [
+    "reference-cpu",
+    "next-gpu"
+  ],
+  "protocol": "Sequential fresh subprocess variants, same trained weights and prompts, explicit all-ones attention mask for unpadded HF inputs, greedy decoding, float32 arithmetic, no prefetch; TF32=0; OS page cache uncontrolled",
+  "full_GLM53_validated": false,
+  "full_Qwen38_validated": false
+}

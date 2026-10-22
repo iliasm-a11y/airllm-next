@@ -12,6 +12,7 @@ from itertools import islice
 from time import perf_counter
 import numbers
 import numpy as np
+from .generation import token_batch,eos_ids,nonnegative_integer
 
 
 @dataclass
@@ -99,7 +100,7 @@ def _host_argmax(logits):
 def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                                 *, eos_token_ids=(), max_depth=4, adaptive=True,
                                 argmax_tokens=None, bytes_read=None,
-                                clock=perf_counter,vocab_size=None):
+                                clock=perf_counter,vocab_size=None,encoded_bytes_read=None):
     """Generate using causal block verification and a lagging pending token.
 
     Cache invariant: after each round it contains exactly the committed output
@@ -112,23 +113,17 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     token ids only. The target and draft must use the same tokenizer/vocabulary;
     callers are responsible for establishing this semantic compatibility.
     """
-    if not isinstance(max_new_tokens, int) or isinstance(max_new_tokens, bool) or max_new_tokens < 0:
-        raise ValueError('max_new_tokens must be a nonnegative integer')
-    ids = np.asarray(input_ids)
-    if ids.ndim != 2 or ids.shape[0] != 1 or not ids.shape[1] or ids.dtype.kind not in 'iu':
-        raise ValueError('Expected nonempty integer input_ids with batch size one')
-    if ids.max() > np.iinfo(np.int32).max or ids.min() < 0:
-        raise ValueError('Token ids must be nonnegative int32 values')
-    if vocab_size is not None and ids.max() >= vocab_size:
-        raise ValueError('Input token id is outside the target vocabulary')
+    max_new_tokens = nonnegative_integer(max_new_tokens, 'max_new_tokens')
+    ids = token_batch(input_ids, vocab_size)
     tokens = ids[0].astype(np.int64).tolist()
     prefix_length = len(tokens)
-    eos = set(eos_token_ids)
+    eos = eos_ids(eos_token_ids, vocab_size)
     choose = argmax_tokens or _host_argmax
     read = bytes_read or (lambda: 0)
     policy = AdaptiveSpeculation(max_depth=max_depth, enabled=adaptive)
     begin = clock()
     logical_start = read()
+    encoded_start = encoded_bytes_read() if encoded_bytes_read is not None else None
     metrics = dict(mode='greedy_block_verification', rounds=0, proposals=0,
                    accepted_draft_tokens=0, target_forward_calls=0,
                    rollback_tokens=0, draft_seconds=0., verification_seconds=0.,
@@ -137,6 +132,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     cache = None
     first_time = None
     decode_start_bytes = logical_start
+    decode_encoded_start = encoded_start
 
     def forward(values):
         nonlocal cache
@@ -149,6 +145,9 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     def finish():
         end = clock()
         count = len(tokens) - prefix_length
+        encoded_end=encoded_bytes_read() if encoded_bytes_read is not None else None
+        encoded_bytes=encoded_end-encoded_start if encoded_start is not None and encoded_end is not None else None
+        decode_encoded_bytes=encoded_end-decode_encoded_start if decode_encoded_start is not None and encoded_end is not None else None
         metrics.update(tokens_generated=count, generation_seconds=end-begin,
                        ttft_seconds=first_time-begin if first_time is not None else 0.,
                        decode_tokens_per_second=(count-1)/(end-first_time)
@@ -157,6 +156,11 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                        logical_bytes_per_accepted_token=(read()-logical_start)/count if count else 0.,
                        decode_logical_bytes_per_accepted_token=(read()-decode_start_bytes)/(count-1)
                        if count > 1 else 0.,
+                       encoded_file_bytes=encoded_bytes,
+                       encoded_file_bytes_per_accepted_token=encoded_bytes/count
+                       if encoded_bytes is not None and count else 0. if encoded_bytes is not None else None,
+                       decode_encoded_file_bytes_per_accepted_token=decode_encoded_bytes/(count-1)
+                       if decode_encoded_bytes is not None and count>1 else 0. if decode_encoded_bytes is not None else None,
                        acceptance_rate=metrics['accepted_draft_tokens']/metrics['proposals']
                        if metrics['proposals'] else None,
                        disabled_reason=policy.disabled_reason,
@@ -172,6 +176,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     tokens.append(pending)
     first_time = clock()
     decode_start_bytes = read()
+    decode_encoded_start = encoded_bytes_read() if encoded_bytes_read is not None else None
     if pending in eos or max_new_tokens == 1:
         return finish()
 
@@ -228,7 +233,10 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                 if candidate in eos:
                     break
             stop = bool(accepted and tokens[-1] in eos)
-            committed_position = base+1+accepted
+            # Accepted EOS is already present in the verified input block. Keep
+            # the same lagging-final-token invariant as correction/bonus EOS;
+            # otherwise a returned session has one extra committed position.
+            committed_position = base+1+accepted-int(stop)
             metrics['rollback_tokens'] += cache.position-committed_position
             cache.truncate(committed_position)
             if not stop:

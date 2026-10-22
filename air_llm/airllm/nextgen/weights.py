@@ -159,13 +159,32 @@ class NativeWeights:
         return values.reshape(tuple(host.shape)+(shape[1],))
 
     def output(self,x,key):
-        if self.estimate(key)<=min(self.cfg.max_tensor_bytes,self.cfg.io_bytes):return self.linear(x,key)
+        budget=min(self.cfg.max_tensor_bytes,self.cfg.io_bytes)
+        size=self.estimate(key)
+        if size<=budget:return self.linear(x,key)
+        shape=self.shape(key)
+        if len(shape)!=2 or min(shape)<1:raise ValueError('Output projection requires a nonempty matrix')
+        rows=shape[0]
+        # The estimate is decoded storage, or the affine packed payload. Respect
+        # an explicitly smaller row_chunk while shrinking large tiles to both
+        # budgets before loading any bytes.
+        row_bytes=max(1,(size+rows-1)//rows)
+        tile_rows=min(self.cfg.row_chunk,budget//row_bytes)
+        if tile_rows<1:raise MemoryError('One output projection row exceeds max_tensor_bytes or io_bytes')
+        # Synchronous output tiles need the same IO headroom as a demand read.
+        # Discard unused lookahead before creating another decoded buffer.
+        self.io.drain()
         # Keep only tile result vectors; each full matrix tile is evaluated and
         # released before the next is read. No lazy graph retains the whole head.
-        out=[];rows=self.shape(key)[0]
-        for start in range(0,rows,self.cfg.row_chunk):
-            w=self._load(key,rows=(start,min(rows,start+self.cfg.row_chunk)))
+        out=[]
+        for start in range(0,rows,tile_rows):
+            w=self._load(key,rows=(start,min(rows,start+tile_rows)))
+            n=size_of(w)
+            if n>budget:raise MemoryError('Output projection tile exceeded its byte budget')
+            self.stats['output_tiles']=self.stats.get('output_tiles',0)+1
+            self.stats['output_tile_peak_bytes']=max(self.stats.get('output_tile_peak_bytes',0),n)
             y=self.linear_weight(x,w);self.mx.eval(y);out.append(y)
+            del w
         return self.mx.concatenate(out,axis=-1)
 
     def close(self):

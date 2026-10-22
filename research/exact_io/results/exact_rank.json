@@ -1,0 +1,200 @@
+{
+  "evidence": "measured modular rank of genuine BF16 weights",
+  "results": [
+    {
+      "key": "model.layers.1.mlp.experts.0.gate_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 452,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 452,
+      "minor_bits_sha256": "ec34229381893bab1473966c93f893d4291e5729bf99b1053d597b7de5348d9f",
+      "seconds": 0.08257100000264472,
+      "rank_upper_bound_over_Q": 452,
+      "exact_zero_rows": 60,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.1171875
+    },
+    {
+      "key": "model.layers.1.mlp.experts.0.up_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 452,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 452,
+      "minor_bits_sha256": "0a3c433183bb276687dd3336fad65ac32a9dc432f64cbeea7934a6a694e2afbd",
+      "seconds": 0.08089083300001221,
+      "rank_upper_bound_over_Q": 452,
+      "exact_zero_rows": 60,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.1171875
+    },
+    {
+      "key": "model.layers.1.mlp.experts.0.down_proj.weight",
+      "original_shape": [
+        2048,
+        512
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 452,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 452,
+      "minor_bits_sha256": "a4fb7c04c7db438c6070234c9dc0308da2200ffbd572574f3e9deb721d2f722b",
+      "seconds": 0.07729208299861057,
+      "rank_upper_bound_over_Q": 452,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 60,
+      "fraction_exact_zero_values": 0.1171875
+    },
+    {
+      "key": "model.layers.10.mlp.experts.0.gate_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "f0de08f68e2c9c892afd01a48bd15d6bfd2b351d4828ea7c02efc139f3a66efa",
+      "seconds": 0.08085824999943725,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    },
+    {
+      "key": "model.layers.10.mlp.experts.0.up_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "d188e7bae8680c15a389012fb35455d5dbd75c39817b2b880ed9ebfaaca8aeca",
+      "seconds": 0.0799368339976354,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    },
+    {
+      "key": "model.layers.10.mlp.experts.0.down_proj.weight",
+      "original_shape": [
+        2048,
+        512
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "a093f8f13d49f786c41c6e93938b45a9a49673b84a4754b8010aeffe793c66be",
+      "seconds": 0.08054087500204332,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    },
+    {
+      "key": "model.layers.19.mlp.experts.0.gate_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "0026f4485faa144539210d100a13d0cf26c259b3641acad041436d4c3bb06396",
+      "seconds": 0.08009191600285703,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    },
+    {
+      "key": "model.layers.19.mlp.experts.0.up_proj.weight",
+      "original_shape": [
+        512,
+        2048
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "780372d1c80f11a2346729507629c9d84b94f9e113324567e4cc0789d7787952",
+      "seconds": 0.08002791599938064,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    },
+    {
+      "key": "model.layers.19.mlp.experts.0.down_proj.weight",
+      "original_shape": [
+        2048,
+        512
+      ],
+      "minor_shape": [
+        512,
+        512
+      ],
+      "modulus": 65521,
+      "rank_mod_prime": 512,
+      "full_rational_rank_certified": true,
+      "rank_lower_bound_over_Q": 512,
+      "minor_bits_sha256": "143cb352c96f252acd61452ae949cfaa0ca64527df951b1a0eea92b7bab1e710",
+      "seconds": 0.0790637920035806,
+      "rank_upper_bound_over_Q": 512,
+      "exact_zero_rows": 0,
+      "exact_zero_columns": 0,
+      "fraction_exact_zero_values": 0.0
+    }
+  ],
+  "conclusion": "Six tested projections have rank 512; three have rank 452 with 60 exact zero rows/columns. No global theorem is inferred.",
+  "limitations": [
+    "Sampled Ling matrices only, not Qwen or GLM.",
+    "Does not exclude sparsity, nonlinear identities, input-dependent certificates, or another exact structured algorithm.",
+    "Even an algebraically exact factorization can change floating-point reductions."
+  ]
+}

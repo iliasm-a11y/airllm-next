@@ -40,10 +40,12 @@ class QuantizedSidecar:
     def load(self,ident,rows=None,*,max_bytes=None):
         v=self.entries[ident];path=self.root/v['file']
         n,m=v['shape'];bits=v.get('bits',self.bits)
-        if bits not in (4,8) or self.group_size not in (32,64,128) or m%self.group_size:
-            raise ValueError('Invalid packed format metadata')
         if type(n) is not int or type(m) is not int or n<1 or m<1:
             raise ValueError('Invalid packed matrix shape')
+        if bits not in (4,8) or self.group_size not in (32,64,128) or m%self.group_size:
+            raise ValueError('Invalid packed format metadata')
+        if max_bytes is not None and (type(max_bytes) is not int or max_bytes<0):
+            raise ValueError('max_bytes must be a nonnegative integer')
         start,stop=(0,n) if rows is None else rows
         if type(start) is not int or type(stop) is not int or not 0<=start<=stop<=n:
             raise ValueError('Invalid packed row tile')
@@ -153,7 +155,13 @@ class QuantizedSidecar:
               'sha256':digest.hexdigest(),'conversion':'affine-round-to-nearest-v1',
               'relative_l2_error':math.sqrt(error_sq/signal_sq) if signal_sq else 0.,'max_abs_error':max_error,
               'peak_conversion_tile_bytes':peak_tile_bytes}
-            self.commit()
+            try:self.commit()
+            except BaseException:
+                # The file can be an orphan after a manifest write failure.
+                # Keep the live object consistent with the previous committed
+                # manifest so the same conversion can be retried safely.
+                self.entries.pop(ident,None)
+                raise
         finally:
             if os.path.exists(tmp):os.unlink(tmp)
         return True
