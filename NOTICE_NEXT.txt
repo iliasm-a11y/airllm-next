@@ -1,0 +1,16 @@
+AirLLM Next engineering changes, 22 October 2026.
+Base: Gavin Li / lyogavin AirLLM, Apache License 2.0 (LICENSE),
+release v4.0.0 ff35db207a0c559af9aa95d686057c3fe84f1d40 plus upstream fixes
+at 25778b37fcd63f62ad25e9eeef7fc0b891d3f40f, and the user's Ultra delivery.
+
+GLM model formulas are derived from the official Hugging Face Transformers
+GlmMoeDsa implementation (Hugging Face contributors, Apache License 2.0).
+The new backend uses MLX as a dependency, copyright Apple Inc., MIT License.
+Apple MLX-LM sources were inspected, not copied wholesale into the engine.
+Source snapshots for audit retain their original copyright notices.
+See evidence-next/sources/mlx-license.txt for inspected MLX-LM source license.
+
+No GLM weights are included. GLM-5.3 model license is separate from the AirLLM
+software license and is reproduced for reference in evidence-next/sources/.
+Quantized derivative weights remain subject to the model's applicable terms.
+No source repository was modified remotely and no code was published.
