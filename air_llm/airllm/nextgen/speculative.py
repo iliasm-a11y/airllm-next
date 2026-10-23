@@ -238,7 +238,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                                 clock=perf_counter,vocab_size=None,encoded_bytes_read=None,
                                 draft_bytes_read=None,draft_encoded_bytes_read=None,
                                 candidate_depths=None, forward_metrics=None,
-                                max_verify_positions=None):
+                                max_verify_positions=None, retry_empty_drafts=False):
     """Generate using causal block verification and a lagging pending token.
 
     Cache invariant: after each round it contains exactly the committed output
@@ -250,7 +250,15 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     append-only cache with position and truncate(position). propose returns new
     token ids only. The target and draft must use the same tokenizer/vocabulary;
     callers are responsible for establishing this semantic compatibility.
+
+    E1 remains the default: retry_empty_drafts=False keeps an empty-draft stop
+    permanent. E2 opt-in probes after eight committed tokens, and only when all
+    recent preparation times are below 1% of the measured decode baseline and
+    both draft transport observations are known zero. This heuristic can detect
+    a phase change; it does not establish a speedup or promise future low cost.
     """
+    if type(retry_empty_drafts) is not bool:
+        raise ValueError('retry_empty_drafts must be boolean')
     max_new_tokens = nonnegative_integer(max_new_tokens, 'max_new_tokens')
     ids = token_batch(input_ids, vocab_size)
     tokens = ids[0].astype(np.int64).tolist()
@@ -279,6 +287,27 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     first_time = None
     decode_start_bytes = logical_start
     decode_encoded_start = encoded_start
+    # E2: only the empty-lookup guard may be revisited. The last bounded
+    # observations must all establish negligible preparation cost and known
+    # zero transport. Unknown traffic or a measured-cost/acceptance stop cannot
+    # authorize probing. No token, expert, or future acceptance is predicted.
+    retry_interval = 8
+    draft_probe_samples = deque(maxlen=policy.history_window)
+    retry_probe_history = deque(maxlen=policy.history_window)
+    retry_at = None
+    retry_blocked = False
+    metrics.update(retry_empty_drafts=retry_empty_drafts,
+                   empty_retry_interval_tokens=retry_interval, empty_retry_cost_fraction=.01,
+                   empty_retry_probes=0, empty_retry_reactivations=0,
+                   empty_retry_candidate_tokens=0, empty_retry_abandoned_candidate_tokens=0,
+                   empty_retry_probe_seconds=0., empty_retry_stopped_reason=None,
+                   proposal_count_scope='proposals count candidates submitted for target verification; rounds/verifier_rounds count verification passes; discarded probe candidates use empty_retry_abandoned_candidate_tokens')
+
+    def cheap_zero_transport_draft():
+        baseline = policy.baseline_seconds
+        return bool(baseline is not None and draft_probe_samples and
+                    all(seconds < baseline*.01 and logical == 0 and encoded == 0
+                        for seconds, logical, encoded in draft_probe_samples))
 
     def forward(values, keep=0):
         nonlocal cache
@@ -327,6 +356,13 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                                                else 'target_and_draft' if draft_bytes_read is not None
                                                else 'target_only_draft_transport_unknown'),
                        final_depth=policy.depth,
+                       verifier_rounds=metrics['rounds'],
+                       empty_retry_probe_measurements=list(retry_probe_history),
+                       empty_retry_history_capacity=policy.history_window,
+                       empty_retry_recent_max_preparation_seconds=max(
+                           (sample[0] for sample in draft_probe_samples), default=None),
+                       empty_retry_recent_transport_known_zero=bool(draft_probe_samples and
+                           all(logical == 0 and encoded == 0 for _,logical,encoded in draft_probe_samples)),
                        final_cache_position=cache.position if cache is not None else 0)
         return SpeculativeResult(tokens, cache, metrics)
 
@@ -371,8 +407,15 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
         context_available=getattr(cache,'limit',2**63)-cache.position
         count=min(policy.depth,remaining-1,max(0,context_available-1))
         if max_verify_positions is not None:count=min(count,max_verify_positions-1)
+        if (retry_empty_drafts and not policy.active and policy.disabled_reason == 'empty_draft_proposals'
+                and retry_at is None):
+            retry_at = len(tokens)+retry_interval
+        probing = bool(retry_empty_drafts and policy.enabled and not policy.active and count and not retry_blocked
+                       and policy.disabled_reason == 'empty_draft_proposals'
+                       and retry_at is not None and len(tokens) >= retry_at
+                       and cheap_zero_transport_draft())
         calibrating=bool(policy.needs_calibration and count)
-        if not policy.active or count==0 or calibrating:
+        if (not policy.active and not probing) or count==0 or calibrating:
             baseline = ordinary_decode(calibration=calibrating)
             tokens.append(pending)
             if pending in eos:
@@ -400,6 +443,46 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
             if token in eos:
                 candidates = candidates[:j+1]
                 break
+        if retry_empty_drafts and adaptive:
+            preparation_logical = (draft_bytes_read()-draft_round_start
+                                   if draft_round_start is not None else None)
+            preparation_encoded = (draft_encoded_bytes_read()-draft_encoded_round_start
+                                   if draft_encoded_round_start is not None else None)
+            preparation_seconds = clock()-round_start
+            draft_probe_samples.append((preparation_seconds, preparation_logical, preparation_encoded))
+        if probing:
+            retry_at = len(tokens)+retry_interval
+            probe_seconds = clock()-round_start
+            metrics['empty_retry_probes'] += 1
+            metrics['empty_retry_candidate_tokens'] += len(candidates)
+            metrics['empty_retry_probe_seconds'] += probe_seconds
+            eligible = cheap_zero_transport_draft()
+            resumed = bool(candidates and eligible)
+            retry_probe_history.append(dict(generated_tokens=len(tokens)-prefix_length,
+                count_limit=count, candidates=len(candidates), seconds=probe_seconds,
+                preparation_seconds=preparation_seconds, draft_logical_bytes=preparation_logical,
+                draft_encoded_file_bytes=preparation_encoded, reactivated=resumed,
+                eligibility_baseline_seconds=policy.baseline_seconds,
+                max_recent_preparation_seconds=max(sample[0] for sample in draft_probe_samples)))
+            if not eligible:
+                # A probe is a real observation, not permission to keep trying
+                # an expensive model or a newly nonzero/unknown transport.
+                retry_blocked = True
+                metrics['empty_retry_stopped_reason'] = 'probe_cost_or_transport_guard'
+            if not resumed:
+                metrics['empty_retry_abandoned_candidate_tokens'] += len(candidates)
+                metrics['draft_seconds'] += draft_seconds
+                baseline = ordinary_decode()
+                tokens.append(pending)
+                if pending in eos:
+                    break
+                continue
+            policy.active = True
+            policy.disabled_reason = None
+            policy.empty_streak = policy.zero_accept_streak = 0
+            policy.slow_streak = policy.total_slow_streak = 0
+            metrics['empty_retry_reactivations'] += 1
+            retry_at = None
         base = cache.position
         verify_start = clock()
         forward_before = forward_metrics() if forward_metrics is not None else None

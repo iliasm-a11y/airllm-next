@@ -242,3 +242,240 @@ def test_native_speculative_sampling_is_explicitly_unsupported(tiny_glm,tmp_path
     with AirLLMNextModel(root,next_config=options(tmp_path)) as model:
         with pytest.raises(NotImplementedError,match='greedy'):
             model.generate([[1]],draft_model=lambda p,n:[1]*n,temperature=.8)
+
+
+
+class RetryManualClock:
+    """Inject measured service costs; never claims hardware performance."""
+    def __init__(self):
+        self.seconds = 0.
+
+    def __call__(self):
+        return self.seconds
+
+
+class RetryTimedTarget(ToyTarget):
+    def __init__(self, clock):
+        super().__init__()
+        self.clock = clock
+
+    def forward(self, *args, **kwargs):
+        self.clock.seconds += 1.
+        return super().forward(*args, **kwargs)
+
+
+def test_empty_adaptive_draft_retries_only_after_eight_committed_tokens_and_real_candidates():
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    prefix = [1, 2]
+    calls = []
+    def late_draft(values, count):
+        generated = len(values)-len(prefix)
+        calls.append(generated)
+        clock.seconds += .001
+        return [] if generated < 20 else exact_draft(target)(values, count)
+    result = greedy_speculative_generate(target, late_draft, [prefix], 36,
+        adaptive=True, retry_empty_drafts=True, max_depth=4, clock=clock, bytes_read=lambda:target.bytes,
+        draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    assert result.tokens == expected(target, prefix, 36)
+    assert result.cache.position == len(result.tokens)-1
+    assert result.cache.values[:result.cache.position] == result.tokens[:-1]
+    # Empty proposals at generated positions 2..5 disable the lookup. It must
+    # then advance eight actual output tokens before each probe, not eight
+    # loop iterations, target positions, candidate tokens, or wall-clock ticks.
+    assert calls[:6] == [2, 3, 4, 5, 14, 22]
+    metrics = result.metrics
+    assert metrics['empty_retry_probes'] == 2
+    assert metrics['empty_retry_reactivations'] == 1
+    assert metrics['accepted_draft_tokens'] > 0
+    assert [row['reactivated'] for row in metrics['empty_retry_probe_measurements']] == [False, True]
+    assert all(row['candidates'] <= row['count_limit'] <= 4 for row in metrics['empty_retry_probe_measurements'])
+    assert metrics['empty_retry_probe_seconds'] == pytest.approx(.002)
+    assert metrics['draft_seconds'] == pytest.approx(metrics['draft_calls']*.001)
+    assert metrics['generation_seconds'] == pytest.approx(len(target.calls)+metrics['draft_calls']*.001)
+
+
+@pytest.mark.parametrize('cost,logical,encoded', [
+    (.02, 0, 0), (.001, None, 0), (.001, 0, None), (.001, 1, 0), (.001, 0, 1)])
+def test_empty_retry_rejects_expensive_or_unobserved_or_nonzero_draft_transport(cost, logical, encoded):
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    counters = [0, 0]
+    def empty(values, count):
+        clock.seconds += cost
+        counters[0] += logical or 0
+        counters[1] += encoded or 0
+        return []
+    result = greedy_speculative_generate(target, empty, [[1, 2]], 32,
+        adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=(lambda:counters[0]) if logical is not None else None,
+        draft_encoded_bytes_read=(lambda:counters[1]) if encoded is not None else None)
+    assert result.tokens == expected(target, [1, 2], 32)
+    assert result.metrics['disabled_reason'] == 'empty_draft_proposals'
+    assert result.metrics['draft_calls'] == 4
+    assert result.metrics['empty_retry_probes'] == 0
+
+
+def test_a_newly_expensive_probe_is_counted_and_permanently_stops_retrying():
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    calls = []
+    def expensive_later(values, count):
+        calls.append(len(values)-2)
+        clock.seconds += .001 if len(calls) <= 4 else .02
+        return [] if len(calls) <= 4 else exact_draft(target)(values, count)
+    result = greedy_speculative_generate(target, expensive_later, [[1, 2]], 40,
+        adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    metrics = result.metrics
+    assert result.tokens == expected(target, [1, 2], 40)
+    assert calls == [2, 3, 4, 5, 14]
+    assert metrics['empty_retry_probes'] == 1
+    assert metrics['empty_retry_candidate_tokens'] > 0
+    assert metrics['empty_retry_abandoned_candidate_tokens'] == metrics['empty_retry_candidate_tokens']
+    assert metrics['empty_retry_reactivations'] == 0
+    assert metrics['empty_retry_stopped_reason'] == 'probe_cost_or_transport_guard'
+    assert metrics['empty_retry_probe_seconds'] == pytest.approx(.02)
+    assert metrics['generation_seconds'] == pytest.approx(len(target.calls)+.004+.02)
+
+
+def test_empty_retry_does_not_reopen_a_zero_acceptance_disable():
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    def wrong(values, count):
+        clock.seconds += .001
+        return exact_draft(target, corrupt_at=0)(values, count)
+    result = greedy_speculative_generate(target, wrong, [[1, 2]], 40,
+        adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    assert result.tokens == expected(target, [1, 2], 40)
+    assert result.metrics['disabled_reason'] == 'no_accepted_draft_tokens'
+    assert result.metrics['empty_retry_probes'] == 0
+
+
+def test_empty_retry_rejects_new_transport_even_when_actual_candidates_are_found():
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    calls, transport = [0], [0]
+    def io_later(values, count):
+        calls[0] += 1
+        clock.seconds += .001
+        if calls[0] <= 4:
+            return []
+        transport[0] += 1
+        return exact_draft(target)(values, count)
+    result = greedy_speculative_generate(target, io_later, [[1, 2]], 40,
+        adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=lambda:transport[0], draft_encoded_bytes_read=lambda:0)
+    assert result.tokens == expected(target, [1, 2], 40)
+    assert calls[0] == 5
+    assert result.metrics['empty_retry_probes'] == 1
+    assert result.metrics['empty_retry_reactivations'] == 0
+    assert result.metrics['empty_retry_stopped_reason'] == 'probe_cost_or_transport_guard'
+    assert result.metrics['empty_retry_probe_measurements'][0]['draft_logical_bytes'] == 1
+    assert result.metrics['empty_retry_abandoned_candidate_tokens'] > 0
+
+
+def test_accepted_eos_after_empty_retry_still_stops_with_the_lagging_cache_invariant():
+    class OrderedTarget(RetryTimedTarget):
+        def __init__(self, clock):
+            super().__init__(clock)
+            self.vocabulary = 256
+
+        def next(self, prefix):
+            return len(prefix)
+    clock = RetryManualClock()
+    target = OrderedTarget(clock)
+    def late_draft(values, count):
+        clock.seconds += .001
+        return [] if len(values)-2 < 10 else exact_draft(target)(values, count)
+    result = greedy_speculative_generate(target, late_draft, [[1, 2]], 40,
+        eos_token_ids=[17], adaptive=True, retry_empty_drafts=True, clock=clock,
+        draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    assert result.tokens == expected(target, [1, 2], 40, [17])
+    assert result.tokens[-1] == 17
+    assert result.metrics['empty_retry_reactivations'] == 1
+    assert result.cache.position == len(result.tokens)-1
+    assert result.cache.values[:result.cache.position] == result.tokens[:-1]
+
+
+def test_probe_proposal_iterator_keeps_the_existing_strict_consumption_bound():
+    from itertools import repeat
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    calls = [0]
+    def faulty_later(values, count):
+        calls[0] += 1
+        clock.seconds += .001
+        return [] if calls[0] <= 4 else repeat(1)
+    with pytest.raises(ValueError, match='more candidates'):
+        greedy_speculative_generate(target, faulty_later, [[1, 2]], 40,
+            adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    assert calls[0] == 5
+
+
+def test_repeated_empty_probe_metadata_is_capped_without_allocating_target_cache_snapshots():
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    def empty(values, count):
+        clock.seconds += .001
+        return []
+    result = greedy_speculative_generate(target, empty, [[1, 2]], 120,
+        adaptive=True, retry_empty_drafts=True, clock=clock, draft_bytes_read=lambda:0, draft_encoded_bytes_read=lambda:0)
+    metrics = result.metrics
+    assert result.tokens == expected(target, [1, 2], 120)
+    assert metrics['empty_retry_probes'] > metrics['empty_retry_history_capacity']
+    assert len(metrics['empty_retry_probe_measurements']) == metrics['empty_retry_history_capacity'] == 8
+    assert metrics['empty_retry_reactivations'] == 0
+    assert all(not row['reactivated'] for row in metrics['empty_retry_probe_measurements'])
+
+
+
+@pytest.mark.parametrize('retry_options', [{}, {'retry_empty_drafts': False}])
+def test_e1_default_and_explicit_false_keep_empty_draft_disable_permanent(retry_options):
+    clock = RetryManualClock()
+    target = RetryTimedTarget(clock)
+    calls = []
+    def late_draft(values, count):
+        calls.append(len(values)-2)
+        clock.seconds += .001
+        return [] if len(values)-2 < 10 else exact_draft(target)(values, count)
+    result = greedy_speculative_generate(target, late_draft, [[1, 2]], 40,
+        adaptive=True, clock=clock, draft_bytes_read=lambda:0,
+        draft_encoded_bytes_read=lambda:0, **retry_options)
+    assert result.tokens == expected(target, [1, 2], 40)
+    assert calls == [2, 3, 4, 5]
+    assert result.metrics['retry_empty_drafts'] is False
+    assert result.metrics['disabled_reason'] == 'empty_draft_proposals'
+    assert result.metrics['empty_retry_probes'] == result.metrics['empty_retry_reactivations'] == 0
+    assert result.metrics['accepted_draft_tokens'] == 0
+    assert result.metrics['verifier_rounds'] == result.metrics['rounds'] == 4
+    assert result.metrics['empty_retry_interval_tokens'] == 8
+    assert result.metrics['empty_retry_cost_fraction'] == .01
+
+
+@pytest.mark.parametrize('invalid', [0, 1, None, 'true', np.bool_(True)])
+def test_retry_empty_drafts_requires_strict_bool_before_any_forward(invalid):
+    from airllm.nextgen.runtime import AirLLMNextModel
+    target = ToyTarget()
+    with pytest.raises(ValueError, match='retry_empty_drafts must be boolean'):
+        greedy_speculative_generate(target, lambda values,count:[], [[1, 2]], 8,
+            retry_empty_drafts=invalid)
+    assert not target.calls
+    with pytest.raises(ValueError, match='retry_empty_drafts must be boolean'):
+        AirLLMNextModel.generate_speculative(object(), [[1, 2]], lambda values,count:[],
+            retry_empty_drafts=invalid)
+
+
+def test_native_runtime_explicitly_forwards_retry_opt_in(tiny_glm, tmp_path, monkeypatch):
+    from airllm.nextgen import AirLLMNextModel
+    import airllm.nextgen.speculative as speculative
+    from test_native import options
+    root, _ = tiny_glm
+    original_generate = speculative.greedy_speculative_generate
+    received = []
+    def capture(*args, **kwargs):
+        received.append(kwargs['retry_empty_drafts'])
+        return original_generate(*args, **kwargs)
+    monkeypatch.setattr(speculative, 'greedy_speculative_generate', capture)
+    with AirLLMNextModel(root, next_config=options(tmp_path)) as model:
+        model.generate_speculative([[1, 8]], lambda values,count:[], max_new_tokens=2,
+            retry_empty_drafts=True)
+        assert model.metrics()['runtime']['speculative']['retry_empty_drafts'] is True
+    assert received == [True]

@@ -155,12 +155,33 @@ def measure(model, operation):
     from airllm.nextgen.physical_io import physical_read_bytes
     clear_weights(model)
     before, physical_before = snapshot(model), physical_read_bytes()
+    captured = {}
+    original_session = model.new_session
+    def capture_session():
+        cache = original_session()
+        captured['cache'] = cache
+        return cache
+    model.new_session = capture_session
     started = time.perf_counter()
-    output = operation()
-    model.mx.eval(output)
-    elapsed = time.perf_counter()-started
+    try:
+        output = operation()
+        model.mx.eval(output)
+        elapsed = time.perf_counter()-started
+    finally:
+        model.new_session = original_session
     after, physical_after = snapshot(model), physical_read_bytes()
     io = numeric_delta(after['io'], before['io'])
+    metrics = model.metrics()
+    cache, budget = captured['cache'], model.options
+    workspace = model.expert_batch_metrics()['totals']['workspace_peak_bytes']
+    guards = dict(cache_bytes=0 <= model.reader.cache.bytes <= budget.cache_bytes,
+        cache_peak_bytes=model.reader.cache.peak_bytes <= budget.cache_bytes,
+        io_peak_bytes=model.reader.io.peak_bytes <= budget.io_bytes,
+        io_fully_drained=model.reader.io.bytes == 0,
+        kv_bytes=0 <= cache.bytes <= budget.kv_bytes,
+        kv_peak_bytes=cache.peak_bytes <= budget.kv_bytes,
+        workspace_reservation=workspace <= budget.workspace_bytes,
+        context_limit=0 <= cache.position <= cache.limit)
     row = dict(seconds=elapsed, io_delta=io,
         reader_delta=numeric_delta(after['reader'], before['reader']),
         sidecar_delta=numeric_delta(after['sidecar'], before['sidecar']),
@@ -168,7 +189,10 @@ def measure(model, operation):
         quantized_payload_bytes=io.get('quantized_logical_bytes', 0),
         process_physical_read_bytes=physical_after-physical_before
             if physical_before is not None and physical_after is not None else None,
-        cache=model.metrics()['cache'], io_scheduler=model.metrics()['prefetch'])
+        cache=metrics['cache'], io_scheduler=metrics['prefetch'], guards=guards,
+        kv=dict(bytes=cache.bytes, peak_bytes=cache.peak_bytes, budget_bytes=budget.kv_bytes,
+                committed_tokens=cache.position, limit=cache.limit),
+        expert_workspace_reservation_peak_bytes=workspace)
     return output, row
 
 
@@ -357,7 +381,9 @@ def main():
                                 row['linear_profile'] = dict(profile, generation_seconds=measured['seconds'],
                                     tokens_match_uninstrumented=profiled.tolist()[0] == tokens,
                                     new_tokens=len(profiled.tolist()[0])-len(ids),
-                                    reader_delta=measured['reader_delta'])
+                                    reader_delta=measured['reader_delta'],
+                                    guards=measured['guards'], kv=measured['kv'],
+                                    expert_workspace_reservation_peak_bytes=measured['expert_workspace_reservation_peak_bytes'])
                             records.append(row)
                             stem = f'r{repeat}c{case}{variant}'
                             arrays[stem+'_teacher_forced_logits'] = host_logits
@@ -371,11 +397,41 @@ def main():
                             mx.clear_cache()
             np.savez_compressed(args.output.with_suffix('.npz'), **arrays)
             report['raw_arrays_sha256'] = digest(args.output.with_suffix('.npz'))
+    # Explicit post-campaign integrity reads are outside every generation and
+    # teacher-forcing interval. Reopening avoids the sidecar verifier's local
+    # signature cache; every committed payload digest is checked again.
+    report['sidecars_final_audit'] = {}
+    with tempfile.TemporaryDirectory(prefix='quantized-final-audit-') as audit_metadata:
+        with OffsetCheckpoint(args.model_dir, audit_metadata, max_read_bytes=32*MiB) as cp:
+            for variant, initial in report['sidecars'].items():
+                scope = 'experts' if variant == 'expert4' else 'mixed'
+                sidecar = QuantizedSidecar(initial['destination'], cp.fingerprint)
+                final = audit_sidecar(cp, sidecar, scope)
+                final.update(manifest_unchanged=final['manifest_sha256'] == initial['manifest_sha256'],
+                    integrity_read_bytes=sidecar.stats['integrity_bytes'], outside_generation_timing=True)
+                report['sidecars_final_audit'][variant] = final
+    report['sidecar_inputs_unchanged'] = all(row['manifest_unchanged']
+        for row in report['sidecars_final_audit'].values())
+    guarded = []
+    for reference in report.get('reference_preparation', []):
+        for kind in ('generation', 'teacher_forced'):
+            guarded.append((dict(case=reference['case'], role='reference', measurement=kind), reference[kind]['guards']))
+    for row in records:
+        for kind in ('generation', 'teacher_forced', 'linear_profile'):
+            if kind in row:
+                guarded.append((dict(case=row['case'], repeat=row['repeat'], variant=row['variant'], measurement=kind), row[kind]['guards']))
+    report['budget_guard_measurements'] = len(guarded)
+    report['budget_guard_failures'] = [identity | dict(failed_guards=[key for key,value in guards.items() if not value])
+        for identity, guards in guarded if not all(guards.values())]
+    report['budget_guards_passed'] = not report['budget_guard_failures'] if guarded else None
+    report['memory_budget_scope'] = 'Configured retained tensor/IO/KV/workspace payloads; Python metadata and backend allocator residency are not a hard process RSS bound'
     report['original_files_unchanged'] = all(digest(args.model_dir/name) == value for name, value in original_hashes.items())
     report['tokenizer_files_unchanged'] = all(digest(args.model_dir/name) == value for name, value in tokenizer_hashes.items())
     save()
-    if not report['source_unchanged'] or not report['original_files_unchanged'] or not report['tokenizer_files_unchanged']:
-        raise SystemExit('Source/original checkpoint changed during experiment; evidence preserved')
+    if (not report['source_unchanged'] or not report['original_files_unchanged']
+            or not report['tokenizer_files_unchanged'] or not report['sidecar_inputs_unchanged']
+            or report['budget_guard_failures']):
+        raise SystemExit('Source/checkpoint/sidecar identity or budget guard failed; evidence preserved')
 
 
 if __name__ == '__main__':

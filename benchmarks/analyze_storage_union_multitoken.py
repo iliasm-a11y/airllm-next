@@ -62,6 +62,8 @@ def main():
                 'perfect_shared_residency_expected_expert_source_bytes_per_token': union_source/length})
 
         replay = []
+        identical_replays = {}
+        reused_replays = 0
         if args.trace_json:
             trace = json.loads(args.trace_json.read_text())
             arrays_path = args.trace_json.with_suffix('.npz')
@@ -76,6 +78,7 @@ def main():
                     raise ValueError(f'Unexpected exported route shape: {routes.shape}')
                 if np.any(routes < 0) or np.any(routes >= experts):
                     raise ValueError('Route trace has an invalid expert id')
+                route_digest = hashlib.sha256(np.sort(routes, axis=-1).tobytes()).hexdigest()
                 actual_union = [len(np.unique(layer)) for layer in routes]
                 union_source_bytes = 0
                 by_layer = {}
@@ -111,6 +114,12 @@ def main():
                 for budget in args.cache_mib:
                     for policy in ('lru', 'slru', 'lfu', 'adaptive', *RESIDENCY_POLICIES):
                         for execution in ('tokenwise', 'union'):
+                            signature = (route_digest, budget, policy, execution)
+                            if signature in identical_replays:
+                                replay.append(dict(identical_replays[signature], case=row['case'],
+                                    repeat=row['repeat'], identical_route_replay_reused=True))
+                                reused_replays += 1
+                                continue
                             cache = (ResidencyWeightCache(budget*1024**2, policy) if policy in RESIDENCY_POLICIES else
                                 AdaptiveWeightCache(budget*1024**2) if policy == 'adaptive' else
                                 WeightCache(budget*1024**2, policy))
@@ -138,11 +147,17 @@ def main():
                                     for layer in range(cfg['num_hidden_layers']):
                                         layer_requests(layer, routes[layer,position:position+1], cache, miss)
                                     output()
-                            replay.append({'kind': 'cache_trace_replay', 'case': row['case'],
+                            result_row = {'kind': 'cache_trace_replay', 'case': row['case'],
                                 'repeat': row['repeat'], 'batch_size': row['batch_size'], 'cache_mib': budget,
                                 'policy': policy, 'execution': execution, 'initial_software_cache': 'empty',
                                 'logical_source_miss_bytes': source_misses[0], 'peak_decoded_cache_bytes': cache.peak_bytes,
-                                'cache_stats': dict(cache.stats)})
+                                'route_set_ordered_positions_sha256': route_digest,
+                                'identical_route_replay_reused': False, 'cache_stats': dict(cache.stats)}
+                            replay.append(result_row)
+                            identical_replays[signature] = result_row
+                print(json.dumps({'replay_case': row['case'], 'repeat': row['repeat'],
+                    'batch_size': row['batch_size'], 'completed_rows': len(replay),
+                    'identical_replays_reused': reused_replays}), flush=True)
         result = {'scope': 'exact Granite metadata; independent-route analytical model and optional real-route cache replay',
             'checkpoint_inventory': {'shared_nonembedding_nonoutput_source_bytes': shared_source,
                 'shared_nonembedding_nonoutput_decoded_fp32_bytes': shared_decoded,
@@ -153,6 +168,7 @@ def main():
                 'num_experts': experts, 'top_k': topk, 'layers': cfg['num_hidden_layers']},
             'analytical_assumption': 'Independent uniform top-k sets across tokens; real route correlation can strongly change union.',
             'theoretical_rows': theoretical, 'replay_rows': replay,
+            'identical_route_replays_reused': reused_replays,
             'replay_limits': ['No runtime or SSD speed measurement', 'No recorded load times; equal-cost adaptive fallback',
                 'Embedding-row reads and speculative prefetch excluded',
                 'Output tiles enabled with 2048-row chunks; replay source precision is BF16, decoded payload FP32',

@@ -266,14 +266,19 @@ class AirLLMNextModel:
 
     def generate_speculative(self,input_ids,draft_model,*,max_new_tokens=32,
                              eos_token_id=None,max_depth=4,adaptive=True,
-                             candidate_depths=None):
+                             candidate_depths=None,retry_empty_drafts=False):
         """Verify local draft proposals with the actual GLM target in blocks.
 
         An already loaded draft model with generate(), a propose(prefix,count)
         object, or a callable returning candidate token ids is accepted. No
         checkpoint is fetched. The draft's tokenizer must match the target's.
         Stochastic sampling and MTP are not implemented by this greedy path.
+        E1 is the default. E2 retry_empty_drafts=True probes an empty draft only
+        every eight emitted tokens with known zero draft transport and observed
+        preparation cost below 1% of this generation's decode baseline.
         """
+        if type(retry_empty_drafts) is not bool:
+            raise ValueError('retry_empty_drafts must be boolean')
         from .speculative import LocalModelDraft,greedy_speculative_generate
         if draft_model is self:raise ValueError('Draft and target must be distinct local models')
         eos=self.config.get('eos_token_id') if eos_token_id is None else eos_token_id
@@ -314,7 +319,7 @@ class AirLLMNextModel:
                        bytes_read=lambda:self.checkpoint.stats['logical_bytes'],
                        encoded_bytes_read=lambda:encoded_read_bytes(self.checkpoint),
                        draft_bytes_read=draft_read,draft_encoded_bytes_read=draft_encoded,
-                       candidate_depths=candidate_depths,
+                       candidate_depths=candidate_depths,retry_empty_drafts=retry_empty_drafts,
                        forward_metrics=(lambda:self.expert_batch_metrics()['totals'])
                            if hasattr(self,'expert_batch_metrics') else None,
                        max_verify_positions=max(1,self.options.workspace_bytes//(8*self.config['vocab_size'])))

@@ -60,6 +60,14 @@ class GraniteWeightsView:
     def __getattr__(self, name):
         return getattr(self.reader, name)
 
+    @property
+    def prefetch_enabled(self):
+        return self.reader.prefetch_enabled
+
+    @prefetch_enabled.setter
+    def prefetch_enabled(self, enabled):
+        self.reader.prefetch_enabled = enabled
+
     def embedding(self, ids, key):
         return self.reader.embedding(ids, key) * self.config['embedding_multiplier']
 
