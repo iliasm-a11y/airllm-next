@@ -1,0 +1,96 @@
+"""Explicit GGUF text CLI with owned-process supervision enabled by default."""
+import argparse
+from dataclasses import asdict
+import json
+import os
+from pathlib import Path
+import sys
+from time import perf_counter
+
+
+def _positive(value):
+    number = int(value)
+    if number < 1:
+        raise argparse.ArgumentTypeError('Expected a positive integer')
+    return number
+
+
+def _run(args):
+    from .config import NextConfig
+    from .gguf import GGUFReader
+    from .gguf_qwen import NativeGGUFQwenModel
+    from .gguf_tokenizer import GGUFTokenizer
+    begin = perf_counter()
+    with GGUFReader(args.model, memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20) as checkpoint:
+        tokenizer = GGUFTokenizer(checkpoint.metadata)
+    del checkpoint
+    ids = tokenizer.apply_chat_template([{'role': 'user', 'content': args.prompt}])
+    if len(ids) + args.max_new_tokens > args.max_context:
+        raise MemoryError('Prompt plus requested tokens exceeds max_context before weight loading')
+    options = NextConfig(cache_bytes=args.cache_mib << 20, io_bytes=64 << 20, kv_bytes=192 << 20,
+        workspace_bytes=128 << 20, reserve_bytes=args.reserve_mib << 20, max_tensor_bytes=16 << 20,
+        row_chunk=args.row_chunk, prefill_chunk=args.prefill_chunk, max_context=args.max_context,
+        policy='adaptive', device=args.device, dtype='float32', prefetch=False, load_tokenizer=False,
+        io_mode=args.io_mode)
+    with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay) as model:
+        output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
+        generated = output.tolist()[0][len(ids):]
+        result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
+                  'generated_ids': generated, 'wall_seconds_including_tokenizer': perf_counter() - begin,
+                  'options': asdict(options), 'metrics': model.metrics(),
+                  'validation_scope': 'Experimental native text backend; independent validation is described in NATIVE_GGUF_REPORT_FR.md'}
+    args.report.write_text(json.dumps(result, indent=2) + '\n')
+    print(result['text'], flush=True)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(prog='airllm-next', description=__doc__)
+    sub = parser.add_subparsers(dest='command', required=True)
+    inspect = sub.add_parser('gguf-inspect', help='Read GGUF index without mapping weights')
+    inspect.add_argument('model', type=Path)
+    run = sub.add_parser('gguf-run', help='Experimental supervised native Qwen35 MoE GGUF text generation')
+    run.add_argument('model', type=Path)
+    run.add_argument('--prompt', default='Bonjour')
+    run.add_argument('--max-new-tokens', type=_positive, default=32)
+    run.add_argument('--max-context', type=_positive, default=256)
+    run.add_argument('--cache-mib', type=_positive, default=256)
+    run.add_argument('--cache-decay', type=_positive, help='Experimental adaptive-cache half-life in requests')
+    run.add_argument('--reserve-mib', type=_positive, default=3072)
+    run.add_argument('--max-rss-mib', type=_positive, default=2048)
+    run.add_argument('--max-swap-growth-mib', type=_positive, default=128)
+    run.add_argument('--timeout', type=_positive, default=900)
+    run.add_argument('--row-chunk', type=_positive, default=512)
+    run.add_argument('--prefill-chunk', type=_positive, default=16)
+    run.add_argument('--device', choices=['gpu', 'cpu', 'auto'], default='auto')
+    run.add_argument('--kernel', choices=['reference', 'metal'], default='reference')
+    run.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
+    run.add_argument('--report', type=Path, required=True, help='Local JSON report and adjacent log/guard files')
+    run.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
+    raw = list(sys.argv[1:] if argv is None else argv)
+    args = parser.parse_args(raw)
+    if args.command == 'gguf-inspect':
+        from .gguf import GGUFReader
+        with GGUFReader(args.model, include_tokenizer_metadata=False) as reader:
+            print(json.dumps({'file_bytes': reader.file_size, 'metadata': reader.metadata,
+                              'tensors': {n: {'shape': d.shape, 'quantization': d.dtype, 'bytes': d.nbytes}
+                                          for n, d in reader.tensors.items()},
+                              'weight_payload_loaded': False}, indent=2))
+        return 0
+    from .experiment_guard import validate_output_paths
+    validate_output_paths(args.report, protected=[args.model])
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    if args.worker:
+        _run(args)
+        return 0
+    from .experiment_guard import ExperimentLimits, supervise
+    limits = ExperimentLimits(rss_bytes=args.max_rss_mib << 20, reserve_bytes=args.reserve_mib << 20,
+        swap_growth_bytes=args.max_swap_growth_mib << 20, admitted_payload_bytes=(args.cache_mib + 640) << 20,
+        timeout_seconds=args.timeout)
+    supervise([sys.executable, '-m', 'airllm.nextgen.gguf_cli', *raw, '--worker'], args.report, limits,
+              env=dict(os.environ, MLX_ENABLE_TF32='0', OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1'))
+    print(json.loads(args.report.read_text())['text'])
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

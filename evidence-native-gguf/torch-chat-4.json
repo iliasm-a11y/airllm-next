@@ -1,0 +1,122 @@
+{
+  "model_file": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "input_ids": [
+    248045,
+    846,
+    198,
+    42498,
+    2295,
+    644,
+    24739,
+    30705,
+    83244,
+    501,
+    173941,
+    1725,
+    187451,
+    13,
+    248046,
+    198,
+    248045,
+    74455,
+    198,
+    248068,
+    271,
+    248069,
+    271
+  ],
+  "generated_ids": [
+    2229,
+    173941,
+    225673,
+    187451
+  ],
+  "all_ids": [
+    248045,
+    846,
+    198,
+    42498,
+    2295,
+    644,
+    24739,
+    30705,
+    83244,
+    501,
+    173941,
+    1725,
+    187451,
+    13,
+    248046,
+    198,
+    248045,
+    74455,
+    198,
+    248068,
+    271,
+    248069,
+    271,
+    2229,
+    173941,
+    225673,
+    187451
+  ],
+  "records": [
+    {
+      "step": 0,
+      "token_id": 2229,
+      "forward_seconds": 15.216414875001647
+    },
+    {
+      "step": 1,
+      "token_id": 173941,
+      "forward_seconds": 3.7362277499996708
+    },
+    {
+      "step": 2,
+      "token_id": 225673,
+      "forward_seconds": 3.836598582995066
+    },
+    {
+      "step": 3,
+      "token_id": 187451,
+      "forward_seconds": 3.596884915998089
+    }
+  ],
+  "elapsed_seconds": 26.88111133399798,
+  "metrics": {
+    "reference": "official_transformers_torch_cpu",
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "official_expert_forward_unchanged": true,
+    "official_source": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py",
+    "official_source_sha256": "5d6a6d8ee858c992c939bd1069d0396025db551420e4c1acd3479ce691f9c4f5",
+    "shared_gguf_codec": true,
+    "initial_meta_parameter_count": 34660610688,
+    "resident_parameter_bytes": 88525312,
+    "configured_total_bytes": 570425344,
+    "startup_seconds": 0.49438395900506293,
+    "peak_cache_payload_bytes": 67911680,
+    "source": {
+      "row_reads": 16264,
+      "expert_fetches": 7310,
+      "peak_workspace_estimate_bytes": 33554432
+    },
+    "io": {
+      "read_calls": 520483,
+      "bytes_read": 12441833820,
+      "logical_bytes": 12441833820,
+      "index_bytes": 4043356,
+      "tensor_bytes": 12437790464,
+      "decoded_rows": 15147897,
+      "peak_operation_bytes": 32605312,
+      "peak_reserved_bytes": 33545842,
+      "encoded_file_bytes": 23938321664
+    }
+  },
+  "limitation": "Independent official Torch equations; GGUF decompression is shared with native reader.",
+  "source_sha256": {
+    "benchmarks/reference_gguf_torch.py": "fd1e18ffef4c3c5c64400432dd98dfe735498f37c3b89a81bce300459994c912",
+    "air_llm/airllm/nextgen/gguf.py": "0eafa8e55310f33a4d469c5f15f8dee8a60f72359f4c7998e29c35071925315d",
+    "air_llm/airllm/nextgen/experiment_guard.py": "c1ba2974dcd9c09b21082fcf517eab74f80d6dd55b1216d1da07cc04ae43bddd"
+  }
+}

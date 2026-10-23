@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "method": "Saved index arithmetic and saved run counters only; no tensor payload read, no inference",
+  "source_index": "evidence-native-gguf/inspect.json",
+  "index_sha256": "f8fe544d4d4352400b57417f5ef133b7895e7fa92029869b9554bf498cf00782",
+  "current_source_sha256": {
+    "air_llm/airllm/nextgen/gguf.py": "479837dc3f14b055c03a1b1dbd6c10acce58ae5e2951f40d2a16214b04c8e1f1",
+    "air_llm/airllm/nextgen/gguf_qwen.py": "8016fe536d75540fdc9ebef8f589211fa304d71733af58415a9cbc9e9482348c",
+    "air_llm/airllm/nextgen/gguf_metal.py": "c81b3e34b2e223819f2c8ad8a28f7632b9a7c7565cac8e2ca7e7be5944906a1b",
+    "air_llm/airllm/nextgen/adaptive_cache.py": "66a7d9f08bee4d383f9970ec7d5602bb2364eff8d02765307f044e9b1201fddc",
+    "air_llm/airllm/nextgen/residency_cache.py": "8f3c8c90db77c3c2eb840926f8b99a765748158ae2ec2184e21259a69079b478"
+  },
+  "cold_encoded_bytes_per_step": 1964699264,
+  "traffic_by_role": {
+    "shared_blocks": 894773760,
+    "active_experts": 652738560,
+    "output_head": 417177600,
+    "output_norm": 8192,
+    "embedding_row": 1152
+  },
+  "kernel_calls_per_step": {
+    "512": {
+      "shared_blocks": 1360,
+      "active_experts": 1920,
+      "output_head": 485,
+      "total": 3765
+    },
+    "2048": {
+      "shared_blocks": 460,
+      "active_experts": 960,
+      "output_head": 122,
+      "total": 1542
+    },
+    "4096": {
+      "shared_blocks": 350,
+      "active_experts": 960,
+      "output_head": 61,
+      "total": 1371
+    }
+  },
+  "cache_capacity_bytes": 268435456,
+  "steady_encoded_bytes_lower_bound_at_capacity": 1696263808,
+  "cache_only_maximum_encoded_reduction_fraction": 0.13662928516269857,
+  "runs": [
+    {
+      "path": "evidence-native-gguf/first-complete-metal.json",
+      "status": "completed",
+      "steps": 1,
+      "rows": 512,
+      "logical_bytes": 1964699264,
+      "logical_bytes_per_step": 1964699264.0,
+      "cold_no_cache_per_step": 1964699264,
+      "encoded_bytes_saved_vs_cold": 0,
+      "saved_fraction_vs_cold": 0.0,
+      "cache_hit_fraction": 0.0,
+      "cache_hits": 0,
+      "cache_misses": 3582,
+      "cacheable_requests_per_step": 3582.0,
+      "packed_matmul_calls_per_step": 3765.0,
+      "predicted_calls_per_step": 3765,
+      "routed_expert_uses": 320.0,
+      "generation_seconds": 2.498515416002192,
+      "tokens_per_second": 0.40023767457879983,
+      "packed_read_seconds": 0.6094286881634616,
+      "matmul_seconds": 1.5499569319727016,
+      "source_hash_differences_from_current": [
+        "air_llm/airllm/nextgen/gguf.py",
+        "air_llm/airllm/nextgen/gguf_qwen.py"
+      ]
+    },
+    {
+      "path": "evidence-native-gguf/short16-metal.json",
+      "status": "completed",
+      "steps": 16,
+      "rows": 2048,
+      "logical_bytes": 31244931072,
+      "logical_bytes_per_step": 1952808192.0,
+      "cold_no_cache_per_step": 1964699264,
+      "encoded_bytes_saved_vs_cold": 190257152,
+      "saved_fraction_vs_cold": 0.006052362424053936,
+      "cache_hit_fraction": 0.007367886178861789,
+      "cache_hits": 203,
+      "cache_misses": 27349,
+      "cacheable_requests_per_step": 1722.0,
+      "packed_matmul_calls_per_step": 1542.0,
+      "predicted_calls_per_step": 1542,
+      "routed_expert_uses": 5120.0,
+      "generation_seconds": 16.72539025000151,
+      "tokens_per_second": 0.9566293976308597,
+      "packed_read_seconds": 4.344996682732017,
+      "matmul_seconds": 7.391141267304192,
+      "source_hash_differences_from_current": [
+        "air_llm/airllm/nextgen/gguf.py",
+        "air_llm/airllm/nextgen/gguf_qwen.py"
+      ]
+    },
+    {
+      "path": "evidence-native-gguf/short4-metal.json",
+      "status": "completed",
+      "steps": 4,
+      "rows": 512,
+      "logical_bytes": 7668941312,
+      "logical_bytes_per_step": 1917235328.0,
+      "cold_no_cache_per_step": 1964699264,
+      "encoded_bytes_saved_vs_cold": 189855744,
+      "saved_fraction_vs_cold": 0.024158372158885277,
+      "cache_hit_fraction": 0.02798715801228364,
+      "cache_hits": 401,
+      "cache_misses": 13927,
+      "cacheable_requests_per_step": 3582.0,
+      "packed_matmul_calls_per_step": 3765.0,
+      "predicted_calls_per_step": 3765,
+      "routed_expert_uses": 1280.0,
+      "generation_seconds": 8.647012875000655,
+      "tokens_per_second": 0.4625874920996572,
+      "packed_read_seconds": 1.281032287661219,
+      "matmul_seconds": 5.380777189908258,
+      "source_hash_differences_from_current": [
+        "air_llm/airllm/nextgen/gguf.py",
+        "air_llm/airllm/nextgen/gguf_qwen.py"
+      ]
+    },
+    {
+      "path": "evidence-native-gguf/stage32-metal.json",
+      "status": "completed",
+      "steps": 32,
+      "rows": 2048,
+      "logical_bytes": 62680119296,
+      "logical_bytes_per_step": 1958753728.0,
+      "cold_no_cache_per_step": 1964699264,
+      "encoded_bytes_saved_vs_cold": 190257152,
+      "saved_fraction_vs_cold": 0.0030261812120269127,
+      "cache_hit_fraction": 0.0036839430894308944,
+      "cache_hits": 203,
+      "cache_misses": 54901,
+      "cacheable_requests_per_step": 1722.0,
+      "packed_matmul_calls_per_step": 1542.0,
+      "predicted_calls_per_step": 1542,
+      "routed_expert_uses": 10240.0,
+      "generation_seconds": 33.19380724999792,
+      "tokens_per_second": 0.9640352418447573,
+      "packed_read_seconds": 7.828710933092225,
+      "matmul_seconds": 15.043667799451214,
+      "source_hash_differences_from_current": [
+        "air_llm/airllm/nextgen/gguf.py",
+        "air_llm/airllm/nextgen/gguf_qwen.py"
+      ]
+    }
+  ],
+  "periodic_cache_model": {
+    "3582": {
+      "requests_between_uses": 3582,
+      "decay_interval": 1024,
+      "steady_frequency_after_use": 1.0971024405623344,
+      "requests_until_benefit_reaches_zero": 136.90699967280617
+    },
+    "1722": {
+      "requests_between_uses": 1722,
+      "decay_interval": 1024,
+      "steady_frequency_after_use": 1.4529138381289601,
+      "requests_until_benefit_reaches_zero": 551.8839292311972
+    }
+  },
+  "limits": [
+    "Logical read bytes are not NAND bytes or physical SSD bandwidth.",
+    "A cache hit still imports packed NumPy bytes into MLX and executes the same product.",
+    "matmul_seconds includes host import, dispatch, assignment and synchronization, not GPU timestamp duration.",
+    "Class-aware policy speed is unmeasured by this analysis; rows4096 is an arithmetic projection, not a run."
+  ]
+}

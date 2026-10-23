@@ -1,0 +1,53 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "benchmarks/reference_gguf_torch.py",
+    "--model-file",
+    "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "--input-ids",
+    "42498",
+    "--max-new-tokens",
+    "1",
+    "--output",
+    "evidence-native-gguf/torch-real1.json",
+    "--logits-output",
+    "evidence-native-gguf/torch-real1-logits.npz",
+    "--row-chunk",
+    "1024",
+    "--max-context",
+    "64",
+    "--reserve-mib",
+    "3072"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 805306368,
+    "timeout_seconds": 300,
+    "interval_seconds": 0.05
+  },
+  "before": {
+    "available_bytes": 5400854528,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096313856,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 106,
+  "sampled_peak_rss_bytes": 611336192,
+  "minimum_available_bytes": 5171412992,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 5251203072,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096313856,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 6.234504166000988
+}

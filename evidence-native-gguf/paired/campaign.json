@@ -1,0 +1,226 @@
+{
+  "tokens_limit": 8,
+  "repeats": 2,
+  "seed": 20261023,
+  "cases": [
+    {
+      "name": "hello",
+      "text": "Hello",
+      "rendering": "raw completion",
+      "input_ids": [
+        9419
+      ]
+    },
+    {
+      "name": "math",
+      "text": "2+2=",
+      "rendering": "raw completion",
+      "input_ids": [
+        17,
+        10,
+        17,
+        28
+      ]
+    },
+    {
+      "name": "chat",
+      "text": "Explique en deux phrases pourquoi le ciel est bleu.",
+      "rendering": "Qwen35 chat, enable_thinking=false",
+      "input_ids": [
+        248045,
+        846,
+        198,
+        42498,
+        2295,
+        644,
+        24739,
+        30705,
+        83244,
+        501,
+        173941,
+        1725,
+        187451,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        271,
+        248069,
+        271
+      ]
+    }
+  ],
+  "variants": {
+    "reference": [
+      "reference",
+      2048,
+      null
+    ],
+    "metal512": [
+      "metal",
+      512,
+      null
+    ],
+    "metal2048": [
+      "metal",
+      2048,
+      null
+    ],
+    "metal-decay": [
+      "metal",
+      2048,
+      32768
+    ]
+  },
+  "order": [
+    [
+      1,
+      1,
+      "metal2048"
+    ],
+    [
+      1,
+      0,
+      "metal512"
+    ],
+    [
+      1,
+      1,
+      "reference"
+    ],
+    [
+      2,
+      1,
+      "reference"
+    ],
+    [
+      2,
+      0,
+      "reference"
+    ],
+    [
+      0,
+      0,
+      "metal2048"
+    ],
+    [
+      2,
+      0,
+      "metal2048"
+    ],
+    [
+      2,
+      1,
+      "metal2048"
+    ],
+    [
+      1,
+      0,
+      "metal2048"
+    ],
+    [
+      0,
+      1,
+      "metal512"
+    ],
+    [
+      0,
+      1,
+      "reference"
+    ],
+    [
+      0,
+      0,
+      "metal-decay"
+    ],
+    [
+      2,
+      1,
+      "metal512"
+    ],
+    [
+      1,
+      1,
+      "metal-decay"
+    ],
+    [
+      0,
+      0,
+      "metal512"
+    ],
+    [
+      1,
+      1,
+      "metal512"
+    ],
+    [
+      0,
+      0,
+      "reference"
+    ],
+    [
+      2,
+      0,
+      "metal-decay"
+    ],
+    [
+      0,
+      1,
+      "metal-decay"
+    ],
+    [
+      1,
+      0,
+      "metal-decay"
+    ],
+    [
+      2,
+      0,
+      "metal512"
+    ],
+    [
+      0,
+      1,
+      "metal2048"
+    ],
+    [
+      2,
+      1,
+      "metal-decay"
+    ],
+    [
+      1,
+      0,
+      "reference"
+    ]
+  ],
+  "completed": [
+    "math-r1-metal2048.json",
+    "math-r0-metal512.json",
+    "math-r1-reference.json",
+    "chat-r1-reference.json",
+    "chat-r0-reference.json",
+    "hello-r0-metal2048.json",
+    "chat-r0-metal2048.json",
+    "chat-r1-metal2048.json",
+    "math-r0-metal2048.json",
+    "hello-r1-metal512.json",
+    "hello-r1-reference.json",
+    "hello-r0-metal-decay.json",
+    "chat-r1-metal512.json",
+    "math-r1-metal-decay.json",
+    "hello-r0-metal512.json",
+    "math-r1-metal512.json",
+    "hello-r0-reference.json",
+    "chat-r0-metal-decay.json",
+    "hello-r1-metal-decay.json",
+    "math-r0-metal-decay.json",
+    "chat-r0-metal512.json",
+    "hello-r1-metal2048.json",
+    "chat-r1-metal-decay.json",
+    "math-r0-reference.json"
+  ]
+}

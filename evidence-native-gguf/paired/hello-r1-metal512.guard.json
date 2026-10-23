@@ -1,0 +1,56 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-4/outputs/airllm-next/benchmarks/benchmark_native_gguf.py",
+    "--model",
+    "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "--output",
+    "evidence-native-gguf/paired/hello-r1-metal512.json",
+    "--phase",
+    "generate",
+    "--token-ids",
+    "9419",
+    "--tokens",
+    "8",
+    "--kernel",
+    "metal",
+    "--rows",
+    "512",
+    "--cache-mib",
+    "256",
+    "--logits-output",
+    "evidence-native-gguf/paired/hello-r1-metal512.npy",
+    "--worker"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 805306368,
+    "timeout_seconds": 900,
+    "interval_seconds": 0.05
+  },
+  "before": {
+    "available_bytes": 5120376832,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096772608,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 297,
+  "sampled_peak_rss_bytes": 519274496,
+  "minimum_available_bytes": 4984864768,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 5246697472,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096772608,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 17.937759792002907
+}

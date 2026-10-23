@@ -1,0 +1,547 @@
+{
+  "schema_version": 1,
+  "model_path": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "model_file_bytes": 23938321664,
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "numpy": "2.5.3",
+  "gguf_python": "0.19.0",
+  "method": "pread only; no mmap; <=16 MiB encoded tensor payload across all samples; FP32 elementwise exact parity",
+  "timing_scope": "Warm in-memory CPU codec microbenchmark; other team tests may run; not inference speed or physical SSD bandwidth",
+  "provenance": {
+    "ggml_source_url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/master/ggml/src/ggml-quants.c",
+    "ggml_source_sha256": "5574a2dccf7c07e75b143733e04a5412d3d8c819e7945f5217a7b83a2b2ff8ab",
+    "extracted_c_sha256": "5427f8c06cb4a03d3989af8f0d414f2bcff1f7d4619015bf0b90e75eceb6d6ee",
+    "python_upstream_source_url": "https://raw.githubusercontent.com/ggml-org/llama.cpp/master/gguf-py/gguf/quants.py",
+    "python_upstream_download_sha256": "5c30d83fda855283a3239e479a26f35ea002ddd7650fcc4d255e6210fc9e72f1",
+    "installed_gguf_quants_sha256": "db403c3b2292d3f2c5cfef4109d4b5745f437b5599c7afc94d4b97feca7e9247",
+    "compiler_flags": [
+      "cc",
+      "-O2",
+      "-ffp-contract=off",
+      "-dynamiclib",
+      "-fPIC"
+    ],
+    "license": "MIT (GGML/llama.cpp); functions extracted unmodified, local half-to-float adapter uses _Float16"
+  },
+  "samples": [
+    {
+      "name": "blk.0.attn_norm.weight",
+      "row": 0,
+      "tensor_shape": [
+        2048
+      ],
+      "type": "F32",
+      "encoded_bytes": 8192,
+      "elements": 2048,
+      "packed_sha256": "f452e90d3bc696497fce0aee0233ce7d3f7dfa4dbfc2ebcc992d426a5df9e4ee",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.blk.0.attn_v.bias",
+      "row": 0,
+      "tensor_shape": [
+        1152
+      ],
+      "type": "F32",
+      "encoded_bytes": 4608,
+      "elements": 1152,
+      "packed_sha256": "6b278fee92a8c0d22fd12e59a4d4470880cba62e6895dea0332afb5199263c43",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.patch_embed.bias",
+      "row": 0,
+      "tensor_shape": [
+        1152
+      ],
+      "type": "F32",
+      "encoded_bytes": 4608,
+      "elements": 1152,
+      "packed_sha256": "527f16070436543fb268bcedb5a65b43053d63439d1971935496f741e4202115",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "blk.0.ffn_gate_inp_shexp.weight",
+      "row": 0,
+      "tensor_shape": [
+        1,
+        2048
+      ],
+      "type": "F16",
+      "encoded_bytes": 4096,
+      "elements": 2048,
+      "packed_sha256": "fa48a81d367f548a75c01c60f9f0196e17c82baf5334df9589eab7e0c8443a5e",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.blk.18.attn_q.weight",
+      "row": 0,
+      "tensor_shape": [
+        1152,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "05a404d1b752197f4f8f632295d4eb149e89379c6dca30708e07b025b26c5b79",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.blk.18.attn_q.weight",
+      "row": 576,
+      "tensor_shape": [
+        1152,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "01ed0c6a145c9c8d6726bd4a92f0708c802af750857977d2fec7e60200525b68",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.blk.18.attn_q.weight",
+      "row": 1151,
+      "tensor_shape": [
+        1152,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "7ef5c7a5ce0fe92c1ec110be8376956bca2e5bd68d2f9dc8c52289ba9f931d0e",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.pos_embed.weight",
+      "row": 0,
+      "tensor_shape": [
+        2304,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "ae228b893526406fe64bae74949ed93bf5796f9094f4f8c164a1215de3245b49",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.pos_embed.weight",
+      "row": 1152,
+      "tensor_shape": [
+        2304,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "c65b9b430d0ed16337251237fe6e19e9930a5e4ac820ab5746643dbd82a04253",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "v.pos_embed.weight",
+      "row": 2303,
+      "tensor_shape": [
+        2304,
+        1152
+      ],
+      "type": "F16",
+      "encoded_bytes": 2304,
+      "elements": 1152,
+      "packed_sha256": "20ca1855480404465dad7e2b0a01de3f4c862a7ca69d49ce466294b72d345d42",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": null,
+      "c_max_abs_error": null
+    },
+    {
+      "name": "blk.0.attn_gate.weight",
+      "row": 0,
+      "tensor_shape": [
+        4096,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "251abaa88c3b2e9908a5308fe0110b1d9d4dea31affa59bd781bfbb46f5a8636",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.0.attn_gate.weight",
+      "row": 2048,
+      "tensor_shape": [
+        4096,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "a5fc357c8692a230b83cdeb62b61b248930806c4c6cfe18b0aaac088b8c25ac0",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.0.attn_gate.weight",
+      "row": 4095,
+      "tensor_shape": [
+        4096,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "17e7540725fdd31bb697e0841f9f7b7e963fccea670bc541821d250e4fb9da5f",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.20.ffn_up_exps.weight",
+      "row": 0,
+      "tensor_shape": [
+        256,
+        512,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "3f0ecfba653dadc2cfd10af152a2800e50960f6b315a44b8e3d2ef004b114213",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.20.ffn_up_exps.weight",
+      "row": 65536,
+      "tensor_shape": [
+        256,
+        512,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "4331b8b7572afc71cd7254e16131c15b69945f8e08ba8e672686bb9d2a4840f8",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.20.ffn_up_exps.weight",
+      "row": 131071,
+      "tensor_shape": [
+        256,
+        512,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "e004208127371401a1de31d04d3ead26fcf36eaa590acac5b079025a7b207239",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "token_embd.weight",
+      "row": 0,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "c2a11d179d9dc1cfc1686f1eab7a8ca2179cf2df34545ce2fb109ca5f6041f87",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "token_embd.weight",
+      "row": 124160,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "ecd3a9d784327761770eeeaa3e4c8e304f176c146bdab6cfc8002ffbfeca334c",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "token_embd.weight",
+      "row": 248319,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q4_K",
+      "encoded_bytes": 1152,
+      "elements": 2048,
+      "packed_sha256": "77dfade1aed0120243a8532cb9e0292e87860df87ad289e8555c959d2353f131",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.0.ffn_down_exps.weight",
+      "row": 0,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "94d2f7f1bb0f20aaf796534af886c31ddf780cb355f701fd04e6ebca85342aef",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.0.ffn_down_exps.weight",
+      "row": 262144,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "577450eddc4367727943665c9dee4447bf09628bc3cd4f8f75ae8306216383fb",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.0.ffn_down_exps.weight",
+      "row": 524287,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "70efc86fcb8ed5b6be20825490f0b4a69e122bbf6f44fc02e00b7b20a742cecb",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.21.ffn_down_exps.weight",
+      "row": 0,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "0db2292e35966c4a5ce66ca695a2a773a766613d239fc50946f7d56ca97c244f",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.21.ffn_down_exps.weight",
+      "row": 262144,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "2520eb3ee86bade07589a002fece35e1255f1b8db853f876a06a71f55a8d18c6",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "blk.21.ffn_down_exps.weight",
+      "row": 524287,
+      "tensor_shape": [
+        256,
+        2048,
+        512
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 420,
+      "elements": 512,
+      "packed_sha256": "c2c224e83a53bdd1abbff44645e729cbd83dd9a5bd8decfb8e1eb7f626a34faa",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "output.weight",
+      "row": 0,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 1680,
+      "elements": 2048,
+      "packed_sha256": "d7f1eba1da59cba47f47b0af7aaa5013796aab8bfc71d2905b1ad72ba6d97933",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "output.weight",
+      "row": 124160,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 1680,
+      "elements": 2048,
+      "packed_sha256": "51b97cc4bdd58c636b09e49928720c941336c7dc90c2c510a74215a0521d854c",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    },
+    {
+      "name": "output.weight",
+      "row": 248319,
+      "tensor_shape": [
+        248320,
+        2048
+      ],
+      "type": "Q6_K",
+      "encoded_bytes": 1680,
+      "elements": 2048,
+      "packed_sha256": "11149dc6879ba125edead7b88755be123d1c20a3817bc81841bb006f72c4dbc8",
+      "python_exact": true,
+      "python_max_abs_error": 0.0,
+      "c_exact": true,
+      "c_max_abs_error": 0.0
+    }
+  ],
+  "microbenchmarks": [
+    {
+      "type": "Q4_K",
+      "name": "blk.0.attn_gate.weight",
+      "rows": 256,
+      "encoded_bytes": 294912,
+      "elements": 524288,
+      "timings": {
+        "portable_numpy": {
+          "median_seconds": 0.000503791499795625,
+          "minimum_seconds": 0.00048024999705376104,
+          "repeats": 20
+        },
+        "upstream_python": {
+          "median_seconds": 0.0008495420006511267,
+          "minimum_seconds": 0.0008196249982574955,
+          "repeats": 20
+        },
+        "upstream_c": {
+          "median_seconds": 5.275000148685649e-05,
+          "minimum_seconds": 5.241700273472816e-05,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "type": "Q6_K",
+      "name": "blk.0.ffn_down_exps.weight",
+      "rows": 256,
+      "encoded_bytes": 107520,
+      "elements": 131072,
+      "timings": {
+        "portable_numpy": {
+          "median_seconds": 0.00020358349866000935,
+          "minimum_seconds": 0.0001997500003199093,
+          "repeats": 20
+        },
+        "upstream_python": {
+          "median_seconds": 0.0003203545020369347,
+          "minimum_seconds": 0.0003161669956170954,
+          "repeats": 20
+        },
+        "upstream_c": {
+          "median_seconds": 1.2500000593718141e-05,
+          "minimum_seconds": 1.2124997738283128e-05,
+          "repeats": 20
+        }
+      }
+    }
+  ],
+  "reader_stats": {
+    "read_calls": 504273,
+    "bytes_read": 4552282,
+    "logical_bytes": 4552282,
+    "index_bytes": 4043338,
+    "tensor_bytes": 508944,
+    "decoded_rows": 28,
+    "peak_operation_bytes": 589824,
+    "peak_reserved_bytes": 1529888,
+    "encoded_file_bytes": 23938321664
+  },
+  "indexed_tensor_count": 1194,
+  "architecture": "qwen35moe",
+  "encoded_sample_bytes_including_rereads": 508944,
+  "status": "PASS"
+}

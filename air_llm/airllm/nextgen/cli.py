@@ -127,8 +127,14 @@ def apply_combined_allocator(target,draft,budget):
 
 
 def main(argv=None):
+    argv=list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] in ('gguf-run','gguf-inspect'):
+        from .gguf_cli import main as gguf_main
+        return gguf_main(argv)
     parser=argparse.ArgumentParser(prog='airllm-next',description='Local streamed MLX GLM/Llama inference and explicit experimental Qwen backend')
     sub=parser.add_subparsers(dest='command',required=True)
+    sub.add_parser('gguf-run',help='Experimental supervised native Qwen35 MoE GGUF text generation')
+    sub.add_parser('gguf-inspect',help='Read GGUF index without mapping weights')
     doctor=sub.add_parser('doctor',help='Check local environment without model weights')
     inspect=sub.add_parser('inspect',help='Offline architecture, quantization and storage feasibility (no inference)')
     inspect.add_argument('model');inspect.add_argument('--tokens',type=nonnegative_int,default=4096)

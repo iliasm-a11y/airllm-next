@@ -1,0 +1,51 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "-m",
+    "airllm.nextgen.gguf_cli",
+    "gguf-run",
+    "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "--prompt",
+    "Explique en deux phrases pourquoi le ciel est bleu.",
+    "--max-new-tokens",
+    "4",
+    "--kernel",
+    "metal",
+    "--row-chunk",
+    "2048",
+    "--report",
+    "evidence-native-gguf/cli-chat4.json",
+    "--worker"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 939524096,
+    "timeout_seconds": 900,
+    "interval_seconds": 0.05
+  },
+  "before": {
+    "available_bytes": 5444075520,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3104702464,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 262,
+  "sampled_peak_rss_bytes": 677183488,
+  "minimum_available_bytes": 4733403136,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 4743872512,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3104702464,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 15.624732417003543
+}
