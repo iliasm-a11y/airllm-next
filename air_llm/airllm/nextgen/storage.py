@@ -9,22 +9,26 @@ from contextlib import contextmanager
 import errno
 import mmap
 import os
+import sys
 from pathlib import Path
 from threading import RLock
 from time import perf_counter
 import numpy as np
 from ..ultra.checkpoint import DirectCheckpoint
+from .physical_io import physical_read_bytes, physical_read_counter_info, set_fd_nocache
 
 _DT = {'F32':'<f4','F16':'<f2','BF16':'<u2','U32':'<u4','U8':'u1',
        'F8_E4M3':'u1','F8_E4M3FN':'u1','I32':'<i4','I64':'<i8','F64':'<f8'}
 
 
-def physical_read_bytes():
-    """Linux actual storage bytes charged to process, incl. readahead. None on macOS."""
-    try:
-        lines = Path('/proc/self/io').read_text().splitlines()
-        return int(next(s.split(':',1)[1] for s in lines if s.startswith('read_bytes:')))
-    except (OSError, StopIteration, ValueError): return None
+READ_MODES = ('pread', 'mmap', 'pread_nocache')
+
+
+def _validate_mode(mode):
+    if mode not in READ_MODES:
+        raise ValueError('mode must be pread, mmap or pread_nocache')
+    if mode == 'pread_nocache' and sys.platform != 'darwin':
+        raise NotImplementedError('pread_nocache requires macOS F_NOCACHE')
 
 
 def encoded_read_bytes(checkpoint):
@@ -34,13 +38,18 @@ def encoded_read_bytes(checkpoint):
 
 
 class OffsetCheckpoint(DirectCheckpoint):
-    def __init__(self, root, cache_dir=None, max_open_files=16, max_read_bytes=512*1024**2):
+    def __init__(self, root, cache_dir=None, max_open_files=16, max_read_bytes=512*1024**2,
+                 *, profile_io=False, profile_max_intervals=8192, profile_max_groups=512):
         if not isinstance(max_read_bytes,int) or isinstance(max_read_bytes,bool) or max_read_bytes < 1:
             raise ValueError('max_read_bytes must be a positive integer')
+        if type(profile_io) is not bool:raise ValueError('profile_io must be boolean')
         super().__init__(root, cache_dir, max_open_files)
         self.fds = OrderedDict()
         self.io_lock = RLock()
         self.max_read_bytes = max_read_bytes
+        self._profiler = None
+        if profile_io:
+            self.enable_profiler(max_intervals=profile_max_intervals,max_groups=profile_max_groups)
         # Validate full shape/dtype byte counts even on a reused metadata manifest.
         ranges=defaultdict(list)
         for key,d in self.tensors.items():
@@ -59,54 +68,94 @@ class OffsetCheckpoint(DirectCheckpoint):
             if any(a[1]>b[0] for a,b in zip(intervals,intervals[1:])):
                 raise ValueError('Overlapping tensor storage ranges')
 
+    def enable_profiler(self, *, max_intervals=8192, max_groups=512):
+        """Start a fresh opt-in bounded session before scheduling concurrent IO."""
+        from .io_profile import IOProfiler
+        with self.io_lock:
+            self._profiler=IOProfiler(max_intervals=max_intervals,max_groups=max_groups,
+                                      physical_counter=physical_read_bytes,
+                                      physical_counter_source=physical_read_counter_info()['source'])
+            return self._profiler
+
+    def io_profile(self):
+        """Return a JSON-serializable snapshot, or None when profiling is off."""
+        profiler=getattr(self,'_profiler',None)
+        return profiler.snapshot() if profiler is not None else None
+
     @contextmanager
-    def descriptor(self, name):
-        # Duplicate a borrowed descriptor under lock so LRU eviction cannot close
-        # an fd while a concurrent read is in flight. Only a few live borrows.
+    def descriptor(self, name, *, mode='pread'):
+        # Cache policy belongs to an open file description and is shared by dup.
+        # Separate opens prevent nocache policy leaking into pread/mmap borrows.
+        _validate_mode(mode)
+        cache_key = (name, mode == 'pread_nocache')
         with self.io_lock:
             if self.closed: raise RuntimeError('Checkpoint is closed')
-            if name not in self.fds:
-                self.fds[name] = os.open(self.root/name, os.O_RDONLY)
+            if cache_key not in self.fds:
+                opened = os.open(self.root/name, os.O_RDONLY)
+                try:
+                    if mode == 'pread_nocache': set_fd_nocache(opened)
+                except BaseException:
+                    os.close(opened)
+                    raise
+                self.fds[cache_key] = opened
                 self.stats['fd_opens'] += 1
-            self.fds.move_to_end(name)
-            fd = os.dup(self.fds[name])
+            self.fds.move_to_end(cache_key)
+            fd = os.dup(self.fds[cache_key])
             while len(self.fds) > self.max_open_files:
                 _,old = self.fds.popitem(last=False); os.close(old)
         try: yield fd
         finally: os.close(fd)
 
-    def _bytes(self, filename, offset, size, mode='pread'):
-        if mode not in ('pread','mmap'): raise ValueError('mode must be pread or mmap')
+    def _bytes(self, filename, offset, size, mode='pread', *, _profile_regions=()):
+        _validate_mode(mode)
         if type(offset) is not int or type(size) is not int or offset < 0 or size < 0:
             raise ValueError('Read offset and size must be nonnegative integers')
         if size > self.max_read_bytes: raise MemoryError('Read exceeds max_tensor_bytes; use row tiles')
-        t=perf_counter()
-        with self.descriptor(filename) as fd:
-            if mode == 'mmap':
-                base = offset//mmap.ALLOCATIONGRANULARITY*mmap.ALLOCATIONGRANULARITY
-                if not size: data=b''
-                else:
-                    with mmap.mmap(fd,size+offset-base,access=mmap.ACCESS_READ,offset=base) as m:
-                        data=m[offset-base:offset-base+size]  # Explicit fault/copy here
-            elif mode == 'pread':
-                # preadv avoids a second giant copy; fallback pread is necessary
-                # on Python/macOS builds without preadv. Short reads are retried.
-                buf=bytearray(size); pos=0; attempts=0
-                while pos < size:
-                    try:
-                        if hasattr(os,'preadv'):
-                            n=os.preadv(fd,[memoryview(buf)[pos:]],offset+pos)
-                        else:
-                            chunk=os.pread(fd,min(size-pos,8*1024**2),offset+pos)
-                            n=len(chunk);buf[pos:pos+n]=chunk
-                    except OSError as e:
-                        if e.errno in (errno.EINTR,errno.EAGAIN) and attempts<3:
-                            attempts+=1;continue
-                        raise
-                    if not n: raise EOFError(f'Short checkpoint read: {filename}@{offset+pos}')
-                    pos+=n
-                data=buf
-            else: raise ValueError('mode must be pread or mmap')
+        t=perf_counter();actual=0;complete=False;profiler=self._profiler
+        try:
+            with self.descriptor(filename, mode=mode) as fd:
+                if mode == 'mmap':
+                    base = offset//mmap.ALLOCATIONGRANULARITY*mmap.ALLOCATIONGRANULARITY
+                    if not size: data=b''
+                    else:
+                        with mmap.mmap(fd,size+offset-base,access=mmap.ACCESS_READ,offset=base) as m:
+                            data=m[offset-base:offset-base+size]  # Explicit fault/copy here
+                    actual=len(data)
+                else:  # pread and explicitly configured pread_nocache
+                    # preadv avoids a second giant copy; fallback pread is necessary
+                    # on Python/macOS builds without preadv. Short reads are retried.
+                    # Small macOS reads can return their owned bytes directly;
+                    # preadv would first zero-fill an equally sized bytearray.
+                    # Keep vector IO for large regions and other platforms.
+                    vectorized=hasattr(os,'preadv') and not (sys.platform == 'darwin' and size <= 8*1024**2)
+                    buf=bytearray(size) if vectorized else None
+                    data=None;pos=0;attempts=0
+                    while pos < size:
+                        try:
+                            if vectorized:
+                                n=os.preadv(fd,[memoryview(buf)[pos:]],offset+pos)
+                            else:
+                                chunk=os.pread(fd,min(size-pos,8*1024**2),offset+pos)
+                                n=len(chunk)
+                                if pos == 0 and n == size:
+                                    # A complete bounded pread already owns
+                                    # exact immutable bytes.
+                                    # Avoid a second allocation/zero-fill/copy.
+                                    data=chunk;pos=n;actual=n;break
+                                if buf is None:buf=bytearray(size)
+                                buf[pos:pos+n]=chunk
+                        except OSError as e:
+                            if e.errno in (errno.EINTR,errno.EAGAIN) and attempts<3:
+                                attempts+=1;continue
+                            raise
+                        if not n: raise EOFError(f'Short checkpoint read: {filename}@{offset+pos}')
+                        pos+=n;actual=pos
+                    if data is None:data=buf if buf is not None else b''
+            complete=True
+        finally:
+            if profiler is not None:
+                profiler.record_read(filename,offset,actual,perf_counter()-t,mode,
+                                     _profile_regions,failed=not complete)
         with self.io_lock:
             self.stats['logical_bytes']+=size;self.stats['read_calls']+=1
             self.stats['io_seconds']+=perf_counter()-t
@@ -133,7 +182,13 @@ class OffsetCheckpoint(DirectCheckpoint):
 
     def read_array(self,key,*,rows=None,expert=None,mode='pread'):
         filename,offset,size,dt,shape=self._region(key,rows=rows,expert=expert)
-        data=self._bytes(filename,offset,size,mode)
+        _validate_mode(mode)
+        if size>self.max_read_bytes:raise MemoryError('Read exceeds max_tensor_bytes; use row tiles')
+        profiler=getattr(self,'_profiler',None)
+        if profiler is not None:
+            regions=profiler.requests([(filename,offset,size,key,expert)])
+            data=self._bytes(filename,offset,size,mode,_profile_regions=regions)
+        else:data=self._bytes(filename,offset,size,mode)
         with self.io_lock:self.stats['requested_bytes']+=size
         return np.frombuffer(data,dtype=dt).reshape(shape)
 
@@ -146,13 +201,13 @@ class OffsetCheckpoint(DirectCheckpoint):
         The total backing allocation, including gaps, is validated before IO;
         callers must consume/release one bounded batch before requesting another.
         """
-        if mode not in ('pread','mmap'):raise ValueError('mode must be pread or mmap')
+        _validate_mode(mode)
         if not isinstance(max_gap_bytes,int) or isinstance(max_gap_bytes,bool) or max_gap_bytes<0:
             raise ValueError('max_gap_bytes must be a nonnegative integer')
         budget=self.max_read_bytes if max_batch_bytes is None else max_batch_bytes
         if not isinstance(budget,int) or isinstance(budget,bool) or budget<1:
             raise ValueError('max_batch_bytes must be a positive integer')
-        regions=[]
+        regions=[];profile_requests=[];profiler=getattr(self,'_profiler',None)
         for i,request in enumerate(requests):
             if isinstance(request,str):request={'key':request}
             if not isinstance(request,dict) or set(request)-{'key','rows','expert'}:
@@ -160,6 +215,8 @@ class OffsetCheckpoint(DirectCheckpoint):
             filename,offset,size,dt,shape=self._region(**request)
             if size>self.max_read_bytes:raise MemoryError('Read exceeds max_tensor_bytes; use row tiles')
             regions.append((filename,offset,size,dt,shape,i))
+            if profiler is not None:
+                profile_requests.append((filename,offset,size,request['key'],request.get('expert')))
         groups=[]
         for region in sorted(regions,key=lambda r:(r[0],r[1])):
             filename,offset,size,_,_,_=region
@@ -170,10 +227,14 @@ class OffsetCheckpoint(DirectCheckpoint):
             else:groups.append([filename,offset,end,[region]])
         allocated=sum(end-start for _,start,end,_ in groups)
         if allocated>budget:raise MemoryError('Coalesced batch exceeds max_batch_bytes; split the request batch')
+        tagged=profiler.requests(profile_requests) if profiler is not None else None
         output=[None]*len(regions)
         requested=sum(r[2] for r in regions)
         for filename,start,end,entries in groups:
-            data=self._bytes(filename,start,end-start,mode)
+            if tagged is not None:
+                data=self._bytes(filename,start,end-start,mode,
+                                 _profile_regions=[tagged[r[5]] for r in entries])
+            else:data=self._bytes(filename,start,end-start,mode)
             for _,offset,size,dt,shape,i in entries:
                 output[i]=np.frombuffer(data,dtype=dt,count=size//dt.itemsize,offset=offset-start).reshape(shape)
         with self.io_lock:

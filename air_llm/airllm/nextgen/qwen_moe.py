@@ -65,6 +65,7 @@ class QwenSparseMLP:
             raise ValueError('Qwen MoE expects [batch, sequence, hidden_size]')
         ids,weights=qwen_route(mx,x,self.r.get(self.p+'gate.weight'),self.c)
         host=np.asarray(ids); flat=x.reshape(-1,x.shape[-1]); selected=np.unique(host)
+        if hasattr(self.r,'observe_layer'):self.r.observe_layer(self.layer,selected)
         self.routes={int(e):int(np.count_nonzero(host==e)) for e in selected}
         output=mx.zeros_like(flat)
         for j,expert in enumerate(selected):

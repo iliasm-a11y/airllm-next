@@ -1,0 +1,46 @@
+running reference
+running native_off
+running native
+running native_spec
+{
+  "reference": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 0.0,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 7.112000959001307,
+    "process_peak_rss_bytes": 751583232,
+    "raw_report": "granite-metal-after-stream-fix-reference.json"
+  },
+  "native_off": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 8.106231689453125e-05,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 1.3061901455002953,
+    "process_peak_rss_bytes": 706035712,
+    "raw_report": "granite-metal-after-stream-fix-native_off.json"
+  },
+  "native": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 8.106231689453125e-05,
+    "bitwise_equal_first_native_variant": true,
+    "median_generation_seconds": 1.0713123329987866,
+    "process_peak_rss_bytes": 715423744,
+    "raw_report": "granite-metal-after-stream-fix-native.json"
+  },
+  "native_spec": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 8.106231689453125e-05,
+    "bitwise_equal_first_native_variant": true,
+    "median_generation_seconds": 1.0414027919978253,
+    "process_peak_rss_bytes": 718159872,
+    "raw_report": "granite-metal-after-stream-fix-native_spec.json"
+  }
+}

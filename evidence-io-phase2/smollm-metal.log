@@ -1,0 +1,130 @@
+{
+  "output": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/outputs/airllm-next/evidence-io-phase2/smollm-metal.json",
+  "summaries": {
+    "adaptive_pipeline_nocache": {
+      "process_cold_median_seconds": 0.8701521659968421,
+      "warm_median_seconds": 0.6974952500022482,
+      "warm_median_logical_bytes": 2187095040.0,
+      "warm_median_read_calls": 1608.0,
+      "peak_process_rss_bytes": 705675264,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.7328479585012246,
+          "warm_median_logical_bytes": 2192401152.0,
+          "warm_median_read_calls": 1609.0,
+          "warm_speedup_vs_reference": 1.0471375346014453
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.6974952500022482,
+          "warm_median_logical_bytes": 2187095040.0,
+          "warm_median_read_calls": 1608.0,
+          "warm_speedup_vs_reference": 0.9196237658944091
+        }
+      },
+      "warm_speedup_vs_reference": 0.9823447722362306
+    },
+    "adaptive_pipeline": {
+      "process_cold_median_seconds": 0.7038177080030437,
+      "warm_median_seconds": 0.7309005205024732,
+      "warm_median_logical_bytes": 2272913280.0,
+      "warm_median_read_calls": 1655.5,
+      "peak_process_rss_bytes": 708935680,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.7978280624993204,
+          "warm_median_logical_bytes": 2282644224.0,
+          "warm_median_read_calls": 1660.0,
+          "warm_speedup_vs_reference": 0.9618521089602916
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.7309005205024732,
+          "warm_median_logical_bytes": 2244602880.0,
+          "warm_median_read_calls": 1640.5,
+          "warm_speedup_vs_reference": 0.8775930383242344
+        }
+      },
+      "warm_speedup_vs_reference": 0.9374474272206963
+    },
+    "reference": {
+      "process_cold_median_seconds": 0.9336045000018203,
+      "warm_median_seconds": 0.9225917084986577,
+      "warm_median_logical_bytes": 4304506752.0,
+      "warm_median_read_calls": 4743.0,
+      "peak_process_rss_bytes": 683540480,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.9179601459982223,
+          "warm_median_logical_bytes": 4304505600.0,
+          "warm_median_read_calls": 4742.0,
+          "warm_speedup_vs_reference": 0.8359759493351259
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.9351749169982213,
+          "warm_median_logical_bytes": 4304507904.0,
+          "warm_median_read_calls": 4744.0,
+          "warm_speedup_vs_reference": 0.6858965064625978
+        }
+      },
+      "warm_speedup_vs_reference": 0.7426695971659149
+    },
+    "baseline": {
+      "process_cold_median_seconds": 0.7426675419992534,
+      "warm_median_seconds": 0.6851808124993113,
+      "warm_median_logical_bytes": 2210095872.0,
+      "warm_median_read_calls": 1624.5,
+      "peak_process_rss_bytes": 704135168,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.7673926045026747,
+          "warm_median_logical_bytes": 2210095872.0,
+          "warm_median_read_calls": 1629.5,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.6414332085005299,
+          "warm_median_logical_bytes": 2201250816.0,
+          "warm_median_read_calls": 1624.5,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    },
+    "pread_nocache": {
+      "process_cold_median_seconds": 0.9245163330051582,
+      "warm_median_seconds": 0.9070339584977773,
+      "warm_median_logical_bytes": 4304506752.0,
+      "warm_median_read_calls": 4743.0,
+      "peak_process_rss_bytes": 683507712,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.8865511039984995,
+          "warm_median_logical_bytes": 4304505600.0,
+          "warm_median_read_calls": 4742.0,
+          "warm_speedup_vs_reference": 0.865593197100089
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.936754104001011,
+          "warm_median_logical_bytes": 4304507904.0,
+          "warm_median_read_calls": 4744.0,
+          "warm_speedup_vs_reference": 0.6847402170546963
+        }
+      },
+      "warm_speedup_vs_reference": 0.7554081146356444
+    }
+  }
+}

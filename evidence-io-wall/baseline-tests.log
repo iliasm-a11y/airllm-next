@@ -1,0 +1,41 @@
+........................................................................ [ 11%]
+........................................................................ [ 22%]
+........................................................................ [ 33%]
+.................................................................. [ 44%]
+........................................................................ [ 55%]
+..................................................F..................... [ 66%]
+........................................................................ [ 78%]
+....................s.............................................. [ 88%]
+........................................................................ [100%]
+=================================== FAILURES ===================================
+_ test_glm_eight_tokens_and_cached_logits_match_torch_with_zero_queries[prompt0] _
+
+tiny_glm = (PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-41/test_glm_eight_tokens...5)
+    (rotary_emb): GlmMoeDsaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=48, out_features=96, bias=False)
+))
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-41/test_glm_eight_tokens_and_cach0')
+prompt = [1, 8, 12]
+
+    @pytest.mark.parametrize('prompt', [[1, 8, 12], [0, 0, 0, 0, 0]])
+    def test_glm_eight_tokens_and_cached_logits_match_torch_with_zero_queries(tiny_glm, tmp_path, prompt):
+        root, reference = tiny_glm
+        ids = torch.tensor([prompt])
+        with torch.inference_mode():
+            expected_tokens = reference.generate(ids, attention_mask=torch.ones_like(ids),
+                                                  max_new_tokens=8, do_sample=False).tolist()
+        if prompt == [1, 8, 12]:
+            # This unchanged release fixture exposed the inherited selection bug.
+>           assert expected_tokens[0][3:] == [57, 57, 8, 0, 77, 45, 72, 57]
+E           assert [57, 57, 8, 0, 43, 58, ...] == [57, 57, 8, 0, 77, 45, ...]
+E             
+E             At index 4 diff: 43 != 77
+E             Use -v to get more diff
+
+tests_next/test_v5_dsa_ties.py:60: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+Writing model shards:   0%|          | 0/5 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 5/5 [00:00<00:00, 3999.91it/s]
+=========================== short test summary info ============================
+FAILED air_llm/test_v5_dsa_ties.py::test_glm_eight_tokens_and_cached_logits_match_torch_with_zero_queries[prompt0]
+1 failed, 635 passed, 1 skipped, 11 subtests passed in 15.53s

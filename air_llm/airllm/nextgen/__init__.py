@@ -11,6 +11,9 @@ def __getattr__(name):
     if name == 'AirLLMNextLlamaModel':
         from .llama_runtime import AirLLMNextLlamaModel
         return AirLLMNextLlamaModel
+    if name == 'AirLLMNextGraniteMoeModel':
+        from .granite_runtime import AirLLMNextGraniteMoeModel
+        return AirLLMNextGraniteMoeModel
     if name == 'AgentEngine':
         from .agent_engine import AgentEngine
         return AgentEngine

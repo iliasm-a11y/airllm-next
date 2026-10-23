@@ -1,0 +1,27 @@
+{
+  "mlx_version": "0.32.4",
+  "root_cause": "MLX0.32.4 process-global default_device is changed by worker StreamContext while main thread constructsGPU graph",
+  "baseline_source": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/work/phase1-source/air_llm/airllm/nextgen/weights.py",
+  "negative_control_real_baseline_loader": [
+    {
+      "dtype_path": "F32",
+      "old_loader_trips_main_device_assertion": true
+    },
+    {
+      "dtype_path": "BF16",
+      "old_loader_trips_main_device_assertion": true
+    },
+    {
+      "dtype_path": "FP8",
+      "old_loader_trips_main_device_assertion": true
+    }
+  ],
+  "positive_control": "tests_next/test_worker_streams.py F32/BF16/FP8 passed after explicitCPUstream fix",
+  "targeted_tests": "56passed (worker_streams/storage_coalesced/fp8_model/granite_runtime/storage_cache_quant)",
+  "primary_sources": [
+    "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/mlx/device.cpp",
+    "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/mlx/stream.cpp",
+    "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/mlx/utils.h"
+  ],
+  "scope": "Controlled cross-thread defaults and exact tiny decoded matrices; trained Metal before/after must be validated separately"
+}

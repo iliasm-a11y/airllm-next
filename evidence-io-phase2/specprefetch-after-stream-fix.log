@@ -1,0 +1,82 @@
+W1023 13:34:21.995000 81399 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Writing model shards:   0%|          | 0/5 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 5/5 [00:00<00:00, 1659.01it/s]
+{
+  "output": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/outputs/airllm-next/evidence-io-phase2/specprefetch-after-stream-fix.json",
+  "summaries": {
+    "reference": {
+      "process_cold_median_seconds": 0.41671820799820125,
+      "warm_median_seconds": 0.059319145999324974,
+      "warm_median_logical_bytes": 4094272.0,
+      "warm_median_read_calls": 1197.5,
+      "peak_process_rss_bytes": 231817216,
+      "warm_generation_count": 30,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.056198332997155376,
+          "warm_median_logical_bytes": 3706112,
+          "warm_median_read_calls": 1074,
+          "warm_speedup_vs_reference": 1.1922084058935165
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.0669172920024721,
+          "warm_median_logical_bytes": 4482432,
+          "warm_median_read_calls": 1321,
+          "warm_speedup_vs_reference": 1.1902977185758994
+        }
+      },
+      "warm_speedup_vs_reference": 1.2542879832074152
+    },
+    "baseline": {
+      "process_cold_median_seconds": 0.41903829100192524,
+      "warm_median_seconds": 0.07440329200107954,
+      "warm_median_logical_bytes": 4158784.0,
+      "warm_median_read_calls": 1211.5,
+      "peak_process_rss_bytes": 231768064,
+      "warm_generation_count": 30,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.06700012499641161,
+          "warm_median_logical_bytes": 3779840,
+          "warm_median_read_calls": 1090,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.07965150000381982,
+          "warm_median_logical_bytes": 4537728,
+          "warm_median_read_calls": 1333,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    },
+    "specprefetch": {
+      "process_cold_median_seconds": 0.4068416250011069,
+      "warm_median_seconds": 0.06173993699849234,
+      "warm_median_logical_bytes": 4094272.0,
+      "warm_median_read_calls": 1197.5,
+      "peak_process_rss_bytes": 231882752,
+      "warm_generation_count": 30,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.056963625000207685,
+          "warm_median_logical_bytes": 3706112,
+          "warm_median_read_calls": 1074,
+          "warm_speedup_vs_reference": 1.176191385224647
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.06853158400190296,
+          "warm_median_logical_bytes": 4482432,
+          "warm_median_read_calls": 1321,
+          "warm_speedup_vs_reference": 1.162259725407895
+        }
+      },
+      "warm_speedup_vs_reference": 1.2051080000761327
+    }
+  }
+}

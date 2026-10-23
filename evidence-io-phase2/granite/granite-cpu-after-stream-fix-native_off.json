@@ -1,0 +1,428 @@
+{
+  "variant": "native_off",
+  "device": "cpu",
+  "compute_dtype": "float32",
+  "checkpoint_dtype": "bfloat16",
+  "construction_seconds": 0.07874750000337372,
+  "cases": [
+    {
+      "prompt": "What is the capital of France?",
+      "runs": [
+        {
+          "repeat": 0,
+          "seconds": 1.0275639169994975,
+          "ttft_seconds": 0.514566375000868,
+          "decode_tokens_per_second": 5.847981236541704,
+          "input_tokens": 15,
+          "new_tokens": 4,
+          "token_ids": [
+            49152,
+            496,
+            49153,
+            8197,
+            438,
+            322,
+            18926,
+            432,
+            45600,
+            49,
+            0,
+            203,
+            49152,
+            17594,
+            49153,
+            1318,
+            18926,
+            432,
+            45600
+          ],
+          "text": "The capital of France",
+          "process_physical_read_bytes": 54149120,
+          "physical_counter": {
+            "source": "libproc.proc_pid_rusage(RUSAGE_INFO_V2).ri_diskio_bytesread",
+            "scope": "process-wide OS-accounted storage reads; includes unrelated reads and readahead; not per-file or NAND bytes",
+            "unavailable": null,
+            "physical_ssd_bandwidth_certified": false
+          },
+          "physical_counter_scope": "whole worker process; includes all files, no per-file/device attribution",
+          "io_policy": "pread",
+          "kv_cache": {
+            "bytes": 12582912,
+            "peak_bytes": 12582912,
+            "budget_bytes": 33554432,
+            "committed_tokens": 18
+          },
+          "io_delta": {
+            "manifest_hit": 0,
+            "header_bytes": 0,
+            "fd_opens": 1,
+            "logical_bytes": 4837355520,
+            "read_calls": 3104,
+            "io_seconds": 0.30018672112055356,
+            "requested_bytes": 4837355520
+          },
+          "metrics": {
+            "compute_device": "cpu",
+            "metal_validated": false,
+            "numerics": {
+              "compute_dtype": "float32",
+              "dynamic_fp8_activation_kernels_reproduced": false,
+              "mlx_enable_tf32_environment": "0",
+              "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+              "full_checkpoint_quality_validated": false
+            },
+            "runtime": {
+              "startup_seconds": 0.008529083999746945,
+              "sampled_rss_peak_bytes": 713932800,
+              "swap_growth_bytes": 0
+            },
+            "telemetry": {
+              "available_bytes": 4021338112,
+              "total_bytes": 17179869184,
+              "rss_bytes": 714211328,
+              "swap_used_bytes": 6312165376,
+              "cpu_percent": 26.0,
+              "gpu_utilization": null,
+              "temperature_c": null,
+              "thermal_throttled": null,
+              "memory_pressure_source": "available physical memory (not macOS pressure level)",
+              "physical_read_bytes": 78184448,
+              "process_peak_rss_bytes": 722059264,
+              "rss_peak_scope": "process lifetime, not isolated per model"
+            },
+            "io": {
+              "manifest_hit": 0,
+              "header_bytes": 26392,
+              "fd_opens": 1,
+              "logical_bytes": 4837355520,
+              "read_calls": 3104,
+              "io_seconds": 0.30018672112055356,
+              "requested_bytes": 4837355520
+            },
+            "io_profile": null,
+            "io_profile_coverage": "original shard offsets; packed/quantized transport has separate counters",
+            "sidecar_transport": {},
+            "lossless_transport": {},
+            "weights": {
+              "dequant_seconds": 0.0,
+              "loads": 3104,
+              "speculative_reads": 0,
+              "load_seconds": 0.6149794250668492,
+              "output_tiles": 100,
+              "output_tile_peak_bytes": 8388608
+            },
+            "cache": {
+              "misses": 2988,
+              "load_observations": 2988,
+              "admitted": 867,
+              "rejected": 2121,
+              "cold_rejected": 1386,
+              "hits": 158,
+              "evictions": 714,
+              "bytes": 267587584,
+              "peak_bytes": 268435456,
+              "capacity": 268435456
+            },
+            "compact_cache": {
+              "bytes": 0,
+              "peak_bytes": 0,
+              "capacity": 0,
+              "budget_scope": "partition of cache_bytes; not additional memory"
+            },
+            "prefetch": {
+              "submitted": 2988,
+              "consumed": 2988,
+              "wait_seconds": 0.5961786217012559,
+              "peak_bytes": 4194304,
+              "budget": 33554432,
+              "enabled": false
+            },
+            "spec_prefetch": {
+              "enabled": false
+            },
+            "architecture": {
+              "model_type": "granitemoe",
+              "status": "experimental explicit backend",
+              "routing": "top-k logits then softmax; boundary ties rejected",
+              "production_auto_dispatch": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "prompt": "Complete the sequence: one, two, three,",
+      "runs": [
+        {
+          "repeat": 0,
+          "seconds": 1.010246834004647,
+          "ttft_seconds": 0.5173257089991239,
+          "decode_tokens_per_second": 6.086166422602369,
+          "input_tokens": 18,
+          "new_tokens": 4,
+          "token_ids": [
+            49152,
+            496,
+            49153,
+            7371,
+            322,
+            6613,
+            44,
+            1591,
+            30,
+            3134,
+            30,
+            8019,
+            30,
+            0,
+            203,
+            49152,
+            17594,
+            49153,
+            17483,
+            30,
+            20795,
+            30
+          ],
+          "text": "four, five,",
+          "process_physical_read_bytes": 9060352,
+          "physical_counter": {
+            "source": "libproc.proc_pid_rusage(RUSAGE_INFO_V2).ri_diskio_bytesread",
+            "scope": "process-wide OS-accounted storage reads; includes unrelated reads and readahead; not per-file or NAND bytes",
+            "unavailable": null,
+            "physical_ssd_bandwidth_certified": false
+          },
+          "physical_counter_scope": "whole worker process; includes all files, no per-file/device attribution",
+          "io_policy": "pread",
+          "kv_cache": {
+            "bytes": 12582912,
+            "peak_bytes": 12582912,
+            "budget_bytes": 33554432,
+            "committed_tokens": 21
+          },
+          "io_delta": {
+            "manifest_hit": 0,
+            "header_bytes": 0,
+            "fd_opens": 0,
+            "logical_bytes": 4826755072,
+            "read_calls": 2966,
+            "io_seconds": 0.27834327593882335,
+            "requested_bytes": 4826755072
+          },
+          "metrics": {
+            "compute_device": "cpu",
+            "metal_validated": false,
+            "numerics": {
+              "compute_dtype": "float32",
+              "dynamic_fp8_activation_kernels_reproduced": false,
+              "mlx_enable_tf32_environment": "0",
+              "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+              "full_checkpoint_quality_validated": false
+            },
+            "runtime": {
+              "startup_seconds": 0.008529083999746945,
+              "sampled_rss_peak_bytes": 715161600,
+              "swap_growth_bytes": 0
+            },
+            "telemetry": {
+              "available_bytes": 4119724032,
+              "total_bytes": 17179869184,
+              "rss_bytes": 715227136,
+              "swap_used_bytes": 6312165376,
+              "cpu_percent": 24.5,
+              "gpu_utilization": null,
+              "temperature_c": null,
+              "thermal_throttled": null,
+              "memory_pressure_source": "available physical memory (not macOS pressure level)",
+              "physical_read_bytes": 87244800,
+              "process_peak_rss_bytes": 734707712,
+              "rss_peak_scope": "process lifetime, not isolated per model"
+            },
+            "io": {
+              "manifest_hit": 0,
+              "header_bytes": 26392,
+              "fd_opens": 1,
+              "logical_bytes": 9664110592,
+              "read_calls": 6070,
+              "io_seconds": 0.5785299970593769,
+              "requested_bytes": 9664110592
+            },
+            "io_profile": null,
+            "io_profile_coverage": "original shard offsets; packed/quantized transport has separate counters",
+            "sidecar_transport": {},
+            "lossless_transport": {},
+            "weights": {
+              "dequant_seconds": 0.0,
+              "loads": 6070,
+              "speculative_reads": 0,
+              "load_seconds": 1.1719185201072833,
+              "output_tiles": 200,
+              "output_tile_peak_bytes": 8388608
+            },
+            "cache": {
+              "misses": 5837,
+              "load_observations": 5837,
+              "admitted": 1762,
+              "rejected": 4075,
+              "cold_rejected": 1468,
+              "hits": 431,
+              "evictions": 1615,
+              "bytes": 267587584,
+              "peak_bytes": 268435456,
+              "capacity": 268435456
+            },
+            "compact_cache": {
+              "bytes": 0,
+              "peak_bytes": 0,
+              "capacity": 0,
+              "budget_scope": "partition of cache_bytes; not additional memory"
+            },
+            "prefetch": {
+              "submitted": 5837,
+              "consumed": 5837,
+              "wait_seconds": 1.1372385836584726,
+              "peak_bytes": 4194304,
+              "budget": 33554432,
+              "enabled": false
+            },
+            "spec_prefetch": {
+              "enabled": false
+            },
+            "architecture": {
+              "model_type": "granitemoe",
+              "status": "experimental explicit backend",
+              "routing": "top-k logits then softmax; boundary ties rejected",
+              "production_auto_dispatch": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "torch": "2.14.1",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "libraries": {
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "mlx": "0.32.4",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.3",
+    "psutil": "7.2.2"
+  },
+  "host_total_memory_bytes": 17179869184,
+  "process_peak_rss_bytes": 734707712,
+  "swap_used_before_bytes": 6312165376,
+  "swap_used_after_bytes": 6312165376,
+  "npz_file": "granite-cpu-after-stream-fix-native_off.npz",
+  "npz_sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca",
+  "reference_key_mapping": null,
+  "reference_loading": null,
+  "source": {
+    "head": "51be52d72df0b1227f48123a467b75652dede370",
+    "files_sha256": {
+      "air_llm/airllm/nextgen/__init__.py": "4264bf9a4cd3c28429fc183342593bca4b60e4e769799e6c19c38606c7b7eea3",
+      "air_llm/airllm/nextgen/adapters.py": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f",
+      "air_llm/airllm/nextgen/adaptive_cache.py": "66a7d9f08bee4d383f9970ec7d5602bb2364eff8d02765307f044e9b1201fddc",
+      "air_llm/airllm/nextgen/agent_engine.py": "d20f0e94f32d4297d014b1798faa1a7eff3bca7d1104741802d22f8dc54bde47",
+      "air_llm/airllm/nextgen/agent_server.py": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a",
+      "air_llm/airllm/nextgen/attention.py": "fe88df33d0df1667c147b880a1a74d58429f2d03c3bd27ee0f568dc32597ddf2",
+      "air_llm/airllm/nextgen/cache.py": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+      "air_llm/airllm/nextgen/cli.py": "d45b2cbe84b242db84b64578da82c924ab4bffaadcf8c26727579cf52fa6653f",
+      "air_llm/airllm/nextgen/compact_cache.py": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f",
+      "air_llm/airllm/nextgen/config.py": "1de9c7df034fef27c65740fac5cbece0fdcdc81dad6e7c05dc92ae577a002ffe",
+      "air_llm/airllm/nextgen/generation.py": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13",
+      "air_llm/airllm/nextgen/granite_runtime.py": "dfdeeb5ee8822f92e14919da1fb4e4d7f4a6e33ebc6e75fb2ff7a1732bc373ef",
+      "air_llm/airllm/nextgen/io_profile.py": "ebe7e1ed4dedd2fa87308b543b6007957a47a7b2373413b2cadef681655c47c5",
+      "air_llm/airllm/nextgen/limits.py": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3",
+      "air_llm/airllm/nextgen/llama_runtime.py": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f",
+      "air_llm/airllm/nextgen/lossless.py": "672ffa5c8d12217ec6c0db45bd8d97746a304fd88a78de5ebf66678c289574d1",
+      "air_llm/airllm/nextgen/moe.py": "d5beeef7512892b15479414c5c0ff916a586315fa29b6446deaa79fd6a393e86",
+      "air_llm/airllm/nextgen/physical_io.py": "ed9a92884c3b565d6d77dff3dac7f6ca97ad3ee95063dd44cd0bf5ba60829090",
+      "air_llm/airllm/nextgen/preflight.py": "d93563eb47d00f2f0a16ade34ec5ac5e7b9b9077df739972f0433735c13227f4",
+      "air_llm/airllm/nextgen/prompt_draft.py": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269",
+      "air_llm/airllm/nextgen/quantization.py": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b",
+      "air_llm/airllm/nextgen/qwen_moe.py": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2",
+      "air_llm/airllm/nextgen/qwen_runtime.py": "4432bd9d271fcbe2be28b9c00a381685ad500a1910c6efe8cf79637f8107c8a4",
+      "air_llm/airllm/nextgen/recurrent.py": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf",
+      "air_llm/airllm/nextgen/runtime.py": "2d0a451bd041448e725c0c50774223cd17f2f3a1afbdae0a16c5ddd76ebdb49d",
+      "air_llm/airllm/nextgen/server.py": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5",
+      "air_llm/airllm/nextgen/sidecar.py": "5303827de734749d678ae76e900cf37290512444f28c1bed240abed7f155fd57",
+      "air_llm/airllm/nextgen/specprefetch.py": "4025a7b132cd98abe9fc9c9024bb41264e7efda06d9bf7ea56f78a55fc1360e8",
+      "air_llm/airllm/nextgen/speculative.py": "c18e3a8fa144c8bd429919d51e7815ed23af467cdcbe18f217495f6d60f94560",
+      "air_llm/airllm/nextgen/storage.py": "3ed49138bac42e0de83b7a1a1140e14c975bc4fc28f45be84350dd2063f4e1b0",
+      "air_llm/airllm/nextgen/tuning.py": "512838d3138e260878712e44704e5875c04d4344b57fa5eb529a42f601fe17a7",
+      "air_llm/airllm/nextgen/weights.py": "40542eed377ddb4f243e7d522054ac6d01a4362666cec0b0821a34a8e8e84824",
+      "benchmarks/benchmark_granite_moe.py": "912de406f7f1d2b8a9dbcdaa1b5aa3ddf69b37b577e47693393a777da416bc0a"
+    }
+  },
+  "source_unchanged_at_worker_end": true,
+  "checkpoint_identity": {
+    "model_id": "ibm-granite/granite-3.0-1b-a400m-instruct",
+    "revision": "ffec3c35bdfd97a06f0b4cd5fcc92cd9b1584445",
+    "model_config_sha256": "ca4bb3a5c1bdef988ab413e0d731640446da65316e4ed16de3666cd96ecc3a0b",
+    "weight_file_bytes": 2669283096,
+    "weight_sha256_verified_by_controller": "f7ae1cee56a9ea6c5360437b1c0407f8d84816b2cc75470f4e7e5236fa2a07dc"
+  },
+  "arguments": {
+    "model_dir": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/work/models/Granite-3.0-1B-A400M-Instruct",
+    "output": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/outputs/airllm-next/evidence-io-phase2/granite/granite-cpu-after-stream-fix-native_off.json",
+    "tokens": 4,
+    "repeats": 1,
+    "prompts": 2,
+    "cache_mib": 256,
+    "device": "cpu",
+    "max_rss_gib": 5.0,
+    "reserve_gib": 1.5,
+    "variants": [
+      "reference",
+      "native_off",
+      "native",
+      "native_spec"
+    ],
+    "worker": "native_off"
+  },
+  "native_options": {
+    "cache_bytes": 268435456,
+    "compact_cache_bytes": 0,
+    "output_tile_cache": false,
+    "output_prefetch": false,
+    "io_bytes": 33554432,
+    "kv_bytes": 33554432,
+    "workspace_bytes": 134217728,
+    "reserve_bytes": 1610612736,
+    "max_tensor_bytes": 33554432,
+    "io_workers": 2,
+    "max_open_files": 16,
+    "row_chunk": 2048,
+    "prefill_chunk": 64,
+    "max_context": 128,
+    "policy": "adaptive",
+    "device": "cpu",
+    "dtype": "float32",
+    "profile": "balanced",
+    "prefetch": false,
+    "spec_prefetch": false,
+    "spec_prefetch_bytes": 8388608,
+    "spec_prefetch_experts": 1,
+    "io_mode": "pread",
+    "profile_io": false,
+    "coalesce_reads": false,
+    "selective_fp8_scales": true,
+    "cache_dir": "/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/airllm-granite-i4tu05vr",
+    "quantized_dir": null,
+    "lossless_dir": null,
+    "lossless_native_library": null,
+    "lossless_verify_hash": true,
+    "load_tokenizer": false,
+    "use_saved_tuning": false
+  },
+  "os_page_cache": "uncontrolled; checkpoint hash/download can warm pages; no cold-disk claim",
+  "external_ssd_measured": false,
+  "full_model_payload_exceeds_host_ram": false,
+  "comparison_tolerance_predeclared": {
+    "atol": 0.0001,
+    "rtol": 0.0005
+  },
+  "timing_scope": "manual exact greedy cached decoding, including routing trace copies and logits readback"
+}

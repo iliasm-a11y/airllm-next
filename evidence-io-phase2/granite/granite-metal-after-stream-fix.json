@@ -1,0 +1,235 @@
+{
+  "model_id": "ibm-granite/granite-3.0-1b-a400m-instruct",
+  "revision": "ffec3c35bdfd97a06f0b4cd5fcc92cd9b1584445",
+  "checkpoint_bytes": 2669283096,
+  "checkpoint_sha256": "f7ae1cee56a9ea6c5360437b1c0407f8d84816b2cc75470f4e7e5236fa2a07dc",
+  "provenance": {
+    "model_id": "ibm-granite/granite-3.0-1b-a400m-instruct",
+    "revision": "ffec3c35bdfd97a06f0b4cd5fcc92cd9b1584445",
+    "source": "https://huggingface.co/ibm-granite/granite-3.0-1b-a400m-instruct/tree/ffec3c35bdfd97a06f0b4cd5fcc92cd9b1584445",
+    "gated": false,
+    "downloaded_utc": "2026-10-23T11:12:03.375818+00:00",
+    "selected_payload_bytes": 2673996477,
+    "files": [
+      {
+        "name": "README.md",
+        "bytes": 11314,
+        "sha256": "1e1d94c6e1be69d6c893636b2d20ca7593cfcf77b0b8dcff91fba830788e1e65",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "70fb4fe2fa9f0574865e90ed658185cd55395f2d",
+        "hub_git_blob_sha1": "70fb4fe2fa9f0574865e90ed658185cd55395f2d"
+      },
+      {
+        "name": "added_tokens.json",
+        "bytes": 87,
+        "sha256": "081bdeaf76fc5463cc2e20fbadf17ad9eb569bb5343b120cc64b98840754f96c",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "183eb810668f005a1ed0e0c8be060e5f47c23f2f",
+        "hub_git_blob_sha1": "183eb810668f005a1ed0e0c8be060e5f47c23f2f"
+      },
+      {
+        "name": "config.json",
+        "bytes": 888,
+        "sha256": "ca4bb3a5c1bdef988ab413e0d731640446da65316e4ed16de3666cd96ecc3a0b",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "9b0f708a78e577737127cfcda0dc2a6dd4a476e6",
+        "hub_git_blob_sha1": "9b0f708a78e577737127cfcda0dc2a6dd4a476e6"
+      },
+      {
+        "name": "generation_config.json",
+        "bytes": 137,
+        "sha256": "cb482de67fcafdef681b085a24ce8004d906f8990c849be2c75b3c4a5a4f7804",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "7deebc860cf6aec74ac8929e1e9fd25bd6bc85c5",
+        "hub_git_blob_sha1": "7deebc860cf6aec74ac8929e1e9fd25bd6bc85c5"
+      },
+      {
+        "name": "merges.txt",
+        "bytes": 441810,
+        "sha256": "303127a244b0078878156c17229f36d11b7a3a3f8e47b7cfdbb304ff46be5030",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "f8479fb696fe07332c55300a6accf8cc191acc6a",
+        "hub_git_blob_sha1": "f8479fb696fe07332c55300a6accf8cc191acc6a"
+      },
+      {
+        "name": "model.safetensors",
+        "bytes": 2669283096,
+        "sha256": "f7ae1cee56a9ea6c5360437b1c0407f8d84816b2cc75470f4e7e5236fa2a07dc",
+        "hub_lfs_sha256": "f7ae1cee56a9ea6c5360437b1c0407f8d84816b2cc75470f4e7e5236fa2a07dc",
+        "git_blob_sha1": null,
+        "hub_git_blob_sha1": "de4f6046fbb8c9efc81acb3867fbb4bdfb1acde3"
+      },
+      {
+        "name": "special_tokens_map.json",
+        "bytes": 701,
+        "sha256": "596d752bf46f5cace1f6826b52ed7d913347a4eea0ecce8ab2f869471ca40369",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "386500a5040da66c6db3d8b9c44ccd1ee202c744",
+        "hub_git_blob_sha1": "386500a5040da66c6db3d8b9c44ccd1ee202c744"
+      },
+      {
+        "name": "tokenizer.json",
+        "bytes": 3475806,
+        "sha256": "ed944c0b3d71e2d651a5ba0f8e7b350faff30031c8e3353de70b12b9c1bf5654",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "11f3f2c66235d30bc9bf04ad7e1b4a19d80e84da",
+        "hub_git_blob_sha1": "11f3f2c66235d30bc9bf04ad7e1b4a19d80e84da"
+      },
+      {
+        "name": "tokenizer_config.json",
+        "bytes": 5643,
+        "sha256": "9aab47148a9468bacde5b86b69af3cc2e0d7e1fe55c23c0d07d3179f37e2b69b",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "d74ee73a87b784306471df88cdd53b819b0d3450",
+        "hub_git_blob_sha1": "d74ee73a87b784306471df88cdd53b819b0d3450"
+      },
+      {
+        "name": "vocab.json",
+        "bytes": 776995,
+        "sha256": "80ab859339a2525fdfbda14bc39df02dffb824aefdaf86426217bbb146d17e01",
+        "hub_lfs_sha256": null,
+        "git_blob_sha1": "0a11f2016e660fd490f7bf168e6d1f9c86a8f744",
+        "hub_git_blob_sha1": "0a11f2016e660fd490f7bf168e6d1f9c86a8f744"
+      }
+    ],
+    "first_download_complete_utc": "2026-10-23T11:12:00.005182+00:00",
+    "weight_transport_executed": "8 ascending plus 8 descending concurrent HTTP Range requests of32MiB, shared sparse file, exact Content-Range/length checks, per-range digests for resume, final complete official LFS SHA256 before atomic rename",
+    "download_attempts": "stalled initial Hugging Face Xet stopped; bounded direct4workers then8workers plus8auxiliary; prior partial retained, no prior model weights overwritten"
+  },
+  "variant_order": [
+    "reference",
+    "native_off",
+    "native",
+    "native_spec"
+  ],
+  "tokens": 4,
+  "repeats": 1,
+  "prompts": [
+    "What is the capital of France?",
+    "Complete the sequence: one, two, three,"
+  ],
+  "cache_mib": 256,
+  "reference": "official Transformers FP32 layers loaded/unloaded through independent safetensors hooks",
+  "tolerance_predeclared": {
+    "atol": 0.0001,
+    "rtol": 0.0005
+  },
+  "summary": {
+    "reference": {
+      "tokens_match_reference": true,
+      "all_topk_expert_sets_match_reference": true,
+      "logits_within_predeclared_tolerance": true,
+      "max_abs_logit_error": 0.0,
+      "bitwise_equal_first_native_variant": null,
+      "median_generation_seconds": 7.112000959001307,
+      "process_peak_rss_bytes": 751583232,
+      "raw_report": "granite-metal-after-stream-fix-reference.json"
+    },
+    "native_off": {
+      "tokens_match_reference": true,
+      "all_topk_expert_sets_match_reference": true,
+      "logits_within_predeclared_tolerance": true,
+      "max_abs_logit_error": 8.106231689453125e-05,
+      "bitwise_equal_first_native_variant": null,
+      "median_generation_seconds": 1.3061901455002953,
+      "process_peak_rss_bytes": 706035712,
+      "raw_report": "granite-metal-after-stream-fix-native_off.json"
+    },
+    "native": {
+      "tokens_match_reference": true,
+      "all_topk_expert_sets_match_reference": true,
+      "logits_within_predeclared_tolerance": true,
+      "max_abs_logit_error": 8.106231689453125e-05,
+      "bitwise_equal_first_native_variant": true,
+      "median_generation_seconds": 1.0713123329987866,
+      "process_peak_rss_bytes": 715423744,
+      "raw_report": "granite-metal-after-stream-fix-native.json"
+    },
+    "native_spec": {
+      "tokens_match_reference": true,
+      "all_topk_expert_sets_match_reference": true,
+      "logits_within_predeclared_tolerance": true,
+      "max_abs_logit_error": 8.106231689453125e-05,
+      "bitwise_equal_first_native_variant": true,
+      "median_generation_seconds": 1.0414027919978253,
+      "process_peak_rss_bytes": 718159872,
+      "raw_report": "granite-metal-after-stream-fix-native_spec.json"
+    }
+  },
+  "guards": {
+    "reference": {
+      "sampled_peak_rss_bytes": 745291776,
+      "minimum_available_system_bytes": 3332767744,
+      "rss_limit_bytes": 5368709120,
+      "reserve_bytes": 1610612736,
+      "exit_code": 0,
+      "violation": null,
+      "sampling_interval_seconds": 0.05
+    },
+    "native_off": {
+      "sampled_peak_rss_bytes": 700268544,
+      "minimum_available_system_bytes": 3695886336,
+      "rss_limit_bytes": 5368709120,
+      "reserve_bytes": 1610612736,
+      "exit_code": 0,
+      "violation": null,
+      "sampling_interval_seconds": 0.05
+    },
+    "native": {
+      "sampled_peak_rss_bytes": 709132288,
+      "minimum_available_system_bytes": 3767664640,
+      "rss_limit_bytes": 5368709120,
+      "reserve_bytes": 1610612736,
+      "exit_code": 0,
+      "violation": null,
+      "sampling_interval_seconds": 0.05
+    },
+    "native_spec": {
+      "sampled_peak_rss_bytes": 715735040,
+      "minimum_available_system_bytes": 3779067904,
+      "rss_limit_bytes": 5368709120,
+      "reserve_bytes": 1610612736,
+      "exit_code": 0,
+      "violation": null,
+      "sampling_interval_seconds": 0.05
+    }
+  },
+  "os_page_cache": "uncontrolled; hashing before execution warms checkpoint pages",
+  "physical_external_ssd_measured": false,
+  "giant_model_validated": false,
+  "source_files_sha256": {
+    "air_llm/airllm/nextgen/__init__.py": "4264bf9a4cd3c28429fc183342593bca4b60e4e769799e6c19c38606c7b7eea3",
+    "air_llm/airllm/nextgen/adapters.py": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f",
+    "air_llm/airllm/nextgen/adaptive_cache.py": "66a7d9f08bee4d383f9970ec7d5602bb2364eff8d02765307f044e9b1201fddc",
+    "air_llm/airllm/nextgen/agent_engine.py": "d20f0e94f32d4297d014b1798faa1a7eff3bca7d1104741802d22f8dc54bde47",
+    "air_llm/airllm/nextgen/agent_server.py": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a",
+    "air_llm/airllm/nextgen/attention.py": "fe88df33d0df1667c147b880a1a74d58429f2d03c3bd27ee0f568dc32597ddf2",
+    "air_llm/airllm/nextgen/cache.py": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+    "air_llm/airllm/nextgen/cli.py": "d45b2cbe84b242db84b64578da82c924ab4bffaadcf8c26727579cf52fa6653f",
+    "air_llm/airllm/nextgen/compact_cache.py": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f",
+    "air_llm/airllm/nextgen/config.py": "1de9c7df034fef27c65740fac5cbece0fdcdc81dad6e7c05dc92ae577a002ffe",
+    "air_llm/airllm/nextgen/generation.py": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13",
+    "air_llm/airllm/nextgen/granite_runtime.py": "dfdeeb5ee8822f92e14919da1fb4e4d7f4a6e33ebc6e75fb2ff7a1732bc373ef",
+    "air_llm/airllm/nextgen/io_profile.py": "ebe7e1ed4dedd2fa87308b543b6007957a47a7b2373413b2cadef681655c47c5",
+    "air_llm/airllm/nextgen/limits.py": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3",
+    "air_llm/airllm/nextgen/llama_runtime.py": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f",
+    "air_llm/airllm/nextgen/lossless.py": "672ffa5c8d12217ec6c0db45bd8d97746a304fd88a78de5ebf66678c289574d1",
+    "air_llm/airllm/nextgen/moe.py": "d5beeef7512892b15479414c5c0ff916a586315fa29b6446deaa79fd6a393e86",
+    "air_llm/airllm/nextgen/physical_io.py": "ed9a92884c3b565d6d77dff3dac7f6ca97ad3ee95063dd44cd0bf5ba60829090",
+    "air_llm/airllm/nextgen/preflight.py": "d93563eb47d00f2f0a16ade34ec5ac5e7b9b9077df739972f0433735c13227f4",
+    "air_llm/airllm/nextgen/prompt_draft.py": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269",
+    "air_llm/airllm/nextgen/quantization.py": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b",
+    "air_llm/airllm/nextgen/qwen_moe.py": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2",
+    "air_llm/airllm/nextgen/qwen_runtime.py": "4432bd9d271fcbe2be28b9c00a381685ad500a1910c6efe8cf79637f8107c8a4",
+    "air_llm/airllm/nextgen/recurrent.py": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf",
+    "air_llm/airllm/nextgen/runtime.py": "2d0a451bd041448e725c0c50774223cd17f2f3a1afbdae0a16c5ddd76ebdb49d",
+    "air_llm/airllm/nextgen/server.py": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5",
+    "air_llm/airllm/nextgen/sidecar.py": "5303827de734749d678ae76e900cf37290512444f28c1bed240abed7f155fd57",
+    "air_llm/airllm/nextgen/specprefetch.py": "4025a7b132cd98abe9fc9c9024bb41264e7efda06d9bf7ea56f78a55fc1360e8",
+    "air_llm/airllm/nextgen/speculative.py": "c18e3a8fa144c8bd429919d51e7815ed23af467cdcbe18f217495f6d60f94560",
+    "air_llm/airllm/nextgen/storage.py": "3ed49138bac42e0de83b7a1a1140e14c975bc4fc28f45be84350dd2063f4e1b0",
+    "air_llm/airllm/nextgen/tuning.py": "512838d3138e260878712e44704e5875c04d4344b57fa5eb529a42f601fe17a7",
+    "air_llm/airllm/nextgen/weights.py": "40542eed377ddb4f243e7d522054ac6d01a4362666cec0b0821a34a8e8e84824",
+    "benchmarks/benchmark_granite_moe.py": "912de406f7f1d2b8a9dbcdaa1b5aa3ddf69b37b577e47693393a777da416bc0a"
+  }
+}

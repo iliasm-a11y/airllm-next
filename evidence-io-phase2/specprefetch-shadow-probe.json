@@ -1,0 +1,362 @@
+{
+  "scope": "Separate native shadow-predictor bookkeeping from speculative IO startup.\n\nThis diagnostic wraps benchmark_io_wall without editing production sources.\n``shadow`` rejects every speculative submission from process start. It still\npredicts, observes exact routes and executes all ordinary demands. Count started\nexecutor threads after shutdown, outside generation timing. No IO delays are\ninjected. Scope remains the supplied checkpoint and uncontrolled OS cache.\n",
+  "summaries": {
+    "reference": {
+      "warm_median_seconds": 0.06362189549690811,
+      "warm_median_logical_bytes": 4094272.0,
+      "started_threads_per_worker": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "spec_metrics": [
+        {
+          "enabled": false
+        },
+        {
+          "enabled": false
+        },
+        {
+          "enabled": false
+        }
+      ]
+    },
+    "shadow": {
+      "warm_median_seconds": 0.06293416650078143,
+      "warm_median_logical_bytes": 4094272.0,
+      "started_threads_per_worker": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ],
+      "spec_metrics": [
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.0018649159974302165,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.002568791969679296,
+          "probe_shadow_no_io": 270,
+          "transition_predictions": 267,
+          "discard_wait_seconds": 3.872992238029838e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 0,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        },
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.0019468779864837416,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.0026336769660701975,
+          "probe_shadow_no_io": 270,
+          "transition_predictions": 267,
+          "discard_wait_seconds": 3.7919962778687477e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 0,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        },
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.002022301974648144,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.003200962964911014,
+          "probe_shadow_no_io": 270,
+          "transition_predictions": 267,
+          "discard_wait_seconds": 3.583998477552086e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 0,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        }
+      ]
+    },
+    "specprefetch": {
+      "warm_median_seconds": 0.07553872900098213,
+      "warm_median_logical_bytes": 4094272.0,
+      "started_threads_per_worker": [
+        [
+          2
+        ],
+        [
+          2
+        ],
+        [
+          2
+        ]
+      ],
+      "spec_metrics": [
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.0019174979970557615,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.0026516609577811323,
+          "submitted": 8,
+          "dispatch_seconds": 0.00021175100118853152,
+          "dispatch_samples": 8,
+          "wasted": 4,
+          "wasted_reservation_bytes": 18432,
+          "wasted_payload_bytes": 18432,
+          "discard_completion_seconds": 2.4915003450587392e-05,
+          "useful": 4,
+          "useful_reservation_bytes": 18432,
+          "useful_payload_bytes": 18432,
+          "take_wait_seconds": 1.5374003851320595e-05,
+          "transition_predictions": 267,
+          "cost_rejections": 34,
+          "accuracy_rejections": 228,
+          "discard_wait_seconds": 3.0830124160274863e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 4608,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        },
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.001999627027544193,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.0028111689898651093,
+          "submitted": 8,
+          "dispatch_seconds": 0.0001930840007844381,
+          "dispatch_samples": 8,
+          "wasted": 4,
+          "wasted_reservation_bytes": 18432,
+          "wasted_payload_bytes": 18432,
+          "discard_completion_seconds": 2.683301136130467e-05,
+          "useful": 4,
+          "useful_reservation_bytes": 18432,
+          "useful_payload_bytes": 18432,
+          "take_wait_seconds": 1.4792000001762062e-05,
+          "transition_predictions": 267,
+          "cost_rejections": 34,
+          "accuracy_rejections": 228,
+          "discard_wait_seconds": 4.333000106271356e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 4608,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        },
+        {
+          "reuse_predictions": 3,
+          "prediction_calls": 272,
+          "prediction_seconds": 0.0020463640394154936,
+          "prediction_hits": 147,
+          "prediction_misses": 123,
+          "observations": 272,
+          "truncated_observations": 0,
+          "observe_seconds": 0.003092907958489377,
+          "submitted": 8,
+          "dispatch_seconds": 0.0002451249893056229,
+          "dispatch_samples": 8,
+          "wasted": 4,
+          "wasted_reservation_bytes": 18432,
+          "wasted_payload_bytes": 18432,
+          "discard_completion_seconds": 5.570800567511469e-05,
+          "useful": 4,
+          "useful_reservation_bytes": 18432,
+          "useful_payload_bytes": 18432,
+          "take_wait_seconds": 1.6164995031431317e-05,
+          "transition_predictions": 267,
+          "cost_rejections": 34,
+          "accuracy_rejections": 228,
+          "discard_wait_seconds": 3.7909994716756046e-06,
+          "outstanding_bytes": 0,
+          "peak_bytes": 4608,
+          "pending_reads": 0,
+          "layers": 2,
+          "transition_edges": 128,
+          "budget_bytes": 65536,
+          "enabled": true,
+          "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+          "max_layers": 256,
+          "max_transition_edges": 4096,
+          "max_pending_reads": 32,
+          "max_route_experts": 64,
+          "min_accuracy": 0.75,
+          "accuracy_window_predictions": 16,
+          "accuracy_min_predictions": 4,
+          "byte_metric": "decoded_payload_not_physical_ssd"
+        }
+      ]
+    }
+  },
+  "correctness": [
+    {
+      "artifact": "00-reference.json",
+      "variant": "reference",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "00-specprefetch.json",
+      "variant": "specprefetch",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "00-shadow.json",
+      "variant": "shadow",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "01-shadow.json",
+      "variant": "shadow",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "01-reference.json",
+      "variant": "reference",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "01-specprefetch.json",
+      "variant": "specprefetch",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "02-reference.json",
+      "variant": "reference",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "02-specprefetch.json",
+      "variant": "specprefetch",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "02-shadow.json",
+      "variant": "shadow",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    }
+  ],
+  "worker_artifacts": [
+    "00-reference.json",
+    "00-specprefetch.json",
+    "00-shadow.json",
+    "01-shadow.json",
+    "01-reference.json",
+    "01-specprefetch.json",
+    "02-reference.json",
+    "02-specprefetch.json",
+    "02-shadow.json"
+  ],
+  "current_source_hashes_consistent_across_workers": true,
+  "physical_ssd_validated": false
+}

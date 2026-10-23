@@ -1,0 +1,374 @@
+{
+  "reference": {
+    "warm_median_seconds": 0.05823883300035959,
+    "warm_median_logical_bytes": 4094272.0,
+    "started_threads_per_worker": [
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "spec_metrics": [
+      {
+        "enabled": false
+      },
+      {
+        "enabled": false
+      },
+      {
+        "enabled": false
+      }
+    ]
+  },
+  "shadow": {
+    "warm_median_seconds": 0.05914879150441266,
+    "warm_median_logical_bytes": 4094272.0,
+    "started_threads_per_worker": [
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "spec_metrics": [
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.0018521340462029912,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.0024851659836713225,
+        "probe_shadow_no_io": 270,
+        "transition_predictions": 267,
+        "discard_wait_seconds": 3.3750038710422814e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.0018485029650037177,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002534336017561145,
+        "probe_shadow_no_io": 270,
+        "transition_predictions": 267,
+        "discard_wait_seconds": 3.1249946914613247e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.001854833033576142,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002537837004638277,
+        "probe_shadow_no_io": 270,
+        "transition_predictions": 267,
+        "discard_wait_seconds": 3.12401243718341e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      }
+    ]
+  },
+  "warmup": {
+    "warm_median_seconds": 0.06108785400283523,
+    "warm_median_logical_bytes": 4094272.0,
+    "started_threads_per_worker": [
+      [
+        1
+      ],
+      [
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "spec_metrics": [
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.0018243790182168595,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002495915970939677,
+        "probe_warmup_rejections": 8,
+        "transition_predictions": 267,
+        "cost_rejections": 34,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 2.914013748522848e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.0018751610841718502,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.00246783799957484,
+        "probe_warmup_rejections": 8,
+        "transition_predictions": 267,
+        "cost_rejections": 34,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 2.9990114853717387e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.001823819948185701,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002503381110727787,
+        "probe_warmup_rejections": 8,
+        "transition_predictions": 267,
+        "cost_rejections": 34,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 2.793000021483749e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 0,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      }
+    ]
+  },
+  "specprefetch": {
+    "warm_median_seconds": 0.07317635400249856,
+    "warm_median_logical_bytes": 4094272.0,
+    "started_threads_per_worker": [
+      [
+        2
+      ],
+      [
+        2
+      ],
+      [
+        2
+      ]
+    ],
+    "spec_metrics": [
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.0018392459678580053,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.0025078279722947627,
+        "cost_rejections": 39,
+        "submitted": 3,
+        "dispatch_seconds": 0.00012425099703250453,
+        "dispatch_samples": 3,
+        "useful": 1,
+        "useful_reservation_bytes": 4608,
+        "useful_payload_bytes": 4608,
+        "take_wait_seconds": 4.458997864276171e-06,
+        "transition_predictions": 267,
+        "wasted": 2,
+        "wasted_reservation_bytes": 9216,
+        "wasted_payload_bytes": 9216,
+        "discard_completion_seconds": 1.562500256113708e-05,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 2.5000044843181968e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 4608,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.00183229200047208,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002488537022145465,
+        "cost_rejections": 41,
+        "submitted": 1,
+        "dispatch_seconds": 8.149999484885484e-05,
+        "dispatch_samples": 1,
+        "useful": 1,
+        "useful_reservation_bytes": 4608,
+        "useful_payload_bytes": 4608,
+        "take_wait_seconds": 4.6670029405504465e-06,
+        "transition_predictions": 267,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 3.164990630466491e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 4608,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      },
+      {
+        "reuse_predictions": 3,
+        "prediction_calls": 272,
+        "prediction_seconds": 0.001839965072576888,
+        "prediction_hits": 147,
+        "prediction_misses": 123,
+        "observations": 272,
+        "truncated_observations": 0,
+        "observe_seconds": 0.002496618042641785,
+        "cost_rejections": 41,
+        "submitted": 1,
+        "dispatch_seconds": 8.354099554708228e-05,
+        "dispatch_samples": 1,
+        "useful": 1,
+        "useful_reservation_bytes": 4608,
+        "useful_payload_bytes": 4608,
+        "take_wait_seconds": 3.999994078185409e-06,
+        "transition_predictions": 267,
+        "accuracy_rejections": 228,
+        "discard_wait_seconds": 2.9180009732954204e-06,
+        "outstanding_bytes": 0,
+        "peak_bytes": 4608,
+        "pending_reads": 0,
+        "layers": 2,
+        "transition_edges": 128,
+        "budget_bytes": 65536,
+        "enabled": true,
+        "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+        "max_layers": 256,
+        "max_transition_edges": 4096,
+        "max_pending_reads": 32,
+        "max_route_experts": 64,
+        "min_accuracy": 0.75,
+        "accuracy_window_predictions": 16,
+        "accuracy_min_predictions": 4,
+        "byte_metric": "decoded_payload_not_physical_ssd"
+      }
+    ]
+  }
+}

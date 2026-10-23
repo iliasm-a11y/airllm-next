@@ -1,0 +1,121 @@
+{
+  "device": "gpu",
+  "same_native_variant": "native_off",
+  "prefetch": false,
+  "spec_prefetch": false,
+  "same_worker_repeated_runs": [
+    {
+      "case": 0,
+      "step": 0,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 0,
+      "step": 1,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 0,
+      "step": 2,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 0,
+      "step": 3,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 1,
+      "step": 0,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 1,
+      "step": 1,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 1,
+      "step": 2,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    },
+    {
+      "case": 1,
+      "step": 3,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "topk_sets_identical": true
+    }
+  ],
+  "all_bitwise_equal": true,
+  "all_topk_sets_identical": true,
+  "max_abs_difference": 0.0,
+  "source_npz": "granite-metal-repeat-control-native_off.npz",
+  "observation": "Identical no-prefetch Metal configuration is bitwise stable across repeats in one worker; separate worker comparison recorded independently below. This diagnostic does not isolate a particular kernel or establish cause.",
+  "cross_worker_same_native_configuration": [
+    {
+      "case": 0,
+      "step": 0,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 0,
+      "step": 1,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 0,
+      "step": 2,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 0,
+      "step": 3,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 1,
+      "step": 0,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 1,
+      "step": 1,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 1,
+      "step": 2,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "case": 1,
+      "step": 3,
+      "bitwise_equal": true,
+      "max_abs_difference": 0.0
+    }
+  ],
+  "cross_worker_all_bitwise_equal": true,
+  "cross_worker_max_abs_difference": 0.0
+}

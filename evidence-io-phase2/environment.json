@@ -1,0 +1,53 @@
+{
+  "observed_at_utc": "2026-10-23T11:27:19.887961+00:00",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "python_executable": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+  "package_versions": {
+    "numpy": "2.5.3",
+    "mlx": "0.32.4",
+    "mlx-metal": "0.32.4",
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "safetensors": "0.8.0",
+    "psutil": "7.2.2",
+    "pytest": "9.1.1"
+  },
+  "hardware": {
+    "hw.model": "Mac17,3",
+    "hw.memsize": "17179869184",
+    "machdep.cpu.brand_string": "Apple M5",
+    "hw.logicalcpu": "10",
+    "hw.physicalcpu": "10"
+  },
+  "system_memory": {
+    "total": 17179869184,
+    "available": 4853596160,
+    "percent": 71.7,
+    "used": 7500480512,
+    "free": 506986496,
+    "active": 4360437760,
+    "inactive": 4295557120,
+    "wired": 3140042752
+  },
+  "system_swap": {
+    "total": 7516192768,
+    "used": 6379274240,
+    "free": 1136918528,
+    "percent": 84.9,
+    "sin": 656085843968,
+    "sout": 6105219072
+  },
+  "physical_process_read_bytes_counter": 16384,
+  "physical_read_counter_info": {
+    "source": "libproc.proc_pid_rusage(RUSAGE_INFO_V2).ri_diskio_bytesread",
+    "scope": "process-wide OS-accounted storage reads; includes unrelated reads and readahead; not per-file or NAND bytes",
+    "unavailable": null,
+    "physical_ssd_bandwidth_certified": false
+  },
+  "physical_counter_scope": "OS process storage read counter, unavailable is null; never a bandwidth result",
+  "physical_ssd_bandwidth_certified": false,
+  "mlx_enable_tf32_environment": "0",
+  "source_revision": "51be52d72df0b1227f48123a467b75652dede370"
+}

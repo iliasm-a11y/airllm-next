@@ -39,6 +39,7 @@ class SparseMLP:
         # Exactly one mandatory route readback per MoE layer. The host must know
         # SSD offsets; predictions never replace router decisions.
         host=np.asarray(ids);flat=x.reshape(-1,x.shape[-1]);selected=np.unique(host)
+        if hasattr(self.r,'observe_layer'):self.r.observe_layer(self.layer,selected)
         self.routes.setdefault(str(self.layer),Counter()).update(int(e) for e in host.reshape(-1))
         out=mx.zeros_like(flat)
         # Load each real expert once for the whole prefill chunk. No approximate

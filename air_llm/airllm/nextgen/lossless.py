@@ -285,6 +285,16 @@ class LosslessOverlay:
     def __getattr__(self, name):
         return getattr(self.source, name)
 
+    def io_profile(self):
+        # Packed payload/index reads have their own counters and do not travel
+        # through OffsetCheckpoint._bytes. Never present its zeros as total I/O.
+        profile=getattr(self.source,'io_profile',lambda:None)()
+        if profile is None:return None
+        with self.lock:
+            return {'coverage':'original_shard_fallback_only',
+                    'packed_reads_profiled':False,'original_shard_fallback':profile,
+                    'packed_transport_counters':dict(self.transport_stats)}
+
     @property
     def encoded_read_bytes(self):
         """File-logical bytes, including fallback reads; never physical NAND I/O."""
@@ -525,7 +535,7 @@ def open_checkpoint(root,config,*,cache_dir=None):
             return LosslessCheckpoint(root,max_read_bytes=config.max_tensor_bytes,
                 max_block_bytes=block_limit,palette_decoder=decoder,verify_hash=config.lossless_verify_hash)
     source=OffsetCheckpoint(root,config.metadata_dir() if cache_dir is None else cache_dir,
-                            config.max_open_files,config.max_tensor_bytes)
+                            config.max_open_files,config.max_tensor_bytes,profile_io=config.profile_io)
     try:return configured_overlay(source,config)
     except BaseException:
         source.close()

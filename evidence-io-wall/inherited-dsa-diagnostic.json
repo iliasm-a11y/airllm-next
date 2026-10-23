@@ -1,0 +1,154 @@
+{
+  "scope": "Actual local tiny GLM CPU reference parity; not full-model or hardware throughput evidence",
+  "recorded_at_utc": "2026-10-23T09:38:51.400751+00:00",
+  "baseline_commit": "b720462",
+  "baseline_failure_log": "evidence-io-wall/baseline-tests.log",
+  "baseline_failure": "The inherited golden tail assertion fails on the reference before comparing candidate output.",
+  "inherited_expected_tail": [
+    57,
+    57,
+    8,
+    0,
+    77,
+    45,
+    72,
+    57
+  ],
+  "versions": {
+    "torch": "2.14.1",
+    "mlx": "0.32.4",
+    "transformers": "5.20.2",
+    "numpy": "2.5.3",
+    "safetensors": "0.8.0"
+  },
+  "command_environment": {
+    "PYTHONPATH": "air_llm:tests_next:tests_ultra",
+    "MLX_ENABLE_TF32": "0",
+    "interpreter": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python"
+  },
+  "protocol": [
+    "Load save_tiny from tests_ultra/conftest.py, setting torch threads=1 and torch.manual_seed(521) via that fixture; construct/save the unchanged tiny GLM fixture in a fresh temporary directory.",
+    "Set MLX default device to mx.cpu and construct AirLLMNextModel using tests_next/test_native.py options (float32, CPU, prefill_chunk=2).",
+    "For each prompt generate the CPU reference twice with attention_mask=ones_like(ids), max_new_tokens=8, do_sample=False and assert exact repeated sequence.",
+    "Generate eight tokens with the candidate and assert exact equality with the current CPU reference.",
+    "Repeat eight cached forward steps from the original prompt; compare candidate last-token logits with reference last-token logits using np.testing.assert_allclose at unchanged atol=4e-6, rtol=3e-4. Feed each reference argmax as next input.",
+    "Record maximum absolute errors at each cached step and actual DSA tie fallback counts."
+  ],
+  "tolerances": {
+    "atol": 4e-06,
+    "rtol": 0.0003,
+    "unchanged": true
+  },
+  "test_repair": "Replace the backend-specific reference golden tail with current-reference repeat-call determinism; retain exact candidate token equality, the DSA fallback assertion, and cached-logit comparisons unchanged.",
+  "cause_limit": "Observed reference output drift is established. Dependency or top-k implementation changes are plausible causes; the exact historical cause was not isolated.",
+  "results": [
+    {
+      "prompt": [
+        1,
+        8,
+        12
+      ],
+      "reference_tokens": [
+        [
+          1,
+          8,
+          12,
+          57,
+          57,
+          8,
+          0,
+          43,
+          58,
+          50,
+          59
+        ]
+      ],
+      "reference_repeat_identical": true,
+      "candidate_tokens": [
+        [
+          1,
+          8,
+          12,
+          57,
+          57,
+          8,
+          0,
+          43,
+          58,
+          50,
+          59
+        ]
+      ],
+      "token_parity": true,
+      "cached_logits_max_abs_error": 5.960464477539063e-08,
+      "cached_logits_per_step_max_abs_error": [
+        4.470348358154297e-08,
+        4.470348358154297e-08,
+        5.960464477539063e-08,
+        5.960464477539063e-08,
+        5.21540641784668e-08,
+        5.960464477539063e-08,
+        5.960464477539063e-08,
+        5.960464477539063e-08
+      ],
+      "dsa_tie_fallback_calls": 4
+    },
+    {
+      "prompt": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference_tokens": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "reference_repeat_identical": true,
+      "candidate_tokens": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "token_parity": true,
+      "cached_logits_max_abs_error": 0.0,
+      "cached_logits_per_step_max_abs_error": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dsa_tie_fallback_calls": 32
+    }
+  ]
+}

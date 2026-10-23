@@ -1,0 +1,80 @@
+{
+  "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/evidence-io-wall/trained-context1024.json",
+  "summaries": {
+    "reference": {
+      "process_cold_median_seconds": 0.5412869579995458,
+      "warm_median_seconds": 2.3404819584975485,
+      "warm_median_logical_bytes": 8843622912.0,
+      "warm_median_read_calls": 11387.0,
+      "peak_process_rss_bytes": 475922432,
+      "warm_generation_count": 4,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.4677089580000029,
+          "warm_median_logical_bytes": 2152256256.0,
+          "warm_median_read_calls": 2374.0,
+          "warm_speedup_vs_reference": 1.0488249243648975
+        },
+        "1": {
+          "input_tokens": 1024,
+          "warm_median_seconds": 4.504366020999441,
+          "warm_median_logical_bytes": 15534989568.0,
+          "warm_median_read_calls": 20400.0,
+          "warm_speedup_vs_reference": 0.9009025451260692
+        }
+      },
+      "warm_speedup_vs_reference": 0.9622800980462481
+    },
+    "baseline": {
+      "process_cold_median_seconds": 0.5082967715025006,
+      "warm_median_seconds": 2.252199208498496,
+      "warm_median_logical_bytes": 8843622912.0,
+      "warm_median_read_calls": 11387.0,
+      "peak_process_rss_bytes": 474333184,
+      "warm_generation_count": 4,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.49054481249913806,
+          "warm_median_logical_bytes": 2152256256.0,
+          "warm_median_read_calls": 2374.0,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 1024,
+          "warm_median_seconds": 4.057994812497782,
+          "warm_median_logical_bytes": 15534989568.0,
+          "warm_median_read_calls": 20400.0,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    },
+    "adaptive": {
+      "process_cold_median_seconds": 0.5697228954959428,
+      "warm_median_seconds": 2.257238188001793,
+      "warm_median_logical_bytes": 7604981568.0,
+      "warm_median_read_calls": 7376.5,
+      "peak_process_rss_bytes": 489668608,
+      "warm_generation_count": 4,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.47600833350225,
+          "warm_median_logical_bytes": 1905737472.0,
+          "warm_median_read_calls": 1574.0,
+          "warm_speedup_vs_reference": 1.0305382867773245
+        },
+        "1": {
+          "input_tokens": 1024,
+          "warm_median_seconds": 4.121645500501472,
+          "warm_median_logical_bytes": 13312520064.0,
+          "warm_median_read_calls": 13194.0,
+          "warm_speedup_vs_reference": 0.9845569717250194
+        }
+      },
+      "warm_speedup_vs_reference": 0.9977676350107484
+    }
+  }
+}

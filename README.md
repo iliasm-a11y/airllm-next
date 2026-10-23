@@ -1,5 +1,21 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [second experimental phase](IO_PHASE2_RESEARCH_FR.md) adds explicit macOS
+F_NOCACHE reads, OS-accounted process storage counters, improved small reads,
+measured SpecPrefetch admission and an explicit experimental Granite MoE backend.
+Physical measurements identify the internal Apple SSD; the Fanxiang is absent.
+Positive, negative and preliminary measurements remain separately documented.
+A complete trained Granite 1.3B MoE now passes the short strict CPU/Metal
+protocol through the explicit Python backend, after fixing a worker CPU/GPU
+device race. This does not validate giant models or general model quality.
+
+The [October 23 I/O research validation](IO_WALL_RESEARCH_FR.md) adds opt-in
+adaptive admission, bounded SpecPrefetch, output tile pipelining and offset-I/O
+profiling. On the measured M5/SmolLM2 warm-file protocol with equal 256 MiB
+software caches, adaptive admission plus output pipelining gives 1.39× and
+46.4% fewer logical read bytes. External Fanxiang SSD and giant-model validation
+remain pending; negative ablations and raw evidence hashes are included.
+
 V5 extends the exact `4.1.0rc1` source commit
 `9629c27b9d8bdf697ae866498ad468e11eb183d4`. It integrates an optional compact
 source-weight cache inside the existing weight budget, reusable output tiles,

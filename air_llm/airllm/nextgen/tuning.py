@@ -101,7 +101,10 @@ def runtime_tuning_key(model):
       'cache_bucket_256MiB':model.options.cache_bytes//(256*MiB),
       'io_bucket_64MiB':model.options.io_bytes//(64*MiB),
       'cache_policy':model.options.policy,'coalesce_reads':model.options.coalesce_reads,'selective_fp8_scales':model.options.selective_fp8_scales,
-      'compact_cache_bytes':model.options.compact_cache_bytes,'output_tile_cache':model.options.output_tile_cache}
+      'compact_cache_bytes':model.options.compact_cache_bytes,'output_tile_cache':model.options.output_tile_cache,
+      'output_prefetch':model.options.output_prefetch,
+      'io_mode':model.options.io_mode,'spec_prefetch':model.options.spec_prefetch,
+      'spec_prefetch_budget':model.options.spec_prefetch_budget,'spec_prefetch_experts':model.options.spec_prefetch_experts}
     return sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
 
 
@@ -116,7 +119,7 @@ def calibrate_prefetch(model,input_ids,tokens=8):
     try:
         reader.prefetch_enabled=False;model.generate(input_ids,max_new_tokens=tokens,eos_token_id=[])
         for enabled in (False,True,True,False):
-            reader.io.drain();reader.prefetch_enabled=enabled
+            reader.drain();reader.prefetch_enabled=enabled
             begin=perf_counter();model.generate(input_ids,max_new_tokens=tokens,eos_token_id=[])
             rows.append({'prefetch':enabled,'generation_seconds':perf_counter()-begin,
               'decode_tokens_s':model.stats['decode_tokens_per_second']})
@@ -142,6 +145,7 @@ def calibrate_cache(cache):
     same matrix. All policies see identical sizes and service observations.
     """
     from .cache import WeightCache
+    from .adaptive_cache import AdaptiveWeightCache
     from types import SimpleNamespace
     trace=list(cache.trace);rows=[]
     costs={}
@@ -151,8 +155,9 @@ def calibrate_cache(cache):
     costs={key:statistics.median(values) for key,values in costs.items()}
     costs.update({key:value for key,value in cache.costs.items() if key not in costs})
     known=sum(key in costs for key,_ in trace)
-    for policy in ('slru','lru','lfu','cost'):
-        candidate=WeightCache(cache.capacity,policy);miss_bytes=0;service=0.;unknown=0
+    for policy in ('slru','lru','lfu','cost','adaptive'):
+        cache_type=AdaptiveWeightCache if policy=='adaptive' else WeightCache
+        candidate=cache_type(cache.capacity,policy);miss_bytes=0;service=0.;unknown=0
         for key,n in trace:
             if candidate.get(key,n) is None:
                 miss_bytes+=n
@@ -164,7 +169,8 @@ def calibrate_cache(cache):
             'replayed_observed_service_seconds':service,'misses_without_cost_observation':unknown})
     # Preserve the existing byte-oriented auto-selection rule. Cost policy stays
     # explicit until end-to-end calibration demonstrates a latency improvement.
-    eligible=[row for row in rows if row['policy']!='cost']
+    eligible=[row for row in rows if row['policy'] not in ('cost','adaptive')]
+    if cache.policy=='adaptive':eligible=[row for row in rows if row['policy']=='adaptive']
     best=min(eligible,key=lambda x:x['miss_weight_bytes'])['policy']
     return {'selected_policy':best,'scope':'recent actual weight requests and observed IO+conversion durations',
         'cost_observation_request_coverage':known/len(trace) if trace else 0.,
