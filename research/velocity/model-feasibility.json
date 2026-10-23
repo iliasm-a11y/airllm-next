@@ -1,0 +1,189 @@
+{
+  "checked_utc": "2026-10-23T16:16:30Z",
+  "models": [
+    {
+      "model_id": "Qwen/Qwen3-30B-A3B-MLX-6bit",
+      "revision": "b92024737fc38f0bce249aaefb7611dd22c38b58",
+      "license": "apache-2.0",
+      "weight_file_bytes": 23853636272,
+      "weight_file_GiB": 22.215429946780205,
+      "shards": [
+        {
+          "name": "model-00001-of-00005.safetensors",
+          "size": 5283561615,
+          "lfs_sha256": "9fc80f27a8d091093b4b053287b0f65ff37e452ffe491b85ace8b65f3d122adf"
+        },
+        {
+          "name": "model-00002-of-00005.safetensors",
+          "size": 5355037546,
+          "lfs_sha256": "d07bae5b535ac0c4deaafc10d4bab7cbe42c6b7d4c8efcbc76700236df50edaf"
+        },
+        {
+          "name": "model-00003-of-00005.safetensors",
+          "size": 5355037518,
+          "lfs_sha256": "bac8d4814d383d201b0e287309ed766d7f41137fff54c476bd91fa535d720f4b"
+        },
+        {
+          "name": "model-00004-of-00005.safetensors",
+          "size": 5355037580,
+          "lfs_sha256": "fd373bce66c55ef0618721c840244d39a2546128e697961696a0477ead53db7c"
+        },
+        {
+          "name": "model-00005-of-00005.safetensors",
+          "size": 2504962013,
+          "lfs_sha256": "5ddd8e7db28a5dc1b7dfa98afb6164343e0d16dc3ad5b8aa10312dc4c60dc80e"
+        }
+      ],
+      "config": {
+        "architectures": [
+          "Qwen3MoeForCausalLM"
+        ],
+        "attention_bias": false,
+        "attention_dropout": 0.0,
+        "bos_token_id": 151643,
+        "decoder_sparse_step": 1,
+        "eos_token_id": 151645,
+        "head_dim": 128,
+        "hidden_act": "silu",
+        "hidden_size": 2048,
+        "initializer_range": 0.02,
+        "intermediate_size": 6144,
+        "max_position_embeddings": 40960,
+        "max_window_layers": 48,
+        "mlp_only_layers": [],
+        "model_type": "qwen3_moe",
+        "moe_intermediate_size": 768,
+        "norm_topk_prob": true,
+        "num_attention_heads": 32,
+        "num_experts": 128,
+        "num_experts_per_tok": 8,
+        "num_hidden_layers": 48,
+        "num_key_value_heads": 4,
+        "output_router_logits": false,
+        "quantization": {
+          "group_size": 128,
+          "bits": 6
+        },
+        "quantization_config": {
+          "group_size": 128,
+          "bits": 6
+        },
+        "rms_norm_eps": 1e-06,
+        "rope_scaling": null,
+        "rope_theta": 1000000.0,
+        "router_aux_loss_coef": 0.001,
+        "sliding_window": null,
+        "tie_word_embeddings": false,
+        "torch_dtype": "bfloat16",
+        "transformers_version": "4.51.0",
+        "use_cache": true,
+        "use_sliding_window": false,
+        "vocab_size": 151936
+      },
+      "metadata_url": "https://huggingface.co/api/models/Qwen/Qwen3-30B-A3B-MLX-6bit/revision/b92024737fc38f0bce249aaefb7611dd22c38b58?blobs=true"
+    },
+    {
+      "model_id": "Qwen/Qwen3-30B-A3B-MLX-8bit",
+      "revision": "ef6823f1ecb032a5661f97806d920d270803a1b9",
+      "license": "apache-2.0",
+      "weight_file_bytes": 31486614312,
+      "weight_file_GiB": 29.324194706976414,
+      "shards": [
+        {
+          "name": "model-00001-of-00006.safetensors",
+          "size": 5254075841,
+          "lfs_sha256": "3541e399e19da62d41fc718319c7696f0d64f3421e1ae74bb3381be23fddd025"
+        },
+        {
+          "name": "model-00002-of-00006.safetensors",
+          "size": 5368169148,
+          "lfs_sha256": "0da843ee78eb6f8a79bb726f2fe033a1ffc40c1188147c13a2cbf030c48ae521"
+        },
+        {
+          "name": "model-00003-of-00006.safetensors",
+          "size": 5348423795,
+          "lfs_sha256": "052b2c7af5e9c052b20ba7fc0a2ff1933730f70dd59ae4de06903e6c6517f3aa"
+        },
+        {
+          "name": "model-00004-of-00006.safetensors",
+          "size": 5348423813,
+          "lfs_sha256": "6d5f70e843aaab6cbf3ba24a0309cacfce092476c73ddea1128b8d87be87a587"
+        },
+        {
+          "name": "model-00005-of-00006.safetensors",
+          "size": 5368169127,
+          "lfs_sha256": "c210a58140ef770e3f5fb5c703f7d5eb247047b75760ac739ad5b3b3adf93ccf"
+        },
+        {
+          "name": "model-00006-of-00006.safetensors",
+          "size": 4799352588,
+          "lfs_sha256": "979effd63dda8ccc7231c2146775333cfcc0109e81b0f46087eea0d8ccb2d31c"
+        }
+      ],
+      "config": {
+        "architectures": [
+          "Qwen3MoeForCausalLM"
+        ],
+        "attention_bias": false,
+        "attention_dropout": 0.0,
+        "bos_token_id": 151643,
+        "decoder_sparse_step": 1,
+        "eos_token_id": 151645,
+        "head_dim": 128,
+        "hidden_act": "silu",
+        "hidden_size": 2048,
+        "initializer_range": 0.02,
+        "intermediate_size": 6144,
+        "max_position_embeddings": 40960,
+        "max_window_layers": 48,
+        "mlp_only_layers": [],
+        "model_type": "qwen3_moe",
+        "moe_intermediate_size": 768,
+        "norm_topk_prob": true,
+        "num_attention_heads": 32,
+        "num_experts": 128,
+        "num_experts_per_tok": 8,
+        "num_hidden_layers": 48,
+        "num_key_value_heads": 4,
+        "output_router_logits": false,
+        "quantization": {
+          "group_size": 128,
+          "bits": 8
+        },
+        "quantization_config": {
+          "group_size": 128,
+          "bits": 8
+        },
+        "rms_norm_eps": 1e-06,
+        "rope_scaling": null,
+        "rope_theta": 1000000.0,
+        "router_aux_loss_coef": 0.001,
+        "sliding_window": null,
+        "tie_word_embeddings": false,
+        "torch_dtype": "bfloat16",
+        "transformers_version": "4.51.0",
+        "use_cache": true,
+        "use_sliding_window": false,
+        "vocab_size": 151936
+      },
+      "metadata_url": "https://huggingface.co/api/models/Qwen/Qwen3-30B-A3B-MLX-8bit/revision/ef6823f1ecb032a5661f97806d920d270803a1b9?blobs=true"
+    }
+  ],
+  "selected_model": "Qwen/Qwen3-30B-A3B-MLX-6bit",
+  "selected_tensor_payload_bytes": 23853477888,
+  "physical_ram_bytes": 17179869184,
+  "disk_free_bytes_now": 53080702976,
+  "disk_free_bytes_download_preflight": 53853831168,
+  "download_reserve_bytes": 17179869184,
+  "canonical_source_model": "Qwen/Qwen3-30B-A3B",
+  "canonical_source_model_url": "https://huggingface.co/Qwen/Qwen3-30B-A3B",
+  "source_declared_total_parameters": 30500000000,
+  "source_declared_active_parameters": 3300000000,
+  "source_parameter_counts_are_declarations": true,
+  "large_generation_validated": false,
+  "adapter_status": "CPU independent dequantized Transformers validation only; 4/6/8bit and canonical6bit/group128/BF16 affine scales",
+  "download_status": "partial HTTP ranges suspended after discovery of installed23.938GBGGUF candidate",
+  "checkpoint_complete": false,
+  "local_codellama_note": "Existing evidence is Linux-only CodeLlama7B13.477GB at /workspace/scratch; not an available26GB Mac checkpoint",
+  "priority_installed_candidate": "qwen3.6:latest, local manifestdigest07d35212591f"
+}

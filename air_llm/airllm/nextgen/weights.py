@@ -5,11 +5,12 @@ skeleton or full expert bank is ever allocated by this backend.
 """
 from dataclasses import dataclass
 import math
+from threading import RLock
 from time import perf_counter
 import numpy as np
 from .quantization import FP8_LUT, PackedMatrix
 from .cache import WeightCache, SingleFlight, size_of
-from .compact_cache import CompactWeightCache
+from .compact_cache import CompactWeightCache, backing_bytes
 from .adaptive_cache import AdaptiveWeightCache
 from .residency_cache import ResidencyWeightCache, RESIDENCY_POLICIES
 from .specprefetch import SpecPrefetch
@@ -30,6 +31,13 @@ class NativeWeights:
         self.spec=(SpecPrefetch(self.io,config.spec_prefetch_budget,
                   max_predictions=config.spec_prefetch_experts) if config.spec_prefetch else None)
         self.dtype=getattr(mx,config.dtype);self.stats={'dequant_seconds':0.,'loads':0,'speculative_reads':0}
+        self._stats_lock=RLock()
+        self.profile_stages=config.profile_io
+        if self.profile_stages:
+            # Worker wall-time sums can overlap compute and other workers. They
+            # attribute load cost; they are not additive generation/GPU timings.
+            self.stats.update({'source_read_seconds':0.,'source_read_calls':0,
+                               'materialize_seconds':0.,'materialize_calls':0})
         self.block=tuple(model_config.get('quantization_config',{}).get('weight_block_size',[128,128]))
         self.lut=mx.array(FP8_LUT)
 
@@ -50,25 +58,77 @@ class NativeWeights:
         d=self.cp.tensors[key];n=math.prod(self.shape(key,expert))
         return n*(4 if self.cfg.dtype=='float32' or d['dtype']=='F32' else 2)
 
-    def _array(self,a,dtype=None):
+    def _profile_call(self,stage,function,*args,**kwargs):
+        start=perf_counter();failed=False
+        try:return function(*args,**kwargs)
+        except BaseException:
+            failed=True;raise
+        finally:
+            elapsed=perf_counter()-start
+            with self._stats_lock:
+                self.stats[stage+'_seconds']+=elapsed
+                self.stats[stage+'_calls']+=1
+                if failed:
+                    name=stage+'_failed_calls'
+                    self.stats[name]=self.stats.get(name,0)+1
+
+    def _array(self,a,dtype=None,*,bfloat16_bits=False):
+        if self.profile_stages:
+            return self._profile_call('materialize',self._array_value,a,dtype,bfloat16_bits=bfloat16_bits)
+        return self._array_value(a,dtype,bfloat16_bits=bfloat16_bits)
+
+    def _array_value(self,a,dtype=None,*,bfloat16_bits=False):
         # Evaluation on CPU ensures data has been read before the Future resolves;
         # on Apple these evaluated buffers are shared with Metal, not copied to VRAM.
         # Stream contexts also change MLX's process-global default device.
         # A worker context would move concurrent main-thread GPU operations
         # onto CPU. Use explicit streams without mutating that shared default.
-        v=self.mx.array(a)
+        v=self._import_array(a) if self.cfg.zero_copy_weights else self.mx.array(a)
+        if bfloat16_bits:v=v.view(self.mx.bfloat16,stream=self.mx.cpu)
         if dtype is not None:v=v.astype(dtype,stream=self.mx.cpu)
         self.mx.eval(v)
         return v
+
+    def _import_array(self,a):
+        """Adopt an exact source allocation, with a portable copy fallback.
+
+        MLX retains the NumPy exporter for the lifetime of the imported buffer.
+        Only full contiguous buffers qualify: a small coalesced view must not
+        hide a larger retained allocation from the decoded-cache/IO accounting.
+        Offset and lossless readers create privately owned, unrecycled buffers.
+        No caller-owned tensor or checkpoint mapping is modified.
+        """
+        eligible=isinstance(a,np.ndarray) and a.flags.c_contiguous and a.nbytes>0
+        if eligible:
+            try:eligible=backing_bytes((a,))==a.nbytes
+            except (TypeError,ValueError):eligible=False
+        if eligible:
+            importer=getattr(self.mx,'from_dlpack',None)
+            if importer is not None:
+                try:
+                    value=importer(a,copy=False)
+                except (BufferError,TypeError,ValueError,RuntimeError):
+                    # copy=False may be unavailable, or the platform allocator
+                    # may reject the host pointer/alignment. Exact values win.
+                    pass
+                else:
+                    with self._stats_lock:
+                        self.stats['zero_copy_imports']=self.stats.get('zero_copy_imports',0)+1
+                        self.stats['zero_copy_import_bytes']=self.stats.get('zero_copy_import_bytes',0)+a.nbytes
+                    return value
+        with self._stats_lock:
+            self.stats['zero_copy_fallbacks']=self.stats.get('zero_copy_fallbacks',0)+1
+        return self.mx.array(a)
 
     def _load(self,key,expert=None,rows=None):
         start=perf_counter()
         value=self._load_value(key,expert,rows)
         elapsed=perf_counter()-start
         if rows is None:self.cache.record_load(self.identity(key,expert),elapsed)
-        self.stats['loads']+=1
-        self.stats.setdefault('load_seconds',0.)
-        self.stats['load_seconds']+=elapsed
+        with self._stats_lock:
+            self.stats['loads']+=1
+            self.stats.setdefault('load_seconds',0.)
+            self.stats['load_seconds']+=elapsed
         return value
 
     def _load_value(self,key,expert=None,rows=None):
@@ -80,7 +140,9 @@ class NativeWeights:
             rows=tuple(int(value) for value in rows)
         ident=self.identity(key,expert)
         if self.sidecar and ident in self.sidecar.entries:
-            p=self.sidecar.load(ident,rows=rows,max_bytes=self.cfg.max_tensor_bytes)
+            if self.profile_stages:
+                p=self._profile_call('source_read',self.sidecar.load,ident,rows=rows,max_bytes=self.cfg.max_tensor_bytes)
+            else:p=self.sidecar.load(ident,rows=rows,max_bytes=self.cfg.max_tensor_bytes)
             if p.nbytes>self.cfg.max_tensor_bytes:raise MemoryError('Packed matrix tile exceeds max_tensor_bytes')
             with self.cp.io_lock:
                 self.cp.stats['logical_bytes']+=p.nbytes
@@ -107,15 +169,21 @@ class NativeWeights:
             cache_key=('fp8',key,expert,rows,scale_rows)
             source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
             if source is None:
-                source=self.cp.read_arrays(requests,mode=self.cfg.io_mode,max_batch_bytes=self.cp.max_read_bytes,
-                                           coalesce=self.cfg.coalesce_reads)
+                if self.profile_stages:
+                    source=self._profile_call('source_read',self.cp.read_arrays,requests,mode=self.cfg.io_mode,
+                        max_batch_bytes=self.cp.max_read_bytes,coalesce=self.cfg.coalesce_reads)
+                else:
+                    source=self.cp.read_arrays(requests,mode=self.cfg.io_mode,max_batch_bytes=self.cp.max_read_bytes,
+                                               coalesce=self.cfg.coalesce_reads)
                 self.compact_cache.put(cache_key,source)
             a,scales=source
+            t=perf_counter()
             if self.cp.tensors[sk]['dtype']=='BF16':scales=(scales.astype(np.uint32)<<16).view(np.float32)
-            t=perf_counter();offset=rows[0] if rows else 0;mx=self.mx
+            offset=rows[0] if rows else 0;mx=self.mx
             # Decode on CPU stream while GPU executes a previous expert. The raw
             # FP8 buffer dies after evaluation. Cached result is reused directly.
-            raw=mx.array(a);s=mx.array(scales)
+            if self.cfg.zero_copy_weights:raw=self._import_array(a);s=self._import_array(scales)
+            else:raw=mx.array(a);s=mx.array(scales)
             ri=mx.subtract(mx.floor_divide(mx.add(mx.arange(a.shape[0],stream=mx.cpu),offset,
                 stream=mx.cpu),br,stream=mx.cpu),scale_rows[0] if scale_rows else 0,stream=mx.cpu)
             ci=mx.floor_divide(mx.arange(a.shape[1],stream=mx.cpu),bc,stream=mx.cpu)
@@ -125,11 +193,17 @@ class NativeWeights:
             selected_scales=mx.take(mx.take(s,ri,axis=0,stream=mx.cpu),ci,axis=1,stream=mx.cpu)
             v=mx.multiply(decoded,selected_scales,stream=mx.cpu).astype(self.dtype,stream=mx.cpu)
             mx.eval(v)
-            self.stats['dequant_seconds']+=perf_counter()-t
+            elapsed=perf_counter()-t
+            with self._stats_lock:
+                self.stats['dequant_seconds']+=elapsed
+                if self.profile_stages:
+                    # FP8 lookup/scale expansion includes import and evaluation.
+                    # dequant_seconds is a subset of materialize_seconds.
+                    self.stats['materialize_seconds']+=elapsed
+                    self.stats['materialize_calls']+=1
         elif d['dtype']=='BF16':
             a=self._source_array(key,expert,rows)
-            v=self.mx.array(a).view(self.mx.bfloat16,stream=self.mx.cpu).astype(self.dtype,stream=self.mx.cpu)
-            self.mx.eval(v)
+            v=self._array(a,self.dtype,bfloat16_bits=True)
         else:
             a=self._source_array(key,expert,rows)
             # Router scores, normalization weights and correction bias stay fp32.
@@ -141,7 +215,10 @@ class NativeWeights:
         cache_key=('array',key,expert,rows)
         source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
         if source is None:
-            source=(self.cp.read_array(key,expert=expert,rows=rows,mode=self.cfg.io_mode),)
+            if self.profile_stages:
+                value=self._profile_call('source_read',self.cp.read_array,key,expert=expert,rows=rows,mode=self.cfg.io_mode)
+            else:value=self.cp.read_array(key,expert=expert,rows=rows,mode=self.cfg.io_mode)
+            source=(value,)
             self.compact_cache.put(cache_key,source)
         return source[0]
 

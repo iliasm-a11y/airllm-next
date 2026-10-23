@@ -1,5 +1,13 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [Velocity campaign](VELOCITY_REPORT_FR.md) measures actual generated tokens:
+exact optional zero-copy imports improve trained Granite throughput by about 8%
+beyond existing prefetch in the six-prompt primary campaign. Incremental draft KV
+is implemented but remains slower than direct generation in its tested setup.
+The installed 23.94 GB Qwen3.6 was tested; no safe beyond-RAM native generation
+is certified. Failed memory trials, Q8 quality controls and reproducible raw
+evidence are retained. This is research, not an AirLLM 7.0 stable release.
+
 The [multi-token MoE campaign](MULTITOKEN_REPORT_FR.md) compares exact expert
 union, causal block verification, residency policies, real-model drafts and
 lossy expert storage on trained Granite with bounded CPU/Metal runs. It keeps

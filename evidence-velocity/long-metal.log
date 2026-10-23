@@ -1,0 +1,13 @@
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+{"repeat": 1, "case": 3, "variant": "prefetch", "new_tokens": 128, "generation_seconds": 19.616493541005184, "tokens_per_second": 6.525121308374312}
+{"repeat": 1, "case": 6, "variant": "reference", "new_tokens": 123, "generation_seconds": 24.446027041994967, "tokens_per_second": 5.0314924297802115}
+{"repeat": 1, "case": 3, "variant": "reference", "new_tokens": 128, "generation_seconds": 22.082124874999863, "tokens_per_second": 5.796543617272738}
+{"repeat": 0, "case": 3, "variant": "reference", "new_tokens": 128, "generation_seconds": 22.375247999996645, "tokens_per_second": 5.720606985005001}
+{"repeat": 0, "case": 3, "variant": "zero-copy", "new_tokens": 128, "generation_seconds": 19.19093291599711, "tokens_per_second": 6.6698164471880474}
+{"repeat": 1, "case": 6, "variant": "prefetch", "new_tokens": 123, "generation_seconds": 21.99234499999875, "tokens_per_second": 5.592855150281018}
+{"repeat": 0, "case": 3, "variant": "prefetch", "new_tokens": 128, "generation_seconds": 19.750050458998885, "tokens_per_second": 6.48099610002152}
+{"repeat": 0, "case": 6, "variant": "zero-copy", "new_tokens": 123, "generation_seconds": 20.55649729200377, "tokens_per_second": 5.983509654042352}
+{"repeat": 1, "case": 3, "variant": "zero-copy", "new_tokens": 128, "generation_seconds": 19.210531042001094, "tokens_per_second": 6.663012059382752}
+{"repeat": 0, "case": 6, "variant": "reference", "new_tokens": 123, "generation_seconds": 24.975655875001394, "tokens_per_second": 4.9247955935809085}
+{"repeat": 1, "case": 6, "variant": "zero-copy", "new_tokens": 123, "generation_seconds": 20.901710458005255, "tokens_per_second": 5.884685860859372}
+{"repeat": 0, "case": 6, "variant": "prefetch", "new_tokens": 123, "generation_seconds": 22.741859875000955, "tokens_per_second": 5.408528619737388}

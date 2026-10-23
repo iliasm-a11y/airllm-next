@@ -14,6 +14,8 @@ class NextConfig:
     compact_cache_bytes: int = 0
     output_tile_cache: bool = False
     output_prefetch: bool = False
+    # Experimental exact host-buffer import; unsupported MLX builds copy.
+    zero_copy_weights: bool = False
     io_bytes: int = 256 * MiB
     kv_bytes: int = 512 * MiB
     workspace_bytes: int = 768 * MiB
@@ -52,7 +54,7 @@ class NextConfig:
         for k in ('max_tensor_bytes','io_workers','max_open_files','row_chunk','prefill_chunk','max_context','spec_prefetch_experts'):
             if type(getattr(self,k)) is not int or getattr(self,k) < 1:
                 raise ValueError(f'{k} must be a positive integer')
-        for k in ('prefetch','spec_prefetch','profile_io','coalesce_reads','selective_fp8_scales','lossless_verify_hash','output_tile_cache','output_prefetch',
+        for k in ('prefetch','spec_prefetch','profile_io','coalesce_reads','selective_fp8_scales','lossless_verify_hash','output_tile_cache','output_prefetch','zero_copy_weights',
                   'load_tokenizer','use_saved_tuning'):
             if type(getattr(self,k)) is not bool:
                 raise ValueError(f'{k} must be boolean')

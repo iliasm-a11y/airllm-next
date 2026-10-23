@@ -81,6 +81,7 @@ def config_for(args):
     if getattr(args,'profile_io',False):values['profile_io']=True
     if getattr(args,'output_tile_cache',False):values['output_tile_cache']=True
     if getattr(args,'output_prefetch',False):values['output_prefetch']=True
+    if getattr(args,'zero_copy_weights',False):values['zero_copy_weights']=True
     if getattr(args,'max_context',None) is not None:values['max_context']=args.max_context
     if getattr(args,'cache_dir',None):values['cache_dir']=args.cache_dir
     if getattr(args,'cache_policy',None):
@@ -154,6 +155,7 @@ def main(argv=None):
             p.add_argument('--compact-cache-mib',type=nonnegative_int,help='Compact source weight partition inside --cache-mib')
             p.add_argument('--output-tile-cache',action='store_true',help='Opt in to decoded output tile admission in the existing weight cache')
             p.add_argument('--output-prefetch',action='store_true',help='Experimental exact output tile pipeline within the existing I/O allowance')
+            p.add_argument('--zero-copy-weights',action='store_true',help='Experimental exact host-buffer import with a portable copy fallback')
             p.add_argument('--row-chunk',type=positive_int);p.add_argument('--prefill-chunk',type=positive_int)
             p.add_argument('--io-workers',type=positive_int)
             transport=p.add_mutually_exclusive_group()

@@ -1,0 +1,21 @@
+{
+  "method": "Arithmetic on independently read installedGGUFtensor shapes andGGMLblock sizes; not observedIO",
+  "expert_pool_encoded_bytes": 20887633920,
+  "active_expert_encoded_bytes_per_token_if_all_miss": 652738560,
+  "nonexpert_text_encoded_bytes_excluding_input_embedding": 1311959552,
+  "output_head_encoded_bytes": 417177600,
+  "assumptions": [
+    "All40MoElayers executed",
+    "All8routedexperts executed",
+    "Q4_K256values144bytes;Q6_K256values210bytes",
+    "Noexpert cache reuse",
+    "Textforward only; vision excluded"
+  ],
+  "bandwidth_required_for_experts_only_GiB_per_second": {
+    "2": 1.2158203125,
+    "4": 2.431640625,
+    "8": 4.86328125,
+    "10": 6.0791015625,
+    "15": 9.11865234375
+  }
+}
