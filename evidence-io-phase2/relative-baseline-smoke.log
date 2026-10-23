@@ -1,0 +1,57 @@
+W1023 13:09:57.185000 77161 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Writing model shards:   0%|          | 0/5 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 5/5 [00:00<00:00, 2007.42it/s]
+{
+  "output": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/outputs/airllm-next/evidence-io-phase2/relative-baseline-smoke.json",
+  "summaries": {
+    "reference": {
+      "process_cold_median_seconds": 0.012377749997540377,
+      "warm_median_seconds": 0.012736500000755768,
+      "warm_median_logical_bytes": 973056.0,
+      "warm_median_read_calls": 287.5,
+      "peak_process_rss_bytes": 230375424,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.007686124998144805,
+          "warm_median_logical_bytes": 584896,
+          "warm_median_read_calls": 164,
+          "warm_speedup_vs_reference": 1.1971246896039491
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.01778687500336673,
+          "warm_median_logical_bytes": 1361216,
+          "warm_median_read_calls": 411,
+          "warm_speedup_vs_reference": 1.1757054005802872
+        }
+      },
+      "warm_speedup_vs_reference": 1.1821683744270068
+    },
+    "baseline": {
+      "process_cold_median_seconds": 0.011815709003712982,
+      "warm_median_seconds": 0.015056687501783017,
+      "warm_median_logical_bytes": 973056.0,
+      "warm_median_read_calls": 287.5,
+      "peak_process_rss_bytes": 230047744,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.009201250002661254,
+          "warm_median_logical_bytes": 584896,
+          "warm_median_read_calls": 164,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.02091212500090478,
+          "warm_median_logical_bytes": 1361216,
+          "warm_median_read_calls": 411,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    }
+  }
+}

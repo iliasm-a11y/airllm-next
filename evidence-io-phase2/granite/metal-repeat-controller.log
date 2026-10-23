@@ -1,0 +1,24 @@
+running reference
+running native_off
+{
+  "reference": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 0.0,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 2.85085760450238,
+    "process_peak_rss_bytes": 812548096,
+    "raw_report": "granite-metal-repeat-control-reference.json"
+  },
+  "native_off": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 8.106231689453125e-05,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 1.2139044789983018,
+    "process_peak_rss_bytes": 714539008,
+    "raw_report": "granite-metal-repeat-control-native_off.json"
+  }
+}

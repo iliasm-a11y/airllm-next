@@ -3,7 +3,7 @@
 SpecPrefetch reste désactivé par défaut. Les corrections ci-dessous réduisent
 des coûts identifiés et sécurisent le retrait des lectures inutiles. Elles ne
 constituent pas une validation de débit sur SSD externe ni sur modèle géant.
-Les résultats natifs finaux sont dans `evidence-io-phase2/specprefetch-paired-stable.json`
+Les résultats natifs finaux sont dans `evidence-io-phase2/specprefetch-after-stream-fix.json`
 et le rapport général de cette phase.
 
 ## Corrections
@@ -100,10 +100,11 @@ sources sont cohérentes à l'intérieur de chaque suite. Ce diagnostic justifie
 les deux règles d'admission retenues ; il ne démontre toujours pas un gain par
 rapport à la désactivation. Les trois suites historiques sont
 `specprefetch-shadow-probe.json`, `specprefetch-warmup-probe.json` et
-`specprefetch-demand-gate-probe.json`. La comparaison finale après promotion des
-règles reste `specprefetch-paired-stable.json`.
+`specprefetch-demand-gate-probe.json`. La première comparaison stable après
+promotion des règles est conservée dans `specprefetch-paired-stable.json` ; elle
+précède la correction des streams des workers décrite ci-dessous.
 
-Cette suite finale utilise cinq ordres de variantes mélangés, trois répétitions
+Cette première suite stable utilise cinq ordres de variantes mélangés, trois répétitions
 échauffées, deux prompts et seize nouveaux tokens, soit trente générations
 échauffées par variante. Le SpecPrefetch de phase 1 prend **75,445 ms**, le
 SpecPrefetch corrigé **60,950 ms**, et la désactivation **58,014 ms**. La correction
@@ -113,6 +114,31 @@ les tokens sont identiques et les empreintes des sources restent cohérentes.
 Sur ce petit modèle aléatoire, les règles corrigées n'admettent aucune lecture
 spéculative : le résultat mesure une désactivation conditionnelle appropriée et
 son coût de contrôle, pas un recouvrement réussi d'E/S physiques.
+
+La validation sur le vrai modèle entraîné a ensuite révélé une course entre le
+contexte CPU d'un worker et le contexte Metal du thread de calcul : le contexte
+de stream modifiait le device par défaut global de MLX. Les conversions F32,
+BF16 et FP8 utilisent désormais des opérations explicitement placées sur CPU,
+sans changer ce device global. Trois tests avec barrière reproduisent le défaut
+sur la phase 1 et passent après correction. La validation Metal stricte du
+checkpoint `ibm-granite/granite-3.0-1b-a400m-instruct` passe après cette correction :
+tokens et ensembles d'experts identiques à la référence indépendante, logits
+dans les tolérances annoncées avant l'essai, variantes natives identiques bit à
+bit. Les résultats détaillés sont dans
+`evidence-io-phase2/granite/granite-metal-after-stream-fix.json`.
+
+**La comparaison faisant autorité pour les sources finales est
+`evidence-io-phase2/specprefetch-after-stream-fix.json`.** Elle reprend les cinq
+ordres mélangés, trois répétitions échauffées, deux prompts et seize nouveaux
+tokens, soit trente générations échauffées par variante. Le SpecPrefetch de
+phase 1 prend **74,403 ms**, la version corrigée **61,740 ms**, et la désactivation
+**59,319 ms**. La réduction par rapport à la phase 1 est de **17,0 %**, soit
+**1,205×**, tandis que la version corrigée reste **4,1 % plus lente** que la
+désactivation. Tous les logits et tokens sont identiques bit à bit et les
+empreintes des sources sont cohérentes. Aucune lecture spéculative n'est admise
+dans les cinq workers corrigés de ce petit modèle aléatoire. Le résultat
+historique de 19,2 % ci-dessus reste une mesure valide de l'étape antérieure,
+mais ne décrit pas les sources finales après correction des streams.
 
 Exemple, après extraction de `specprefetch.py` du commit `3e4138a` :
 

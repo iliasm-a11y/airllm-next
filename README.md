@@ -5,6 +5,9 @@ F_NOCACHE reads, OS-accounted process storage counters, improved small reads,
 measured SpecPrefetch admission and an explicit experimental Granite MoE backend.
 Physical measurements identify the internal Apple SSD; the Fanxiang is absent.
 Positive, negative and preliminary measurements remain separately documented.
+A complete trained Granite 1.3B MoE now passes the short strict CPU/Metal
+protocol through the explicit Python backend, after fixing a worker CPU/GPU
+device race. This does not validate giant models or general model quality.
 
 The [October 23 I/O research validation](IO_WALL_RESEARCH_FR.md) adds opt-in
 adaptive admission, bounded SpecPrefetch, output tile pipelining and offset-I/O

@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "seed": 20261023,
+  "source_revision": "3e4138a1a6a20decf5c9be187fd5062836cd1caf",
+  "baseline_revision": "3e4138a1a6a20decf5c9be187fd5062836cd1caf",
+  "baseline_variant": "reference",
+  "model_path": "/Users/macbook/Documents/Codex/2026-10-23/referenced-chatgpt-conversation-this-is-an/outputs/airllm-next/evidence-io-phase2/relative-baseline-smoke-runs/tiny-glm",
+  "fixture_kind": "tiny_glm",
+  "model_shards_sha256": {
+    "model-00001-of-00005.safetensors": "338315d4b789da5af5d1d66ab96b804e18e3965f64d8fbbc0bac4765cc36567d",
+    "model-00002-of-00005.safetensors": "58022bb1d136b1d1f816fbc9849596bd6f88d76ba7e2527d8952316a322522ba",
+    "model-00003-of-00005.safetensors": "afaed1431cab143b24128812cfd0a34b8b1a0184481ef76bd6df6f5b5f198ebb",
+    "model-00004-of-00005.safetensors": "b103653463c87efaa522e4061c99581bbcc3ad844af2d1eddf91b5c97f6a3714",
+    "model-00005-of-00005.safetensors": "7eab569b560d580580860f9aff295d0128447c5457437be8003438bb467e1b09"
+  },
+  "model_serialized_bytes": 417976,
+  "scope": "native full tiny/random GLM or supplied trained local model; no large-model speed claim",
+  "protocol": "randomized fresh worker per variant/round, first run software-cold, later repeated prompts warm; OS cache uncontrolled",
+  "profiling_enabled": false,
+  "baseline_instrumentation_note": "baseline lacks opt-in interval profiler; use --profile-io only for diagnostic runs",
+  "correctness": [
+    {
+      "artifact": "000-round0-reference.json",
+      "variant": "reference",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "001-round0-baseline.json",
+      "variant": "baseline",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    }
+  ],
+  "correctness_atol": 4e-06,
+  "correctness_rtol": 0.0002,
+  "summaries": {
+    "reference": {
+      "process_cold_median_seconds": 0.012377749997540377,
+      "warm_median_seconds": 0.012736500000755768,
+      "warm_median_logical_bytes": 973056.0,
+      "warm_median_read_calls": 287.5,
+      "peak_process_rss_bytes": 230375424,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.007686124998144805,
+          "warm_median_logical_bytes": 584896,
+          "warm_median_read_calls": 164,
+          "warm_speedup_vs_reference": 1.1971246896039491
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.01778687500336673,
+          "warm_median_logical_bytes": 1361216,
+          "warm_median_read_calls": 411,
+          "warm_speedup_vs_reference": 1.1757054005802872
+        }
+      },
+      "warm_speedup_vs_reference": 1.1821683744270068
+    },
+    "baseline": {
+      "process_cold_median_seconds": 0.011815709003712982,
+      "warm_median_seconds": 0.015056687501783017,
+      "warm_median_logical_bytes": 973056.0,
+      "warm_median_read_calls": 287.5,
+      "peak_process_rss_bytes": 230047744,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.009201250002661254,
+          "warm_median_logical_bytes": 584896,
+          "warm_median_read_calls": 164,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.02091212500090478,
+          "warm_median_logical_bytes": 1361216,
+          "warm_median_read_calls": 411,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    }
+  },
+  "physical_ssd_bandwidth_certified": false,
+  "worker_artifacts": [
+    "000-round0-reference.json",
+    "001-round0-baseline.json"
+  ],
+  "current_source_hashes_consistent_across_workers": true,
+  "storage": {
+    "schema_version": 1,
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "numpy": "2.5.3",
+    "pid": 77161,
+    "checkpoint_fingerprint": "141174389974a06c7cb3206c46a9ea45d9a59644be95b5d25b7b3a91e0e9d264",
+    "baseline_storage_sha256": null,
+    "baseline_scope": "same code, separate read_array calls",
+    "metadata_seconds": 0.0017009590010275133,
+    "metadata_stats": {
+      "manifest_hit": 0,
+      "header_bytes": 2808
+    },
+    "input_tensor_count": 32,
+    "input_tensor_bytes": 524288,
+    "input_order_sha256": "e8103b846bd4f4769d140ca97edcf39575e54c431e67ae5d39b423da899b9fc7",
+    "group_count": 4,
+    "max_read_bytes": 1048576,
+    "cache_state": "warm",
+    "cache_state_explanation": "every selected tensor touched immediately before each candidate; RAM/page cache effects included",
+    "physical_counters_scope": "process-level Linux storage bytes, including readahead; unavailable platforms return null",
+    "physical_ssd_bandwidth_certified": false,
+    "inference_performed": false,
+    "scope": "bounded offset-I/O microbenchmark; no model, Metal, quality, TTFT or full-checkpoint throughput claim",
+    "peak_rss_process_lifetime_bytes": 389005312,
+    "seed": 20261023,
+    "summary": {
+      "separate_pread": {
+        "median_read_seconds": 0.00016558400966459885,
+        "median_read_calls": 32,
+        "read_time_speedup_vs_separate_pread": 1.0
+      },
+      "separate_mmap": {
+        "median_read_seconds": 0.0003017509952769615,
+        "median_read_calls": 32,
+        "read_time_speedup_vs_separate_pread": 0.5487438724522448
+      },
+      "coalesced_pread": {
+        "median_read_seconds": 0.00011287499364698306,
+        "median_read_calls": 4,
+        "read_time_speedup_vs_separate_pread": 1.4669680530168039
+      },
+      "coalesced_mmap": {
+        "median_read_seconds": 0.004386250002426095,
+        "median_read_calls": 4,
+        "read_time_speedup_vs_separate_pread": 0.03775070038712158
+      }
+    },
+    "raw_measurements": [
+      {
+        "repeat": 0,
+        "order": 0,
+        "mode": "coalesced_mmap",
+        "wall_seconds_including_sha256": 0.004567250005493406,
+        "read_seconds": 0.004386250002426095,
+        "cpu_seconds_including_sha256": 0.00044699999999986417,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 119529894.49074018,
+        "physical_read_bytes": 0,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 4,
+          "io_seconds": 0.00424083300458733,
+          "requested_bytes": 524288,
+          "coalesced_batches": 4,
+          "coalesced_groups": 4,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 524288
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 1,
+        "mode": "separate_pread",
+        "wall_seconds_including_sha256": 0.0003407909971429035,
+        "read_seconds": 0.00016558400966459885,
+        "cpu_seconds_including_sha256": 0.0003420000000000645,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 3166296075.701871,
+        "physical_read_bytes": 0,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 32,
+          "io_seconds": 8.57479972182773e-05,
+          "requested_bytes": 524288,
+          "coalesced_batches": 0,
+          "coalesced_groups": 0,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 0
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 2,
+        "mode": "separate_mmap",
+        "wall_seconds_including_sha256": 0.0004764580007758923,
+        "read_seconds": 0.0003017509952769615,
+        "cpu_seconds_including_sha256": 0.0004770000000000607,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 1737485569.9109905,
+        "physical_read_bytes": 0,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 32,
+          "io_seconds": 0.00021183298667892814,
+          "requested_bytes": 524288,
+          "coalesced_batches": 0,
+          "coalesced_groups": 0,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 0
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 3,
+        "mode": "coalesced_pread",
+        "wall_seconds_including_sha256": 0.0002857080035028048,
+        "read_seconds": 0.00011287499364698306,
+        "cpu_seconds_including_sha256": 0.00028600000000000847,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 4644855189.447121,
+        "physical_read_bytes": 0,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 4,
+          "io_seconds": 2.229100209660828e-05,
+          "requested_bytes": 524288,
+          "coalesced_batches": 4,
+          "coalesced_groups": 4,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 524288
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "checkpoint_model_id": "ibm-granite/granite-3.0-1b-a400m-instruct",
+  "revision": "ffec3c35bdfd97a06f0b4cd5fcc92cd9b1584445",
+  "checkpoint_sha256": "f7ae1cee56a9ea6c5360437b1c0407f8d84816b2cc75470f4e7e5236fa2a07dc",
+  "source_checkpoint_commit": "5a7ea348746c0e630c5f2f8f34c1e65db1e3dbc1",
+  "runs": [
+    {
+      "report": "granite-metal.json",
+      "controller": "metal-controller.log",
+      "observed_controller_exit_code": 1,
+      "status": "official tolerance + tokens + topk pass; native pairwise bitwise condition fails; retained original failure"
+    },
+    {
+      "report": "granite-cpu.json",
+      "controller": "cpu-controller.log",
+      "observed_controller_exit_code": 0,
+      "status": "all original strict conditions pass"
+    },
+    {
+      "report": "granite-metal-repeat-control.json",
+      "controller": "metal-repeat-controller.log",
+      "observed_controller_exit_code": 0,
+      "status": "native_off reference tolerance/tokens/routes pass; independent diagnostic confirms repeat and cross-worker bitwise stability"
+    },
+    {
+      "report": "granite-cpu-final.json",
+      "controller": "cpu-final-controller.log",
+      "observed_controller_exit_code": 0,
+      "status": "strict CPU conditions pass; added KV and dependency-version collection; outputs bitwise identical to first CPU series"
+    },
+    {
+      "report": "granite-metal-after-stream-fix.json",
+      "controller": "metal-after-stream-fix-controller.log",
+      "observed_controller_exit_code": 0,
+      "status": "all original strict conditions pass after explicit CPU-stream worker fix; native matrices/routes bitwise equal pre-fix no-prefetch control"
+    },
+    {
+      "report": "granite-cpu-after-stream-fix.json",
+      "controller": "cpu-after-stream-fix-controller.log",
+      "observed_controller_exit_code": 0,
+      "status": "all original strict CPU conditions pass on committed corrected loader; all arrays identical to pre-fix CPU series"
+    }
+  ],
+  "physical_scope": "process-level counters only, mixed uncontrolled OS cache, original internal SSD only, no Fanxiang/external-device attribution",
+  "final_checkpoint_sha256_verified": true,
+  "original_metal_bitwise_requirement_relaxed": false,
+  "numpy_arrays": [
+    {
+      "file": "granite-cpu-after-stream-fix-native.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-after-stream-fix-native_off.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-after-stream-fix-native_spec.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-after-stream-fix-reference.npz",
+      "bytes": 1471628,
+      "sha256": "2f867f5b420d07952bfb3c731f0a671c1adfa288e9da59e005f9a3057207dcd4"
+    },
+    {
+      "file": "granite-cpu-final-native.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-final-native_off.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-final-native_spec.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-final-reference.npz",
+      "bytes": 1471628,
+      "sha256": "2f867f5b420d07952bfb3c731f0a671c1adfa288e9da59e005f9a3057207dcd4"
+    },
+    {
+      "file": "granite-cpu-native.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-native_off.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-native_spec.npz",
+      "bytes": 1470712,
+      "sha256": "81798cb8e9cd23e282abd600672eb8d6268d8f36a27b1ff7aaf9a4346d49ceca"
+    },
+    {
+      "file": "granite-cpu-reference.npz",
+      "bytes": 1471628,
+      "sha256": "2f867f5b420d07952bfb3c731f0a671c1adfa288e9da59e005f9a3057207dcd4"
+    },
+    {
+      "file": "granite-metal-after-stream-fix-native.npz",
+      "bytes": 1470418,
+      "sha256": "d7fc5c9814a8ed7ad4dee99f56a2ae0d8de34a1067c1f5579b85bc4e1e259c32"
+    },
+    {
+      "file": "granite-metal-after-stream-fix-native_off.npz",
+      "bytes": 1470418,
+      "sha256": "d7fc5c9814a8ed7ad4dee99f56a2ae0d8de34a1067c1f5579b85bc4e1e259c32"
+    },
+    {
+      "file": "granite-metal-after-stream-fix-native_spec.npz",
+      "bytes": 1470418,
+      "sha256": "d7fc5c9814a8ed7ad4dee99f56a2ae0d8de34a1067c1f5579b85bc4e1e259c32"
+    },
+    {
+      "file": "granite-metal-after-stream-fix-reference.npz",
+      "bytes": 1471628,
+      "sha256": "2f867f5b420d07952bfb3c731f0a671c1adfa288e9da59e005f9a3057207dcd4"
+    },
+    {
+      "file": "granite-metal-native.npz",
+      "bytes": 1470534,
+      "sha256": "13137280a1c4a5846e6959cb4597a95bc8fc72d9f2cec3db25a6751c5872ff4c"
+    },
+    {
+      "file": "granite-metal-native_off.npz",
+      "bytes": 1470418,
+      "sha256": "d7fc5c9814a8ed7ad4dee99f56a2ae0d8de34a1067c1f5579b85bc4e1e259c32"
+    },
+    {
+      "file": "granite-metal-native_spec.npz",
+      "bytes": 1470707,
+      "sha256": "0e21347dc2cb76f83101e8d4a2062d3babd6e2cd1c83911e2b6d7bc0956c768b"
+    },
+    {
+      "file": "granite-metal-reference.npz",
+      "bytes": 1471628,
+      "sha256": "2f867f5b420d07952bfb3c731f0a671c1adfa288e9da59e005f9a3057207dcd4"
+    },
+    {
+      "file": "granite-metal-repeat-control-native_off.npz",
+      "bytes": 2940814,
+      "sha256": "78ade8f789c0fa668daf8b74694d1cfeb6d1272a4240ad62211728b52d31efbc"
+    },
+    {
+      "file": "granite-metal-repeat-control-reference.npz",
+      "bytes": 2943234,
+      "sha256": "bbdcc7421b05f40d09e855ba059a7febb0ae6508bb5da7f8c1bf43073f5cbc82"
+    }
+  ],
+  "final_metal_strict_validation_passed": true,
+  "final_cpu_strict_validation_passed": true
+}

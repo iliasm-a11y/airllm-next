@@ -1,0 +1,11 @@
+{
+  "observed_at": "2026-10-23",
+  "compiler_probe": "clang work/physical-counter-abi.c -o work/physical-counter-abi && ./work/physical-counter-abi",
+  "sdk_header": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/resource.h",
+  "RUSAGE_INFO_V2": 2,
+  "sizeof_rusage_info_v2": 160,
+  "offsetof_ri_diskio_bytesread": 144,
+  "counter_source": "libproc.proc_pid_rusage(RUSAGE_INFO_V2).ri_diskio_bytesread",
+  "preadv_available_in_runtime": true,
+  "limitation": "ABI verified from installed public headers. Counter is OS-accounted process storage I/O, not per-file or NAND traffic."
+}

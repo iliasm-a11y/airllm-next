@@ -1,0 +1,54 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 36%]
+.......................................................................................................................................... [ 54%]
+........................................................................ [ 63%]
+.............F.....F.................................................... [ 72%]
+........................................................................ [ 82%]
+....................s.............................................. [ 90%]
+........................................................................ [100%]
+=================================== FAILURES ===================================
+_________________ test_short_reads_eintr_and_disappeared_file __________________
+
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-77/test_short_reads_eintr_and_dis0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1233914f0>
+
+    def test_short_reads_eintr_and_disappeared_file(tmp_path,monkeypatch):
+        import os,errno
+        root=tmp_path/'cp';root.mkdir();save_file({'a':np.ones((4,16),np.float32)},root/'model.safetensors')
+        with OffsetCheckpoint(root) as cp:
+            real=os.preadv;calls=[0]
+            def partial(fd,buffers,offset):
+                calls[0]+=1
+                if calls[0]==1:raise OSError(errno.EINTR,'interrupted')
+                return real(fd,[buffers[0][:7]],offset)
+            monkeypatch.setattr(os,'preadv',partial)
+>           np.testing.assert_array_equal(cp.read_array('a'),1);assert calls[0]>2
+                                                                ^^^^^^^^^^^^^^^^^
+E           assert 0 > 2
+
+tests_next/test_storage_cache_quant.py:63: AssertionError
+_____________ test_coalesced_exact_order_and_single_backing_buffer _____________
+
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-77/test_coalesced_exact_order_and0')
+
+    def test_coalesced_exact_order_and_single_backing_buffer(tmp_path):
+        a=np.arange(64,dtype='f4').reshape(4,16)
+        with checkpoint(tmp_path,{'a':a,'b':a+3}) as cp:
+            arrays=cp.read_arrays(['b','a'])
+            np.testing.assert_array_equal(arrays[0],a+3)
+            np.testing.assert_array_equal(arrays[1],a)
+            assert cp.stats['read_calls']==1
+            assert cp.stats['logical_bytes']==a.nbytes*2
+            assert cp.stats['coalesced_gap_bytes']==0
+            # Numpy references keep one bytearray alive; no per-tensor copy is made.
+>           assert arrays[0].base.base.obj is arrays[1].base.base.obj
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: 'bytes' object has no attribute 'obj'
+
+tests_next/test_storage_coalesced.py:31: AttributeError
+=========================== short test summary info ============================
+FAILED air_llm/test_storage_cache_quant.py::test_short_reads_eintr_and_disappeared_file
+FAILED air_llm/test_storage_coalesced.py::test_coalesced_exact_order_and_single_backing_buffer
+2 failed, 778 passed, 1 skipped, 11 subtests passed in 20.25s

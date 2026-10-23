@@ -1,0 +1,46 @@
+running reference
+running native_off
+running native
+running native_spec
+{
+  "reference": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 0.0,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 4.1606696665003255,
+    "process_peak_rss_bytes": 813973504,
+    "raw_report": "granite-cpu-final-reference.json"
+  },
+  "native_off": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 7.724761962890625e-05,
+    "bitwise_equal_first_native_variant": null,
+    "median_generation_seconds": 1.0305323749998934,
+    "process_peak_rss_bytes": 731332608,
+    "raw_report": "granite-cpu-final-native_off.json"
+  },
+  "native": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 7.724761962890625e-05,
+    "bitwise_equal_first_native_variant": true,
+    "median_generation_seconds": 0.8963454369986721,
+    "process_peak_rss_bytes": 729153536,
+    "raw_report": "granite-cpu-final-native.json"
+  },
+  "native_spec": {
+    "tokens_match_reference": true,
+    "all_topk_expert_sets_match_reference": true,
+    "logits_within_predeclared_tolerance": true,
+    "max_abs_logit_error": 7.724761962890625e-05,
+    "bitwise_equal_first_native_variant": true,
+    "median_generation_seconds": 0.9115543955012981,
+    "process_peak_rss_bytes": 732413952,
+    "raw_report": "granite-cpu-final-native_spec.json"
+  }
+}
