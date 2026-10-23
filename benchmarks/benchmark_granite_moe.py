@@ -9,6 +9,7 @@ comparisons include different loading strategies, so are not kernel speedups.
 """
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import os
 from pathlib import Path
@@ -172,6 +173,9 @@ def worker(args):
                 'physical_counter_scope': 'whole worker process; includes all files, no per-file/device attribution',
                 'io_policy': 'safetensors mmap group loading' if args.worker == 'reference' else cfg.io_mode}
             if args.worker != 'reference':
+                row['kv_cache'] = {'bytes': cache.bytes, 'peak_bytes': cache.peak_bytes,
+                    'budget_bytes': cfg.kv_bytes, 'committed_tokens': cache.position}
+            if args.worker != 'reference':
                 row['io_delta'] = {k:v-io_before.get(k,0) for k,v in model.checkpoint.stats.items()
                     if isinstance(v,(int,float)) and not isinstance(v,bool)}
                 row['metrics'] = model.metrics()
@@ -187,6 +191,8 @@ def worker(args):
     report = {'variant': args.worker, 'device': 'cpu' if args.worker == 'reference' else args.device,
         'compute_dtype': 'float32', 'checkpoint_dtype': 'bfloat16', 'construction_seconds': construction,
         'cases': cases, 'torch': torch.__version__, 'python': sys.version, 'platform': platform.platform(),
+        'libraries': {name:importlib.metadata.version(name) for name in ('torch','transformers','mlx','safetensors','numpy','psutil')},
+        'host_total_memory_bytes': psutil.virtual_memory().total,
         'process_peak_rss_bytes': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if sys.platform == 'darwin' else 1024),
         'swap_used_before_bytes': swap_before, 'swap_used_after_bytes': psutil.swap_memory().used,
         'npz_file': path.with_suffix('.npz').name, 'npz_sha256': digest(path.with_suffix('.npz')),

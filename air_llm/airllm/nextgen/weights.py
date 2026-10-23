@@ -51,10 +51,12 @@ class NativeWeights:
     def _array(self,a,dtype=None):
         # Evaluation on CPU ensures data has been read before the Future resolves;
         # on Apple these evaluated buffers are shared with Metal, not copied to VRAM.
-        with self.mx.stream(self.mx.cpu):
-            v=self.mx.array(a)
-            if dtype is not None:v=v.astype(dtype)
-            self.mx.eval(v)
+        # Stream contexts also change MLX's process-global default device.
+        # A worker context would move concurrent main-thread GPU operations
+        # onto CPU. Use explicit streams without mutating that shared default.
+        v=self.mx.array(a)
+        if dtype is not None:v=v.astype(dtype,stream=self.mx.cpu)
+        self.mx.eval(v)
         return v
 
     def _load(self,key,expert=None,rows=None):
@@ -111,16 +113,21 @@ class NativeWeights:
             t=perf_counter();offset=rows[0] if rows else 0;mx=self.mx
             # Decode on CPU stream while GPU executes a previous expert. The raw
             # FP8 buffer dies after evaluation. Cached result is reused directly.
-            with mx.stream(mx.cpu):
-                raw=mx.array(a);s=mx.array(scales)
-                ri=(mx.arange(a.shape[0])+offset)//br-(scale_rows[0] if scale_rows else 0);ci=mx.arange(a.shape[1])//bc
-                v=(self.lut[raw.astype(mx.int32)]*s[ri[:,None],ci[None,:]]).astype(self.dtype)
-                mx.eval(v)
+            raw=mx.array(a);s=mx.array(scales)
+            ri=mx.subtract(mx.floor_divide(mx.add(mx.arange(a.shape[0],stream=mx.cpu),offset,
+                stream=mx.cpu),br,stream=mx.cpu),scale_rows[0] if scale_rows else 0,stream=mx.cpu)
+            ci=mx.floor_divide(mx.arange(a.shape[1],stream=mx.cpu),bc,stream=mx.cpu)
+            # Explicit take calls replace indexing syntax, whose implicit
+            # gather operations would otherwise follow the shared device.
+            decoded=mx.take(self.lut,raw.astype(mx.int32,stream=mx.cpu),stream=mx.cpu)
+            selected_scales=mx.take(mx.take(s,ri,axis=0,stream=mx.cpu),ci,axis=1,stream=mx.cpu)
+            v=mx.multiply(decoded,selected_scales,stream=mx.cpu).astype(self.dtype,stream=mx.cpu)
+            mx.eval(v)
             self.stats['dequant_seconds']+=perf_counter()-t
         elif d['dtype']=='BF16':
             a=self._source_array(key,expert,rows)
-            with self.mx.stream(self.mx.cpu):
-                v=self.mx.array(a).view(self.mx.bfloat16).astype(self.dtype);self.mx.eval(v)
+            v=self.mx.array(a).view(self.mx.bfloat16,stream=self.mx.cpu).astype(self.dtype,stream=self.mx.cpu)
+            self.mx.eval(v)
         else:
             a=self._source_array(key,expert,rows)
             # Router scores, normalization weights and correction bias stay fp32.
