@@ -102,10 +102,13 @@ class GraniteAttention(LlamaAttention):
 
 
 class GraniteMLP:
-    def __init__(self, mx, reader, config, layer, routes, *, execution='union', batch_metrics=None):
+    def __init__(self, mx, reader, config, layer, routes, *, execution='union', batch_metrics=None,
+                 sync_group=1):
         self.mx, self.reader, self.config, self.layer, self.routes = mx, reader, config, layer, routes
         self.execution = validate_expert_execution(execution)
         self.batch_metrics = batch_metrics
+        self.sync_group = sync_group
+        self.scheduling = Counter()
         self.prefix = f'model.layers.{layer}.block_sparse_moe.'
         def key(current, legacy):
             return self.prefix + (current if self.prefix + current in reader.cp.tensors else legacy)
@@ -133,12 +136,24 @@ class GraniteMLP:
         self.routes.setdefault(str(self.layer), Counter()).update(int(e) for e in host.flat)
         flat, out = x.reshape(-1, x.shape[-1]), mx.zeros_like(x.reshape(-1, x.shape[-1]))
         observe_batch, clear_batch = getattr(r, 'observe_batch', None), getattr(r, 'clear_batch', None)
-        groups = 0
+        groups = pending_groups = pending_bytes = 0
         try:
             if observe_batch is not None:
                 # Multiplicity describes actual known assignments, not predicted reuse.
                 observe_batch(pair for expert in host.flat for pair in self.expert_keys(int(expert)))
             for expert, ti, ki, next_expert in expert_work_groups(host, self.execution):
+                # A lazy/queued graph can retain evicted weights. Charge all
+                # pending expert payloads AND activations to workspace; do not
+                # silently grant an extra bank outside the cache/IO budgets.
+                payload = sum(r.estimate(key, index) for key, index in self.expert_keys(expert))
+                retained = payload + workspace
+                if self.sync_group > 1:
+                    if retained > r.cfg.workspace_bytes:
+                        raise MemoryError('One queued expert exceeds workspace_bytes')
+                    if pending_bytes + retained > r.cfg.workspace_bytes and pending_groups:
+                        mx.eval(out)
+                        self.scheduling['barriers'] += 1
+                        pending_groups = pending_bytes = 0
                 gate_up = r.get(self.gate_up, expert)
                 r.prefetch(self.down, expert)
                 rows, slots = mx.array(ti), mx.array(ki)
@@ -147,10 +162,25 @@ class GraniteMLP:
                     r.prefetch(self.gate_up, next_expert)
                 value = r.linear((gate * mx.sigmoid(gate)) * up, self.down, expert)
                 out[rows] = out[rows] + (value * weights[rows, slots, None]).astype(out.dtype)
-                mx.eval(out)
+                pending_groups += 1
+                pending_bytes += retained
+                self.scheduling['retained_bound_peak_bytes'] = max(
+                    self.scheduling['retained_bound_peak_bytes'], pending_bytes)
+                if pending_groups >= self.sync_group:
+                    mx.eval(out)
+                    self.scheduling['barriers'] += 1
+                    pending_groups = pending_bytes = 0
+                else:
+                    # Same arithmetic/order; only schedule ahead of the next
+                    # bounded CPU weight load, never change the global device.
+                    mx.async_eval(out)
+                    self.scheduling['async_submissions'] += 1
                 groups += 1
                 del gate_up
         finally:
+            if pending_groups:
+                mx.eval(out)
+                self.scheduling['barriers'] += 1
             if clear_batch is not None:
                 clear_batch()
         if self.batch_metrics is not None:
@@ -166,8 +196,11 @@ class AirLLMNextGraniteMoeModel(AirLLMNextLlamaModel):
     normalize_config = staticmethod(normalize_granite_config)
 
     def __init__(self, model_local_path_or_repo_id, next_config=None, *,
-                 expert_execution='union', expert_metrics_capacity=0, **kwargs):
+                 expert_execution='union', expert_metrics_capacity=0, expert_sync_group=1, **kwargs):
         self.expert_execution = validate_expert_execution(expert_execution)
+        if type(expert_sync_group) is not int or not 1 <= expert_sync_group <= 32:
+            raise ValueError('expert_sync_group must be an integer from 1 to 32')
+        self.expert_sync_group = expert_sync_group
         self._expert_batch_metrics = ExpertBatchMetrics(expert_metrics_capacity)
         super().__init__(model_local_path_or_repo_id, next_config=next_config, **kwargs)
 
@@ -187,7 +220,8 @@ class AirLLMNextGraniteMoeModel(AirLLMNextLlamaModel):
         self.attention = [GraniteAttention(self.mx, self.reader, self.config, i)
                           for i in range(self.config['num_hidden_layers'])]
         self.mlps = [GraniteMLP(self.mx, self.reader, self.config, i, self.routes,
-                              execution=self.expert_execution, batch_metrics=self._expert_batch_metrics)
+                              execution=self.expert_execution, batch_metrics=self._expert_batch_metrics,
+                              sync_group=self.expert_sync_group)
                      for i in range(self.config['num_hidden_layers'])]
 
     def _validate_layout(self):
@@ -216,5 +250,10 @@ class AirLLMNextGraniteMoeModel(AirLLMNextLlamaModel):
         result['architecture'] = {'model_type': 'granitemoe', 'status': 'experimental explicit backend',
             'routing': 'top-k logits then softmax; boundary ties rejected', 'production_auto_dispatch': False}
         result['expert_execution'] = self.expert_execution
+        result['expert_scheduling'] = dict(sync_group=self.expert_sync_group,
+            barriers=sum(m.scheduling['barriers'] for m in self.mlps),
+            async_submissions=sum(m.scheduling['async_submissions'] for m in self.mlps),
+            retained_bound_peak_bytes=max((m.scheduling['retained_bound_peak_bytes'] for m in self.mlps), default=0),
+            workspace_bytes=self.options.workspace_bytes)
         result['expert_batches'] = self.expert_batch_metrics()
         return result
