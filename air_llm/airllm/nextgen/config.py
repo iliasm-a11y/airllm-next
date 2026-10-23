@@ -24,7 +24,7 @@ class NextConfig:
     row_chunk: int = 2048
     prefill_chunk: int = 16
     max_context: int = 4096
-    policy: Literal['lru', 'slru', 'lfu', 'cost', 'adaptive'] = 'slru'
+    policy: Literal['lru', 'slru', 'lfu', 'cost', 'adaptive', 'shared', 'expert', 'hybrid', 'batch-aware'] = 'slru'
     device: Literal['auto', 'cpu', 'gpu'] = 'auto'
     dtype: Literal['float32', 'bfloat16', 'float16'] = 'bfloat16'
     profile: Literal['balanced', 'performance'] = 'balanced'
@@ -56,7 +56,7 @@ class NextConfig:
                   'load_tokenizer','use_saved_tuning'):
             if type(getattr(self,k)) is not bool:
                 raise ValueError(f'{k} must be boolean')
-        if self.policy not in ('lru','slru','lfu','cost','adaptive'): raise ValueError('Unknown cache policy')
+        if self.policy not in ('lru','slru','lfu','cost','adaptive','shared','expert','hybrid','batch-aware'): raise ValueError('Unknown cache policy')
         if self.io_mode not in ('pread','mmap','pread_nocache'): raise ValueError('Unknown I/O mode')
         if self.spec_prefetch_bytes > self.io_bytes:
             raise ValueError('spec_prefetch_bytes must fit inside io_bytes')

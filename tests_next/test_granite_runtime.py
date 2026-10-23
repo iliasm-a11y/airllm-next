@@ -141,6 +141,124 @@ def test_granite_layout_and_kv_budget_fail_explicitly(tmp_path):
         AirLLMNextGraniteMoeModel(root, next_config=options(tmp_path))
 
 
+@pytest.mark.parametrize('policy', ['shared', 'expert', 'hybrid', 'batch-aware'])
+def test_granite_saved_runtime_tuning_preserves_explicit_residency_policy(tmp_path, policy):
+    from airllm.nextgen.residency_cache import ResidencyWeightCache
+    from airllm.nextgen.tuning import runtime_tuning_key
+    root = tmp_path/'granite'
+    checkpoint(root)
+    cfg = options(tmp_path, policy=policy, use_saved_tuning=True, prefetch=True)
+    with AirLLMNextGraniteMoeModel(root, next_config=cfg) as first:
+        tuning_path = first.options.metadata_dir()/(first.checkpoint.fingerprint+'.runtime-tuning.json')
+        tuning_path.write_text(json.dumps(dict(key=runtime_tuning_key(first),
+            cache_policy='slru', prefetch_enabled=False)))
+    with AirLLMNextGraniteMoeModel(root, next_config=cfg) as reconstructed:
+        # A changed prefetch flag proves the saved record matched the actual
+        # runtime key and was applied; preserving the policy cannot pass merely
+        # because the file was missing, stale, malformed, or tuning was disabled.
+        assert reconstructed.options.use_saved_tuning is True
+        assert reconstructed.options.prefetch is True
+        assert reconstructed.reader.prefetch_enabled is False
+        assert isinstance(reconstructed.reader.cache, ResidencyWeightCache)
+        assert reconstructed.reader.cache.policy == policy
+        assert reconstructed.options.policy == policy
+
+
+@pytest.mark.parametrize('positions', [1, 2, 4, 8, 16, 32])
+def test_granite_multitoken_union_matches_serial_positions_and_causal_tokens(tmp_path, positions):
+    root = tmp_path/'granite'
+    checkpoint(root)
+    prefix = [[1, 7, 8]]
+    proposal = [[(i * 7 + 9) % 41 for i in range(positions)]]
+    cfg = options(tmp_path, prefill_chunk=32, cache_bytes=0, prefetch=False)
+    with AirLLMNextGraniteMoeModel(root, next_config=cfg, expert_metrics_capacity=3) as model:
+        cache = model(prefix).past_key_values
+        model.expert_batch_metrics(reset=True)
+        batched = model(proposal, past_key_values=cache)
+        batch_logits = np.asarray(batched.logits)
+        batch_routes = [mlp.last_route_ids.copy() for mlp in model.mlps]
+        metrics = model.expert_batch_metrics()
+        expected_groups = sum(len(np.unique(routes)) for routes in batch_routes)
+        assert metrics['totals']['positions'] == 2 * positions
+        assert metrics['totals']['assignments'] == 4 * positions
+        assert metrics['totals']['distinct_expert_sum'] == expected_groups
+        assert metrics['totals']['demand_load_calls'] == 2 * expected_groups
+        assert len(metrics['history']) == 2
+
+        unit_cache = model(prefix).past_key_values
+        token_logits, token_routes = [], [[] for _ in model.mlps]
+        for token in proposal[0]:
+            output = model([[token]], past_key_values=unit_cache)
+            token_logits.append(np.asarray(output.logits))
+            for i, mlp in enumerate(model.mlps):
+                token_routes[i].append(mlp.last_route_ids.copy())
+        # Tolerances are fixed before measuring error, matching the official
+        # FP32 Granite parity gate. Routes are checked as exact ordered IDs.
+        np.testing.assert_allclose(batch_logits, np.concatenate(token_logits, axis=1), atol=4e-6, rtol=3e-4)
+        for actual, wanted in zip(batch_routes, token_routes):
+            np.testing.assert_array_equal(actual, np.concatenate(wanted, axis=0))
+
+        retained = positions // 2
+        bytes_before = cache.bytes
+        cache.truncate(len(prefix[0]) + retained)
+        correction = model([[6]], past_key_values=cache)
+        fresh = model([prefix[0] + proposal[0][:retained] + [6]])
+        np.testing.assert_allclose(np.asarray(correction.logits), np.asarray(fresh.logits[:, -1:]),
+                                   atol=4e-6, rtol=3e-4)
+        assert cache.position == len(prefix[0]) + retained + 1
+        assert cache.bytes == bytes_before
+        assert len(model.expert_batch_metrics()['history']) <= 3
+
+    with AirLLMNextGraniteMoeModel(root, next_config=cfg, expert_execution='serial_positions') as model:
+        cache = model(prefix).past_key_values
+        model.expert_batch_metrics(reset=True)
+        serial = model(proposal, past_key_values=cache)
+        np.testing.assert_allclose(np.asarray(serial.logits), batch_logits, atol=4e-6, rtol=3e-4)
+        for mlp, wanted in zip(model.mlps, batch_routes):
+            np.testing.assert_array_equal(mlp.last_route_ids, wanted)
+        metrics = model.expert_batch_metrics()['totals']
+        assert metrics['expert_groups'] == 2 * 2 * positions
+        assert metrics['demand_load_calls'] == 2 * metrics['expert_groups']
+        assert model.expert_batch_metrics()['history'] == []
+
+
+def test_granite_multitoken_failed_forward_rolls_back_and_overwrites_uncommitted_dense_kv(tmp_path):
+    root = tmp_path/'granite'
+    checkpoint(root)
+    cfg = options(tmp_path, prefill_chunk=32)
+    with AirLLMNextGraniteMoeModel(root, next_config=cfg) as model:
+        cache = model([[1, 7, 8]]).past_key_values
+        committed = [[np.asarray(array[:, :, :cache.position]).copy() for array in buffers]
+                     for buffers in cache.layers.values()]
+        original = model.mlps[1]
+        def fail(x):
+            raise RuntimeError('injected expert failure')
+        model.mlps[1] = fail
+        with pytest.raises(RuntimeError, match='injected expert failure'):
+            model([[9, 10, 11, 12, 13, 14, 15, 16]], past_key_values=cache)
+        assert cache.position == 3
+        for buffers, wanted in zip(cache.layers.values(), committed):
+            for array, expected in zip(buffers, wanted):
+                np.testing.assert_array_equal(np.asarray(array[:, :, :3]), expected)
+        model.mlps[1] = original
+        retry = model([[20, 21, 22, 23]], past_key_values=cache)
+        fresh = model([[1, 7, 8, 20, 21, 22, 23]])
+        np.testing.assert_allclose(np.asarray(retry.logits), np.asarray(fresh.logits[:, -4:]),
+                                   atol=4e-6, rtol=3e-4)
+
+
+def test_granite_expert_workspace_fails_before_router_or_expert_load(tmp_path):
+    from dataclasses import replace
+    root = tmp_path/'granite'
+    checkpoint(root)
+    with AirLLMNextGraniteMoeModel(root, next_config=options(tmp_path)) as model:
+        model.reader.reader.cfg = replace(model.options, workspace_bytes=1)
+        before = model.reader.stats['loads']
+        with pytest.raises(MemoryError, match='expert activations'):
+            model.mlps[0](mx.zeros((1, 32, 16), dtype=mx.float32))
+        assert model.reader.stats['loads'] == before
+
+
 @pytest.mark.parametrize('legacy', [False, True])
 def test_official_streamed_reference_matches_full_official_model_and_releases_layers(tmp_path, legacy):
     import importlib.util

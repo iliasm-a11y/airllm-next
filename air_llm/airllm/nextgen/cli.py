@@ -162,7 +162,8 @@ def main(argv=None):
             p.add_argument('--lossless-native-library',help='Explicit native palette decoder library for --lossless-dir')
             p.add_argument('--no-prefetch',action='store_true');p.add_argument('--float32',action='store_true')
             p.add_argument('--json-report')
-            p.add_argument('--cache-policy',choices=['lru','slru','lfu','cost','adaptive'])
+            p.add_argument('--cache-policy',choices=['lru','slru','lfu','cost','adaptive','shared','expert','hybrid','batch-aware'],
+                help='Opt-in residency policies share the existing --cache-mib budget')
             p.add_argument('--spec-prefetch',action='store_true',help='Experimental previous-route expert prediction; exact router remains authoritative')
             p.add_argument('--spec-prefetch-mib',type=nonnegative_int,help='Partition of --io-mib; zero selects min(32 MiB, IO/4)')
             p.add_argument('--spec-prefetch-experts',type=positive_int,help='Maximum predicted first expert matrices per layer (at most 64)')

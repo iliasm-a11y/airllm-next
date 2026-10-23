@@ -167,9 +167,16 @@ class QuantizedSidecar:
         return True
 
 
+def is_expert_tensor(key):
+    """Modern experts and official Granite 3.0 legacy packed-bank names."""
+    return ('.experts.' in key or
+            key.endswith(('.block_sparse_moe.input_linear.weight',
+                          '.block_sparse_moe.output_linear.weight')))
+
+
 def expert_matrices(cp):
     for key,d in cp.tensors.items():
-        if '.experts.' not in key or key.endswith(('_scale_inv','_scale')):continue
+        if not is_expert_tensor(key) or key.endswith(('_scale_inv','_scale')):continue
         if len(d['shape'])==3:
             for e in range(d['shape'][0]):yield key,e,tuple(d['shape'][1:])
         elif len(d['shape'])==2:yield key,None,tuple(d['shape'])
@@ -186,13 +193,13 @@ def convert_experts(cp,model_config,destination,bits=4,group_size=64,row_chunk=1
         # Embeddings use selected original rows; the output head can be tiled.
         for key,d in cp.tensors.items():
             if len(d['shape'])!=2 or not key.endswith('.weight'):continue
-            if '.experts.' in key or any(x in key for x in ('embed_tokens','indexer.','indexers_proj','mlp.gate.','kv_b_proj')):continue
+            if is_expert_tensor(key) or any(x in key for x in ('embed_tokens','indexer.','indexers_proj','mlp.gate.','block_sparse_moe.router.','kv_b_proj')):continue
             matrices.append((key,None,tuple(d['shape'])))
     for key,e,shape in matrices:
         ident=key if e is None else f'{key}#{e}'
         if ident in sidecar.entries:
             sidecar.verify(ident,require_digest=False)
-            expected=bits if '.experts.' in key else linear_bits
+            expected=bits if is_expert_tensor(key) else linear_bits
             if sidecar.entries[ident].get('bits',sidecar.bits)!=expected:
                 raise ValueError('Cannot resume with a different per-matrix precision; choose a new output directory')
             continue
@@ -207,5 +214,5 @@ def convert_experts(cp,model_config,destination,bits=4,group_size=64,row_chunk=1
                 if scale is not None:yield dequant_fp8(raw,scale,block,row_offset=start)
                 elif d['dtype']=='BF16':yield (raw.astype(np.uint32)<<16).view(np.float32)
                 else:yield raw.astype(np.float32)
-        sidecar.add(ident,tiles(),shape,bits if '.experts.' in key else linear_bits);converted+=1
+        sidecar.add(ident,tiles(),shape,bits if is_expert_tensor(key) else linear_bits);converted+=1
     return sidecar

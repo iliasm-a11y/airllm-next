@@ -63,6 +63,7 @@ class AdaptiveSpeculation:
     slowdown_tolerance: float = 1.05
     calibration_interval: int = 4
     history_window: int = 8
+    candidate_depths: tuple[int, ...] | None = None
 
     def __post_init__(self):
         for name in ('max_depth', 'slow_rounds_to_disable', 'calibration_interval', 'history_window'):
@@ -76,6 +77,11 @@ class AdaptiveSpeculation:
                 or not math.isfinite(self.slowdown_tolerance) or self.slowdown_tolerance < 1):
             raise ValueError('slowdown_tolerance must be finite and at least one')
         self.depth = min(2, self.max_depth) if self.enabled else self.max_depth
+        if self.candidate_depths is not None:
+            if (not self.candidate_depths or any(type(d) is not int or not 1 <= d <= self.max_depth
+                    for d in self.candidate_depths) or tuple(sorted(set(self.candidate_depths))) != self.candidate_depths):
+                raise ValueError('candidate_depths must be sorted unique positive depths within max_depth')
+            if self.enabled:self.depth = self.candidate_depths[0]
         self.active = True
         self.rounds = 0
         self.slow_streak = 0
@@ -126,18 +132,20 @@ class AdaptiveSpeculation:
     def _select_measured_depth(self, trial_depth, fully_accepted, baseline):
         summaries = self.cost_summary()
         viable = {int(d): s for d, s in summaries.items()
-                  if int(d) not in self.blocked_depths}
+                  if int(d) not in self.blocked_depths and
+                  (self.candidate_depths is None or int(d) in self.candidate_depths)}
         # Two observations at a fully accepted depth permit one neighboring
         # trial. This is bounded exploration, not an assumed acceleration.
         summary = summaries[str(trial_depth)]
-        next_depth = trial_depth+1
+        next_depth = (next((d for d in self.candidate_depths if d > trial_depth), self.max_depth+1)
+                      if self.candidate_depths else trial_depth+1)
         if (fully_accepted and summary['samples'] >= 2 and next_depth <= self.max_depth
                 and next_depth not in self.blocked_depths and str(next_depth) not in summaries
                 and (baseline is None or summary['seconds_per_token'] <= baseline*self.slowdown_tolerance)):
             self.depth = next_depth
             return
         if not viable:
-            self.depth = max(1, min(self.max_depth, trial_depth//2))
+            self.depth = self._reduced_depth(trial_depth)
             return
         fastest = min(s['seconds_per_token'] for s in viable.values())
         near = [(d, s) for d, s in viable.items() if s['seconds_per_token'] <= fastest*1.03]
@@ -151,6 +159,13 @@ class AdaptiveSpeculation:
             d, s = item
             return (s[domain] if domain else 0., s['seconds_per_token'], d)
         self.depth = min(near, key=key)[0]
+
+    def _reduced_depth(self, trial_depth):
+        limit=max(1,min(self.max_depth,trial_depth//2))
+        if self.candidate_depths:
+            return max((d for d in self.candidate_depths if d <= limit),
+                       default=self.candidate_depths[0])
+        return limit
 
     def observe(self, *, seconds, emitted, proposed, accepted, baseline_seconds,
                 depth=None, logical_bytes=None, encoded_bytes=None):
@@ -176,7 +191,7 @@ class AdaptiveSpeculation:
         self.empty_streak = self.empty_streak+1 if not proposed else 0
         self._select_measured_depth(trial_depth, bool(proposed and accepted == proposed), baseline_seconds)
         if proposed and accepted * 2 < proposed:
-            self.depth = max(1, min(self.depth, trial_depth // 2))
+            self.depth = min(self.depth, self._reduced_depth(trial_depth))
         # Repeatedly accepting no draft tokens cannot amortize any target pass.
         # This observed progress guard remains valid even when a noisy initial
         # decode timing badly overestimates the wall-time fallback baseline.
@@ -194,7 +209,7 @@ class AdaptiveSpeculation:
         self.depth_slow_streak[trial_depth] = self.depth_slow_streak[trial_depth]+1 if slow else 0
         if self.depth_slow_streak[trial_depth] >= self.slow_rounds_to_disable:
             self.blocked_depths.add(trial_depth)
-            self.depth = max(1, trial_depth//2)
+            self.depth = self._reduced_depth(trial_depth)
         self.slow_streak = self.slow_streak + 1 if slow else 0
         if self.slow_streak >= self.slow_rounds_to_disable:
             self.active = False
@@ -221,7 +236,9 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                                 *, eos_token_ids=(), max_depth=4, adaptive=True,
                                 argmax_tokens=None, bytes_read=None,
                                 clock=perf_counter,vocab_size=None,encoded_bytes_read=None,
-                                draft_bytes_read=None,draft_encoded_bytes_read=None):
+                                draft_bytes_read=None,draft_encoded_bytes_read=None,
+                                candidate_depths=None, forward_metrics=None,
+                                max_verify_positions=None):
     """Generate using causal block verification and a lagging pending token.
 
     Cache invariant: after each round it contains exactly the committed output
@@ -241,7 +258,10 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     eos = eos_ids(eos_token_ids, vocab_size)
     choose = argmax_tokens or _host_argmax
     read = bytes_read or (lambda: 0)
-    policy = AdaptiveSpeculation(max_depth=max_depth, enabled=adaptive)
+    policy = AdaptiveSpeculation(max_depth=max_depth, enabled=adaptive,
+                                candidate_depths=candidate_depths)
+    if max_verify_positions is not None and (type(max_verify_positions) is not int or max_verify_positions < 1):
+        raise ValueError('max_verify_positions must be a positive integer or None')
     begin = clock()
     logical_start = read()
     encoded_start = encoded_bytes_read() if encoded_bytes_read is not None else None
@@ -260,10 +280,10 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     decode_start_bytes = logical_start
     decode_encoded_start = encoded_start
 
-    def forward(values):
+    def forward(values, keep=0):
         nonlocal cache
         result = target.forward(np.asarray([values], dtype=np.int32),
-                                past_key_values=cache, logits_to_keep=0)
+                                past_key_values=cache, logits_to_keep=keep)
         cache = result.past_key_values
         metrics['target_forward_calls'] += 1
         metrics['target_forward_positions'] += len(values)
@@ -313,7 +333,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
     if not max_new_tokens:
         return finish()
     # Prefill emits the first actual target token, without consulting the draft.
-    predictions = forward(tokens)
+    predictions = forward(tokens, keep=1)
     pending = int(predictions[-1])
     tokens.append(pending)
     first_time = clock()
@@ -350,6 +370,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
         remaining = max_new_tokens-(len(tokens)-prefix_length)
         context_available=getattr(cache,'limit',2**63)-cache.position
         count=min(policy.depth,remaining-1,max(0,context_available-1))
+        if max_verify_positions is not None:count=min(count,max_verify_positions-1)
         calibrating=bool(policy.needs_calibration and count)
         if not policy.active or count==0 or calibrating:
             baseline = ordinary_decode(calibration=calibrating)
@@ -381,6 +402,7 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
                 break
         base = cache.position
         verify_start = clock()
+        forward_before = forward_metrics() if forward_metrics is not None else None
         try:
             # logits[j] predicts candidates[j]; logits[-1] supplies a bonus.
             predictions = forward([pending]+candidates)
@@ -409,6 +431,10 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
             cache.truncate(base)
             raise
         verify_seconds = clock()-verify_start
+        forward_after = forward_metrics() if forward_metrics is not None else None
+        forward_delta = ({k: v-forward_before.get(k, 0) for k,v in forward_after.items()
+                          if isinstance(v, (int, float)) and not isinstance(v, bool)}
+                         if forward_after is not None else None)
         elapsed = clock()-round_start
         # EOS accepted above has no bonus. Correction/bonus EOS still counts.
         if accepted and candidates[accepted-1] in eos:
@@ -437,6 +463,8 @@ def greedy_speculative_generate(target, propose, input_ids, max_new_tokens,
             total_encoded_file_bytes=total_encoded,
             rejected_proposal_tokens=len(candidates)-accepted,
             verification_input_tokens=len(candidates)+1,
+            expert_batch_delta=forward_delta,
+            kv_bytes=getattr(cache,'bytes',None), kv_peak_bytes=getattr(cache,'peak_bytes',None),
             baseline_seconds=baseline, next_depth=None))
         policy.observe(seconds=elapsed, emitted=emitted, proposed=len(candidates),
                        accepted=accepted, baseline_seconds=baseline,depth=count,
