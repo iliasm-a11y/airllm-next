@@ -156,8 +156,10 @@ class NativeWeights:
             if self.cache.contains(ident):continue
             size=self.estimate(key,packed_expert)
             if size<=self.cfg.max_tensor_bytes:
+                with self.cache.lock:load_seconds=self.cache.costs.get(ident)
                 self.spec.submit(layer,expert,ident,size,
-                    lambda k=key,e=packed_expert:self._load(k,e))
+                    lambda k=key,e=packed_expert:self._load(k,e),load_seconds=load_seconds,
+                    scheduling_seconds=self.stats.get('spec_demand_overhead_seconds'))
 
     def observe_layer(self,layer,experts):
         if self.spec:self.spec.observe(layer,experts)
@@ -170,6 +172,7 @@ class NativeWeights:
         v=self.spec.take(ident) if self.spec else None
         if v is None:v=self.io.take(ident)
         if v is None:
+            demand_start=perf_counter() if self.spec else None
             # Main thread is serialized by model's lock. submit() deduplicates
             # if another prediction already scheduled precisely this matrix.
             if not self.io.submit(ident,n,lambda:self._load(key,expert)):
@@ -180,6 +183,19 @@ class NativeWeights:
                     if n>self.cfg.io_bytes:raise MemoryError('Increase io_bytes for the largest decoded matrix')
                     raise RuntimeError('Could not reserve demand read')
             v=self.io.take(ident)
+            if demand_start is not None:
+                elapsed=perf_counter()-demand_start
+                with self.cache.lock:load_cost=self.cache.costs.get(ident)
+                if load_cost is not None:
+                    # The exact IO roundtrip includes queueing and completion
+                    # handoff, unlike worker-dispatch latency alone. Subtract
+                    # the same key's observed load EWMA to estimate scheduling
+                    # overhead; this is a gate hint, not a hardware measurement.
+                    overhead=max(0.,elapsed-load_cost)
+                    previous=self.stats.get('spec_demand_overhead_seconds')
+                    self.stats['spec_demand_overhead_seconds']=(overhead if previous is None
+                                                              else previous*.75+overhead*.25)
+                    self.stats['spec_demand_overhead_samples']=self.stats.get('spec_demand_overhead_samples',0)+1
         self.cache.put(ident,v);return v
 
     def prefetch(self,key,expert=None):

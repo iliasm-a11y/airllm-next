@@ -25,7 +25,8 @@ from time import perf_counter, process_time
 
 
 VARIANTS = ('reference', 'adaptive', 'prefetch', 'specprefetch', 'coalesced', 'mmap', 'all')
-OPTIONAL_VARIANTS = ('output_pipeline','adaptive_pipeline')
+OPTIONAL_VARIANTS = ('output_pipeline', 'adaptive_pipeline', 'pread_nocache',
+                     'adaptive_pipeline_nocache')
 MiB = 1024 ** 2
 
 
@@ -35,7 +36,7 @@ def variant_options(name, io_bytes):
     options = {'policy': 'lru', 'prefetch': False, 'spec_prefetch': False,
                'spec_prefetch_bytes': 0, 'spec_prefetch_experts': 1,
                'coalesce_reads': False, 'io_mode': 'pread', 'output_prefetch': False}
-    if name in ('adaptive', 'all','adaptive_pipeline'):
+    if name in ('adaptive', 'all', 'adaptive_pipeline', 'adaptive_pipeline_nocache'):
         options['policy'] = 'adaptive'
     if name in ('prefetch', 'all'):
         options['prefetch'] = True
@@ -45,8 +46,10 @@ def variant_options(name, io_bytes):
         options['coalesce_reads'] = True
     if name in ('mmap', 'all'):
         options['io_mode'] = 'mmap'
-    if name in ('output_pipeline','adaptive_pipeline'):
+    if name in ('output_pipeline', 'adaptive_pipeline', 'adaptive_pipeline_nocache'):
         options['output_prefetch'] = True
+    if name in ('pread_nocache', 'adaptive_pipeline_nocache'):
+        options['io_mode'] = 'pread_nocache'
     return options
 
 
@@ -87,6 +90,7 @@ def environment_snapshot(source_root):
     import psutil
     sys.path.insert(0, str(Path(source_root).resolve() / 'air_llm'))
     from airllm.nextgen.storage import physical_read_bytes
+    from airllm.nextgen.physical_io import physical_read_counter_info
     versions = {}
     for package in ('numpy', 'mlx', 'mlx-metal', 'torch', 'transformers', 'safetensors', 'psutil', 'pytest'):
         try:
@@ -105,6 +109,7 @@ def environment_snapshot(source_root):
             'system_memory': dict(psutil.virtual_memory()._asdict()),
             'system_swap': dict(psutil.swap_memory()._asdict()),
             'physical_process_read_bytes_counter': physical_read_bytes(),
+            'physical_read_counter_info': physical_read_counter_info(),
             'physical_counter_scope': 'OS process storage read counter, unavailable is null; never a bandwidth result',
             'physical_ssd_bandwidth_certified': False,
             'mlx_enable_tf32_environment': os.environ.get('MLX_ENABLE_TF32'),
@@ -137,14 +142,26 @@ def worker(args):
     import mlx.core as mx
     from airllm.nextgen.config import NextConfig
     from airllm.nextgen.storage import physical_read_bytes
+    # Baseline checkouts predating phase 2 have no macOS counter metadata.
+    try:
+        from airllm.nextgen.physical_io import physical_read_counter_info
+        counter_info = physical_read_counter_info()
+    except ImportError:
+        counter_info = {'source': 'legacy Linux /proc/self/io or unavailable',
+                        'scope': 'process-wide OS storage counter; unavailable is null',
+                        'physical_ssd_bandwidth_certified': False}
     config = json.loads((Path(args.model_dir) / 'config.json').read_text())
     backend = args.backend
     if backend == 'auto':
-        backend = 'llama' if config.get('model_type') == 'llama' else 'qwen' if str(config.get('model_type', '')).startswith('qwen') else 'glm'
+        backend = ('granite' if config.get('model_type') == 'granitemoe' else
+                   'llama' if config.get('model_type') == 'llama' else
+                   'qwen' if str(config.get('model_type', '')).startswith('qwen') else 'glm')
     if backend == 'llama':
         from airllm.nextgen.llama_runtime import AirLLMNextLlamaModel as Model
     elif backend == 'qwen':
         from airllm.nextgen.qwen_runtime import ExperimentalQwenModel as Model
+    elif backend == 'granite':
+        from airllm.nextgen.granite_runtime import AirLLMNextGraniteMoeModel as Model
     else:
         from airllm.nextgen import AirLLMNextModel as Model
     source_hashes = {str(path.relative_to(args.source_root)): file_digest(path)
@@ -174,7 +191,8 @@ def worker(args):
                   reserve_bytes=args.reserve_bytes, max_context=args.max_context,
                   row_chunk=args.row_chunk, io_workers=args.io_workers,
                   use_saved_tuning=False, load_tokenizer=False, profile_io=args.profile_io)
-    options = variant_options(args.worker, args.io_bytes)
+    options = variant_options(args.baseline_variant if args.worker == 'baseline'
+                              else args.worker, args.io_bytes)
     supported = {field.name for field in fields(NextConfig)}
     omitted = {key: value for key, value in (shared | options).items() if key not in supported}
     if args.worker != 'baseline' and omitted:
@@ -253,8 +271,10 @@ def worker(args):
             report = {'variant': args.worker, 'config': cfg.as_dict(), 'omitted_baseline_fields': omitted,
                 'source_root': str(Path(args.source_root).resolve()),
                 'source_revision': source_revision(args.source_root),
+                'baseline_variant': args.baseline_variant if args.worker == 'baseline' else None,
                 'source_files_sha256_at_worker_start': source_hashes,
                 'startup_seconds': startup_seconds, 'device': model.device, 'backend': backend,
+                'physical_read_counter_info': counter_info,
                 'fixture_kind': args.fixture_kind, 'prompt_text': prompt_text,
                 'trained_prompt_extension': ({'scope': 'synthetic repeated natural-language token context',
                     'second_prompt_target_tokens': args.long_prompt_tokens,
@@ -264,11 +284,21 @@ def worker(args):
                 'process_peak_rss_bytes': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss *
                                           (1 if sys.platform == 'darwin' else 1024),
                 'mlx_peak_memory_bytes': _optional_memory(mx, 'get_peak_memory'),
-                'os_page_cache_state': 'uncontrolled; a fresh process is not a cold SSD read',
+                'os_page_cache_state': (
+                    'F_NOCACHE requested for payload descriptors; existing OS cache was not purged'
+                    if cfg.io_mode == 'pread_nocache' else
+                    'uncontrolled; a fresh process is not a cold SSD read'),
                 'physical_ssd_bandwidth_certified': False}
+    final_hashes = {str(path.relative_to(args.source_root)): file_digest(path)
+                    for path in sorted((Path(args.source_root) / 'air_llm/airllm/nextgen').glob('*.py'))}
+    report['source_files_sha256_at_worker_end'] = final_hashes
+    report['source_unchanged_during_worker'] = final_hashes == source_hashes
+    report['benchmark_script_sha256'] = file_digest(__file__)
     destination = Path(args.output)
     np.savez_compressed(destination.with_suffix('.npz'), **logits)
     destination.write_text(json.dumps(report, indent=2) + '\n')
+    if not report['source_unchanged_during_worker']:
+        raise RuntimeError('Native source changed during the worker; diagnostic artifacts retained')
 
 
 def compare_reports(reports, artifacts, *, atol=4e-6, rtol=2e-4):
@@ -315,6 +345,10 @@ def storage_comparison(root, repeats, seed):
 
 def run_suite(args):
     source = Path(args.source_root).resolve()
+    if args.baseline_source:
+        # Workers change cwd to this checkout: resolve once in the caller,
+        # otherwise a relative source/PYTHONPATH gets interpreted twice.
+        args.baseline_source = str(Path(args.baseline_source).resolve(strict=True))
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     work = output.parent / (output.stem + '-runs')
@@ -336,7 +370,8 @@ def run_suite(args):
                    '--fixture-kind', fixture_kind, '--output', str(destination)]
         for name in ('tokens', 'warm_repeats', 'cache_bytes', 'io_bytes', 'max_tensor_bytes',
                      'kv_bytes', 'workspace_bytes', 'reserve_bytes', 'max_context',
-                     'row_chunk', 'io_workers', 'device', 'dtype', 'backend', 'long_prompt_tokens'):
+                     'row_chunk', 'io_workers', 'device', 'dtype', 'backend', 'long_prompt_tokens',
+                     'baseline_variant'):
             command.extend(['--' + name.replace('_', '-'), str(getattr(args, name))])
         if args.profile_io:
             command.append('--profile-io')
@@ -379,6 +414,7 @@ def run_suite(args):
     report = {'schema_version': 1, 'platform': platform.platform(), 'python': sys.version,
         'seed': args.seed, 'source_revision': source_revision(source),
         'baseline_revision': source_revision(args.baseline_source) if args.baseline_source else None,
+        'baseline_variant': args.baseline_variant if args.baseline_source else None,
         'model_path': str(model), 'fixture_kind': fixture_kind,
         'model_shards_sha256': {path.name: file_digest(path) for path in shards},
         'model_serialized_bytes': sum(path.stat().st_size for path in shards),
@@ -395,6 +431,8 @@ def run_suite(args):
             for row in reports if row['variant'] != 'baseline'),
         'storage': storage_comparison(work / 'storage-fixture', args.repeats, args.seed)}
     output.write_text(json.dumps(report, indent=2) + '\n')
+    if not report['current_source_hashes_consistent_across_workers']:
+        raise RuntimeError('Native source changed between workers; diagnostic report retained')
     print(json.dumps({'output': str(output), 'summaries': summaries}, indent=2))
 
 
@@ -403,10 +441,12 @@ def main():
     parser.add_argument('--output', required=True)
     parser.add_argument('--source-root', default=str(Path(__file__).resolve().parents[1]))
     parser.add_argument('--baseline-source')
+    parser.add_argument('--baseline-variant', choices=(*VARIANTS, *OPTIONAL_VARIANTS),
+                        default='reference', help='Options used by the pinned baseline worker')
     parser.add_argument('--model-dir')
     parser.add_argument('--variants', default=','.join(VARIANTS))
     parser.add_argument('--worker', choices=(*VARIANTS, *OPTIONAL_VARIANTS, 'baseline'))
-    parser.add_argument('--backend', choices=('auto', 'glm', 'llama', 'qwen'), default='auto')
+    parser.add_argument('--backend', choices=('auto', 'glm', 'llama', 'qwen', 'granite'), default='auto')
     parser.add_argument('--fixture-kind', choices=('tiny_glm', 'trained_local'))
     parser.add_argument('--long-prompt-tokens', type=int, default=48)
     parser.add_argument('--extend-trained-prompt', action='store_true',

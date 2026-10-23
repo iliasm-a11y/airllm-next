@@ -1,5 +1,11 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [second experimental phase](IO_PHASE2_RESEARCH_FR.md) adds explicit macOS
+F_NOCACHE reads, OS-accounted process storage counters, improved small reads,
+measured SpecPrefetch admission and an explicit experimental Granite MoE backend.
+Physical measurements identify the internal Apple SSD; the Fanxiang is absent.
+Positive, negative and preliminary measurements remain separately documented.
+
 The [October 23 I/O research validation](IO_WALL_RESEARCH_FR.md) adds opt-in
 adaptive admission, bounded SpecPrefetch, output tile pipelining and offset-I/O
 profiling. On the measured M5/SmolLM2 warm-file protocol with equal 256 MiB

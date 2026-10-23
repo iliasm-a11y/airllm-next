@@ -32,6 +32,15 @@ def test_first_prompt_only_is_software_cold_and_all_policies_share_budgets():
         assert options['spec_prefetch_bytes'] <= 4096
 
 
+def test_nocache_is_explicit_and_preserves_equal_memory_envelopes():
+    plain = benchmark.variant_options('reference', 4096)
+    controlled = benchmark.variant_options('pread_nocache', 4096)
+    assert plain['io_mode'] == 'pread'
+    assert controlled == plain | {'io_mode': 'pread_nocache'}
+    assert benchmark.variant_options('adaptive_pipeline_nocache', 4096) == (
+        benchmark.variant_options('adaptive_pipeline', 4096) | {'io_mode': 'pread_nocache'})
+
+
 def reports(tmp_path, values, output_ids=None):
     reference = tmp_path / 'reference.npz'
     observed = tmp_path / 'observed.npz'

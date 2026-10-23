@@ -27,8 +27,21 @@ def test_coalesced_exact_order_and_single_backing_buffer(tmp_path):
         assert cp.stats['read_calls']==1
         assert cp.stats['logical_bytes']==a.nbytes*2
         assert cp.stats['coalesced_gap_bytes']==0
-        # Numpy references keep one bytearray alive; no per-tensor copy is made.
-        assert arrays[0].base.base.obj is arrays[1].base.base.obj
+        # Disjoint tensor slices must retain the same whole read buffer, whether
+        # NumPy exposes it through an ndarray, memoryview or immutable bytes.
+        def owner(value):
+            visited=set()
+            while True:
+                assert id(value) not in visited,'Unexpected cyclic buffer ownership'
+                visited.add(id(value))
+                if isinstance(value,np.ndarray) and value.base is not None:value=value.base
+                elif isinstance(value,memoryview):value=value.obj
+                else:return value
+        backing=owner(arrays[0])
+        assert owner(arrays[1]) is backing
+        assert memoryview(backing).nbytes==a.nbytes*2
+        assert arrays[0].tobytes()==(a+3).tobytes()
+        assert arrays[1].tobytes()==a.tobytes()
         before=cp.stats['read_calls']
         separate=cp.read_arrays(['b','a'],coalesce=False)
         assert cp.stats['read_calls']-before==2

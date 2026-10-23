@@ -25,3 +25,11 @@ official Transformers implementations (Hugging Face contributors, Apache-2.0).
 No model weights are embedded in the Python distribution. External checkpoints
 retain their own licenses. No full GLM-5.3/Qwen3.8 compatibility follows from this
 software notice.
+
+Experimental research addendum, 23 October 2026:
+The explicit Granite MoE backend follows IBM Granite and official Hugging Face
+Transformers GraniteMoe equations and legacy tensor naming (Apache License 2.0).
+The independent validation reference uses installed official Transformers
+modules, with bounded layer loading. No IBM model weights are bundled in the
+source repository or Python distribution; checkpoints retain their own terms.
+See IO_PHASE2_RESEARCH_FR.md for the measured scope and remaining limits.

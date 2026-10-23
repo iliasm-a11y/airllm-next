@@ -19,7 +19,7 @@ def scheduler():
     predictors = []
 
     def make(budget=64, **kwargs):
-        predictor = SpecPrefetch(io, budget, **kwargs)
+        predictor = SpecPrefetch(io, budget, **({'warmup_predictions': 0} | kwargs))
         predictors.append(predictor)
         return predictor
 
@@ -42,6 +42,9 @@ def payload(size=8, value=1):
     {'budget_bytes': -1}, {'budget_bytes': True}, {'budget_bytes': 129},
     {'max_predictions': 0}, {'max_layers': 0}, {'max_transitions': -1},
     {'max_pending': 0}, {'max_route_experts': 0}, {'max_layers': True},
+    {'min_accuracy': -0.01}, {'min_accuracy': 1.01}, {'min_accuracy': True},
+    {'min_accuracy': float('nan')}, {'min_accuracy': float('inf')},
+    {'warmup_predictions': -1}, {'warmup_predictions': 17}, {'warmup_predictions': True},
 ])
 def test_invalid_limits_are_rejected(scheduler, kwargs):
     io, _ = scheduler
@@ -74,6 +77,12 @@ def test_predictor_metadata_is_globally_bounded(scheduler):
         assert len(predictor.transitions) <= 5
         assert all(len(state.previous) <= 4 for state in predictor.layers.values())
         assert all(len(state.predicted) <= 1 for state in predictor.layers.values())
+        indexed = {(layer, source, target): count
+                   for layer, state in predictor.layers.items()
+                   for source, targets in state.successors.items()
+                   for target, count in targets.items()}
+        assert indexed == predictor.transitions
+        assert sum(len(state.accuracy) for state in predictor.layers.values()) <= 3 * 16
     assert predictor.metrics()['layer_evictions'] == 27
     assert predictor.metrics()['truncated_observations'] == 90
 
@@ -200,7 +209,7 @@ def test_discard_swallows_prediction_errors_before_shared_drain(scheduler):
 def test_wrong_queued_prediction_is_cancelled_without_touching_exact_io(scheduler):
     _, make = scheduler
     io = SingleFlight(32, 1)
-    predictor = SpecPrefetch(io, 16)
+    predictor = SpecPrefetch(io, 16, warmup_predictions=0)
     blocker = Event()
     started = Event()
     calls = []
@@ -226,7 +235,7 @@ def test_wrong_queued_prediction_is_cancelled_without_touching_exact_io(schedule
         io.close()
 
 
-def test_running_wrong_prediction_holds_reservation_until_discard_finishes(scheduler, monkeypatch):
+def test_running_wrong_prediction_does_not_block_router_and_keeps_reservation(scheduler, monkeypatch):
     io, make = scheduler
     predictor = make()
     started = Event()
@@ -253,13 +262,120 @@ def test_running_wrong_prediction_holds_reservation_until_discard_finishes(sched
     with ThreadPoolExecutor(1) as workers:
         discarded = workers.submit(predictor.observe, 0, [2])
         assert cancelling.wait(2)
-        assert not discarded.done()
+        discarded.result(timeout=2)  # release remains unset: observation cannot wait for IO
+        assert io.bytes == predictor.bytes == 8
+        # The other IO worker can serve actual demand while the wrong read is
+        # still active; its buffer remains charged in both budgets.
+        assert io.submit('actual', 8, lambda: payload(value=2))
+        np.testing.assert_array_equal(io.take('actual'), payload(value=2))
         assert io.bytes == predictor.bytes == 8
         release.set()
-        discarded.result(timeout=2)
+        predictor.discard()
     assert io.bytes == predictor.bytes == 0
     assert predictor.metrics()['wasted_payload_bytes'] == 8
     assert predictor.metrics()['prediction_misses'] == 1
+
+
+def test_low_shadow_accuracy_gates_reads_and_recovers_without_io(scheduler):
+    io, make = scheduler
+    predictor = make(max_transitions=0)
+    # Reuse is wrong on each alternating route. Four shadow outcomes suffice
+    # to pause IO; no actual read is needed for continued calibration.
+    predictor.observe(0, [0])
+    for step in range(4):
+        predictor.predict(0)
+        predictor.observe(0, [(step + 1) % 2])
+    assert predictor.predict(0) == (0,)
+    assert not predictor.submit(0, 0, 'unreliable', 8, payload)
+    assert not io.pending
+    assert predictor.metrics()['accuracy_rejections'] == 1
+    for _ in range(16):
+        predictor.predict(0)
+        predictor.observe(0, [0])
+    assert predictor.predict(0) == (0,)
+    assert predictor.submit(0, 0, 'recovered', 8, payload)
+    assert predictor.take('recovered').nbytes == 8
+
+
+def test_default_shadow_warmup_collects_accuracy_before_any_io(scheduler):
+    io, make = scheduler
+    predictor = make(warmup_predictions=4)
+    prime(predictor)
+    for step in range(4):
+        assert not predictor.submit(0, 1, f'warmup-{step}', 8, payload)
+        assert not io.pending
+        predictor.observe(0, [1])
+        predictor.predict(0)
+    assert predictor.metrics()['warmup_rejections'] == 4
+    assert predictor.submit(0, 1, 'calibrated', 8, payload)
+    assert predictor.take('calibrated').nbytes == 8
+
+
+def test_accuracy_gate_can_be_disabled_for_control_experiments(scheduler):
+    _, make = scheduler
+    predictor = make(max_transitions=0, min_accuracy=0)
+    predictor.observe(0, [0])
+    for step in range(16):
+        predictor.predict(0)
+        predictor.observe(0, [(step + 1) % 2])
+    assert predictor.predict(0) == (0,)
+    assert predictor.submit(0, 0, 'control', 8, payload)
+    assert predictor.take('control').nbytes == 8
+
+
+def test_measured_cost_gate_rejects_zero_benefit_and_admits_expensive_load(scheduler):
+    _, make = scheduler
+    predictor = make()
+    prime(predictor)
+    assert predictor.submit(0, 1, 'calibration', 8, payload)
+    assert predictor.take('calibration').nbytes == 8
+    for _ in range(4):
+        predictor.predict(0)
+        predictor.observe(0, [1])
+    predictor.predict(0)
+    # These explicit cost hints test the admission inequality, not throughput.
+    assert not predictor.submit(0, 1, 'zero-benefit', 8, payload, load_seconds=0)
+    assert predictor.metrics()['cost_rejections'] == 1
+    assert predictor.metrics()['dispatch_samples'] == 1
+    assert predictor.submit(0, 1, 'expensive', 8, payload, load_seconds=10)
+    assert predictor.take('expensive').nbytes == 8
+
+
+def test_exact_demand_cost_hint_gates_first_prediction_without_startup_probe(scheduler):
+    io, make = scheduler
+    predictor = make()
+    prime(predictor)
+    # Explicit cost hints check the inequality before any accuracy/dispatch
+    # samples exist. No artificially delayed loader contributes a speed claim.
+    assert not predictor.submit(0, 1, 'cheap', 8, payload,
+                                load_seconds=0.001, scheduling_seconds=0.01)
+    assert not io.pending and predictor.metrics().get('dispatch_samples', 0) == 0
+    assert predictor.submit(0, 1, 'expensive', 8, payload,
+                            load_seconds=1, scheduling_seconds=0.001)
+    assert predictor.take('expensive').nbytes == 8
+
+
+def test_missing_cost_metrics_allow_only_existing_bounded_calibration(scheduler):
+    io, make = scheduler
+    predictor = make(budget=8)
+    prime(predictor)
+    # None means unavailable, not a measured zero scheduling cost. A bounded
+    # calibration read remains possible without inventing cost observations.
+    assert predictor.submit(0, 1, 'unknown', 8, payload,
+                            load_seconds=0, scheduling_seconds=None)
+    assert not predictor.submit(0, 1, 'overflow', 8, payload)
+    assert io.bytes == predictor.bytes == 8
+    assert predictor.take('unknown').nbytes == 8
+
+
+@pytest.mark.parametrize('name', ['load_seconds', 'scheduling_seconds'])
+@pytest.mark.parametrize('cost', [-1, float('inf'), float('nan'), True, '1'])
+def test_invalid_measured_load_cost_is_rejected(scheduler, name, cost):
+    _, make = scheduler
+    predictor = make()
+    prime(predictor)
+    with pytest.raises(ValueError, match=name):
+        predictor.submit(0, 1, 'invalid', 8, payload, **{name: cost})
 
 
 def test_demand_waits_out_concurrent_discard_then_retries_cleanly(scheduler, monkeypatch):
@@ -296,6 +412,103 @@ def test_demand_waits_out_concurrent_discard_then_retries_cleanly(scheduler, mon
     assert io.submit('key', 8, payload)
     assert io.take('key').nbytes == 8
     assert io.bytes == predictor.bytes == 0
+
+
+def test_discard_releases_payload_without_cyclic_gc(scheduler):
+    import gc
+    import weakref
+    from threading import Barrier
+    io, make = scheduler
+    predictor = make()
+    started, release = Event(), Event()
+    references = []
+
+    def read():
+        value = payload()
+        references.append(weakref.ref(value))
+        started.set()
+        release.wait(2)
+        return value
+
+    enabled = gc.isenabled()
+    gc.disable()
+    try:
+        prime(predictor)
+        assert predictor.submit(0, 1, 'retired', 8, read)
+        assert started.wait(2)
+        predictor.observe(0, [2])
+        release.set()
+        predictor.discard()
+        # Ensure the worker has returned from Future.set_result/callbacks.
+        barrier = Barrier(3)
+        workers = [io.pool.submit(barrier.wait, 2) for _ in range(2)]
+        barrier.wait(2)
+        for worker in workers:
+            worker.result(timeout=2)
+        assert references[0]() is None
+        assert io.bytes == predictor.bytes == 0
+    finally:
+        release.set()
+        if enabled:
+            gc.enable()
+
+
+def test_take_during_owned_admission_preserves_optional_failure_retry(scheduler, monkeypatch):
+    io, make = scheduler
+    predictor = make()
+    admitted, release, taking = Event(), Event(), Event()
+    submit = io.submit
+
+    def pause_submission(*args, **kwargs):
+        result = submit(*args, **kwargs)
+        admitted.set()
+        release.wait(2)
+        return result
+
+    def fail():
+        raise OSError('optional calibration read failed')
+
+    def demand():
+        taking.set()
+        return predictor.take('racing')
+
+    monkeypatch.setattr(io, 'submit', pause_submission)
+    prime(predictor)
+    with ThreadPoolExecutor(2) as workers:
+        prediction = workers.submit(predictor.submit, 0, 1, 'racing', 8, fail)
+        assert admitted.wait(2)
+        actual = workers.submit(demand)
+        assert taking.wait(2)
+        release.set()
+        assert prediction.result(timeout=2)
+        assert actual.result(timeout=2) is None
+    assert predictor.metrics()['failed'] == 1
+    assert not io.pending and io.bytes == predictor.bytes == 0
+
+
+def test_concurrent_shared_drain_and_retirement_release_each_reservation_once(scheduler):
+    io, make = scheduler
+    predictor = make()
+    started, release = Event(), Event()
+
+    def read():
+        started.set()
+        release.wait(2)
+        return payload()
+
+    prime(predictor)
+    assert predictor.submit(0, 1, 'retired', 8, read)
+    assert started.wait(2)
+    predictor.observe(0, [2])
+    with ThreadPoolExecutor(1) as workers:
+        shared_drain = workers.submit(io.drain)
+        release.set()
+        shared_drain.result(timeout=2)
+    predictor.discard()
+    assert io.bytes == predictor.bytes == 0
+    assert not io.pending and not predictor.pending
+    assert predictor.metrics()['wasted'] == 1
+    assert io.stats['discarded'] == 1
 
 
 def test_external_shared_take_is_reconciled_without_inventing_usefulness(scheduler):
@@ -368,6 +581,7 @@ def test_wrong_predictions_do_not_choose_or_change_actual_expert_values(schedule
             value = io.take(key)
         result.append(value)
     np.testing.assert_array_equal(result[0], payload(value=2))
+    predictor.discard()  # observe retires unused running buffers asynchronously
     assert io.bytes == predictor.bytes == 0
 
 
@@ -399,6 +613,9 @@ def test_native_weights_retries_a_failed_prediction_using_actual_checkpoint(tmp_
         monkeypatch.setattr(reader, '_load', read)
         try:
             reader.spec.observe(0, [1])
+            for _ in range(4):
+                reader.spec.predict(0)
+                reader.spec.observe(0, [1])
             reader.begin_layer(0, lambda expert: [('bank', expert)])
             reader.observe_layer(0, [1])
             np.testing.assert_array_equal(np.asarray(reader.get('bank', 1)), bank[1])

@@ -50,16 +50,26 @@ def test_exact_rows_experts_and_mmap(tmp_path):
     with OffsetCheckpoint(root,tmp_path/'meta') as cp:assert cp.stats['manifest_hit']==1
 
 
-def test_short_reads_eintr_and_disappeared_file(tmp_path,monkeypatch):
+@pytest.mark.parametrize('without_preadv',[False,True])
+def test_short_reads_eintr_and_disappeared_file(tmp_path,monkeypatch,without_preadv):
     import os,errno
     root=tmp_path/'cp';root.mkdir();save_file({'a':np.ones((4,16),np.float32)},root/'model.safetensors')
     with OffsetCheckpoint(root) as cp:
-        real=os.preadv;calls=[0]
-        def partial(fd,buffers,offset):
+        real_pread=os.pread;real_preadv=getattr(os,'preadv',None);calls=[0]
+        def interrupted_once():
             calls[0]+=1
             if calls[0]==1:raise OSError(errno.EINTR,'interrupted')
-            return real(fd,[buffers[0][:7]],offset)
-        monkeypatch.setattr(os,'preadv',partial)
+        def partial_pread(fd,size,offset):
+            interrupted_once()
+            return real_pread(fd,min(size,7),offset)
+        def partial_preadv(fd,buffers,offset):
+            interrupted_once()
+            return real_preadv(fd,[buffers[0][:7]],offset)
+        # Instrument whichever syscall the platform actually selects. Exercise
+        # the fallback explicitly too, including Python builds without preadv.
+        monkeypatch.setattr(os,'pread',partial_pread)
+        if without_preadv:monkeypatch.delattr(os,'preadv',raising=False)
+        elif real_preadv is not None:monkeypatch.setattr(os,'preadv',partial_preadv)
         np.testing.assert_array_equal(cp.read_array('a'),1);assert calls[0]>2
         (root/'model.safetensors').write_bytes(b'')
         with pytest.raises(EOFError):cp.read_array('a')

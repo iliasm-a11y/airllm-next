@@ -66,7 +66,7 @@ def _tag(key, expert):
 
 
 class IOProfiler:
-    def __init__(self, *, max_intervals=8192, max_groups=512, physical_counter=None):
+    def __init__(self, *, max_intervals=8192, max_groups=512, physical_counter=None, physical_counter_source=None):
         for name, value in (('max_intervals', max_intervals), ('max_groups', max_groups)):
             if type(value) is not int or value < 1:
                 raise ValueError(f'{name} must be a positive integer')
@@ -81,8 +81,10 @@ class IOProfiler:
         self.failed_read_calls = self.unattributed_read_bytes = 0
         self.io_seconds = 0.
         self.modes = {'pread': {'read_calls': 0, 'read_bytes': 0, 'io_seconds': 0.},
-                      'mmap': {'read_calls': 0, 'read_bytes': 0, 'io_seconds': 0.}}
+                      'mmap': {'read_calls': 0, 'read_bytes': 0, 'io_seconds': 0.},
+                      'pread_nocache': {'read_calls': 0, 'read_bytes': 0, 'io_seconds': 0.}}
         self.physical_counter = physical_counter
+        self.physical_counter_source = physical_counter_source
         self.physical_start = physical_counter() if physical_counter else None
 
     def requests(self, regions):
@@ -151,7 +153,7 @@ class IOProfiler:
                     'requested_bytes': self.requested_bytes,
                     'requested_semantics': 'validated selections attempted, including duplicates and failed transfers',
                     'read_bytes': self.read_bytes,
-                    'read_semantics': 'bytes copied by completed or partially completed pread/mmap calls; gaps included',
+                    'read_semantics': 'bytes copied by completed or partially completed pread/mmap/pread_nocache calls; gaps included',
                     'request_count': self.request_count, 'read_calls': self.read_calls,
                     'failed_read_calls': self.failed_read_calls, 'io_seconds': self.io_seconds,
                     'requested_intervals': self.requested.snapshot(),
@@ -164,5 +166,7 @@ class IOProfiler:
                     'metadata_limits': {'max_intervals_per_stream': self.max_intervals,
                                         'max_layer_expert_groups': self.max_groups},
                     'physical_process_read_bytes': physical,
+                    'physical_counter_source': self.physical_counter_source,
+                    'cache_policy': 'pread/mmap use normal OS cache policy; pread_nocache requests macOS F_NOCACHE per separately opened fd; no cache purge',
                     'physical_scope': 'process-wide OS storage counter; includes unrelated reads/readahead; unavailable is null',
                     'physical_ssd_bandwidth_certified': False}

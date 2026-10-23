@@ -33,7 +33,7 @@ class NextConfig:
     spec_prefetch: bool = False
     spec_prefetch_bytes: int = 0
     spec_prefetch_experts: int = 1
-    io_mode: Literal['pread', 'mmap'] = 'pread'
+    io_mode: Literal['pread', 'mmap', 'pread_nocache'] = 'pread'
     profile_io: bool = False
     coalesce_reads: bool = False
     selective_fp8_scales: bool = True
@@ -57,7 +57,7 @@ class NextConfig:
             if type(getattr(self,k)) is not bool:
                 raise ValueError(f'{k} must be boolean')
         if self.policy not in ('lru','slru','lfu','cost','adaptive'): raise ValueError('Unknown cache policy')
-        if self.io_mode not in ('pread','mmap'): raise ValueError('Unknown I/O mode')
+        if self.io_mode not in ('pread','mmap','pread_nocache'): raise ValueError('Unknown I/O mode')
         if self.spec_prefetch_bytes > self.io_bytes:
             raise ValueError('spec_prefetch_bytes must fit inside io_bytes')
         if self.spec_prefetch_experts > 64:
@@ -67,6 +67,8 @@ class NextConfig:
         if self.profile not in ('balanced','performance'): raise ValueError('Unknown profile')
         if self.compact_cache_bytes > self.cache_bytes:
             raise ValueError('compact_cache_bytes must fit inside cache_bytes')
+        if self.lossless_dir and self.io_mode == 'pread_nocache':
+            raise ValueError('pread_nocache is not supported for compressed lossless transport')
         if self.lossless_dir and self.quantized_dir:
             raise ValueError('Lossless original-weight transport cannot be combined with a quantized sidecar')
         if self.lossless_native_library and not self.lossless_dir:

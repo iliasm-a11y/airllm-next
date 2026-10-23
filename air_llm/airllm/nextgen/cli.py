@@ -166,7 +166,7 @@ def main(argv=None):
             p.add_argument('--spec-prefetch',action='store_true',help='Experimental previous-route expert prediction; exact router remains authoritative')
             p.add_argument('--spec-prefetch-mib',type=nonnegative_int,help='Partition of --io-mib; zero selects min(32 MiB, IO/4)')
             p.add_argument('--spec-prefetch-experts',type=positive_int,help='Maximum predicted first expert matrices per layer (at most 64)')
-            p.add_argument('--io-mode',choices=['pread','mmap'],help='Explicit file read strategy; mmap still faults/copies selected bytes')
+            p.add_argument('--io-mode',choices=['pread','mmap','pread_nocache'],help='Read strategy; pread_nocache requests macOS F_NOCACHE (no cache purge or SSD bandwidth guarantee)')
             p.add_argument('--profile-io',action='store_true',help='Bounded logical I/O/re-read profiler; physical SSD counters reported separately')
             p.add_argument('--coalesce-reads',action='store_true',help='Opt in to workload-dependent read coalescing')
             p.add_argument('--no-selective-fp8-scales',action='store_true')
