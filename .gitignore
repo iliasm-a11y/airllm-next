@@ -19,3 +19,10 @@ evidence-io-phase2/*-runs/storage-fixture/
 evidence-io-phase2/*.xml
 evidence-io-phase2/*.pstats
 dist-io-phase2/
+evidence-multitoken/**/*.npz
+evidence-multitoken/*.npz
+evidence-multitoken/*.xml
+# Public JSON is stored losslessly as published/*.json.gz; restore script checks hashes.
+evidence-multitoken/**/*.json
+!evidence-multitoken/MANIFEST.json
+!evidence-multitoken/validation-final.json

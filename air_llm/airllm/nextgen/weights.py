@@ -11,6 +11,7 @@ from .quantization import FP8_LUT, PackedMatrix
 from .cache import WeightCache, SingleFlight, size_of
 from .compact_cache import CompactWeightCache
 from .adaptive_cache import AdaptiveWeightCache
+from .residency_cache import ResidencyWeightCache, RESIDENCY_POLICIES
 from .specprefetch import SpecPrefetch
 
 
@@ -21,7 +22,8 @@ class NativeWeights:
         # data is opt-in: it trades decoded residency for more compact reuse and
         # may lose on low-reuse or conversion-bound workloads.
         compact_bytes=config.compact_cache_bytes
-        cache_type=AdaptiveWeightCache if config.policy=='adaptive' else WeightCache
+        cache_type=(ResidencyWeightCache if config.policy in RESIDENCY_POLICIES else
+                    AdaptiveWeightCache if config.policy=='adaptive' else WeightCache)
         self.cache=cache_type(config.cache_bytes-compact_bytes,config.policy)
         self.compact_cache=CompactWeightCache(compact_bytes)
         self.io=SingleFlight(config.io_bytes,config.io_workers)
@@ -170,6 +172,14 @@ class NativeWeights:
 
     def observe_layer(self,layer,experts):
         if self.spec:self.spec.observe(layer,experts)
+
+    def observe_batch(self,expert_keys):
+        """Prioritize an actual routed union without reserving extra weights."""
+        if self.cfg.policy=='batch-aware':
+            self.cache.set_batch(self.identity(key,expert) for key,expert in expert_keys)
+
+    def clear_batch(self):
+        if self.cfg.policy=='batch-aware':self.cache.clear_batch()
 
     def get(self,key,expert=None):
         ident=self.identity(key,expert);v=self.cache.get(ident,self.estimate(key,expert))

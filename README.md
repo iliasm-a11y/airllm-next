@@ -1,5 +1,12 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [multi-token MoE campaign](MULTITOKEN_REPORT_FR.md) compares exact expert
+union, causal block verification, residency policies, real-model drafts and
+lossy expert storage on trained Granite with bounded CPU/Metal runs. It keeps
+negative results and separates known-position verification from generated-token
+throughput. SpecPrefetch and the new residency/retry ablations remain opt-in;
+these experiments do not validate 300–700B models or the external Fanxiang SSD.
+
 The [second experimental phase](IO_PHASE2_RESEARCH_FR.md) adds explicit macOS
 F_NOCACHE reads, OS-accounted process storage counters, improved small reads,
 measured SpecPrefetch admission and an explicit experimental Granite MoE backend.
