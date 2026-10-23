@@ -1,0 +1,7 @@
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+{"repeat": 0, "case": 0, "variant": "reference", "new_tokens": 8, "generation_seconds": 1.575484167005925, "tokens_per_second": 5.0778041236703295}
+{"repeat": 0, "case": 2, "variant": "reference", "new_tokens": 8, "generation_seconds": 1.6075822080019861, "tokens_per_second": 4.976417355317058}
+{"repeat": 0, "case": 2, "variant": "prefetch", "new_tokens": 8, "generation_seconds": 1.3684215409957687, "tokens_per_second": 5.846151759770301}
+{"repeat": 0, "case": 0, "variant": "prefetch", "new_tokens": 8, "generation_seconds": 1.3584122079992085, "tokens_per_second": 5.889228580905584}
+{"repeat": 0, "case": 2, "variant": "zero-copy", "new_tokens": 8, "generation_seconds": 1.2418416250002338, "tokens_per_second": 6.442045297038979}
+{"repeat": 0, "case": 0, "variant": "zero-copy", "new_tokens": 8, "generation_seconds": 1.2161952080059564, "tokens_per_second": 6.577891400441055}

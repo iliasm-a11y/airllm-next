@@ -26,3 +26,7 @@ evidence-multitoken/*.xml
 evidence-multitoken/**/*.json
 !evidence-multitoken/MANIFEST.json
 !evidence-multitoken/validation-final.json
+# Velocity raw measurements remain local; published gzip and SHA256 manifest restore them.
+evidence-velocity/**/*.json
+!evidence-velocity/MANIFEST.json
+evidence-velocity/*.xml

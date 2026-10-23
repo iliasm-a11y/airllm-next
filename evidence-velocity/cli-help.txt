@@ -1,0 +1,100 @@
+usage: airllm-next run [-h] [--cache-dir CACHE_DIR]
+                       [--profile {balanced,performance}]
+                       [--device {auto,cpu,gpu}] [--prompt PROMPT]
+                       [--token-ids TOKEN_IDS]
+                       [--max-new-tokens MAX_NEW_TOKENS]
+                       [--max-context MAX_CONTEXT] [--cache-mib CACHE_MIB]
+                       [--io-mib IO_MIB] [--kv-mib KV_MIB]
+                       [--workspace-mib WORKSPACE_MIB]
+                       [--reserve-mib RESERVE_MIB]
+                       [--max-tensor-mib MAX_TENSOR_MIB]
+                       [--compact-cache-mib COMPACT_CACHE_MIB]
+                       [--output-tile-cache] [--output-prefetch]
+                       [--zero-copy-weights] [--row-chunk ROW_CHUNK]
+                       [--prefill-chunk PREFILL_CHUNK]
+                       [--io-workers IO_WORKERS]
+                       [--quantized-dir QUANTIZED_DIR | --lossless-dir LOSSLESS_DIR]
+                       [--lossless-native-library LOSSLESS_NATIVE_LIBRARY]
+                       [--no-prefetch] [--float32] [--json-report JSON_REPORT]
+                       [--cache-policy {lru,slru,lfu,cost,adaptive,shared,expert,hybrid,batch-aware}]
+                       [--spec-prefetch]
+                       [--spec-prefetch-mib SPEC_PREFETCH_MIB]
+                       [--spec-prefetch-experts SPEC_PREFETCH_EXPERTS]
+                       [--io-mode {pread,mmap,pread_nocache}] [--profile-io]
+                       [--coalesce-reads] [--no-selective-fp8-scales]
+                       [--backend {glm,qwen-experimental,llama}]
+                       [--draft-model DRAFT_MODEL | --prompt-lookup]
+                       [--speculative-depth SPECULATIVE_DEPTH]
+                       [--no-adaptive-speculation]
+                       model
+
+positional arguments:
+  model                 Local safetensors checkpoint directory
+
+options:
+  -h, --help            show this help message and exit
+  --cache-dir CACHE_DIR
+  --profile {balanced,performance}
+  --device {auto,cpu,gpu}
+  --prompt PROMPT
+  --token-ids TOKEN_IDS
+                        Comma-separated ids (no tokenizer required)
+  --max-new-tokens MAX_NEW_TOKENS
+  --max-context MAX_CONTEXT
+  --cache-mib CACHE_MIB
+                        cache memory budget in MiB
+  --io-mib IO_MIB       io memory budget in MiB
+  --kv-mib KV_MIB       kv memory budget in MiB
+  --workspace-mib WORKSPACE_MIB
+                        workspace memory budget in MiB
+  --reserve-mib RESERVE_MIB
+                        reserve memory budget in MiB
+  --max-tensor-mib MAX_TENSOR_MIB
+                        Largest individual tensor read in MiB
+  --compact-cache-mib COMPACT_CACHE_MIB
+                        Compact source weight partition inside --cache-mib
+  --output-tile-cache   Opt in to decoded output tile admission in the
+                        existing weight cache
+  --output-prefetch     Experimental exact output tile pipeline within the
+                        existing I/O allowance
+  --zero-copy-weights   Experimental exact host-buffer import with a portable
+                        copy fallback
+  --row-chunk ROW_CHUNK
+  --prefill-chunk PREFILL_CHUNK
+  --io-workers IO_WORKERS
+  --quantized-dir QUANTIZED_DIR
+                        Lossy packed-weight sidecar
+  --lossless-dir LOSSLESS_DIR
+                        Explicit original-weight compressed overlay; hash
+                        verification remains enabled
+  --lossless-native-library LOSSLESS_NATIVE_LIBRARY
+                        Explicit native palette decoder library for
+                        --lossless-dir
+  --no-prefetch
+  --float32
+  --json-report JSON_REPORT
+  --cache-policy {lru,slru,lfu,cost,adaptive,shared,expert,hybrid,batch-aware}
+                        Opt-in residency policies share the existing --cache-
+                        mib budget
+  --spec-prefetch       Experimental previous-route expert prediction; exact
+                        router remains authoritative
+  --spec-prefetch-mib SPEC_PREFETCH_MIB
+                        Partition of --io-mib; zero selects min(32 MiB, IO/4)
+  --spec-prefetch-experts SPEC_PREFETCH_EXPERTS
+                        Maximum predicted first expert matrices per layer (at
+                        most 64)
+  --io-mode {pread,mmap,pread_nocache}
+                        Read strategy; pread_nocache requests macOS F_NOCACHE
+                        (no cache purge or SSD bandwidth guarantee)
+  --profile-io          Bounded logical I/O/re-read profiler; physical SSD
+                        counters reported separately
+  --coalesce-reads      Opt in to workload-dependent read coalescing
+  --no-selective-fp8-scales
+  --backend {glm,qwen-experimental,llama}
+  --draft-model DRAFT_MODEL
+                        Explicit compatible local draft with the target
+                        architecture/tokenizer; no download
+  --prompt-lookup       Propose bounded spans from the known prefix; target
+                        verifies every token
+  --speculative-depth SPECULATIVE_DEPTH
+  --no-adaptive-speculation

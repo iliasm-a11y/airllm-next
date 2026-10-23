@@ -1,0 +1,33 @@
+AIRLLM_NO_WILLNEED_READY process_local_interposer_loaded
+0.04.850.904 I srv  llama_server: initializing ...
+0.04.850.909 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.04.852.331 I srv  init_listene: The UI is disabled
+0.04.852.333 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.04.852.374 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.04.854.333 I srv    load_model: loading model '/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d'
+0.05.000.305 W load: control-looking token: 248064 '<|repo_name|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.000.308 W load: control-looking token: 248063 '<|fim_pad|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.000.309 W load: control-looking token: 248062 '<|fim_suffix|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.000.309 W load: control-looking token: 248061 '<|fim_middle|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.000.310 W load: control-looking token: 248060 '<|fim_prefix|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.000.537 W load: control-looking token: 248065 '<|file_sep|>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.05.054.795 W model has unused tensor blk.40.attn_norm.weight (size = 8192 bytes) -- ignoring
+0.05.054.799 W model has unused tensor blk.40.post_attention_norm.weight (size = 8192 bytes) -- ignoring
+0.05.054.804 W model has unused tensor blk.40.attn_q.weight (size = 9437184 bytes) -- ignoring
+0.05.054.806 W model has unused tensor blk.40.attn_k.weight (size = 589824 bytes) -- ignoring
+0.05.054.808 W model has unused tensor blk.40.attn_v.weight (size = 860160 bytes) -- ignoring
+0.05.054.814 W model has unused tensor blk.40.attn_output.weight (size = 4718592 bytes) -- ignoring
+0.05.054.816 W model has unused tensor blk.40.attn_q_norm.weight (size = 1024 bytes) -- ignoring
+0.05.054.818 W model has unused tensor blk.40.attn_k_norm.weight (size = 1024 bytes) -- ignoring
+0.05.054.820 W model has unused tensor blk.40.ffn_gate_inp.weight (size = 2097152 bytes) -- ignoring
+0.05.054.822 W model has unused tensor blk.40.ffn_down_exps.weight (size = 220200960 bytes) -- ignoring
+0.05.054.825 W model has unused tensor blk.40.ffn_gate_exps.weight (size = 150994944 bytes) -- ignoring
+0.05.054.827 W model has unused tensor blk.40.ffn_up_exps.weight (size = 150994944 bytes) -- ignoring
+0.05.054.828 W model has unused tensor blk.40.ffn_gate_inp_shexp.weight (size = 4096 bytes) -- ignoring
+0.05.054.830 W model has unused tensor blk.40.ffn_gate_shexp.weight (size = 589824 bytes) -- ignoring
+0.05.054.832 W model has unused tensor blk.40.ffn_up_shexp.weight (size = 589824 bytes) -- ignoring
+0.05.054.833 W model has unused tensor blk.40.ffn_down_shexp.weight (size = 860160 bytes) -- ignoring
+0.05.054.835 W model has unused tensor blk.40.nextn.eh_proj.weight (size = 4718592 bytes) -- ignoring
+0.05.054.837 W model has unused tensor blk.40.nextn.enorm.weight (size = 8192 bytes) -- ignoring
+0.05.054.838 W model has unused tensor blk.40.nextn.hnorm.weight (size = 8192 bytes) -- ignoring
+0.05.054.843 W model has unused tensor blk.40.nextn.shared_head_norm.weight (size = 8192 bytes) -- ignoring
