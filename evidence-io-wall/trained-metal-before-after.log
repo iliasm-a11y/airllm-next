@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 388, in <module>
+    parser.error('--worker requires --model-dir')
+^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 384, in main
+    if getattr(args, name) < 1:
+    ^^^^^^^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 304, in run_suite
+    OPENBLAS_NUM_THREADS='1', PYTHONPATH=str(Path(current_source) / 'air_llm')))
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Worker reference failed: /Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/evidence-io-wall/trained-metal-before-after-runs/001-round0-reference.log

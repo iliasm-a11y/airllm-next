@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "seed": 20261023,
+  "source_revision": "b7204624bc4ca99d61615920f16033da076eca39",
+  "baseline_revision": null,
+  "model_path": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/evidence-io-wall/glm-before-after-runs/tiny-glm",
+  "fixture_kind": "tiny_glm",
+  "model_shards_sha256": {
+    "model-00001-of-00005.safetensors": "338315d4b789da5af5d1d66ab96b804e18e3965f64d8fbbc0bac4765cc36567d",
+    "model-00002-of-00005.safetensors": "58022bb1d136b1d1f816fbc9849596bd6f88d76ba7e2527d8952316a322522ba",
+    "model-00003-of-00005.safetensors": "afaed1431cab143b24128812cfd0a34b8b1a0184481ef76bd6df6f5b5f198ebb",
+    "model-00004-of-00005.safetensors": "b103653463c87efaa522e4061c99581bbcc3ad844af2d1eddf91b5c97f6a3714",
+    "model-00005-of-00005.safetensors": "7eab569b560d580580860f9aff295d0128447c5457437be8003438bb467e1b09"
+  },
+  "model_serialized_bytes": 417976,
+  "scope": "native full tiny/random GLM or supplied trained local model; no large-model speed claim",
+  "protocol": "randomized fresh worker per variant/round, first run software-cold, later repeated prompts warm; OS cache uncontrolled",
+  "profiling_enabled": true,
+  "baseline_instrumentation_note": null,
+  "correctness": [
+    {
+      "artifact": "000-round0-reference.json",
+      "variant": "reference",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    },
+    {
+      "artifact": "001-round0-all.json",
+      "variant": "all",
+      "identical_logits": true,
+      "logits_allclose": true,
+      "same_greedy_sequences": true,
+      "max_abs_logit_error": 0.0
+    }
+  ],
+  "correctness_atol": 4e-06,
+  "correctness_rtol": 0.0002,
+  "summaries": {
+    "reference": {
+      "process_cold_median_seconds": 0.48997762499493547,
+      "warm_median_seconds": 0.034705687499808846,
+      "warm_median_logical_bytes": 2310720.0,
+      "warm_median_read_calls": 677.5,
+      "peak_process_rss_bytes": 231145472,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.02932508300000336,
+          "warm_median_logical_bytes": 1922560,
+          "warm_median_read_calls": 554,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.04008629199961433,
+          "warm_median_logical_bytes": 2698880,
+          "warm_median_read_calls": 801,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    },
+    "all": {
+      "process_cold_median_seconds": 0.3900649999995949,
+      "warm_median_seconds": 0.04753843749858788,
+      "warm_median_logical_bytes": 2064672.0,
+      "warm_median_read_calls": 369.5,
+      "peak_process_rss_bytes": 229605376,
+      "warm_generation_count": 2,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 5,
+          "warm_median_seconds": 0.03455745799874421,
+          "warm_median_logical_bytes": 1701120,
+          "warm_median_read_calls": 295,
+          "warm_speedup_vs_reference": 0.8485891236869624
+        },
+        "1": {
+          "input_tokens": 48,
+          "warm_median_seconds": 0.06051941699843155,
+          "warm_median_logical_bytes": 2428224,
+          "warm_median_read_calls": 444,
+          "warm_speedup_vs_reference": 0.6623707561600143
+        }
+      },
+      "warm_speedup_vs_reference": 0.7300552842284682
+    }
+  },
+  "physical_ssd_bandwidth_certified": false,
+  "worker_artifacts": [
+    "000-round0-reference.json",
+    "001-round0-all.json"
+  ],
+  "storage": {
+    "schema_version": 1,
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "numpy": "2.5.3",
+    "pid": 61321,
+    "checkpoint_fingerprint": "e6b4e2ff119a2a4f1d08371f8325f451076170008eb395cc878c4f31e3611f98",
+    "baseline_storage_sha256": null,
+    "baseline_scope": "same code, separate read_array calls",
+    "metadata_seconds": 0.0011909169988939539,
+    "metadata_stats": {
+      "manifest_hit": 0,
+      "header_bytes": 2808
+    },
+    "input_tensor_count": 32,
+    "input_tensor_bytes": 524288,
+    "input_order_sha256": "e8103b846bd4f4769d140ca97edcf39575e54c431e67ae5d39b423da899b9fc7",
+    "group_count": 4,
+    "max_read_bytes": 1048576,
+    "cache_state": "warm",
+    "cache_state_explanation": "every selected tensor touched immediately before each candidate; RAM/page cache effects included",
+    "physical_counters_scope": "process-level Linux storage bytes, including readahead; unavailable platforms return null",
+    "physical_ssd_bandwidth_certified": false,
+    "inference_performed": false,
+    "scope": "bounded offset-I/O microbenchmark; no model, Metal, quality, TTFT or full-checkpoint throughput claim",
+    "peak_rss_process_lifetime_bytes": 36765696,
+    "seed": 20261023,
+    "summary": {
+      "separate_pread": {
+        "median_read_seconds": 0.0001532909882371314,
+        "median_read_calls": 32,
+        "read_time_speedup_vs_separate_pread": 1.0
+      },
+      "separate_mmap": {
+        "median_read_seconds": 0.00029220699798315763,
+        "median_read_calls": 32,
+        "read_time_speedup_vs_separate_pread": 0.5245972522737694
+      },
+      "coalesced_pread": {
+        "median_read_seconds": 0.0001123349939007312,
+        "median_read_calls": 4,
+        "read_time_speedup_vs_separate_pread": 1.3645880318700367
+      },
+      "coalesced_mmap": {
+        "median_read_seconds": 0.004347374000644777,
+        "median_read_calls": 4,
+        "read_time_speedup_vs_separate_pread": 0.03526059368584257
+      }
+    },
+    "raw_measurements": [
+      {
+        "repeat": 0,
+        "order": 0,
+        "mode": "coalesced_mmap",
+        "wall_seconds_including_sha256": 0.004517332999967039,
+        "read_seconds": 0.004347374000644777,
+        "cpu_seconds_including_sha256": 0.00037399999999999933,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 120598779.84324346,
+        "physical_read_bytes": null,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 4,
+          "io_seconds": 0.004237166998791508,
+          "requested_bytes": 524288,
+          "coalesced_batches": 4,
+          "coalesced_groups": 4,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 524288
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 1,
+        "mode": "separate_pread",
+        "wall_seconds_including_sha256": 0.0003219170030206442,
+        "read_seconds": 0.0001532909882371314,
+        "cpu_seconds_including_sha256": 0.00032200000000000284,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 3420214104.0995827,
+        "physical_read_bytes": null,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 32,
+          "io_seconds": 7.833402196411043e-05,
+          "requested_bytes": 524288,
+          "coalesced_batches": 0,
+          "coalesced_groups": 0,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 0
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 2,
+        "mode": "separate_mmap",
+        "wall_seconds_including_sha256": 0.0004751250016852282,
+        "read_seconds": 0.00029220699798315763,
+        "cpu_seconds_including_sha256": 0.0004750000000000032,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 1794234921.1986332,
+        "physical_read_bytes": null,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 32,
+          "io_seconds": 0.00020529200992314145,
+          "requested_bytes": 524288,
+          "coalesced_batches": 0,
+          "coalesced_groups": 0,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 0
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      },
+      {
+        "repeat": 0,
+        "order": 3,
+        "mode": "coalesced_pread",
+        "wall_seconds_including_sha256": 0.00027995900018140674,
+        "read_seconds": 0.0001123349939007312,
+        "cpu_seconds_including_sha256": 0.00028000000000000247,
+        "requested_tensor_bytes": 524288,
+        "logical_bytes_per_second_read_timing": 4667183232.887391,
+        "physical_read_bytes": null,
+        "counter_delta": {
+          "manifest_hit": 0,
+          "header_bytes": 0,
+          "fd_opens": 0,
+          "logical_bytes": 524288,
+          "read_calls": 4,
+          "io_seconds": 2.6374997105449438e-05,
+          "requested_bytes": 524288,
+          "coalesced_batches": 4,
+          "coalesced_groups": 4,
+          "coalesced_gap_bytes": 0,
+          "coalesced_backing_bytes": 524288
+        },
+        "payload_sha256_verified": true,
+        "cache_hint": {
+          "requested": false,
+          "guaranteed_cold": false
+        }
+      }
+    ]
+  }
+}

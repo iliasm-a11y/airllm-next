@@ -1,0 +1,109 @@
+..........................................................F............. [ 10%]
+........................................................................ [ 20%]
+........................................................................ [ 30%]
+........................................................................ [ 40%]
+.....................................................F............ [ 49%]
+........................................................................ [ 59%]
+........................................................................ [ 69%]
+........................................................................ [ 79%]
+...............................s................................... [ 88%]
+........................................................................ [ 98%]
+...........                                                              [100%]
+=================================== FAILURES ===================================
+_ test_native_architecture_sessions_interleave_and_restart_with_ordinary_tokens[qwen] _
+
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-53/test_native_architecture_sessi2')
+kind = 'qwen'
+
+    @pytest.mark.parametrize('kind', ['glm', 'llama', 'qwen'])
+    def test_native_architecture_sessions_interleave_and_restart_with_ordinary_tokens(tmp_path, kind):
+        from conftest import save_tiny
+        from test_native import options
+        from airllm.nextgen.runtime import AirLLMNextModel
+        from airllm.nextgen.llama_runtime import AirLLMNextLlamaModel
+        from airllm.nextgen.qwen_runtime import ExperimentalQwenModel
+        if kind == 'qwen':
+            from test_qwen_runtime import make_qwen
+            root, _, config = make_qwen(tmp_path)
+            model_class = ExperimentalQwenModel
+        else:
+            root = tmp_path/'model'
+            save_tiny(root, kind)
+            config = options(tmp_path, prefill_chunk=2)
+            model_class = AirLLMNextModel if kind == 'glm' else AirLLMNextLlamaModel
+        prompts = [[1, 7, 8], [1, 9, 11, 6]]
+        with model_class(root, next_config=config) as model:
+            expected = [model.generate([prompt], max_new_tokens=5, eos_token_id=[]).tolist()[0][len(prompt):]
+                        for prompt in prompts]
+            with AgentEngine(model, state_dir=tmp_path/'journals', quantum_tokens=1) as engine:
+                ids = [engine.submit(prompt, max_tokens=5, eos_token_id=[]) for prompt in prompts]
+                engine.step(); engine.step(); engine.step()
+                assert engine.status()['max_resident_contexts'] == 1
+                original_mlp = model.mlps[-1]
+                def interrupted(_):
+                    raise OSError('simulated native removable-drive interruption')
+                model.mlps[-1] = interrupted
+                try:
+                    failed = engine.step()
+>                   assert failed['state'] == 'failed' and failed['error'] == 'OSError'
+E                   AssertionError: assert ('failed' == 'failed'
+E                     
+E                       failed and 'AttributeError' == 'OSError'
+E                     
+E                     - OSError
+E                     + AttributeError)
+
+tests_next/test_agent_engine.py:260: AssertionError
+____________ test_qwen_forward_failure_restores_recurrent_and_conv _____________
+
+tmp_path = PosixPath('/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/pytest-of-macbook/pytest-53/test_qwen_forward_failure_rest0')
+
+    def test_qwen_forward_failure_restores_recurrent_and_conv(tmp_path):
+        root,ref,opt=make_qwen(tmp_path)
+        with ExperimentalQwenModel(root,opt) as model:
+            cache=model.forward([[1,2,3]]).past_key_values
+            old={k:arr(v).copy() for k,v in cache.banks['recurrent'].items()}
+            old_conv={k:arr(v).copy() for k,v in cache.banks['conv'].items()}
+            original=model.mlps[1]
+            class Failure:
+                def __call__(self,x):raise RuntimeError('injected failure')
+            model.mlps[1]=Failure()
+>           with pytest.raises(RuntimeError,match='injected'):model.forward([[4]],past_key_values=cache)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_qwen_runtime.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <airllm.nextgen.qwen_runtime.ExperimentalQwenModel object at 0x121430e00>
+input_ids = [[4]]
+past_key_values = <airllm.nextgen.qwen_runtime.QwenSession object at 0x121458080>
+use_cache = True, logits_to_keep = 0
+
+    def forward(self,input_ids,past_key_values=None,use_cache=True,logits_to_keep=0):
+        with self.lock,self.mx.stream(self.stream):
+            if self.closed:raise RuntimeError('Model is closed')
+            ids=token_batch(input_ids,self.config['vocab_size'])
+            keep_from=logits_suffix_start(ids.shape[1],logits_to_keep)
+            check_logits_budget(ids.shape[1]-keep_from,self.config['vocab_size'],self.options.workspace_bytes)
+            cache=past_key_values if past_key_values is not None else self.new_session()
+            if not isinstance(cache,QwenSession) or cache.owner is not self:raise ValueError('Cache belongs to another model')
+            if cache.position+ids.shape[1]>cache.limit:raise MemoryError('Qwen context limit exceeded')
+            snapshot=cache.snapshot();mx=self.mx;outputs=[]
+            try:
+                for start in range(0,ids.shape[1],self.options.prefill_chunk):
+                    available=psutil.virtual_memory().available
+                    if available<self.options.reserve_bytes+self.options.workspace_bytes:
+                        self.reader.trim();self.reader.drain()
+                    if available<self.options.reserve_bytes:raise MemoryError('System reserve reached')
+                    part=ids[:,start:start+self.options.prefill_chunk]
+                    x=self.reader.embedding(part,'model.embed_tokens.weight').astype(self.dtype);mx.eval(x)
+                    for i,(mixer,mlp) in enumerate(zip(self.mixers,self.mlps)):
+>                       self.reader.begin_layer(i,mlp.expert_keys)
+                                                  ^^^^^^^^^^^^^^^
+E                       AttributeError: 'Failure' object has no attribute 'expert_keys'
+
+air_llm/airllm/nextgen/qwen_runtime.py:321: AttributeError
+=========================== short test summary info ============================
+FAILED air_llm/test_agent_engine.py::test_native_architecture_sessions_interleave_and_restart_with_ordinary_tokens[qwen]
+FAILED air_llm/test_qwen_runtime.py::test_qwen_forward_failure_restores_recurrent_and_conv
+2 failed, 717 passed, 1 skipped, 11 subtests passed in 14.24s

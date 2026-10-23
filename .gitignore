@@ -6,3 +6,9 @@ __pycache__/
 build/
 .DS_Store
 .benchmark-ooc/
+# Reproducible local benchmark payloads; manifests and reports are committed.
+evidence-io-wall/**/*.npz
+evidence-io-wall/*-runs/tiny-glm/
+evidence-io-wall/*-runs/storage-fixture/
+evidence-io-wall/*.xml
+dist-io-wall/

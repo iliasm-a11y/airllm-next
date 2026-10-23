@@ -1,5 +1,12 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [October 23 I/O research validation](IO_WALL_RESEARCH_FR.md) adds opt-in
+adaptive admission, bounded SpecPrefetch, output tile pipelining and offset-I/O
+profiling. On the measured M5/SmolLM2 warm-file protocol with equal 256 MiB
+software caches, adaptive admission plus output pipelining gives 1.39× and
+46.4% fewer logical read bytes. External Fanxiang SSD and giant-model validation
+remain pending; negative ablations and raw evidence hashes are included.
+
 V5 extends the exact `4.1.0rc1` source commit
 `9629c27b9d8bdf697ae866498ad468e11eb183d4`. It integrates an optional compact
 source-weight cache inside the existing weight budget, reusable output tiles,

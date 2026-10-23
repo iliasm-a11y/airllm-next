@@ -1,0 +1,359 @@
+{
+  "wheel": "airllm-5.0.0a1-py3-none-any.whl",
+  "wheel_sha256": "9d823380acb97908e8050802160d9ba1219a21ef940a98adc443a2d4a405fe85",
+  "source_python_files_identical": 65,
+  "new_modules_present": true,
+  "installed_import_path": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/work/wheel-check/airllm/__init__.py",
+  "working_directory": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/work",
+  "tokens": [
+    1,
+    7,
+    8,
+    9,
+    10,
+    7,
+    51,
+    51,
+    51,
+    51,
+    28
+  ],
+  "matches_reference_benchmark": true,
+  "metrics": {
+    "compute_device": "cpu",
+    "metal_validated": false,
+    "numerics": {
+      "compute_dtype": "float32",
+      "dynamic_fp8_activation_kernels_reproduced": false,
+      "mlx_enable_tf32_environment": "0",
+      "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+      "full_checkpoint_quality_validated": false
+    },
+    "runtime": {
+      "startup_seconds": 0.049947875006182585,
+      "sampled_rss_peak_bytes": 226181120,
+      "swap_growth_bytes": 0,
+      "ttft_seconds": 0.03140908400382614,
+      "generation_seconds": 0.6388840840008925,
+      "tokens_generated": 6,
+      "prefill_tokens": 5,
+      "prefill_tokens_per_second": 159.18961531609514,
+      "decode_tokens_per_second": 8.230791390631953,
+      "logical_bytes_per_token_including_prefill": 226821.33333333334,
+      "decode_logical_bytes_per_token": 199795.2,
+      "encoded_file_bytes_per_token_including_prefill": 226821.33333333334,
+      "decode_encoded_file_bytes_per_token": 199795.2,
+      "gpu_time_seconds": null,
+      "kv_peak_bytes": 32768,
+      "physical_read_bytes": null
+    },
+    "telemetry": {
+      "available_bytes": 4319117312,
+      "total_bytes": 17179869184,
+      "rss_bytes": 226246656,
+      "swap_used_bytes": 4671275008,
+      "cpu_percent": 10.2,
+      "gpu_utilization": null,
+      "temperature_c": null,
+      "thermal_throttled": null,
+      "memory_pressure_source": "available physical memory (not macOS pressure level)",
+      "physical_read_bytes": null,
+      "process_peak_rss_bytes": 226246656,
+      "rss_peak_scope": "process lifetime, not isolated per model"
+    },
+    "io": {
+      "manifest_hit": 0,
+      "header_bytes": 10904,
+      "logical_bytes": 1360928,
+      "fd_opens": 5,
+      "read_calls": 295,
+      "io_seconds": 0.015378089956357144,
+      "requested_bytes": 1360928
+    },
+    "io_profile": {
+      "schema_version": 1,
+      "scope": "serialized logical bytes; OS page-cache service is included; not SSD bandwidth",
+      "requested_bytes": 1360928,
+      "requested_semantics": "validated selections attempted, including duplicates and failed transfers",
+      "read_bytes": 1360928,
+      "read_semantics": "bytes copied by completed or partially completed pread/mmap calls; gaps included",
+      "request_count": 295,
+      "read_calls": 295,
+      "failed_read_calls": 0,
+      "io_seconds": 0.014658514985057991,
+      "requested_intervals": {
+        "unique_bytes": 362144,
+        "reread_bytes": 998784,
+        "unique_bytes_lower_bound": 362144,
+        "reread_bytes_lower_bound": 998784,
+        "interval_count": 13,
+        "saturated": false
+      },
+      "read_intervals": {
+        "unique_bytes": 362144,
+        "reread_bytes": 998784,
+        "unique_bytes_lower_bound": 362144,
+        "reread_bytes_lower_bound": 998784,
+        "interval_count": 13,
+        "saturated": false
+      },
+      "modes": {
+        "pread": {
+          "read_calls": 0,
+          "read_bytes": 0,
+          "io_seconds": 0.0
+        },
+        "mmap": {
+          "read_calls": 295,
+          "read_bytes": 1360928,
+          "io_seconds": 0.014658514985057991
+        }
+      },
+      "by_layer_expert": {
+        "layer=0/expert=other": {
+          "request_count": 47,
+          "requested_bytes": 395680,
+          "read_calls": 47,
+          "read_bytes": 395680
+        },
+        "layer=1/expert=0": {
+          "request_count": 4,
+          "requested_bytes": 18432,
+          "read_calls": 4,
+          "read_bytes": 18432
+        },
+        "layer=1/expert=1": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=1/expert=2": {
+          "request_count": 14,
+          "requested_bytes": 64512,
+          "read_calls": 14,
+          "read_bytes": 64512
+        },
+        "layer=1/expert=3": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=1/expert=4": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=1/expert=5": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=1/expert=6": {
+          "request_count": 6,
+          "requested_bytes": 27648,
+          "read_calls": 6,
+          "read_bytes": 27648
+        },
+        "layer=1/expert=7": {
+          "request_count": 15,
+          "requested_bytes": 69120,
+          "read_calls": 15,
+          "read_bytes": 69120
+        },
+        "layer=1/expert=other": {
+          "request_count": 39,
+          "requested_bytes": 103936,
+          "read_calls": 39,
+          "read_bytes": 103936
+        },
+        "layer=1/expert=shared": {
+          "request_count": 18,
+          "requested_bytes": 82944,
+          "read_calls": 18,
+          "read_bytes": 82944
+        },
+        "layer=2/expert=0": {
+          "request_count": 9,
+          "requested_bytes": 41472,
+          "read_calls": 9,
+          "read_bytes": 41472
+        },
+        "layer=2/expert=1": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=2/expert=2": {
+          "request_count": 15,
+          "requested_bytes": 69120,
+          "read_calls": 15,
+          "read_bytes": 69120
+        },
+        "layer=2/expert=3": {
+          "request_count": 6,
+          "requested_bytes": 27648,
+          "read_calls": 6,
+          "read_bytes": 27648
+        },
+        "layer=2/expert=5": {
+          "request_count": 3,
+          "requested_bytes": 13824,
+          "read_calls": 3,
+          "read_bytes": 13824
+        },
+        "layer=2/expert=7": {
+          "request_count": 15,
+          "requested_bytes": 69120,
+          "read_calls": 15,
+          "read_bytes": 69120
+        },
+        "layer=2/expert=other": {
+          "request_count": 53,
+          "requested_bytes": 112512,
+          "read_calls": 53,
+          "read_bytes": 112512
+        },
+        "layer=2/expert=shared": {
+          "request_count": 18,
+          "requested_bytes": 82944,
+          "read_calls": 18,
+          "read_bytes": 82944
+        },
+        "layer=other/expert=other": {
+          "request_count": 18,
+          "requested_bytes": 112896,
+          "read_calls": 18,
+          "read_bytes": 112896
+        }
+      },
+      "unattributed_read_bytes": 0,
+      "group_attribution": "overlaps assigned once to first sorted region; gaps unattributed",
+      "group_limit_reached": false,
+      "metadata_limits": {
+        "max_intervals_per_stream": 8192,
+        "max_layer_expert_groups": 512
+      },
+      "physical_process_read_bytes": null,
+      "physical_scope": "process-wide OS storage counter; includes unrelated reads/readahead; unavailable is null",
+      "physical_ssd_bandwidth_certified": false
+    },
+    "io_profile_coverage": "original shard offsets; packed/quantized transport has separate counters",
+    "sidecar_transport": {},
+    "lossless_transport": {},
+    "weights": {
+      "dequant_seconds": 0.0,
+      "loads": 295,
+      "speculative_reads": 0,
+      "load_seconds": 0.019487751080305316,
+      "dsa_tie_checks": 12,
+      "dsa_tie_check_seconds": 0.0067709180075326,
+      "dsa_tie_extra_workspace_peak_bytes": 576,
+      "dsa_tie_host_copy_seconds": 0.0002837910069501959,
+      "dsa_tie_reference_import_seconds": 0.5817116239923052,
+      "dsa_tie_cpu_topk_seconds": 0.0027454999944893643,
+      "dsa_tie_fallback_calls": 4,
+      "dsa_tie_fallback_rows": 4,
+      "dsa_tie_fallback_seconds": 0.5850474990002112
+    },
+    "cache": {
+      "misses": 281,
+      "load_observations": 285,
+      "admitted": 61,
+      "rejected": 220,
+      "cold_rejected": 70,
+      "hits": 133,
+      "evictions": 30,
+      "bytes": 31776,
+      "peak_bytes": 32768,
+      "capacity": 32768
+    },
+    "compact_cache": {
+      "bytes": 0,
+      "peak_bytes": 0,
+      "capacity": 0,
+      "budget_scope": "partition of cache_bytes; not additional memory"
+    },
+    "prefetch": {
+      "submitted": 285,
+      "consumed": 281,
+      "wait_seconds": 0.016545457001484465,
+      "discarded": 4,
+      "peak_bytes": 18432,
+      "budget": 262144,
+      "enabled": true
+    },
+    "spec_prefetch": {
+      "reuse_predictions": 2,
+      "prediction_calls": 12,
+      "prediction_seconds": 7.912398723419756e-05,
+      "prediction_hits": 6,
+      "prediction_misses": 4,
+      "observations": 12,
+      "truncated_observations": 0,
+      "observe_seconds": 0.00010095998732140288,
+      "submitted": 10,
+      "wasted": 4,
+      "wasted_reservation_bytes": 18432,
+      "wasted_payload_bytes": 18432,
+      "discard_wait_seconds": 2.1166990336496383e-05,
+      "useful": 6,
+      "useful_reservation_bytes": 27648,
+      "useful_payload_bytes": 27648,
+      "take_wait_seconds": 2.2707994503434747e-05,
+      "transition_predictions": 8,
+      "outstanding_bytes": 0,
+      "peak_bytes": 4608,
+      "pending_reads": 0,
+      "layers": 2,
+      "transition_edges": 39,
+      "budget_bytes": 65536,
+      "enabled": true,
+      "strategy": "observed_same_layer_transitions_then_last_route_reuse",
+      "max_layers": 256,
+      "max_transition_edges": 4096,
+      "max_pending_reads": 32,
+      "max_route_experts": 64,
+      "byte_metric": "decoded_payload_not_physical_ssd"
+    }
+  },
+  "config": {
+    "cache_bytes": 32768,
+    "compact_cache_bytes": 0,
+    "output_tile_cache": false,
+    "output_prefetch": true,
+    "io_bytes": 262144,
+    "kv_bytes": 1048576,
+    "workspace_bytes": 1048576,
+    "reserve_bytes": 1073741824,
+    "max_tensor_bytes": 262144,
+    "io_workers": 2,
+    "max_open_files": 16,
+    "row_chunk": 2048,
+    "prefill_chunk": 16,
+    "max_context": 4096,
+    "policy": "adaptive",
+    "device": "cpu",
+    "dtype": "float32",
+    "profile": "balanced",
+    "prefetch": true,
+    "spec_prefetch": true,
+    "spec_prefetch_bytes": 0,
+    "spec_prefetch_experts": 1,
+    "io_mode": "mmap",
+    "profile_io": true,
+    "coalesce_reads": false,
+    "selective_fp8_scales": true,
+    "cache_dir": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/work/installed-meta",
+    "quantized_dir": null,
+    "lossless_dir": null,
+    "lossless_native_library": null,
+    "lossless_verify_hash": true,
+    "load_tokenizer": false,
+    "use_saved_tuning": false
+  }
+}

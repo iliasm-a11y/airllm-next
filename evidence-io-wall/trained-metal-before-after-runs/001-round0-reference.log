@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 395, in <module>
+    main()
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 389, in main
+    worker(args)
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/benchmarks/benchmark_io_wall.py", line 171, in worker
+    result = model(current, past_key_values=cache, logits_to_keep=1)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/air_llm/airllm/nextgen/runtime.py", line 194, in forward
+    if self.config['mlp_layer_types'][i]=='sparse':
+       ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'mlp_layer_types'

@@ -1,0 +1,105 @@
+{
+  "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission/outputs/airllm-next/evidence-io-wall/trained-metal-fixed.json",
+  "summaries": {
+    "baseline": {
+      "process_cold_median_seconds": 0.9108027500042226,
+      "warm_median_seconds": 0.8717030840016378,
+      "warm_median_logical_bytes": 4304506752.0,
+      "warm_median_read_calls": 4743.0,
+      "peak_process_rss_bytes": 484409344,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.87203566700191,
+          "warm_median_logical_bytes": 4304505600.0,
+          "warm_median_read_calls": 4742.0,
+          "warm_speedup_vs_reference": 1.0
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.871557895996375,
+          "warm_median_logical_bytes": 4304507904.0,
+          "warm_median_read_calls": 4744.0,
+          "warm_speedup_vs_reference": 1.0
+        }
+      },
+      "warm_speedup_vs_reference": 1.0
+    },
+    "reference": {
+      "process_cold_median_seconds": 0.8976385830028448,
+      "warm_median_seconds": 0.8830554164997011,
+      "warm_median_logical_bytes": 4304506752.0,
+      "warm_median_read_calls": 4743.0,
+      "peak_process_rss_bytes": 484737024,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.8807697914962773,
+          "warm_median_logical_bytes": 4304505600.0,
+          "warm_median_read_calls": 4742.0,
+          "warm_speedup_vs_reference": 0.9900835330881075
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.8923327289994631,
+          "warm_median_logical_bytes": 4304507904.0,
+          "warm_median_read_calls": 4744.0,
+          "warm_speedup_vs_reference": 0.9767185128058878
+        }
+      },
+      "warm_speedup_vs_reference": 0.9871442581224831
+    },
+    "adaptive": {
+      "process_cold_median_seconds": 0.8921858330068062,
+      "warm_median_seconds": 0.8725195204970078,
+      "warm_median_logical_bytes": 3769001856.0,
+      "warm_median_read_calls": 3159.0,
+      "peak_process_rss_bytes": 494911488,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.8725195204970078,
+          "warm_median_logical_bytes": 3769000704.0,
+          "warm_median_read_calls": 3158.0,
+          "warm_speedup_vs_reference": 0.9994454525271571
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.8778378329989209,
+          "warm_median_logical_bytes": 3769003008.0,
+          "warm_median_read_calls": 3160.0,
+          "warm_speedup_vs_reference": 0.9928461308382073
+        }
+      },
+      "warm_speedup_vs_reference": 0.999064277100752
+    },
+    "output_pipeline": {
+      "process_cold_median_seconds": 0.8581927920022281,
+      "warm_median_seconds": 0.8378399169996555,
+      "warm_median_logical_bytes": 4304506752.0,
+      "warm_median_read_calls": 4743.0,
+      "peak_process_rss_bytes": 489193472,
+      "warm_generation_count": 12,
+      "by_prompt": {
+        "0": {
+          "input_tokens": 7,
+          "warm_median_seconds": 0.8345560630004911,
+          "warm_median_logical_bytes": 4304505600.0,
+          "warm_median_read_calls": 4742.0,
+          "warm_speedup_vs_reference": 1.0449096299973761
+        },
+        "1": {
+          "input_tokens": 9,
+          "warm_median_seconds": 0.8555602289998205,
+          "warm_median_logical_bytes": 4304507904.0,
+          "warm_median_read_calls": 4744.0,
+          "warm_speedup_vs_reference": 1.018698469674375
+        }
+      },
+      "warm_speedup_vs_reference": 1.0404172280586104
+    }
+  }
+}
