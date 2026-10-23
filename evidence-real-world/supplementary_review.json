@@ -1,0 +1,117 @@
+{
+  "status": "completed",
+  "scope": "A4 ajouté prospectivement après les premières observations ; ne remplace aucune des 21 tâches principales.",
+  "method": "Lecture intégrale des seules réponses dont status=completed ; notes de qualité distinctes des contrôles objectifs. Aucun contenu corrigé ne remplace la sortie brute. Évaluateur Codex distinct du moteur testé, sans prétention de reproductibilité inter-évaluateurs.",
+  "score_axes": [
+    "exactitude_factuelle",
+    "respect_instructions",
+    "coherence",
+    "completude",
+    "utilite_reelle"
+  ],
+  "scale": {
+    "0": "inutilisable ou contraire au critère",
+    "1": "défauts majeurs",
+    "2": "plusieurs erreurs ou très incomplet",
+    "3": "utile avec limite réelle",
+    "4": "correct avec défaut mineur",
+    "5": "satisfait pleinement le critère dans le périmètre"
+  },
+  "reviewed_turns": [
+    {
+      "id": "A4",
+      "session_id": "A4_bayes",
+      "source_file": "hard-reasoning.json",
+      "source_relative_path": "evidence-real-world/hard-reasoning.json",
+      "source_response_key": "text",
+      "response_sha256": "bf42f85d51619171821d9f3552ca38ad99fe5ab834f4eaa135b2556bbd60c2e5",
+      "response_text": "1) A+ : 900 D et 900 non-D.\n2) A+B+ : 720 D et 450 non-D.\n3) P(D|A+) = 0,5 (50 %) ; P(D|A+B+) = 720/1170 ≈ 0,6154 (61,54 %).\n4) Non, le seuil de 90 % n'est pas atteint.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "900/900 puis 720/450 exacts ;0,5=1/2 et 720/1170=8/13≈61,54 % ; seuil 90 % non atteint."
+        },
+        "respect_instructions": {
+          "score": 4,
+          "rationale": "Quatre lignes sans préambule et calcul conditionnel correct. La première probabilité n’est pas écrite sous forme a/b, contrairement à la demande de fractions exactes."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Les effectifs successifs et les probabilités sont cohérents ; aucune hypothèse d’indépendance n’est invoquée."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Les deux effectifs par état, les deux probabilités et la décision de seuil sont tous fournis ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Résultat mathématique complet et immédiatement utile ; seule une notation formelle manque pour la première probabilité."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Effectifs A+ et A+B+",
+          "result": "pass",
+          "evidence": "A+ :900 D/900 non-D ; A+B+ :720 D/450 non-D."
+        },
+        {
+          "check": "Probabilités exactes équivalentes",
+          "result": "pass",
+          "evidence": "Fraction('0.5')=1/2 ; Fraction(720,1170)=8/13. La seconde fraction n’a pas à être réduite car le prompt ne le demandait pas."
+        },
+        {
+          "check": "Décision au seuil 90 %",
+          "result": "pass",
+          "evidence": "8/13<9/10 ; conclusion explicite que le seuil n’est pas atteint."
+        },
+        {
+          "check": "Notation fractionnaire des deux probabilités",
+          "result": "partial_format",
+          "evidence": "Premier résultat écrit 0,5, valeur exacte mais non présentée sous forme a/b ; second résultat fractionnaire 720/1170 conforme."
+        },
+        {
+          "check": "Quatre lignes sans préambule",
+          "result": "pass",
+          "evidence": "Exactement quatre lignes non vides."
+        }
+      ],
+      "uncertainties": [
+        "Si une décimale exacte est acceptée comme représentation suffisante de la valeur rationnelle, un verdict réussi est défendable ; le verdict partiel adopte la lecture formelle d’écriture fractionnaire.",
+        "Ce contrôle a été ajouté prospectivement après les premières observations et reste hors des 21 tâches principales."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Tous les effectifs, probabilités et conclusion de seuil sont exacts. Réserve de forme stricte : la première probabilité est donnée en décimale exacte 0,5 plutôt qu’en écriture fractionnaire demandée ; aucune faute de Bayes.",
+      "exact_fraction_verification": {
+        "method": "fractions.Fraction",
+        "first_observed": "0,5",
+        "first_exact_equivalent": "1/2",
+        "second_observed": "720/1170",
+        "second_exact_reduced": "8/13",
+        "threshold_exact": "9/10",
+        "threshold_reached": false
+      },
+      "observed_nonempty_lines": 4,
+      "requested_cap": 256
+    }
+  ],
+  "verdict_rule": {
+    "reussi": "Résultats essentiels corrects et livrés, contraintes demandées respectées ; aucune réserve substantielle observée dans le périmètre du test.",
+    "partiel": "Un résultat essentiel utile est livré, mais un autre résultat, une justification ou une contrainte de forme manque ou présente un défaut ; aucune réussite stricte revendiquée.",
+    "echec_critere": "Résultat essentiel faux ou aucun résultat essentiel livré pour une demande non ambiguë ; cause éventuelle distincte du constat.",
+    "indetermine": "Ambiguïté du protocole ou preuve insuffisante empêchant un jugement univoque sur le critère essentiel ; ne compte ni comme réussite stricte ni comme erreur certaine du modèle."
+  },
+  "verdict_counts": {
+    "reussi": 0,
+    "partiel": 1,
+    "echec_critere": 0,
+    "indetermine": 0
+  },
+  "include_in_primary_task_counts": false,
+  "completed_supplementary_turns_reviewed": 1,
+  "verdict_sensitivity": {
+    "strict_fraction_notation": "partiel",
+    "exact_decimal_value_accepted": "reussi",
+    "arithmetic_assessment_unchanged": "correct"
+  }
+}

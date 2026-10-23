@@ -1,0 +1,1903 @@
+{
+  "kind": "proposed_publication_file_manifest",
+  "schema_version": 2,
+  "generated_at_utc": "2026-10-23T21:14:57.699644+00:00",
+  "scope": "New/modified nonignored mission files against HEAD; unchanged repository context not repeated",
+  "publication_performed": false,
+  "git_staging_performed": false,
+  "requires_refresh_after_inference": false,
+  "status": "inventory_complete_for_manual_diff_review",
+  "generator": {
+    "path": "workspace:work/refresh_publication.py",
+    "sha256": "68d80c8f82d6cf778e7b1b2b08e604743c1b437730f7d34cceeaf25fdd8566ec",
+    "stdlib_only": true,
+    "model_or_test_execution": false
+  },
+  "git_head": "ac93b5d084dca4e72ec11092629bc4ebf7ac8a25",
+  "file_list": "research/real_world/PUBLICATION_FILES.txt",
+  "include_count": 146,
+  "include": [
+    {
+      "path": ".gitignore",
+      "change_status": " M",
+      "category": "repository_configuration",
+      "bytes_at_snapshot": 1302,
+      "sha256_at_snapshot": "82b9265b5aca901d4292fd94c11c21fa7449c307a1538f9e643d5bea71a93705"
+    },
+    {
+      "path": "REAL_WORLD_EVALUATION_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 35593,
+      "sha256_at_snapshot": "1c165b1a95417e300ced9213edd08aa723271ccbe7b2b17e61157f10056fc975"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/gguf_chat.py",
+      "change_status": "??",
+      "category": "runtime_source",
+      "bytes_at_snapshot": 9570,
+      "sha256_at_snapshot": "6af7f468b1de6282eb366fd8918732bd5f95792e4a5bad1e5b2b8a11b5e15074"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/gguf_qwen.py",
+      "change_status": " M",
+      "category": "runtime_source",
+      "bytes_at_snapshot": 26132,
+      "sha256_at_snapshot": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/gguf_tokenizer.py",
+      "change_status": " M",
+      "category": "runtime_source",
+      "bytes_at_snapshot": 6622,
+      "sha256_at_snapshot": "5004e08f4e157ac088158e2c5c6a10ba56611f6b723a29a5bfe548b94c7cb705"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/qwen_moe.py",
+      "change_status": " M",
+      "category": "runtime_source",
+      "bytes_at_snapshot": 12233,
+      "sha256_at_snapshot": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e"
+    },
+    {
+      "path": "benchmarks/analyze_real_world.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 53766,
+      "sha256_at_snapshot": "895093d03490169093fcea13d92f5932d864ef0572170f40fc64c45bb451f0fb"
+    },
+    {
+      "path": "benchmarks/check_real_world_code.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 17088,
+      "sha256_at_snapshot": "b7fd48405a7946bd00aae09f3f9e2c2bd4c73240ef896fda3865bfafaf278c63"
+    },
+    {
+      "path": "benchmarks/evaluate_real_world.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 11640,
+      "sha256_at_snapshot": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17"
+    },
+    {
+      "path": "benchmarks/plot_real_world.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 13209,
+      "sha256_at_snapshot": "432eb5fc56d1ca82c48aed2ed6db7ccb6a4a657ec5a0c0b9eabd3bece5ce8ee5"
+    },
+    {
+      "path": "benchmarks/replay_real_world_router.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 12704,
+      "sha256_at_snapshot": "4f79ed634cfd52dba51ad24d6bb521b4e3b68a3b2dd6b85422596e7b2c19dde6"
+    },
+    {
+      "path": "benchmarks/validate_real_world_ground_truth.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 8367,
+      "sha256_at_snapshot": "76e5389376de44c78cbe955c232e17628339db3957fa79840c4c31c19c4b6fad"
+    },
+    {
+      "path": "evidence-real-world/admission-1024mib.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1839,
+      "sha256_at_snapshot": "103bb6e850b00aab11df928e93b87a99cb512463500ada6311cefe9235aec0ae"
+    },
+    {
+      "path": "evidence-real-world/admission-long-256.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2017,
+      "sha256_at_snapshot": "510757e558554b4f8f2ed9dbfa4b337699cb8f357a85e40f57537bfc10f51f5d"
+    },
+    {
+      "path": "evidence-real-world/admission-long-512.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2016,
+      "sha256_at_snapshot": "f78d39290bcc965b2847bb5763ad22dcf67ee2aceb124ebe726a0c5ab364310b"
+    },
+    {
+      "path": "evidence-real-world/adversarial-code-checks.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 102630,
+      "sha256_at_snapshot": "64e99077e707269aa8139da691d6c90d857a72511709b9a0b1ba71d2b215dece"
+    },
+    {
+      "path": "evidence-real-world/analyzer-audit-initial14.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 4179,
+      "sha256_at_snapshot": "9cb8f81e13aaaee8524b5fd2eac648a6d6b640cb558a3a2a392c7d8d4d4cd5ff"
+    },
+    {
+      "path": "evidence-real-world/analyzer-audit.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 24567,
+      "sha256_at_snapshot": "e042873ab13842fc06f71ddf2f6a669f036171f51e4509948c17c885334dba37"
+    },
+    {
+      "path": "evidence-real-world/baseline-chat-math.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1561,
+      "sha256_at_snapshot": "d1e184c90e2e42416ab9cff970a3114949a4e847bdddcff4cfddb30d0f772ed7"
+    },
+    {
+      "path": "evidence-real-world/baseline-chat-math.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 3576,
+      "sha256_at_snapshot": "d27155826c6d603ad7cdd24c31679d73619102c279548400b804f6b81c41e4bd"
+    },
+    {
+      "path": "evidence-real-world/baseline-chat-math.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2,
+      "sha256_at_snapshot": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d"
+    },
+    {
+      "path": "evidence-real-world/baseline_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 3956,
+      "sha256_at_snapshot": "8e5d79cae02ff169d7ea2e7984d6df37572234d1c136b3f4782c4926b51158e0"
+    },
+    {
+      "path": "evidence-real-world/campaign-before-router-fix.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1838,
+      "sha256_at_snapshot": "02b11673730ad21375315f2d1791946805ca51ec086b77333d8c19f1852e0c30"
+    },
+    {
+      "path": "evidence-real-world/campaign-before-router-fix.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 169785,
+      "sha256_at_snapshot": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164"
+    },
+    {
+      "path": "evidence-real-world/campaign-before-router-fix.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 4887,
+      "sha256_at_snapshot": "081b53686156c8fd419b558e7d10b107fb81b0bb9a90a04930de87f82dbc010f"
+    },
+    {
+      "path": "evidence-real-world/campaign-orchestration-final.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 68917,
+      "sha256_at_snapshot": "a1b82a517c8ed8478a789a146b8e807fc54d183e99e3ddb5c4d2056154214f71"
+    },
+    {
+      "path": "evidence-real-world/campaign-resumed.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1745,
+      "sha256_at_snapshot": "190f4bda550085b7117bab035a3c79d015fbcb4dd59a61b67fd1483d1e532042"
+    },
+    {
+      "path": "evidence-real-world/campaign-resumed.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 320376,
+      "sha256_at_snapshot": "6838685de04cf4068c9000ef311792d51fc3a0ce66aecceaa5c1e1978dcc15cc"
+    },
+    {
+      "path": "evidence-real-world/campaign-resumed.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 5222,
+      "sha256_at_snapshot": "04ca86a94d0e689872894eefa5244129911ada1d430d2ed8db7e409018cd0747"
+    },
+    {
+      "path": "evidence-real-world/campaign.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1838,
+      "sha256_at_snapshot": "02b11673730ad21375315f2d1791946805ca51ec086b77333d8c19f1852e0c30"
+    },
+    {
+      "path": "evidence-real-world/campaign.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 169785,
+      "sha256_at_snapshot": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164"
+    },
+    {
+      "path": "evidence-real-world/campaign.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 4887,
+      "sha256_at_snapshot": "081b53686156c8fd419b558e7d10b107fb81b0bb9a90a04930de87f82dbc010f"
+    },
+    {
+      "path": "evidence-real-world/code-checks-in-progress.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 11505,
+      "sha256_at_snapshot": "c1e835170ad226314a275b60dbfddbd7ac706c6e701072bab1cab02228a58896"
+    },
+    {
+      "path": "evidence-real-world/code-checks.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 11504,
+      "sha256_at_snapshot": "4568e4ade5aeb0b7d1b611987eb9990e7898acc74831575a4f5b92d57322f146"
+    },
+    {
+      "path": "evidence-real-world/concision-control.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1950,
+      "sha256_at_snapshot": "fe96d8fa28c2aa555ffddda47e2f166b149e1d0f0a28680eb2aff1233fa75d7a"
+    },
+    {
+      "path": "evidence-real-world/concision-control.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 27133,
+      "sha256_at_snapshot": "e6d89bf5c742d14de780229cb1019fbcbf0b71f10283f72bb1b52fbf41983477"
+    },
+    {
+      "path": "evidence-real-world/concision-control.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 167,
+      "sha256_at_snapshot": "92ce9dc50e0107fc7564460afac233ea4bb0baf38f34f418d71ac35548338fb5"
+    },
+    {
+      "path": "evidence-real-world/conversation-rebuild.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1954,
+      "sha256_at_snapshot": "bdc4b86138f35588e5e5ceae29e0523200b6c9e3b4f0335614074042cc3710a3"
+    },
+    {
+      "path": "evidence-real-world/conversation-rebuild.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 137123,
+      "sha256_at_snapshot": "5c93f4e35219c421d53ae89b14517800a26203dd176db26712116a2837362fb7"
+    },
+    {
+      "path": "evidence-real-world/conversation-rebuild.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1486,
+      "sha256_at_snapshot": "664c6257100d0c2531251102ff650445fe7c880a505159678cc3cff09afdd96c"
+    },
+    {
+      "path": "evidence-real-world/d2-clarified.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1953,
+      "sha256_at_snapshot": "1742710e9c75be765aca03543718da2d65e0b912fd3555285c51bd70dadf9391"
+    },
+    {
+      "path": "evidence-real-world/d2-clarified.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 51972,
+      "sha256_at_snapshot": "4517406a2a609640daf0794f59d6dce0e952efbf881413787f8d9dfb66d68484"
+    },
+    {
+      "path": "evidence-real-world/d2-clarified.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 527,
+      "sha256_at_snapshot": "3e63dbe36794bd8c9509fffb56bf8c4fc4b5c637c78585c00896f464b8ecd5d4"
+    },
+    {
+      "path": "evidence-real-world/diagnostic_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 21353,
+      "sha256_at_snapshot": "2f9ae58e1f4d688361548a0020b58ce6b63c0d0a664c7046dbab0bc2c31c4fdc"
+    },
+    {
+      "path": "evidence-real-world/f2-concision-control.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1948,
+      "sha256_at_snapshot": "13701f3f2637af23b2e0a059c603f596cf4c0bb284e1a23f80a1b4d945e3dc9c"
+    },
+    {
+      "path": "evidence-real-world/f2-concision-control.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 32944,
+      "sha256_at_snapshot": "5ece7d8020a7129efacaeb06b5c2899efb048c908a399c424ff02e5426435907"
+    },
+    {
+      "path": "evidence-real-world/f2-concision-control.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 324,
+      "sha256_at_snapshot": "00be0088434761c391a6762ddb4aea03007c6b5dd234f8d9af911927b7e4d92a"
+    },
+    {
+      "path": "evidence-real-world/ground-truth.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 8111,
+      "sha256_at_snapshot": "19b45ae03cc70741d894bda5631f509c43ab7a39ee7eebf30f09a32534df5117"
+    },
+    {
+      "path": "evidence-real-world/hard-reasoning.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1940,
+      "sha256_at_snapshot": "8b7dd2e70871272a0fe6e70f50e626b1ce59a74105061b5e34d22b75d4c6d79a"
+    },
+    {
+      "path": "evidence-real-world/hard-reasoning.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 36970,
+      "sha256_at_snapshot": "95992f8821755e5477b11522db62322a04a7c89eaf2b95d23a51df25db819fd4"
+    },
+    {
+      "path": "evidence-real-world/hard-reasoning.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 259,
+      "sha256_at_snapshot": "4d11f4852dc58ec9411258191e98c70454bcd243bd4d678f0a871506cdfdf6d8"
+    },
+    {
+      "path": "evidence-real-world/independent_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 58564,
+      "sha256_at_snapshot": "2a4a7a65fc346329e94211c9cb82fbe6c8ef1eb86c6078f3a589db2b012788fb"
+    },
+    {
+      "path": "evidence-real-world/long-1024.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1955,
+      "sha256_at_snapshot": "e74f4c78b24611430c8812eb26115a4b1be8a019637034d0e5c66469553bd0b1"
+    },
+    {
+      "path": "evidence-real-world/long-1024.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 16882,
+      "sha256_at_snapshot": "999e8033a78a667f53d8f78053e459a7fcd58f309804c1a6381f18f5306126e7"
+    },
+    {
+      "path": "evidence-real-world/long-1024.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 0,
+      "sha256_at_snapshot": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-real-world/long-128.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1927,
+      "sha256_at_snapshot": "ebcb5979636463c37d38d0d421d6bf8531fff25e16af486bb40129ecaa6006d7"
+    },
+    {
+      "path": "evidence-real-world/long-128.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 52860,
+      "sha256_at_snapshot": "b6f4260dbedb36c15ce9387fe77356f382afefc55910482be3c152032728139d"
+    },
+    {
+      "path": "evidence-real-world/long-128.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 690,
+      "sha256_at_snapshot": "b7cba168bd6ebc257447e6f18850ae308cbffdb4f916d3cffef95c957da5678a"
+    },
+    {
+      "path": "evidence-real-world/long-256.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1926,
+      "sha256_at_snapshot": "ecdb27a5b3e51e6d7f9bad0c8d7848f406b7144209680ee7b80d51a265c6709a"
+    },
+    {
+      "path": "evidence-real-world/long-256.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 64187,
+      "sha256_at_snapshot": "211342b3c89e3ff2b2fc973783f449c76a95356d18afbf0fe8ff901170d7c706"
+    },
+    {
+      "path": "evidence-real-world/long-256.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1281,
+      "sha256_at_snapshot": "b5c3eed35012c565f63519f78852f39cc06abb31ff852a1be37c3186a1af3857"
+    },
+    {
+      "path": "evidence-real-world/long-512.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1927,
+      "sha256_at_snapshot": "448b0d8f84075eb947ace5f2e7d1d069d532b554e84b17fe5e00521eeaacad2f"
+    },
+    {
+      "path": "evidence-real-world/long-512.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 87223,
+      "sha256_at_snapshot": "6c370ec5e6f18ac71fcca7eab0e964d9f9ae451e47c33f2ccb4121d85ce581ed"
+    },
+    {
+      "path": "evidence-real-world/long-512.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2533,
+      "sha256_at_snapshot": "edc6b72cd489e93366fa82a46d7d859f7c97f702bdf206bb59eba5683e8197d5"
+    },
+    {
+      "path": "evidence-real-world/long_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 23838,
+      "sha256_at_snapshot": "e1526e20f7a9b482ffe000768de1732107a2cb0e679fbdc02fc45dfa413688d7"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-current.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1565,
+      "sha256_at_snapshot": "594b74441f0f9fae25c6c1b3ecb6603d8279058a4d85cea77b92171d42a035ff"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-current.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2273,
+      "sha256_at_snapshot": "30711b9cda4032b7d881088331f4e9588b7345e78e4fc21fe55c01646da7778f"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-current.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1651,
+      "sha256_at_snapshot": "32621c5eb21a3cbefe56917d75b198ad931e490797bbeea0ac58b89b5e73d5ae"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-wrapper-preflight.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1564,
+      "sha256_at_snapshot": "9a8f7d8ff5e3da6763cd19b53d19b6fae134ff28c60eef247dd4ad7bb2b42549"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-wrapper-preflight.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1112,
+      "sha256_at_snapshot": "2a50a873126c992adae292028d3bdb72676b9268d2ceec701ba05819be8b60f6"
+    },
+    {
+      "path": "evidence-real-world/model-sha256-wrapper-preflight.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 985,
+      "sha256_at_snapshot": "0c9002e76dfeb9c2aa7a7ad41fd6aa92a7d96b9d5e1441436550d93571ed3c55"
+    },
+    {
+      "path": "evidence-real-world/partial_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 5357,
+      "sha256_at_snapshot": "45b9d4034a3d6733de35c507bfef9161a150848df1b9d0795acfbe95c905e88b"
+    },
+    {
+      "path": "evidence-real-world/pilot-short-caps.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1838,
+      "sha256_at_snapshot": "5b5af274bb9f4e9c833056eec27d5493bc5b266ee91b597cf0b0e04552624172"
+    },
+    {
+      "path": "evidence-real-world/pilot-short-caps.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 49373,
+      "sha256_at_snapshot": "460fb26956272524c946ef36f7ae7c9ca15fa3263dc0c2364730eba41d610a88"
+    },
+    {
+      "path": "evidence-real-world/pilot-short-caps.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 846,
+      "sha256_at_snapshot": "c8f570139c42989612bf249270b24dcb197456cb4c84cb9b8b0258e6287ec869"
+    },
+    {
+      "path": "evidence-real-world/pilot_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 6688,
+      "sha256_at_snapshot": "0befd80a6f66059e43b877f0f22af3c1e17a4516bfdfcfbbe94afed0a2da4ed0"
+    },
+    {
+      "path": "evidence-real-world/preflight-source-change.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1747,
+      "sha256_at_snapshot": "8fb307634ba57bcbbac54529e9162e0f10f2c838323dd77f0374027b9e67beb7"
+    },
+    {
+      "path": "evidence-real-world/preflight-source-change.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 10849,
+      "sha256_at_snapshot": "f2ad899815e4c336ca979f1b2a59bf802f850160c57d5fd9304f14c9ab11cf74"
+    },
+    {
+      "path": "evidence-real-world/preflight-source-change.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 0,
+      "sha256_at_snapshot": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-real-world/queue-first-attempt.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 22900,
+      "sha256_at_snapshot": "dc83af40fe60ec65987750ac5dd6470680ac1c3e5a5a0fc5c6807bec8df7fa8a"
+    },
+    {
+      "path": "evidence-real-world/queue-second-attempt.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 23291,
+      "sha256_at_snapshot": "5ff3e0cd40435748fee9a9047923cbf67d69972e07a1e766c85c0f10ef6fad30"
+    },
+    {
+      "path": "evidence-real-world/queue-third-attempt.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 26797,
+      "sha256_at_snapshot": "d0d8d16f568f9841f4d9351e89cdf6111c28c1301606099eb77370afb44c42fc"
+    },
+    {
+      "path": "evidence-real-world/review_bindings.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 14194,
+      "sha256_at_snapshot": "8b1e8f8dfe500c90742be144a330bb6dbbc2f52d57b310d96d68223dfbb1c72a"
+    },
+    {
+      "path": "evidence-real-world/review_consistency_audit.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1481,
+      "sha256_at_snapshot": "513dcdc79c7680dd66653078b7a8d606e62c6668e9f49708407084da66140a73"
+    },
+    {
+      "path": "evidence-real-world/router-current-tests.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1211,
+      "sha256_at_snapshot": "7d5352f6368ea78955086441e7b1235263a861ec0ef55ffbc7133a4abc6e1986"
+    },
+    {
+      "path": "evidence-real-world/router-current-tests.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 427,
+      "sha256_at_snapshot": "bc751022502ce1732b4165b05b1682293c14581315f49ef4d68b3395fec96c28"
+    },
+    {
+      "path": "evidence-real-world/router-current-tests.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 99,
+      "sha256_at_snapshot": "b0ae1888981eb717a006c27e1889c1ace0c0c5ff45e08023fd51429a949dca8f"
+    },
+    {
+      "path": "evidence-real-world/router-failure-replay.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1571,
+      "sha256_at_snapshot": "94581153b5a2e4cfe830ba965e02cbb78706ca50766f4a722c4ba943e9808109"
+    },
+    {
+      "path": "evidence-real-world/router-failure-replay.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 25079,
+      "sha256_at_snapshot": "90c0cf87ea0553d632857096e17cf44f312ca4ec8db92b9c64dbad9cdff6d2af"
+    },
+    {
+      "path": "evidence-real-world/router-failure-replay.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 2126,
+      "sha256_at_snapshot": "0b47c4683fb187bb11e8b8734526e9a7e6a52c2c61ef0a018de19b3c77294e2c"
+    },
+    {
+      "path": "evidence-real-world/router-failure-source-preflight.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1569,
+      "sha256_at_snapshot": "5e164905a9104c7258769882d9e4acba2c69789dc9d164bd00c1c7df39a7dbac"
+    },
+    {
+      "path": "evidence-real-world/router-failure-source-preflight.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 904,
+      "sha256_at_snapshot": "6a8fa09b3338eb6e923fb43a3d30950072af28542fe59417fd3ab1cd4c520faf"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests-batch.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1264,
+      "sha256_at_snapshot": "553024af324cb7b70f2bb30b9c3472d03b837be920030ea106b1bebe44189e8a"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests-batch.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 99,
+      "sha256_at_snapshot": "d06da282a547631c4165d8042f0f92030f5f3f6c70330063256ec4e8076cdd46"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1258,
+      "sha256_at_snapshot": "2c48a9d5801e5a459eb1df29137971bece6e4396890e398300213db012412983"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 99,
+      "sha256_at_snapshot": "051ec73a1d62264443921789b62e11442d0ae2cf9c6ee2a9b924f02402e95e0f"
+    },
+    {
+      "path": "evidence-real-world/router-public-tests.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1272,
+      "sha256_at_snapshot": "149af8bdcd05b90a001062ea20cf35ea94136049e721a8f89c118e8b0eee14b2"
+    },
+    {
+      "path": "evidence-real-world/router-public-tests.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 317,
+      "sha256_at_snapshot": "62051a17b6fb9fd5441bd96da81f6e08ad69539457b1631741b4f7ea24b43bdf"
+    },
+    {
+      "path": "evidence-real-world/router-reference-probe.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1294,
+      "sha256_at_snapshot": "49f2bc8428c3da22402ad5a4faab670c8779674704480d7c46713388089baf6e"
+    },
+    {
+      "path": "evidence-real-world/router-reference-probe.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 4575,
+      "sha256_at_snapshot": "68524fd6307f40d3f687c7961b485518dc1d8ff2b3882b588ddb54c85e680c70"
+    },
+    {
+      "path": "evidence-real-world/router-reference-probe.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 4575,
+      "sha256_at_snapshot": "68524fd6307f40d3f687c7961b485518dc1d8ff2b3882b588ddb54c85e680c70"
+    },
+    {
+      "path": "evidence-real-world/sources_before_router_fix/evaluate_real_world.py",
+      "change_status": "??",
+      "category": "executed_source_archive",
+      "bytes_at_snapshot": 11137,
+      "sha256_at_snapshot": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27"
+    },
+    {
+      "path": "evidence-real-world/sources_before_router_fix/gguf_qwen.py",
+      "change_status": "??",
+      "category": "executed_source_archive",
+      "bytes_at_snapshot": 25816,
+      "sha256_at_snapshot": "821f23fb592288553e46ebe90112f4d6fa55c5d2da53495da7038db6664074a1"
+    },
+    {
+      "path": "evidence-real-world/sources_before_router_fix/qwen_moe.py",
+      "change_status": "??",
+      "category": "executed_source_archive",
+      "bytes_at_snapshot": 4768,
+      "sha256_at_snapshot": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2"
+    },
+    {
+      "path": "evidence-real-world/sources_campaign_start/gguf_chat.py",
+      "change_status": "??",
+      "category": "executed_source_archive",
+      "bytes_at_snapshot": 9081,
+      "sha256_at_snapshot": "e144e608a5fb2a5807e69efd12a2f0ce5c0825aac38634479faf5c5b3ab6685d"
+    },
+    {
+      "path": "evidence-real-world/sources_router_capture/replay_real_world_router.py",
+      "change_status": "??",
+      "category": "executed_source_archive",
+      "bytes_at_snapshot": 12704,
+      "sha256_at_snapshot": "4f79ed634cfd52dba51ad24d6bb521b4e3b68a3b2dd6b85422596e7b2c19dde6"
+    },
+    {
+      "path": "evidence-real-world/supplementary_review.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 5767,
+      "sha256_at_snapshot": "3b028c08cd0d9adf20d5f7cb4823622e9820c05ded7d209f7217e37da59288e2"
+    },
+    {
+      "path": "evidence-real-world/tests.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1322,
+      "sha256_at_snapshot": "8e33827184fe486222c2c8beff55e67fd8212b397e329b27ed2814487351f8d5"
+    },
+    {
+      "path": "evidence-real-world/validation-fixed.guard.json",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1566,
+      "sha256_at_snapshot": "6c8a51acf970450b5c9e85bf878af3bf0ef2f525bc892184fa8af59f3d0b6bee"
+    },
+    {
+      "path": "evidence-real-world/validation-fixed.log",
+      "change_status": "??",
+      "category": "public_evidence_snapshot",
+      "bytes_at_snapshot": 1402,
+      "sha256_at_snapshot": "509c0c51d25f0a5c42532a4d813347cd8c10b54d1b1c61ed487489d148b8d564"
+    },
+    {
+      "path": "research/real_world/ANALYSIS_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 87300,
+      "sha256_at_snapshot": "24a3f86316132a4d561a9451ccf3659b2b2ad7b1c32554b1167e384b4b7c964c"
+    },
+    {
+      "path": "research/real_world/ANALYZER_AUDIT_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 10712,
+      "sha256_at_snapshot": "a36f628683b0810b02cb0e7c306c732e8860075bc511bdb017525d71b0bcfd6c"
+    },
+    {
+      "path": "research/real_world/FIGURES_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 2884,
+      "sha256_at_snapshot": "5d65bc83db15701f436291f80b5a3d17dfb9a99c4b31ba15758f5c6f5da9174b"
+    },
+    {
+      "path": "research/real_world/GROUND_TRUTH_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 14507,
+      "sha256_at_snapshot": "9d43920e5b71b5ac88a07eda431e69aa03bc75bb2f70c19ed3d9355d0e37ee4c"
+    },
+    {
+      "path": "research/real_world/IMPLEMENTATION_REVIEW_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 12917,
+      "sha256_at_snapshot": "92f0d5cc7f164835384ae0d6727b2af560cc4f3feaf17baccc481abaa7c99420"
+    },
+    {
+      "path": "research/real_world/PROTOCOL_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 19868,
+      "sha256_at_snapshot": "6d0d866da1cdabba6bfc8cd7afe701bf20e9796f0dddbeab1d2b3f07740465eb"
+    },
+    {
+      "path": "research/real_world/PUBLICATION_FILES.txt",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 6396,
+      "sha256_at_snapshot": "14f3cd16f523343f3ee124e309b911f22baf087e3a83e2b31fc11151c515c378"
+    },
+    {
+      "path": "research/real_world/RELEASE_AUDIT_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 12661,
+      "sha256_at_snapshot": "403b87fc22239ad90b42f97c843a584121aaa70c0ce558f5ad4795ba25d87653"
+    },
+    {
+      "path": "research/real_world/RESPONSES_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 61100,
+      "sha256_at_snapshot": "24fd73911107ee0972b9e84ab9568b2562a1a329c0d5b9c565f20ff79a468e16"
+    },
+    {
+      "path": "research/real_world/ROUTER_CAPTURE_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 3977,
+      "sha256_at_snapshot": "b2188195f7af0f2fe8a2d3f93bdf98e3f4c3cd117bfcdd0b98599059799bbaeb"
+    },
+    {
+      "path": "research/real_world/ROUTER_TIE_FIX_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 11862,
+      "sha256_at_snapshot": "35ae022e6792101e80c596534b560c58527174327aedce7d2b630cf627d9d21d"
+    },
+    {
+      "path": "research/real_world/RUN_NOTES_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1741,
+      "sha256_at_snapshot": "f10503842c04bd68919770a284957681d9e3fe95301d6a4b87b5978da533dd2b"
+    },
+    {
+      "path": "research/real_world/atomic_json_save_manifest.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1759,
+      "sha256_at_snapshot": "3ad28496b1285df87215ab43d72c89672c0c74b3cdf83d35b4620193cd7e2eed"
+    },
+    {
+      "path": "research/real_world/chat_contract.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 123971,
+      "sha256_at_snapshot": "8fb6e38183a74225666632be23a2e6027f11f79523d31e8dd005c35ec2564d0a"
+    },
+    {
+      "path": "research/real_world/chat_contract_FR.md",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 5674,
+      "sha256_at_snapshot": "c8d3015d5a3817d98bc3ca69d65bc216f45b2a38266a63e8d6b3e3f819d1b4aa"
+    },
+    {
+      "path": "research/real_world/chat_contract_unicode_diagnostic.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 10421,
+      "sha256_at_snapshot": "037d52049e004565a685ba71170a8064ffd23fa3cf4d54b53f5f871023a3ba46"
+    },
+    {
+      "path": "research/real_world/check_adversarial_code.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 7686,
+      "sha256_at_snapshot": "eb264fc83628063cbbb60a19bd0530a62c84fe129fc26f9a56eb3b12f0790a0a"
+    },
+    {
+      "path": "research/real_world/check_chat_contract.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 12796,
+      "sha256_at_snapshot": "b632ded073ade739893afae1ee31a27285f409637f2c57eb03a4fb030b2ed4dd"
+    },
+    {
+      "path": "research/real_world/code_sandbox_probes.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1889,
+      "sha256_at_snapshot": "fd0bbd17ec304eca131e11040771f298a7a5594c329d8d4ad3fb7386d12f4848"
+    },
+    {
+      "path": "research/real_world/concision-tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1227,
+      "sha256_at_snapshot": "9ad863b3b478d6917468785d432e35c6b183a89921bf34210699ea851cca4da3"
+    },
+    {
+      "path": "research/real_world/d2-clarified-tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 3126,
+      "sha256_at_snapshot": "2f050b41e68ba9dc93e33e7f9892ab54e559ac3a2c5d45f7d252b35977e96c57"
+    },
+    {
+      "path": "research/real_world/environment.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 880,
+      "sha256_at_snapshot": "8a0c5598e43a4a15559f83a5a1baa5c9c19af3fe9fd83021ae24e60d204bf89b"
+    },
+    {
+      "path": "research/real_world/f2-concision-tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1637,
+      "sha256_at_snapshot": "bc84d747b15003f0047252be65de9d1a43dcd7c1cf341387f8d0975a6a013ff5"
+    },
+    {
+      "path": "research/real_world/hard-reasoning-tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 2612,
+      "sha256_at_snapshot": "78b830bb8fa17c18031c81db871cddf2d0b09290ea990a079a1d38c0e75451ed"
+    },
+    {
+      "path": "research/real_world/implementation_review_probes.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 2955,
+      "sha256_at_snapshot": "01f1705720599b76108cb8b58585b268a20b38a128e5eda68a411bdb89193736"
+    },
+    {
+      "path": "research/real_world/model-provenance.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 1805,
+      "sha256_at_snapshot": "a65f3e0ccf65de85fb3ba50be46b3da49d23c7fb980a1b1ab098853e367a941f"
+    },
+    {
+      "path": "research/real_world/pilot-short-caps-tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 38545,
+      "sha256_at_snapshot": "2d94651e848f8e1b013080dfb7c69ceaa0a043a1adcb19b8b36e8fab86b4935b"
+    },
+    {
+      "path": "research/real_world/probe_router_capture.py",
+      "change_status": "??",
+      "category": "evaluation_and_analysis_tools",
+      "bytes_at_snapshot": 3447,
+      "sha256_at_snapshot": "b597eb01e683c2fd572a86f6459e7208e19db0e9289439903f5bd6d9066d2785"
+    },
+    {
+      "path": "research/real_world/publication_manifest.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": null,
+      "sha256_at_snapshot": null,
+      "hash_omitted_reason": "Manifest excludes its own size/hash to avoid circularity"
+    },
+    {
+      "path": "research/real_world/router_fix_contract.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 7731,
+      "sha256_at_snapshot": "0f76f9bc085c155857a5f2eb56ce26d1853ca54e41064136bd2d6d740e1e583e"
+    },
+    {
+      "path": "research/real_world/tasks.json",
+      "change_status": "??",
+      "category": "report_protocol_or_audit",
+      "bytes_at_snapshot": 38558,
+      "sha256_at_snapshot": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3"
+    },
+    {
+      "path": "research/real_world/tests/test_atomic_json_save.py",
+      "change_status": "??",
+      "category": "regression_test",
+      "bytes_at_snapshot": 6066,
+      "sha256_at_snapshot": "57ab63b030c429bb21c31e9bb0ff3b4ed3b06239d9a2f1676238006d8055135e"
+    },
+    {
+      "path": "tests_next/test_gguf_chat.py",
+      "change_status": "??",
+      "category": "regression_test",
+      "bytes_at_snapshot": 11127,
+      "sha256_at_snapshot": "9384125b522f0cf98a4a15c185346a370e6b4ec1ea52b9fb04f0d971adb8fa76"
+    },
+    {
+      "path": "tests_next/test_gguf_tokenizer.py",
+      "change_status": " M",
+      "category": "regression_test",
+      "bytes_at_snapshot": 5918,
+      "sha256_at_snapshot": "4c54fce13a1d7e7a6a5e92a18d540b9be2df9e106684e114ba50b15d75c5b35a"
+    },
+    {
+      "path": "tests_next/test_qwen_router_ties.py",
+      "change_status": "??",
+      "category": "regression_test",
+      "bytes_at_snapshot": 8526,
+      "sha256_at_snapshot": "e0a4e5ca953fded14593eb09e6320d0925078be0f9a40f496b2f43a929b3a4f9"
+    },
+    {
+      "path": "tests_next/test_real_world_code_checks.py",
+      "change_status": "??",
+      "category": "regression_test",
+      "bytes_at_snapshot": 6239,
+      "sha256_at_snapshot": "795edf887c5d5c2cae594ce24081f6ccaaeee2ceb9f8a1bda6dc28a1b3746f85"
+    }
+  ],
+  "exclude": [
+    {
+      "path": "evidence-real-world/router-failure-replay.npz",
+      "reason": "weights_numeric_capture_or_archive_not_public"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests-batch.xml",
+      "reason": "local_test_xml_not_public"
+    },
+    {
+      "path": "evidence-real-world/router-fix-tests.xml",
+      "reason": "local_test_xml_not_public"
+    },
+    {
+      "path": "evidence-real-world/router-public-tests.xml",
+      "reason": "local_test_xml_not_public"
+    },
+    {
+      "path": "evidence-real-world/tests-fixed.xml",
+      "reason": "local_test_xml_not_public"
+    },
+    {
+      "path": "evidence-real-world/tests.xml",
+      "reason": "local_test_xml_not_public"
+    },
+    {
+      "path": "research/real_world/atomic_json_save.patch",
+      "reason": "historical_patch_already_applied_preserved_locally"
+    },
+    {
+      "path": "research/real_world/tests/__pycache__/test_atomic_json_save.cpython-312-pytest-9.1.1.pyc",
+      "reason": "work_environment_or_cache"
+    }
+  ],
+  "exclusion_policy": {
+    "max_regular_file_bytes": 16777216,
+    "max_allowed_image_or_pdf_bytes": 4194304,
+    "weights_and_numeric_capture_extensions": [
+      ".bin",
+      ".ckpt",
+      ".dylib",
+      ".gguf",
+      ".gz",
+      ".h5",
+      ".hdf5",
+      ".model",
+      ".npy",
+      ".npz",
+      ".onnx",
+      ".pickle",
+      ".pkl",
+      ".pt",
+      ".pth",
+      ".safetensors",
+      ".so",
+      ".tar",
+      ".tflite",
+      ".whl",
+      ".zip"
+    ],
+    "local_capture_note": "Real router NPZ includes a gate weight matrix and stays local; public hash/JSON/replayer remain",
+    "historical_patch": "Kept locally; implementation/source archive/tests already preserve the adopted change",
+    "deletions_performed": false
+  },
+  "secret_and_personal_data_scan": {
+    "rules": [
+      "openai_key_shape",
+      "huggingface_token_shape",
+      "github_token_shape",
+      "aws_access_key_shape",
+      "private_key_header",
+      "url_embedded_credentials",
+      "literal_credential_assignment",
+      "email_address_candidate",
+      "french_phone_candidate"
+    ],
+    "scanned_text_files": 144,
+    "candidate_count": 0,
+    "locations": [],
+    "values_and_context_never_recorded": true,
+    "binary_files_not_text_scanned": [],
+    "scope_note": "Bounded changed/added mission files only; no full Git-history scan or semantic PII guarantee",
+    "technical_user_path_occurrences": 410
+  },
+  "documentation_link_findings": [],
+  "trailing_whitespace_preserved": {
+    "research/real_world/RESPONSES_FR.md": [
+      70,
+      73,
+      74,
+      75,
+      78,
+      436,
+      437,
+      445,
+      446,
+      857,
+      860,
+      861,
+      920,
+      1115,
+      1116,
+      1124,
+      1125
+    ]
+  },
+  "observed_runs": [
+    {
+      "path": "evidence-real-world/campaign-before-router-fix.json",
+      "status_raw": "failed",
+      "status_effective": "failed_guard",
+      "guard_path": "evidence-real-world/campaign-before-router-fix.guard.json",
+      "guard_exit_code": 1,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A1",
+          "status": "completed",
+          "observed_tokens": 118,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "A2",
+          "status": "completed",
+          "observed_tokens": 256,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "A3",
+          "status": "completed",
+          "observed_tokens": 73,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "B1",
+          "status": "completed",
+          "observed_tokens": 78,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "B2",
+          "status": "completed",
+          "observed_tokens": 51,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "C1",
+          "status": "completed",
+          "observed_tokens": 26,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "C2",
+          "status": "completed",
+          "observed_tokens": 53,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "D1",
+          "status": "completed",
+          "observed_tokens": 33,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "D2",
+          "status": "failed",
+          "observed_tokens": 77,
+          "completed_observation": false,
+          "stop_reason": null
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/campaign-resumed.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/campaign-resumed.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "D2",
+          "status": "completed",
+          "observed_tokens": 79,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E1",
+          "status": "completed",
+          "observed_tokens": 31,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E2",
+          "status": "completed",
+          "observed_tokens": 31,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E3",
+          "status": "completed",
+          "observed_tokens": 44,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E4",
+          "status": "completed",
+          "observed_tokens": 109,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E5",
+          "status": "completed",
+          "observed_tokens": 88,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "F1",
+          "status": "completed",
+          "observed_tokens": 140,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "F2",
+          "status": "completed",
+          "observed_tokens": 256,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "G1",
+          "status": "completed",
+          "observed_tokens": 38,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "G2",
+          "status": "completed",
+          "observed_tokens": 31,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "G3",
+          "status": "completed",
+          "observed_tokens": 256,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "G4",
+          "status": "completed",
+          "observed_tokens": 32,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "G5",
+          "status": "completed",
+          "observed_tokens": 42,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/campaign.json",
+      "status_raw": "failed",
+      "status_effective": "failed_guard",
+      "guard_path": "evidence-real-world/campaign.guard.json",
+      "guard_exit_code": 1,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A1",
+          "status": "completed",
+          "observed_tokens": 118,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "A2",
+          "status": "completed",
+          "observed_tokens": 256,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "A3",
+          "status": "completed",
+          "observed_tokens": 73,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "B1",
+          "status": "completed",
+          "observed_tokens": 78,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "B2",
+          "status": "completed",
+          "observed_tokens": 51,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "C1",
+          "status": "completed",
+          "observed_tokens": 26,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "C2",
+          "status": "completed",
+          "observed_tokens": 53,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "D1",
+          "status": "completed",
+          "observed_tokens": 33,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "D2",
+          "status": "failed",
+          "observed_tokens": 77,
+          "completed_observation": false,
+          "stop_reason": null
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/concision-control.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/concision-control.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A2_concis",
+          "status": "completed",
+          "observed_tokens": 51,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/conversation-rebuild.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/conversation-rebuild.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "E1",
+          "status": "completed",
+          "observed_tokens": 31,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E2",
+          "status": "completed",
+          "observed_tokens": 31,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E3",
+          "status": "completed",
+          "observed_tokens": 44,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E4",
+          "status": "completed",
+          "observed_tokens": 109,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        },
+        {
+          "id": "E5",
+          "status": "completed",
+          "observed_tokens": 88,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/d2-clarified.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/d2-clarified.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "D2_clarified",
+          "status": "completed",
+          "observed_tokens": 116,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/f2-concision-control.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/f2-concision-control.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "F2_concis",
+          "status": "completed",
+          "observed_tokens": 97,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/hard-reasoning.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/hard-reasoning.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A4",
+          "status": "completed",
+          "observed_tokens": 107,
+          "completed_observation": true,
+          "stop_reason": "eos"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/long-1024.json",
+      "status_raw": "started",
+      "status_effective": "interrupted_guard",
+      "guard_path": "evidence-real-world/long-1024.guard.json",
+      "guard_exit_code": -15,
+      "guard_violation": "system_swap_growth",
+      "maximum_swap_growth_bytes": 170459136,
+      "turns": [
+        {
+          "id": "L1024",
+          "status": "started",
+          "observed_tokens": 244,
+          "completed_observation": false,
+          "stop_reason": null
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/long-128.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/long-128.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "L128",
+          "status": "completed",
+          "observed_tokens": 128,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/long-256.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/long-256.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "L256",
+          "status": "completed",
+          "observed_tokens": 256,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/long-512.json",
+      "status_raw": "completed",
+      "status_effective": "completed",
+      "guard_path": "evidence-real-world/long-512.guard.json",
+      "guard_exit_code": 0,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "L512",
+          "status": "completed",
+          "observed_tokens": 512,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/pilot-short-caps.json",
+      "status_raw": "started",
+      "status_effective": "failed_guard",
+      "guard_path": "evidence-real-world/pilot-short-caps.guard.json",
+      "guard_exit_code": -15,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A1",
+          "status": "completed",
+          "observed_tokens": 96,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "A2",
+          "status": "completed",
+          "observed_tokens": 96,
+          "completed_observation": true,
+          "stop_reason": "max_new_tokens"
+        },
+        {
+          "id": "A3",
+          "status": "started",
+          "observed_tokens": 0,
+          "completed_observation": false,
+          "stop_reason": null
+        }
+      ]
+    },
+    {
+      "path": "evidence-real-world/preflight-source-change.json",
+      "status_raw": "started",
+      "status_effective": "failed_guard",
+      "guard_path": "evidence-real-world/preflight-source-change.guard.json",
+      "guard_exit_code": -15,
+      "guard_violation": null,
+      "maximum_swap_growth_bytes": 0,
+      "turns": [
+        {
+          "id": "A1",
+          "status": "started",
+          "observed_tokens": 15,
+          "completed_observation": false,
+          "stop_reason": null
+        }
+      ]
+    }
+  ],
+  "main_evidence": {
+    "primary_scope": "21 IDs uniques; campaign puis campaign-resumed; pilotes, copie archive et diagnostics exclus",
+    "planned_ids": [
+      "A1",
+      "A2",
+      "A3",
+      "B1",
+      "B2",
+      "C1",
+      "C2",
+      "D1",
+      "D2",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "F1",
+      "F2",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ],
+    "completed_unique_count": 21,
+    "missing_completed_ids": [],
+    "completed_sources": [
+      {
+        "id": "A1",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "A2",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "A3",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "B1",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "B2",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "C1",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "C2",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "D1",
+        "source": "evidence-real-world/campaign.json"
+      },
+      {
+        "id": "D2",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "E1",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "E2",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "E3",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "E4",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "E5",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "F1",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "F2",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "G1",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "G2",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "G3",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "G4",
+        "source": "evidence-real-world/campaign-resumed.json"
+      },
+      {
+        "id": "G5",
+        "source": "evidence-real-world/campaign-resumed.json"
+      }
+    ],
+    "duplicate_completed_records_ignored": [],
+    "reviewed_main_count": 21,
+    "review_ids_exact_once": true,
+    "verdict_counts_recomputed": {
+      "echec_critere": 2,
+      "indetermine": 1,
+      "partiel": 2,
+      "reussi": 16
+    },
+    "verdict_counts_declared": {
+      "reussi": 16,
+      "partiel": 2,
+      "echec_critere": 2,
+      "indetermine": 1
+    },
+    "review_response_bindings": [
+      {
+        "id": "A1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "A2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "A3",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "B1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "B2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "C1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "C2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "D1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "D2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "E1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "E2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "E3",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "E4",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "E5",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "F1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "F2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "G1",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "G2",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "G3",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "G4",
+        "response_sha256_matches": true
+      },
+      {
+        "id": "G5",
+        "response_sha256_matches": true
+      }
+    ],
+    "ablation_E_comparisons": [
+      {
+        "id": "E1",
+        "both_completed": true,
+        "generated_ids_identical": true,
+        "text_identical": true
+      },
+      {
+        "id": "E2",
+        "both_completed": true,
+        "generated_ids_identical": true,
+        "text_identical": true
+      },
+      {
+        "id": "E3",
+        "both_completed": true,
+        "generated_ids_identical": true,
+        "text_identical": true
+      },
+      {
+        "id": "E4",
+        "both_completed": true,
+        "generated_ids_identical": true,
+        "text_identical": true
+      },
+      {
+        "id": "E5",
+        "both_completed": true,
+        "generated_ids_identical": true,
+        "text_identical": true
+      }
+    ],
+    "notes": [
+      "A1 conserve son annotation adjudiquée du JSON, sans réécriture du texte.",
+      "D2 initial reste indéterminé si annoté ainsi; le contrôle clarifié est séparé.",
+      "Le palier 1024 interrompu ne devient pas une génération validée."
+    ]
+  },
+  "publication_review_blockers": [],
+  "hash_contract": "Raw bytes SHA-256; only this manifest omits its own size/hash. Generated list/audit hashed after rendering.",
+  "write_contract": "Same-directory UTF-8 temporaries, fsync/close/os.replace; manifest published last, not a multi-file transaction",
+  "limits": [
+    "No new inference/test/hash of the full GGUF is run here.",
+    "No semantic absence-of-secrets guarantee or new runtime/quality validation.",
+    "Stopped L1024 stays unvalidated; diagnostics never replace the 21 main observations.",
+    "No model/machine/storage generalization from this inventory."
+  ]
+}

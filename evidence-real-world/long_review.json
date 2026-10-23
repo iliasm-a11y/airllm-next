@@ -1,0 +1,332 @@
+{
+  "status": "completed_observed_ladder_with_protected_interruption",
+  "scope": "Lecture de chaque palier de génération naturelle à prompt identique. Les plafonds 128/256/512/1024 sollicitent une continuation ; ils ne garantissent pas de livrer les 900–1100 mots demandés. Les notes de complétude décrivent le livrable à chaque plafond, séparément de la stabilité du décodage.",
+  "method": "Lecture intégrale des réponses achevées, et des fragments interrompus dans une collection distincte. Cinq axes décrivent le texte observable ; statuts d’exécution et validation de longueur restent séparés.",
+  "score_axes": [
+    "exactitude_factuelle",
+    "respect_instructions",
+    "coherence",
+    "completude",
+    "utilite_reelle"
+  ],
+  "scale": {
+    "0": "inutilisable ou contraire au critère",
+    "1": "défauts majeurs",
+    "2": "plusieurs erreurs ou très incomplet",
+    "3": "utile avec limite réelle",
+    "4": "correct avec défaut mineur",
+    "5": "satisfait pleinement le critère dans le périmètre"
+  },
+  "reviewed_turns": [
+    {
+      "id": "L128",
+      "session_id": "L_generation_128",
+      "source_file": "long-128.json",
+      "source_relative_path": "evidence-real-world/long-128.json",
+      "source_response_key": "text",
+      "response_sha256": "1429787405395ca9cd10b6c680c81e60faa97735c3d93a17972d5e043b3476fe",
+      "response_text": "# Guide Opérationnel : Journée de Réparation d’Objets par Lumen\n\n### 1. Situation\nL’association Lumen organise une journée dédiée à la réparation collaborative d’objets usuels, visant à promouvoir l’économie circulaire et la lutte contre l’obsolescence programmée. L’événement se tiendra le samedi 18 juillet dans une salle louée spécifiquement pour l’occasion. La capacité d’accueil est strictement limitée à 40 visiteurs maximum pour garantir la qualité de l’accompagnement et la sécurité des participants. La salle est techniquement disponible de ",
+      "termination": "max_new_tokens",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 3,
+          "rationale": "Lumen, la date et le plafond de 40 visiteurs sont fidèles. Les objectifs d’économie circulaire et de lutte contre l’obsolescence ne sont pas donnés, et la salle est présentée comme déjà louée alors que sa confirmation écrite manque dans le cas."
+        },
+        "respect_instructions": {
+          "score": 3,
+          "rationale": "Commence la structure numérotée en français, mais présente des objectifs ajoutés sans marque d’hypothèse ; les huit parties ne sont pas livrées à ce plafond."
+        },
+        "coherence": {
+          "score": 4,
+          "rationale": "Introduction fluide sans contradiction interne ni boucle observée ; dernière phrase coupée après «disponible de»."
+        },
+        "completude": {
+          "score": 1,
+          "rationale": "Seule la première partie commence ; budget, calendrier détaillé, rôles, risques, critères et message restent absents par construction du plafond."
+        },
+        "utilite_reelle": {
+          "score": 2,
+          "rationale": "Quelques faits d’accueil sont utiles, mais le fragment ne constitue pas encore un guide opérationnel et ajoute un cadrage non fourni."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Faits connus conservés dans la portion observée",
+          "result": "pass",
+          "evidence": "Association Lumen ; samedi 18 juillet ;40 visiteurs maximum."
+        },
+        {
+          "check": "Objectifs ajoutés explicitement hypothétiques",
+          "result": "fail",
+          "evidence": "Économie circulaire et lutte contre l’obsolescence sont présentées comme objectifs établis, sans mention qu’il s’agit d’une proposition."
+        },
+        {
+          "check": "Complétude et motif d’arrêt",
+          "result": "incomplete_due_to_cap",
+          "evidence": "128 tokens, une partie commencée sur huit, arrêt max_new_tokens ; aucune prolongation forcée après EOS."
+        },
+        {
+          "check": "Boucle ou perte de fil dans le fragment intégral",
+          "result": "not_observed_in_this_prefix",
+          "evidence": "Lecture intégrale : pas de répétition cyclique ni dérive incohérente ; ne prouve rien sur une continuation absente."
+        }
+      ],
+      "uncertainties": [
+        "La portion suivante pourrait préciser la confirmation de la salle ; le fragment seul ne permet pas d’attribuer une conclusion définitive à la réponse plus longue.",
+        "Le plafond 128 rend la consigne 900–1100 mots impossible à remplir ; complétude et utilité portent ici sur le texte livré, sans transformer cette coupure configurée en incapacité du modèle.",
+        "Les objectifs supplémentaires peuvent se comprendre comme un cadrage proposé pour le guide, plutôt que comme une prétention à citer les données. Leur statut n’est pas explicitement balisé ; cette réserve de fidélité ne constitue pas une nouvelle erreur factuelle certaine."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Préfixe français cohérent et partiellement fidèle, coupé au plafond de 128 tokens ; guide non complet et objectifs ajoutés sans les présenter comme hypothèses. Le plafond ne permettait pas les 900–1100 mots sollicités.",
+      "observed_word_count_whitespace": 77
+    },
+    {
+      "id": "L256",
+      "session_id": "L_generation_256",
+      "source_file": "long-256.json",
+      "source_relative_path": "evidence-real-world/long-256.json",
+      "source_response_key": "text",
+      "response_sha256": "123637e47d131c77e53b6e09ad8942938b091f89d068fe87bd64b18b4890ea1c",
+      "response_text": "# Guide Opérationnel : Journée de Réparation d’Objets par Lumen\n\n### 1. Situation\nL’association Lumen organise une journée dédiée à la réparation collaborative d’objets usuels, visant à promouvoir l’économie circulaire et la lutte contre l’obsolescence programmée. L’événement se tiendra le samedi 18 juillet dans une salle louée spécifiquement pour l’occasion. La capacité d’accueil est strictement limitée à 40 visiteurs maximum pour garantir la qualité de l’accompagnement et la sécurité des participants. La salle est techniquement disponible de 9 h à 18 h, mais l’accueil du public est encadré entre 10 h et 17 h. Cette contrainte horaire impose une logistique précise pour la préparation et le nettoyage. Le nombre exact d’objets pouvant être réparés reste une variable inconnue, dépendant de l’état des appareils apportés par les visiteurs et de la disponibilité des bénévoles. Il est impératif de noter que la confirmation écrite de la réservation de la salle n’a pas encore été obtenue, ce qui constitue un point de blocage administratif majeur à résoudre immédiatement. De plus, aucune recette n’est",
+      "termination": "max_new_tokens",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 4,
+          "rationale": "Date, capacité, horaires, nombre de réparations inconnu et confirmation écrite manquante sont fidèles. Les objectifs d’économie circulaire et d’obsolescence sont ajoutés sans être fournis par le cas."
+        },
+        "respect_instructions": {
+          "score": 3,
+          "rationale": "Français et début de structure numérotée corrects ; objectifs ajoutés non marqués comme hypothèses, et guide complet non livré sous ce plafond."
+        },
+        "coherence": {
+          "score": 4,
+          "rationale": "La continuation précise correctement que la salle n’est pas confirmée ; pas de boucle ni perte de fil observée. La dernière phrase est coupée après «aucune recette n’est»."
+        },
+        "completude": {
+          "score": 1,
+          "rationale": "Seule la situation est développée ; budget, calendrier, rôles, risques structurés, critères et message de lancement restent absents au plafond."
+        },
+        "utilite_reelle": {
+          "score": 3,
+          "rationale": "Le fragment donne des contraintes d’accueil et un point d’action sur la salle, mais reste insuffisant comme guide complet."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Horaires et inconnues fidèles",
+          "result": "pass",
+          "evidence": "Salle 9 h–18 h ; public 10 h–17 h ; nombre de réparations inconnu ; confirmation écrite non obtenue."
+        },
+        {
+          "check": "Statut de salle nuancé dans la continuation",
+          "result": "pass",
+          "evidence": "Le passage suivant l’expression de salle louée indique explicitement que la confirmation écrite manque."
+        },
+        {
+          "check": "Objectifs présentés comme établis",
+          "result": "additional_framing_not_explicitly_labelled",
+          "evidence": "Économie circulaire et lutte contre l’obsolescence ne figurent pas dans les données et ne sont pas étiquetées comme propositions."
+        },
+        {
+          "check": "Boucles et continuité à la lecture complète",
+          "result": "not_observed_in_this_prefix",
+          "evidence": "Développement continu de la situation sans répétition cyclique ; coupure au plafond 256."
+        }
+      ],
+      "uncertainties": [
+        "Complétude limitée par un plafond incompatible avec 900–1100 mots ; aucune conclusion d’incapacité à produire un guide plus long n’est tirée.",
+        "La confirmation manquante est bien rappelée dans cette extension ; ne pas extrapoler le fragment 128 en affirmation définitive de salle confirmée.",
+        "Les objectifs supplémentaires peuvent se comprendre comme un cadrage proposé pour le guide, plutôt que comme une prétention à citer les données. Leur statut n’est pas explicitement balisé ; cette réserve de fidélité ne constitue pas une nouvelle erreur factuelle certaine."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Introduction cohérente et davantage de faits utiles, dont la confirmation manquante de la salle ; arrêt au plafond avant les sept autres parties. Les objectifs ajoutés restent non identifiés comme propositions.",
+      "prefix_comparison": {
+        "reference_source": "long-128.json",
+        "reference_tokens": 128,
+        "exact_prefix_equal": true,
+        "text_starts_with_reference_text": true
+      },
+      "observed_word_count_whitespace": 170
+    },
+    {
+      "id": "L512",
+      "session_id": "L_generation_512",
+      "source_file": "long-512.json",
+      "source_relative_path": "evidence-real-world/long-512.json",
+      "source_response_key": "text",
+      "response_sha256": "d6996bb37a488df1e2e3762e964a135317a094805b62bcba3cada704ca3307e2",
+      "response_text": "# Guide Opérationnel : Journée de Réparation d’Objets par Lumen\n\n### 1. Situation\nL’association Lumen organise une journée dédiée à la réparation collaborative d’objets usuels, visant à promouvoir l’économie circulaire et la lutte contre l’obsolescence programmée. L’événement se tiendra le samedi 18 juillet dans une salle louée spécifiquement pour l’occasion. La capacité d’accueil est strictement limitée à 40 visiteurs maximum pour garantir la qualité de l’accompagnement et la sécurité des participants. La salle est techniquement disponible de 9 h à 18 h, mais l’accueil du public est encadré entre 10 h et 17 h. Cette contrainte horaire impose une logistique précise pour la préparation et le nettoyage. Le nombre exact d’objets pouvant être réparés reste une variable inconnue, dépendant de l’état des appareils apportés par les visiteurs et de la disponibilité des bénévoles. Il est impératif de noter que la confirmation écrite de la réservation de la salle n’a pas encore été obtenue, ce qui constitue un point de blocage administratif majeur à résoudre immédiatement. De plus, aucune recette n’est garantie ; bien que des dons soient possibles, leur montant est inconnu et ne doit pas être intégré au budget prévisionnel. Les inscriptions sont gratuites, ce qui simplifie la logistique financière mais nécessite une gestion rigoureuse des coûts fixes.\n\n### 2. Objectifs\nL’objectif principal est d’offrir un espace sécurisé et bienveillant où 40 visiteurs maximum peuvent faire examiner et potentiellement réparer leurs objets en panne. Un objectif secondaire consiste à sensibiliser le public à la réparation autonome. L’objectif opérationnel est d’assurer le bon déroulement de la journée grâce à une coordination efficace des huit bénévoles disponibles. Il s’agit également de respecter scrupuleusement les règles de sécurité : aucun appareil branché au secteur ne sera accepté, et aucun objet dangereux ne doit être admis sur le site. Enfin, l’objectif administratif est de produire un bilan précis distinguant le nombre de visiteurs, d’objets examinés, de réparations réussies et de dépenses justifiées, afin d’évaluer l’impact de l’action et la rentabilité financière de l’événement.\n\n### 3. Calcul du budget\nLe budget disponible pour cet événement s’élève à 650 €. Les",
+      "termination": "max_new_tokens",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 4,
+          "rationale": "Les contraintes principales citées sont fidèles : horaires,40 visiteurs, huit bénévoles, recettes inconnues, gratuité, confirmation manquante et indicateurs du bilan. Des objectifs de sensibilisation autonome et de rentabilité financière sont ajoutés sans être fournis."
+        },
+        "respect_instructions": {
+          "score": 3,
+          "rationale": "Suit le début de la structure demandée en français ; les objectifs ajoutés ne sont pas présentés comme propositions, et les huit parties ne sont pas livrées à ce plafond."
+        },
+        "coherence": {
+          "score": 4,
+          "rationale": "Développement continu de la situation et des objectifs, sans boucle ni perte de fil. Les rappels de faits entre ces parties relèvent de la structure du guide ; la coupure survient au début du budget."
+        },
+        "completude": {
+          "score": 2,
+          "rationale": "Situation et objectifs sont développés ; budget seulement amorcé à 650 €, sans total des dépenses ni marge, et cinq parties suivantes absentes."
+        },
+        "utilite_reelle": {
+          "score": 3,
+          "rationale": "Contient plusieurs contraintes utiles et une première orientation opérationnelle, mais ne permet pas encore de gérer le budget ni l’ensemble de l’événement."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Fidélité des contraintes observées",
+          "result": "mostly_pass",
+          "evidence": "Confirmation écrite absente, dons non garantis, inscriptions gratuites, huit bénévoles et quatre indicateurs du bilan explicitement conservés."
+        },
+        {
+          "check": "Calculs de budget",
+          "result": "not_yet_observable",
+          "evidence": "La troisième partie s’arrête après «650 €. Les» ; ni dépenses 550 € ni marge 100 € générées dans ce palier."
+        },
+        {
+          "check": "Objectifs supplémentaires non signalés",
+          "result": "additional_framing_not_explicitly_labelled",
+          "evidence": "Sensibilisation à la réparation autonome et évaluation de la rentabilité financière formulées comme objectifs établis."
+        },
+        {
+          "check": "Boucles et dérive à la lecture intégrale",
+          "result": "not_observed_in_this_prefix",
+          "evidence": "Pas de répétition cyclique ou rupture incohérente ; deux parties progressent normalement avant coupure au plafond 512."
+        }
+      ],
+      "uncertainties": [
+        "Les calculs encore absents ne peuvent être notés faux. Les exigences non livrées restent séparées de l’exactitude sur le contenu observable.",
+        "La formulation sur le refus d’appareils branchés est plus forte que l’interdiction de les réparer fournie dans le cas ; elle reste cohérente comme précaution, mais ne doit pas être présentée comme citation exacte de la consigne.",
+        "Les objectifs supplémentaires peuvent se comprendre comme un cadrage proposé pour le guide, plutôt que comme une prétention à citer les données. Leur statut n’est pas explicitement balisé ; cette réserve de fidélité ne constitue pas une nouvelle erreur factuelle certaine."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Deux parties développées, troisième amorcée, sans boucle observée ; le plafond interrompt avant les calculs du budget et les cinq dernières parties. Des objectifs supplémentaires sont formulés comme établis.",
+      "prefix_comparison": {
+        "reference_source": "long-256.json",
+        "reference_tokens": 256,
+        "exact_prefix_equal": true,
+        "text_starts_with_reference_text": true
+      },
+      "observed_word_count_whitespace": 346
+    }
+  ],
+  "verdict_rule": {
+    "reussi": "Résultats essentiels corrects et livrés, contraintes demandées respectées ; aucune réserve substantielle observée dans le périmètre du test.",
+    "partiel": "Un résultat essentiel utile est livré, mais un autre résultat, une justification ou une contrainte de forme manque ou présente un défaut ; aucune réussite stricte revendiquée.",
+    "echec_critere": "Résultat essentiel faux ou aucun résultat essentiel livré pour une demande non ambiguë ; cause éventuelle distincte du constat.",
+    "indetermine": "Ambiguïté du protocole ou preuve insuffisante empêchant un jugement univoque sur le critère essentiel ; ne compte ni comme réussite stricte ni comme erreur certaine du modèle."
+  },
+  "verdict_counts": {
+    "reussi": 0,
+    "partiel": 3,
+    "echec_critere": 0,
+    "indetermine": 0
+  },
+  "interrupted_turns": [
+    {
+      "id": "L1024",
+      "session_id": "L_generation_1024",
+      "source_file": "long-1024.json",
+      "source_response_key": "partial_text",
+      "source_status": "started",
+      "execution_status": "interrupted_by_external_guard",
+      "is_completed_response": false,
+      "requested_max_new_tokens": 1024,
+      "observed_generated_tokens": 244,
+      "requested_length_validated": false,
+      "response_sha256": "85009e30109704d330b574f7ff4a0a0783d0ae056fdc3c85077d047fa99b1f8f",
+      "response_text": "# Guide Opérationnel : Journée de Réparation d’Objets par Lumen\n\n### 1. Situation\nL’association Lumen organise une journée dédiée à la réparation collaborative d’objets usuels, visant à promouvoir l’économie circulaire et la lutte contre l’obsolescence programmée. L’événement se tiendra le samedi 18 juillet dans une salle louée spécifiquement pour l’occasion. La capacité d’accueil est strictement limitée à 40 visiteurs maximum pour garantir la qualité de l’accompagnement et la sécurité des participants. La salle est techniquement disponible de 9 h à 18 h, mais l’accueil du public est encadré entre 10 h et 17 h. Cette contrainte horaire impose une logistique précise pour la préparation et le nettoyage. Le nombre exact d’objets pouvant être réparés reste une variable inconnue, dépendant de l’état des appareils apportés par les visiteurs et de la disponibilité des bénévoles. Il est impératif de noter que la confirmation écrite de la réservation de la salle n’a pas encore été obtenue, ce qui constitue un point de blocage administratif",
+      "termination": "external_guard:system_swap_growth",
+      "quality_verdict_observable_prefix": "partiel",
+      "quality_verdict_rationale": "Fragment cohérent et partiellement utile, mais guide interrompu par protection mémoire à 244 tokens ; aucun résultat à 1024 tokens n’est validé.",
+      "scores_conditioned_on_observed_prefix": true,
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 4,
+          "rationale": "Date, capacité, horaires, nombre de réparations inconnu et confirmation manquante sont fidèles dans le fragment. Les objectifs ajoutés restent un cadrage proposé possible, sans être explicitement balisés."
+        },
+        "respect_instructions": {
+          "score": 3,
+          "rationale": "Début français et numéroté conforme ; guide de huit parties non livré, du fait de l’interruption externe et non d’un EOS naturel."
+        },
+        "coherence": {
+          "score": 4,
+          "rationale": "Progression fluide sans boucle ni dérive observée ; la dernière phrase est coupée après «blocage administratif»."
+        },
+        "completude": {
+          "score": 1,
+          "rationale": "Seule la situation est commencée ; la protection arrête la tentative bien avant les huit parties et le plafond demandé."
+        },
+        "utilite_reelle": {
+          "score": 3,
+          "rationale": "Le fragment fournit des contraintes d’accueil et rappelle la confirmation manquante, mais ne constitue pas un guide complet."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Préfixe exact comparé au palier 256",
+          "result": "pass",
+          "evidence": "244 identifiants observés, comparés un par un aux 244 premiers du palier 256."
+        },
+        {
+          "check": "Validation du palier 1024",
+          "result": "not_validated",
+          "evidence": "Arrêt externe à 244 tokens ; rapport encore status=started, aucun texte completed ni EOS enregistré."
+        },
+        {
+          "check": "Croissance de swap et arrêt du garde",
+          "result": "observed_protection_stop",
+          "evidence": "Maximum global 170459136 octets ; violation system_swap_growth ; code de sortie−15 ; le garde a interrompu le processus."
+        },
+        {
+          "check": "Boucle ou tokens incohérents dans le fragment intégral",
+          "result": "not_observed_in_this_prefix",
+          "evidence": "Lecture intégrale : pas de boucle cyclique ni de rupture incohérente avant interruption."
+        }
+      ],
+      "guard_observations": {
+        "source_file": "long-1024.guard.json",
+        "maximum_system_swap_growth_bytes": 170459136,
+        "sampled_peak_owned_rss_bytes": 450134016,
+        "minimum_system_available_bytes": 3905142784,
+        "peak_pressure_level": 1,
+        "exit_code": -15
+      },
+      "prefix_comparison": {
+        "reference_source": "long-256.json",
+        "reference_tokens_compared": 244,
+        "exact_prefix_equal": true
+      },
+      "uncertainties": [
+        "La croissance du swap est un compteur système : elle ne prouve pas que le moteur est la cause exclusive. Les autres applications peuvent contribuer à un arrêt conservateur.",
+        "Les notes décrivent uniquement les 244 tokens observables. Elles ne sont ni une réussite d’exécution ni une validation à 1024 tokens.",
+        "La protection a effectivement interrompu le processus ; la stabilité jusqu’à 1024 reste non mesurée. Aucun nouvel essai de ce palier ne remplace cette tentative.",
+        "Les objectifs supplémentaires peuvent être lus comme un cadrage proposé ; leur statut peu balisé n’est pas une nouvelle erreur factuelle certaine."
+      ],
+      "observed_word_count_whitespace": 161
+    }
+  ],
+  "completed_generation_levels": [
+    128,
+    256,
+    512
+  ],
+  "unvalidated_generation_levels": [
+    1024
+  ],
+  "completed_responses_reviewed": 3,
+  "interrupted_fragments_reviewed": 1,
+  "completed_verdict_counts": {
+    "reussi": 0,
+    "partiel": 3,
+    "echec_critere": 0,
+    "indetermine": 0
+  }
+}

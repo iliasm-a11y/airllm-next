@@ -1,0 +1,681 @@
+{
+  "kind": "final_independent_analyzer_audit",
+  "status": "passed",
+  "timestamp": "2026-10-23T23:12:25+02:00",
+  "method": "Independent integer counts and math.fsum, compared to analyzer; no inference or ML/plot imports.",
+  "analyzer_sha256": "895093d03490169093fcea13d92f5932d864ef0572170f40fc64c45bb451f0fb",
+  "input_sha256": {
+    "campaign.json": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164",
+    "campaign-resumed.json": "6838685de04cf4068c9000ef311792d51fc3a0ce66aecceaa5c1e1978dcc15cc",
+    "hard-reasoning.json": "95992f8821755e5477b11522db62322a04a7c89eaf2b95d23a51df25db819fd4",
+    "concision-control.json": "e6d89bf5c742d14de780229cb1019fbcbf0b71f10283f72bb1b52fbf41983477",
+    "f2-concision-control.json": "5ece7d8020a7129efacaeb06b5c2899efb048c908a399c424ff02e5426435907",
+    "d2-clarified.json": "4517406a2a609640daf0794f59d6dce0e952efbf881413787f8d9dfb66d68484",
+    "pilot-short-caps.json": "460fb26956272524c946ef36f7ae7c9ca15fa3263dc0c2364730eba41d610a88",
+    "long-128.json": "b6f4260dbedb36c15ce9387fe77356f382afefc55910482be3c152032728139d",
+    "long-256.json": "211342b3c89e3ff2b2fc973783f449c76a95356d18afbf0fe8ff901170d7c706",
+    "long-512.json": "6c370ec5e6f18ac71fcca7eab0e964d9f9ae451e47c33f2ccb4121d85ce581ed",
+    "long-1024.json": "999e8033a78a667f53d8f78053e459a7fcd58f309804c1a6381f18f5306126e7",
+    "conversation-rebuild.json": "5c93f4e35219c421d53ae89b14517800a26203dd176db26712116a2837362fb7",
+    "campaign.guard.json": "02b11673730ad21375315f2d1791946805ca51ec086b77333d8c19f1852e0c30",
+    "campaign-resumed.guard.json": "190f4bda550085b7117bab035a3c79d015fbcb4dd59a61b67fd1483d1e532042",
+    "hard-reasoning.guard.json": "8b7dd2e70871272a0fe6e70f50e626b1ce59a74105061b5e34d22b75d4c6d79a",
+    "concision-control.guard.json": "fe96d8fa28c2aa555ffddda47e2f166b149e1d0f0a28680eb2aff1233fa75d7a",
+    "f2-concision-control.guard.json": "13701f3f2637af23b2e0a059c603f596cf4c0bb284e1a23f80a1b4d945e3dc9c",
+    "d2-clarified.guard.json": "1742710e9c75be765aca03543718da2d65e0b912fd3555285c51bd70dadf9391",
+    "pilot-short-caps.guard.json": "5b5af274bb9f4e9c833056eec27d5493bc5b266ee91b597cf0b0e04552624172",
+    "long-128.guard.json": "ebcb5979636463c37d38d0d421d6bf8531fff25e16af486bb40129ecaa6006d7",
+    "long-256.guard.json": "ecdb27a5b3e51e6d7f9bad0c8d7848f406b7144209680ee7b80d51a265c6709a",
+    "long-512.guard.json": "448b0d8f84075eb947ace5f2e7d1d069d532b554e84b17fe5e00521eeaacad2f",
+    "long-1024.guard.json": "e74f4c78b24611430c8812eb26115a4b1be8a019637034d0e5c66469553bd0b1",
+    "conversation-rebuild.guard.json": "bdc4b86138f35588e5e5ceae29e0523200b6c9e3b4f0335614074042cc3710a3",
+    "independent_review.json": "2a4a7a65fc346329e94211c9cb82fbe6c8ef1eb86c6078f3a589db2b012788fb",
+    "pilot_review.json": "0befd80a6f66059e43b877f0f22af3c1e17a4516bfdfcfbbe94afed0a2da4ed0",
+    "long_review.json": "e1526e20f7a9b482ffe000768de1732107a2cb0e679fbdc02fc45dfa413688d7",
+    "diagnostic_review.json": "2f9ae58e1f4d688361548a0020b58ce6b63c0d0a664c7046dbab0bc2c31c4fdc",
+    "supplementary_review.json": "3b028c08cd0d9adf20d5f7cb4823622e9820c05ded7d209f7217e37da59288e2",
+    "baseline_review.json": "8e5d79cae02ff169d7ea2e7984d6df37572234d1c136b3f4782c4926b51158e0",
+    "baseline-chat-math.json": "d27155826c6d603ad7cdd24c31679d73619102c279548400b804f6b81c41e4bd",
+    "partial_review.json": "45b9d4034a3d6733de35c507bfef9161a150848df1b9d0795acfbe95c905e88b",
+    "code-checks.json": "4568e4ade5aeb0b7d1b611987eb9990e7898acc74831575a4f5b92d57322f146"
+  },
+  "primary_ids": [
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "F1",
+    "F2",
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5"
+  ],
+  "calculations": {
+    "primary21": {
+      "turns": 21,
+      "tokens": 1865,
+      "wall_seconds": 3080.6558973779684,
+      "total_tokens_per_second": 0.6053905603632503,
+      "decode_tokens_excluding_first": 1844,
+      "decode_seconds": 2011.648530169041,
+      "decode_tokens_per_second": 0.9166611226291338,
+      "naive_mean_individual_decode_rates": 0.9099334487577114,
+      "logical_read_bytes": 4470667232384,
+      "storage_read_bytes": 1374366089216
+    },
+    "primary_plus_A4_22": {
+      "turns": 22,
+      "tokens": 1972,
+      "wall_seconds": 3293.9860538779685,
+      "total_tokens_per_second": 0.5986667726411256,
+      "decode_tokens_excluding_first": 1950,
+      "decode_seconds": 2127.288216294037,
+      "decode_tokens_per_second": 0.9166599923150556,
+      "naive_mean_individual_decode_rates": 0.9102383069760637,
+      "logical_read_bytes": 4756434514048,
+      "storage_read_bytes": 1482789134336
+    },
+    "domain_A_primary3": {
+      "turns": 3,
+      "tokens": 447,
+      "wall_seconds": 602.7310525409921,
+      "total_tokens_per_second": 0.7416243084134101,
+      "decode_tokens_excluding_first": 444,
+      "decode_seconds": 463.5444532089896,
+      "decode_tokens_per_second": 0.9578369386718172,
+      "naive_mean_individual_decode_rates": 0.959413312328448,
+      "logical_read_bytes": 983255198336,
+      "storage_read_bytes": 239199506432
+    }
+  },
+  "all_completed_per_turn_decode_rates_checked": 35,
+  "ttft_examples": [
+    {
+      "id": "A1",
+      "source": "campaign.json",
+      "engine_ttft": 46.32951120800135,
+      "startup": 1.90327341700322,
+      "outside_engine_seconds": 0.0008966669993242249,
+      "lower": 48.23278462500457,
+      "upper": 48.233681292003894,
+      "perceived_total": 166.39291370900173
+    },
+    {
+      "id": "D2",
+      "source": "campaign-resumed.json",
+      "engine_ttft": 189.82585508299235,
+      "startup": 1.80442224998842,
+      "outside_engine_seconds": 0.0019144160032738,
+      "lower": 191.63027733298077,
+      "upper": 191.63219174898404,
+      "perceived_total": 283.39824391598813
+    },
+    {
+      "id": "E2",
+      "source": "campaign-resumed.json",
+      "engine_ttft": 20.52934649999952,
+      "startup": 0.0,
+      "outside_engine_seconds": 0.0015339589881477877,
+      "lower": 20.52934649999952,
+      "upper": 20.530880458987667,
+      "perceived_total": 57.31145699998888
+    }
+  ],
+  "D2": {
+    "failed_prefix_tokens": 77,
+    "replayed_complete_tokens": 79,
+    "prefix_equal": true,
+    "stop_reason": "eos",
+    "first_line": "Date actuelle : 8 avril ; ancien créneau annulé : 15 mai.",
+    "quality_scope": "Ambiguous date wording; runtime completion is separate from document interpretation."
+  },
+  "annotations": {
+    "counts": {
+      "independent_review.json": 21,
+      "pilot_review.json": 2,
+      "long_review.json": 4,
+      "diagnostic_review.json": 8,
+      "supplementary_review.json": 1,
+      "baseline_review.json": 1,
+      "partial_review.json": 1
+    },
+    "total_verified_bindings": 38,
+    "bindings": [
+      {
+        "review": "independent_review.json",
+        "id": "A1",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "9bbc95a95db9ad482303047dc2336e17227051f2ad748a08aadb913f452f7392",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "A2",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "8fa251ccba299b267f1ba9dec2a2a7707b8830411bac8260575dcc336cebee69",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "A3",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "cc27cc14c302c6b575dff08ca7532c00305ce2b89e00705b150b8467a7039a4d",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "B1",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "3dda214782971193e60321360b7ea18e27956aaf71abbe65c425c5988d0fef9d",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "B2",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "8863c4620753c52a53fae3ae285df957551a04e6f07951c0be67a525a7b5f441",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "C1",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "c897445314e3d7d6806333282bc3ed70152354c72844c59d80b01bcae9525bb5",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "C2",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "2c09f2be64423a5dc0e84da4be9bab42a48c29b33e002a63a0c79f6e9333e604",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "D1",
+        "source_file": "campaign.json",
+        "source_response_key": "text",
+        "response_sha256": "5b833614d90675b7aff9c963ce9a430dfd00d6fada2ab88e432299b5f60b0ed9",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "D2",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "efe3afa03f4184ea738681fe3dd302627a9365708236e70e4f2ee928a7e2070b",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "E1",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "3b3107df68628e3c6f8e247d72935cfa2d20d15f1ac41da1f9dc635f3a150c24",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "E2",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "499e1dbcb91ded3b440cb3464d127342152a07309b11628cffa59338388e2901",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "E3",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "58216c7657afcbccab5d33e1e96d43ddb7a74a6950e9960a4123ae3348910e30",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "E4",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "c55cabddfd59e28c3cadcd38d67cd178c9a47428820cc9fd6ed5f1babbda94dc",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "E5",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "037814f597afe1cd2ffc763659944206fbfe315b81a54d8b9e23454557bc3274",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "F1",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "71decdd52b6ebf91af48f0197d59fc61e481f7cc10179a685b858a2706824fea",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "F2",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "e676fc122570698174b59d73f89441b0bd844ee40def7aa1c6215c9ae78c35e6",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "G1",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "c616ae2ed209812a087858ff8f7ced793fcd1a6055c3514c569adefa63374fb9",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "G2",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "a9593ab179458b1caea5c39109aa2e00126ba341053d5cc1ac6d4a3f5671d562",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "G3",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "a542384d17e15ab65db42aa5de0bd07053b3c8ae6568d1d82681fb3592f54b21",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "G4",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "1ab99cef90a55d8ae4470e3d845e2b1758f1e4d280c754843b9db6bf2c50a3a3",
+        "matches": true
+      },
+      {
+        "review": "independent_review.json",
+        "id": "G5",
+        "source_file": "campaign-resumed.json",
+        "source_response_key": "text",
+        "response_sha256": "b4980654ecc01e6211dd4e9a2903d41b7a15de895c5bc800b49e15a91aae69fd",
+        "matches": true
+      },
+      {
+        "review": "pilot_review.json",
+        "id": "A1",
+        "source_file": "pilot-short-caps.json",
+        "source_response_key": "text",
+        "response_sha256": "bedd63d0948a15debcfb321c1e4fcb72110f5f3784475ebf84385f5e033e53d8",
+        "matches": true
+      },
+      {
+        "review": "pilot_review.json",
+        "id": "A2",
+        "source_file": "pilot-short-caps.json",
+        "source_response_key": "text",
+        "response_sha256": "a082c9bdb23391ee8d4fa29b11c03cad88c84720b442a396dee8f9f658817fc3",
+        "matches": true
+      },
+      {
+        "review": "long_review.json",
+        "id": "L128",
+        "source_file": "long-128.json",
+        "source_response_key": "text",
+        "response_sha256": "1429787405395ca9cd10b6c680c81e60faa97735c3d93a17972d5e043b3476fe",
+        "matches": true
+      },
+      {
+        "review": "long_review.json",
+        "id": "L256",
+        "source_file": "long-256.json",
+        "source_response_key": "text",
+        "response_sha256": "123637e47d131c77e53b6e09ad8942938b091f89d068fe87bd64b18b4890ea1c",
+        "matches": true
+      },
+      {
+        "review": "long_review.json",
+        "id": "L512",
+        "source_file": "long-512.json",
+        "source_response_key": "text",
+        "response_sha256": "d6996bb37a488df1e2e3762e964a135317a094805b62bcba3cada704ca3307e2",
+        "matches": true
+      },
+      {
+        "review": "long_review.json",
+        "id": "L1024",
+        "source_file": "long-1024.json",
+        "source_response_key": "partial_text",
+        "response_sha256": "85009e30109704d330b574f7ff4a0a0783d0ae056fdc3c85077d047fa99b1f8f",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "E1",
+        "source_file": "conversation-rebuild.json",
+        "source_response_key": "text",
+        "response_sha256": "3b3107df68628e3c6f8e247d72935cfa2d20d15f1ac41da1f9dc635f3a150c24",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "E2",
+        "source_file": "conversation-rebuild.json",
+        "source_response_key": "text",
+        "response_sha256": "499e1dbcb91ded3b440cb3464d127342152a07309b11628cffa59338388e2901",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "E3",
+        "source_file": "conversation-rebuild.json",
+        "source_response_key": "text",
+        "response_sha256": "58216c7657afcbccab5d33e1e96d43ddb7a74a6950e9960a4123ae3348910e30",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "E4",
+        "source_file": "conversation-rebuild.json",
+        "source_response_key": "text",
+        "response_sha256": "c55cabddfd59e28c3cadcd38d67cd178c9a47428820cc9fd6ed5f1babbda94dc",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "E5",
+        "source_file": "conversation-rebuild.json",
+        "source_response_key": "text",
+        "response_sha256": "037814f597afe1cd2ffc763659944206fbfe315b81a54d8b9e23454557bc3274",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "A2_concis",
+        "source_file": "concision-control.json",
+        "source_response_key": "text",
+        "response_sha256": "261a68d2d58306982d9eb690980d42a5b1ebb395b8688300ebda9a1fd51654f4",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "F2_concis",
+        "source_file": "f2-concision-control.json",
+        "source_response_key": "text",
+        "response_sha256": "be8f8a15b170094ac0f6a35e2ecf55a583af1c28764691d5ed2a2fb45e530bf9",
+        "matches": true
+      },
+      {
+        "review": "diagnostic_review.json",
+        "id": "D2_clarified",
+        "source_file": "d2-clarified.json",
+        "source_response_key": "text",
+        "response_sha256": "8c1677269d7224d04ff5b559ae871584aabb72779a31e5be9fd1e6033ee38dde",
+        "matches": true
+      },
+      {
+        "review": "supplementary_review.json",
+        "id": "A4",
+        "source_file": "hard-reasoning.json",
+        "source_response_key": "text",
+        "response_sha256": "bf42f85d51619171821d9f3552ca38ad99fe5ab834f4eaa135b2556bbd60c2e5",
+        "matches": true
+      },
+      {
+        "review": "baseline_review.json",
+        "id": "baseline-chat-math",
+        "source_file": "baseline-chat-math.json",
+        "source_response_key": "text",
+        "response_sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+        "matches": true
+      },
+      {
+        "review": "partial_review.json",
+        "id": "D2",
+        "source_file": "campaign.json",
+        "source_response_key": "partial_text",
+        "response_sha256": "7e0bff1b15ee7b90b2ac4c6996af02efbb77c48709fae4c9d7c395939aad0d46",
+        "matches": true
+      }
+    ],
+    "primary_verdicts": {
+      "reussi": 16,
+      "partiel": 2,
+      "indetermine": 1,
+      "echec_critere": 2
+    },
+    "A4_scores": {
+      "exactitude_factuelle": 5,
+      "respect_instructions": 4,
+      "coherence": 5,
+      "completude": 5,
+      "utilite_reelle": 5
+    },
+    "A4_instruction_rationale": "Quatre lignes sans préambule et calcul conditionnel correct. La première probabilité n’est pas écrite sous forme a/b, contrairement à la demande de fractions exactes."
+  },
+  "code_checks": {
+    "source_sha256": "4568e4ade5aeb0b7d1b611987eb9990e7898acc74831575a4f5b92d57322f146",
+    "functions_passed": 2,
+    "cases_passed": 8,
+    "sandbox_verified": true
+  },
+  "ablation_E": {
+    "pairs": [
+      {
+        "id": "E1",
+        "input_ids_equal": true,
+        "output_ids_equal": true,
+        "kv_total_seconds": 79.61093970898946,
+        "rebuild_total_seconds": 76.11920329098939,
+        "ratio_rebuild_over_kv": 0.9561399924336556,
+        "reduction_percent": -4.587195171567715
+      },
+      {
+        "id": "E2",
+        "input_ids_equal": true,
+        "output_ids_equal": true,
+        "kv_total_seconds": 57.31145699998888,
+        "rebuild_total_seconds": 103.73404125000525,
+        "ratio_rebuild_over_kv": 1.8100053057458543,
+        "reduction_percent": 44.751543168105414
+      },
+      {
+        "id": "E3",
+        "input_ids_equal": true,
+        "output_ids_equal": true,
+        "kv_total_seconds": 64.83850470899779,
+        "rebuild_total_seconds": 146.39937774999999,
+        "ratio_rebuild_over_kv": 2.257907988579567,
+        "reduction_percent": 55.71121564483712
+      },
+      {
+        "id": "E4",
+        "input_ids_equal": true,
+        "output_ids_equal": true,
+        "kv_total_seconds": 139.9543252500007,
+        "rebuild_total_seconds": 269.08673916599946,
+        "ratio_rebuild_over_kv": 1.922675406317949,
+        "reduction_percent": 47.989140719542135
+      },
+      {
+        "id": "E5",
+        "input_ids_equal": true,
+        "output_ids_equal": true,
+        "kv_total_seconds": 120.05208279199724,
+        "rebuild_total_seconds": 321.76921233300527,
+        "ratio_rebuild_over_kv": 2.680246813297725,
+        "reduction_percent": 62.690003210203656
+      }
+    ],
+    "E2_E5_pairs": 4,
+    "kv_sum_seconds": 382.1563697509846,
+    "rebuild_sum_seconds": 840.98937049901,
+    "ratio_of_sums": 2.200642033121164
+  },
+  "long_ladder": {
+    "completed_caps": [
+      128,
+      256,
+      512
+    ],
+    "completed_prefix_pairs": [
+      {
+        "smaller": 128,
+        "larger": 256,
+        "prefix_equal": true
+      },
+      {
+        "smaller": 128,
+        "larger": 512,
+        "prefix_equal": true
+      },
+      {
+        "smaller": 256,
+        "larger": 512,
+        "prefix_equal": true
+      }
+    ],
+    "requested1024_validated": false,
+    "raw1024_status": "started",
+    "effective1024_status": "interrompu_garde",
+    "fragment1024_tokens": 244,
+    "guard_exit_code": -15,
+    "guard_violation": "system_swap_growth",
+    "swap_growth_bytes": 170459136,
+    "swap_growth_limit_bytes": 134217728,
+    "fragment_prefix_matches256": true
+  },
+  "sources": {
+    "campaign.json": {
+      "declared": 45,
+      "current_matches": 42,
+      "mismatches": [
+        {
+          "path": "air_llm/airllm/nextgen/gguf_qwen.py",
+          "recorded_sha256": "821f23fb592288553e46ebe90112f4d6fa55c5d2da53495da7038db6664074a1",
+          "current_sha256": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/gguf_qwen.py"
+          ]
+        },
+        {
+          "path": "air_llm/airllm/nextgen/qwen_moe.py",
+          "recorded_sha256": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2",
+          "current_sha256": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/qwen_moe.py"
+          ]
+        },
+        {
+          "path": "benchmarks/evaluate_real_world.py",
+          "recorded_sha256": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27",
+          "current_sha256": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/evaluate_real_world.py"
+          ]
+        }
+      ]
+    },
+    "campaign-resumed.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "hard-reasoning.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "concision-control.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "f2-concision-control.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "d2-clarified.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "pilot-short-caps.json": {
+      "declared": 45,
+      "current_matches": 42,
+      "mismatches": [
+        {
+          "path": "air_llm/airllm/nextgen/gguf_qwen.py",
+          "recorded_sha256": "821f23fb592288553e46ebe90112f4d6fa55c5d2da53495da7038db6664074a1",
+          "current_sha256": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/gguf_qwen.py"
+          ]
+        },
+        {
+          "path": "air_llm/airllm/nextgen/qwen_moe.py",
+          "recorded_sha256": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2",
+          "current_sha256": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/qwen_moe.py"
+          ]
+        },
+        {
+          "path": "benchmarks/evaluate_real_world.py",
+          "recorded_sha256": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27",
+          "current_sha256": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17",
+          "matching_archives": [
+            "evidence-real-world/sources_before_router_fix/evaluate_real_world.py"
+          ]
+        }
+      ]
+    },
+    "long-128.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "long-256.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "long-512.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "long-1024.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    },
+    "conversation-rebuild.json": {
+      "declared": 45,
+      "current_matches": 45,
+      "mismatches": []
+    }
+  },
+  "raw_inputs_unchanged_during_audit": true
+}

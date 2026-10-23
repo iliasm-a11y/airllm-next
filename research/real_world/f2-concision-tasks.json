@@ -1,0 +1,30 @@
+[
+  {
+    "id": "F2_concision",
+    "domain": "F_donnees_budget",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation. Réponds sans préambule, en quatre lignes maximum.",
+    "turns": [
+      {
+        "id": "F2_concis",
+        "prompt": "Pour 10 participants, budget ferme de 500 € livraison comprise. Options fictives : A = 38 €/personne + 80 € livraison, 10 places ; B = 44 €/personne + 20 € livraison, 12 places ; C = 35 €/personne + 40 € livraison, 8 places. Le critère prioritaire est d’accueillir les 10, puis minimiser le coût, puis préférer la plus grande capacité en cas d’égalité. Choisis une option et justifie, avec le total de chacune.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Appliquer des critères hiérarchisés avec exclusion de capacité.",
+          "expected": "A=460 €, B=460 €, C=390 € mais insuffisant ; choisir B, égalité coût et 12 places.",
+          "contains_all": [
+            "460",
+            "390"
+          ],
+          "rubric": [
+            "Choisit B grâce au départage sur capacité.",
+            "Exclut C car 8 places pour 10 personnes.",
+            "Les trois totaux sont corrects.",
+            "Sans préambule, quatre lignes maximum selon la consigne système additionnelle."
+          ]
+        }
+      }
+    ],
+    "comparison_role": "post_observation_concision_control",
+    "origin_turn_id": "F2"
+  }
+]

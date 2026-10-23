@@ -56,18 +56,57 @@ class GGUFTokenizer:
     def decode(self, ids, skip_special_tokens=False):
         return self.engine.decode(list(map(int, ids)), skip_special_tokens=skip_special_tokens)
 
-    def apply_chat_template(self, messages, *, tokenize=True, add_generation_prompt=True, enable_thinking=False):
+    def apply_chat_template(self, messages, *, tokenize=True, add_generation_prompt=True,
+                            enable_thinking=False, preserve_thinking=False):
+        """Render the official Qwen3.6 text-only conversation contract.
+
+        ``enable_thinking=False`` is an explicit adapter default. The official
+        template opens a thinking block when it is enabled. Historical thinking
+        is omitted by that template unless ``preserve_thinking=True``; the latter
+        also makes completed assistant turns retain the generation prefix.
+        """
+        from collections.abc import Mapping
+
         if not messages:
             raise ValueError('At least one text message is required')
-        text = ''
-        for message in messages:
-            if set(message) != {'role', 'content'} or message['role'] not in ('system', 'user', 'assistant') or not isinstance(message['content'], str):
+        if any(type(flag) is not bool for flag in
+               (tokenize, add_generation_prompt, enable_thinking, preserve_thinking)):
+            raise TypeError('Chat template flags must be booleans')
+        for index, message in enumerate(messages):
+            if (not isinstance(message, Mapping) or not {'role', 'content'} <= set(message)
+                    or set(message) - {'role', 'content', 'reasoning_content'}
+                    or message['role'] not in ('system', 'user', 'assistant')
+                    or not isinstance(message['content'], str)):
                 raise NotImplementedError('This adapter supports plain text system/user/assistant messages only')
-            if message['role'] == 'assistant' and '<think>' in message['content']:
-                raise NotImplementedError('Rendering existing thinking messages requires the full official template')
-            text += f"<|im_start|>{message['role']}\n{message['content'].strip()}<|im_end|>\n"
+            if message['role'] == 'system' and index != 0:
+                raise ValueError('System message must be at the beginning')
+            if 'reasoning_content' in message and (message['role'] != 'assistant'
+                    or not isinstance(message['reasoning_content'], str)):
+                raise NotImplementedError('reasoning_content must be text on an assistant message')
+
+        # Match the official last-query rule even when tool-response delimiters
+        # happen to occur in text. Actual tool messages remain unsupported.
+        user_indices = [i for i, message in enumerate(messages)
+                        if message['role'] == 'user'
+                        and not (message['content'].strip().startswith('<tool_response>')
+                                 and message['content'].strip().endswith('</tool_response>'))]
+        if not user_indices:
+            raise ValueError('No user query found in messages')
+        last_query_index = user_indices[-1]
+        pieces = []
+        for index, message in enumerate(messages):
+            content = message['content'].strip()
+            pieces.append(f"<|im_start|>{message['role']}\n")
+            if message['role'] == 'assistant':
+                reasoning = message.get('reasoning_content', '')
+                if 'reasoning_content' not in message and '</think>' in content:
+                    reasoning = content.split('</think>')[0].rstrip('\n').split('<think>')[-1].lstrip('\n')
+                    content = content.split('</think>')[-1].lstrip('\n')
+                if preserve_thinking or index > last_query_index:
+                    pieces.append(f'<think>\n{reasoning.strip()}\n</think>\n\n')
+            pieces.append(content + '<|im_end|>\n')
         if add_generation_prompt:
-            text += '<|im_start|>assistant\n'
-            if not enable_thinking:
-                text += '<think>\n\n</think>\n\n'
+            pieces.append('<|im_start|>assistant\n')
+            pieces.append('<think>\n' if enable_thinking else '<think>\n\n</think>\n\n')
+        text = ''.join(pieces)
         return self.encode(text) if tokenize else text

@@ -1,0 +1,108 @@
+{
+  "transformers_version": "5.20.2",
+  "source_file": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py",
+  "source_sha256": "5d6a6d8ee858c992c939bd1069d0396025db551420e4c1acd3479ce691f9c4f5",
+  "router_source": "class Qwen3_5MoeTopKRouter(nn.Module):\n    def __init__(self, config):\n        super().__init__()\n        self.top_k = config.num_experts_per_tok\n        self.num_experts = config.num_experts\n        self.hidden_dim = config.hidden_size\n        self.weight = nn.Parameter(torch.zeros(self.num_experts, self.hidden_dim))\n\n    def forward(self, hidden_states):\n        hidden_states = hidden_states.reshape(-1, self.hidden_dim)\n        router_logits = F.linear(hidden_states, self.weight)  # (seq_len, num_experts)\n        router_probs = torch.nn.functional.softmax(router_logits, dtype=torch.float, dim=-1)\n        router_top_value, router_indices = torch.topk(router_probs, self.top_k, dim=-1)  # (seq_len, top_k)\n        router_top_value /= router_top_value.sum(dim=-1, keepdim=True)\n        router_top_value = router_top_value.to(router_logits.dtype)\n        router_scores = router_top_value\n        return router_logits, router_scores, router_indices\n",
+  "reference_contract": "CPU F.linear on full flat chunk, softmax dtype=float32, topk, selected-score normalization, cast back to router logits dtype",
+  "local_torch_version": "2.14.1",
+  "frozen_fixed_source_sha256": {
+    "air_llm/airllm/nextgen/qwen_moe.py": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e",
+    "air_llm/airllm/nextgen/gguf_qwen.py": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99",
+    "tests_next/test_qwen_router_ties.py": "8b89ab77c50e6ac4722eeff681a2b1303f0853309d4077d3f48539b66c22c7bc"
+  },
+  "cpu_probe": "evidence-real-world/router-reference-probe.json",
+  "captured_gate_regression": "evidence-real-world/router-fix-tests-batch.xml",
+  "tests_passed": 13,
+  "full_model_fixed_replay_status": "D2 completed with legitimate EOS and exact 77-token pre-failure prefix; the response date differs from the intended event-date criterion under ambiguous wording",
+  "full_model_fixed_replay": {
+    "evidence_file": "evidence-real-world/campaign-resumed.json",
+    "run_status_when_read": "started",
+    "run_file_sha256_at_snapshot": "8185948c887b109ce3d8223e9b9c9b84d2129f4a3fae0d3b30f39fba08c9aadd",
+    "file_hash_scope": "Snapshot of a cumulative file while later turns may still be appended; use canonical D2 turn hash for this record.",
+    "turn_id": "D2",
+    "turn_record_sha256": "94ceba9a446dd0dfcea658f03c8820b04068008bfa5a69e4b8ebf20ac6910477",
+    "turn_hash_method": "UTF-8 json.dumps(turn, ensure_ascii=False, sort_keys=True, separators=(comma,colon))",
+    "response_sha256": "efe3afa03f4184ea738681fe3dd302627a9365708236e70e4f2ee928a7e2070b",
+    "response_text": "Date actuelle : 8 avril ; ancien créneau annulé : 15 mai.\nTotal dépenses prévues : 1 632 € ; marge sur budget : 168 €.\nPoints non confirmés : confirmation écrite de l’intervenante et détails des allergies alimentaires.\nResponsable des repas : Inès ; échéance : avant le 13 mai.",
+    "status": "completed",
+    "stop_reason": "eos",
+    "generated_count": 79,
+    "generated_ids_sha256": "5a59540a7bb3ca0d52fbb29023c37b2264c20450b1971e919471c8e3ffbea7ce",
+    "trailing_generated_ids_after_original_failure": [
+      13,
+      248046
+    ],
+    "original_failure_file": "evidence-real-world/campaign-before-router-fix.json",
+    "original_failure_file_sha256": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164",
+    "original_error": "ValueError: Qwen router top-k boundary tie: reference tie-breaking is not validated",
+    "prefix_compared_tokens": 77,
+    "prefix_exact": true,
+    "prompt_exact_match": true,
+    "token_cap_exact_match": true,
+    "response_wall_seconds": 281.5938216659997,
+    "ttft_seconds": 189.82585508299235,
+    "memory": {
+      "before": {
+        "available_bytes": 5036457984,
+        "physical_bytes": 17179869184,
+        "swap_used_bytes": 2769616896,
+        "pressure_level": 1
+      },
+      "after": {
+        "available_bytes": 3928178688,
+        "physical_bytes": 17179869184,
+        "swap_used_bytes": 2769616896,
+        "pressure_level": 1
+      },
+      "sampled_peak_rss_bytes": 531431424,
+      "maximum_swap_growth_bytes": 0,
+      "minimum_available_bytes": 3928178688,
+      "samples": 5134,
+      "interval_seconds": 0.05
+    },
+    "router_stats": {
+      "qwen_router_tie_checks": 4360,
+      "qwen_router_tie_check_seconds": 1.2689161722519202,
+      "qwen_router_tie_workspace_peak_bytes": 8433228,
+      "qwen_router_tie_available_bytes": 4055941120,
+      "qwen_router_tie_import_allowance_bytes": 402653184,
+      "qwen_router_tie_reference_import_seconds": 0.6588530829903902,
+      "qwen_router_tie_reference_version": "2.14.1",
+      "qwen_router_tie_reference_device": "cpu",
+      "qwen_router_tie_reference_operation": "linear_softmax_topk_normalize",
+      "qwen_router_tie_host_copy_seconds": 6.995799776632339e-05,
+      "qwen_router_tie_cpu_linear_seconds": 0.003924832999473438,
+      "qwen_router_tie_cpu_softmax_seconds": 0.000832499994430691,
+      "qwen_router_tie_cpu_topk_normalize_seconds": 0.005256542004644871,
+      "qwen_router_tie_cpu_router_seconds": 0.010024500006693415,
+      "qwen_router_tie_fallback_calls": 1,
+      "qwen_router_tie_fallback_rows": 1,
+      "qwen_router_tie_reference_rows": 1,
+      "qwen_router_tie_fallback_seconds": 0.6731501250033034
+    },
+    "source_sha256": {
+      "air_llm/airllm/nextgen/qwen_moe.py": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e",
+      "air_llm/airllm/nextgen/gguf_qwen.py": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99",
+      "air_llm/airllm/nextgen/gguf_chat.py": "6af7f468b1de6282eb366fd8918732bd5f95792e4a5bad1e5b2b8a11b5e15074",
+      "benchmarks/evaluate_real_world.py": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17"
+    },
+    "sources_match_current": true,
+    "timing_attribution_limit": "Do not treat before/after total-duration difference as causal router overhead: cache state and completed endpoints differ. Direct fallback instrumentation measured its own cost.",
+    "content_interpretation_limit": "The planned criterion expected event date 22 mai, while the model returned 8 avril, the documented version date. The wording date actuelle is ambiguous; this alone does not prove a model reading error. A clarified-prompt test must be kept separate."
+  },
+  "public_capture_test_policy": {
+    "environment_variable": "AIRLLM_TEST_ROUTER_CAPTURE",
+    "unset_behavior": "Explicit skip of the real captured Metal regression; synthetic CPU routing tests still run.",
+    "max_capture_file_bytes": 8388608,
+    "binary_fixture_publication": "NPZ stays local; public JSON, hashes and replay script remain available.",
+    "test_only_source_sha256_after_explicit_fixture_opt_in": "e0a4e5ca953fded14593eb09e6320d0925078be0f9a40f496b2f43a929b3a4f9",
+    "targeted_public_validation": {
+      "passed": 12,
+      "skipped": 1,
+      "skip_reason": "Set AIRLLM_TEST_ROUTER_CAPTURE to the local, unpublished real router NPZ",
+      "log": "evidence-real-world/router-public-tests.log",
+      "guard": "evidence-real-world/router-public-tests.guard.json",
+      "concurrent_execution_note": "This 1.14-second CPU-only validation started immediately before the instruction to defer tests during active inference; no GPU work occurred. This brief concurrency is disclosed, not treated as a clean timing experiment."
+    }
+  }
+}

@@ -290,7 +290,11 @@ class GGUFQwenSparseMLP:
 
     def __call__(self,x):
         mx=self.mx;p=self.p;flat=x.reshape(-1,x.shape[-1])
-        ids,scores=qwen_route(mx,x,self.r.get(p+'ffn_gate_inp.weight'),self.c)
+        # Explicit local CPU-reference convention only for exact probability
+        # boundary ties. The generic Qwen route keeps its fail-closed default.
+        ids,scores=qwen_route(mx,x,self.r.get(p+'ffn_gate_inp.weight'),self.c,
+            tie_policy='torch_cpu_reference',workspace_bytes=self.r.cfg.workspace_bytes,
+            reserve_bytes=self.r.cfg.reserve_bytes,stats=self.r.stats)
         host=np.asarray(ids);selected=np.unique(host);output=mx.zeros_like(flat)
         self.routes={int(e):int(np.count_nonzero(host==e)) for e in selected}
         self.r.stats['routed_expert_uses']+=len(selected)

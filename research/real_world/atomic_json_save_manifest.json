@@ -1,0 +1,30 @@
+{
+  "kind": "staged_atomic_json_save_patch",
+  "target": "benchmarks/evaluate_real_world.py",
+  "original_sha256": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27",
+  "patched_sha256": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17",
+  "patch_sha256": "dcd330da614b1557d29a53340a8c021600a9d777baa7c8f60553d5a937d00014",
+  "applied_to_frozen_harness": false,
+  "change_scope": "import NamedTemporaryFile plus save only; no model/worker logic modifications",
+  "json_policy": "UTF-8, ensure_ascii=False, allow_nan=False; reject incomplete/non-standard JSON without replacing previous snapshot",
+  "frozen_harness_sha256_after_tests": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27",
+  "frozen_harness_unchanged": true,
+  "tests": {
+    "path": "research/real_world/tests/test_atomic_json_save.py",
+    "passed": 9,
+    "wall_seconds": 0.25,
+    "command": "python -m pytest --noconftest research/real_world/tests/test_atomic_json_save.py -q",
+    "patch_applied_only_to_temporary_copies": true
+  },
+  "limitations": [
+    "Atomic replacement protects process interruption, not certified power-loss durability.",
+    "A process killed before finally may leave an unused temporary file; previous complete JSON remains available."
+  ],
+  "historical_scope": "Preparation manifest before adoption; original fields describe that initial snapshot, not the latest harness.",
+  "adoption_observed": {
+    "current_source_sha256": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17",
+    "matches_staged_patched_sha256": true,
+    "public_patch_file_required": false,
+    "reason": "Current atomic implementation and archived version1 source preserve the change; staging patch remains local."
+  }
+}

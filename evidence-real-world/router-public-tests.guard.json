@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "-m",
+    "pytest",
+    "--noconftest",
+    "tests_next/test_qwen_router_ties.py",
+    "-q",
+    "-rs",
+    "--junitxml=evidence-real-world/router-public-tests.xml"
+  ],
+  "limits": {
+    "rss_bytes": 1073741824,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 402653184,
+    "timeout_seconds": 60,
+    "interval_seconds": 0.05
+  },
+  "before": {
+    "available_bytes": 3995303936,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2744451072,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 19,
+  "sampled_peak_rss_bytes": 238288896,
+  "minimum_available_bytes": 3981590528,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 3981590528,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2744451072,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 1.1410810840025079
+}

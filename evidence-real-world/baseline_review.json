@@ -1,0 +1,89 @@
+{
+  "status": "completed",
+  "scope": "Évaluation du contrôle initial de chat 2+2, hors campagne principale et hors contrôles additionnels.",
+  "method": "Lecture intégrale des seules réponses dont status=completed ; notes de qualité distinctes des contrôles objectifs. Aucun contenu corrigé ne remplace la sortie brute. Évaluateur Codex distinct du moteur testé, sans prétention de reproductibilité inter-évaluateurs.",
+  "score_axes": [
+    "exactitude_factuelle",
+    "respect_instructions",
+    "coherence",
+    "completude",
+    "utilite_reelle"
+  ],
+  "scale": {
+    "0": "inutilisable ou contraire au critère",
+    "1": "défauts majeurs",
+    "2": "plusieurs erreurs ou très incomplet",
+    "3": "utile avec limite réelle",
+    "4": "correct avec défaut mineur",
+    "5": "satisfait pleinement le critère dans le périmètre"
+  },
+  "verdict_rule": {
+    "reussi": "Résultats essentiels corrects et livrés, contraintes demandées respectées ; aucune réserve substantielle observée dans le périmètre du test.",
+    "partiel": "Un résultat essentiel utile est livré, mais un autre résultat, une justification ou une contrainte de forme manque ou présente un défaut ; aucune réussite stricte revendiquée.",
+    "echec_critere": "Résultat essentiel faux ou aucun résultat essentiel livré pour une demande non ambiguë ; cause éventuelle distincte du constat.",
+    "indetermine": "Ambiguïté du protocole ou preuve insuffisante empêchant un jugement univoque sur le critère essentiel ; ne compte ni comme réussite stricte ni comme erreur certaine du modèle."
+  },
+  "reviewed_turns": [
+    {
+      "id": "baseline-chat-math",
+      "session_id": "baseline-chat-math",
+      "source_file": "baseline-chat-math.json",
+      "source_response_key": "text",
+      "response_sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "response_text": "4",
+      "prompt": "Combien font 2+2 ? Réponds uniquement par le nombre.",
+      "prompt_source": "baseline-chat-math.guard.json command --prompt ; input_ids conservés dans le résultat",
+      "termination": "EOS248046 observé comme second token généré",
+      "generated_ids": [
+        19,
+        248046
+      ],
+      "wall_seconds_including_tokenizer": 15.367992209001386,
+      "verdict": "reussi",
+      "verdict_rationale": "Répond exactement 4 et uniquement ce nombre au calcul demandé ; contrôle initial trivial distinct de la campagne.",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "2+2=4, résultat exact."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "La réponse est uniquement le nombre 4, sans texte extérieur."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Aucune contradiction ; réponse directe au calcul."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Le seul résultat demandé est livré puis un EOS est généré."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Résout entièrement cette demande élémentaire dans son périmètre."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Résultat et format exacts",
+          "result": "pass",
+          "evidence": "text vaut exactement la chaîne 4 ; prompt demande seulement le nombre."
+        },
+        {
+          "check": "Arrêt naturel",
+          "result": "pass",
+          "evidence": "Deux identifiants générés :19 puis 248046 ; second identifiant EOS, processus terminé avec code 0."
+        }
+      ],
+      "uncertainties": [
+        "Ce contrôle élémentaire ne mesure ni raisonnement complexe ni capacité d’assistant général ; il reste hors des 21 tâches principales."
+      ]
+    }
+  ],
+  "verdict_counts": {
+    "reussi": 1,
+    "partiel": 0,
+    "echec_critere": 0,
+    "indetermine": 0
+  }
+}

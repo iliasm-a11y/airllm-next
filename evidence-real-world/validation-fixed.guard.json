@@ -1,0 +1,50 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "-m",
+    "pytest",
+    "tests_next",
+    "tests_ultra",
+    "air_llm/tests",
+    "research/exact_io/tests",
+    "research/v5/test_streamed_reference.py",
+    "benchmarks/test_quantized_granite_benchmark.py",
+    "benchmarks/test_quantized_corpus_quality.py",
+    "benchmarks/test_velocity_quantization.py",
+    "research/real_world/tests",
+    "--ignore=air_llm/tests/test_streaming_gpu.py",
+    "-q",
+    "--junitxml=evidence-real-world/tests-fixed.xml"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 805306368,
+    "timeout_seconds": 600,
+    "interval_seconds": 0.05
+  },
+  "before": {
+    "available_bytes": 4913709056,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2769616896,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 359,
+  "sampled_peak_rss_bytes": 605814784,
+  "minimum_available_bytes": 4819533824,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "observed_descendant_count": 16,
+  "after": {
+    "available_bytes": 4899110912,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2769616896,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 22.789248917004443
+}

@@ -1,0 +1,386 @@
+{
+  "kind": "exact_model_code_restricted_execution",
+  "limits": {
+    "cpu_seconds": 3,
+    "requested_address_space_bytes": 268435456,
+    "sampled_rss_stop_bytes": 268435456,
+    "address_space_limit_applied": false,
+    "data_limit_applied": false,
+    "darwin_fallback": "parent RSS sampling when AS/DATA unsupported; not a strict process-wide allocation cap",
+    "file_size_bytes": 1048576,
+    "file_descriptors": 16
+  },
+  "restrictions": [
+    "sandbox-exec: deny network",
+    "sandbox-exec: deny process-fork",
+    "sandbox-exec: deny file-write outside temporary directory",
+    "Python -I -S",
+    "AST allowlist",
+    "explicit safe builtins"
+  ],
+  "sandbox_probes": {
+    "exit_code": 0,
+    "stdout": "{\"rlimit_as\": [9223372036854775807, 9223372036854775807], \"rlimit_data\": [9223372036854775807, 9223372036854775807], \"rlimit_cpu\": [3, 3], \"rlimit_fsize\": [1048576, 1048576], \"rlimit_nofile\": [16, 16], \"network_denied\": true, \"outside_write_denied\": true, \"fork_denied\": true, \"inside_write_allowed\": true}\n",
+    "stderr": "",
+    "timed_out": false,
+    "memory_stopped": false,
+    "sampled_peak_rss_bytes": 1212416,
+    "rss_poll_interval_seconds": 0.01,
+    "wall_seconds": 0.03778087500541005,
+    "checks": {
+      "rlimit_as": [
+        9223372036854775807,
+        9223372036854775807
+      ],
+      "rlimit_data": [
+        9223372036854775807,
+        9223372036854775807
+      ],
+      "rlimit_cpu": [
+        3,
+        3
+      ],
+      "rlimit_fsize": [
+        1048576,
+        1048576
+      ],
+      "rlimit_nofile": [
+        16,
+        16
+      ],
+      "network_denied": true,
+      "outside_write_denied": true,
+      "fork_denied": true,
+      "inside_write_allowed": true
+    },
+    "passed": true
+  },
+  "results": [
+    {
+      "response_text": "def dedoublonne(valeurs):\n    resultat = []\n    vus = []\n    for val in valeurs:\n        if isinstance(val, list):\n            cle = tuple(val)\n        else:\n            cle = val\n        if cle not in vus:\n            vus.append(cle)\n            resultat.append(val)\n    return resultat",
+      "response_sha256": "3dda214782971193e60321360b7ea18e27956aaf71abbe65c425c5988d0fef9d",
+      "tests": {
+        "function": "dedoublonne",
+        "cases": [
+          {
+            "args": [
+              [
+                3,
+                1,
+                3,
+                2,
+                1
+              ]
+            ],
+            "expected": [
+              3,
+              1,
+              2
+            ]
+          },
+          {
+            "args": [
+              []
+            ],
+            "expected": []
+          },
+          {
+            "args": [
+              [
+                [
+                  1
+                ],
+                [
+                  1
+                ],
+                [
+                  2
+                ]
+              ]
+            ],
+            "expected": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ]
+          },
+          {
+            "args": [
+              [
+                "a",
+                "b",
+                "a"
+              ]
+            ],
+            "expected": [
+              "a",
+              "b"
+            ]
+          }
+        ],
+        "assert_input_unchanged": true,
+        "timeout_seconds": 2
+      },
+      "executed": true,
+      "passed": true,
+      "source": "def dedoublonne(valeurs):\n    resultat = []\n    vus = []\n    for val in valeurs:\n        if isinstance(val, list):\n            cle = tuple(val)\n        else:\n            cle = val\n        if cle not in vus:\n            vus.append(cle)\n            resultat.append(val)\n    return resultat",
+      "source_sha256": "3dda214782971193e60321360b7ea18e27956aaf71abbe65c425c5988d0fef9d",
+      "extraction": {
+        "mode": "raw_response",
+        "format_code_only": true
+      },
+      "ast_accepted": true,
+      "process": {
+        "exit_code": 0,
+        "stdout": "{\"cases\": [{\"args\": [[3, 1, 3, 2, 1]], \"expected\": [3, 1, 2], \"actual\": [3, 1, 2], \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[]], \"expected\": [], \"actual\": [], \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[[1], [1], [2]]], \"expected\": [[1], [2]], \"actual\": [[1], [2]], \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[\"a\", \"b\", \"a\"]], \"expected\": [\"a\", \"b\"], \"actual\": [\"a\", \"b\"], \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}], \"passed\": true}\n",
+        "stderr": "",
+        "timed_out": false,
+        "memory_stopped": false,
+        "sampled_peak_rss_bytes": 7208960,
+        "rss_poll_interval_seconds": 0.01,
+        "wall_seconds": 0.027005833995644934
+      },
+      "test_results": {
+        "cases": [
+          {
+            "args": [
+              [
+                3,
+                1,
+                3,
+                2,
+                1
+              ]
+            ],
+            "expected": [
+              3,
+              1,
+              2
+            ],
+            "actual": [
+              3,
+              1,
+              2
+            ],
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              []
+            ],
+            "expected": [],
+            "actual": [],
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              [
+                [
+                  1
+                ],
+                [
+                  1
+                ],
+                [
+                  2
+                ]
+              ]
+            ],
+            "expected": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "actual": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ],
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              [
+                "a",
+                "b",
+                "a"
+              ]
+            ],
+            "expected": [
+              "a",
+              "b"
+            ],
+            "actual": [
+              "a",
+              "b"
+            ],
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "id": "B1"
+    },
+    {
+      "response_text": "def somme_pairs(nombres):\n    if not nombres:\n        return 0\n    total = 0\n    for n in nombres:\n        if n % 2 == 0:\n            total += n\n    return total",
+      "response_sha256": "8863c4620753c52a53fae3ae285df957551a04e6f07951c0be67a525a7b5f441",
+      "tests": {
+        "function": "somme_pairs",
+        "cases": [
+          {
+            "args": [
+              []
+            ],
+            "expected": 0
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                3
+              ]
+            ],
+            "expected": 6
+          },
+          {
+            "args": [
+              [
+                -2,
+                0,
+                5,
+                8
+              ]
+            ],
+            "expected": 6
+          },
+          {
+            "args": [
+              [
+                1,
+                3,
+                5
+              ]
+            ],
+            "expected": 0
+          }
+        ],
+        "assert_input_unchanged": true,
+        "timeout_seconds": 2
+      },
+      "executed": true,
+      "passed": true,
+      "source": "def somme_pairs(nombres):\n    if not nombres:\n        return 0\n    total = 0\n    for n in nombres:\n        if n % 2 == 0:\n            total += n\n    return total",
+      "source_sha256": "8863c4620753c52a53fae3ae285df957551a04e6f07951c0be67a525a7b5f441",
+      "extraction": {
+        "mode": "raw_response",
+        "format_code_only": true
+      },
+      "ast_accepted": true,
+      "process": {
+        "exit_code": 0,
+        "stdout": "{\"cases\": [{\"args\": [[]], \"expected\": 0, \"actual\": 0, \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[2, 4, 3]], \"expected\": 6, \"actual\": 6, \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[-2, 0, 5, 8]], \"expected\": 6, \"actual\": 6, \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}, {\"args\": [[1, 3, 5]], \"expected\": 0, \"actual\": 0, \"result_equal\": true, \"input_unchanged\": true, \"same_object_as_first_argument\": false, \"passed\": true}], \"passed\": true}\n",
+        "stderr": "",
+        "timed_out": false,
+        "memory_stopped": false,
+        "sampled_peak_rss_bytes": 3522560,
+        "rss_poll_interval_seconds": 0.01,
+        "wall_seconds": 0.03665333399840165
+      },
+      "test_results": {
+        "cases": [
+          {
+            "args": [
+              []
+            ],
+            "expected": 0,
+            "actual": 0,
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              [
+                2,
+                4,
+                3
+              ]
+            ],
+            "expected": 6,
+            "actual": 6,
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              [
+                -2,
+                0,
+                5,
+                8
+              ]
+            ],
+            "expected": 6,
+            "actual": 6,
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          },
+          {
+            "args": [
+              [
+                1,
+                3,
+                5
+              ]
+            ],
+            "expected": 0,
+            "actual": 0,
+            "result_equal": true,
+            "input_unchanged": true,
+            "same_object_as_first_argument": false,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "id": "B2"
+    }
+  ],
+  "tasks_file": "research/real_world/tasks.json",
+  "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+  "responses_file": "evidence-real-world/campaign.json",
+  "responses_sha256": "e533a7a8b5f08849df511e6f0a33cfd9b166b937853ed12bcc43df1faf05be1a",
+  "summary": {
+    "sandbox_verified": true,
+    "evaluated": 2,
+    "executed": 2,
+    "passed": 2
+  }
+}

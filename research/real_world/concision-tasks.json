@@ -1,0 +1,25 @@
+[
+  {
+    "id": "A2_concision_control",
+    "domain": "A_raisonnement",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation. Pour cette tâche, réponds uniquement en deux lignes de calculs, au plus 45 mots, sans préambule, sans Markdown et sans LaTeX. Donne tous les résultats demandés.",
+    "turns": [
+      {
+        "id": "A2_concis",
+        "prompt": "Un atelier achète 18 kits à 24 € chacun. Une remise de 15 % s’applique sur les kits, puis on ajoute 36 € de livraison sans remise. Quel est le total et combien reste-t-il sur un budget de 450 € ? Donne les deux calculs.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Calculer une remise avant frais fixes.",
+          "expected": "Kits : 18 × 24 × 0,85 = 367,20 € ; total 403,20 € ; reste 46,80 €.",
+          "regex_all": [
+            "403[,.]20",
+            "46[,.]80"
+          ],
+          "rubric": [
+            "La remise porte uniquement sur 432 € de kits."
+          ]
+        }
+      }
+    ]
+  }
+]

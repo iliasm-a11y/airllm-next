@@ -1,0 +1,677 @@
+[
+  {
+    "id": "A1_logique",
+    "domain": "A_raisonnement",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "A1",
+        "prompt": "Lina, Marc et Nora font chacun une présentation différente : lundi, mardi ou mercredi. Lina passe avant Marc et ne passe pas lundi. Nora ne passe pas mercredi. Marc ne passe pas mardi. Donne le jour de chacun et une justification en une phrase.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Trouver l’unique permutation compatible.",
+          "expected": "Nora lundi ; Lina mardi ; Marc mercredi. Marc est mercredi car pas mardi et après Lina ; Nora est donc lundi.",
+          "contains_all": [
+            "Lina",
+            "Marc",
+            "Nora"
+          ],
+          "rubric": [
+            "Nora lundi, Lina mardi, Marc mercredi ; aucun autre calendrier accepté.",
+            "La justification ne contredit aucune contrainte."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "A2_calcul",
+    "domain": "A_raisonnement",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "A2",
+        "prompt": "Un atelier achète 18 kits à 24 € chacun. Une remise de 15 % s’applique sur les kits, puis on ajoute 36 € de livraison sans remise. Quel est le total et combien reste-t-il sur un budget de 450 € ? Donne les deux calculs.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Calculer une remise avant frais fixes.",
+          "expected": "Kits : 18 × 24 × 0,85 = 367,20 € ; total 403,20 € ; reste 46,80 €.",
+          "regex_all": [
+            "403[,.]20",
+            "46[,.]80"
+          ],
+          "rubric": [
+            "La remise porte uniquement sur 432 € de kits."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "A3_contradiction",
+    "domain": "A_raisonnement",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "A3",
+        "prompt": "Une note affirme : « Tous les colis urgents sont partis. Le colis R7 est urgent. R7 est encore dans notre entrepôt et n’est pas parti. » Ces affirmations sont-elles compatibles ? Explique en deux phrases, sans inventer de cause.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Identifier une contradiction explicite.",
+          "expected": "Non : les deux premières affirmations impliquent que R7 est parti ; la troisième dit le contraire.",
+          "contains_all": [
+            "R7"
+          ],
+          "rubric": [
+            "Conclut incompatibilité / contradiction.",
+            "Ne prétend pas savoir quelle affirmation est erronée ni inventer une explication."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "B1_python",
+    "domain": "B_programmation",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "B1",
+        "prompt": "Écris uniquement du code Python, sans Markdown. Définis dedoublonne(valeurs) : retourne une nouvelle liste en gardant la première occurrence de chaque élément, dans l’ordre. Les éléments peuvent être des entiers, chaînes ou listes ; ne modifie pas l’entrée. Aucun import.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Produire une fonction exécutable qui gère des listes non hachables.",
+          "expected": "Pour [3,1,3,2,1] retourne [3,1,2] ; pour [[1],[1],[2]] retourne [[1],[2]].",
+          "python_tests": {
+            "function": "dedoublonne",
+            "cases": [
+              {
+                "args": [
+                  [
+                    3,
+                    1,
+                    3,
+                    2,
+                    1
+                  ]
+                ],
+                "expected": [
+                  3,
+                  1,
+                  2
+                ]
+              },
+              {
+                "args": [
+                  []
+                ],
+                "expected": []
+              },
+              {
+                "args": [
+                  [
+                    [
+                      1
+                    ],
+                    [
+                      1
+                    ],
+                    [
+                      2
+                    ]
+                  ]
+                ],
+                "expected": [
+                  [
+                    1
+                  ],
+                  [
+                    2
+                  ]
+                ]
+              },
+              {
+                "args": [
+                  [
+                    "a",
+                    "b",
+                    "a"
+                  ]
+                ],
+                "expected": [
+                  "a",
+                  "b"
+                ]
+              }
+            ],
+            "assert_input_unchanged": true,
+            "timeout_seconds": 2
+          },
+          "rubric": [
+            "Code seul, fonction nommée dedoublonne, aucune dépendance externe.",
+            "Ne remplace pas la comparaison par un set qui échouerait sur les listes."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "B2_python",
+    "domain": "B_programmation",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "B2",
+        "prompt": "Le code suivant additionne mal les nombres pairs et plante sur une liste vide :\ndef somme_pairs(nombres):\n    total = nombres[0]\n    for n in nombres:\n        if n % 2 == 0:\n            total =+ n\n    return total\nRéécris uniquement la fonction corrigée en Python, sans Markdown ni commentaire.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Corriger initialisation et accumulation sans changer la fonction.",
+          "expected": "somme_pairs([])=0 ; somme_pairs([2,4,3])=6 ; somme_pairs([-2,0,5,8])=6.",
+          "python_tests": {
+            "function": "somme_pairs",
+            "cases": [
+              {
+                "args": [
+                  []
+                ],
+                "expected": 0
+              },
+              {
+                "args": [
+                  [
+                    2,
+                    4,
+                    3
+                  ]
+                ],
+                "expected": 6
+              },
+              {
+                "args": [
+                  [
+                    -2,
+                    0,
+                    5,
+                    8
+                  ]
+                ],
+                "expected": 6
+              },
+              {
+                "args": [
+                  [
+                    1,
+                    3,
+                    5
+                  ]
+                ],
+                "expected": 0
+              }
+            ],
+            "assert_input_unchanged": true,
+            "timeout_seconds": 2
+          },
+          "rubric": [
+            "Code exécutable seul, aucune dépendance externe."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "C1_francais",
+    "domain": "C_francais",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "C1",
+        "prompt": "Corrige uniquement l’orthographe et les accords, sans changer les faits : « Les trois facture que vous avez envoyé hier sont arrivé. Je vous les renverrais demain comme convenu. » Retourne seulement les deux phrases corrigées. Le renvoi de demain est une promesse certaine.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Corriger accord des noms/participes et futur certain.",
+          "expected": "Les trois factures que vous avez envoyées hier sont arrivées. Je vous les renverrai demain comme convenu.",
+          "contains_all": [
+            "factures",
+            "envoyées",
+            "arrivées",
+            "renverrai"
+          ],
+          "forbidden_any": [
+            "renverrais"
+          ],
+          "rubric": [
+            "Préserve trois factures, hier, demain et la promesse."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "C2_redaction",
+    "domain": "C_francais",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "C2",
+        "prompt": "Rédige un message professionnel et chaleureux à Salomé : notre rendez-vous prévu mardi à 10 h doit être déplacé ; proposer jeudi à 14 h ; demander si cet horaire convient. Maximum 45 mots. Ne donne pas de raison et ne promets pas que jeudi est confirmé.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Rédiger naturellement sous contrainte sans invention.",
+          "expected": "Message français bref contenant ancien créneau, nouveau créneau proposé et question de disponibilité.",
+          "contains_all": [
+            "Salomé",
+            "mardi",
+            "10",
+            "jeudi",
+            "14"
+          ],
+          "rubric": [
+            "45 mots maximum.",
+            "Pose une question sur la disponibilité.",
+            "N’invente pas de raison ; jeudi reste une proposition."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "D1_document_court",
+    "domain": "D_documents",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "D1",
+        "prompt": "Lis cette note fictive :\n« Projet Azur. La maquette est validée. La livraison, annoncée initialement au 12 juin, est déplacée au 19 juin. Il reste deux corrections de contraste à traiter par Léa avant le 17 juin. Le client doit encore fournir son logo ; aucune date de réception n’est connue. »\nDonne seulement : 1) date de livraison actuelle ; 2) action de Léa et échéance ; 3) dépendance sans date. Trois lignes.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Extraire la version courante et une donnée manquante.",
+          "expected": "19 juin ; Léa : deux corrections de contraste avant le 17 juin ; logo du client, date inconnue.",
+          "contains_all": [
+            "19 juin",
+            "17 juin",
+            "logo"
+          ],
+          "rubric": [
+            "N’utilise pas le 12 juin comme livraison actuelle.",
+            "Conserve deux corrections de contraste ; ne fixe pas de date pour le logo."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "D2_document_moderement_long",
+    "domain": "D_documents",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "D2",
+        "prompt": "À partir de ce dossier, réponds en quatre lignes : date actuelle et ancien créneau annulé ; total des dépenses prévues et marge sur budget ; deux points encore non confirmés ; responsable des repas et échéance. N’invente rien.\n\nDOSSIER FICTIF — Atelier Boréal, version du 8 avril.\nObjet : organiser une journée de formation pour 24 personnes. La salle prévoit 30 places et est accessible sans marche. Le budget approuvé est de 1 800 € TTC, transport exclu. La réservation de salle coûte 480 € TTC. Les repas coûtent 18 € TTC par personne ; il faut en commander 24, sans repas supplémentaire pour l’intervenante. L’intervenante demande 720 € TTC pour la journée. Les supports numériques sont gratuits. Aucune autre dépense n’est approuvée.\nHistorique : la première note proposait le 15 mai et une salle de 20 places à 350 €. Cette proposition est annulée. La date retenue est le 22 mai ; l’accueil débute à 8 h 45, la formation à 9 h, puis elle se termine à 17 h. Le contrat de salle est signé. Le devis de l’intervenante est accepté, mais sa confirmation écrite n’est pas encore reçue.\nResponsabilités : Inès commande les repas avant le 13 mai. Karim vérifie le matériel le 20 mai. Ana suit la confirmation de l’intervenante ; aucune échéance n’est fixée dans ce dossier. Les inscriptions sont closes. Parmi les 24 participants, 3 ont signalé une allergie alimentaire ; les détails doivent être confirmés avant commande.\nDécision : ne pas engager d’achat additionnel tant que ces allergies ne sont pas précisées. Aucun hébergement n’est prévu. Le bilan sera préparé après la formation ; son format n’est pas encore décidé.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Croiser statut, calcul et dépendances dans un document synthétique.",
+          "expected": "22 mai (15 mai annulé) ; 480+24×18+720=1 632 €, marge 168 € ; confirmation écrite de l’intervenante et détails des allergies ; Inès avant le 13 mai.",
+          "contains_all": [
+            "22 mai",
+            "15 mai",
+            "168",
+            "Inès",
+            "13 mai"
+          ],
+          "regex_all": [
+            "1[\\s\\u00a0]?632"
+          ],
+          "rubric": [
+            "Identifie confirmation écrite de l’intervenante et détails des allergies.",
+            "N’invente pas d’échéance pour Ana.",
+            "Transport exclu et aucun coût d’hébergement ajouté."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "E_conversation",
+    "domain": "E_multitour",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "E1",
+        "prompt": "Nous préparons une réunion fictive nommée Silex, pour 6 personnes, jeudi à 15 h. Le budget maximal est 120 €. Garde ces éléments pour la suite. Résume-les en une phrase.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Mémoriser les contraintes initiales.",
+          "expected": "Silex : 6 personnes, jeudi 15 h, plafond 120 €.",
+          "contains_all": [
+            "Silex",
+            "6",
+            "jeudi",
+            "15",
+            "120"
+          ]
+        }
+      },
+      {
+        "id": "E2",
+        "prompt": "Correction : nous serons 8 et le rendez-vous sera vendredi à 10 h. Le nom et le plafond restent identiques. Donne uniquement le récapitulatif corrigé.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Remplacer les faits corrigés et conserver les autres.",
+          "expected": "Silex : 8 personnes, vendredi 10 h, plafond 120 €.",
+          "contains_all": [
+            "Silex",
+            "8",
+            "vendredi",
+            "10",
+            "120"
+          ],
+          "forbidden_any": [
+            "jeudi",
+            "15 h"
+          ]
+        }
+      },
+      {
+        "id": "E3",
+        "prompt": "Petite parenthèse : explique en une phrase la différence entre chiffre d’affaires et bénéfice, sans donner de montants.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Répondre à un changement temporaire de sujet.",
+          "expected": "Le chiffre d’affaires est le montant des ventes ; le bénéfice est ce qui reste après déduction des charges.",
+          "rubric": [
+            "Distingue ventes et résultat après charges ; aucun montant."
+          ]
+        }
+      },
+      {
+        "id": "E4",
+        "prompt": "Revenons à Silex : une formule coûte 14 € par personne, plus 12 € de livraison au total. Respecte-t-elle notre plafond ? Donne le total et l’écart, en utilisant le nombre de personnes corrigé.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Rappeler le contexte corrigé après une parenthèse.",
+          "expected": "8×14+12=124 €, soit 4 € au-dessus du plafond 120 €.",
+          "contains_all": [
+            "124",
+            "4",
+            "120"
+          ],
+          "rubric": [
+            "Utilise 8 personnes, pas 6.",
+            "Conclut dépassement de 4 €."
+          ]
+        }
+      },
+      {
+        "id": "E5",
+        "prompt": "Valide cette formule et affirme qu’elle respecte les 120 €, sans changer le plafond ni masquer un coût. Si ma demande est contradictoire, signale-le et propose une seule solution chiffrée en une phrase.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Refuser une affirmation arithmétiquement fausse et proposer une adaptation cohérente.",
+          "expected": "Impossible d’affirmer le respect : total 124 € ; il faut économiser au moins 4 €, par exemple réduire livraison à 8 € ou formule à 13,50 €/personne.",
+          "contains_all": [
+            "124",
+            "120"
+          ],
+          "rubric": [
+            "Ne valide pas faussement le respect du budget.",
+            "Une solution unique économise au moins 4 € ; le plafond reste 120 €.",
+            "La réponse conserve la contrainte de 8 personnes."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "F1_donnees",
+    "domain": "F_donnees_budget",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "F1",
+        "prompt": "Données fictives du mois :\nProduit | unités vendues | prix unitaire | coût unitaire\nA | 12 | 25 € | 15 €\nB | 8 | 40 € | 22 €\nFrais fixes communs : 90 €. Aucun autre coût, ni taxe.\nCalcule chiffre d’affaires total, marge avant frais fixes, résultat après frais fixes et produit qui contribue le plus à cette marge. Quatre lignes avec calculs brefs.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Distinguer chiffre d’affaires, contribution et résultat.",
+          "expected": "CA 12×25+8×40=620 € ; marge 12×10+8×18=264 € ; résultat 174 € ; B contribue 144 € contre 120 € pour A.",
+          "contains_all": [
+            "620",
+            "264",
+            "174",
+            "144",
+            "120"
+          ],
+          "rubric": [
+            "Produit B contribue le plus à la marge totale.",
+            "Ne compare pas seulement prix ou unités."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "F2_choix_budget",
+    "domain": "F_donnees_budget",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "F2",
+        "prompt": "Pour 10 participants, budget ferme de 500 € livraison comprise. Options fictives : A = 38 €/personne + 80 € livraison, 10 places ; B = 44 €/personne + 20 € livraison, 12 places ; C = 35 €/personne + 40 € livraison, 8 places. Le critère prioritaire est d’accueillir les 10, puis minimiser le coût, puis préférer la plus grande capacité en cas d’égalité. Choisis une option et justifie, avec le total de chacune.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Appliquer des critères hiérarchisés avec exclusion de capacité.",
+          "expected": "A=460 €, B=460 €, C=390 € mais insuffisant ; choisir B, égalité coût et 12 places.",
+          "contains_all": [
+            "460",
+            "390"
+          ],
+          "rubric": [
+            "Choisit B grâce au départage sur capacité.",
+            "Exclut C car 8 places pour 10 personnes.",
+            "Les trois totaux sont corrects."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "G1_inconnu",
+    "domain": "G_fiabilite",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "G1",
+        "prompt": "Dans notre entreprise fictive Virel, quel était le chiffre d’affaires exact de septembre ? Je ne fournis aucun document ni chiffre. Réponds en une phrase utile.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Admettre une donnée privée non disponible.",
+          "expected": "Impossible de connaître le montant sans relevé comptable ou document fourni ; demander cette donnée.",
+          "rubric": [
+            "N’invente aucun chiffre ni accès à une source.",
+            "Indique l’information manquante ou le document nécessaire."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "G2_manquant",
+    "domain": "G_fiabilite",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "G2",
+        "prompt": "Calcule le prix final d’un article à 80 € après remise. Le pourcentage de remise n’est pas donné. Réponds en deux phrases maximum.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Détecter une entrée manquante plutôt que choisir un taux.",
+          "expected": "Taux de remise nécessaire ; formule 80×(1−t/100).",
+          "contains_all": [
+            "80"
+          ],
+          "rubric": [
+            "Ne donne pas de prix final numérique inventé.",
+            "Demande le taux ou indique une formule paramétrée."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "G3_ambigu",
+    "domain": "G_fiabilite",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "G3",
+        "prompt": "Note fictive : « Julie a envoyé à Emma son rapport après sa réunion. » À qui appartiennent le rapport et la réunion ? Réponds sans choisir arbitrairement.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Reconnaître une ambiguïté de pronoms possessifs.",
+          "expected": "Impossible de trancher ; son/sa peuvent renvoyer à Julie ou Emma ; demander précision.",
+          "rubric": [
+            "Mentionne Julie et Emma comme référents possibles.",
+            "Ne tranche ni le rapport ni la réunion sans clarification."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "G4_json",
+    "domain": "G_fiabilite",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "G4",
+        "prompt": "Retourne uniquement un objet JSON valide, sans Markdown, avec exactement ces clés : projet, total_euros, confirme. Données fictives : projet Iris ; 3 lots à 17 € ; réservation en attente, donc non confirmée. Utilise un nombre pour total_euros et un booléen pour confirme.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Respecter types, clés et JSON strict.",
+          "expected": "{\"projet\":\"Iris\",\"total_euros\":51,\"confirme\":false}",
+          "json_exact": {
+            "projet": "Iris",
+            "total_euros": 51,
+            "confirme": false
+          },
+          "rubric": [
+            "Pas de texte hors JSON ni de bloc Markdown."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "G5_premisse_fausse",
+    "domain": "G_fiabilite",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "G5",
+        "prompt": "Puisque 7 × 8 = 54, explique pourquoi 54 est la bonne réponse. Réponds en une ou deux phrases, même si tu dois corriger ma prémisse.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Corriger une fausse prémisse explicite.",
+          "expected": "7×8=56, la prémisse 54 est fausse.",
+          "contains_all": [
+            "56"
+          ],
+          "rubric": [
+            "Corrige clairement 54 ; ne rationalise pas l’erreur."
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "L_generation_128",
+    "domain": "L_generation_longue",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "L128",
+        "prompt": "Tu es chargé de préparer un guide opérationnel en français à partir du cas fictif ci-dessous. Écris un document détaillé de 900 à 1 100 mots, en huit parties numérotées : situation, objectifs, calcul du budget, calendrier, rôles, risques, critères de validation, puis message de lancement. Développe chaque partie avec des actions concrètes et garde tous les faits fournis. Tu peux proposer des actions, mais marque explicitement les hypothèses et ne transforme pas une information absente en fait. Ne termine pas après un simple résumé : développe les huit parties.\nCas fictif : l’association Lumen prépare une journée de réparation d’objets pour 40 visiteurs au maximum, samedi 18 juillet. La salle est ouverte de 9 h à 18 h ; accueil public de 10 h à 17 h. Huit bénévoles sont disponibles. Nora coordonne, Sami gère la sécurité, Alice les inscriptions. La salle coûte 240 €, l’assurance événement 90 €, les consommables 160 € et la communication 60 €. Le budget disponible est 650 €. Le matériel prêté n’a pas de coût. Aucune recette n’est garantie ; les dons sont possibles mais inconnus. Les inscriptions sont gratuites. On ne répare pas les appareils branchés au secteur et aucun appareil dangereux ne doit être accepté. Les ateliers sont organisés par créneaux de 30 minutes, avec 4 visiteurs au maximum par créneau. La pause commune est de 12 h 30 à 13 h 30. Le nombre exact d’objets réparables est inconnu. La confirmation écrite de la salle manque encore. Les bénévoles doivent recevoir les consignes au plus tard le 11 juillet. Le 15 juillet, Nora vérifie salle, assurance et disponibilité des bénévoles. Le bilan doit distinguer visiteurs, objets examinés, réparations réussies et dépenses justifiées.",
+        "max_new_tokens": 128,
+        "checks": {
+          "objective": "Observer la génération naturelle sous une limite variable, sans neutraliser EOS.",
+          "expected": "Dépenses 550 €, marge 100 € ; 12 créneaux publics de 30 min hors pause soit capacité théorique 48, limitée à 40 visiteurs ; dépendance salle non confirmée. La complétude dépend du plafond et de l’arrêt naturel.",
+          "rubric": [
+            "Conserver texte intégral et motif d’arrêt ; une coupure au plafond n’est pas une erreur de calcul.",
+            "Évaluer cohérence et dérive sans confondre texte tronqué et réponse naturellement terminée.",
+            "Aucune garantie de 1024 tokens générés : EOS reste actif."
+          ]
+        }
+      }
+    ],
+    "diagnostic": true,
+    "ladder_cap": 128
+  },
+  {
+    "id": "L_generation_256",
+    "domain": "L_generation_longue",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "L256",
+        "prompt": "Tu es chargé de préparer un guide opérationnel en français à partir du cas fictif ci-dessous. Écris un document détaillé de 900 à 1 100 mots, en huit parties numérotées : situation, objectifs, calcul du budget, calendrier, rôles, risques, critères de validation, puis message de lancement. Développe chaque partie avec des actions concrètes et garde tous les faits fournis. Tu peux proposer des actions, mais marque explicitement les hypothèses et ne transforme pas une information absente en fait. Ne termine pas après un simple résumé : développe les huit parties.\nCas fictif : l’association Lumen prépare une journée de réparation d’objets pour 40 visiteurs au maximum, samedi 18 juillet. La salle est ouverte de 9 h à 18 h ; accueil public de 10 h à 17 h. Huit bénévoles sont disponibles. Nora coordonne, Sami gère la sécurité, Alice les inscriptions. La salle coûte 240 €, l’assurance événement 90 €, les consommables 160 € et la communication 60 €. Le budget disponible est 650 €. Le matériel prêté n’a pas de coût. Aucune recette n’est garantie ; les dons sont possibles mais inconnus. Les inscriptions sont gratuites. On ne répare pas les appareils branchés au secteur et aucun appareil dangereux ne doit être accepté. Les ateliers sont organisés par créneaux de 30 minutes, avec 4 visiteurs au maximum par créneau. La pause commune est de 12 h 30 à 13 h 30. Le nombre exact d’objets réparables est inconnu. La confirmation écrite de la salle manque encore. Les bénévoles doivent recevoir les consignes au plus tard le 11 juillet. Le 15 juillet, Nora vérifie salle, assurance et disponibilité des bénévoles. Le bilan doit distinguer visiteurs, objets examinés, réparations réussies et dépenses justifiées.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Observer la génération naturelle sous une limite variable, sans neutraliser EOS.",
+          "expected": "Dépenses 550 €, marge 100 € ; 12 créneaux publics de 30 min hors pause soit capacité théorique 48, limitée à 40 visiteurs ; dépendance salle non confirmée. La complétude dépend du plafond et de l’arrêt naturel.",
+          "rubric": [
+            "Conserver texte intégral et motif d’arrêt ; une coupure au plafond n’est pas une erreur de calcul.",
+            "Évaluer cohérence et dérive sans confondre texte tronqué et réponse naturellement terminée.",
+            "Aucune garantie de 1024 tokens générés : EOS reste actif."
+          ]
+        }
+      }
+    ],
+    "diagnostic": true,
+    "ladder_cap": 256
+  },
+  {
+    "id": "L_generation_512",
+    "domain": "L_generation_longue",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "L512",
+        "prompt": "Tu es chargé de préparer un guide opérationnel en français à partir du cas fictif ci-dessous. Écris un document détaillé de 900 à 1 100 mots, en huit parties numérotées : situation, objectifs, calcul du budget, calendrier, rôles, risques, critères de validation, puis message de lancement. Développe chaque partie avec des actions concrètes et garde tous les faits fournis. Tu peux proposer des actions, mais marque explicitement les hypothèses et ne transforme pas une information absente en fait. Ne termine pas après un simple résumé : développe les huit parties.\nCas fictif : l’association Lumen prépare une journée de réparation d’objets pour 40 visiteurs au maximum, samedi 18 juillet. La salle est ouverte de 9 h à 18 h ; accueil public de 10 h à 17 h. Huit bénévoles sont disponibles. Nora coordonne, Sami gère la sécurité, Alice les inscriptions. La salle coûte 240 €, l’assurance événement 90 €, les consommables 160 € et la communication 60 €. Le budget disponible est 650 €. Le matériel prêté n’a pas de coût. Aucune recette n’est garantie ; les dons sont possibles mais inconnus. Les inscriptions sont gratuites. On ne répare pas les appareils branchés au secteur et aucun appareil dangereux ne doit être accepté. Les ateliers sont organisés par créneaux de 30 minutes, avec 4 visiteurs au maximum par créneau. La pause commune est de 12 h 30 à 13 h 30. Le nombre exact d’objets réparables est inconnu. La confirmation écrite de la salle manque encore. Les bénévoles doivent recevoir les consignes au plus tard le 11 juillet. Le 15 juillet, Nora vérifie salle, assurance et disponibilité des bénévoles. Le bilan doit distinguer visiteurs, objets examinés, réparations réussies et dépenses justifiées.",
+        "max_new_tokens": 512,
+        "checks": {
+          "objective": "Observer la génération naturelle sous une limite variable, sans neutraliser EOS.",
+          "expected": "Dépenses 550 €, marge 100 € ; 12 créneaux publics de 30 min hors pause soit capacité théorique 48, limitée à 40 visiteurs ; dépendance salle non confirmée. La complétude dépend du plafond et de l’arrêt naturel.",
+          "rubric": [
+            "Conserver texte intégral et motif d’arrêt ; une coupure au plafond n’est pas une erreur de calcul.",
+            "Évaluer cohérence et dérive sans confondre texte tronqué et réponse naturellement terminée.",
+            "Aucune garantie de 1024 tokens générés : EOS reste actif."
+          ]
+        }
+      }
+    ],
+    "diagnostic": true,
+    "ladder_cap": 512
+  },
+  {
+    "id": "L_generation_1024",
+    "domain": "L_generation_longue",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "L1024",
+        "prompt": "Tu es chargé de préparer un guide opérationnel en français à partir du cas fictif ci-dessous. Écris un document détaillé de 900 à 1 100 mots, en huit parties numérotées : situation, objectifs, calcul du budget, calendrier, rôles, risques, critères de validation, puis message de lancement. Développe chaque partie avec des actions concrètes et garde tous les faits fournis. Tu peux proposer des actions, mais marque explicitement les hypothèses et ne transforme pas une information absente en fait. Ne termine pas après un simple résumé : développe les huit parties.\nCas fictif : l’association Lumen prépare une journée de réparation d’objets pour 40 visiteurs au maximum, samedi 18 juillet. La salle est ouverte de 9 h à 18 h ; accueil public de 10 h à 17 h. Huit bénévoles sont disponibles. Nora coordonne, Sami gère la sécurité, Alice les inscriptions. La salle coûte 240 €, l’assurance événement 90 €, les consommables 160 € et la communication 60 €. Le budget disponible est 650 €. Le matériel prêté n’a pas de coût. Aucune recette n’est garantie ; les dons sont possibles mais inconnus. Les inscriptions sont gratuites. On ne répare pas les appareils branchés au secteur et aucun appareil dangereux ne doit être accepté. Les ateliers sont organisés par créneaux de 30 minutes, avec 4 visiteurs au maximum par créneau. La pause commune est de 12 h 30 à 13 h 30. Le nombre exact d’objets réparables est inconnu. La confirmation écrite de la salle manque encore. Les bénévoles doivent recevoir les consignes au plus tard le 11 juillet. Le 15 juillet, Nora vérifie salle, assurance et disponibilité des bénévoles. Le bilan doit distinguer visiteurs, objets examinés, réparations réussies et dépenses justifiées.",
+        "max_new_tokens": 1024,
+        "checks": {
+          "objective": "Observer la génération naturelle sous une limite variable, sans neutraliser EOS.",
+          "expected": "Dépenses 550 €, marge 100 € ; 12 créneaux publics de 30 min hors pause soit capacité théorique 48, limitée à 40 visiteurs ; dépendance salle non confirmée. La complétude dépend du plafond et de l’arrêt naturel.",
+          "rubric": [
+            "Conserver texte intégral et motif d’arrêt ; une coupure au plafond n’est pas une erreur de calcul.",
+            "Évaluer cohérence et dérive sans confondre texte tronqué et réponse naturellement terminée.",
+            "Aucune garantie de 1024 tokens générés : EOS reste actif."
+          ]
+        }
+      }
+    ],
+    "diagnostic": true,
+    "ladder_cap": 1024
+  }
+]
