@@ -10,6 +10,8 @@ import numpy as np
 from .quantization import FP8_LUT, PackedMatrix
 from .cache import WeightCache, SingleFlight, size_of
 from .compact_cache import CompactWeightCache
+from .adaptive_cache import AdaptiveWeightCache
+from .specprefetch import SpecPrefetch
 
 
 class NativeWeights:
@@ -19,9 +21,12 @@ class NativeWeights:
         # data is opt-in: it trades decoded residency for more compact reuse and
         # may lose on low-reuse or conversion-bound workloads.
         compact_bytes=config.compact_cache_bytes
-        self.cache=WeightCache(config.cache_bytes-compact_bytes,config.policy)
+        cache_type=AdaptiveWeightCache if config.policy=='adaptive' else WeightCache
+        self.cache=cache_type(config.cache_bytes-compact_bytes,config.policy)
         self.compact_cache=CompactWeightCache(compact_bytes)
         self.io=SingleFlight(config.io_bytes,config.io_workers)
+        self.spec=(SpecPrefetch(self.io,config.spec_prefetch_budget,
+                  max_predictions=config.spec_prefetch_experts) if config.spec_prefetch else None)
         self.dtype=getattr(mx,config.dtype);self.stats={'dequant_seconds':0.,'loads':0,'speculative_reads':0}
         self.block=tuple(model_config.get('quantization_config',{}).get('weight_block_size',[128,128]))
         self.lut=mx.array(FP8_LUT)
@@ -98,7 +103,7 @@ class NativeWeights:
             cache_key=('fp8',key,expert,rows,scale_rows)
             source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
             if source is None:
-                source=self.cp.read_arrays(requests,max_batch_bytes=self.cp.max_read_bytes,
+                source=self.cp.read_arrays(requests,mode=self.cfg.io_mode,max_batch_bytes=self.cp.max_read_bytes,
                                            coalesce=self.cfg.coalesce_reads)
                 self.compact_cache.put(cache_key,source)
             a,scales=source
@@ -127,7 +132,7 @@ class NativeWeights:
         cache_key=('array',key,expert,rows)
         source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
         if source is None:
-            source=(self.cp.read_array(key,expert=expert,rows=rows),)
+            source=(self.cp.read_array(key,expert=expert,rows=rows,mode=self.cfg.io_mode),)
             self.compact_cache.put(cache_key,source)
         return source[0]
 
@@ -136,19 +141,41 @@ class NativeWeights:
         self.cache.resize(self.cache.capacity//2)
         self.compact_cache.resize(self.compact_cache.capacity//2)
 
+    def drain(self):
+        # Predictions are optional: discard their failures before exact-reader
+        # shutdown/pressure handling can propagate an unrelated speculative error.
+        if self.spec:self.spec.discard()
+        self.io.drain()
+
+    def begin_layer(self,layer,expert_keys):
+        """Read only a predicted first matrix while attention runs, never route."""
+        if not self.spec:return
+        for expert in self.spec.predict(layer):
+            key,packed_expert=expert_keys(expert)[0]
+            ident=self.identity(key,packed_expert)
+            if self.cache.contains(ident):continue
+            size=self.estimate(key,packed_expert)
+            if size<=self.cfg.max_tensor_bytes:
+                self.spec.submit(layer,expert,ident,size,
+                    lambda k=key,e=packed_expert:self._load(k,e))
+
+    def observe_layer(self,layer,experts):
+        if self.spec:self.spec.observe(layer,experts)
+
     def get(self,key,expert=None):
         ident=self.identity(key,expert);v=self.cache.get(ident,self.estimate(key,expert))
         if v is not None:return v
         n=self.estimate(key,expert)
         if n>self.cfg.max_tensor_bytes:raise MemoryError(f'{key} must be read as row tiles ({n} bytes)')
-        v=self.io.take(ident)
+        v=self.spec.take(ident) if self.spec else None
+        if v is None:v=self.io.take(ident)
         if v is None:
             # Main thread is serialized by model's lock. submit() deduplicates
             # if another prediction already scheduled precisely this matrix.
             if not self.io.submit(ident,n,lambda:self._load(key,expert)):
                 # Wait/discard stale lookahead before synchronous demand to avoid
                 # exceeding the IO budget with a hidden extra decoded matrix.
-                self.io.drain()
+                self.drain()
                 if not self.io.submit(ident,n,lambda:self._load(key,expert)):
                     if n>self.cfg.io_bytes:raise MemoryError('Increase io_bytes for the largest decoded matrix')
                     raise RuntimeError('Could not reserve demand read')
@@ -208,7 +235,13 @@ class NativeWeights:
         if tile_rows<1:raise MemoryError('One output projection row exceeds max_tensor_bytes or io_bytes')
         # Synchronous output tiles need the same IO headroom as a demand read.
         # Discard unused lookahead before creating another decoded buffer.
-        self.io.drain()
+        self.drain()
+        if self.cfg.output_prefetch and self.cfg.io_bytes//2>=row_bytes:
+            # The currently used tile and the next Future together fit in the
+            # original I/O allowance. No extra double-buffer memory is granted.
+            pipeline_rows=min(self.cfg.row_chunk,self.cfg.max_tensor_bytes//row_bytes,
+                              (self.cfg.io_bytes//2)//row_bytes)
+            return self._output_pipeline(x,key,rows,pipeline_rows,row_bytes)
         # Keep only tile result vectors; each full matrix tile is evaluated and
         # released before the next is read. No lazy graph retains the whole head.
         out=[]
@@ -232,8 +265,59 @@ class NativeWeights:
             del w
         return self.mx.concatenate(out,axis=-1)
 
+    def _output_pipeline(self,x,key,rows,tile_rows,row_bytes):
+        """Overlap an exact next-tile read/decode with current Metal work."""
+        out=[]
+        def load_tile(selection):
+            begin=perf_counter()
+            value=self._load(key,rows=selection)
+            if self.cfg.output_tile_cache:
+                self.cache.record_load(('output',key,*selection),perf_counter()-begin)
+            return value
+        try:
+            for start in range(0,rows,tile_rows):
+                selection=(start,min(rows,start+tile_rows))
+                tile_key=('output',key,*selection)
+                io_key=('output-io',key,*selection)
+                estimate=row_bytes*(selection[1]-selection[0])
+                w=self.cache.get(tile_key,estimate) if self.cfg.output_tile_cache else None
+                if w is None:
+                    w=self.io.take(io_key)
+                    if w is None:w=load_tile(selection)
+                    if self.cfg.output_tile_cache:self.cache.put(tile_key,w)
+                else:self.stats['output_tile_cache_hits']=self.stats.get('output_tile_cache_hits',0)+1
+                n=size_of(w)
+                if n>min(self.cfg.max_tensor_bytes,self.cfg.io_bytes//2):
+                    raise MemoryError('Output pipeline tile exceeded its double-buffer allowance')
+                next_start=selection[1]
+                if next_start<rows:
+                    next_selection=(next_start,min(rows,next_start+tile_rows))
+                    next_cache_key=('output',key,*next_selection)
+                    if not self.cfg.output_tile_cache or not self.cache.contains(next_cache_key):
+                        ok=self.io.submit(('output-io',key,*next_selection),
+                            row_bytes*(next_selection[1]-next_selection[0]),
+                            lambda r=next_selection:load_tile(r))
+                        if ok:self.stats['output_pipeline_submitted']=self.stats.get('output_pipeline_submitted',0)+1
+                self.stats['output_pipeline_peak_payload_bytes']=max(
+                    self.stats.get('output_pipeline_peak_payload_bytes',0),n+self.io.bytes)
+                self.stats['output_tiles']=self.stats.get('output_tiles',0)+1
+                self.stats['output_tile_peak_bytes']=max(self.stats.get('output_tile_peak_bytes',0),n)
+                y=self.linear_weight(x,w);self.mx.eval(y);out.append(y)
+                del w
+            return self.mx.concatenate(out,axis=-1)
+        except BaseException:
+            try:self.drain()
+            except BaseException:
+                # Cleanup still releases every reservation. Preserve the actual
+                # compute/read failure if the next asynchronous tile also fails.
+                self.stats['output_pipeline_cleanup_failures']=self.stats.get('output_pipeline_cleanup_failures',0)+1
+            raise
+
     def close(self):
-        try:self.io.close()
+        try:
+            try:
+                if self.spec:self.spec.close()
+            finally:self.io.close()
         finally:
             self.cache.clear()
             self.compact_cache.clear()

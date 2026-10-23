@@ -69,15 +69,18 @@ def doctor_report():
 
 def config_for(args):
     values={}
-    for field in ('cache_bytes','compact_cache_bytes','io_bytes','kv_bytes','workspace_bytes','reserve_bytes','max_tensor_bytes'):
+    for field in ('cache_bytes','compact_cache_bytes','io_bytes','kv_bytes','workspace_bytes','reserve_bytes','max_tensor_bytes','spec_prefetch_bytes'):
         mib=getattr(args,field.replace('_bytes','_mib'),None)
         if mib is not None:values[field]=int(mib*1024**2)
     if getattr(args,'float32',False):values['dtype']='float32'
     if getattr(args,'quantized_dir',None):values['quantized_dir']=args.quantized_dir
-    for field in ('lossless_dir','lossless_native_library','row_chunk','prefill_chunk','io_workers'):
+    for field in ('lossless_dir','lossless_native_library','row_chunk','prefill_chunk','io_workers','io_mode','spec_prefetch_experts'):
         if getattr(args,field,None) is not None:values[field]=getattr(args,field)
     if getattr(args,'no_prefetch',False):values['prefetch']=False
+    if getattr(args,'spec_prefetch',False):values['spec_prefetch']=True
+    if getattr(args,'profile_io',False):values['profile_io']=True
     if getattr(args,'output_tile_cache',False):values['output_tile_cache']=True
+    if getattr(args,'output_prefetch',False):values['output_prefetch']=True
     if getattr(args,'max_context',None) is not None:values['max_context']=args.max_context
     if getattr(args,'cache_dir',None):values['cache_dir']=args.cache_dir
     if getattr(args,'cache_policy',None):
@@ -150,6 +153,7 @@ def main(argv=None):
             p.add_argument('--max-tensor-mib',type=positive_int,help='Largest individual tensor read in MiB')
             p.add_argument('--compact-cache-mib',type=nonnegative_int,help='Compact source weight partition inside --cache-mib')
             p.add_argument('--output-tile-cache',action='store_true',help='Opt in to decoded output tile admission in the existing weight cache')
+            p.add_argument('--output-prefetch',action='store_true',help='Experimental exact output tile pipeline within the existing I/O allowance')
             p.add_argument('--row-chunk',type=positive_int);p.add_argument('--prefill-chunk',type=positive_int)
             p.add_argument('--io-workers',type=positive_int)
             transport=p.add_mutually_exclusive_group()
@@ -158,7 +162,12 @@ def main(argv=None):
             p.add_argument('--lossless-native-library',help='Explicit native palette decoder library for --lossless-dir')
             p.add_argument('--no-prefetch',action='store_true');p.add_argument('--float32',action='store_true')
             p.add_argument('--json-report')
-            p.add_argument('--cache-policy',choices=['lru','slru','lfu','cost'])
+            p.add_argument('--cache-policy',choices=['lru','slru','lfu','cost','adaptive'])
+            p.add_argument('--spec-prefetch',action='store_true',help='Experimental previous-route expert prediction; exact router remains authoritative')
+            p.add_argument('--spec-prefetch-mib',type=nonnegative_int,help='Partition of --io-mib; zero selects min(32 MiB, IO/4)')
+            p.add_argument('--spec-prefetch-experts',type=positive_int,help='Maximum predicted first expert matrices per layer (at most 64)')
+            p.add_argument('--io-mode',choices=['pread','mmap'],help='Explicit file read strategy; mmap still faults/copies selected bytes')
+            p.add_argument('--profile-io',action='store_true',help='Bounded logical I/O/re-read profiler; physical SSD counters reported separately')
             p.add_argument('--coalesce-reads',action='store_true',help='Opt in to workload-dependent read coalescing')
             p.add_argument('--no-selective-fp8-scales',action='store_true')
         if name in ('run','serve','calibrate','agent-serve'):

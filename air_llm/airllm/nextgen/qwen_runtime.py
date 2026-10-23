@@ -313,11 +313,13 @@ class ExperimentalQwenModel:
                 for start in range(0,ids.shape[1],self.options.prefill_chunk):
                     available=psutil.virtual_memory().available
                     if available<self.options.reserve_bytes+self.options.workspace_bytes:
-                        self.reader.trim();self.reader.io.drain()
+                        self.reader.trim();self.reader.drain()
                     if available<self.options.reserve_bytes:raise MemoryError('System reserve reached')
                     part=ids[:,start:start+self.options.prefill_chunk]
                     x=self.reader.embedding(part,'model.embed_tokens.weight').astype(self.dtype);mx.eval(x)
                     for i,(mixer,mlp) in enumerate(zip(self.mixers,self.mlps)):
+                        if self.reader.spec and hasattr(mlp,'expert_keys'):
+                            self.reader.begin_layer(i,mlp.expert_keys)
                         p=f'model.layers.{i}.'
                         norm=zero_centered_rms(mx,x,self.reader.get(p+'input_layernorm.weight'),self.config['rms_norm_eps'])
                         x=x+mixer(norm,cache);mx.eval(x)
@@ -334,7 +336,7 @@ class ExperimentalQwenModel:
                 cache.release(snapshot)
                 return SimpleNamespace(logits=logits,past_key_values=cache if use_cache else None)
             except BaseException:
-                cache.restore(snapshot);self.reader.io.drain();raise
+                cache.restore(snapshot);self.reader.drain();raise
 
     __call__=forward
 

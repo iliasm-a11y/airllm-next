@@ -117,7 +117,7 @@ class AirLLMNextModel:
                     tune=json.loads(rt_path.read_text())
                     if tune.get('key')==runtime_tuning_key(self):
                         self.reader.prefetch_enabled=bool(tune['prefetch_enabled'])
-                        if tune.get('cache_policy') in ('slru','lru','lfu'):self.reader.cache.policy=tune['cache_policy']
+                        if self.options.policy!='adaptive' and tune.get('cache_policy') in ('slru','lru','lfu'):self.reader.cache.policy=tune['cache_policy']
                 except (OSError,ValueError,KeyError,TypeError):pass
             self._build_layers()
             self._validate_layout()
@@ -171,7 +171,7 @@ class AirLLMNextModel:
         self.stats['swap_growth_bytes']=max(0,psutil.swap_memory().used-self.start_swap)
         if vm.available < self.options.reserve_bytes+self.options.workspace_bytes:
             self.reader.trim()
-            self.reader.io.drain()
+            self.reader.drain()
             if vm.available<self.options.reserve_bytes:raise MemoryError('System memory reserve reached; context/weight budgets must be reduced')
 
     def forward(self,input_ids,past_key_values=None,use_cache=True,logits_to_keep=0):
@@ -191,6 +191,9 @@ class AirLLMNextModel:
                     x=self.reader.embedding(part,'model.embed_tokens.weight').astype(self.dtype);mx.eval(x)
                     selected=None
                     for i,(attn,mlp) in enumerate(zip(self.attention,self.mlps)):
+                        if (self.reader.spec and hasattr(mlp,'expert_keys') and
+                            self.config['mlp_layer_types'][i]=='sparse'):
+                            self.reader.begin_layer(i,mlp.expert_keys)
                         p=f'model.layers.{i}.'
                         norm=rms(mx,x,self.reader.get(p+'input_layernorm.weight'),self.config.get('rms_norm_eps',1e-5))
                         a,selected=attn(norm,cache,selected);x=x+a;mx.eval(x,selected)
@@ -212,7 +215,7 @@ class AirLLMNextModel:
                 # Append-only cache: committed prefix remains valid. Uncommitted
                 # tail positions will be overwritten on retry.
                 cache.position=old
-                self.reader.io.drain()
+                self.reader.drain()
                 raise
 
     __call__=forward
@@ -334,13 +337,17 @@ class AirLLMNextModel:
                'tf32_environment_note':'Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision',
                'full_checkpoint_quality_validated':False},'runtime':dict(self.stats),'telemetry':telemetry(),
            'io':dict(self.checkpoint.stats),
+           'io_profile':self.checkpoint.io_profile() if hasattr(self.checkpoint,'io_profile') else None,
+           'io_profile_coverage':'original shard offsets; packed/quantized transport has separate counters',
+           'sidecar_transport':dict(r.sidecar.stats) if r.sidecar else {},
            'lossless_transport':dict(getattr(self.checkpoint,'transport_stats',{})),
            'weights':dict(r.stats),
            'cache':dict(r.cache.stats)|{'bytes':r.cache.bytes,'peak_bytes':r.cache.peak_bytes,'capacity':r.cache.capacity},
            'compact_cache':dict(r.compact_cache.stats)|{'bytes':r.compact_cache.bytes,
                'peak_bytes':r.compact_cache.peak_bytes,'capacity':r.compact_cache.capacity,
                'budget_scope':'partition of cache_bytes; not additional memory'},
-           'prefetch':dict(r.io.stats)|{'peak_bytes':r.io.peak_bytes,'budget':r.io.budget,'enabled':r.prefetch_enabled}}
+           'prefetch':dict(r.io.stats)|{'peak_bytes':r.io.peak_bytes,'budget':r.io.budget,'enabled':r.prefetch_enabled},
+           'spec_prefetch':r.spec.metrics() if r.spec else {'enabled':False}}
 
     def close(self,save_profile=True):
         with self.lock:
