@@ -1,0 +1,10 @@
+W1023 19:48:54.495000 14510 torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+{"reference_step": 0, "token_id": 20, "forward_seconds": 6.5068065829982515}
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+{"reference_step": 1, "token_id": 248046, "forward_seconds": 3.7119160420043045}
+{"reference_step": 2, "token_id": 198, "forward_seconds": 3.650368000002345}
+{"reference_step": 3, "token_id": 248045, "forward_seconds": 3.6105093750011292}
+{"output": "evidence-native-gguf/torch-math-4.json", "generated_ids": [20, 248046, 198, 248045]}

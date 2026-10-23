@@ -1,11 +1,23 @@
 # AirLLM Next 5.0.0a1 — research generation
 
+The [native GGUF campaign](NATIVE_GGUF_REPORT_FR.md) executes the installed
+23.94 GB Qwen35 MoE checkpoint on the 16 GiB M5 with selective expert reads,
+bounded recurrent/KV state and independently checked packed Metal kernels.
+In 24 shuffled trials, the 2048-row path reaches 0.621 generated tok/s including
+prefill and 0.942 decode tok/s, about 3.97x/4.77x the new GGUF reference path at
+the same memory budgets. Official Transformers equations independently check
+short real-checkpoint outputs. This is experimental text inference; see the
+report for longer runs, swap, OS-cache limits and negative cache results.
+Use `airllm-next gguf-inspect model.gguf` or the supervised
+`airllm-next gguf-run model.gguf --kernel metal --row-chunk 2048 --report run.json`.
+This research does not create a stable 8.0 release.
+
 The [Velocity campaign](VELOCITY_REPORT_FR.md) measures actual generated tokens:
 exact optional zero-copy imports improve trained Granite throughput by about 8%
 beyond existing prefetch in the six-prompt primary campaign. Incremental draft KV
 is implemented but remains slower than direct generation in its tested setup.
-The installed 23.94 GB Qwen3.6 was tested; no safe beyond-RAM native generation
-is certified. Failed memory trials, Q8 quality controls and reproducible raw
+That earlier campaign tested the installed 23.94 GB Qwen3.6 without validating
+safe beyond-RAM native generation. Failed memory trials, Q8 quality controls and reproducible raw
 evidence are retained. This is research, not an AirLLM 7.0 stable release.
 
 The [multi-token MoE campaign](MULTITOKEN_REPORT_FR.md) compares exact expert

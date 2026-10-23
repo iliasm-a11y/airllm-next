@@ -1,0 +1,84 @@
+{
+  "model_file": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "input_ids": [
+    17,
+    10,
+    17,
+    28
+  ],
+  "generated_ids": [
+    20,
+    248046,
+    198,
+    248045
+  ],
+  "all_ids": [
+    17,
+    10,
+    17,
+    28,
+    20,
+    248046,
+    198,
+    248045
+  ],
+  "records": [
+    {
+      "step": 0,
+      "token_id": 20,
+      "forward_seconds": 6.5068065829982515
+    },
+    {
+      "step": 1,
+      "token_id": 248046,
+      "forward_seconds": 3.7119160420043045
+    },
+    {
+      "step": 2,
+      "token_id": 198,
+      "forward_seconds": 3.650368000002345
+    },
+    {
+      "step": 3,
+      "token_id": 248045,
+      "forward_seconds": 3.6105093750011292
+    }
+  ],
+  "elapsed_seconds": 17.89983708300133,
+  "metrics": {
+    "reference": "official_transformers_torch_cpu",
+    "torch": "2.14.1",
+    "transformers": "5.20.2",
+    "official_expert_forward_unchanged": true,
+    "official_source": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/transformers/models/qwen3_5_moe/modeling_qwen3_5_moe.py",
+    "official_source_sha256": "5d6a6d8ee858c992c939bd1069d0396025db551420e4c1acd3479ce691f9c4f5",
+    "shared_gguf_codec": true,
+    "initial_meta_parameter_count": 34660610688,
+    "resident_parameter_bytes": 88525312,
+    "configured_total_bytes": 570425344,
+    "startup_seconds": 0.41975516700040316,
+    "peak_cache_payload_bytes": 67133440,
+    "source": {
+      "row_reads": 10920,
+      "expert_fetches": 3760,
+      "peak_workspace_estimate_bytes": 33554432
+    },
+    "io": {
+      "read_calls": 515139,
+      "bytes_read": 8821152732,
+      "logical_bytes": 8821152732,
+      "index_bytes": 4043356,
+      "tensor_bytes": 8817109376,
+      "decoded_rows": 9695078,
+      "peak_operation_bytes": 32605312,
+      "peak_reserved_bytes": 33545842,
+      "encoded_file_bytes": 23938321664
+    }
+  },
+  "limitation": "Independent official Torch equations; GGUF decompression is shared with native reader.",
+  "source_sha256": {
+    "benchmarks/reference_gguf_torch.py": "fd1e18ffef4c3c5c64400432dd98dfe735498f37c3b89a81bce300459994c912",
+    "air_llm/airllm/nextgen/gguf.py": "0eafa8e55310f33a4d469c5f15f8dee8a60f72359f4c7998e29c35071925315d",
+    "air_llm/airllm/nextgen/experiment_guard.py": "c1ba2974dcd9c09b21082fcf517eab74f80d6dd55b1216d1da07cc04ae43bddd"
+  }
+}

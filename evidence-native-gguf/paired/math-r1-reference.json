@@ -1,0 +1,339 @@
+{
+  "kind": "native_airllm_gguf_research",
+  "phase": "generate",
+  "status": "completed",
+  "identity": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "versions": {
+      "mlx": "0.32.4",
+      "numpy": "2.5.3",
+      "psutil": "7.2.2",
+      "transformers": "5.20.2",
+      "tokenizers": "0.23.3"
+    },
+    "source_sha256": {
+      "air_llm/airllm/nextgen/__init__.py": "4264bf9a4cd3c28429fc183342593bca4b60e4e769799e6c19c38606c7b7eea3",
+      "air_llm/airllm/nextgen/adapters.py": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f",
+      "air_llm/airllm/nextgen/adaptive_cache.py": "66a7d9f08bee4d383f9970ec7d5602bb2364eff8d02765307f044e9b1201fddc",
+      "air_llm/airllm/nextgen/agent_engine.py": "d20f0e94f32d4297d014b1798faa1a7eff3bca7d1104741802d22f8dc54bde47",
+      "air_llm/airllm/nextgen/agent_server.py": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a",
+      "air_llm/airllm/nextgen/attention.py": "fe88df33d0df1667c147b880a1a74d58429f2d03c3bd27ee0f568dc32597ddf2",
+      "air_llm/airllm/nextgen/cache.py": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+      "air_llm/airllm/nextgen/cli.py": "fd9757c04db3919fad9ddf4be5287eb6ecb0c04048ed4ef4132f71c0376b2903",
+      "air_llm/airllm/nextgen/compact_cache.py": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f",
+      "air_llm/airllm/nextgen/config.py": "f5e5b746be3a316f74ec7090d2761f68b43e008ff191b3adbf3eac22d4fb32d4",
+      "air_llm/airllm/nextgen/experiment_guard.py": "c1ba2974dcd9c09b21082fcf517eab74f80d6dd55b1216d1da07cc04ae43bddd",
+      "air_llm/airllm/nextgen/expert_union.py": "341ab5ab33c4da286b9b69a79c97ab504c23cdb52f4a923629e85cca6031c94e",
+      "air_llm/airllm/nextgen/generation.py": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13",
+      "air_llm/airllm/nextgen/gguf.py": "0eafa8e55310f33a4d469c5f15f8dee8a60f72359f4c7998e29c35071925315d",
+      "air_llm/airllm/nextgen/gguf_cli.py": "23e2a0e8eb1210e0894083957b05d4eed4052b67f60b3eca0d6f8350b8f2429a",
+      "air_llm/airllm/nextgen/gguf_metal.py": "c81b3e34b2e223819f2c8ad8a28f7632b9a7c7565cac8e2ca7e7be5944906a1b",
+      "air_llm/airllm/nextgen/gguf_qwen.py": "821f23fb592288553e46ebe90112f4d6fa55c5d2da53495da7038db6664074a1",
+      "air_llm/airllm/nextgen/gguf_tokenizer.py": "05daa67c62f6d429272101f227646b162aa28d0066249ac8b5a3e1b9637a8615",
+      "air_llm/airllm/nextgen/granite_runtime.py": "074137fbfd27b0adb6e87792030780760769fdb56b26775711779581b3dc5984",
+      "air_llm/airllm/nextgen/incremental_draft.py": "3835e919b317ed83c8c3372ad548c48accc37d561383546d895597a4d55f70c2",
+      "air_llm/airllm/nextgen/io_profile.py": "ebe7e1ed4dedd2fa87308b543b6007957a47a7b2373413b2cadef681655c47c5",
+      "air_llm/airllm/nextgen/limits.py": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3",
+      "air_llm/airllm/nextgen/llama_runtime.py": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f",
+      "air_llm/airllm/nextgen/lossless.py": "672ffa5c8d12217ec6c0db45bd8d97746a304fd88a78de5ebf66678c289574d1",
+      "air_llm/airllm/nextgen/moe.py": "d5beeef7512892b15479414c5c0ff916a586315fa29b6446deaa79fd6a393e86",
+      "air_llm/airllm/nextgen/physical_io.py": "ed9a92884c3b565d6d77dff3dac7f6ca97ad3ee95063dd44cd0bf5ba60829090",
+      "air_llm/airllm/nextgen/preflight.py": "d93563eb47d00f2f0a16ade34ec5ac5e7b9b9077df739972f0433735c13227f4",
+      "air_llm/airllm/nextgen/prompt_draft.py": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269",
+      "air_llm/airllm/nextgen/quantization.py": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b",
+      "air_llm/airllm/nextgen/qwen3_mlx_runtime.py": "bbd7191d41b936fe2481ec444cbeac4c0ee17d5c7f52d8a2557b1660ec0d67c6",
+      "air_llm/airllm/nextgen/qwen_moe.py": "df7ebafb3ff6a4d5c0b6164700d0622829c371559d24f844830b6b9441932cf2",
+      "air_llm/airllm/nextgen/qwen_runtime.py": "4432bd9d271fcbe2be28b9c00a381685ad500a1910c6efe8cf79637f8107c8a4",
+      "air_llm/airllm/nextgen/recurrent.py": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf",
+      "air_llm/airllm/nextgen/residency_cache.py": "8f3c8c90db77c3c2eb840926f8b99a765748158ae2ec2184e21259a69079b478",
+      "air_llm/airllm/nextgen/runtime.py": "443adbfc736ab8de474b08c1d498ecca8f90805b5ef484be8380467ca09e1550",
+      "air_llm/airllm/nextgen/server.py": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5",
+      "air_llm/airllm/nextgen/sidecar.py": "af7ea8c1f694f4d3b369dcbe5e283bdd326116a73b76749e9e771083265b0390",
+      "air_llm/airllm/nextgen/specprefetch.py": "4025a7b132cd98abe9fc9c9024bb41264e7efda06d9bf7ea56f78a55fc1360e8",
+      "air_llm/airllm/nextgen/speculative.py": "5a54d88a3b3d73105173bc677977b736e4cbfafa8334f23d4319f529a5aa2b73",
+      "air_llm/airllm/nextgen/storage.py": "3ed49138bac42e0de83b7a1a1140e14c975bc4fc28f45be84350dd2063f4e1b0",
+      "air_llm/airllm/nextgen/text_draft.py": "9b9e84f5329d85e73104e61c41f066f29726a7b353f4a2781bccb976c1735ffe",
+      "air_llm/airllm/nextgen/tuning.py": "512838d3138e260878712e44704e5875c04d4344b57fa5eb529a42f601fe17a7",
+      "air_llm/airllm/nextgen/weights.py": "feaf3992dcc231941f0d223427c5b2c636ebee1c60c2f23db6be4ec8923dda32",
+      "benchmarks/benchmark_native_gguf.py": "3ccf8e4bfc0d346723e01653ef6ade0fd84b57f5886b25d66992b524df7e82da"
+    }
+  },
+  "before": {
+    "available_bytes": 4917002240,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096772608,
+    "pressure_level": 1
+  },
+  "arguments": {
+    "model": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "output": "evidence-native-gguf/paired/math-r1-reference.json",
+    "phase": "generate",
+    "worker": true,
+    "tokens": 8,
+    "token_ids": "17,10,17,28",
+    "prompt": "Explique en deux phrases pourquoi le ciel est bleu.",
+    "reference_tokenizer": null,
+    "kernel": "reference",
+    "rows": 2048,
+    "repeats": 3,
+    "cache_mib": 256,
+    "cache_decay": null,
+    "policy": "adaptive",
+    "prefill_chunk": 16,
+    "max_context": 256,
+    "io_mode": "pread",
+    "timeout": 900,
+    "logits_output": "evidence-native-gguf/paired/math-r1-reference.npy"
+  },
+  "os_cache": "Uncontrolled; F_NOCACHE is an fd policy, never a cache purge or NAND measurement.",
+  "gpu_command_seconds": null,
+  "energy_joules": null,
+  "initialization_seconds": 0.4066771249999874,
+  "config": {
+    "model_type": "qwen3_5_moe_text",
+    "hidden_size": 2048,
+    "vocab_size": 248320,
+    "num_hidden_layers": 40,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 2,
+    "head_dim": 256,
+    "linear_conv_kernel_dim": 4,
+    "linear_key_head_dim": 128,
+    "linear_value_head_dim": 128,
+    "linear_num_key_heads": 16,
+    "linear_num_value_heads": 32,
+    "num_experts": 256,
+    "num_experts_per_tok": 8,
+    "moe_intermediate_size": 512,
+    "shared_expert_intermediate_size": 512,
+    "max_position_embeddings": 262144,
+    "layer_types": [
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention",
+      "linear_attention",
+      "linear_attention",
+      "linear_attention",
+      "full_attention"
+    ],
+    "rope_parameters": {
+      "rope_type": "default",
+      "rope_theta": 10000000.0,
+      "partial_rotary_factor": 0.25
+    },
+    "rms_norm_eps": 9.999999974752427e-07,
+    "tie_word_embeddings": false,
+    "eos_token_id": [
+      248044,
+      248046
+    ],
+    "gguf_v_head_reordered": true,
+    "partial_rotary_factor": 0.25
+  },
+  "options": {
+    "cache_bytes": 268435456,
+    "compact_cache_bytes": 0,
+    "output_tile_cache": false,
+    "output_prefetch": false,
+    "zero_copy_weights": false,
+    "io_bytes": 67108864,
+    "kv_bytes": 201326592,
+    "workspace_bytes": 134217728,
+    "reserve_bytes": 3221225472,
+    "max_tensor_bytes": 16777216,
+    "io_workers": 2,
+    "max_open_files": 16,
+    "row_chunk": 2048,
+    "prefill_chunk": 16,
+    "max_context": 256,
+    "policy": "adaptive",
+    "device": "gpu",
+    "dtype": "float32",
+    "profile": "balanced",
+    "prefetch": false,
+    "spec_prefetch": false,
+    "spec_prefetch_bytes": 0,
+    "spec_prefetch_experts": 1,
+    "io_mode": "pread",
+    "profile_io": false,
+    "coalesce_reads": false,
+    "selective_fp8_scales": true,
+    "cache_dir": null,
+    "quantized_dir": null,
+    "lossless_dir": null,
+    "lossless_native_library": null,
+    "lossless_verify_hash": true,
+    "load_tokenizer": false,
+    "use_saved_tuning": true
+  },
+  "input_ids": [
+    17,
+    10,
+    17,
+    28
+  ],
+  "generated_ids": [
+    20,
+    248046
+  ],
+  "token_seconds": [
+    8.236055291999946,
+    4.9963844579979195
+  ],
+  "logit_top10": [
+    {
+      "id": 248046,
+      "value": 13.797056198120117
+    },
+    {
+      "id": 369,
+      "value": 13.691431045532227
+    },
+    {
+      "id": 271,
+      "value": 13.403263092041016
+    },
+    {
+      "id": 198,
+      "value": 12.94094467163086
+    },
+    {
+      "id": 11,
+      "value": 12.33005428314209
+    },
+    {
+      "id": 318,
+      "value": 11.949210166931152
+    },
+    {
+      "id": 220,
+      "value": 11.779813766479492
+    },
+    {
+      "id": 303,
+      "value": 11.650869369506836
+    },
+    {
+      "id": 96488,
+      "value": 11.134034156799316
+    },
+    {
+      "id": 13,
+      "value": 11.034375190734863
+    }
+  ],
+  "last_logits_sha256": "eda8e9111e4af15e54ce849e12c8ad1e99dbc303e512af97ddf55fe9ef4c22d2",
+  "metrics": {
+    "backend": "next-gguf-qwen-experimental",
+    "compute_device": "gpu",
+    "experimental": true,
+    "full_qwen_checkpoint_validated": false,
+    "metal_validated": false,
+    "mtp_execution": false,
+    "vision_execution": false,
+    "runtime": {
+      "startup_seconds": 0.4066420829985873
+    },
+    "io": {
+      "read_calls": 510000,
+      "bytes_read": 5134083420,
+      "logical_bytes": 5134083420,
+      "index_bytes": 4043356,
+      "tensor_bytes": 5130040064,
+      "decoded_rows": 6127499,
+      "peak_operation_bytes": 66152192,
+      "peak_reserved_bytes": 67092722,
+      "encoded_file_bytes": 23938321664
+    },
+    "allocator": {
+      "limit_bytes": 671088640,
+      "peak_bytes": 418882444,
+      "packed_cache_allowance_is_separate": false
+    },
+    "weights": {
+      "peak_workspace_estimate_bytes": 48195072,
+      "read_dequant_seconds": 9.532520416345506,
+      "materialize_seconds": 0.589690007873287,
+      "loads": 5781.0,
+      "matmul_seconds": 2.1941403558957973,
+      "routed_expert_uses": 1240.0
+    },
+    "kernel": "reference",
+    "cache": {
+      "misses": 5521,
+      "load_observations": 5521,
+      "admitted": 903,
+      "hits": 26,
+      "rejected": 4618,
+      "cold_rejected": 4050,
+      "evictions": 832,
+      "bytes": 266927872,
+      "peak_bytes": 268435456,
+      "capacity": 268435456,
+      "decay_interval": 1024
+    },
+    "prefetch": {
+      "enabled": false
+    },
+    "numerics": {
+      "compute_dtype": "float32",
+      "text_mrope": "equal positions on all axes"
+    }
+  },
+  "generation_seconds": 13.260871708000195,
+  "generation_tokens_per_second": 0.1508196477606682,
+  "ttft_seconds": 8.236055291999946,
+  "decode_tokens_per_second": 0.2001447263329103,
+  "cpu_seconds": 11.033814,
+  "logical_bytes": 5130040064,
+  "process_storage_read_bytes": 7766016,
+  "storage_counter": {
+    "source": "libproc.proc_pid_rusage(RUSAGE_INFO_V2).ri_diskio_bytesread",
+    "scope": "process-wide OS-accounted storage reads; includes unrelated reads and readahead; not per-file or NAND bytes",
+    "unavailable": null,
+    "physical_ssd_bandwidth_certified": false
+  },
+  "kv_peak_bytes": 136155136,
+  "wall_seconds": 13.690333625003404,
+  "after": {
+    "available_bytes": 5169512448,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3096772608,
+    "pressure_level": 1
+  },
+  "rss_bytes_at_end": 246169600
+}
