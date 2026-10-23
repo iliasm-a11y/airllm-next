@@ -1,0 +1,494 @@
+{
+  "kind": "sequential_remaining_real_world_campaign",
+  "status": "stopped_on_error",
+  "started": "2026-10-23T21:55:39+02:00",
+  "updated": "2026-10-23T22:03:22+02:00",
+  "pid": 39460,
+  "jobs": [
+    {
+      "id": "long-128",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-128.json",
+        "--sessions",
+        "L_generation_128",
+        "--cache-mib",
+        "32",
+        "--kv-mib",
+        "288",
+        "--max-context",
+        "2048",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-128.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+      "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+      "sessions": [
+        "L_generation_128"
+      ],
+      "expected_options": {
+        "cache_bytes": 33554432,
+        "kv_bytes": 301989888,
+        "max_context": 2048
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "L128"
+      ],
+      "maximum_output_tokens": 128,
+      "status": "already_completed",
+      "validation": {
+        "report_sha256": "b6f4260dbedb36c15ce9387fe77356f382afefc55910482be3c152032728139d",
+        "guard_sha256": "ebcb5979636463c37d38d0d421d6bf8531fff25e16af486bb40129ecaa6006d7",
+        "completed_ids": [
+          "L128"
+        ],
+        "guard_exit_code": 0,
+        "guard_violation": null
+      },
+      "finished": "2026-10-23T21:55:39+02:00"
+    },
+    {
+      "id": "long-256",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-256.json",
+        "--sessions",
+        "L_generation_256",
+        "--cache-mib",
+        "32",
+        "--kv-mib",
+        "288",
+        "--max-context",
+        "2048",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-256.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+      "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+      "sessions": [
+        "L_generation_256"
+      ],
+      "expected_options": {
+        "cache_bytes": 33554432,
+        "kv_bytes": 301989888,
+        "max_context": 2048
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "L256"
+      ],
+      "maximum_output_tokens": 256,
+      "status": "completed",
+      "started": "2026-10-23T21:55:39+02:00",
+      "return_code": 0,
+      "wall_seconds": 462.52477566699963,
+      "validation": {
+        "report_sha256": "211342b3c89e3ff2b2fc973783f449c76a95356d18afbf0fe8ff901170d7c706",
+        "guard_sha256": "ecdb27a5b3e51e6d7f9bad0c8d7848f406b7144209680ee7b80d51a265c6709a",
+        "completed_ids": [
+          "L256"
+        ],
+        "guard_exit_code": 0,
+        "guard_violation": null
+      },
+      "finished": "2026-10-23T22:03:22+02:00"
+    },
+    {
+      "id": "long-512",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-512.json",
+        "--sessions",
+        "L_generation_512",
+        "--cache-mib",
+        "32",
+        "--kv-mib",
+        "288",
+        "--max-context",
+        "2048",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-512.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+      "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+      "sessions": [
+        "L_generation_512"
+      ],
+      "expected_options": {
+        "cache_bytes": 33554432,
+        "kv_bytes": 301989888,
+        "max_context": 2048
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "L512"
+      ],
+      "maximum_output_tokens": 512,
+      "status": "failed",
+      "started": "2026-10-23T22:03:22+02:00",
+      "return_code": 1,
+      "wall_seconds": 0.08505929200327955,
+      "error": "RuntimeError: Supervised job long-512 failed (exit 1); queue stopped",
+      "finished": "2026-10-23T22:03:22+02:00"
+    },
+    {
+      "id": "long-1024",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-1024.json",
+        "--sessions",
+        "L_generation_1024",
+        "--cache-mib",
+        "32",
+        "--kv-mib",
+        "288",
+        "--max-context",
+        "2048",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/long-1024.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+      "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+      "sessions": [
+        "L_generation_1024"
+      ],
+      "expected_options": {
+        "cache_bytes": 33554432,
+        "kv_bytes": 301989888,
+        "max_context": 2048
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "L1024"
+      ],
+      "maximum_output_tokens": 1024,
+      "status": "pending"
+    },
+    {
+      "id": "conversation-rebuild",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/conversation-rebuild.json",
+        "--sessions",
+        "E_conversation",
+        "--cache-mib",
+        "64",
+        "--kv-mib",
+        "256",
+        "--max-context",
+        "1280",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200",
+        "--rebuild"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/conversation-rebuild.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/tasks.json",
+      "tasks_sha256": "3b610261f272aabcda67d7dd674ddac1ea015754dc1ea3339a077b7e3746f8f3",
+      "sessions": [
+        "E_conversation"
+      ],
+      "expected_options": {
+        "cache_bytes": 67108864,
+        "kv_bytes": 268435456,
+        "max_context": 1280
+      },
+      "reuse_kv": false,
+      "expected_turn_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "maximum_output_tokens": 1280,
+      "status": "pending"
+    },
+    {
+      "id": "concision-control",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/concision-tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/concision-control.json",
+        "--sessions",
+        "A2_concision_control",
+        "--cache-mib",
+        "64",
+        "--kv-mib",
+        "256",
+        "--max-context",
+        "1280",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/concision-control.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/concision-tasks.json",
+      "tasks_sha256": "9ad863b3b478d6917468785d432e35c6b183a89921bf34210699ea851cca4da3",
+      "sessions": [
+        "A2_concision_control"
+      ],
+      "expected_options": {
+        "cache_bytes": 67108864,
+        "kv_bytes": 268435456,
+        "max_context": 1280
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "A2_concis"
+      ],
+      "maximum_output_tokens": 256,
+      "status": "pending"
+    },
+    {
+      "id": "f2-concision-control",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/f2-concision-tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/f2-concision-control.json",
+        "--sessions",
+        "F2_concision",
+        "--cache-mib",
+        "64",
+        "--kv-mib",
+        "256",
+        "--max-context",
+        "1280",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/f2-concision-control.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/f2-concision-tasks.json",
+      "tasks_sha256": "bc84d747b15003f0047252be65de9d1a43dcd7c1cf341387f8d0975a6a013ff5",
+      "sessions": [
+        "F2_concision"
+      ],
+      "expected_options": {
+        "cache_bytes": 67108864,
+        "kv_bytes": 268435456,
+        "max_context": 1280
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "F2_concis"
+      ],
+      "maximum_output_tokens": 256,
+      "status": "pending"
+    },
+    {
+      "id": "d2-clarified",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/d2-clarified-tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/d2-clarified.json",
+        "--sessions",
+        "D2_document_date_clarifiee",
+        "--cache-mib",
+        "64",
+        "--kv-mib",
+        "256",
+        "--max-context",
+        "1280",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/d2-clarified.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/d2-clarified-tasks.json",
+      "tasks_sha256": "2f050b41e68ba9dc93e33e7f9892ab54e559ac3a2c5d45f7d252b35977e96c57",
+      "sessions": [
+        "D2_document_date_clarifiee"
+      ],
+      "expected_options": {
+        "cache_bytes": 67108864,
+        "kv_bytes": 268435456,
+        "max_context": 1280
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "D2_clarified"
+      ],
+      "maximum_output_tokens": 256,
+      "status": "pending"
+    },
+    {
+      "id": "hard-reasoning",
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py",
+        "--model",
+        "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+        "--tasks",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/hard-reasoning-tasks.json",
+        "--output",
+        "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/hard-reasoning.json",
+        "--sessions",
+        "A4_bayes",
+        "--cache-mib",
+        "64",
+        "--kv-mib",
+        "256",
+        "--max-context",
+        "1280",
+        "--rows",
+        "2048",
+        "--timeout",
+        "7200"
+      ],
+      "output": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/hard-reasoning.json",
+      "tasks": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/research/real_world/hard-reasoning-tasks.json",
+      "tasks_sha256": "78b830bb8fa17c18031c81db871cddf2d0b09290ea990a079a1d38c0e75451ed",
+      "sessions": [
+        "A4_bayes"
+      ],
+      "expected_options": {
+        "cache_bytes": 67108864,
+        "kv_bytes": 268435456,
+        "max_context": 1280
+      },
+      "reuse_kv": true,
+      "expected_turn_ids": [
+        "A4"
+      ],
+      "maximum_output_tokens": 256,
+      "status": "pending"
+    }
+  ],
+  "repo": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next",
+  "python": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+  "model": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "harness_sha256": "5b9d6f72a7ecb9c4e62917defcf99ae2b9aeade0ef197d831850cf4d4cba3e17",
+  "engine_sources_sha256": {
+    "air_llm/airllm/nextgen/__init__.py": "4264bf9a4cd3c28429fc183342593bca4b60e4e769799e6c19c38606c7b7eea3",
+    "air_llm/airllm/nextgen/adapters.py": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f",
+    "air_llm/airllm/nextgen/adaptive_cache.py": "66a7d9f08bee4d383f9970ec7d5602bb2364eff8d02765307f044e9b1201fddc",
+    "air_llm/airllm/nextgen/agent_engine.py": "d20f0e94f32d4297d014b1798faa1a7eff3bca7d1104741802d22f8dc54bde47",
+    "air_llm/airllm/nextgen/agent_server.py": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a",
+    "air_llm/airllm/nextgen/attention.py": "fe88df33d0df1667c147b880a1a74d58429f2d03c3bd27ee0f568dc32597ddf2",
+    "air_llm/airllm/nextgen/cache.py": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+    "air_llm/airllm/nextgen/cli.py": "fd9757c04db3919fad9ddf4be5287eb6ecb0c04048ed4ef4132f71c0376b2903",
+    "air_llm/airllm/nextgen/compact_cache.py": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f",
+    "air_llm/airllm/nextgen/config.py": "f5e5b746be3a316f74ec7090d2761f68b43e008ff191b3adbf3eac22d4fb32d4",
+    "air_llm/airllm/nextgen/experiment_guard.py": "c1ba2974dcd9c09b21082fcf517eab74f80d6dd55b1216d1da07cc04ae43bddd",
+    "air_llm/airllm/nextgen/expert_union.py": "341ab5ab33c4da286b9b69a79c97ab504c23cdb52f4a923629e85cca6031c94e",
+    "air_llm/airllm/nextgen/generation.py": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13",
+    "air_llm/airllm/nextgen/gguf.py": "0eafa8e55310f33a4d469c5f15f8dee8a60f72359f4c7998e29c35071925315d",
+    "air_llm/airllm/nextgen/gguf_chat.py": "6af7f468b1de6282eb366fd8918732bd5f95792e4a5bad1e5b2b8a11b5e15074",
+    "air_llm/airllm/nextgen/gguf_cli.py": "23e2a0e8eb1210e0894083957b05d4eed4052b67f60b3eca0d6f8350b8f2429a",
+    "air_llm/airllm/nextgen/gguf_metal.py": "c81b3e34b2e223819f2c8ad8a28f7632b9a7c7565cac8e2ca7e7be5944906a1b",
+    "air_llm/airllm/nextgen/gguf_qwen.py": "9e1b2e325ab296b7e27a9e88e7f5bc51236d7aebacd692ef7a9607120ca7ed99",
+    "air_llm/airllm/nextgen/gguf_tokenizer.py": "5004e08f4e157ac088158e2c5c6a10ba56611f6b723a29a5bfe548b94c7cb705",
+    "air_llm/airllm/nextgen/granite_runtime.py": "074137fbfd27b0adb6e87792030780760769fdb56b26775711779581b3dc5984",
+    "air_llm/airllm/nextgen/incremental_draft.py": "3835e919b317ed83c8c3372ad548c48accc37d561383546d895597a4d55f70c2",
+    "air_llm/airllm/nextgen/io_profile.py": "ebe7e1ed4dedd2fa87308b543b6007957a47a7b2373413b2cadef681655c47c5",
+    "air_llm/airllm/nextgen/limits.py": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3",
+    "air_llm/airllm/nextgen/llama_runtime.py": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f",
+    "air_llm/airllm/nextgen/lossless.py": "672ffa5c8d12217ec6c0db45bd8d97746a304fd88a78de5ebf66678c289574d1",
+    "air_llm/airllm/nextgen/moe.py": "d5beeef7512892b15479414c5c0ff916a586315fa29b6446deaa79fd6a393e86",
+    "air_llm/airllm/nextgen/physical_io.py": "ed9a92884c3b565d6d77dff3dac7f6ca97ad3ee95063dd44cd0bf5ba60829090",
+    "air_llm/airllm/nextgen/preflight.py": "d93563eb47d00f2f0a16ade34ec5ac5e7b9b9077df739972f0433735c13227f4",
+    "air_llm/airllm/nextgen/prompt_draft.py": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269",
+    "air_llm/airllm/nextgen/quantization.py": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b",
+    "air_llm/airllm/nextgen/qwen3_mlx_runtime.py": "bbd7191d41b936fe2481ec444cbeac4c0ee17d5c7f52d8a2557b1660ec0d67c6",
+    "air_llm/airllm/nextgen/qwen_moe.py": "bc0ec17002407f1cbdfa523df38ae6a6358146d6eb11f8a0c573bd41ad61817e",
+    "air_llm/airllm/nextgen/qwen_runtime.py": "4432bd9d271fcbe2be28b9c00a381685ad500a1910c6efe8cf79637f8107c8a4",
+    "air_llm/airllm/nextgen/recurrent.py": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf",
+    "air_llm/airllm/nextgen/residency_cache.py": "8f3c8c90db77c3c2eb840926f8b99a765748158ae2ec2184e21259a69079b478",
+    "air_llm/airllm/nextgen/runtime.py": "443adbfc736ab8de474b08c1d498ecca8f90805b5ef484be8380467ca09e1550",
+    "air_llm/airllm/nextgen/server.py": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5",
+    "air_llm/airllm/nextgen/sidecar.py": "af7ea8c1f694f4d3b369dcbe5e283bdd326116a73b76749e9e771083265b0390",
+    "air_llm/airllm/nextgen/specprefetch.py": "4025a7b132cd98abe9fc9c9024bb41264e7efda06d9bf7ea56f78a55fc1360e8",
+    "air_llm/airllm/nextgen/speculative.py": "5a54d88a3b3d73105173bc677977b736e4cbfafa8334f23d4319f529a5aa2b73",
+    "air_llm/airllm/nextgen/storage.py": "3ed49138bac42e0de83b7a1a1140e14c975bc4fc28f45be84350dd2063f4e1b0",
+    "air_llm/airllm/nextgen/text_draft.py": "9b9e84f5329d85e73104e61c41f066f29726a7b353f4a2781bccb976c1735ffe",
+    "air_llm/airllm/nextgen/tuning.py": "512838d3138e260878712e44704e5875c04d4344b57fa5eb529a42f601fe17a7",
+    "air_llm/airllm/nextgen/weights.py": "feaf3992dcc231941f0d223427c5b2c636ebee1c60c2f23db6be4ec8923dda32"
+  },
+  "prerequisite": "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/campaign-resumed.json",
+  "prerequisite_validation": {
+    "report_sha256": "6838685de04cf4068c9000ef311792d51fc3a0ce66aecceaa5c1e1978dcc15cc",
+    "guard_sha256": "190f4bda550085b7117bab035a3c79d015fbcb4dd59a61b67fd1483d1e532042",
+    "completed_ids": [
+      "D2",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "F1",
+      "F2",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ],
+    "guard_exit_code": 0,
+    "guard_violation": null
+  },
+  "active_job": "long-512",
+  "error": "RuntimeError: Supervised job long-512 failed (exit 1); queue stopped"
+}

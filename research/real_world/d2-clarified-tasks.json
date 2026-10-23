@@ -1,0 +1,35 @@
+[
+  {
+    "id": "D2_document_date_clarifiee",
+    "domain": "D_documents",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "D2_clarified",
+        "prompt": "À partir de ce dossier, réponds en quatre lignes : date retenue pour la journée de formation et ancien créneau annulé (sans les confondre avec la date de version du dossier) ; total des dépenses prévues et marge sur budget ; deux points encore non confirmés ; responsable des repas et échéance. N’invente rien.\n\nDOSSIER FICTIF — Atelier Boréal, version du 8 avril.\nObjet : organiser une journée de formation pour 24 personnes. La salle prévoit 30 places et est accessible sans marche. Le budget approuvé est de 1 800 € TTC, transport exclu. La réservation de salle coûte 480 € TTC. Les repas coûtent 18 € TTC par personne ; il faut en commander 24, sans repas supplémentaire pour l’intervenante. L’intervenante demande 720 € TTC pour la journée. Les supports numériques sont gratuits. Aucune autre dépense n’est approuvée.\nHistorique : la première note proposait le 15 mai et une salle de 20 places à 350 €. Cette proposition est annulée. La date retenue est le 22 mai ; l’accueil débute à 8 h 45, la formation à 9 h, puis elle se termine à 17 h. Le contrat de salle est signé. Le devis de l’intervenante est accepté, mais sa confirmation écrite n’est pas encore reçue.\nResponsabilités : Inès commande les repas avant le 13 mai. Karim vérifie le matériel le 20 mai. Ana suit la confirmation de l’intervenante ; aucune échéance n’est fixée dans ce dossier. Les inscriptions sont closes. Parmi les 24 participants, 3 ont signalé une allergie alimentaire ; les détails doivent être confirmés avant commande.\nDécision : ne pas engager d’achat additionnel tant que ces allergies ne sont pas précisées. Aucun hébergement n’est prévu. Le bilan sera préparé après la formation ; son format n’est pas encore décidé.",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Croiser statut, calcul et dépendances dans un document synthétique.",
+          "expected": "22 mai (15 mai annulé) ; 480+24×18+720=1 632 €, marge 168 € ; confirmation écrite de l’intervenante et détails des allergies ; Inès avant le 13 mai.",
+          "contains_all": [
+            "22 mai",
+            "15 mai",
+            "168",
+            "Inès",
+            "13 mai"
+          ],
+          "regex_all": [
+            "1[\\s\\u00a0]?632"
+          ],
+          "rubric": [
+            "Identifie confirmation écrite de l’intervenante et détails des allergies.",
+            "N’invente pas d’échéance pour Ana.",
+            "Transport exclu et aucun coût d’hébergement ajouté."
+          ]
+        }
+      }
+    ],
+    "comparison_role": "lexical_clarification_of_D2",
+    "origin_turn_id": "D2"
+  }
+]

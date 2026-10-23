@@ -1,0 +1,90 @@
+{
+  "status": "completed_partial_review",
+  "scope": "Lecture du fragment intégral d’une tentative échouée. Ces notes décrivent uniquement le texte observable ; elles ne comptent pas comme une réponse completed ni comme une réussite de livraison.",
+  "source_file": "evidence-real-world/campaign.json",
+  "source_file_sha256_at_review": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164",
+  "denominator_status": {
+    "domain": "D_documents",
+    "planned_turns": 2,
+    "completed_turns": 1,
+    "failed_turns": 1
+  },
+  "reviewed_turns": [
+    {
+      "id": "D2",
+      "session_id": "D2_document_moderement_long",
+      "source_status": "failed",
+      "source_response_key": "partial_text",
+      "response_sha256": "7e0bff1b15ee7b90b2ac4c6996af02efbb77c48709fae4c9d7c395939aad0d46",
+      "response_text": "Date actuelle : 8 avril ; ancien créneau annulé : 15 mai.\nTotal dépenses prévues : 1 632 € ; marge sur budget : 168 €.\nPoints non confirmés : confirmation écrite de l’intervenante et détails des allergies alimentaires.\nResponsable des repas : Inès ; échéance : avant le 13 mai",
+      "generated_tokens_observed": 77,
+      "error": "ValueError: Qwen router top-k boundary tie: reference tie-breaking is not validated",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 4,
+          "rationale": "Tous les montants, dépendances et responsables cités sont exacts. Le critère prévu attendait la date de formation du 22 mai ; la sortie donne le 8 avril, date de version réellement fournie. La formulation « date actuelle » permet cette lecture : ce point est un écart au critère prévu, avec ambiguïté du protocole, plutôt qu’une invention factuelle démontrée."
+        },
+        "respect_instructions": {
+          "score": 4,
+          "rationale": "Les quatre lignes et catégories sont présentes. La date de formation n’est pas extraite selon l’intention du critère, mais la consigne ne nommait pas explicitement la date de l’événement."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "La réponse ne se contredit pas ; budget et actions concordent avec le dossier. La date de version peut être citée à côté d’un ancien créneau sans contradiction intrinsèque."
+        },
+        "completude": {
+          "score": 4,
+          "rationale": "Les quatre rubriques apparaissent dans le fragment, mais la date attendue de la formation n’est pas donnée et la tentative a été interrompue avant terminaison normale. L’interprétation de la date reste ambiguë."
+        },
+        "utilite_reelle": {
+          "score": 4,
+          "rationale": "Budget et actions sont fiables et utiles. Pour utiliser ce récapitulatif comme calendrier d’événement, il faut préciser que la date attendue est celle de la formation."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Date de formation 22 mai selon le critère prévu",
+          "result": "fail_against_predeclared_criterion_with_prompt_ambiguity",
+          "evidence": "8 avril reprend une donnée réelle du dossier ; la consigne ne précisait pas explicitement la date de l’événement."
+        },
+        {
+          "check": "Anciencréneau 15 mai",
+          "result": "pass",
+          "evidence": "«ancien créneau annulé :15 mai». "
+        },
+        {
+          "check": "Dépenses : 1 632 € et marge de 168 €",
+          "result": "pass",
+          "evidence": "480+24×18+720=1632 ;1800−1632=168, chiffres présents dans le fragment."
+        },
+        {
+          "check": "Deux points encore non confirmés",
+          "result": "pass",
+          "evidence": "Confirmation écrite de l’intervenante et détails des allergies, tous deux explicitement non confirmés."
+        },
+        {
+          "check": "Repas: Inès avant le 13 mai",
+          "result": "pass",
+          "evidence": "Dernière ligne fidèle au dossier."
+        },
+        {
+          "check": "Réponse normalement terminée",
+          "result": "fail",
+          "evidence": "Exception routeur à 77 tokens ; source_status = failed, aucun stop_reason EOS."
+        }
+      ],
+      "lexical_ambiguity": "Le critère prévu attend 22 mai. La formulation «date actuelle» peut aussi renvoyer à la date de version 8 avril explicitement donnée. Le rapprochement avec «anciencréneau» favorise l’intention de calendrier mais ne supprime pas cette ambiguïté. Distinguer l’écart au critère et la responsabilité possible du protocole ; la reformulation sera testée séparément.",
+      "causal_limit": "L’exception explicite concerne un départage top-k du routeur. Le fragment ne prouve pas que cette exception a causé le choix de 8 avril ; qualité d’extraction et interruption restent deux constats distincts.",
+      "source_file": "evidence-real-world/campaign.json"
+    }
+  ],
+  "duplicate_capture_note": {
+    "source_file": "router-failure-replay.json",
+    "original_source": "campaign.json",
+    "token_ids_exact_equal": true,
+    "equal_token_count": 77,
+    "reference_token_count": 77,
+    "partial_text_exact_equal": true,
+    "scoring_policy": "Capture instrumentée exactement identique 77/77 au fragment original ; aucune nouvelle note indépendante ni duplication dans un décompte."
+  }
+}

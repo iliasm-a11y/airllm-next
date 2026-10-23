@@ -1,0 +1,599 @@
+{
+  "official_regex_repr": "\"(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\\\r\\\\n\\\\p{L}\\\\p{N}]?[\\\\p{L}\\\\p{M}]+|\\\\p{N}| ?[^\\\\s\\\\p{L}\\\\p{M}\\\\p{N}]+[\\\\r\\\\n]*|\\\\s*[\\\\r\\\\n]+|\\\\s+(?!\\\\S)|\\\\s+\"",
+  "gguf_adapter_regex_repr": "\"(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\\\r\\\\n\\\\p{L}\\\\p{N}]?[\\\\p{L}\\\\p{M}]+|\\\\p{N}| ?[^\\\\s\\\\p{L}\\\\p{M}\\\\p{N}]+[\\\\r\\\\n]*|\\\\s*[\\\\r\\\\n]+|\\\\s+(?!\\\\S)|\\\\s+\"",
+  "pretokenization": [
+    {
+      "text": "हिन्दी",
+      "adapter_split": [
+        [
+          "हिन्दी",
+          [
+            0,
+            6
+          ]
+        ]
+      ],
+      "official_split": [
+        [
+          "हिन्दी",
+          [
+            0,
+            6
+          ]
+        ]
+      ],
+      "official_full_split": [
+        [
+          "à¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            0,
+            6
+          ]
+        ]
+      ]
+    },
+    {
+      "text": "Français Qwen prochain numéro 123 élan",
+      "adapter_split": [
+        [
+          "Français",
+          [
+            0,
+            8
+          ]
+        ],
+        [
+          " Qwen",
+          [
+            8,
+            13
+          ]
+        ],
+        [
+          " prochain",
+          [
+            13,
+            22
+          ]
+        ],
+        [
+          " numéro",
+          [
+            22,
+            29
+          ]
+        ],
+        [
+          " ",
+          [
+            29,
+            30
+          ]
+        ],
+        [
+          "1",
+          [
+            30,
+            31
+          ]
+        ],
+        [
+          "2",
+          [
+            31,
+            32
+          ]
+        ],
+        [
+          "3",
+          [
+            32,
+            33
+          ]
+        ],
+        [
+          " élan",
+          [
+            33,
+            39
+          ]
+        ]
+      ],
+      "official_split": [
+        [
+          "Français",
+          [
+            0,
+            8
+          ]
+        ],
+        [
+          " Qwen",
+          [
+            8,
+            13
+          ]
+        ],
+        [
+          " prochain",
+          [
+            13,
+            22
+          ]
+        ],
+        [
+          " numéro",
+          [
+            22,
+            29
+          ]
+        ],
+        [
+          " ",
+          [
+            29,
+            30
+          ]
+        ],
+        [
+          "1",
+          [
+            30,
+            31
+          ]
+        ],
+        [
+          "2",
+          [
+            31,
+            32
+          ]
+        ],
+        [
+          "3",
+          [
+            32,
+            33
+          ]
+        ],
+        [
+          " élan",
+          [
+            33,
+            39
+          ]
+        ]
+      ],
+      "official_full_split": [
+        [
+          "FranÃ§ais",
+          [
+            0,
+            8
+          ]
+        ],
+        [
+          "ĠQwen",
+          [
+            8,
+            13
+          ]
+        ],
+        [
+          "Ġprochain",
+          [
+            13,
+            22
+          ]
+        ],
+        [
+          "ĠnumÃ©ro",
+          [
+            22,
+            29
+          ]
+        ],
+        [
+          "Ġ",
+          [
+            29,
+            30
+          ]
+        ],
+        [
+          "1",
+          [
+            30,
+            31
+          ]
+        ],
+        [
+          "2",
+          [
+            31,
+            32
+          ]
+        ],
+        [
+          "3",
+          [
+            32,
+            33
+          ]
+        ],
+        [
+          "ĠeÌģlan",
+          [
+            33,
+            39
+          ]
+        ]
+      ]
+    },
+    {
+      "text": "bonjour résumé",
+      "adapter_split": [
+        [
+          "bonjour",
+          [
+            0,
+            7
+          ]
+        ],
+        [
+          " résumé",
+          [
+            7,
+            14
+          ]
+        ]
+      ],
+      "official_split": [
+        [
+          "bonjour",
+          [
+            0,
+            7
+          ]
+        ],
+        [
+          " résumé",
+          [
+            7,
+            14
+          ]
+        ]
+      ],
+      "official_full_split": [
+        [
+          "bonjour",
+          [
+            0,
+            7
+          ]
+        ],
+        [
+          "ĠrÃ©sumÃ©",
+          [
+            7,
+            14
+          ]
+        ]
+      ]
+    }
+  ],
+  "gguf_merges_count": 247587,
+  "official_merges_count": 247587,
+  "merges_equal": true,
+  "official_vocab_id_differences": {},
+  "gguf_engine_model": {
+    "type": "BPE",
+    "dropout": null,
+    "unk_token": null,
+    "continuing_subword_prefix": null,
+    "end_of_word_suffix": null,
+    "fuse_unk": false,
+    "byte_fallback": false,
+    "ignore_merges": false,
+    "vocab": "omitted",
+    "merges": "omitted"
+  },
+  "official_engine_model": {
+    "type": "BPE",
+    "dropout": null,
+    "unk_token": null,
+    "continuing_subword_prefix": "",
+    "end_of_word_suffix": "",
+    "fuse_unk": false,
+    "byte_fallback": false,
+    "ignore_merges": false,
+    "vocab": "omitted",
+    "merges": "omitted"
+  },
+  "direct_encodes": [
+    {
+      "text": "हिन्दी",
+      "gguf": [
+        215989,
+        150127,
+        177453
+      ],
+      "official_tokenizer_json": [
+        215989,
+        150127,
+        177453
+      ],
+      "gguf_normalized": "हिन्दी",
+      "official_normalized": "हिन्दी",
+      "gguf_pretokens": [
+        [
+          "à¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            0,
+            6
+          ]
+        ]
+      ],
+      "official_pretokens": [
+        [
+          "à¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            0,
+            6
+          ]
+        ]
+      ]
+    },
+    {
+      "text": " 👩🏽‍💻 café́ naïve क् हिन्दी",
+      "gguf": [
+        59720,
+        102,
+        9008,
+        237,
+        121,
+        373,
+        235,
+        88995,
+        119,
+        50203,
+        52033,
+        91603,
+        571,
+        46215,
+        28640,
+        190488,
+        150127,
+        177453
+      ],
+      "official_tokenizer_json": [
+        59720,
+        102,
+        9008,
+        237,
+        121,
+        373,
+        235,
+        88995,
+        119,
+        50203,
+        52033,
+        91603,
+        571,
+        46215,
+        28640,
+        190488,
+        150127,
+        177453
+      ],
+      "gguf_normalized": " 👩🏽‍💻 café́ naïve क् हिन्दी",
+      "official_normalized": " 👩🏽‍💻 café́ naïve क् हिन्दी",
+      "gguf_pretokens": [
+        [
+          "ĠðŁĳ©ðŁı½âĢįðŁĴ»",
+          [
+            0,
+            5
+          ]
+        ],
+        [
+          "ĠcafÃ©Ìģ",
+          [
+            5,
+            11
+          ]
+        ],
+        [
+          "ĠnaÃ¯ve",
+          [
+            11,
+            17
+          ]
+        ],
+        [
+          "Ġà¤ķà¥į",
+          [
+            17,
+            20
+          ]
+        ],
+        [
+          "Ġà¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            20,
+            27
+          ]
+        ]
+      ],
+      "official_pretokens": [
+        [
+          "ĠðŁĳ©ðŁı½âĢįðŁĴ»",
+          [
+            0,
+            5
+          ]
+        ],
+        [
+          "ĠcafÃ©Ìģ",
+          [
+            5,
+            11
+          ]
+        ],
+        [
+          "ĠnaÃ¯ve",
+          [
+            11,
+            17
+          ]
+        ],
+        [
+          "Ġà¤ķà¥į",
+          [
+            17,
+            20
+          ]
+        ],
+        [
+          "Ġà¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            20,
+            27
+          ]
+        ]
+      ]
+    },
+    {
+      "text": "क् हिन्दी",
+      "gguf": [
+        149567,
+        190488,
+        150127,
+        177453
+      ],
+      "official_tokenizer_json": [
+        149567,
+        190488,
+        150127,
+        177453
+      ],
+      "gguf_normalized": "क् हिन्दी",
+      "official_normalized": "क् हिन्दी",
+      "gguf_pretokens": [
+        [
+          "à¤ķà¥į",
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          "Ġà¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            2,
+            9
+          ]
+        ]
+      ],
+      "official_pretokens": [
+        [
+          "à¤ķà¥į",
+          [
+            0,
+            2
+          ]
+        ],
+        [
+          "Ġà¤¹à¤¿à¤¨à¥įà¤¦à¥Ģ",
+          [
+            2,
+            9
+          ]
+        ]
+      ]
+    }
+  ],
+  "transformers_tokenizer_class": "Qwen2Tokenizer",
+  "transformers_backend_pretokenizer": {
+    "type": "Sequence",
+    "pretokenizers": [
+      {
+        "type": "Split",
+        "pattern": {
+          "Regex": "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
+        },
+        "behavior": "Isolated",
+        "invert": false
+      },
+      {
+        "type": "ByteLevel",
+        "add_prefix_space": false,
+        "trim_offsets": true,
+        "use_regex": false
+      }
+    ]
+  },
+  "direct_official_pretokenizer": {
+    "type": "Sequence",
+    "pretokenizers": [
+      {
+        "type": "Split",
+        "pattern": {
+          "Regex": "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?[\\p{L}\\p{M}]+|\\p{N}| ?[^\\s\\p{L}\\p{M}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
+        },
+        "behavior": "Isolated",
+        "invert": false
+      },
+      {
+        "type": "ByteLevel",
+        "add_prefix_space": false,
+        "trim_offsets": false,
+        "use_regex": false
+      }
+    ]
+  },
+  "official_merge_entry_type": "str",
+  "transformers_hindi_pretokens": [
+    [
+      "à¤¹",
+      [
+        0,
+        1
+      ]
+    ],
+    [
+      "à¤¿à¤¨",
+      [
+        1,
+        3
+      ]
+    ],
+    [
+      "à¥įà¤¦",
+      [
+        3,
+        5
+      ]
+    ],
+    [
+      "à¥Ģ",
+      [
+        5,
+        6
+      ]
+    ]
+  ],
+  "transformers_hindi_ids": [
+    90703,
+    181077,
+    28640,
+    148651,
+    42201
+  ],
+  "direct_official_hindi_ids": [
+    215989,
+    150127,
+    177453
+  ],
+  "merge_comparison_note": "Canonical string pairs compared; the initial diagnostic compared lists to strings."
+}

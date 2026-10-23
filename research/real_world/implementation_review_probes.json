@@ -1,0 +1,63 @@
+{
+  "review_scope": "temporary synthetic fixtures only; no inference",
+  "baseline_checker_sha256": "464de14e8c8b5438bc5b975ac5e7571463c58e823a91125a11d2fcbc2b67a2c0",
+  "cases": [
+    {
+      "name": "output_equals_responses",
+      "exit_code": 0,
+      "stdout": "{\"sandbox_verified\": true, \"evaluated\": 1, \"executed\": 1, \"passed\": 1}\n",
+      "stderr": "",
+      "original_preserved": false,
+      "new_kind": "exact_model_code_restricted_execution"
+    },
+    {
+      "name": "failed_response_without_text",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/check_real_world_code.py\", line 309, in <module>\n    main()\n  File \"/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/check_real_world_code.py\", line 294, in main\n    checked = check_response(responses[turn_id]['text'], specification)\n                             ~~~~~~~~~~~~~~~~~~^^^^^^^^\nKeyError: 'text'\n",
+      "result_file_written": false
+    }
+  ],
+  "alias_after_fix": {
+    "checker_sha256": "6b8530ecdb349f3a9447fc5407d9a03a187beb500ed8d9f3d58d8f5e9381d162",
+    "exit_code": 1,
+    "original_preserved": true,
+    "error": "ValueError: Code-check output aliases a protected input file"
+  },
+  "regression_checks": {
+    "command": "PYTHONPATH=air_llm python -m pytest --noconftest tests_next/test_gguf_chat.py tests_next/test_real_world_code_checks.py -q",
+    "passed": 42,
+    "wall_seconds": 1.51,
+    "model_loaded": false,
+    "gpu_inference": false
+  },
+  "incomplete_response_after_fix": {
+    "checker_sha256": "b7fd48405a7946bd00aae09f3f9e2c2bd4c73240ef896fda3865bfafaf278c63",
+    "exit_code": 0,
+    "summary": {
+      "sandbox_verified": true,
+      "evaluated": 1,
+      "executed": 0,
+      "passed": 0
+    },
+    "results": [
+      {
+        "executed": false,
+        "passed": false,
+        "response_status": "failed",
+        "error": "Response is not completed text; no code executed",
+        "recorded_error": "MemoryError: controlled fixture",
+        "recorded_partial_text": "def f(",
+        "partial_text_sha256": "268194c96dd3bbad4945ebbadcb9bfa0b1fb23dbfcba3f40dee588ab142fba9b",
+        "id": "B1"
+      }
+    ]
+  },
+  "source_sha256_at_final_review": {
+    "air_llm/airllm/nextgen/gguf_chat.py": "6af7f468b1de6282eb366fd8918732bd5f95792e4a5bad1e5b2b8a11b5e15074",
+    "benchmarks/evaluate_real_world.py": "8aefd03a9e15ba05d9fe14146d0f5b74ec5f1aad2c81a77f9b306e9cb4d11f27",
+    "benchmarks/check_real_world_code.py": "b7fd48405a7946bd00aae09f3f9e2c2bd4c73240ef896fda3865bfafaf278c63",
+    "tests_next/test_gguf_chat.py": "9384125b522f0cf98a4a15c185346a370e6b4ec1ea52b9fb04f0d971adb8fa76",
+    "tests_next/test_real_world_code_checks.py": "795edf887c5d5c2cae594ce24081f6ccaaeee2ceb9f8a1bda6dc28a1b3746f85"
+  }
+}

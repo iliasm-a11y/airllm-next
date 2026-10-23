@@ -1,0 +1,131 @@
+{
+  "status": "completed_for_available_responses",
+  "source": "evidence-real-world/pilot-short-caps.json",
+  "method": "Lecture intégrale des seules réponses dont status=completed ; notes de qualité distinctes des contrôles objectifs. Aucun contenu corrigé ne remplace la sortie brute. Évaluateur Codex distinct du moteur testé, sans prétention de reproductibilité inter-évaluateurs.",
+  "score_axes": [
+    "exactitude_factuelle",
+    "respect_instructions",
+    "coherence",
+    "completude",
+    "utilite_reelle"
+  ],
+  "scale": {
+    "0": "inutilisable ou contraire au critère",
+    "1": "défauts majeurs",
+    "2": "plusieurs erreurs ou très incomplet",
+    "3": "utile avec limite réelle",
+    "4": "correct avec défaut mineur",
+    "5": "satisfait pleinement le critère dans le périmètre"
+  },
+  "reviewed_turns": [
+    {
+      "id": "A1",
+      "session_id": "A1_logique",
+      "source_file": "evidence-real-world/pilot-short-caps.json",
+      "source_response_key": "text",
+      "response_sha256": "bedd63d0948a15debcfb321c1e4fcb72110f5f3784475ebf84385f5e033e53d8",
+      "response_text": "Voici le jour de présentation de chacun, suivi de la justification logique :\n\n1. **Lina** présente le **mardi**.\n2. **Marc** présente le **mercredi**.\n3. **Nora** présente le **lundi**.\n\n**Justification en une phrase :**\nPuisque Lina ne peut pas être lundi (elle passe avant Marc) et que Marc ne peut pas être mardi (il passe après Lina), Lina doit",
+      "termination": "max_new_tokens",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Les trois affectations et relations citées sont exactes. Les parenthèses n’affirment pas explicitement la causalité précédemment reprochée ; le défaut du pilote est la coupure de justification au plafond."
+        },
+        "respect_instructions": {
+          "score": 3,
+          "rationale": "Les jours demandés sont donnés, mais la justification en une phrase reste inachevée au plafond de 96 tokens."
+        },
+        "coherence": {
+          "score": 3,
+          "rationale": "Calendrier cohérent ; justification interrompue après «Lina doit». Les parenthèses peuvent être plus claires sans constituer une contradiction certaine."
+        },
+        "completude": {
+          "score": 3,
+          "rationale": "La solution est complète ; sa justification est coupée au plafond et ne conduit pas au calendrier."
+        },
+        "utilite_reelle": {
+          "score": 4,
+          "rationale": "Le lecteur dispose du bon calendrier, mais ne reçoit pas la justification complète demandée."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Affectation des trois jours",
+          "result": "pass",
+          "evidence": "Lina mardi ; Marc mercredi ; Nora lundi."
+        },
+        {
+          "check": "Justification terminée",
+          "result": "fail",
+          "evidence": "Derniers mots : « Lina doit » ; arrêt max_new_tokens."
+        }
+      ],
+      "uncertainties": [
+        "La coupure vient du plafond mesuré ; elle ne démontre ni un EOS prématuré ni une limite de raisonnement du modèle."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Calendrier exact mais justification coupée."
+    },
+    {
+      "id": "A2",
+      "session_id": "A2_calcul",
+      "source_file": "evidence-real-world/pilot-short-caps.json",
+      "source_response_key": "text",
+      "response_sha256": "a082c9bdb23391ee8d4fa29b11c03cad88c84720b442a396dee8f9f658817fc3",
+      "response_text": "Voici les deux calculs demandés :\n\n**1. Calcul du total à payer :**\n\n*   **Coût initial des kits :**  \n    $18 \\text{ kits} \\times 24 \\text{ €} = 432 \\text{ €}$\n\n*   **Application de la remise de 15 % sur les kits :**  \n    Montant de la remise : $432 \\text{ €} \\times ",
+      "termination": "max_new_tokens",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Le seul calcul achevé observé, 18×24=432 €, est exact. Cette note porte uniquement sur ce fragment ; le total remisé et le reste sont absents et ne peuvent être validés."
+        },
+        "respect_instructions": {
+          "score": 1,
+          "rationale": "La réponse ne fournit ni le total demandé ni le reste du budget ; elle développe une présentation coupée pendant le calcul de remise."
+        },
+        "coherence": {
+          "score": 3,
+          "rationale": "La démarche observée est logique, mais la dernière expression est coupée après le signe de multiplication."
+        },
+        "completude": {
+          "score": 1,
+          "rationale": "Aucun des deux résultats finaux demandés n’est fourni au plafond de 96 tokens."
+        },
+        "utilite_reelle": {
+          "score": 1,
+          "rationale": "Le lecteur connaît le coût brut des kits, mais doit terminer seul les deux calculs utiles."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Coût brut des kits",
+          "result": "pass",
+          "evidence": "18×24=432 €."
+        },
+        {
+          "check": "Total final 403,20 € et reste 46,80 €",
+          "result": "missing",
+          "evidence": "Les deux résultats sont absents de la réponse intégrale."
+        }
+      ],
+      "uncertainties": [
+        "La coupure vient du plafond mesuré ; le fragment ne permet pas de conclure à une incapacité arithmétique."
+      ],
+      "verdict": "echec_critere",
+      "verdict_rationale": "Aucun des deux résultats finaux demandés n’est livré au plafond ; le fragment ne démontre pas une incapacité de calcul."
+    }
+  ],
+  "scope": "Pilote à plafonds courts arrêté après A1 et A2 ; A3 sans réponse achevée ne reçoit pas de note.",
+  "verdict_rule": {
+    "reussi": "Résultats essentiels corrects et livrés, contraintes demandées respectées ; aucune réserve substantielle observée dans le périmètre du test.",
+    "partiel": "Un résultat essentiel utile est livré, mais un autre résultat, une justification ou une contrainte de forme manque ou présente un défaut ; aucune réussite stricte revendiquée.",
+    "echec_critere": "Résultat essentiel faux ou aucun résultat essentiel livré pour une demande non ambiguë ; cause éventuelle distincte du constat.",
+    "indetermine": "Ambiguïté du protocole ou preuve insuffisante empêchant un jugement univoque sur le critère essentiel ; ne compte ni comme réussite stricte ni comme erreur certaine du modèle."
+  },
+  "verdict_counts": {
+    "reussi": 0,
+    "partiel": 1,
+    "echec_critere": 1,
+    "indetermine": 0
+  }
+}

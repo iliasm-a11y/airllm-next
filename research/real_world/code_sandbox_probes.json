@@ -1,0 +1,65 @@
+{
+  "kind": "exact_model_code_restricted_execution",
+  "limits": {
+    "cpu_seconds": 3,
+    "requested_address_space_bytes": 268435456,
+    "sampled_rss_stop_bytes": 268435456,
+    "address_space_limit_applied": false,
+    "data_limit_applied": false,
+    "darwin_fallback": "parent RSS sampling when AS/DATA unsupported; not a strict process-wide allocation cap",
+    "file_size_bytes": 1048576,
+    "file_descriptors": 16
+  },
+  "restrictions": [
+    "sandbox-exec: deny network",
+    "sandbox-exec: deny process-fork",
+    "sandbox-exec: deny file-write outside temporary directory",
+    "Python -I -S",
+    "AST allowlist",
+    "explicit safe builtins"
+  ],
+  "sandbox_probes": {
+    "exit_code": 0,
+    "stdout": "{\"rlimit_as\": [9223372036854775807, 9223372036854775807], \"rlimit_data\": [9223372036854775807, 9223372036854775807], \"rlimit_cpu\": [3, 3], \"rlimit_fsize\": [1048576, 1048576], \"rlimit_nofile\": [16, 16], \"network_denied\": true, \"outside_write_denied\": true, \"fork_denied\": true, \"inside_write_allowed\": true}\n",
+    "stderr": "",
+    "timed_out": false,
+    "memory_stopped": false,
+    "sampled_peak_rss_bytes": 8749056,
+    "rss_poll_interval_seconds": 0.01,
+    "wall_seconds": 0.033142542000859976,
+    "checks": {
+      "rlimit_as": [
+        9223372036854775807,
+        9223372036854775807
+      ],
+      "rlimit_data": [
+        9223372036854775807,
+        9223372036854775807
+      ],
+      "rlimit_cpu": [
+        3,
+        3
+      ],
+      "rlimit_fsize": [
+        1048576,
+        1048576
+      ],
+      "rlimit_nofile": [
+        16,
+        16
+      ],
+      "network_denied": true,
+      "outside_write_denied": true,
+      "fork_denied": true,
+      "inside_write_allowed": true
+    },
+    "passed": true
+  },
+  "results": [],
+  "summary": {
+    "sandbox_verified": true,
+    "evaluated": 0,
+    "executed": 0,
+    "passed": 0
+  }
+}

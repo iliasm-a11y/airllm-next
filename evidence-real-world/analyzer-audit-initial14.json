@@ -1,0 +1,170 @@
+{
+  "method": "Independent stdlib fsum and integer counts, then compare to analyzer; no inference or numerical ML imports",
+  "analyzer_sha256": "23f07c5e33a116b7bb63024eecbfbd21c29526ac0c4174a5c680ebbffcdd7f7c",
+  "input_sha256": {
+    "campaign.json": "aaec599024e43066eacced82ee17d6c648672af2abf482e6161a4c0080bb7164",
+    "campaign-resumed.json": "7a4d559a826104d19341f84f34613c7525f75ad4af030c8a94ba77506af59fb8",
+    "independent_review.json": "559dac948ebed7b020d1e9d4ff4c485b4434b2573dd2df197785c1d3acba8d25"
+  },
+  "input_status": {
+    "campaign.json": "failed",
+    "campaign-resumed.json": "started",
+    "independent_review.json": "in_progress"
+  },
+  "selected_ids": [
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+  ],
+  "global": {
+    "turns": 14,
+    "tokens": 1070,
+    "wall_seconds": 1859.5235498769835,
+    "total_tokens_per_second": 0.5754162135084472,
+    "decode_tokens_excluding_first": 1056,
+    "decode_seconds": 1138.0721907100087,
+    "decode_tokens_per_second": 0.9278848992357801,
+    "naive_mean_individual_decode_rates": 0.9167319577383685,
+    "logical_read_bytes": 2647972760832,
+    "storage_read_bytes": 868829642752
+  },
+  "domain_A": {
+    "turns": 3,
+    "tokens": 447,
+    "wall_seconds": 602.7310525409921,
+    "tokens_per_second": 0.7416243084134101,
+    "decode_tokens": 444,
+    "decode_seconds": 463.5444532089896,
+    "decode_tokens_per_second": 0.9578369386718172
+  },
+  "D2": {
+    "original_status": "failed",
+    "original_partial_count": 77,
+    "new_status": "completed",
+    "new_count": 79,
+    "same_prefix77": true,
+    "new_stop": "eos",
+    "engine_ttft": 189.82585508299235,
+    "startup": 1.80442224998842,
+    "outside_engine_wall_seconds": 0.0019144160032738,
+    "perceived_ttft_lower": 191.63027733298077,
+    "perceived_ttft_upper": 191.63219174898404,
+    "perceived_total": 283.39824391598813,
+    "first_line": "Date actuelle : 8 avril ; ancien créneau annulé : 15 mai."
+  },
+  "score_bindings": [
+    {
+      "id": "A1",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "A2",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "A3",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "B1",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "B2",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "C1",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "C2",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "D1",
+      "source": "campaign.json",
+      "matches": true
+    },
+    {
+      "id": "D2",
+      "source": "campaign-resumed.json",
+      "matches": true
+    },
+    {
+      "id": "E1",
+      "source": "campaign-resumed.json",
+      "matches": true
+    },
+    {
+      "id": "E2",
+      "source": "campaign-resumed.json",
+      "matches": true
+    },
+    {
+      "id": "E3",
+      "source": "campaign-resumed.json",
+      "matches": true
+    },
+    {
+      "id": "E4",
+      "source": "campaign-resumed.json",
+      "matches": true
+    },
+    {
+      "id": "E5",
+      "source": "campaign-resumed.json",
+      "matches": true
+    }
+  ],
+  "sources": {
+    "campaign.json": {
+      "count": 45,
+      "current_matches": 42,
+      "mismatches": [
+        {
+          "path": "air_llm/airllm/nextgen/gguf_qwen.py",
+          "archive_matches": [
+            "evidence-real-world/sources_before_router_fix/gguf_qwen.py"
+          ]
+        },
+        {
+          "path": "air_llm/airllm/nextgen/qwen_moe.py",
+          "archive_matches": [
+            "evidence-real-world/sources_before_router_fix/qwen_moe.py"
+          ]
+        },
+        {
+          "path": "benchmarks/evaluate_real_world.py",
+          "archive_matches": [
+            "evidence-real-world/sources_before_router_fix/evaluate_real_world.py"
+          ]
+        }
+      ]
+    },
+    "campaign-resumed.json": {
+      "count": 45,
+      "current_matches": 45,
+      "mismatches": []
+    }
+  },
+  "ablation_rebuild_exists": false
+}

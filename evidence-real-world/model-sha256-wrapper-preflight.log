@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/work/verify_model_hash.py", line 236, in <module>
+    main()
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/work/verify_model_hash.py", line 228, in main
+    worker(model, args.staged_output.absolute())
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/work/verify_model_hash.py", line 76, in worker
+    assert_new_outputs(output, model)
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/work/verify_model_hash.py", line 50, in assert_new_outputs
+    raise FileExistsError(f'Refusing to replace an existing proof: {path}')
+FileExistsError: Refusing to replace an existing proof: /Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/evidence-real-world/.model-sha256-current.hash-1ox9pgxk/model-sha256-current.log

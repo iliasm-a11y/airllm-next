@@ -1,0 +1,28 @@
+{"id": "A1", "text": "Voici le jour de présentation de chacun, suivi de la justification logique :\n\n1. **Lina** présente le **mardi**.\n2. **Marc** présente le **mercredi**.\n3. **Nora** présente le **lundi**.\n\n**Justification en une phrase :**\nPuisque Lina ne peut pas être lundi (elle passe avant Marc) et que Marc ne peut pas être mardi (il passe après Lina), Lina doit être mardi et Marc mercredi, ce qui laisse le lundi à Nora, qui ne peut pas être mercredi.", "seconds": 164.4896402919985, "tokens": 118, "stop": "eos"}
+{"id": "A2", "text": "Voici les deux calculs demandés :\n\n**1. Calcul du total à payer :**\n\n*   **Coût initial des kits :**  \n    $18 \\text{ kits} \\times 24 \\text{ €} = 432 \\text{ €}$\n\n*   **Application de la remise de 15 % sur les kits :**  \n    Montant de la remise : $432 \\text{ €} \\times 0,15 = 64,80 \\text{ €}$  \n    Prix après remise : $432 \\text{ €} - 64,80 \\text{ €} = 367,20 \\text{ €}$  \n    *(Ou directement : $432 \\times 0,85 = 367,20 \\text{ €}$)*\n\n*   **Ajout des frais de livraison (sans remise) :**  \n    $367,20 \\text{ €} + 36 \\text{ €} = 403,20 \\text{ €}$\n\n👉 **Le total à payer est de 403,20 €.**\n\n---", "seconds": 312.33230608299345, "tokens": 256, "stop": "max_new_tokens"}
+{"id": "A3", "text": "Non, ces affirmations sont incompatibles car la prémisse selon laquelle tous les colis urgents sont partis contredit le fait que le colis R7, identifié comme urgent, soit encore dans l'entrepôt. Il est logiquement impossible que tous les éléments d'une catégorie soient absents tout en restant un membre spécifique de cette même catégorie.", "seconds": 125.90910616600013, "tokens": 73, "stop": "eos"}
+{"id": "B1", "text": "def dedoublonne(valeurs):\n    resultat = []\n    vus = []\n    for val in valeurs:\n        if isinstance(val, list):\n            cle = tuple(val)\n        else:\n            cle = val\n        if cle not in vus:\n            vus.append(cle)\n            resultat.append(val)\n    return resultat", "seconds": 130.58977729199978, "tokens": 78, "stop": "eos"}
+{"id": "B2", "text": "def somme_pairs(nombres):\n    if not nombres:\n        return 0\n    total = 0\n    for n in nombres:\n        if n % 2 == 0:\n            total += n\n    return total", "seconds": 109.16022883400728, "tokens": 51, "stop": "eos"}
+{"id": "C1", "text": "Les trois factures que vous avez envoyées hier sont arrivées. Je vous les renverrai demain comme convenu.", "seconds": 72.17344925001089, "tokens": 26, "stop": "eos"}
+{"id": "C2", "text": "Bonjour Salomé,\n\nJe souhaite reporter notre rendez-vous de mardi à 10 h. Serait-il possible de le décaler à jeudi à 14 h ? Merci de me confirmer si cet horaire te convient.\n\nBien à toi,", "seconds": 104.01217249999172, "tokens": 53, "stop": "eos"}
+{"id": "D1", "text": "1) 19 juin\n2) Deux corrections de contraste à traiter avant le 17 juin\n3) Fourniture du logo par le client", "seconds": 97.49573833400791, "tokens": 33, "stop": "eos"}
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py", line 207, in <module>
+    main()
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py", line 194, in main
+    worker(args)
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/benchmarks/evaluate_real_world.py", line 138, in worker
+    result = chat.reply(spec['prompt'], max_new_tokens=spec['max_new_tokens'], on_token=emitted)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/air_llm/airllm/nextgen/gguf_chat.py", line 119, in reply
+    output = self.model.forward(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/air_llm/airllm/nextgen/qwen_runtime.py", line 327, in forward
+    x=x+mlp(norm).astype(x.dtype);mx.eval(x)
+        ^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/air_llm/airllm/nextgen/gguf_qwen.py", line 293, in __call__
+    ids,scores=qwen_route(mx,x,self.r.get(p+'ffn_gate_inp.weight'),self.c)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-23/files-pasted-by-the-user-mission-5/outputs/airllm-next/air_llm/airllm/nextgen/qwen_moe.py", line 32, in qwen_route
+    raise ValueError('Qwen router top-k boundary tie: reference tie-breaking is not validated')
+ValueError: Qwen router top-k boundary tie: reference tie-breaking is not validated

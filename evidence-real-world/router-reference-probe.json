@@ -1,0 +1,169 @@
+{
+  "kind": "captured_router_cpu_reference_comparison",
+  "gpu_work": false,
+  "capture_sha256": "0b343cc940dfa5099fb87832acc1117998f3c95833658bf8b4a0b8095125cacd",
+  "versions": {
+    "torch": "2.14.1",
+    "mlx": "0.32.4"
+  },
+  "top_k": 8,
+  "matrix_shape": [
+    256,
+    2048
+  ],
+  "rows": [
+    {
+      "row": 0,
+      "native_boundary_logits": {
+        "49": -4.415645599365234,
+        "206": -4.415645599365234
+      },
+      "torch_full_boundary_logits": {
+        "49": -4.415645599365234,
+        "206": -4.415645122528076
+      },
+      "mlx_cpu_boundary_logits": {
+        "49": -4.415645599365234,
+        "206": -4.415645122528076
+      },
+      "native_vs_torch_full_max_logit_error": 9.5367431640625e-07,
+      "variants": {
+        "native_gpu": {
+          "probability_49": 0.010838142596185207,
+          "probability_206": 0.010838142596185207,
+          "probabilities_equal": true,
+          "boundary_tie": true,
+          "selected": [
+            14,
+            89,
+            124,
+            172,
+            102,
+            59,
+            216,
+            49
+          ],
+          "normalized_scores": [
+            0.277896910905838,
+            0.18737848103046417,
+            0.10613430291414261,
+            0.09273562580347061,
+            0.0857207328081131,
+            0.08486785739660263,
+            0.0846891701221466,
+            0.08057695627212524
+          ],
+          "max_probability_difference_vs_native": 0.0
+        },
+        "torch_on_native_logits": {
+          "probability_49": 0.010838142596185207,
+          "probability_206": 0.010838142596185207,
+          "probabilities_equal": true,
+          "boundary_tie": true,
+          "selected": [
+            14,
+            89,
+            124,
+            172,
+            102,
+            59,
+            216,
+            49
+          ],
+          "normalized_scores": [
+            0.2778969407081604,
+            0.18737848103046417,
+            0.1061343103647232,
+            0.09273563325405121,
+            0.0857207328081131,
+            0.08486786484718323,
+            0.0846891775727272,
+            0.08057695627212524
+          ],
+          "max_probability_difference_vs_native": 3.725290298461914e-09
+        },
+        "torch_full_cpu_gate": {
+          "probability_49": 0.010838143527507782,
+          "probability_206": 0.010838148184120655,
+          "probabilities_equal": false,
+          "boundary_tie": false,
+          "selected": [
+            14,
+            89,
+            124,
+            172,
+            102,
+            59,
+            216,
+            206
+          ],
+          "normalized_scores": [
+            0.2778969407081604,
+            0.1873784363269806,
+            0.10613429546356201,
+            0.09273562580347061,
+            0.0857207179069519,
+            0.08486784249544144,
+            0.0846891701221466,
+            0.08057697862386703
+          ],
+          "max_probability_difference_vs_native": 1.4901161193847656e-08
+        },
+        "mlx_cpu_default_on_native_logits": {
+          "probability_49": 0.010838141664862633,
+          "probability_206": 0.010838141664862633,
+          "probabilities_equal": true,
+          "boundary_tie": true,
+          "selected": [
+            14,
+            89,
+            124,
+            172,
+            102,
+            59,
+            216,
+            49
+          ],
+          "normalized_scores": [
+            0.277896910905838,
+            0.18737846612930298,
+            0.10613430291414261,
+            0.09273562580347061,
+            0.0857207328081131,
+            0.08486784249544144,
+            0.0846891701221466,
+            0.08057694882154465
+          ],
+          "max_probability_difference_vs_native": 1.862645149230957e-09
+        },
+        "mlx_cpu_precise_on_native_logits": {
+          "probability_49": 0.010838141664862633,
+          "probability_206": 0.010838141664862633,
+          "probabilities_equal": true,
+          "boundary_tie": true,
+          "selected": [
+            14,
+            89,
+            124,
+            172,
+            102,
+            59,
+            216,
+            49
+          ],
+          "normalized_scores": [
+            0.277896910905838,
+            0.18737846612930298,
+            0.10613430291414261,
+            0.09273562580347061,
+            0.0857207328081131,
+            0.08486784249544144,
+            0.0846891701221466,
+            0.08057694882154465
+          ],
+          "max_probability_difference_vs_native": 1.862645149230957e-09
+        }
+      }
+    }
+  ]
+}

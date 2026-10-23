@@ -1,0 +1,44 @@
+[
+  {
+    "id": "A4_bayes",
+    "domain": "A_raisonnement",
+    "system": "Tu es un assistant utile et précis. Réponds en français. Respecte les contraintes demandées et n’invente pas les informations absentes. Tu n’as ni navigateur, ni accès aux fichiers ou aux services externes pendant cette conversation.",
+    "turns": [
+      {
+        "id": "A4",
+        "prompt": "Un lot fictif contient 10 000 pièces, dont 10 % sont défectueuses (D) et les autres non défectueuses (non-D). Le test A est positif pour 90 % des D et 10 % des non-D. Parmi les pièces A+ seulement, le test B est positif pour 80 % des D et 50 % des non-D. Ces proportions sont exactes dans ce lot. Ne suppose pas l’indépendance des tests. Réponds sans préambule, en quatre lignes maximum : 1) effectifs A+ par état D/non-D ; 2) effectifs A+B+ par état D/non-D ; 3) fractions exactes P(D|A+) et P(D|A+B+), puis pourcentages ; 4) après les deux tests positifs, le seuil de 90 % de probabilité de défaut est-il atteint ?",
+        "max_new_tokens": 256,
+        "checks": {
+          "objective": "Calculer des effectifs conditionnels successifs sans supposer l’indépendance, puis une probabilité inverse et la comparer à un seuil.",
+          "expected": "A+ : D = 900 ; non-D = 900.\nA+B+ : D = 720 ; non-D = 450.\nP(D|A+) = 1/2 = 50 % ; P(D|A+B+) = 8/13 ≈ 61,54 %.\nLe seuil de 90 % n’est pas atteint.",
+          "contains_all": [
+            "900",
+            "720",
+            "450"
+          ],
+          "rubric": [
+            "A+ : exactement 900 D et 900 non-D.",
+            "A+B+ : exactement 720 D et 450 non-D ; les taux de B s’appliquent à la sous-population A+, sans hypothèse d’indépendance.",
+            "P(D|A+) = 1/2 = 50 % et P(D|A+B+) = 8/13, environ 61,54 %.",
+            "Conclut que le seuil de 90 % n’est pas atteint après A+B+.",
+            "Quatre lignes maximum, sans préambule."
+          ],
+          "golden_exact": {
+            "lot_total": 10000,
+            "defective": 1000,
+            "nondefective": 9000,
+            "a_positive_defective": 900,
+            "a_positive_nondefective": 900,
+            "a_b_positive_defective": 720,
+            "a_b_positive_nondefective": 450,
+            "p_defective_given_a_positive": "1/2",
+            "p_defective_given_a_b_positive": "8/13",
+            "threshold": "9/10",
+            "threshold_met": false,
+            "derivation": "Calculé avec fractions.Fraction ; 1000×9/10=900 ; 9000×1/10=900 ; 900×4/5=720 ; 900×1/2=450 ; 900/1800=1/2 ; 720/1170=8/13."
+          }
+        }
+      }
+    ]
+  }
+]

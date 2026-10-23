@@ -1,0 +1,475 @@
+{
+  "status": "completed",
+  "scope": "Contrôles séparés : reconstruction de conversation, contrainte de concision et clarification lexicale D2 ; aucune substitution aux réponses principales.",
+  "method": "Lecture intégrale des seules réponses dont status=completed ; notes de qualité distinctes des contrôles objectifs. Aucun contenu corrigé ne remplace la sortie brute. Évaluateur Codex distinct du moteur testé, sans prétention de reproductibilité inter-évaluateurs.",
+  "score_axes": [
+    "exactitude_factuelle",
+    "respect_instructions",
+    "coherence",
+    "completude",
+    "utilite_reelle"
+  ],
+  "scale": {
+    "0": "inutilisable ou contraire au critère",
+    "1": "défauts majeurs",
+    "2": "plusieurs erreurs ou très incomplet",
+    "3": "utile avec limite réelle",
+    "4": "correct avec défaut mineur",
+    "5": "satisfait pleinement le critère dans le périmètre"
+  },
+  "reviewed_turns": [
+    {
+      "id": "E1",
+      "session_id": "E_conversation",
+      "source_file": "conversation-rebuild.json",
+      "source_relative_path": "evidence-real-world/conversation-rebuild.json",
+      "source_response_key": "text",
+      "response_sha256": "3b3107df68628e3c6f8e247d72935cfa2d20d15f1ac41da1f9dc635f3a150c24",
+      "response_text": "La réunion fictive Silex, prévue jeudi à 15 h avec 6 personnes, a un budget maximal de 120 €.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Silex,6 personnes, jeudi 15 h et plafond 120 € sont repris exactement."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Une phrase, sans ajout."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Récapitulatif cohérent des contraintes initiales."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Tous les éléments sont présents ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Récapitulatif immédiatement exploitable."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Faits et format",
+          "result": "pass",
+          "evidence": "Nom, nombre, créneau et budget exacts ; une phrase."
+        }
+      ],
+      "uncertainties": [],
+      "verdict": "reussi",
+      "verdict_rationale": "Récapitulatif initial exact en une phrase, dans le contrôle sans réutilisation du KV.",
+      "control_role": "full_history_rebuild_without_kv_reuse",
+      "primary_comparison": {
+        "source_file": "campaign-resumed.json",
+        "prompt_exact_equal": true,
+        "text_exact_equal": true,
+        "generated_ids_exact_equal": true,
+        "full_input_ids_exact_equal": true
+      }
+    },
+    {
+      "id": "E2",
+      "session_id": "E_conversation",
+      "source_file": "conversation-rebuild.json",
+      "source_relative_path": "evidence-real-world/conversation-rebuild.json",
+      "source_response_key": "text",
+      "response_sha256": "499e1dbcb91ded3b440cb3464d127342152a07309b11628cffa59338388e2901",
+      "response_text": "La réunion fictive Silex, prévue vendredi à 10 h avec 8 personnes, a un budget maximal de 120 €.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Met à jour 8 personnes et vendredi 10 h, conserve Silex et 120 €."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Seulement le récapitulatif corrigé demandé."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Aucun mélange avec le contexte remplacé."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Les quatre éléments sont présents ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Contexte corrigé fiable pour continuer la conversation."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Correction et conservation des faits",
+          "result": "pass",
+          "evidence": "8 personnes, vendredi 10 h, Silex,120 € ; aucune ancienne valeur."
+        }
+      ],
+      "uncertainties": [],
+      "verdict": "reussi",
+      "verdict_rationale": "Correction sélective exacte, sans anciennes valeurs, dans le contrôle de reconstruction complète de l’historique.",
+      "control_role": "full_history_rebuild_without_kv_reuse",
+      "primary_comparison": {
+        "source_file": "campaign-resumed.json",
+        "prompt_exact_equal": true,
+        "text_exact_equal": true,
+        "generated_ids_exact_equal": true,
+        "full_input_ids_exact_equal": true
+      }
+    },
+    {
+      "id": "E3",
+      "session_id": "E_conversation",
+      "source_file": "conversation-rebuild.json",
+      "source_relative_path": "evidence-real-world/conversation-rebuild.json",
+      "source_response_key": "text",
+      "response_sha256": "58216c7657afcbccab5d33e1e96d43ddb7a74a6950e9960a4123ae3348910e30",
+      "response_text": "Le chiffre d'affaires représente l'ensemble des revenus générés par les ventes ou services d'une entreprise, tandis que le bénéfice correspond au montant restant après déduction des charges et dépenses des revenus totaux.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Distingue revenus des ventes/services et résultat après charges."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Une seule phrase, aucun montant chiffré."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Les deux définitions s’opposent de façon claire et cohérente."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "La différence demandée est entièrement expliquée ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Explication brève et directement utile."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Définitions, format et absence de montants",
+          "result": "pass",
+          "evidence": "Ventes/services contre revenus moins charges ; une phrase, aucun chiffre."
+        }
+      ],
+      "uncertainties": [],
+      "verdict": "reussi",
+      "verdict_rationale": "Définitions correctes en une phrase sans chiffre, dans le contrôle de reconstruction complète.",
+      "control_role": "full_history_rebuild_without_kv_reuse",
+      "primary_comparison": {
+        "source_file": "campaign-resumed.json",
+        "prompt_exact_equal": true,
+        "text_exact_equal": true,
+        "generated_ids_exact_equal": true,
+        "full_input_ids_exact_equal": true
+      }
+    },
+    {
+      "id": "E4",
+      "session_id": "E_conversation",
+      "source_file": "conversation-rebuild.json",
+      "source_relative_path": "evidence-real-world/conversation-rebuild.json",
+      "source_response_key": "text",
+      "response_sha256": "c55cabddfd59e28c3cadcd38d67cd178c9a47428820cc9fd6ed5f1babbda94dc",
+      "response_text": "Pour 8 personnes, la formule coûte 14 € par personne, soit 8 × 14 = 112 €, plus 12 € de livraison, ce qui donne un total de 124 €.  \nLe budget maximal est de 120 €, donc l'écart est de 124 € - 120 € = **4 € de dépassement**.  \n\n**Réponse : Non, cela ne respecte pas le plafond, avec un dépassement de 4 €.**",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Utilise 8 personnes et 120 € ;8×14+12=124 €, dépassement 4 €."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Donne total, écart et conformité au plafond comme demandé."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Calculs et conclusion concordent."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Tous les éléments sont présents ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Résultat fiable pour la décision de budget."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Contexte corrigé, total et dépassement",
+          "result": "pass",
+          "evidence": "8 personnes ;124 € ;4 € au-dessus de 120 €."
+        }
+      ],
+      "uncertainties": [],
+      "verdict": "reussi",
+      "verdict_rationale": "Contexte corrigé conservé après parenthèse, total 124 € et dépassement 4 € exacts dans la reconstruction complète.",
+      "control_role": "full_history_rebuild_without_kv_reuse",
+      "primary_comparison": {
+        "source_file": "campaign-resumed.json",
+        "prompt_exact_equal": true,
+        "text_exact_equal": true,
+        "generated_ids_exact_equal": true,
+        "full_input_ids_exact_equal": true
+      }
+    },
+    {
+      "id": "E5",
+      "session_id": "E_conversation",
+      "source_file": "conversation-rebuild.json",
+      "source_relative_path": "evidence-real-world/conversation-rebuild.json",
+      "source_response_key": "text",
+      "response_sha256": "037814f597afe1cd2ffc763659944206fbfe315b81a54d8b9e23454557bc3274",
+      "response_text": "Il est contradictoire de valider une formule qui dépasse le plafond de 120 € tout en affirmant qu'elle le respecte. Pour rester dans les limites, il faut réduire le coût total à 120 € maximum, par exemple en choisissant une formule à **13,50 € par personne** (8 × 13,50 + 12 = 120 €).",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Contradiction correctement signalée ;8×13,50+12=120 € respecte le plafond sans masquer de coût."
+        },
+        "respect_instructions": {
+          "score": 4,
+          "rationale": "Deux phrases au total sous la lecture stricte ; la solution seule tient dans une phrase et satisfait une lecture plus étroite."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Le constat de dépassement et l’adaptation proposée concordent."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Contradiction, solution et calcul complets ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Solution utilisable pour les 8 personnes avec livraison et plafond inchangés."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Une solution cohérente et aucun accord factuellement faux",
+          "result": "pass",
+          "evidence": "Formule 13,50 € par personne ; calcul exact à 120 € ; demande initiale dite contradictoire."
+        },
+        {
+          "check": "Portée de la contrainte d’une phrase",
+          "result": "conditional_format_reservation",
+          "evidence": "Deux phrases dans l’ensemble, une phrase pour la solution chiffrée."
+        }
+      ],
+      "uncertainties": [
+        "Le verdict partiel suppose que «en une phrase» porte sur toute la réponse ; si la portée se limite à la proposition chiffrée, un verdict réussi est défendable."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Fond correct et solution unique ; même réserve de forme conditionnelle que le passage principal : deux phrases au total, mais une seule pour la proposition chiffrée.",
+      "control_role": "full_history_rebuild_without_kv_reuse",
+      "primary_comparison": {
+        "source_file": "campaign-resumed.json",
+        "prompt_exact_equal": true,
+        "text_exact_equal": true,
+        "generated_ids_exact_equal": true,
+        "full_input_ids_exact_equal": true
+      }
+    },
+    {
+      "id": "A2_concis",
+      "session_id": "A2_concision_control",
+      "source_file": "concision-control.json",
+      "source_relative_path": "evidence-real-world/concision-control.json",
+      "source_response_key": "text",
+      "response_sha256": "261a68d2d58306982d9eb690980d42a5b1ebb395b8688300ebda9a1fd51654f4",
+      "response_text": "Total : 18 * 24 * 0.85 + 36 = 403.20 €. Reste : 450 - 403.20 = 46.80 €.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "18×24×0,85+36=403,20 € et 450−403,20=46,80 €, exactement les deux résultats attendus."
+        },
+        "respect_instructions": {
+          "score": 4,
+          "rationale": "20 mots, aucun préambule ni format LaTeX/Markdown ; la consigne exigeait deux lignes et la sortie en comporte une seule."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Calcul de remise, livraison et reste du budget cohérents."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Les deux résultats et leurs calculs sont complets ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Réponse immédiatement exploitable, avec les deux montants utiles sous le plafond."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Total et budget restant",
+          "result": "pass",
+          "evidence": "Total 403.20 € ; reste 46.80 € ; formules exactes."
+        },
+        {
+          "check": "Longueur et format",
+          "result": "partial",
+          "evidence": "20 mots, une ligne nonvide ; système demandait exactement deux lignes, au plus 45 mots, sans préambule ni Markdown/LaTeX."
+        },
+        {
+          "check": "Différence avec A2 principal",
+          "result": "observed_delivery_improvement",
+          "evidence": "Les deux résultats sont livrés à 51 tokens avec EOS ; A2 principal atteignait 256 sans fournir le reste. Ce contrôle ne remplace pas le résultat principal."
+        }
+      ],
+      "uncertainties": [
+        "Le délai du premier token ne peut être déduit de la concision du texte ; les mesures de latence doivent être comparées séparément."
+      ],
+      "verdict": "partiel",
+      "verdict_rationale": "Les deux calculs et résultats sont exacts et concis ; une seule ligne au lieu des deux explicitement demandées par le message système.",
+      "control_role": "post_observation_system_concision",
+      "origin_turn_id": "A2",
+      "observed_word_count_whitespace": 20,
+      "observed_nonempty_lines": 1
+    },
+    {
+      "id": "F2_concis",
+      "session_id": "F2_concision",
+      "source_file": "f2-concision-control.json",
+      "source_relative_path": "evidence-real-world/f2-concision-control.json",
+      "source_response_key": "text",
+      "response_sha256": "be8f8a15b170094ac0f6a35e2ecf55a583af1c28764691d5ed2a2fb45e530bf9",
+      "response_text": "Option A : 380 + 80 = 460 € (capacité 10, valide).\nOption B : 440 + 20 = 460 € (capacité 12, valide).\nOption C : 350 + 40 = 390 € (capacité 8, invalide).\nChoix : Option B, car coût égal à A mais capacité supérieure.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "A=460 €, B=460 €, C=390 € théoriques ; C est insuffisante, B gagne par capacité 12 contre 10 à coût égal."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Donne toutes les informations demandées, sans préambule et en quatre lignes maximum."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Les critères sont appliqués dans l’ordre : capacité, coût, puis capacité supérieure à égalité."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Trois totaux, exclusion et recommandation motivée présents ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Décision complète, concise et directement exploitable sous le budget 500 €."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Totaux et capacité",
+          "result": "pass",
+          "evidence": "A 380+80=460 ;B 440+20=460 ;C 350+40=390 mais 8 places pour 10 participants."
+        },
+        {
+          "check": "Départage et format",
+          "result": "pass",
+          "evidence": "ChoixB pour sa capacité 12 à coût égal ; quatre lignes non vides, aucun préambule."
+        },
+        {
+          "check": "Contrôle séparé deF2 principal",
+          "result": "observed_delivery_improvement",
+          "evidence": "Tous les résultats livrés avec EOS à 97 tokens ; le principal atteignait 256 avant tout total achevé. Aucun remplacement du principal."
+        }
+      ],
+      "uncertainties": [],
+      "verdict": "reussi",
+      "verdict_rationale": "Les trois totaux, l’exclusion deC et le choix deB au départage sont exacts, en quatre lignes sans préambule.",
+      "control_role": "post_observation_system_concision",
+      "origin_turn_id": "F2",
+      "observed_nonempty_lines": 4,
+      "observed_word_count_whitespace": 48
+    },
+    {
+      "id": "D2_clarified",
+      "session_id": "D2_document_date_clarifiee",
+      "source_file": "d2-clarified.json",
+      "source_relative_path": "evidence-real-world/d2-clarified.json",
+      "source_response_key": "text",
+      "response_sha256": "8c1677269d7224d04ff5b559ae871584aabb72779a31e5be9fd1e6033ee38dde",
+      "response_text": "La date retenue est le 22 mai, l’ancien créneau du 15 mai ayant été annulé.\nLe total des dépenses prévues s’élève à 1 632 € (salle, repas et intervenante), soit une marge de 168 € sur le budget de 1 800 €.\nLes deux points non confirmés sont la confirmation écrite de l’intervenante et les détails des allergies alimentaires.\nInès est responsable des repas avec une échéance de commande avant le 13 mai.",
+      "termination": "eos",
+      "scores": {
+        "exactitude_factuelle": {
+          "score": 5,
+          "rationale": "Tous les éléments sont fidèles :22 mai,15 mai annulé,1632 € de dépenses,168 € de marge, deux confirmations manquantes et Inès avant 13 mai."
+        },
+        "respect_instructions": {
+          "score": 5,
+          "rationale": "Quatre lignes, toutes les catégories demandées, aucune confusion avec la version du 8 avril."
+        },
+        "coherence": {
+          "score": 5,
+          "rationale": "Dates, montants et actions concordent avec le dossier."
+        },
+        "completude": {
+          "score": 5,
+          "rationale": "Les quatre rubriques sont complètes ; EOS naturel."
+        },
+        "utilite_reelle": {
+          "score": 5,
+          "rationale": "Récapitulatif clair et directement exploitable pour l’organisation de la formation."
+        }
+      },
+      "objective_checks": [
+        {
+          "check": "Dates de formation et créneau annulé",
+          "result": "pass",
+          "evidence": "22 mai retenu,15 mai annulé ;8 avril non présenté comme date de formation."
+        },
+        {
+          "check": "Budget et dépendances",
+          "result": "pass",
+          "evidence": "1632 € ; marge 168 € ; confirmation écrite et allergies encore non confirmées."
+        },
+        {
+          "check": "Responsable, échéance et format",
+          "result": "pass",
+          "evidence": "Inès avant 13 mai ; quatre lignes non vides."
+        }
+      ],
+      "uncertainties": [
+        "La consigne a été reformulée explicitement : ce contrôle documente l’effet de la clarification, sans remplacer D2 original ni transformer son ambiguïté en faute certaine du modèle."
+      ],
+      "verdict": "reussi",
+      "verdict_rationale": "Date de formation 22 mai et ancien créneau 15 mai correctement distingués ; budget, inconnues et action d’Inès exacts, en quatre lignes.",
+      "control_role": "explicit_lexical_clarification",
+      "origin_turn_id": "D2",
+      "observed_nonempty_lines": 4,
+      "original_d2_verdict_unchanged": "indetermine"
+    }
+  ],
+  "verdict_rule": {
+    "reussi": "Résultats essentiels corrects et livrés, contraintes demandées respectées ; aucune réserve substantielle observée dans le périmètre du test.",
+    "partiel": "Un résultat essentiel utile est livré, mais un autre résultat, une justification ou une contrainte de forme manque ou présente un défaut ; aucune réussite stricte revendiquée.",
+    "echec_critere": "Résultat essentiel faux ou aucun résultat essentiel livré pour une demande non ambiguë ; cause éventuelle distincte du constat.",
+    "indetermine": "Ambiguïté du protocole ou preuve insuffisante empêchant un jugement univoque sur le critère essentiel ; ne compte ni comme réussite stricte ni comme erreur certaine du modèle."
+  },
+  "verdict_counts": {
+    "reussi": 6,
+    "partiel": 2,
+    "echec_critere": 0,
+    "indetermine": 0
+  },
+  "include_in_primary_task_counts": false,
+  "rebuild_control_summary": {
+    "completed_turns_reviewed": 5,
+    "all_prompt_ids_equal": true,
+    "all_generated_ids_equal": true,
+    "core_options_equal": true,
+    "main_reuse_kv": true,
+    "control_reuse_kv": false,
+    "counts_excluded_from_primary": true
+  },
+  "completed_diagnostic_turns_reviewed": 8,
+  "planned_diagnostic_turns": 8
+}
