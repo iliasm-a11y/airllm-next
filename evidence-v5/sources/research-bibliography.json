@@ -1,0 +1,48 @@
+{
+  "verified_date": "2026-10-23",
+  "scope": "Primary-source literature consulted; external results are not AirLLM Next measurements and have not been independently reproduced here.",
+  "papers": [
+    {
+      "title": "Fast Inference from Transformers via Speculative Decoding",
+      "authors": "Yaniv Leviathan, Matan Kalman, Yossi Matias",
+      "url": "https://arxiv.org/abs/2211.17192v2",
+      "relevance": "Target verification permits output-preserving speculation under the required verification/sampling rules. The local engine implements a narrower exact greedy contract, not the paper's complete stochastic sampler."
+    },
+    {
+      "title": "Accelerating Mixture-of-Experts Inference by Hiding Offloading Latency with Speculative Decoding",
+      "authors": "Zhibin Wang et al.",
+      "url": "https://arxiv.org/abs/2508.21706v2",
+      "relevance": "SpecMoEOff couples verification width with per-expert work and offloading costs. It motivates measuring full generation latency including draft and verification overhead rather than expert read count alone."
+    },
+    {
+      "title": "Utility-Driven Speculative Decoding for Mixture-of-Experts",
+      "authors": "Anish Saxena, Po-An Tsai, Hritvik Taneja, Aamer Jaleel, Moinuddin Qureshi",
+      "url": "https://arxiv.org/abs/2506.20675v1",
+      "relevance": "Cascade observes that speculation can activate many additional experts and become slower. It motivates testing zero-depth greedy fallbacks and adapting speculation to observed service time per emitted token."
+    },
+    {
+      "title": "SP-MoE: Speculative Decoding and Prefetching for Accelerating MoE-based Model Inference",
+      "authors": "Liangkun Chen, Zijian Wen, Tian Wu, Xiaoxi Zhang, Chuan Wu",
+      "url": "https://arxiv.org/abs/2510.10302v2",
+      "relevance": "Bounded prefetch and overlapped expert offloading can complement speculation. Draft-based routing predictions remain hints: actual target routing is the only authority for execution, and wasted prefetch must be charged."
+    },
+    {
+      "title": "FlashMoE: Reducing SSD I/O Bottlenecks via ML-Based Cache Replacement for Mixture-of-Experts Inference on Edge Devices",
+      "authors": "Byeongju Kim, Jungwan Lee, Donghyeon Han, Hoi-Jun Yoo, Sangyeob Kim",
+      "url": "https://arxiv.org/abs/2601.17063v2",
+      "relevance": "A learned combination of recency and frequency motivates trace-driven admission/replacement comparisons. Its reported hit rates or speedups cannot be transferred to GLM-5.3 on this user's 16 GB M5."
+    },
+    {
+      "title": "SSD-LLaMA: SSD-Native Inference for Trillion-Parameter MoE at 1+ Token/s on a Consumer PC",
+      "authors": "Fangzhou Liang, Yibin Shen, Jianmin Hu, Jiayang Xu, Hanchi Gao, Minxian Xu, Zili Meng",
+      "url": "https://arxiv.org/abs/2609.18110v1",
+      "relevance": "A recent three-tier SSD/RAM/VRAM design executes selected experts without pruning and coordinates expert delivery. Its single RTX 5090 and up-to-32 GB RAM setting differs materially from an M5 Air with 16 GB unified memory; throughput claims are not a validation of this engine."
+    },
+    {
+      "title": "SSD Offloading for LLM Mixture-of-Experts Weights Considered Harmful in Energy Efficiency",
+      "authors": "Kwanhee Kyung, Sungmin Yun, Jung Ho Ahn",
+      "url": "https://arxiv.org/abs/2508.06978v1",
+      "relevance": "Latency hiding alone does not remove storage traffic or its energy cost. Physical/logical read counters and sustained energy/thermal experiments remain distinct from wall-clock speedup."
+    }
+  ]
+}

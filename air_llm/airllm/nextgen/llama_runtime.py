@@ -1,4 +1,4 @@
-"""Bias-free, default-RoPE Llama through the bounded Next weight engine.
+"""Bias-free, default/linear-RoPE Llama through the bounded Next weight engine.
 
 This is a separate architecture implementation. It shares selective embeddings,
 tiled output projection, cache policies, sessions and generation with GLM; it
@@ -6,7 +6,7 @@ does not reinterpret Llama checkpoints as DSA or as a hybrid recurrent model.
 """
 import math
 
-from .adapters import validated_default_rope
+from .adapters import validated_llama_rope
 from .runtime import AirLLMNextModel
 
 
@@ -22,7 +22,7 @@ def normalize_llama_config(config):
         raise NotImplementedError('Next Llama implements full-head RoPE and full causal attention')
     if c.get('pretraining_tp', 1) != 1:
         raise NotImplementedError('Tensor-parallel checkpoint semantics are not implemented')
-    rope = validated_default_rope(c)
+    rope = validated_llama_rope(c)
     c['rope_parameters'] = dict(rope, rope_theta=rope.get('rope_theta', c.get('rope_theta', 10000.)))
     for name in ('vocab_size', 'hidden_size', 'intermediate_size', 'num_hidden_layers',
                  'num_attention_heads', 'max_position_embeddings'):
@@ -109,7 +109,7 @@ class LlamaAttention:
             values.append(y.reshape(batch, length, count, dim).transpose(0, 2, 1, 3))
         q, k, v = values
         args = dict(dims=dim, traditional=False, base=c['rope_parameters']['rope_theta'],
-                    scale=1., offset=cache.position)
+                    scale=1./c['rope_parameters'].get('factor', 1.), offset=cache.position)
         q, k = mx.fast.rope(q, **args), mx.fast.rope(k, **args)
         k, v = cache.append(self.layer, k, v)
         mask = None

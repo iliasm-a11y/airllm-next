@@ -1,0 +1,19 @@
+........................................................................ [ 58%]
+.................................ss.............F..                [100%]
+=================================== FAILURES ===================================
+_ PreflightTests.test_single_file_with_unknown_payload_still_requires_local_file _
+
+self = <test_preflight.PreflightTests testMethod=test_single_file_with_unknown_payload_still_requires_local_file>
+
+    def test_single_file_with_unknown_payload_still_requires_local_file(self):
+        (self.root / 'model.safetensors.index.json').unlink()
+        report = self.report()
+>       self.assertEqual(report['storage']['download_gate'], 'blocked_unknown_payload_size')
+E       AssertionError: 'not_needed_for_declared_files' != 'blocked_unknown_payload_size'
+E       - not_needed_for_declared_files
+E       + blocked_unknown_payload_size
+
+tests_next/test_preflight.py:142: AssertionError
+=========================== short test summary info ============================
+FAILED tests_next/test_preflight.py::PreflightTests::test_single_file_with_unknown_payload_still_requires_local_file
+1 failed, 120 passed, 2 skipped, 6 subtests passed in 5.04s

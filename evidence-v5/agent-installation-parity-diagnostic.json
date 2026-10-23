@@ -1,0 +1,65 @@
+{
+  "scope": "Source reproduction of installed verification GLM failure; diagnostic, not a passing release gate",
+  "fixture": "../wheel-verification/glm_moe_dsa",
+  "seed": 521,
+  "input_ids": [
+    1,
+    8,
+    12
+  ],
+  "torch_expected": [
+    1,
+    8,
+    12,
+    57,
+    57,
+    8,
+    0,
+    77,
+    45,
+    72,
+    57
+  ],
+  "ordinary_native": [
+    1,
+    8,
+    12,
+    57,
+    57,
+    8,
+    0,
+    43,
+    58,
+    50,
+    59
+  ],
+  "agent_native": [
+    1,
+    8,
+    12,
+    57,
+    57,
+    8,
+    0,
+    43,
+    58,
+    50,
+    59
+  ],
+  "ordinary_equals_agent": true,
+  "independent_torch_parity": false,
+  "first_prefill_max_logit_absolute_error": 1.043081283569336e-07,
+  "first_argmax_torch": 57,
+  "first_argmax_native": 57,
+  "settings": {
+    "device": "cpu",
+    "dtype": "float32",
+    "cache_bytes": 1048576,
+    "compact_cache_bytes": 262144,
+    "output_tile_cache": true,
+    "prefill_chunk": 2,
+    "row_chunk": 16,
+    "quantum_tokens": 2
+  },
+  "interpretation": "Scheduling reproduces ordinary native generation. Underlying ordinary-vs-independent-reference mismatch remains a separate failing validation gate; root is investigating."
+}

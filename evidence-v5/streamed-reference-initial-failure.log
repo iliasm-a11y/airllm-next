@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_streamed_hf_reference_prefill_and_cached_decode _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-11/test_streamed_hf_reference_pre0')
+
+    def test_streamed_hf_reference_prefill_and_cached_decode(tmp_path):
+        torch.manual_seed(12031);torch.set_num_threads(1)
+        config=LlamaConfig(vocab_size=48,hidden_size=32,intermediate_size=64,
+                           num_hidden_layers=2,num_attention_heads=4,num_key_value_heads=2,
+                           max_position_embeddings=64,attention_dropout=0.,tie_word_embeddings=False)
+        config._attn_implementation='eager'
+        model=LlamaForCausalLM(config).eval();model.save_pretrained(tmp_path)
+>       streamed=StreamedTransformersLlama(tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+research/v5/test_streamed_reference.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <v5_large_reference.StreamedTransformersLlama object at 0x7fd4176a42c0>
+root = PosixPath('/tmp/pytest-of-root/pytest-11/test_streamed_hf_reference_pre0')
+
+    def __init__(self, root):
+        import torch
+        from transformers import LlamaConfig
+        from transformers.models.llama.modeling_llama import LlamaRotaryEmbedding
+        from transformers.cache_utils import DynamicCache
+        from safetensors import safe_open
+        self.torch=torch;self.safe_open=safe_open;self.root=Path(root)
+        self.config=LlamaConfig.from_dict(json.loads((self.root/'config.json').read_text()))
+        self.config._attn_implementation='eager'
+        index=self.root/'model.safetensors.index.json'
+        if index.exists():self.weight_map=json.loads(index.read_text())['weight_map']
+        else:
+            with safe_open(self.root/'model.safetensors',framework='pt',device='cpu') as f:
+                self.weight_map={key:'model.safetensors' for key in f.keys()}
+>       self.rope=LlamaRotaryEmbedding(config=self.config,device='cpu')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: LlamaRotaryEmbedding.__init__() got an unexpected keyword argument 'device'
+
+research/v5/benchmark_large.py:37: TypeError
+----------------------------- Captured stderr call -----------------------------
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 510.88it/s]
+=========================== short test summary info ============================
+FAILED research/v5/test_streamed_reference.py::test_streamed_hf_reference_prefill_and_cached_decode
+1 failed in 5.47s

@@ -1,19 +1,26 @@
-# AirLLM Next 4.1.0rc1
+# AirLLM Next 5.0.0a1
 
-Release candidate of the AirLLM derivative maintained at
+Research alpha of the AirLLM derivative maintained at
 [iliasm-a11y/airllm-next](https://github.com/iliasm-a11y/airllm-next).
 The original AirLLM copyright and Apache 2.0 license are preserved. This is a
-derivative release candidate, with separate model licenses for any user-supplied
+derivative research build, with separate model licenses for any user-supplied
 weights. Model weights are not included.
 
 The Next engine runs local checkpoints through selective Safetensors reads,
 bounded weight and context caches, native MLX compute, and an optional verified
 lossless transport. It implements GLM DSA/MoE and a separate bias-free Llama
-path with default RoPE. Qwen hybrid execution is explicitly experimental.
+path with default or linear RoPE. Qwen hybrid execution is explicitly experimental.
 Full GLM-5.3 and Qwen3.8 generation on 16 GB has not been certified.
 
+V5 adds optional compact source residency inside the weight cache budget,
+decoded output tile admission, measured speculation cost control, read-only
+resource preflight, and a bounded durable agent queue sharing one model and
+one resident architecture context. Cache changes remain opt-in; fewer file
+reads do not guarantee lower generation time. Context switches replay verified
+tokens, which trades latency for bounded native-state memory.
+
 Python 3.12 or newer is required. The macOS setup requires native ARM64
-Python 3.12/3.13 and MLX 0.32.4; this candidate's execution checks use Python
+Python 3.12/3.13 and MLX 0.32.4; this build's execution checks use Python
 3.12. From a repository checkout:
 
 ```sh

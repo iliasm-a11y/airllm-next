@@ -95,12 +95,13 @@ def runtime_tuning_key(model):
     if model.options.quantized_dir:
         p=Path(model.options.quantized_dir)/'manifest.json'
         manifest=sha256(p.read_bytes()).hexdigest()
-    identity={'engine_schema_version':3,'checkpoint':model.checkpoint.fingerprint,'quantized_manifest':manifest,
+    identity={'engine_schema_version':5,'checkpoint':model.checkpoint.fingerprint,'quantized_manifest':manifest,
       'platform':platform.platform(),'machine':platform.machine(),'device':model.device,
       'dtype':model.options.dtype,'profile':model.options.profile,'prefill_chunk':model.options.prefill_chunk,
       'cache_bucket_256MiB':model.options.cache_bytes//(256*MiB),
       'io_bucket_64MiB':model.options.io_bytes//(64*MiB),
-      'cache_policy':model.options.policy,'coalesce_reads':model.options.coalesce_reads,'selective_fp8_scales':model.options.selective_fp8_scales}
+      'cache_policy':model.options.policy,'coalesce_reads':model.options.coalesce_reads,'selective_fp8_scales':model.options.selective_fp8_scales,
+      'compact_cache_bytes':model.options.compact_cache_bytes,'output_tile_cache':model.options.output_tile_cache}
     return sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
 
 

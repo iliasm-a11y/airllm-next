@@ -25,6 +25,78 @@ def validated_default_rope(config):
     return dict(parameters)
 
 
+def validated_llama_rope(config):
+    """Normalize only full-head default or linear-scaled Llama RoPE.
+
+    Linear scaling divides positions (equivalently inverse frequencies) by the
+    positive factor. It has no sequence-length dependent update or attention
+    rescaling. Current/legacy dictionaries may complement each other, but any
+    conflicting declaration fails before a checkpoint or device is opened.
+    GLM and Qwen continue to use the stricter default-only validator above.
+    """
+    merged = {}
+    allowed = {'rope_type', 'type', 'rope_theta', 'factor', 'original_max_position_embeddings'}
+    def positive(value, name):
+        try:
+            finite = math.isfinite(value)
+        except (TypeError, OverflowError):
+            finite = False
+        if not isinstance(value, numbers.Real) or isinstance(value, bool) or not finite or value <= 0:
+            raise ValueError(f'{name} must be finite and positive')
+    if 'rope_theta' in config:
+        positive(config['rope_theta'], 'rope_theta')
+    for name in ('rope_parameters', 'rope_scaling'):
+        values = config.get(name)
+        if values is None:
+            continue
+        if not isinstance(values, dict):
+            raise ValueError(f'{name} must be an object')
+        unknown = set(values)-allowed
+        if unknown:
+            raise NotImplementedError('Unsupported Llama RoPE parameters: '+', '.join(sorted(unknown)))
+        for key in ('rope_theta', 'factor'):
+            if key in values:
+                positive(values[key], key)
+        if 'original_max_position_embeddings' in values:
+            original = values['original_max_position_embeddings']
+            if type(original) is not int or original < 1:
+                raise ValueError('original_max_position_embeddings must be a positive integer')
+        kinds = [values[key] for key in ('rope_type', 'type') if key in values]
+        if len(kinds) == 2 and kinds[0] != kinds[1]:
+            raise ValueError('Conflicting Llama RoPE type aliases')
+        normalized = {key: value for key, value in values.items() if key != 'type'}
+        if kinds:
+            normalized['rope_type'] = kinds[0]
+        for key, value in normalized.items():
+            if key in merged and merged[key] != value:
+                raise ValueError(f'Conflicting Llama RoPE declarations for {key}')
+            merged[key] = value
+    kind = merged.get('rope_type', 'default')
+    if kind not in ('default', 'linear'):
+        raise NotImplementedError('Next Llama implements default and linear RoPE only')
+    theta = merged.get('rope_theta', config.get('rope_theta', 10000.))
+    if 'rope_theta' in merged and 'rope_theta' in config and config['rope_theta'] != theta:
+        raise ValueError('Conflicting Llama rope_theta declarations')
+    positive(theta, 'rope_theta')
+    if kind == 'linear' and 'factor' not in merged:
+        raise ValueError('Linear Llama RoPE requires an explicit factor')
+    factor = merged.get('factor', 1.)
+    positive(factor, 'Llama RoPE factor')
+    if not math.isfinite(1./factor):
+        raise ValueError('Llama RoPE factor has no finite inverse')
+    if kind == 'default' and factor != 1:
+        raise NotImplementedError('A nonunit Llama RoPE factor requires rope_type=linear')
+    original = merged.get('original_max_position_embeddings')
+    if original is not None and (type(original) is not int or original < 1):
+        raise ValueError('original_max_position_embeddings must be a positive integer')
+    result = {'rope_type': kind, 'rope_theta': float(theta)}
+    if kind == 'linear':
+        result['factor'] = float(factor)
+    if original is not None:
+        result['original_max_position_embeddings'] = original
+    return result
+
+
 @dataclass(frozen=True)
 class ModelAdapter:
     model_type: str
@@ -51,11 +123,11 @@ class ModelAdapter:
             # GLM's FP8 implementation does not enable FP8 for every adapter.
             if q or config.get('quantization'):
                 raise NotImplementedError('Next Llama accepts floating checkpoint weights only')
-            validated_default_rope(config)
+            validated_llama_rope(config)
             if config.get('attention_bias') or config.get('mlp_bias') or config.get('hidden_act','silu')!='silu':
                 raise NotImplementedError('Next Llama requires bias-free SiLU layers')
             if config.get('partial_rotary_factor',1.)!=1. or config.get('sliding_window') or config.get('pretraining_tp',1)!=1:
-                raise NotImplementedError('Next Llama requires full-head default RoPE, full causal attention and pretraining_tp=1')
+                raise NotImplementedError('Next Llama requires full-head default/linear RoPE, full causal attention and pretraining_tp=1')
         if q and not (q.get('quant_method') == 'fp8' and q.get('fmt', 'e4m3') == 'e4m3'):
             raise NotImplementedError(
                 f'Native {self.family} cannot execute quantization '

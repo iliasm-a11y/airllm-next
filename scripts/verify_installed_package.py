@@ -45,7 +45,7 @@ def main():
             capture_output=True,text=True,check=True)
         return result.stdout
     help_text=cli('--help')
-    assert all(command in help_text for command in ('doctor','inspect','run','pack','serve'))
+    assert all(command in help_text for command in ('doctor','inspect','run','pack','serve','preflight','agent-serve'))
     doctor=json.loads(cli('doctor'))
     fixtures=[]
     for architecture in ('llama','glm_moe_dsa'):
@@ -70,8 +70,22 @@ def main():
         ids=torch.tensor([[1,8,12]])
         with torch.inference_mode():expected=reference.generate(ids,max_new_tokens=8,do_sample=False).tolist()
         with AutoModel.from_pretrained(checkpoint,backend='next',
-                next_config=NextConfig(**options,cache_dir=str(root/(architecture+'-metadata')))) as model:
+                next_config=NextConfig(**options,compact_cache_bytes=256*1024,output_tile_cache=True,
+                    cache_dir=str(root/(architecture+'-metadata')))) as model:
             actual=model.generate(ids,max_new_tokens=8).tolist()
+            from airllm.nextgen import AgentEngine
+            journal=root/(architecture+'-agent-journals')
+            with AgentEngine(model,state_dir=journal,quantum_tokens=2) as engine:
+                job=engine.submit(ids.tolist()[0],max_tokens=8)
+                first=engine.step()
+            with AgentEngine(model,state_dir=journal,quantum_tokens=2) as engine:
+                if engine.snapshot(job)['state']!='completed':engine.resume(job)
+                while engine.step() is not None:pass
+                restored=engine.snapshot(job)
+                # Replay must reproduce the ordinary native trajectory. Independent
+                # Transformers parity remains a separate mandatory gate below.
+                assert ids.tolist()[0]+restored['output_ids']==actual[0],(
+                    architecture,'agent replay differs from ordinary generation',restored['output_ids'],actual[0])
         assert actual==expected,(architecture,actual,expected)
         inspected=json.loads(cli('inspect',str(checkpoint),'--tokens','32'))
         assert inspected['runtime_available'] and not inspected['generation_validated']
@@ -83,7 +97,8 @@ def main():
         assert cli_tokens==expected[0]
         fixtures.append({'architecture':architecture,'fixture':'seeded random miniature',
             'compute_device':'cpu','new_tokens':len(actual[0])-3,'tokens':actual[0],
-            'matches_independent_transformers_reference':True,'cli_matches_reference':True})
+            'matches_independent_transformers_reference':True,'cli_matches_reference':True,
+            'installed_agent_durable_replay_matches_ordinary':True})
     report={'version':metadata.version('airllm'),'python':sys.version,
         'package_file':str(package),'source_checkout_required':False,
         'imported_production_modules':modules,'doctor':doctor,'fixtures':fixtures,

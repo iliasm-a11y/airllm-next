@@ -1,0 +1,32 @@
+{
+  "model_id": "codellama/CodeLlama-7b-hf",
+  "revision": "6c284d1468fe6c413cf56183e69b194dcfa27fe6",
+  "headers": [
+    {
+      "file": "model-00001-of-00002.safetensors",
+      "file_bytes": 9976701592,
+      "header_bytes": 25232,
+      "header_sha256": "f59a4746cf3f4fed3db861be0a1b02a61cb7de77bbd4beefd120dc43a0f7f94c"
+    },
+    {
+      "file": "model-00002-of-00002.safetensors",
+      "file_bytes": 3500425616,
+      "header_bytes": 8584,
+      "header_sha256": "9afcb46657d5517bdcb82ef9495106f1915e506c9361a0e789ae6c1d6875a459"
+    }
+  ],
+  "tensor_count": 291,
+  "payload_bytes": 13477093376,
+  "index_payload_bytes": 13477093376,
+  "dtype_inventory": {
+    "BF16": 291
+  },
+  "largest_tensor": "model.embed_tokens.weight",
+  "largest_tensor_shape": [
+    32016,
+    4096
+  ],
+  "largest_internal_projection_fp32_bytes": 180355072,
+  "source_checkpoint_unchanged": true,
+  "generation_validated": false
+}

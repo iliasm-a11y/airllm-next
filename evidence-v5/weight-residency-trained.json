@@ -1,0 +1,67 @@
+{
+  "model_path": "/workspace/scratch/ec05240ca81a/models/smollm2-135m",
+  "checkpoint_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "checkpoint_bytes": 269060552,
+  "same_generated_sequences_all_variants": true,
+  "scope": "Complete trained checkpoint, MLX CPU; checkpoint fits RAM; no giant-model/OOC/SSD claim",
+  "cache_state": "Software caches empty at each worker start; OS page cache uncontrolled; two reversed orders",
+  "numerical_transport": "Source cache retains original bytes; no quantization or weight changes",
+  "summaries": {
+    "decoded300": {
+      "warm_median_generation_seconds": 8.31956585350008,
+      "warm_median_logical_bytes": 4729352256.0,
+      "warm_median_ttft_seconds": 4.253115286000138,
+      "warm_median_decode_tokens_per_second": 3.59452493850145,
+      "process_peak_rss_bytes_max": 829222912,
+      "timed_warm_generations": 8
+    },
+    "compact300": {
+      "warm_median_generation_seconds": 8.631398053999874,
+      "warm_median_logical_bytes": 0.0,
+      "warm_median_ttft_seconds": 4.489710685500086,
+      "warm_median_decode_tokens_per_second": 3.607595043417164,
+      "process_peak_rss_bytes_max": 772411392,
+      "timed_warm_generations": 8
+    },
+    "decoded600": {
+      "warm_median_generation_seconds": 6.888940579000064,
+      "warm_median_logical_bytes": 906027840.0,
+      "warm_median_ttft_seconds": 4.203042646000085,
+      "warm_median_decode_tokens_per_second": 5.69149515707118,
+      "process_peak_rss_bytes_max": 939327488,
+      "timed_warm_generations": 8
+    },
+    "tiles600": {
+      "warm_median_generation_seconds": 6.50226093099991,
+      "warm_median_logical_bytes": 58176.0,
+      "warm_median_ttft_seconds": 4.14494042750016,
+      "warm_median_decode_tokens_per_second": 6.225968882415536,
+      "process_peak_rss_bytes_max": 1047916544,
+      "timed_warm_generations": 8
+    }
+  },
+  "pairs": [
+    {
+      "control": "decoded300",
+      "variant": "compact300",
+      "full_generation_speedup": 0.9638723415895195,
+      "logical_file_bytes_reduction_fraction": 1.0
+    },
+    {
+      "control": "decoded600",
+      "variant": "tiles600",
+      "full_generation_speedup": 1.059468491360695,
+      "logical_file_bytes_reduction_fraction": 0.9999357900525441
+    }
+  ],
+  "evidence_files": [
+    "weight-residency-trained-round0-decoded300.json",
+    "weight-residency-trained-round0-compact300.json",
+    "weight-residency-trained-round0-decoded600.json",
+    "weight-residency-trained-round0-tiles600.json",
+    "weight-residency-trained-round1-tiles600.json",
+    "weight-residency-trained-round1-decoded600.json",
+    "weight-residency-trained-round1-compact300.json",
+    "weight-residency-trained-round1-decoded300.json"
+  ]
+}

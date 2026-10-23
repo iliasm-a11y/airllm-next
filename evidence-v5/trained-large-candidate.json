@@ -1,0 +1,220 @@
+{
+  "variant": "candidate",
+  "source": "/workspace/scratch/ec05240ca81a/airllm-next",
+  "source_files_sha256": {
+    "air_llm/airllm/nextgen/__init__.py": "35458ad8f8051dea2b18b0b9ef78a20dc4d38bee6d9708f60bc01c12b7193d25",
+    "air_llm/airllm/nextgen/adapters.py": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f",
+    "air_llm/airllm/nextgen/agent_engine.py": "f5770283a7213381a0109bf0b707e59c8be66a2eda414e35b4014de39c70820e",
+    "air_llm/airllm/nextgen/agent_server.py": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a",
+    "air_llm/airllm/nextgen/attention.py": "4b6bb54c8f81d93b6c59df1eb458c014e3a2035e19d0f438b0978276ad5814e9",
+    "air_llm/airllm/nextgen/cache.py": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+    "air_llm/airllm/nextgen/cli.py": "416a73be1ccd74323caa6e8e36dbf0b14386b4bde5d2df565695cb544539aa4c",
+    "air_llm/airllm/nextgen/compact_cache.py": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f",
+    "air_llm/airllm/nextgen/config.py": "e170bfd4b1c2dafd4f7d6bb63c014fb424bafd75324325980050f355f17d26d2",
+    "air_llm/airllm/nextgen/generation.py": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13",
+    "air_llm/airllm/nextgen/limits.py": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3",
+    "air_llm/airllm/nextgen/llama_runtime.py": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f",
+    "air_llm/airllm/nextgen/lossless.py": "91a4cfc45b5f6ce2d24b23375be607e6999d1913bd635ee123a363666e8726ac",
+    "air_llm/airllm/nextgen/moe.py": "d3d6fba66c764dd0e64fb1376bfade1fc187028f587a10cd551ad5daee56748e",
+    "air_llm/airllm/nextgen/preflight.py": "46c0514e6a47250733c494d002f3a332ab9f7d523edb9fa88279af1b3fd73edc",
+    "air_llm/airllm/nextgen/prompt_draft.py": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269",
+    "air_llm/airllm/nextgen/quantization.py": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b",
+    "air_llm/airllm/nextgen/qwen_moe.py": "a4984cbc62dd29c2ee5ab3a56e6aeb6cc81f97b4d4cff24ba2829568ae142b00",
+    "air_llm/airllm/nextgen/qwen_runtime.py": "297b691eb97372d424b547a99354049aa8dbc80701ef582dc6267ad8428689cf",
+    "air_llm/airllm/nextgen/recurrent.py": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf",
+    "air_llm/airllm/nextgen/runtime.py": "b124281535abdff2bc245606cf671e01eb33b2bb4a1c48247dff91b2b0e18f7f",
+    "air_llm/airllm/nextgen/server.py": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5",
+    "air_llm/airllm/nextgen/sidecar.py": "5303827de734749d678ae76e900cf37290512444f28c1bed240abed7f155fd57",
+    "air_llm/airllm/nextgen/speculative.py": "c18e3a8fa144c8bd429919d51e7815ed23af467cdcbe18f217495f6d60f94560",
+    "air_llm/airllm/nextgen/storage.py": "e211bb7db19bffd7d2d0dba325f315dadb822f087f982b18de93f0c6657ee0b5",
+    "air_llm/airllm/nextgen/tuning.py": "44ecd8e6351e8841464a900b04f61e5df75bc1fe887384dfd920f474fc9627d3",
+    "air_llm/airllm/nextgen/weights.py": "956cda42cf6f46a6963a7da799994626a12d27006dcd1de83d751f9990956456"
+  },
+  "model_dir": "/workspace/scratch/ec05240ca81a/models/codellama-7b",
+  "prompt": "def add(a, b):\n    ",
+  "input_tokens": [
+    1,
+    822,
+    788,
+    29898,
+    29874,
+    29892,
+    289,
+    1125,
+    13,
+    268
+  ],
+  "token_ids": [
+    1,
+    822,
+    788,
+    29898,
+    29874,
+    29892,
+    289,
+    1125,
+    13,
+    268,
+    736,
+    263,
+    718,
+    289
+  ],
+  "new_tokens": 4,
+  "output_text": "return a + b",
+  "startup_seconds": 0.022559603999980027,
+  "generation_seconds": 164.4006240020003,
+  "ttft_seconds": 82.16068763099975,
+  "steps": [
+    {
+      "step": 0,
+      "seconds": 82.16068763099975,
+      "selected_token": 736,
+      "physical_read_bytes": 12595986432
+    },
+    {
+      "step": 1,
+      "seconds": 27.322692418000315,
+      "selected_token": 263,
+      "physical_read_bytes": 12595986432
+    },
+    {
+      "step": 2,
+      "seconds": 27.25870328899964,
+      "selected_token": 718,
+      "physical_read_bytes": 12595986432
+    },
+    {
+      "step": 3,
+      "seconds": 27.65774036699986,
+      "selected_token": 289,
+      "physical_read_bytes": 12595986432
+    }
+  ],
+  "decode_tokens_per_second": 0.03647898243119385,
+  "physical_read_bytes": 50383945728,
+  "system_swap_start_bytes": 0,
+  "system_swap_end_bytes": 0,
+  "process_peak_rss_bytes": 1404461056,
+  "host_memory_bytes": 10451439616,
+  "cgroup_before": {
+    "memory.max": "8589934592",
+    "memory.current": "7671164928",
+    "memory.peak": "8592490496",
+    "memory.events": "low 0\nhigh 0\nmax 214650\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.stat": "anon 469987328\nfile 6974672896\nkernel 225316864\nkernel_stack 999424\npagetables 4788224\nsec_pagetables 0\npercpu 6732\nsock 0\nvmalloc 4096\nshmem 0\nfile_mapped 95993856\nfile_dirty 716800\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2390753280\nshmem_thp 0\ninactive_anon 469618688\nactive_anon 94208\ninactive_file 4713943040\nactive_file 2260729856\nunevictable 0\nslab_reclaimable 217625352\nslab_unreclaimable 1849856\nslab 219475208\nworkingset_refault_anon 0\nworkingset_refault_file 18468226\nworkingset_activate_anon 0\nworkingset_activate_file 130996\nworkingset_restore_anon 0\nworkingset_restore_file 103\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 22778990\npgsteal 22766839\npswpin 0\npswpout 0\npgscan_kswapd 740610\npgscan_direct 22038380\npgscan_khugepaged 0\npgscan_proactive 0\npgsteal_kswapd 740162\npgsteal_direct 22026677\npgsteal_khugepaged 0\npgsteal_proactive 0\npgfault 60514891\npgmajfault 129\npgrefill 1753\npgactivate 436213\npgdeactivate 1753\npglazyfree 7\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 0\nthp_collapse_alloc 0\nthp_swpout 0\nthp_swpout_fallback 0"
+  },
+  "cgroup_after": {
+    "memory.max": "8589934592",
+    "memory.current": "8046587904",
+    "memory.peak": "8592490496",
+    "memory.events": "low 0\nhigh 0\nmax 409353\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.stat": "anon 846159872\nfile 6972301312\nkernel 226398208\nkernel_stack 1048576\npagetables 5697536\nsec_pagetables 0\npercpu 7612\nsock 0\nvmalloc 4096\nshmem 0\nfile_mapped 104292352\nfile_dirty 606208\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2388656128\nshmem_thp 0\ninactive_anon 846069760\nactive_anon 94208\ninactive_file 4711260160\nactive_file 2261041152\nunevictable 0\nslab_reclaimable 217640328\nslab_unreclaimable 1976464\nslab 219616792\nworkingset_refault_anon 0\nworkingset_refault_file 30769237\nworkingset_activate_anon 0\nworkingset_activate_file 131000\nworkingset_restore_anon 0\nworkingset_restore_file 103\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 35081736\npgsteal 35069205\npswpin 0\npswpout 0\npgscan_kswapd 740610\npgscan_direct 34341126\npgscan_khugepaged 0\npgscan_proactive 0\npgsteal_kswapd 740162\npgsteal_direct 34329043\npgsteal_khugepaged 0\npgsteal_proactive 0\npgfault 111858559\npgmajfault 129\npgrefill 1785\npgactivate 436606\npgdeactivate 1785\npglazyfree 7\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 0\nthp_collapse_alloc 0\nthp_swpout 0\nthp_swpout_fallback 0"
+  },
+  "cgroup_scope": "Shared experiment cgroup, including filesystem cache and sibling processes; not process RSS",
+  "cgroup_memory_max": "8589934592",
+  "config": {
+    "cache_bytes": 268435456,
+    "compact_cache_bytes": 0,
+    "output_tile_cache": false,
+    "io_bytes": 268435456,
+    "kv_bytes": 134217728,
+    "workspace_bytes": 536870912,
+    "reserve_bytes": 536870912,
+    "max_tensor_bytes": 268435456,
+    "io_workers": 2,
+    "max_open_files": 16,
+    "row_chunk": 2048,
+    "prefill_chunk": 16,
+    "max_context": 256,
+    "policy": "slru",
+    "device": "cpu",
+    "dtype": "float32",
+    "profile": "balanced",
+    "prefetch": false,
+    "coalesce_reads": false,
+    "selective_fp8_scales": true,
+    "cache_dir": "/tmp/airllm-v5-large-srgdqs31",
+    "quantized_dir": null,
+    "lossless_dir": null,
+    "lossless_native_library": null,
+    "lossless_verify_hash": true,
+    "load_tokenizer": false,
+    "use_saved_tuning": false
+  },
+  "metrics": {
+    "compute_device": "cpu",
+    "metal_validated": false,
+    "numerics": {
+      "compute_dtype": "float32",
+      "dynamic_fp8_activation_kernels_reproduced": false,
+      "mlx_enable_tf32_environment": "0",
+      "tf32_environment_note": "Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision",
+      "full_checkpoint_quality_validated": false
+    },
+    "runtime": {
+      "startup_seconds": 0.018943013999887626,
+      "sampled_rss_peak_bytes": 863547392,
+      "swap_growth_bytes": 0
+    },
+    "telemetry": {
+      "available_bytes": 8708694016,
+      "total_bytes": 10451439616,
+      "rss_bytes": 863551488,
+      "swap_used_bytes": 0,
+      "cpu_percent": 11.1,
+      "gpu_utilization": null,
+      "temperature_c": null,
+      "thermal_throttled": null,
+      "memory_pressure_source": "available physical memory (not macOS pressure level)",
+      "physical_read_bytes": 50383966208,
+      "process_peak_rss_bytes": 1404461056,
+      "rss_peak_scope": "process lifetime, not isolated per model"
+    },
+    "io": {
+      "manifest_hit": 0,
+      "header_bytes": 33832,
+      "fd_opens": 2,
+      "logical_bytes": 52859379712,
+      "read_calls": 1233,
+      "io_seconds": 25.05539707498656,
+      "requested_bytes": 52859379712
+    },
+    "lossless_transport": {},
+    "weights": {
+      "dequant_seconds": 0.0,
+      "loads": 1233,
+      "speculative_reads": 0,
+      "load_seconds": 81.82401841200453,
+      "output_tiles": 64,
+      "output_tile_peak_bytes": 33554432
+    },
+    "cache": {
+      "misses": 1156,
+      "evictions": 1154,
+      "bytes": 180371456,
+      "peak_bytes": 268435456,
+      "capacity": 268435456
+    },
+    "compact_cache": {
+      "bytes": 0,
+      "peak_bytes": 0,
+      "capacity": 0,
+      "budget_scope": "partition of cache_bytes; not additional memory"
+    },
+    "prefetch": {
+      "submitted": 1156,
+      "consumed": 1156,
+      "wait_seconds": 81.14306467701226,
+      "peak_bytes": 180355072,
+      "budget": 268435456,
+      "enabled": false
+    }
+  },
+  "precision": "float32 compute from unchanged original floating checkpoint",
+  "mlx_enable_tf32": "0",
+  "os_cache_state": "Uncontrolled. Real checkpoint exceeds physical host RAM and cgroup capacity; no cache purge used.",
+  "external_ssd_measured": false,
+  "metal_measured": false,
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+}

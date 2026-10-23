@@ -1,0 +1,48 @@
+{
+  "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "revision": "12fd25f77366fa6b3b4b768ec3050bf629380bac",
+  "checkpoint_sha256": "5af571cbf074e6d21a03528d2330792e532ca608f24ac70a143f6b369968ab8c",
+  "weight_file_bytes": 269060552,
+  "protocol": "Sequential isolated subprocesses; same trained checkpoint, FP32, budgets, prompts and greedy16/other requested tokens. Software initial forward measured separately. OS cache uncontrolled. No concurrent benchmark load intended.",
+  "tokens_per_run": 16,
+  "repeats_per_prompt": 3,
+  "cache_mib": 640,
+  "compact_mib": 128,
+  "variant_order": [
+    "reference",
+    "baseline"
+  ],
+  "summary": {
+    "reference": {
+      "all_sequences_match_reference": true,
+      "logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_logit_error": 0.0,
+      "median_generation_seconds": 1.0069846649998908,
+      "median_decode_tokens_per_second": null,
+      "median_ttft_seconds": null,
+      "median_decode_logical_bytes_per_token": null,
+      "median_decode_encoded_file_bytes_per_token": null,
+      "process_peak_rss_bytes": 1287405568,
+      "raw_report": "trained-control-reference.json",
+      "generation_speedup_vs_v4_baseline": 5.878356396818278
+    },
+    "baseline": {
+      "all_sequences_match_reference": true,
+      "logits_within_atol_1e4_rtol_5e4": true,
+      "max_abs_logit_error": 7.2479248046875e-05,
+      "median_generation_seconds": 5.919414747000019,
+      "median_decode_tokens_per_second": 6.795050253276201,
+      "median_ttft_seconds": 3.6565540330000204,
+      "median_decode_logical_bytes_per_token": 56624256.0,
+      "median_decode_encoded_file_bytes_per_token": 56624256.0,
+      "process_peak_rss_bytes": 939409408,
+      "raw_report": "trained-control-baseline.json",
+      "generation_speedup_vs_v4_baseline": 1.0
+    }
+  },
+  "full_GLM53_generated": false,
+  "full_Qwen38_generated": false,
+  "checkpoint_exceeds_physical_ram": false,
+  "metal_measured": false,
+  "external_ssd_measured": false
+}

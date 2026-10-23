@@ -90,7 +90,7 @@ class AirLLMNextModel:
         # Do not pin or raise wired-memory limits to defeat macOS safety controls.
         if available:
             mx.set_cache_limit(min(256*1024**2,self.options.workspace_bytes//4))
-            mx.set_memory_limit(self.options.cache_bytes+self.options.kv_bytes+self.options.workspace_bytes+self.options.io_bytes)
+            mx.set_memory_limit(self.options.mlx_memory_bytes)
         try:
             from .lossless import open_checkpoint
             self.checkpoint=open_checkpoint(self.root,self.options,cache_dir=self._profile)
@@ -170,7 +170,7 @@ class AirLLMNextModel:
         if rss is not None:self.stats['sampled_rss_peak_bytes']=max(self.stats['sampled_rss_peak_bytes'],rss)
         self.stats['swap_growth_bytes']=max(0,psutil.swap_memory().used-self.start_swap)
         if vm.available < self.options.reserve_bytes+self.options.workspace_bytes:
-            self.reader.cache.resize(self.reader.cache.capacity//2)
+            self.reader.trim()
             self.reader.io.drain()
             if vm.available<self.options.reserve_bytes:raise MemoryError('System memory reserve reached; context/weight budgets must be reduced')
 
@@ -288,6 +288,16 @@ class AirLLMNextModel:
         elif hasattr(draft_model,'propose'):propose=draft_model.propose
         elif callable(draft_model):propose=draft_model
         else:raise TypeError('Supply a loaded local draft model or a candidate proposal callable')
+        # A draft's transport is distinct from the target's. Unknown external
+        # proposal costs stay unknown rather than masquerading as zero bytes.
+        draft_checkpoint=getattr(draft_model,'checkpoint',None)
+        draft_read=getattr(draft_model,'logical_bytes_read',None)
+        draft_encoded=getattr(draft_model,'encoded_bytes_read',None)
+        if draft_checkpoint is not None:
+            draft_read=lambda:draft_checkpoint.stats['logical_bytes']
+            draft_encoded=lambda:encoded_read_bytes(draft_checkpoint)
+        if not callable(draft_read):draft_read=None
+        if not callable(draft_encoded):draft_encoded=None
         host=token_batch(input_ids,self.config['vocab_size'])
         with self.lock:
             if self.closed:raise RuntimeError('Model is closed')
@@ -298,7 +308,8 @@ class AirLLMNextModel:
                        eos_token_ids=eos,max_depth=max_depth,adaptive=adaptive,
                        argmax_tokens=target_argmax,vocab_size=self.config['vocab_size'],
                        bytes_read=lambda:self.checkpoint.stats['logical_bytes'],
-                       encoded_bytes_read=lambda:encoded_read_bytes(self.checkpoint))
+                       encoded_bytes_read=lambda:encoded_read_bytes(self.checkpoint),
+                       draft_bytes_read=draft_read,draft_encoded_bytes_read=draft_encoded)
             measured=result.metrics
             self.stats.update({'ttft_seconds':measured['ttft_seconds'],
                 'generation_seconds':measured['generation_seconds'],
@@ -326,6 +337,9 @@ class AirLLMNextModel:
            'lossless_transport':dict(getattr(self.checkpoint,'transport_stats',{})),
            'weights':dict(r.stats),
            'cache':dict(r.cache.stats)|{'bytes':r.cache.bytes,'peak_bytes':r.cache.peak_bytes,'capacity':r.cache.capacity},
+           'compact_cache':dict(r.compact_cache.stats)|{'bytes':r.compact_cache.bytes,
+               'peak_bytes':r.compact_cache.peak_bytes,'capacity':r.compact_cache.capacity,
+               'budget_scope':'partition of cache_bytes; not additional memory'},
            'prefetch':dict(r.io.stats)|{'peak_bytes':r.io.peak_bytes,'budget':r.io.budget,'enabled':r.prefetch_enabled}}
 
     def close(self,save_profile=True):

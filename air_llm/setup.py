@@ -14,7 +14,7 @@ for _readme in (os.path.join(here, "README.md"), os.path.join(here, os.pardir, "
 
 setuptools.setup(
     name="airllm",
-    version="4.1.0rc1",
+    version="5.0.0a1",
     author="Gavin Li",
     author_email="gavinli@animaai.cloud",
     description="Local out-of-core inference with selective reads, bounded caches and native MLX backends",

@@ -1,5 +1,11 @@
 # Candidate user guide
 
+This guide records **4.1.0rc1** installation and measurements. For the V5
+research alpha, use the repository [README](../README.md),
+[V5 validation](../FINAL_VALIDATION_V5.md), and
+[RONIN guide](../RONIN_INFERENCE_GUIDE.md). The `dist-final/4.1` wheels below
+remain historical; V5 packages are in `dist-v5/`.
+
 ## Installation and CPU validation
 
 Tested: macOS 27.2 arm64, Apple M5 16 GB, Python 3.12.13, MLX 0.32.4,

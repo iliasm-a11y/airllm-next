@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="5.465" timestamp="2026-10-23T03:37:47.911616+02:00" hostname="feb6d3dade23"><testcase classname="research.v5.test_streamed_reference" name="test_streamed_hf_reference_prefill_and_cached_decode" time="0.050"><failure message="TypeError: LlamaRotaryEmbedding.__init__() got an unexpected keyword argument 'device'">tmp_path = PosixPath('/tmp/pytest-of-root/pytest-11/test_streamed_hf_reference_pre0')
+
+    def test_streamed_hf_reference_prefill_and_cached_decode(tmp_path):
+        torch.manual_seed(12031);torch.set_num_threads(1)
+        config=LlamaConfig(vocab_size=48,hidden_size=32,intermediate_size=64,
+                           num_hidden_layers=2,num_attention_heads=4,num_key_value_heads=2,
+                           max_position_embeddings=64,attention_dropout=0.,tie_word_embeddings=False)
+        config._attn_implementation='eager'
+        model=LlamaForCausalLM(config).eval();model.save_pretrained(tmp_path)
+&gt;       streamed=StreamedTransformersLlama(tmp_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+research/v5/test_streamed_reference.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;v5_large_reference.StreamedTransformersLlama object at 0x7fd4176a42c0&gt;
+root = PosixPath('/tmp/pytest-of-root/pytest-11/test_streamed_hf_reference_pre0')
+
+    def __init__(self, root):
+        import torch
+        from transformers import LlamaConfig
+        from transformers.models.llama.modeling_llama import LlamaRotaryEmbedding
+        from transformers.cache_utils import DynamicCache
+        from safetensors import safe_open
+        self.torch=torch;self.safe_open=safe_open;self.root=Path(root)
+        self.config=LlamaConfig.from_dict(json.loads((self.root/'config.json').read_text()))
+        self.config._attn_implementation='eager'
+        index=self.root/'model.safetensors.index.json'
+        if index.exists():self.weight_map=json.loads(index.read_text())['weight_map']
+        else:
+            with safe_open(self.root/'model.safetensors',framework='pt',device='cpu') as f:
+                self.weight_map={key:'model.safetensors' for key in f.keys()}
+&gt;       self.rope=LlamaRotaryEmbedding(config=self.config,device='cpu')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: LlamaRotaryEmbedding.__init__() got an unexpected keyword argument 'device'
+
+research/v5/benchmark_large.py:37: TypeError</failure></testcase></testsuite></testsuites>

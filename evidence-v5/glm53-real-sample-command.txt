@@ -1,0 +1,6 @@
+PYTHONPATH=/workspace/scratch/4d96346afabf/deps:air_llm MLX_ENABLE_TF32=0 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python research/v5/validate_glm53_sample.py --validate-only
+
+Acquisition:
+python research/v5/validate_glm53_sample.py --acquire-only
+
+Validation exited 0. Samples and reconstructed partial Safetensors remain outside Git at ../models/glm53-samples.

@@ -1,5 +1,11 @@
 # Technical and scientific limits
 
+This is the retained **4.1.0rc1** limit report. V5 adds bounded agent job
+journals and replay, compact source residency, tile admission and linear Llama
+RoPE; see [V5 architecture](../NEXT_GENERATION_ARCHITECTURE.md) and
+[V5 validation](../FINAL_VALIDATION_V5.md). Unresolved numerical, giant-model
+and hardware limits still apply unless V5 evidence explicitly supersedes them.
+
 Lossless transport reconstructs original bits, including signed zero/NaN
 payloads. Same-runtime original/standalone cases assert bit-identical logits
 and tokens. Independent Torch/MLX comparisons use explicit tolerances and

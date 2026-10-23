@@ -1,0 +1,659 @@
+{
+  "kind": "isolated CPU prompt lookup microbenchmark; not end-to-end inference",
+  "baseline_ref": "9629c27b9d8bdf697ae866498ad468e11eb183d4",
+  "baseline_source_sha256": "550e57506b95292bb2aa923fb55e7dba2f4eb44fcc5fe227449b1889b85f4337",
+  "summary": {
+    "no_match": {
+      "v4": 0.057916971000167905,
+      "v5": 0.002035352999882889,
+      "v4_over_v5": 28.455491997457127
+    },
+    "random_tokens": {
+      "v4": 0.06997906199990211,
+      "v5": 0.0021172570000089763,
+      "v4_over_v5": 33.05175611633611
+    },
+    "repeat_pattern": {
+      "v4": 1.1217000064789318e-05,
+      "v5": 0.0008377550000204792,
+      "v4_over_v5": 0.01338935615366678
+    },
+    "repeat_one": {
+      "v4": 1.0366000196881942e-05,
+      "v5": 0.0008613810000497324,
+      "v4_over_v5": 0.012034163971904946
+    }
+  },
+  "records": [
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 0,
+      "seconds": 0.002116986000146426,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 0,
+      "seconds": 0.05560635199981334,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 1,
+      "seconds": 0.05638967499999126,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 1,
+      "seconds": 0.002035352999882889,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 2,
+      "seconds": 0.001992308000126286,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 2,
+      "seconds": 0.0556378000001132,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 3,
+      "seconds": 0.0020273009999982605,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 3,
+      "seconds": 0.06115488999989793,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 4,
+      "seconds": 0.0020069409999905474,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 4,
+      "seconds": 0.06008250000013504,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 5,
+      "seconds": 0.002013941000086561,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 5,
+      "seconds": 0.05885153199983506,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 6,
+      "seconds": 0.0030695739999373473,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 6,
+      "seconds": 0.0618988429998808,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 7,
+      "seconds": 0.057033468000099674,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 7,
+      "seconds": 0.0021769069999209023,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v4",
+      "repetition": 8,
+      "seconds": 0.057916971000167905,
+      "output": []
+    },
+    {
+      "workload": "no_match",
+      "implementation": "v5",
+      "repetition": 8,
+      "seconds": 0.00215898900000866,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 0,
+      "seconds": 0.0020945320000009815,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 0,
+      "seconds": 0.06834577700010414,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 1,
+      "seconds": 0.0020646469999974215,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 1,
+      "seconds": 0.06965876899994328,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 2,
+      "seconds": 0.06920289000004232,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 2,
+      "seconds": 0.0022525109998241533,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 3,
+      "seconds": 0.0021172570000089763,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 3,
+      "seconds": 0.08356736199993975,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 4,
+      "seconds": 0.0021021739999014244,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 4,
+      "seconds": 0.07204478099993139,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 5,
+      "seconds": 0.002110255999923538,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 5,
+      "seconds": 0.07280498899990562,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 6,
+      "seconds": 0.003499954000062644,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 6,
+      "seconds": 0.06997906199990211,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 7,
+      "seconds": 0.07587461299999632,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 7,
+      "seconds": 0.003662549999944531,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v5",
+      "repetition": 8,
+      "seconds": 0.0028240740000455844,
+      "output": []
+    },
+    {
+      "workload": "random_tokens",
+      "implementation": "v4",
+      "repetition": 8,
+      "seconds": 0.0685239450001518,
+      "output": []
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 0,
+      "seconds": 1.2798999932783772e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 0,
+      "seconds": 0.0007991359998413827,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 1,
+      "seconds": 2.335499993932899e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 1,
+      "seconds": 0.0011011819999566796,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 2,
+      "seconds": 0.0008128070001021115,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 2,
+      "seconds": 1.1327000038363622e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 3,
+      "seconds": 1.0145000032935059e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 3,
+      "seconds": 0.0008377550000204792,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 4,
+      "seconds": 0.0008115949999591976,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 4,
+      "seconds": 1.0446000032970915e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 5,
+      "seconds": 9.65499998528685e-06,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 5,
+      "seconds": 0.0009110250000503584,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 6,
+      "seconds": 1.2078000054316362e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 6,
+      "seconds": 0.0008680900000399561,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 7,
+      "seconds": 1.0756999927252764e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 7,
+      "seconds": 0.000929673999962688,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v5",
+      "repetition": 8,
+      "seconds": 0.0008368539999992208,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_pattern",
+      "implementation": "v4",
+      "repetition": 8,
+      "seconds": 1.1217000064789318e-05,
+      "output": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 0,
+      "seconds": 0.0008751409998239978,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 0,
+      "seconds": 1.147800003309385e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 1,
+      "seconds": 0.0008613810000497324,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 1,
+      "seconds": 1.1066999832110014e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 2,
+      "seconds": 9.403999911228311e-06,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 2,
+      "seconds": 0.0008051459999478539,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 3,
+      "seconds": 0.000787127999956283,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 3,
+      "seconds": 1.0115000122823403e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 4,
+      "seconds": 0.000895062000154212,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 4,
+      "seconds": 1.0675999874365516e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 5,
+      "seconds": 9.405000128026586e-06,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 5,
+      "seconds": 0.0008920069999476254,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 6,
+      "seconds": 1.034600018101628e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 6,
+      "seconds": 0.000823343000092791,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 7,
+      "seconds": 0.0008466680001220084,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 7,
+      "seconds": 1.0366000196881942e-05,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v5",
+      "repetition": 8,
+      "seconds": 0.0008677099999658822,
+      "output": [
+        1
+      ]
+    },
+    {
+      "workload": "repeat_one",
+      "implementation": "v4",
+      "repetition": 8,
+      "seconds": 1.065600008587353e-05,
+      "output": [
+        1
+      ]
+    }
+  ]
+}

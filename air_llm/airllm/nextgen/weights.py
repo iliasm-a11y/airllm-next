@@ -9,12 +9,18 @@ from time import perf_counter
 import numpy as np
 from .quantization import FP8_LUT, PackedMatrix
 from .cache import WeightCache, SingleFlight, size_of
+from .compact_cache import CompactWeightCache
 
 
 class NativeWeights:
     def __init__(self,checkpoint,mx,config,model_config,sidecar=None):
         self.cp=checkpoint;self.mx=mx;self.cfg=config;self.model_config=model_config;self.sidecar=sidecar;self.prefetch_enabled=config.prefetch
-        self.cache=WeightCache(config.cache_bytes,config.policy)
+        # Both tiers share the original weight budget. Retaining encoded source
+        # data is opt-in: it trades decoded residency for more compact reuse and
+        # may lose on low-reuse or conversion-bound workloads.
+        compact_bytes=config.compact_cache_bytes
+        self.cache=WeightCache(config.cache_bytes-compact_bytes,config.policy)
+        self.compact_cache=CompactWeightCache(compact_bytes)
         self.io=SingleFlight(config.io_bytes,config.io_workers)
         self.dtype=getattr(mx,config.dtype);self.stats={'dequant_seconds':0.,'loads':0,'speculative_reads':0}
         self.block=tuple(model_config.get('quantization_config',{}).get('weight_block_size',[128,128]))
@@ -24,7 +30,12 @@ class NativeWeights:
     def identity(key,expert=None):return key if expert is None else f'{key}#{expert}'
 
     def shape(self,key,expert=None):
-        shape=self.cp.tensors[key]['shape'];return tuple(shape[1:] if expert is not None else shape)
+        shape=self.cp.tensors[key]['shape']
+        if expert is not None:
+            if (not isinstance(expert,(int,np.integer)) or isinstance(expert,(bool,np.bool_)) or
+                len(shape)!=3 or not 0<=expert<shape[0]):raise ValueError('Invalid packed expert id')
+            return tuple(shape[1:])
+        return tuple(shape)
 
     def estimate(self,key,expert=None):
         ident=self.identity(key,expert)
@@ -52,6 +63,12 @@ class NativeWeights:
         return value
 
     def _load_value(self,key,expert=None,rows=None):
+        shape=self.shape(key,expert)
+        if rows is not None:
+            if len(shape)!=2 or len(rows)!=2:raise ValueError('Invalid matrix row range')
+            if (any(not isinstance(value,(int,np.integer)) or isinstance(value,(bool,np.bool_)) for value in rows)
+                    or not 0<=rows[0]<=rows[1]<=shape[0]):raise ValueError('Invalid matrix row range')
+            rows=tuple(int(value) for value in rows)
         ident=self.identity(key,expert)
         if self.sidecar and ident in self.sidecar.entries:
             p=self.sidecar.load(ident,rows=rows,max_bytes=self.cfg.max_tensor_bytes)
@@ -78,8 +95,13 @@ class NativeWeights:
             requests=[{'key':key,'expert':expert,'rows':rows},
                       {'key':sk,'expert':expert,'rows':scale_rows}]
             # No hidden overread: only adjacent payload/scale ranges combine.
-            a,scales=self.cp.read_arrays(requests,max_batch_bytes=self.cp.max_read_bytes,
-                                         coalesce=self.cfg.coalesce_reads)
+            cache_key=('fp8',key,expert,rows,scale_rows)
+            source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
+            if source is None:
+                source=self.cp.read_arrays(requests,max_batch_bytes=self.cp.max_read_bytes,
+                                           coalesce=self.cfg.coalesce_reads)
+                self.compact_cache.put(cache_key,source)
+            a,scales=source
             if self.cp.tensors[sk]['dtype']=='BF16':scales=(scales.astype(np.uint32)<<16).view(np.float32)
             t=perf_counter();offset=rows[0] if rows else 0;mx=self.mx
             # Decode on CPU stream while GPU executes a previous expert. The raw
@@ -91,15 +113,28 @@ class NativeWeights:
                 mx.eval(v)
             self.stats['dequant_seconds']+=perf_counter()-t
         elif d['dtype']=='BF16':
-            a=self.cp.read_array(key,expert=expert,rows=rows)
+            a=self._source_array(key,expert,rows)
             with self.mx.stream(self.mx.cpu):
                 v=self.mx.array(a).view(self.mx.bfloat16).astype(self.dtype);self.mx.eval(v)
         else:
-            a=self.cp.read_array(key,expert=expert,rows=rows)
+            a=self._source_array(key,expert,rows)
             # Router scores, normalization weights and correction bias stay fp32.
             target=self.mx.float32 if d['dtype']=='F32' else self.dtype
             v=self._array(a,target)
         return v
+
+    def _source_array(self,key,expert,rows):
+        cache_key=('array',key,expert,rows)
+        source=self.compact_cache.get(cache_key) if self.compact_cache.capacity else None
+        if source is None:
+            source=(self.cp.read_array(key,expert=expert,rows=rows),)
+            self.compact_cache.put(cache_key,source)
+        return source[0]
+
+    def trim(self):
+        """Reduce both tiers under observed system pressure, never grow them."""
+        self.cache.resize(self.cache.capacity//2)
+        self.compact_cache.resize(self.compact_cache.capacity//2)
 
     def get(self,key,expert=None):
         ident=self.identity(key,expert);v=self.cache.get(ident,self.estimate(key,expert))
@@ -178,7 +213,17 @@ class NativeWeights:
         # released before the next is read. No lazy graph retains the whole head.
         out=[]
         for start in range(0,rows,tile_rows):
-            w=self._load(key,rows=(start,min(rows,start+tile_rows)))
+            selection=(start,min(rows,start+tile_rows))
+            tile_key=('output',key,*selection)
+            estimate=row_bytes*(selection[1]-selection[0])
+            w=self.cache.get(tile_key,estimate) if self.cfg.output_tile_cache else None
+            if w is None:
+                started=perf_counter()
+                w=self._load(key,rows=selection)
+                if self.cfg.output_tile_cache:
+                    self.cache.record_load(tile_key,perf_counter()-started)
+                    self.cache.put(tile_key,w)
+            else:self.stats['output_tile_cache_hits']=self.stats.get('output_tile_cache_hits',0)+1
             n=size_of(w)
             if n>budget:raise MemoryError('Output projection tile exceeded its byte budget')
             self.stats['output_tiles']=self.stats.get('output_tiles',0)+1
@@ -189,4 +234,6 @@ class NativeWeights:
 
     def close(self):
         try:self.io.close()
-        finally:self.cache.clear()
+        finally:
+            self.cache.clear()
+            self.compact_cache.clear()

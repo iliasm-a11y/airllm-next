@@ -1,0 +1,2820 @@
+{
+  "base_commit": "9629c27b9d8bdf697ae866498ad468e11eb183d4",
+  "scope": "Inherited evidence payload inventory and structured-format integrity; measurements remain attributed to original hardware/run, not rerun by this inventory.",
+  "files": [
+    {
+      "path": "evidence-final/api-initial-batchencoding-failure.json",
+      "bytes": 588,
+      "sha256": "43549e586aa9baeae524a370f7dc2376fd65cc79012c1e8082b88e9536f4b9a8",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "observed_http_status",
+        "response_body_captured",
+        "tokenizer_probe",
+        "diagnosis",
+        "resolved_by"
+      ]
+    },
+    {
+      "path": "evidence-final/archive.sha256",
+      "bytes": 93,
+      "sha256": "5545feccbd009e56a391427d3c0c4dd84e75f35770b911866e52195cfd2edda1"
+    },
+    {
+      "path": "evidence-final/compressed-evidence.json",
+      "bytes": 9401,
+      "sha256": "6b7975dcbedca80585a5d90887f53e93309322591b4e859d20a0a107048fd33d",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "format",
+        "originals_also_preserved_in_local_commit",
+        "files"
+      ]
+    },
+    {
+      "path": "evidence-final/environment-installed.json",
+      "bytes": 1489,
+      "sha256": "7020ea5a7853821e109d30d5899aaa02726ddc176e5fb9c270aad91031638399",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/environment.json",
+      "bytes": 1489,
+      "sha256": "6af0a4cc682be13cd0b063ae0b43bc84fe41316edca63f6b6430b6a91f683900",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/external-disks.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/glm-before-after-baseline.json",
+      "bytes": 255810,
+      "sha256": "b23ac30d5d35005b8ba94308eb5eb642cd45e5e4a7f5a2fab65f3fbd3c514f47",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "source",
+        "platform",
+        "python",
+        "mlx",
+        "numpy",
+        "compute_device",
+        "metal_validated",
+        "checkpoint_root",
+        "cases"
+      ]
+    },
+    {
+      "path": "evidence-final/glm-before-after-candidate.json",
+      "bytes": 260837,
+      "sha256": "cd5dad0af93df6dd57ab5d12887e5577b196c406048a37565ad606c0b8be82a0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "source",
+        "platform",
+        "python",
+        "mlx",
+        "numpy",
+        "compute_device",
+        "metal_validated",
+        "checkpoint_root",
+        "cases"
+      ]
+    },
+    {
+      "path": "evidence-final/glm-before-after.json",
+      "bytes": 29595,
+      "sha256": "f5e911f8408d800bf23f136943e51c0b15052079a258a726c1a19e7f3f6c48f6",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "cache_condition",
+        "order",
+        "tokens_per_run",
+        "repeats",
+        "comparisons",
+        "checkpoint_sha256",
+        "raw_results"
+      ]
+    },
+    {
+      "path": "evidence-final/glm-mini-metal.json",
+      "bytes": 51058,
+      "sha256": "dc947f4b25e45414dfdbccbca8466e200a65c553623bd40e60388a516685ffd6",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "python",
+        "torch",
+        "mlx",
+        "device",
+        "metal_available",
+        "telemetry_begin",
+        "scope",
+        "cases",
+        "ultra_cpu_baseline",
+        "storage_tuning",
+        "telemetry_end"
+      ]
+    },
+    {
+      "path": "evidence-final/glm-mini-metal.log",
+      "bytes": 772,
+      "sha256": "3983166c61c07ca745f8c9555d62fb2f25864ac4d525850433ea31645cd515ef"
+    },
+    {
+      "path": "evidence-final/installed-launcher.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/installed-launcher.txt",
+      "bytes": 287,
+      "sha256": "4afefcce5e1379d361329990edf323873a204437a21f187c8915520818488a4f"
+    },
+    {
+      "path": "evidence-final/io-warm.json",
+      "bytes": 34663,
+      "sha256": "cb70f0e438cc674f7fb6657f74b32429e26e80eda4734ed6f37a5a0b5946755c",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "schema_version",
+        "platform",
+        "machine",
+        "python",
+        "numpy",
+        "pid",
+        "checkpoint_fingerprint",
+        "baseline_storage_sha256",
+        "baseline_scope",
+        "metadata_seconds",
+        "metadata_stats",
+        "input_tensor_count",
+        "input_tensor_bytes",
+        "input_order_sha256",
+        "group_count",
+        "max_read_bytes",
+        "cache_state",
+        "cache_state_explanation",
+        "physical_counters_scope",
+        "physical_ssd_bandwidth_certified",
+        "inference_performed",
+        "scope",
+        "peak_rss_process_lifetime_bytes",
+        "seed",
+        "summary",
+        "raw_measurements",
+        "input_kind"
+      ]
+    },
+    {
+      "path": "evidence-final/io-warm.log",
+      "bytes": 763,
+      "sha256": "a031010fb72d9a6f2735cb38dd8d38aff757342cc0179e99b0aadf1e90ac855c"
+    },
+    {
+      "path": "evidence-final/logs/package-build.log",
+      "bytes": 21091,
+      "sha256": "d994d22283b78a2264761ed3d92f35506c28e466b9c69a5309856c0dc6593949"
+    },
+    {
+      "path": "evidence-final/logs/package-final-environment-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/logs/package-final-environment-install.log",
+      "bytes": 9967,
+      "sha256": "04385368450f6080fedd96b6f59de3b8eec0b5166d18cb8feed9c14bb0ac0b79"
+    },
+    {
+      "path": "evidence-final/logs/package-final-environment-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/logs/package-final-environment-reinstall.log",
+      "bytes": 388,
+      "sha256": "a3943c1ab74308c567285025c727fb3eedb964e6aff596abb66040686260d160"
+    },
+    {
+      "path": "evidence-final/logs/package-final-environment-run-help.txt",
+      "bytes": 3259,
+      "sha256": "c6eecff7fb5a9768c32ec04d27ce61a45c4e0c5cd89ba914a446654fbfa976ae"
+    },
+    {
+      "path": "evidence-final/logs/package-sdist-final-reinstall.log",
+      "bytes": 1187,
+      "sha256": "138692992bfa10dde7e0f1515aac5fd8fc90695665c89afb85aa4ff69671328c"
+    },
+    {
+      "path": "evidence-final/logs/package-sdist-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/logs/package-sdist-install.log",
+      "bytes": 10022,
+      "sha256": "91b3b3ac3b2c1a99ebcb03457844b04f35eb89b7a6dd007e59517d879bcfa261"
+    },
+    {
+      "path": "evidence-final/logs/package-sdist-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/logs/package-sdist-verification.log",
+      "bytes": 515,
+      "sha256": "b1ad6cc6b105b5718f4de419fb76dbd2730e29c418b9b38cda7d7a8dd172e3a2"
+    },
+    {
+      "path": "evidence-final/logs/package-wheel-final-reinstall.log",
+      "bytes": 388,
+      "sha256": "a3943c1ab74308c567285025c727fb3eedb964e6aff596abb66040686260d160"
+    },
+    {
+      "path": "evidence-final/logs/package-wheel-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/logs/package-wheel-install.log",
+      "bytes": 10119,
+      "sha256": "57dd87d6100652bb0c6d423f00249b2728c90ab8948b185a5b0a17a877970d34"
+    },
+    {
+      "path": "evidence-final/logs/package-wheel-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/logs/package-wheel-verification.log",
+      "bytes": 515,
+      "sha256": "699e020363e01a7c2ea1161646bcf8935f5e5be4969309ac22a689f3f6712b7d"
+    },
+    {
+      "path": "evidence-final/lossless-trained-transport.json",
+      "bytes": 2946,
+      "sha256": "21a2a8e43fc60a70b9a45535412c4dceb90b212c1f88c74b1fc8d878957bb3a8",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "platform",
+        "python",
+        "codec",
+        "block_bytes",
+        "tile_bytes",
+        "hash_verification",
+        "source_free_reader",
+        "tensor_count",
+        "selections_per_pass",
+        "source_tensor_payload_bytes",
+        "source_weight_file_bytes",
+        "standalone_payload_bytes",
+        "standalone_total_bytes",
+        "standalone_payload_ratio",
+        "conversion_seconds",
+        "transport_sha256",
+        "median_seconds",
+        "standalone_speed_ratio",
+        "samples",
+        "process_lifetime_peak_rss_bytes",
+        "rss_scope",
+        "cache_state"
+      ]
+    },
+    {
+      "path": "evidence-final/lossless-trained-transport.log",
+      "bytes": 3836,
+      "sha256": "63d27fb48c4155fa4fd9e6cf8879ce999304c559fc8d05babb71fec35246363b"
+    },
+    {
+      "path": "evidence-final/manifest-before-raw-compression.json",
+      "bytes": 32252,
+      "sha256": "a5419410a91890d44706cef0a194d15645de117e161b0e903b6bcb81e401e64b",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "files"
+      ]
+    },
+    {
+      "path": "evidence-final/manifest.json",
+      "bytes": 32720,
+      "sha256": "3a214795483b0c71d8a153b64c515988c06e473b210ce5d08bed8cc681682b92",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "files"
+      ]
+    },
+    {
+      "path": "evidence-final/mlx-memory-trained-metal.json",
+      "bytes": 11061,
+      "sha256": "dd8957fbc3eeb85b17217e695c37b9265513d776bad7790e73626a454e908d7b",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "epochs",
+        "full_model_test",
+        "thermal_sensor_available"
+      ]
+    },
+    {
+      "path": "evidence-final/mlx-memory-trained-metal.log",
+      "bytes": 87,
+      "sha256": "c09acdf5c86b79c2e4fc87ea6814093ddd9bf6ad0ad185bb502a9f4ddb3184d5"
+    },
+    {
+      "path": "evidence-final/output-tiling-ablation.json",
+      "bytes": 1362,
+      "sha256": "fc88330fd78cbf19a42fbe5825524dd629611d904f7fcaa377427f2757c801b5",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "raw_reports",
+        "row128",
+        "row2048",
+        "max_abs_logit_change",
+        "all_sequences_equal_across_tile_policies",
+        "generation_speedup",
+        "decode_speedup"
+      ]
+    },
+    {
+      "path": "evidence-final/output-tiling-gpu-tests.xml",
+      "bytes": 4569,
+      "sha256": "71ed8371bb5e835a2002e227c926484b8c310d9b16fad9718868f374b2079124",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/output-tiling-tests.xml",
+      "bytes": 4569,
+      "sha256": "7b8620c40d58f2a334335014e8d1297532e98dc260195cec51edba97a87b6a9a",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/package-final-environment-doctor.json",
+      "bytes": 1488,
+      "sha256": "dc2b0da5fb401cd83bd7f432a68d746391afce6a2358ef09f5996c0299d360e5",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/package-final-environment-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/package-final-environment-install.json",
+      "bytes": 588108,
+      "sha256": "a2dc4bec649e2f88497a5dffce7e3dc5dd29dcd183a0eedefddb7ed61bb9bfda",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-final-environment-reinstall.json",
+      "bytes": 5277,
+      "sha256": "ce1ee600d4bbb5602f3566602c98c8847ba6b2ba174600281e7fdb3c5d364f26",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-sdist-doctor.json",
+      "bytes": 1489,
+      "sha256": "03212be620eab863402f2d9004748529e0eb681d53938b88175b452ac00eaf9d",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/package-sdist-final-reinstall.json",
+      "bytes": 5267,
+      "sha256": "e0616689dbaf61023e15d63fda26d931e4da3f093c6fb6c024b17023a88772ab",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-sdist-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/package-sdist-install.json",
+      "bytes": 588049,
+      "sha256": "d03de2ec7e50133207da7f294817260a726fb7e94961c79a352251d93fe12122",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-sdist-verification.json",
+      "bytes": 4548,
+      "sha256": "a02a6ec22f81a183c62a3843166f43377005762d13a11914527182d3b9113b56",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "python",
+        "package_file",
+        "source_checkout_required",
+        "imported_production_modules",
+        "doctor",
+        "fixtures",
+        "scope"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-doctor.json",
+      "bytes": 1489,
+      "sha256": "28d8fec16b0da8d4550f902275a77050a2c9ecdd92f355dbf013f43af9c856e4",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-final-reinstall.json",
+      "bytes": 5277,
+      "sha256": "ce1ee600d4bbb5602f3566602c98c8847ba6b2ba174600281e7fdb3c5d364f26",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-install.json",
+      "bytes": 588059,
+      "sha256": "2c719c5f5ef426ce8b3505fdb075ba8f7e58fcf8b92b3894a42cc6afcc1b06cb",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-standalone-inspect.json",
+      "bytes": 1343,
+      "sha256": "269d0adf545c8f34acb6436a39013cfe4020402fae00caea5ad30cc41d174d66",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/package-wheel-verification.json",
+      "bytes": 4548,
+      "sha256": "6050cb52b2c6899c064b9cd34f7409c69b1242a5232678b8ae7b199bbe302b80",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "python",
+        "package_file",
+        "source_checkout_required",
+        "imported_production_modules",
+        "doctor",
+        "fixtures",
+        "scope"
+      ]
+    },
+    {
+      "path": "evidence-final/packaging.json",
+      "bytes": 5984,
+      "sha256": "f2f4a16b086e1c6e25513577da9608e00b0deec3863ed556c49568bbc468470e",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "status",
+        "version",
+        "verified_at_utc",
+        "artifact_directory",
+        "artifacts",
+        "production_python_files",
+        "production_source_sha256",
+        "archive_python_files_match_current_source",
+        "wheel_and_sdist_code_identical",
+        "sdist_builds_in_isolation",
+        "readme_self_contained_and_in_wheel_metadata",
+        "license_and_both_provenance_notices_preserved",
+        "tests_examples_and_weights_excluded",
+        "build_log",
+        "environments",
+        "resolved_dependencies_in_final_environment",
+        "method",
+        "limits",
+        "release_stage",
+        "prior_packaging_stage",
+        "prior_archive_directory",
+        "real_fast_tokenizer_api_regression_report",
+        "transitive_constraints"
+      ]
+    },
+    {
+      "path": "evidence-final/provenance-commits.txt",
+      "bytes": 749,
+      "sha256": "0cb607d5819921f415557536d8cd531e53952506bf9878f765e4660625cd9fbe"
+    },
+    {
+      "path": "evidence-final/provenance.json",
+      "bytes": 233,
+      "sha256": "3de87287f669983dbf5eca2f8c2f731cb78bb90e7324f6b5f7f8e9292fa316be",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "archive",
+        "entries",
+        "crc_error",
+        "source_base_commit",
+        "branch",
+        "external_disk_listing_empty"
+      ]
+    },
+    {
+      "path": "evidence-final/remote-heads-before.txt",
+      "bytes": 140,
+      "sha256": "af49383725e9e0d2053792c2a90ee0fd7a6641b84cf6c9d636fda0e83cc2bcd6"
+    },
+    {
+      "path": "evidence-final/requirements-observed.txt",
+      "bytes": 762,
+      "sha256": "4b2fbb94b9a972297c1da7d3e3fd73dce2d9537163f38e45a3bc0fffbe205941"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-build.log",
+      "bytes": 21091,
+      "sha256": "4e25620089d4227d7cf93a28c0c6c95beb0d38456a6fd0ed7b1c2800945919f0"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-final-environment-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-final-environment-install.log",
+      "bytes": 9967,
+      "sha256": "04385368450f6080fedd96b6f59de3b8eec0b5166d18cb8feed9c14bb0ac0b79"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-final-environment-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-final-environment-run-help.txt",
+      "bytes": 3259,
+      "sha256": "c6eecff7fb5a9768c32ec04d27ce61a45c4e0c5cd89ba914a446654fbfa976ae"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-sdist-final-reinstall.log",
+      "bytes": 1187,
+      "sha256": "7d031a3437b694d2789acfada3626c5e5d0e56df70a9d0c8a823abb144c154d9"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-sdist-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-sdist-install.log",
+      "bytes": 10022,
+      "sha256": "91b3b3ac3b2c1a99ebcb03457844b04f35eb89b7a6dd007e59517d879bcfa261"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-sdist-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-sdist-verification.log",
+      "bytes": 515,
+      "sha256": "3d2046f6e55d02e360a493ea81725a9a8ca4f474c68e25fc6ab3461c85f58d5d"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-wheel-final-reinstall.log",
+      "bytes": 388,
+      "sha256": "a3943c1ab74308c567285025c727fb3eedb964e6aff596abb66040686260d160"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-wheel-help.txt",
+      "bytes": 582,
+      "sha256": "ef195f2e55e16412292f9b4458346d3014486ef6aa6d32ec8527b0d87499a24e"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-wheel-install.log",
+      "bytes": 10119,
+      "sha256": "57dd87d6100652bb0c6d423f00249b2728c90ab8948b185a5b0a17a877970d34"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-wheel-pip-check.log",
+      "bytes": 30,
+      "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/logs/package-wheel-verification.log",
+      "bytes": 515,
+      "sha256": "eb5e08748469fc6d46a72b0964f07fa5d17c271dc78e8218851ba85ca60a2e46"
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-final-environment-doctor.json",
+      "bytes": 1489,
+      "sha256": "ee36083781862f3fedf89d07f19d596e3a542e850b5262788ffd58ffb0623026",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-final-environment-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-final-environment-install.json",
+      "bytes": 588108,
+      "sha256": "a2dc4bec649e2f88497a5dffce7e3dc5dd29dcd183a0eedefddb7ed61bb9bfda",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-sdist-doctor.json",
+      "bytes": 1489,
+      "sha256": "03212be620eab863402f2d9004748529e0eb681d53938b88175b452ac00eaf9d",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-sdist-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-sdist-install.json",
+      "bytes": 588049,
+      "sha256": "d03de2ec7e50133207da7f294817260a726fb7e94961c79a352251d93fe12122",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-sdist-verification.json",
+      "bytes": 4547,
+      "sha256": "54a5c7f0003fb8ad11035f20abd949929161e37e4c203071be14bd43198861be",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "python",
+        "package_file",
+        "source_checkout_required",
+        "imported_production_modules",
+        "doctor",
+        "fixtures",
+        "scope"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-wheel-doctor.json",
+      "bytes": 1489,
+      "sha256": "28d8fec16b0da8d4550f902275a77050a2c9ecdd92f355dbf013f43af9c856e4",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "machine",
+        "python",
+        "mlx",
+        "metal_available",
+        "mlx_import_error",
+        "telemetry",
+        "working_directory_free_bytes",
+        "checkpoint_generation_tested",
+        "validation",
+        "backends"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-wheel-inspect.json",
+      "bytes": 1088,
+      "sha256": "59619efc48c18caaad3a3e339b532cf1f21b045f1f58cae71b008993a62c8223",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-wheel-install.json",
+      "bytes": 588059,
+      "sha256": "2c719c5f5ef426ce8b3505fdb075ba8f7e58fcf8b92b3894a42cc6afcc1b06cb",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "pip_version",
+        "install",
+        "environment"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-wheel-standalone-inspect.json",
+      "bytes": 1343,
+      "sha256": "269d0adf545c8f34acb6436a39013cfe4020402fae00caea5ad30cc41d174d66",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "adapter",
+        "quantization",
+        "runtime_available",
+        "runtime_rejection_reason",
+        "storage_representation",
+        "generation_validated",
+        "declared_tensor_payload_bytes",
+        "storage_budget_bytes",
+        "declared_payload_fits_budget",
+        "context_estimate",
+        "mtp_layers_declared",
+        "mtp_execution_available",
+        "downloads_performed"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/package-wheel-verification.json",
+      "bytes": 4548,
+      "sha256": "67a5bee8564850737a97d46b6b2341f6c51b338d21cac6fec76cc216468baebc",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "python",
+        "package_file",
+        "source_checkout_required",
+        "imported_production_modules",
+        "doctor",
+        "fixtures",
+        "scope"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-packaging/packaging.json",
+      "bytes": 4898,
+      "sha256": "c237f9a7f14d5061b315e8b78b3790174c31f559ceb8259341f52d8f784ec168",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "status",
+        "version",
+        "verified_at_utc",
+        "artifact_directory",
+        "artifacts",
+        "production_python_files",
+        "production_source_sha256",
+        "archive_python_files_match_current_source",
+        "wheel_and_sdist_code_identical",
+        "sdist_builds_in_isolation",
+        "readme_self_contained_and_in_wheel_metadata",
+        "license_and_both_provenance_notices_preserved",
+        "tests_examples_and_weights_excluded",
+        "build_log",
+        "environments",
+        "resolved_dependencies_in_final_environment",
+        "method",
+        "limits"
+      ]
+    },
+    {
+      "path": "evidence-final/stage1-tests-exact.log",
+      "bytes": 99,
+      "sha256": "9fe7a1e17068ab37c4019a0e724b2f2416886d695deb16bb621bb1da30c2817f"
+    },
+    {
+      "path": "evidence-final/stage1-tests-exact.xml",
+      "bytes": 7863,
+      "sha256": "7558e9711f56262a05fcf12506ab41ddc7410428d83639799527f268fd0578bf",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/stage1-tests-next-cpu.log",
+      "bytes": 420,
+      "sha256": "d573ea3fcd4e4203ff5155d48af6170ed387316fc6c15769737fc7268bbca7de"
+    },
+    {
+      "path": "evidence-final/stage1-tests-next-cpu.xml",
+      "bytes": 43555,
+      "sha256": "3b46fdab752b08cb3e050046511e347e06b47fce7ffa43ea40a3fe85c938e5f1",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/stage1-tests-next-metal.log",
+      "bytes": 420,
+      "sha256": "fc5b4f294d23845a344a9ecd8f9579817421672a041d30e7aa46850a7674c7d2"
+    },
+    {
+      "path": "evidence-final/stage1-tests-next-metal.xml",
+      "bytes": 43555,
+      "sha256": "859ed21ab1ff819e186aaf2f25e4bbd350151eaab146a7fdbcbf4cc2546b622f",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/stage1-tests-ultra.xml",
+      "bytes": 4620,
+      "sha256": "028ddee6fb3b6f959fe6bb6083f412f7e16f32859287a33830da85c1b2266dda",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/stage1-tests-upstream.xml",
+      "bytes": 9762,
+      "sha256": "4b3b8d9799d1223faa93a0f40ec9c590f6309c72d8e28ed5643c3e346f7cd922",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/standalone-smollm2-cpu.json",
+      "bytes": 697,
+      "sha256": "973ffa3db38eef34211758c536d996a535d37c0086054c8016b5a84386b1e109",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "device",
+        "dtype",
+        "prompt",
+        "prompt_ids",
+        "generated_ids",
+        "completion",
+        "logits_bit_identical",
+        "tokens_identical",
+        "original_reader_constructor_blocked_during_packed_run",
+        "logits_sha256",
+        "standalone_tensor_payload_bytes",
+        "standalone_stored_payload_bytes",
+        "cache_peak_bytes",
+        "cache_budget_bytes",
+        "io_peak_bytes",
+        "io_budget_bytes"
+      ]
+    },
+    {
+      "path": "evidence-final/standalone-smollm2-metal.json",
+      "bytes": 697,
+      "sha256": "17003651774a287bb8dbdb9fafe7540283480e1af4cc7301c411ed4171d80819",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "device",
+        "dtype",
+        "prompt",
+        "prompt_ids",
+        "generated_ids",
+        "completion",
+        "logits_bit_identical",
+        "tokens_identical",
+        "original_reader_constructor_blocked_during_packed_run",
+        "logits_sha256",
+        "standalone_tensor_payload_bytes",
+        "standalone_stored_payload_bytes",
+        "cache_peak_bytes",
+        "cache_budget_bytes",
+        "io_peak_bytes",
+        "io_budget_bytes"
+      ]
+    },
+    {
+      "path": "evidence-final/standalone-smollm2-metal.log",
+      "bytes": 838,
+      "sha256": "53babc310fe1569084d74cf546aa37434b096e88f8da90faba497d7d0099216c"
+    },
+    {
+      "path": "evidence-final/static-checks.json",
+      "bytes": 230,
+      "sha256": "e6375636ae59bdf3bf78246d9a8542bee3463af9622bcb1f9463a92f01577918",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "git_diff_check",
+        "bash_syntax_scripts",
+        "python_compileall_production_benchmarks_scripts",
+        "production_code_changed_after_last_tests",
+        "model_weights_in_git_distribution"
+      ]
+    },
+    {
+      "path": "evidence-final/storage-tests.xml",
+      "bytes": 9709,
+      "sha256": "01afb2f8c262e4cd4e677d7b8e018f00fbfa65dcae1a7cf89c8ce684b71d25e3",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/sustained-final-trained-metal.json",
+      "bytes": 137160,
+      "sha256": "fea64f50642ac8542e76986e0f46ea8ef74f69017d35d24fb24e63d13d303b42",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "epochs",
+        "full_model_test",
+        "thermal_sensor_available"
+      ]
+    },
+    {
+      "path": "evidence-final/sustained-final-trained-metal.log",
+      "bytes": 1225,
+      "sha256": "dc876a659992e2c922dcaaf817c89002fd022e5993d7f7a2218d0843870c4f2e"
+    },
+    {
+      "path": "evidence-final/sustained-trained-metal.json",
+      "bytes": 60284,
+      "sha256": "195a2b012844750f52fa612843782432f815b4aebf1b84084fbafeb213e1daf0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "epochs",
+        "full_model_test",
+        "thermal_sensor_available"
+      ]
+    },
+    {
+      "path": "evidence-final/sustained-trained-metal.log",
+      "bytes": 529,
+      "sha256": "df01c45a0446dc48a3946eadabb6ed5e2414816fa9ef6d190e40ebda6e03d615"
+    },
+    {
+      "path": "evidence-final/tests-api-tokenizer-fix.xml",
+      "bytes": 5672,
+      "sha256": "dba36bdf2aaef4e2f4cff9d27e91fb57c33aa87cce143ce4c616bd4eca70ce12",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-exact.log",
+      "bytes": 99,
+      "sha256": "9c38480cd4dcba38a262d28b4c9fece55f344e548f5d6aca919691b36e6362cd"
+    },
+    {
+      "path": "evidence-final/tests-exact.xml",
+      "bytes": 7863,
+      "sha256": "9cd3b9f718c4356a14328e32cf4edca76203a6cc17fc6739e764053a58b98a08",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-final-next-cpu.log",
+      "bytes": 420,
+      "sha256": "650af43bd0ffef7e96b29f8d3b108702c643904438b6d9e683fa5760fde75838"
+    },
+    {
+      "path": "evidence-final/tests-final-next-cpu.xml",
+      "bytes": 46090,
+      "sha256": "8f0466bfb06f3220fb0ec8475f5e17f0e5e03993326b3d256bf1d7214dbd7f69",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-final-next-metal.log",
+      "bytes": 420,
+      "sha256": "d0c090d97b3ad20527cfd6eb80ac09fffb5a3d3037205ec089bbd4814436b55e"
+    },
+    {
+      "path": "evidence-final/tests-final-next-metal.xml",
+      "bytes": 46090,
+      "sha256": "9a4efc7847e78387c5395bc9e5da9fcd796da00ecedf16f002c404437ebce268",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-interface.xml",
+      "bytes": 18209,
+      "sha256": "d02826aba20bcd800ccd24df5b2539983b3e6d12ab8f8e8cdb2d9c19de72717a",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-next-baseline.xml",
+      "bytes": 28042,
+      "sha256": "a2b7703c1de120e0b66a2ecbdcc7a8866a558fd5fc32f16de4fbc41a381c7568",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-next-cpu.log",
+      "bytes": 420,
+      "sha256": "2d341db3e441da41561d7aeef223c034ecad60710a455752541a6a8fa0ce7644"
+    },
+    {
+      "path": "evidence-final/tests-next-cpu.xml",
+      "bytes": 44937,
+      "sha256": "dfe1ecff781ecc3e082694deb7dc994f6a8d71246f56054ac9445b01c9b7b8a2",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-next-metal.log",
+      "bytes": 420,
+      "sha256": "5798f8ab58eafa6361f59a9a0983dbe4ba62cc1a8eae1b53a989070d2eda297b"
+    },
+    {
+      "path": "evidence-final/tests-next-metal.xml",
+      "bytes": 44937,
+      "sha256": "e7c9f912c7b8c3d2dd76106d33da7b6b62afac7ecfe53e4c54a906484f2f309a",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-ultra-baseline.xml",
+      "bytes": 139822,
+      "sha256": "292799e039f0a98b98ad275d90406063d03bb7096640a9e43895be21e2f0674b",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-ultra.log",
+      "bytes": 99,
+      "sha256": "c897c3036c5d0da871cba511b37f02831227f4422c45b52d1dbfc11165bd32de"
+    },
+    {
+      "path": "evidence-final/tests-ultra.xml",
+      "bytes": 4620,
+      "sha256": "6d49a6065ae26d95c18a83e501701e4310c0991d8be17d41a3a136b1127b5a87",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-upstream-initial-import-error.log",
+      "bytes": 3491,
+      "sha256": "4e3563a526e53ffe7af9ff4d71c7f52a567def208b93d3eae101f9225de7968a"
+    },
+    {
+      "path": "evidence-final/tests-upstream-initial-import-error.xml",
+      "bytes": 3514,
+      "sha256": "1646e5d51152c3cd5223c0f88f213619fe9a2dd329e31b94efa4c34b7ebc5636",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tests-upstream.log",
+      "bytes": 204,
+      "sha256": "308b1f1e10f25b75d6fa4d8771b3f2791baa4ff2e4ee341aa65d87821ae2243f"
+    },
+    {
+      "path": "evidence-final/tests-upstream.xml",
+      "bytes": 9762,
+      "sha256": "08543ce6476cfdb41a5c0965fb9e56bb5c5f6d745e8bda08de78f8628726db2e",
+      "format_checked": "xml"
+    },
+    {
+      "path": "evidence-final/tiles128-next-gpu.json.gz",
+      "bytes": 1287446,
+      "sha256": "8b8d14b58963281d669da3d97af546eba2cf44e06e72890a719d4aa44a0414a0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles128-next-gpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/tiles128-reference-cpu.json.gz",
+      "bytes": 1282735,
+      "sha256": "f07047b0dd7b3dc6a5dbcdf8f5e559d8c1867bb34f62e46177e9d42c2350fd95",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles128-reference-cpu.log",
+      "bytes": 353,
+      "sha256": "027fc900b53ec729fd1cce6eeae354539bcf47cdfaaa0341ee84a402a582639e"
+    },
+    {
+      "path": "evidence-final/tiles128.json",
+      "bytes": 1645,
+      "sha256": "89f709e232259b138f09fd654bedd922284f67cab8c88979276e35847826b393",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model_dir",
+        "weight_sha256",
+        "tokens_per_run",
+        "repeats_per_prompt",
+        "cache_mib",
+        "row_chunk",
+        "summary",
+        "variant_order",
+        "protocol",
+        "full_GLM53_validated",
+        "full_Qwen38_validated"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles128.log",
+      "bytes": 1645,
+      "sha256": "89f709e232259b138f09fd654bedd922284f67cab8c88979276e35847826b393"
+    },
+    {
+      "path": "evidence-final/tiles2048-next-gpu.json.gz",
+      "bytes": 1287434,
+      "sha256": "e422ad93cba8cad26e5cb2fae5988540058ce85cd02e9c27a42657fa9157bddd",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles2048-next-gpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/tiles2048-reference-cpu.json.gz",
+      "bytes": 1282722,
+      "sha256": "eb6169a9796d0f435afcd1953a63d8872f5fa5067bcb2be6d508e65d21db42b4",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles2048-reference-cpu.log",
+      "bytes": 289,
+      "sha256": "3ffe2b13f8de2c671f387d91c490f6be4c5ad19042d424bb78e437d5e312da8f"
+    },
+    {
+      "path": "evidence-final/tiles2048.json",
+      "bytes": 1639,
+      "sha256": "0758b8d67658502473c7cbb59f78f607046778283af60d303a011daa419e3f0d",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model_dir",
+        "weight_sha256",
+        "tokens_per_run",
+        "repeats_per_prompt",
+        "cache_mib",
+        "row_chunk",
+        "summary",
+        "variant_order",
+        "protocol",
+        "full_GLM53_validated",
+        "full_Qwen38_validated"
+      ]
+    },
+    {
+      "path": "evidence-final/tiles2048.log",
+      "bytes": 1639,
+      "sha256": "0758b8d67658502473c7cbb59f78f607046778283af60d303a011daa419e3f0d"
+    },
+    {
+      "path": "evidence-final/trained-api-server-initial.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-api-server.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-api.json",
+      "bytes": 1320,
+      "sha256": "3d483ee9ae3846f43d0145ce302b0080871cae0fe15209ca6f4b53752fb55444",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "scope",
+        "installed_package",
+        "status",
+        "models",
+        "chat_response",
+        "invalid_model_status",
+        "invalid_model_response",
+        "healthy_after_invalid_request",
+        "bind",
+        "port_ephemeral",
+        "remote_inference"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-cli-metal.json",
+      "bytes": 1885,
+      "sha256": "b6cf68adfce90de6ec9a17e94ee85bf3d8d8880e5ff278db21d221a666b83680",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "compute_device",
+        "metal_validated",
+        "numerics",
+        "runtime",
+        "telemetry",
+        "io",
+        "lossless_transport",
+        "weights",
+        "cache",
+        "prefetch"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-cli-metal.log",
+      "bytes": 2278,
+      "sha256": "000db860dcc86609ce82dad1799839cab1c62da6d535c8637c3fa05c22007dd3"
+    },
+    {
+      "path": "evidence-final/trained-cli-metal.txt",
+      "bytes": 85,
+      "sha256": "8ffa19429f3bbb818af21dfb8cb87a3826964dc98434fb618e2b17cd78bec9cf"
+    },
+    {
+      "path": "evidence-final/trained-comparison-next-cpu.json.gz",
+      "bytes": 1288423,
+      "sha256": "a567dcc411ace7614eb3a24dd40549dc0c0b0687b831a4a11cd173f078bc9572",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison-next-cpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-comparison-next-gpu.json.gz",
+      "bytes": 1287341,
+      "sha256": "1e7aa58f8777f3c367c23a522bc1e2119b2d6cbff543afaa4cceb2950bf11bb6",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison-next-gpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-comparison-reference-cpu.json.gz",
+      "bytes": 1282731,
+      "sha256": "4581fd0cf352b7e0e9a16a389e312db545fa314ab16a265532f5ab7304c0d4ae",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison-reference-cpu.log",
+      "bytes": 289,
+      "sha256": "507164fc045055a9ce63d736b29c309bb0d41f28f9dbdf5965a6160c0c5ccd88"
+    },
+    {
+      "path": "evidence-final/trained-comparison-ultra-cpu.json.gz",
+      "bytes": 1283911,
+      "sha256": "e7b8c3ff69a7cf7f1bf4fd3fd2c79d8160f7b3bc3d62d3a87f6cdfc2acd0d060",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison-ultra-cpu.log",
+      "bytes": 207,
+      "sha256": "ecd916a1c769ac556b170b0cc2fd45a2307e1ceda617aec79e192f95554b165f"
+    },
+    {
+      "path": "evidence-final/trained-comparison-ultra-gpu.json.gz",
+      "bytes": 1262072,
+      "sha256": "cfe0e083270776e806726a2cda854036fbbf0192e916029c4d8b56fc3b847afd",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison-ultra-gpu.log",
+      "bytes": 207,
+      "sha256": "76e5ef26cf417b5251ab90d6cbc8fd78caab1dbe608da0cc7242e18db0929e12"
+    },
+    {
+      "path": "evidence-final/trained-comparison.json",
+      "bytes": 3006,
+      "sha256": "d3222e729a04386d14314289f49d8b9f90de91ad490e717ad1ac4bf018d49fa1",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model_dir",
+        "weight_sha256",
+        "tokens_per_run",
+        "repeats_per_prompt",
+        "cache_mib",
+        "summary",
+        "protocol",
+        "full_GLM53_validated",
+        "full_Qwen38_validated"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-comparison.log",
+      "bytes": 3006,
+      "sha256": "d3222e729a04386d14314289f49d8b9f90de91ad490e717ad1ac4bf018d49fa1"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-next-cpu.json.gz",
+      "bytes": 1288426,
+      "sha256": "8729bf9203247a7deb2abd3db8f4187fc15a41150f7bcad642aca3fdcf40933c",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-next-cpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-next-gpu.json.gz",
+      "bytes": 1287270,
+      "sha256": "e801053565fc186643c5c3bc6a352664d0c71689043309246fccd22d2c1478b3",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-next-gpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-reference-cpu.json.gz",
+      "bytes": 1282799,
+      "sha256": "e32a06b48d610a965ff7230ce72c5edec7e24407bc5d5e99d1f22c843fa7543e",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-reference-cpu.log",
+      "bytes": 367,
+      "sha256": "c9a87ab844509200784cca8dae004762d30de00df5dda6997423a1313acdfc87"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-ultra-cpu.json.gz",
+      "bytes": 1283972,
+      "sha256": "52c6d2fc66e71725f03b7d13a6ad4147d03f0975811704de2d265c5bdd3c35fa",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-ultra-cpu.log",
+      "bytes": 207,
+      "sha256": "d01ebb554350d604de844c25429faf9a62a849fcaf66c0621df0a8438693f63d"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-ultra-gpu.json.gz",
+      "bytes": 1262128,
+      "sha256": "f53887df862501b73f332474657599e7008692b00ed9db786d0fe000204f382c",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask-ultra-gpu.log",
+      "bytes": 207,
+      "sha256": "99c86570b7101328e9814949916e3c8b82a71eac8fab2e00dfc12538357f250e"
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask.json",
+      "bytes": 2954,
+      "sha256": "050107c83a93906ab60e1bfbefbe93c118a39d1a8e10bbb44365b2964e2364ff",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model_dir",
+        "weight_sha256",
+        "tokens_per_run",
+        "repeats_per_prompt",
+        "cache_mib",
+        "summary",
+        "protocol",
+        "full_GLM53_validated",
+        "full_Qwen38_validated"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-initial-inferred-mask.log",
+      "bytes": 3008,
+      "sha256": "3937738e8402896bf564d382aaeab7f49e321cd04fd86199d0830500832cff11"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-next-cpu.json.gz",
+      "bytes": 1288514,
+      "sha256": "198660a8275efc181a549242cd25fe5819f96980f0a207eefb7fb3f43b71cbd0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-next-cpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-next-gpu.json.gz",
+      "bytes": 1287324,
+      "sha256": "433fb854d2eed450d179192707a1f163292e6976bbb0e0b54a0738cfd4106e82",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-next-gpu.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-reference-cpu.json.gz",
+      "bytes": 1282726,
+      "sha256": "c9327c1230d1e4068d4a4d09fe9a76e0c1b56b99590d7e12c6dd63feacf4ccd3",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-reference-cpu.log",
+      "bytes": 438,
+      "sha256": "52f917acb175dd88bbcc538cf137c1f854934ec096631d719c50452531a6ffcf"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-ultra-cpu.json.gz",
+      "bytes": 1283916,
+      "sha256": "da439c9587bead078c8191dee55f3288bff9fea09066d2a9cda8d15d580706a7",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-ultra-cpu.log",
+      "bytes": 207,
+      "sha256": "1788f25f0b451e63b44fc41b16d2156b153821c429771b5360cc43a5584ed491"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-ultra-gpu.json.gz",
+      "bytes": 1262078,
+      "sha256": "4be3674e74761581e3071b74d5ca34bfab7204b2a94227d2b82d3a1071cda767",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "backend",
+        "device",
+        "construction_seconds",
+        "cases",
+        "process_peak_rss_bytes",
+        "swap_used_bytes_end",
+        "python",
+        "platform",
+        "torch",
+        "precision_environment",
+        "cache_state",
+        "scope",
+        "physical_storage_read_bytes",
+        "energy_joules"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison-ultra-gpu.log",
+      "bytes": 207,
+      "sha256": "b5213ac37b02e21fa693e40f3d5b8c8a404162e308bbc47b50908102996c5c33"
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison.json",
+      "bytes": 3120,
+      "sha256": "8c2a35972564da69629beeced1f4c18a4da456001be0b1aa39c87aaad07dd0b2",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model_dir",
+        "weight_sha256",
+        "tokens_per_run",
+        "repeats_per_prompt",
+        "cache_mib",
+        "summary",
+        "variant_order",
+        "protocol",
+        "full_GLM53_validated",
+        "full_Qwen38_validated"
+      ]
+    },
+    {
+      "path": "evidence-final/trained-reverse-comparison.log",
+      "bytes": 3120,
+      "sha256": "8c2a35972564da69629beeced1f4c18a4da456001be0b1aa39c87aaad07dd0b2"
+    },
+    {
+      "path": "evidence-final/validation-summary.json",
+      "bytes": 442,
+      "sha256": "addd6e252c003432abaccd377fe32f9dd67b5d9bce8665214d35ebc7abe9612e",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "version",
+        "branch",
+        "unique_passed_tests",
+        "passed_by_primary_suite",
+        "next_metal_repeat_passed",
+        "upstream_skipped",
+        "upstream_subtests_passed_not_added",
+        "installed_trained_api_status",
+        "scope"
+      ]
+    },
+    {
+      "path": "research/exact_io/.gitignore",
+      "bytes": 16,
+      "sha256": "f2dab8e330423f2c2e9444627af0c9d82e8a26073900a49688bcc75343a0e681"
+    },
+    {
+      "path": "research/exact_io/RAPPORT_SCIENTIFIQUE_FR.md",
+      "bytes": 38683,
+      "sha256": "41ef27fd06e3b995821e7bcec23d7e5ec9f5621efd69d39c16be55aaca71eeb7"
+    },
+    {
+      "path": "research/exact_io/README.md",
+      "bytes": 6954,
+      "sha256": "8d2f67f9e8c8a7d6abbf84030fc8123c2c1e3536cf9a16a30c890ad1fb72058a"
+    },
+    {
+      "path": "research/exact_io/audit_metadata.py",
+      "bytes": 3645,
+      "sha256": "784b4e0cf9072676d99c70c1b889f61fb99696b55d2fffcee19ef57768c3641f"
+    },
+    {
+      "path": "research/exact_io/backend_probes.py",
+      "bytes": 1479,
+      "sha256": "8a990db6b9f7c409bf8e47a55f2a1fadce105e8c05f0156abb4dc6755d618dc0"
+    },
+    {
+      "path": "research/exact_io/benchmark_compression.py",
+      "bytes": 8720,
+      "sha256": "80c97f72d5ddb3438dc562145b59e4ea4be1c5491d8f807709afae2ee1b2fa22"
+    },
+    {
+      "path": "research/exact_io/benchmark_transport.py",
+      "bytes": 3862,
+      "sha256": "9755a7d0e4aa1abd865a359ea9cd8f9d0a7b0b0cf7c5299433c567f0e8bc50d8"
+    },
+    {
+      "path": "research/exact_io/cache_reference.py",
+      "bytes": 1434,
+      "sha256": "a4851c6e50ad0092d944cd274f334200c90a358e34a4168d901bd4e51c133859"
+    },
+    {
+      "path": "research/exact_io/capture_environment.py",
+      "bytes": 1869,
+      "sha256": "01ca69b611debc9bed2f248c01b18c37d66b377f237f4659f7bdfd89b22ec702"
+    },
+    {
+      "path": "research/exact_io/common.py",
+      "bytes": 540,
+      "sha256": "1f4d83d431d8b7837a0e694cece27ed6ac1ce5f827154ff0d0a6dd25af46a970"
+    },
+    {
+      "path": "research/exact_io/cross_expert.py",
+      "bytes": 2142,
+      "sha256": "5fc40d6d71cf71aab7c701245208a57d8b8608d13ee3772ea3b179edd48c0fec"
+    },
+    {
+      "path": "research/exact_io/exact_rank.py",
+      "bytes": 3442,
+      "sha256": "716ba20df4d9ae7719e2f68c573712daaf4ea873cd47ba7407c5a3b1af7afb44"
+    },
+    {
+      "path": "research/exact_io/finalize_results.py",
+      "bytes": 4859,
+      "sha256": "9d2f5d4521e9e8899d2cdf8e1faa2584641f4a911a344d4b096fa98fa9620c16"
+    },
+    {
+      "path": "research/exact_io/inherited/bench_m5_compute.py",
+      "bytes": 2831,
+      "sha256": "2f350341c665fcd7b41240b932737c109339d743b3913058d08ed904ed1cb403"
+    },
+    {
+      "path": "research/exact_io/inherited/bench_m5_io.py",
+      "bytes": 5115,
+      "sha256": "5e8157837d639b1e8c4c844e88ee524aacb21c3da064f073ac5569e878d3f37f"
+    },
+    {
+      "path": "research/exact_io/inherited/bench_m5_metal.py",
+      "bytes": 3475,
+      "sha256": "902581cb015fac42050b0999a1d179f9bddcab29e385ea8db10016e6ce6a3484"
+    },
+    {
+      "path": "research/exact_io/inherited/bytes_per_token.json",
+      "bytes": 49177,
+      "sha256": "627d83b7d38148eec524de0289ed392fe4c7bd7ccd196094feddf3d5e850f1b8",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "meta",
+        "glm_5_3",
+        "qwen3_8_2_4t_a95b",
+        "ram_per_cached_param_as_implemented",
+        "weight_budget_capacity",
+        "simulations_and_measurements",
+        "caveats"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/corpus_spec.json",
+      "bytes": 618157,
+      "sha256": "bc2d19aae8fa42600401171397882f39d9b09a84c3e2273481f390cb0398543b",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "long",
+        "short",
+        "sources",
+        "repo"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/glm53_headers.json",
+      "bytes": 11954278,
+      "sha256": "303d17e8205b3523caea24d3fb71f818dc33aaec2309452541e6f863ee97237c",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model-00001-of-00141.safetensors",
+        "model-00002-of-00141.safetensors",
+        "model-00003-of-00141.safetensors",
+        "model-00004-of-00141.safetensors",
+        "model-00005-of-00141.safetensors",
+        "model-00006-of-00141.safetensors",
+        "model-00007-of-00141.safetensors",
+        "model-00008-of-00141.safetensors",
+        "model-00009-of-00141.safetensors",
+        "model-00010-of-00141.safetensors",
+        "model-00011-of-00141.safetensors",
+        "model-00012-of-00141.safetensors",
+        "model-00013-of-00141.safetensors",
+        "model-00014-of-00141.safetensors",
+        "model-00015-of-00141.safetensors",
+        "model-00016-of-00141.safetensors",
+        "model-00017-of-00141.safetensors",
+        "model-00018-of-00141.safetensors",
+        "model-00019-of-00141.safetensors",
+        "model-00020-of-00141.safetensors",
+        "model-00021-of-00141.safetensors",
+        "model-00022-of-00141.safetensors",
+        "model-00023-of-00141.safetensors",
+        "model-00024-of-00141.safetensors",
+        "model-00025-of-00141.safetensors",
+        "model-00026-of-00141.safetensors",
+        "model-00027-of-00141.safetensors",
+        "model-00028-of-00141.safetensors",
+        "model-00029-of-00141.safetensors",
+        "model-00030-of-00141.safetensors",
+        "model-00031-of-00141.safetensors",
+        "model-00032-of-00141.safetensors",
+        "model-00033-of-00141.safetensors",
+        "model-00034-of-00141.safetensors",
+        "model-00035-of-00141.safetensors",
+        "model-00036-of-00141.safetensors",
+        "model-00037-of-00141.safetensors",
+        "model-00038-of-00141.safetensors",
+        "model-00039-of-00141.safetensors",
+        "model-00040-of-00141.safetensors"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/manifest.json",
+      "bytes": 5851,
+      "sha256": "ed7f6a4594ccd2c6e7180d48bb2c39f5f28dbf4f3c321c1bdafc5dcb9113e1e8",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "source_commit",
+        "files"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/moe_stream.py",
+      "bytes": 13651,
+      "sha256": "0d219bf8ad34e60d2536ed7bb7459aabbc37f8c8a6304fd14f8cbac2bcbc89aa"
+    },
+    {
+      "path": "research/exact_io/inherited/nvfp4_families.csv",
+      "bytes": 5664,
+      "sha256": "de2840c80c412188d7814dc07973a152c31431605ec71356ad268291770bf402"
+    },
+    {
+      "path": "research/exact_io/inherited/olmoe_run.log",
+      "bytes": 2382,
+      "sha256": "92712a8d633ecb895523c4f3dceda860201a408919d743b917d5ccc3d0a8981a"
+    },
+    {
+      "path": "research/exact_io/inherited/olmoe_run_summary.json",
+      "bytes": 747,
+      "sha256": "d4c7f0a6b1d650b2f2c1f28a9b97292cc225606adc6b5e3c9098e2181ec1f146",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model",
+        "ce_long_per_cat",
+        "acc_long_per_cat",
+        "ce_short_mean",
+        "forward_s",
+        "peak_rss_gb",
+        "bytes_read_GB",
+        "n_tokens"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/olmoe_validation.json",
+      "bytes": 600,
+      "sha256": "0084ad2811f90af1a55a1fb26c4901d1e54ef8956957b655f08a80d05aff8f86",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model",
+        "input_shape",
+        "layers",
+        "peak_rss_gb"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/param_counts.json",
+      "bytes": 824,
+      "sha256": "8a51d9e89e283ee5f27d7015a3ad77abb98bdf273b3d561e97e81fda594781be",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "glm",
+        "qwen"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/prisme_sim.py",
+      "bytes": 8386,
+      "sha256": "7804062222ab70e4d785035223182504ad7332f2404875c80825b25357740e88"
+    },
+    {
+      "path": "research/exact_io/inherited/qwen38_bf16_headers.json",
+      "bytes": 169311,
+      "sha256": "b483495c4b7f477240a743128d9215cbb1f0e575778e6b914efd86561966fd5c",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model-00001-of-00213.safetensors",
+        "model-00002-of-00213.safetensors",
+        "model-00003-of-00213.safetensors",
+        "model-00004-of-00213.safetensors",
+        "model-00005-of-00213.safetensors",
+        "model-00006-of-00213.safetensors",
+        "model-00007-of-00213.safetensors",
+        "model-00008-of-00213.safetensors",
+        "model-00009-of-00213.safetensors",
+        "model-00010-of-00213.safetensors",
+        "model-00011-of-00213.safetensors",
+        "model-00012-of-00213.safetensors",
+        "model-00013-of-00213.safetensors",
+        "model-00014-of-00213.safetensors",
+        "model-00015-of-00213.safetensors",
+        "model-00016-of-00213.safetensors",
+        "model-00017-of-00213.safetensors",
+        "model-00018-of-00213.safetensors",
+        "model-00019-of-00213.safetensors",
+        "model-00020-of-00213.safetensors",
+        "model-00021-of-00213.safetensors",
+        "model-00022-of-00213.safetensors",
+        "model-00023-of-00213.safetensors",
+        "model-00024-of-00213.safetensors",
+        "model-00025-of-00213.safetensors",
+        "model-00026-of-00213.safetensors",
+        "model-00027-of-00213.safetensors",
+        "model-00028-of-00213.safetensors",
+        "model-00029-of-00213.safetensors",
+        "model-00030-of-00213.safetensors",
+        "model-00031-of-00213.safetensors",
+        "model-00032-of-00213.safetensors",
+        "model-00033-of-00213.safetensors",
+        "model-00034-of-00213.safetensors",
+        "model-00035-of-00213.safetensors",
+        "model-00036-of-00213.safetensors",
+        "model-00037-of-00213.safetensors",
+        "model-00038-of-00213.safetensors",
+        "model-00039-of-00213.safetensors",
+        "model-00040-of-00213.safetensors"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/qwen38_config.json",
+      "bytes": 3951,
+      "sha256": "4e3819548967e319ab435d044a3a331dbe3b078590ce822e9d74b79430533987",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "architectures",
+        "attention_bias",
+        "attention_dropout",
+        "attn_output_gate",
+        "bos_token_id",
+        "dtype",
+        "eos_token_id",
+        "full_attention_interval",
+        "head_dim",
+        "hidden_act",
+        "hidden_size",
+        "initializer_range",
+        "layer_types",
+        "linear_conv_kernel_dim",
+        "linear_key_head_dim",
+        "linear_num_key_heads",
+        "linear_num_value_heads",
+        "linear_value_head_dim",
+        "mamba_ssm_dtype",
+        "max_position_embeddings",
+        "model_type",
+        "moe_intermediate_size",
+        "mtp_num_hidden_layers",
+        "mtp_use_dedicated_embeddings",
+        "num_attention_heads",
+        "num_experts",
+        "num_experts_per_tok",
+        "num_hidden_layers",
+        "num_key_value_heads",
+        "output_gate_type",
+        "output_router_logits",
+        "pad_token_id",
+        "partial_rotary_factor",
+        "rms_norm_eps",
+        "rope_parameters",
+        "router_aux_loss_coef",
+        "shared_expert_intermediate_size",
+        "tie_word_embeddings",
+        "transformers_version",
+        "use_cache"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/qwen_nvfp4_meta.json",
+      "bytes": 104256,
+      "sha256": "f9701d86cc5b0fa459b9d876c3bab55c65a9e4d54147d675fa7b3650df7f652e",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "q_idx_meta",
+        "n_idx_meta",
+        "n_cfg",
+        "n_hfq"
+      ]
+    },
+    {
+      "path": "research/exact_io/inherited/routing_traces_olmoe.npz",
+      "bytes": 14365371,
+      "sha256": "fa055bc19a2c0f8a654a0a4a5d919097a43c893d1581fc14fb9e06a657444b91"
+    },
+    {
+      "path": "research/exact_io/inherited/run_model.py",
+      "bytes": 6788,
+      "sha256": "c4563a33a40519b7f70c159b096c144aa8de41b1db7d2821dd0938c4017f701e"
+    },
+    {
+      "path": "research/exact_io/inherited/theorie_PRISME.md",
+      "bytes": 17440,
+      "sha256": "a731566446af736c2996eb5ade9663fc5afe426500badd5b71f97f7a401d702c"
+    },
+    {
+      "path": "research/exact_io/metal_probe.m",
+      "bytes": 641,
+      "sha256": "c74aa12f1d964f251e8252333c3c1616f4c42e30bc5cfa4827ca73fcbda85bd3"
+    },
+    {
+      "path": "research/exact_io/numerical_contract.py",
+      "bytes": 9261,
+      "sha256": "39dc5b0c94bdab342b51b8e279899e441a67ed65b0e54c0d507caed6cbc38ac2"
+    },
+    {
+      "path": "research/exact_io/palette_decode.c",
+      "bytes": 1951,
+      "sha256": "da984ddfe16de0a91d368560ecea5399789840f342d03a551f5699a5b6837fa3"
+    },
+    {
+      "path": "research/exact_io/results/backend_probes.json",
+      "bytes": 775,
+      "sha256": "9fe9b63b4f312a5dddadd64ceb8fd4e3f0200b04fec3765ba02066cfb997cfa7",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "python_executable",
+        "results",
+        "packages_installed_by_experiment",
+        "model_downloaded"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/baseline-test-blocker.json",
+      "bytes": 266,
+      "sha256": "d741cec573edb35242e91f62e8c03fdea4a2ec31549dca889d266bd53f356aca",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "command",
+        "exit_code",
+        "failure",
+        "model_runtime_tests_executed",
+        "mlx_installed",
+        "torch_installed"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/cache_reference.json",
+      "bytes": 658,
+      "sha256": "d529d247aa6208ce432b5b1539969f4f6645bfeeb76aaef629aae4fe75df8532",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "results",
+        "excludes_attention_head_and_decoded_expansion",
+        "physical_io_measured"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/compression.json",
+      "bytes": 7186,
+      "sha256": "28aa0db792e7f9bed56d1751f74dba39fcade2b12436b625ab7a7fb4e5f77f7a",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "platform",
+        "machine",
+        "python",
+        "sample_bytes",
+        "repeats",
+        "roundtrip_tests",
+        "empirical_marginal_entropy",
+        "results",
+        "limitations"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/cross_expert.json",
+      "bytes": 7955,
+      "sha256": "b0cb5b1d211d1b99028f19561e291460ecd4969456252ca59b383a3430d4dfcd",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "results",
+        "summary",
+        "limitation"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/environment-resumed-torch.json",
+      "bytes": 845,
+      "sha256": "4c4df6f69fab75eece21da54ca6838b7e237b9df3c26149d9b1c257844f15104",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "python",
+        "hardware",
+        "metal",
+        "python_executable",
+        "modules",
+        "base_commit",
+        "source_commit",
+        "source_tree_dirty",
+        "network_cli",
+        "note"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/environment-resumed.json",
+      "bytes": 844,
+      "sha256": "33246faf7bc12e857371498ac2ffb7fa345e1c830618825c1791730820cbbff4",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "python",
+        "hardware",
+        "metal",
+        "python_executable",
+        "modules",
+        "base_commit",
+        "source_commit",
+        "source_tree_dirty",
+        "network_cli",
+        "note"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/environment.json",
+      "bytes": 816,
+      "sha256": "3b11735c9ddb1ef5ca3b6d4ad54a14f895a0f4f8749e88d514c2103bdf8f4924",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "platform",
+        "python",
+        "hardware",
+        "metal",
+        "python_executable",
+        "modules",
+        "base_commit",
+        "network_cli",
+        "note"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/exact_rank.json",
+      "bytes": 5914,
+      "sha256": "ae8174c11047b0a8f2f9e0f4f3dc213c1f8b44e5d08a2647a89fedbe273b6f25",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "results",
+        "conclusion",
+        "limitations"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/inherited-controls-resumed.xml",
+      "bytes": 5239,
+      "sha256": "2d07db0af1b5d364caf60cbb91fd754a247d5412e6dd2926e90067efcdee1d9e",
+      "format_checked": "xml"
+    },
+    {
+      "path": "research/exact_io/results/inherited-controls.xml",
+      "bytes": 5239,
+      "sha256": "dc07232edcf8c810c9b0b6950d1b7af7e18f4adc5b9a0972efef1d150ccf1ded",
+      "format_checked": "xml"
+    },
+    {
+      "path": "research/exact_io/results/metadata.json",
+      "bytes": 2928,
+      "sha256": "097d016613014f38dee0574ee415476f31c27dc74d398aab671a8dec2202c2ab",
+      "format_checked": "json",
+      "top_level_type": "list"
+    },
+    {
+      "path": "research/exact_io/results/numerical_contract.json",
+      "bytes": 25157,
+      "sha256": "c2af947cdab6c255eec66fc03f98ea776c2e6b5f07d448766471deed9391bce3",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "python",
+        "python_executable",
+        "torch",
+        "numpy",
+        "torch_threads",
+        "matmul_precision",
+        "pack_manifest_sha256",
+        "source",
+        "weight_sha256",
+        "numpy_reference_reproduction",
+        "trials",
+        "block_comparisons",
+        "block_comparisons_with_bit_differences",
+        "same_row_order_comparisons_bitwise_equal",
+        "arithmetic_counterexample",
+        "full_model_logits_or_tokens_compared",
+        "metal_model_runtime_measured",
+        "inference_speed_measured",
+        "limitations"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/ranking.csv",
+      "bytes": 2338,
+      "sha256": "0355fb3f70414776dc7f983ec9926a8303020ee86b3699fff07a13f6b88cb145"
+    },
+    {
+      "path": "research/exact_io/results/routing.json",
+      "bytes": 30431,
+      "sha256": "4d78aebf80d963f0f58895c7ce1f22aebc2cd746b872f7db67d3c3191f703842",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "trace_sha256",
+        "shape",
+        "N",
+        "k",
+        "no_new_model_forward",
+        "free_generation_acceptance_measured",
+        "source_validation",
+        "union_curves_by_category",
+        "windows",
+        "cache_summary",
+        "cache_by_category",
+        "caveats"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/sample_provenance.json",
+      "bytes": 30249,
+      "sha256": "d6dec32850aaeafdcb622cfbc26532258b9b96367e42f7db94168657e93fc5d0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "model",
+        "source_config_sha256",
+        "fixture_sha256",
+        "selected_weight_bytes",
+        "sampling",
+        "samples",
+        "limitation"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/scenarios.json",
+      "bytes": 94393,
+      "sha256": "1fc36ef18987785fa85d3a468ca701a1611830913a0a05c94dd1e7ab512e6ef1",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "rows",
+        "omitted_costs",
+        "assumptions",
+        "preliminary_claims"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/source-manifest.json",
+      "bytes": 15877,
+      "sha256": "7a53be1beb9a5ed48d4634cd6157e79a6a4755c35233f86a53ed68a02fbb3043",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "files",
+        "note"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/tests-before-eos-fix.xml",
+      "bytes": 8283,
+      "sha256": "50c337d55de16efd52efbee2e9cd3024035a9d3cb1411c0a86dcfc9b7194827f",
+      "format_checked": "xml"
+    },
+    {
+      "path": "research/exact_io/results/tests-resumed.xml",
+      "bytes": 7863,
+      "sha256": "1e34d80016d3317020635cb51446d3610690d9194534c5140a226169fceebe1b",
+      "format_checked": "xml"
+    },
+    {
+      "path": "research/exact_io/results/tests.xml",
+      "bytes": 7863,
+      "sha256": "a8231afe4bffc27f241ff03c160a7fc74b89bccb1206679f686654f34cd396b1",
+      "format_checked": "xml"
+    },
+    {
+      "path": "research/exact_io/results/trained_expert_outputs.npz",
+      "bytes": 274735,
+      "sha256": "93872cfa949339f5e9dd6e8aa68d4479c44b89882813fd7c7273dfd3fd778a82"
+    },
+    {
+      "path": "research/exact_io/results/trained_parity.json",
+      "bytes": 1971,
+      "sha256": "d1827a5b53f0f24101219236acdfcd42c9dfdfebec0da8ffc1927a6a1e6a4e70",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "results",
+        "transport",
+        "whole_model_logits_validated",
+        "mlx_model_runtime_validated",
+        "limitation"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/transport-initial-contended.json",
+      "bytes": 8645,
+      "sha256": "db16fecf5bca080f68cd6a1d4bbef2356f3bed872a7efd5145323ae701c0508f",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "repeats",
+        "order_seed",
+        "trials",
+        "summary",
+        "peak_rss_bytes",
+        "exact_sample_bits",
+        "physical_device_read_bytes",
+        "external_ssd_measured",
+        "limitations",
+        "sink"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/transport.json",
+      "bytes": 8643,
+      "sha256": "ed19543d1d5bf1f46038c6a87c413003b8ba4a1b60034f0ad8786ee1af8fa0a0",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "evidence",
+        "repeats",
+        "order_seed",
+        "trials",
+        "summary",
+        "peak_rss_bytes",
+        "exact_sample_bits",
+        "physical_device_read_bytes",
+        "external_ssd_measured",
+        "limitations",
+        "sink"
+      ]
+    },
+    {
+      "path": "research/exact_io/results/validation-summary.json",
+      "bytes": 2002,
+      "sha256": "97bf8b632b50bc44f7fc22eafb34397d51bdfb309138a06ab3d4f39619df6fc5",
+      "format_checked": "json",
+      "top_level_type": "dict",
+      "top_level_keys": [
+        "base_commit",
+        "branch",
+        "tests",
+        "passed",
+        "complete_historical_mlx_suite_executed",
+        "full_glm_or_qwen_inference_measured",
+        "external_ssd_measured",
+        "metal_model_runtime_measured",
+        "exact_trained_expert_blocks",
+        "palette_encoded_ratio",
+        "native_default_cache_replay",
+        "rejected_or_unproven",
+        "numerical_contract_experiment",
+        "resumed_verification",
+        "resumed_verification_passed"
+      ]
+    },
+    {
+      "path": "research/exact_io/routing.py",
+      "bytes": 5746,
+      "sha256": "62a82ca7faa36d883b4f63e931019d64962a739097fcfe221a87896a4ae68426"
+    },
+    {
+      "path": "research/exact_io/run_all.py",
+      "bytes": 2429,
+      "sha256": "933f190c05fcfdb117d2576b8871f56cb9164b836ef0cdeda531014e9c7439bc"
+    },
+    {
+      "path": "research/exact_io/scenarios.py",
+      "bytes": 2857,
+      "sha256": "542a02d739219f526a94a6454914c5b351b2d9a8f465afb9fd3688a87fab8e06"
+    },
+    {
+      "path": "research/exact_io/tests/test_exact_transport.py",
+      "bytes": 6962,
+      "sha256": "cde42a7ffc33a34e3ec9d4a17ff7c526bed6ced3a90a929debab461dfc83186d"
+    },
+    {
+      "path": "research/exact_io/tests/test_fidelity.py",
+      "bytes": 3075,
+      "sha256": "f7b230b5dc97fe874939207a05777574f6630088198701bb231d7d163f5f4a25"
+    },
+    {
+      "path": "research/exact_io/tests/test_theory.py",
+      "bytes": 2321,
+      "sha256": "f93153e815a78c79bf16e94e8242f88c29f61c2c017856534fb0ec31e48991a0"
+    },
+    {
+      "path": "research/exact_io/trained_parity.py",
+      "bytes": 3244,
+      "sha256": "8e1204a2cb2d5f5df520d349aa192a09f50f6b46d9874d673d696ed71d440cad"
+    }
+  ],
+  "parse_errors": [],
+  "scientific_findings": [
+    "Historical exact-I/O traces are teacher forced OLMoE; they do not establish free-generation draft acceptance for GLM/Qwen.",
+    "Native SLRU trace replay has zero hits at32/64expert units; admission can fail when a hot set exceeds capacity.",
+    "Inherited reversible palette transport reconstructs original bits but complete trained warm-read benchmark is39x slower than original: retained as capacity option, not speed claim.",
+    "Cross-expert XOR compression is larger than independent compression on observed slices; no beneficial universal expert correlation established.",
+    "Exact modular rank lower bounds on trained slices disprove a tiny exact low-rank representation for those tested matrices.",
+    "Block-vs-token floating arithmetic is not universally bit identical; 20/48observed inherited block comparisons had bit differences.",
+    "4.1Metal speedups and SmolLM2generation are original M5 records, not fresh Linux measurements.",
+    "Large GLM/Qwen checkpoint generation, external SSD sustained I/O and thermal tests remain absent from inherited evidence."
+  ]
+}

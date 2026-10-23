@@ -1,4 +1,35 @@
-# AirLLM Next 4.1.0rc1
+# AirLLM Next 5.0.0a1 — research generation
+
+V5 extends the exact `4.1.0rc1` source commit
+`9629c27b9d8bdf697ae866498ad468e11eb183d4`. It integrates an optional compact
+source-weight cache inside the existing weight budget, reusable output tiles,
+measured speculative cost control, resource preflight, and a durable local
+agent queue sharing one model and one resident architecture session.
+Its separate Llama path also accepts strictly validated linear RoPE scaling.
+
+This is an **alpha research build**, not a stable giant-model release.
+V5 measurements in `evidence-v5/` are Linux MLX CPU measurements. Historical M5
+Metal measurements in `evidence-final/` belong to V4.1 and are not V5 results.
+Full GLM-5.3 and Qwen3.8 generation on a 16 GB M5 remains unvalidated.
+
+See [V5 validation](FINAL_VALIDATION_V5.md), [architecture](NEXT_GENERATION_ARCHITECTURE.md),
+[measured comparisons](PERFORMANCE_BEFORE_AFTER.md), [model status](MODEL_COMPATIBILITY_V5.md),
+[M5 protocol](M5_VALIDATION.md), and [RONIN guide](RONIN_INFERENCE_GUIDE.md).
+
+```bash
+airllm-next preflight /absolute/local/checkpoint --tokens 4096
+airllm-next run /absolute/local/checkpoint --backend llama --device cpu \
+  --cache-mib 300 --compact-cache-mib 300 --max-new-tokens 16
+airllm-next agent-serve /absolute/local/checkpoint --backend llama \
+  --state-dir /absolute/private/agent-state --quantum-tokens 8
+```
+
+Compact residency and output-tile admission are opt-in ablations. They can
+increase conversion work or evict useful weights; no universal speedup is
+assumed. Agent scheduling serializes inference and may replay prefixes when
+switching requests; logical agents are not simultaneous model executions.
+
+## Inherited 4.1 behavior and evidence
 
 Local inference with selective Safetensors reads, bounded caches, native MLX
 arithmetic and optional reversible standalone storage. This is a **candidate for

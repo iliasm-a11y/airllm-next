@@ -1,0 +1,154 @@
+{
+  "base_commit": "9629c27b9d8bdf697ae866498ad468e11eb183d4",
+  "base_tree": "b5be3af163ffb81b8fe7be184222c94f18d84195",
+  "working_branch": "research/airllm-next-5-generation",
+  "protected_remote_refs_before": {
+    "main": "9453681973ddfc93d66c6144c8eca2d5a39a8f1c",
+    "release/airllm-next-final": "9629c27b9d8bdf697ae866498ad468e11eb183d4",
+    "research/ooc-engine-2026-10-22": "d43032f38a0325aafd2973847d7ed84b21280c61"
+  },
+  "preserved_directories": [
+    "evidence-final",
+    "research/exact_io",
+    "evidence-ooc",
+    "evidence-next"
+  ],
+  "production_module_inventory": [
+    {
+      "path": "air_llm/airllm/nextgen/__init__.py",
+      "lines": 17,
+      "sha256": "35458ad8f8051dea2b18b0b9ef78a20dc4d38bee6d9708f60bc01c12b7193d25"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/adapters.py",
+      "lines": 324,
+      "sha256": "6cd405bff07f9f0888456bed82df00f87d1c85bdecc13fdec5b2507bfb350a6f"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/agent_engine.py",
+      "lines": 536,
+      "sha256": "d20f0e94f32d4297d014b1798faa1a7eff3bca7d1104741802d22f8dc54bde47"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/agent_server.py",
+      "lines": 228,
+      "sha256": "82aa62ae7fe83ba843728b51639c5a25f1578f21d01c6a702e9d289da31a048a"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/attention.py",
+      "lines": 200,
+      "sha256": "fe88df33d0df1667c147b880a1a74d58429f2d03c3bd27ee0f568dc32597ddf2"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/cache.py",
+      "lines": 172,
+      "sha256": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/cli.py",
+      "lines": 315,
+      "sha256": "416a73be1ccd74323caa6e8e36dbf0b14386b4bde5d2df565695cb544539aa4c"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/compact_cache.py",
+      "lines": 111,
+      "sha256": "330260f984ed5c3ffda7732395ebb8961bdaa4c9dade242fa4d4a846ba4ae89f"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/config.py",
+      "lines": 72,
+      "sha256": "e170bfd4b1c2dafd4f7d6bb63c014fb424bafd75324325980050f355f17d26d2"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/generation.py",
+      "lines": 66,
+      "sha256": "8d73c65830a4df3f46b8465bb92770423400fa77c4c3acf9548c1fd840391b13"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/limits.py",
+      "lines": 51,
+      "sha256": "7576b1e438db6125020e1fea6aeab60a8980f442c4bfed700dd7103cacbe21a3"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/llama_runtime.py",
+      "lines": 174,
+      "sha256": "971c7907151ca3858bed21520456b150f82d261cee7e474b47f7172d9ef36d8f"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/lossless.py",
+      "lines": 557,
+      "sha256": "91a4cfc45b5f6ce2d24b23375be607e6999d1913bd635ee123a363666e8726ac"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/moe.py",
+      "lines": 70,
+      "sha256": "d3d6fba66c764dd0e64fb1376bfade1fc187028f587a10cd551ad5daee56748e"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/preflight.py",
+      "lines": 220,
+      "sha256": "d93563eb47d00f2f0a16ade34ec5ac5e7b9b9077df739972f0433735c13227f4"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/prompt_draft.py",
+      "lines": 62,
+      "sha256": "5f48117673ad2609a5fb72ad869bca4295627ee84616953a8d53120711097269"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/quantization.py",
+      "lines": 63,
+      "sha256": "200af107860f178dc96fb48a25f0b6a0ef2a5ed9b8b9b6f79f46c354b4fe922b"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/qwen_moe.py",
+      "lines": 93,
+      "sha256": "a4984cbc62dd29c2ee5ab3a56e6aeb6cc81f97b4d4cff24ba2829568ae142b00"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/qwen_runtime.py",
+      "lines": 396,
+      "sha256": "746f2996da68aeb3b54a73fa40338d3e462512862fe2922f2b578c94c39df4d8"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/recurrent.py",
+      "lines": 94,
+      "sha256": "f7f90fab983d8bb07414f3adde139c43f446942e003d67e27640205442cdcdaf"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/runtime.py",
+      "lines": 357,
+      "sha256": "b124281535abdff2bc245606cf671e01eb33b2bb4a1c48247dff91b2b0e18f7f"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/server.py",
+      "lines": 251,
+      "sha256": "e8b799cac43c69cd14bc5f16a0ba74e5ceba53faa880e72e4647a861965697b5"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/sidecar.py",
+      "lines": 211,
+      "sha256": "5303827de734749d678ae76e900cf37290512444f28c1bed240abed7f155fd57"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/speculative.py",
+      "lines": 456,
+      "sha256": "c18e3a8fa144c8bd429919d51e7815ed23af467cdcbe18f217495f6d60f94560"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/storage.py",
+      "lines": 200,
+      "sha256": "e211bb7db19bffd7d2d0dba325f315dadb822f087f982b18de93f0c6657ee0b5"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/tuning.py",
+      "lines": 171,
+      "sha256": "44ecd8e6351e8841464a900b04f61e5df75bc1fe887384dfd920f474fc9627d3"
+    },
+    {
+      "path": "air_llm/airllm/nextgen/weights.py",
+      "lines": 239,
+      "sha256": "956cda42cf6f46a6963a7da799994626a12d27006dcd1de83d751f9990956456"
+    }
+  ],
+  "inventory_scope": "final source after DSA boundary tie and GLM recovery identity corrections"
+}

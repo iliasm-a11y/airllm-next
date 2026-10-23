@@ -1,0 +1,229 @@
+{
+  "status": "passed",
+  "scope": "Two block-aligned real trained routed-expert matrix subranges only",
+  "validated_at_utc": "2026-10-23T01:50:46.902517+00:00",
+  "acquisition_manifest_written_at_utc": "2026-10-23T01:43:29.147511+00:00",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "model": "zai-org/GLM-5.3",
+  "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+  "acquisition": {
+    "model": "zai-org/GLM-5.3",
+    "revision": "ba32f8c19c8738e2c57c71798c601d477a7bf844",
+    "index_sha256": "e0fe7f28c1f853d4824e4d796374e3dacf1fe470988773952c79b063768134bf",
+    "config_sha256": "3ac72612095574542f7fff847ada8e59d9199dd8af44bdf625d7e02615572e69",
+    "tiles": [
+      {
+        "key": "model.layers.3.mlp.experts.0.gate_proj.weight",
+        "source_shard": "model-00038-of-00141.safetensors",
+        "source_header_sha256": "8607b1b281f5ca8c7b166376e8f6d7eb9ca07f79200f6095f0f55ca35149ba56",
+        "original_shape": [
+          2048,
+          6144
+        ],
+        "original_rows": [
+          128,
+          256
+        ],
+        "matrix_shape": [
+          128,
+          6144
+        ],
+        "scale_shape": [
+          1,
+          48
+        ],
+        "scale_row_offset": 1,
+        "block_shape": [
+          128,
+          128
+        ],
+        "matrix_source_offset": 4071099800,
+        "scale_source_offset": 1099352,
+        "matrix_file": "tile-0.fp8",
+        "scale_file": "tile-0.scales-f32",
+        "matrix_bytes": 786432,
+        "scale_bytes": 192,
+        "matrix_sha256": "03ffb4eb6c1d6ed992648a8ba153ad96208907bbd2474f6c55949a18a5dedff3",
+        "scale_sha256": "da187a57700bcd9a4f294915eabfacad8ea2dad37318a117e0f414a4a613209c"
+      },
+      {
+        "key": "model.layers.3.mlp.experts.0.down_proj.weight",
+        "source_shard": "model-00038-of-00141.safetensors",
+        "source_header_sha256": "8607b1b281f5ca8c7b166376e8f6d7eb9ca07f79200f6095f0f55ca35149ba56",
+        "original_shape": [
+          6144,
+          2048
+        ],
+        "original_rows": [
+          256,
+          384
+        ],
+        "matrix_shape": [
+          128,
+          2048
+        ],
+        "scale_shape": [
+          1,
+          16
+        ],
+        "scale_row_offset": 2,
+        "block_shape": [
+          128,
+          128
+        ],
+        "matrix_source_offset": 4058254744,
+        "scale_source_offset": 1096216,
+        "matrix_file": "tile-1.fp8",
+        "scale_file": "tile-1.scales-f32",
+        "matrix_bytes": 262144,
+        "scale_bytes": 64,
+        "matrix_sha256": "78ee96a9bfc292febb334679dafe06920bb6c76bba7b46b4515e5e04771684dc",
+        "scale_sha256": "6ed4634ff8b83ee648433df1f3645abeaa60c66dacdc737fc872e4760692659f"
+      }
+    ],
+    "range_requests": [
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 0,
+        "range_end": 7,
+        "http_status": 206,
+        "content_range": "bytes 0-7/5366353304",
+        "body_bytes": 8,
+        "resource_bytes": 5366353304,
+        "sha256": "aa2e180b58aa922d0d198697f38384e1e5ddc29e7d1c9d32f2e0e962c8c89478"
+      },
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 8,
+        "range_end": 105431,
+        "http_status": 206,
+        "content_range": "bytes 8-105431/5366353304",
+        "body_bytes": 105424,
+        "resource_bytes": 5366353304,
+        "sha256": "8607b1b281f5ca8c7b166376e8f6d7eb9ca07f79200f6095f0f55ca35149ba56"
+      },
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 4071099800,
+        "range_end": 4071886231,
+        "http_status": 206,
+        "content_range": "bytes 4071099800-4071886231/5366353304",
+        "body_bytes": 786432,
+        "resource_bytes": 5366353304,
+        "sha256": "03ffb4eb6c1d6ed992648a8ba153ad96208907bbd2474f6c55949a18a5dedff3"
+      },
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 1099352,
+        "range_end": 1099543,
+        "http_status": 206,
+        "content_range": "bytes 1099352-1099543/5366353304",
+        "body_bytes": 192,
+        "resource_bytes": 5366353304,
+        "sha256": "da187a57700bcd9a4f294915eabfacad8ea2dad37318a117e0f414a4a613209c"
+      },
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 4058254744,
+        "range_end": 4058516887,
+        "http_status": 206,
+        "content_range": "bytes 4058254744-4058516887/5366353304",
+        "body_bytes": 262144,
+        "resource_bytes": 5366353304,
+        "sha256": "78ee96a9bfc292febb334679dafe06920bb6c76bba7b46b4515e5e04771684dc"
+      },
+      {
+        "url": "https://huggingface.co/zai-org/GLM-5.3/resolve/ba32f8c19c8738e2c57c71798c601d477a7bf844/model-00038-of-00141.safetensors",
+        "range_start": 1096216,
+        "range_end": 1096279,
+        "http_status": 206,
+        "content_range": "bytes 1096216-1096279/5366353304",
+        "body_bytes": 64,
+        "resource_bytes": 5366353304,
+        "sha256": "6ed4634ff8b83ee648433df1f3645abeaa60c66dacdc737fc872e4760692659f"
+      }
+    ],
+    "total_response_body_bytes": 1154264,
+    "max_response_body_bytes": 16777216,
+    "full_shard_downloaded": false,
+    "checkpoint_generation_performed": false
+  },
+  "compute_device": "MLX CPU",
+  "torch_version": "2.14.1+cpu",
+  "mlx_version": "0.32.4",
+  "reference": "PyTorch float8_e4m3fn cast and explicit official FP32 block scales",
+  "matrix_rebasing": "Original source rows begin at128-block boundaries; local row0 receives the corresponding original scale row, with no source-byte changes.",
+  "tiles": [
+    {
+      "key": "model.layers.3.mlp.experts.0.gate_proj.weight",
+      "shape": [
+        128,
+        6144
+      ],
+      "original_rows": [
+        128,
+        256
+      ],
+      "source_matrix_sha256": "03ffb4eb6c1d6ed992648a8ba153ad96208907bbd2474f6c55949a18a5dedff3",
+      "source_scales_sha256": "da187a57700bcd9a4f294915eabfacad8ea2dad37318a117e0f414a4a613209c",
+      "reconstructed_source_bytes_exact": true,
+      "decoded_fp32_bitwise_equal": true,
+      "decode_max_absolute_error": 0.0,
+      "linear_positions": 3,
+      "linear_rtol": 2e-05,
+      "linear_atol": 2e-05,
+      "linear_passed": true,
+      "linear_max_absolute_error": 1.1548399925231934e-07,
+      "linear_max_reference_absolute_value": 0.04510348290205002
+    },
+    {
+      "key": "model.layers.3.mlp.experts.0.down_proj.weight",
+      "shape": [
+        128,
+        2048
+      ],
+      "original_rows": [
+        256,
+        384
+      ],
+      "source_matrix_sha256": "78ee96a9bfc292febb334679dafe06920bb6c76bba7b46b4515e5e04771684dc",
+      "source_scales_sha256": "6ed4634ff8b83ee648433df1f3645abeaa60c66dacdc737fc872e4760692659f",
+      "reconstructed_source_bytes_exact": true,
+      "decoded_fp32_bitwise_equal": true,
+      "decode_max_absolute_error": 0.0,
+      "linear_positions": 3,
+      "linear_rtol": 2e-05,
+      "linear_atol": 2e-05,
+      "linear_passed": true,
+      "linear_max_absolute_error": 3.725290298461914e-08,
+      "linear_max_reference_absolute_value": 0.03191863372921944
+    }
+  ],
+  "reader_stats": {
+    "dequant_seconds": 0.027968992000296566,
+    "loads": 2,
+    "speculative_reads": 0,
+    "load_seconds": 0.02880760600010035
+  },
+  "checkpoint_stats": {
+    "manifest_hit": 0,
+    "header_bytes": 488,
+    "fd_opens": 1,
+    "logical_bytes": 2097664,
+    "read_calls": 8,
+    "io_seconds": 0.0008758289995967061,
+    "requested_bytes": 2097664,
+    "coalesced_batches": 2,
+    "coalesced_groups": 4,
+    "coalesced_gap_bytes": 0,
+    "coalesced_backing_bytes": 1048832
+  },
+  "throughput_benchmark_performed": false,
+  "full_matrix_validated": false,
+  "full_expert_validated": false,
+  "full_shard_downloaded": false,
+  "full_checkpoint_generation_validated": false,
+  "metal_validated": false,
+  "activation_quantization_semantics_validated": false
+}

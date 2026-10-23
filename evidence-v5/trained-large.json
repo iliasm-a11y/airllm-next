@@ -1,0 +1,51 @@
+{
+  "model_id": "codellama/CodeLlama-7b-hf",
+  "revision": "6c284d1468fe6c413cf56183e69b194dcfa27fe6",
+  "checkpoint_files_bytes": 13477127208,
+  "host_memory_bytes": 10451439616,
+  "checkpoint_exceeds_host_ram": true,
+  "cgroup_memory_max": "8589934592",
+  "tokens_per_variant": 4,
+  "comparison_reference": "reference",
+  "comparisons": {
+    "baseline": {
+      "tokens_match_comparison_reference": true,
+      "max_abs_logit_difference": 5.53131103515625e-05,
+      "logits_within_fixed_atol_1e4_rtol_5e4": true,
+      "generation_seconds": 165.16399787699993,
+      "decode_tokens_per_second": 0.036157854790968696,
+      "process_peak_rss_bytes": 1405104128,
+      "physical_read_bytes": 50575691776,
+      "raw_report": "trained-large-baseline.json"
+    },
+    "candidate": {
+      "tokens_match_comparison_reference": true,
+      "max_abs_logit_difference": 5.53131103515625e-05,
+      "logits_within_fixed_atol_1e4_rtol_5e4": true,
+      "generation_seconds": 164.4006240020003,
+      "decode_tokens_per_second": 0.03647898243119385,
+      "process_peak_rss_bytes": 1404461056,
+      "physical_read_bytes": 50383945728,
+      "raw_report": "trained-large-candidate.json"
+    },
+    "reference": {
+      "tokens_match_comparison_reference": true,
+      "max_abs_logit_difference": 0.0,
+      "logits_within_fixed_atol_1e4_rtol_5e4": true,
+      "generation_seconds": 44.70915840400039,
+      "decode_tokens_per_second": 0.09499177988522038,
+      "process_peak_rss_bytes": 1370660864,
+      "physical_read_bytes": 41399136256,
+      "raw_report": "trained-large-reference.json"
+    }
+  },
+  "tolerances_fixed_before_measurement": {
+    "atol": 0.0001,
+    "rtol": 0.0005
+  },
+  "no_metadata_or_weight_conversion": true,
+  "metal_measured": false,
+  "external_ssd_measured": false,
+  "full_GLM53_generated": false,
+  "full_Qwen38_generated": false
+}

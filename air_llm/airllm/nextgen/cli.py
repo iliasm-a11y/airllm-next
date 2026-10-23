@@ -39,7 +39,9 @@ def token_ids(value):
 
 def doctor_report():
     """Describe this process, without treating device visibility as model validation."""
-    report={'platform':platform.platform(),'machine':platform.machine(),'python':sys.version,
+    from . import __version__
+    report={'engine_version':__version__,'release_stage':'research alpha',
+        'platform':platform.platform(),'machine':platform.machine(),'python':sys.version,
         'mlx':None,'metal_available':False,'mlx_import_error':None,'telemetry':telemetry(),
         'working_directory_free_bytes':shutil.disk_usage(Path.cwd()).free,
         'checkpoint_generation_tested':False,
@@ -50,7 +52,12 @@ def doctor_report():
             'qwen-experimental':{'architecture':'qwen3_5_moe_text','experimental':True,
                                  'sampling':False,'speculation':False,'nvfp4':False},
             'llama':{'architecture':'llama','experimental':False,'sampling':True,
-                     'scope':'Bias-free SiLU Llama with default RoPE; checkpoint validation is separate'}}}
+                     'scope':'Bias-free SiLU Llama with default or linear RoPE; checkpoint validation is separate'}},
+        'agent_inference':{'single_resident_model':True,'max_resident_contexts':1,
+            'scheduling':'bounded priority queue with replay on context switch',
+            'tools_executed_by_engine':False},
+        'weight_residency':{'compact_partition_opt_in':True,'output_tile_cache_opt_in':True,
+            'speedup_certified_by_environment_detection':False}}
     try:
         import mlx.core as mx
         report['mlx']=mx.__version__
@@ -62,7 +69,7 @@ def doctor_report():
 
 def config_for(args):
     values={}
-    for field in ('cache_bytes','io_bytes','kv_bytes','workspace_bytes','reserve_bytes','max_tensor_bytes'):
+    for field in ('cache_bytes','compact_cache_bytes','io_bytes','kv_bytes','workspace_bytes','reserve_bytes','max_tensor_bytes'):
         mib=getattr(args,field.replace('_bytes','_mib'),None)
         if mib is not None:values[field]=int(mib*1024**2)
     if getattr(args,'float32',False):values['dtype']='float32'
@@ -70,6 +77,7 @@ def config_for(args):
     for field in ('lossless_dir','lossless_native_library','row_chunk','prefill_chunk','io_workers'):
         if getattr(args,field,None) is not None:values[field]=getattr(args,field)
     if getattr(args,'no_prefetch',False):values['prefetch']=False
+    if getattr(args,'output_tile_cache',False):values['output_tile_cache']=True
     if getattr(args,'max_context',None) is not None:values['max_context']=args.max_context
     if getattr(args,'cache_dir',None):values['cache_dir']=args.cache_dir
     if getattr(args,'cache_policy',None):
@@ -100,7 +108,8 @@ def combined_allocator_budget(configs,available_bytes=None):
     if total+reserve>available_bytes:
         raise MemoryError('Combined target and draft budgets exceed available memory after the required reserve; reduce their memory budgets')
     return {'scope':'CLI target and explicit local draft only','models':len(configs),
-            'memory_limit_bytes':total,'reserve_bytes':reserve,
+            'memory_limit_bytes':sum(config.mlx_memory_bytes for config in configs),
+            'managed_payload_bytes_including_compact':total,'reserve_bytes':reserve,
             'allocator_cache_limit_bytes':min(256*1024**2,sum(c.workspace_bytes for c in configs)//4),
             'available_bytes_before_draft_load':available_bytes}
 
@@ -120,16 +129,27 @@ def main(argv=None):
     inspect=sub.add_parser('inspect',help='Offline architecture, quantization and storage feasibility (no inference)')
     inspect.add_argument('model');inspect.add_argument('--tokens',type=nonnegative_int,default=4096)
     inspect.add_argument('--storage-budget-bytes',type=nonnegative_int,default=2_000_000_000_000)
-    for name in ('prepare','tune','calibrate','limits','convert','verify','pack','run','serve'):
+    preflight=sub.add_parser('preflight',help='Read-only checkpoint and resource admission report; no generation certification')
+    preflight.add_argument('model');preflight.add_argument('--tokens',type=positive_int,default=4096)
+    preflight.add_argument('--available-memory-mib',type=positive_int,help='Explicit target scenario; default measures the execution host')
+    preflight.add_argument('--reserve-mib',type=nonnegative_int,default=4096)
+    preflight.add_argument('--storage-path',help='Existing target directory or mount for measured free space')
+    preflight.add_argument('--speculative-depth',type=nonnegative_int,default=0)
+    preflight.add_argument('--logical-agents',type=positive_int,default=1)
+    preflight.add_argument('--max-context',type=positive_int,default=4096)
+    preflight.add_argument('--allow-experimental',action='store_true')
+    for name in ('prepare','tune','calibrate','limits','convert','verify','pack','run','serve','agent-serve'):
         p=sub.add_parser(name);p.add_argument('model',help='Local safetensors checkpoint directory')
         p.add_argument('--cache-dir');p.add_argument('--profile',choices=['balanced','performance'],default='balanced')
         p.add_argument('--device',choices=['auto','cpu','gpu'],default='auto')
-        if name in ('run','calibrate','serve'):
+        if name in ('run','calibrate','serve','agent-serve'):
             p.add_argument('--prompt',default='Bonjour');p.add_argument('--token-ids',type=token_ids,help='Comma-separated ids (no tokenizer required)')
             p.add_argument('--max-new-tokens',type=positive_int,default=32);p.add_argument('--max-context',type=positive_int,default=4096)
             for field in ('cache','io','kv','workspace','reserve'):
                 p.add_argument(f'--{field}-mib',type=nonnegative_int,help=f'{field} memory budget in MiB')
             p.add_argument('--max-tensor-mib',type=positive_int,help='Largest individual tensor read in MiB')
+            p.add_argument('--compact-cache-mib',type=nonnegative_int,help='Compact source weight partition inside --cache-mib')
+            p.add_argument('--output-tile-cache',action='store_true',help='Opt in to decoded output tile admission in the existing weight cache')
             p.add_argument('--row-chunk',type=positive_int);p.add_argument('--prefill-chunk',type=positive_int)
             p.add_argument('--io-workers',type=positive_int)
             transport=p.add_mutually_exclusive_group()
@@ -141,7 +161,7 @@ def main(argv=None):
             p.add_argument('--cache-policy',choices=['lru','slru','lfu','cost'])
             p.add_argument('--coalesce-reads',action='store_true',help='Opt in to workload-dependent read coalescing')
             p.add_argument('--no-selective-fp8-scales',action='store_true')
-        if name in ('run','serve','calibrate'):
+        if name in ('run','serve','calibrate','agent-serve'):
             p.add_argument('--backend',choices=['glm','qwen-experimental','llama'],default='glm')
         if name=='run':
             drafting=p.add_mutually_exclusive_group()
@@ -149,10 +169,17 @@ def main(argv=None):
             drafting.add_argument('--prompt-lookup',action='store_true',help='Propose bounded spans from the known prefix; target verifies every token')
             p.add_argument('--speculative-depth',type=positive_int,default=4)
             p.add_argument('--no-adaptive-speculation',action='store_true')
-        if name=='serve':
+        if name in ('serve','agent-serve'):
             p.add_argument('--host',default='127.0.0.1');p.add_argument('--port',type=int,default=8080)
             p.add_argument('--model-name',default='airllm-next')
             p.add_argument('--max-body-bytes',type=positive_int,default=1024*1024,help='Maximum JSON request body bytes')
+        if name=='agent-serve':
+            p.add_argument('--state-dir',required=True,help='Private local directory for durable agent journals')
+            p.add_argument('--quantum-tokens',type=positive_int,default=8)
+            p.add_argument('--max-requests',type=positive_int,default=128)
+            p.add_argument('--max-transcript-bytes',type=positive_int,default=8*1024**2)
+            p.add_argument('--max-journal-bytes',type=positive_int,default=32*1024**2)
+            p.add_argument('--max-journal-write-bytes',type=positive_int,default=256*1024**2)
         if name=='verify':
             p.add_argument('--quantized-dir',required=True,help='Explicit full content scan of this sidecar')
         if name=='pack':
@@ -176,18 +203,27 @@ def main(argv=None):
     if args.command=='inspect':
         from .adapters import inspect_local_checkpoint
         print(json.dumps(inspect_local_checkpoint(args.model,tokens=args.tokens,storage_budget_bytes=args.storage_budget_bytes),indent=2));return
+    if args.command=='preflight':
+        from .preflight import preflight_checkpoint
+        cfg=NextConfig(reserve_bytes=args.reserve_mib*1024**2,max_context=args.max_context)
+        report=preflight_checkpoint(args.model,cfg,tokens=args.tokens,
+            available_memory_bytes=args.available_memory_mib*1024**2 if args.available_memory_mib is not None else None,
+            storage_free_bytes=shutil.disk_usage(args.storage_path).free if args.storage_path else None,
+            speculative_depth=args.speculative_depth,logical_agents=args.logical_agents,
+            allow_experimental=args.allow_experimental)
+        print(json.dumps(report,indent=2));return
     if getattr(args,'lossless_native_library',None) and not args.lossless_dir:
         parser.error('--lossless-native-library requires --lossless-dir')
-    if args.command=='serve' and args.token_ids is not None:
+    if args.command in ('serve','agent-serve') and args.token_ids is not None:
         parser.error('serve requires a local tokenizer; --token-ids is only for run/calibrate')
-    if args.command=='serve' and not 0<=args.port<=65535:
+    if args.command in ('serve','agent-serve') and not 0<=args.port<=65535:
         parser.error('--port must be from 0 to 65535')
     if args.command=='pack' and args.block_bytes%2:
         parser.error('--block-bytes must be even')
     if (getattr(args,'draft_model',None) or getattr(args,'prompt_lookup',False)) and args.backend=='qwen-experimental':
         parser.error('CLI draft verification currently requires --backend glm or llama')
     cfg=config_for(args)
-    if args.command in ('run','calibrate','serve'):
+    if args.command in ('run','calibrate','serve','agent-serve'):
         from .runtime import AirLLMNextModel
         model_class=AirLLMNextModel
         if getattr(args,'backend','glm')=='qwen-experimental':
@@ -198,6 +234,14 @@ def main(argv=None):
             model_class=AirLLMNextLlamaModel
         with ExitStack() as stack:
             model=stack.enter_context(model_class(args.model,next_config=cfg))
+            if args.command=='agent-serve':
+                from .agent_server import serve_agents
+                serve_agents(model,model_name=args.model_name,host=args.host,port=args.port,
+                    state_dir=args.state_dir,quantum_tokens=args.quantum_tokens,
+                    max_requests=args.max_requests,max_transcript_bytes=args.max_transcript_bytes,
+                    max_journal_bytes=args.max_journal_bytes,max_new_tokens=args.max_new_tokens,
+                    max_journal_write_bytes=args.max_journal_write_bytes,
+                    max_body_bytes=args.max_body_bytes);return
             if args.command=='serve':
                 from .server import serve
                 serve(model,model_name=args.model_name,host=args.host,port=args.port,
@@ -205,6 +249,7 @@ def main(argv=None):
             draft=None;allocator_report=None
             if getattr(args,'draft_model',None):
                 draft_cfg=replace(cfg,cache_bytes=min(cfg.cache_bytes,256*1024**2),
+                    compact_cache_bytes=min(cfg.compact_cache_bytes,256*1024**2),
                     io_bytes=min(cfg.io_bytes,128*1024**2),kv_bytes=min(cfg.kv_bytes,128*1024**2),
                     workspace_bytes=min(cfg.workspace_bytes,256*1024**2),load_tokenizer=cfg.load_tokenizer,
                     quantized_dir=None,lossless_dir=None,lossless_native_library=None)

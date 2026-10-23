@@ -1,0 +1,126 @@
+{
+  "scope": "Post-experiment audit of the unchanged raw rows; original aggregate benchmark criteria retained",
+  "workers": [
+    {
+      "file": "weight-residency-trained-round0-decoded300.json",
+      "variant": "decoded300",
+      "warm_median_seconds": 8.076272809500097,
+      "peak_decoded_cache_bytes": 313744896,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 314572800,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round0-compact300.json",
+      "variant": "compact300",
+      "warm_median_seconds": 9.665131836499995,
+      "peak_decoded_cache_bytes": 0,
+      "peak_compact_cache_bytes": 269081856,
+      "configured_cache_budget_bytes": 314572800,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round0-decoded600.json",
+      "variant": "decoded600",
+      "warm_median_seconds": 7.15912135800022,
+      "peak_decoded_cache_bytes": 424813824,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 629145600,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round0-tiles600.json",
+      "variant": "tiles600",
+      "warm_median_seconds": 6.482617768499949,
+      "peak_decoded_cache_bytes": 538060032,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 629145600,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round1-tiles600.json",
+      "variant": "tiles600",
+      "warm_median_seconds": 6.7135813939999025,
+      "peak_decoded_cache_bytes": 538060032,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 629145600,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round1-decoded600.json",
+      "variant": "decoded600",
+      "warm_median_seconds": 6.557557151000083,
+      "peak_decoded_cache_bytes": 424813824,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 629145600,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round1-compact300.json",
+      "variant": "compact300",
+      "warm_median_seconds": 8.428615453500015,
+      "peak_decoded_cache_bytes": 0,
+      "peak_compact_cache_bytes": 269081856,
+      "configured_cache_budget_bytes": 314572800,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    },
+    {
+      "file": "weight-residency-trained-round1-decoded300.json",
+      "variant": "decoded300",
+      "warm_median_seconds": 8.762827213000037,
+      "peak_decoded_cache_bytes": 313744896,
+      "peak_compact_cache_bytes": 0,
+      "configured_cache_budget_bytes": 314572800,
+      "all_observed_cache_payloads_within_total_budget": true,
+      "physical_read_bytes": 0,
+      "max_observed_system_swap_growth_bytes": 0
+    }
+  ],
+  "order_specific_ratios": [
+    {
+      "round": 0,
+      "control": "decoded300",
+      "variant": "compact300",
+      "ratio_of_warm_median_times": 0.8356091718273687
+    },
+    {
+      "round": 0,
+      "control": "decoded600",
+      "variant": "tiles600",
+      "ratio_of_warm_median_times": 1.1043565444792238
+    },
+    {
+      "round": 1,
+      "control": "decoded300",
+      "variant": "compact300",
+      "ratio_of_warm_median_times": 1.0396520355382022
+    },
+    {
+      "round": 1,
+      "control": "decoded600",
+      "variant": "tiles600",
+      "ratio_of_warm_median_times": 0.9767599089303866
+    }
+  ],
+  "timing_limitations": [
+    "OS page cache uncontrolled",
+    "Separate large-checkpoint network download overlapped measurements",
+    "Initial excluded firstworker generation may overlap5s smalltests",
+    "No native MLX allocator peak counter in this experiment",
+    "No Mac/Metal/externalSSD validation"
+  ]
+}

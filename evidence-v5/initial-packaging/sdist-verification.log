@@ -1,0 +1,10 @@
+Writing model shards:   0%|          | 0/4 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 4/4 [00:00<00:00, 1565.33it/s]
+Writing model shards:   0%|          | 0/5 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 5/5 [00:00<00:00, 1339.43it/s]
+Traceback (most recent call last):
+  File "/workspace/scratch/ec05240ca81a/airllm-next/scripts/verify_installed_package.py", line 108, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/ec05240ca81a/airllm-next/scripts/verify_installed_package.py", line 85, in main
+    assert ids.tolist()[0]+restored['output_ids']==expected[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

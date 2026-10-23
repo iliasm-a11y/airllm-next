@@ -6,6 +6,64 @@ not a change to sparse selection, learned weights or the softmax definition.
 """
 import math
 from dataclasses import dataclass
+from time import perf_counter
+import numpy as np
+
+
+def dsa_topk(mx, scores, k, *, workspace_bytes, workspace_in_use=0, stats=None):
+    """Native selection with bounded CPU-reference handling of boundary ties.
+
+    PyTorch CPU topk does not promise stable tie ordering. Selecting a different
+    equal-score key can change DSA attention, so an exact finite tie crossing
+    the K boundary uses the installed CPU reference's actual topk operation.
+    This is a local CPU-reference convention, not a promise to reproduce CUDA
+    topk or a different PyTorch build. Untied selections stay device-native.
+    """
+    selected = mx.argpartition(-scores, k-1, axis=-1)[..., :k]
+    total = scores.shape[-1]
+    if total <= k:
+        return selected
+    stats = stats if stats is not None else {}
+    begin = perf_counter()
+    values = mx.take_along_axis(scores, selected, axis=-1)
+    boundary = mx.min(values, axis=-1)
+    tied = mx.isfinite(boundary) & (
+        mx.sum(scores == boundary[..., None], axis=-1)
+        > mx.sum(values == boundary[..., None], axis=-1))
+    # One explicit readback after T>K. This includes dependency evaluation;
+    # the counter is elapsed sync/check time, not a pure kernel measurement.
+    affected = np.flatnonzero(np.asarray(tied).reshape(-1)).astype(np.int32)
+    stats['dsa_tie_checks'] = stats.get('dsa_tie_checks', 0)+1
+    stats['dsa_tie_check_seconds'] = stats.get('dsa_tie_check_seconds', 0.)+perf_counter()-begin
+    if not len(affected):
+        return selected
+    begin = perf_counter()
+    # Account device gather, writable host scores, conservative CPU topk pair
+    # workspace, outputs and scatter indices before allocating those buffers.
+    # Import/runtime metadata is separate from this managed scratch bound.
+    extra = len(affected)*(32*total+64*k)
+    if workspace_in_use+extra > workspace_bytes:
+        stats['dsa_tie_budget_rejections'] = stats.get('dsa_tie_budget_rejections', 0)+1
+        raise MemoryError('DSA reference tie fallback exceeds workspace_bytes')
+    stats['dsa_tie_extra_workspace_peak_bytes'] = max(stats.get('dsa_tie_extra_workspace_peak_bytes', 0), extra)
+    copy_start = perf_counter()
+    row_ids = mx.array(affected)
+    host = np.array(scores.reshape(-1, total)[row_ids], dtype=np.float32, copy=True)
+    stats['dsa_tie_host_copy_seconds'] = stats.get('dsa_tie_host_copy_seconds', 0.)+perf_counter()-copy_start
+    import_start = perf_counter()
+    import torch
+    stats['dsa_tie_reference_import_seconds'] = stats.get('dsa_tie_reference_import_seconds', 0.)+perf_counter()-import_start
+    topk_start = perf_counter()
+    indices = torch.from_numpy(host).topk(k, dim=-1).indices.numpy().astype(np.int32)
+    stats['dsa_tie_cpu_topk_seconds'] = stats.get('dsa_tie_cpu_topk_seconds', 0.)+perf_counter()-topk_start
+    result = selected.reshape(-1, k)
+    result[row_ids] = mx.array(indices)
+    result = result.reshape(selected.shape)
+    mx.eval(result)
+    stats['dsa_tie_fallback_calls'] = stats.get('dsa_tie_fallback_calls', 0)+1
+    stats['dsa_tie_fallback_rows'] = stats.get('dsa_tie_fallback_rows', 0)+len(affected)
+    stats['dsa_tie_fallback_seconds'] = stats.get('dsa_tie_fallback_seconds', 0.)+perf_counter()-begin
+    return result
 
 
 def rms(mx,x,weight,eps=1e-6):
@@ -36,10 +94,16 @@ class LatentKV:
         old_bytes=sum(v.nbytes for v in old) if old else 0
         if old is None or old[0].shape[1]<stop:
             predicted=sum(widths)*capacity*latent.itemsize
-            if self.bytes-old_bytes+predicted>self.budget:raise MemoryError('Latent KV budget exhausted')
+            # Growing copies retain the old bank until the new evaluated bank
+            # replaces it. Budget the overlap, not only steady-state storage.
+            if self.bytes+predicted>self.budget:raise MemoryError('Latent KV budget exhausted during growth')
+            self.peak_bytes=max(self.peak_bytes,self.bytes+predicted)
             arrays=[mx.zeros((1,capacity,w),dtype=latent.dtype) for w in widths]
             if old:
                 for a,b in zip(arrays,old):a[:,:self.position]=b[:,:self.position]
+            # The caller evaluates attention later. Materialize this copy here
+            # so that its graph cannot retain old banks after the reservation.
+            mx.eval(*arrays)
             self.layers[layer]=arrays;self.bytes+=predicted-old_bytes;self.peak_bytes=max(self.peak_bytes,self.bytes)
         arrays=self.layers[layer]
         for target,value in zip(arrays,[latent,rot]+([index] if index is not None else [])):
@@ -111,7 +175,8 @@ class DSAAttention:
             score=mx.where(causal[None],score,-float('inf'))
             K=min(c['index_topk'],T)
             # Partial selection, not a full sort of an enormous context.
-            selected=mx.argpartition(-score,K-1,axis=-1)[...,:K]
+            selected=dsa_topk(mx,score,K,workspace_bytes=self.r.cfg.workspace_bytes,
+                              workspace_in_use=workspace,stats=self.r.stats)
         else:
             if previous is None:raise ValueError('Shared DSA layer requires actual preceding indexer selection')
             selected=previous;K=selected.shape[-1]

@@ -91,9 +91,13 @@ class QwenSession:
     def bytes(self):return size_of(self.banks)
 
     def reserve(self,bank,layer,new_bytes):
-        old=self.banks[bank].get(layer)
-        old_bytes=size_of(old) if old is not None else 0
-        predicted=self.bytes+self.retained+max(0,new_bytes-old_bytes)
+        if type(new_bytes) is not int or new_bytes<0:
+            raise ValueError('Qwen bank reservation must be a nonnegative integer')
+        # A replacement is allocated while the old bank remains reachable.
+        # In multi-chunk prefill that old bank may differ from the entry
+        # snapshot, so subtracting it understates the transient live payload.
+        # Shared snapshot aliases are deliberately charged conservatively.
+        predicted=self.bytes+self.retained+new_bytes
         if predicted>self.budget:raise MemoryError('Qwen context plus retained rollback states exceeds kv_bytes')
         self.peak_bytes=max(self.peak_bytes,predicted)
 
@@ -247,7 +251,7 @@ class ExperimentalQwenModel:
         self.stream=mx.new_stream(getattr(mx,self.device));self.stats=defaultdict(float);start=perf_counter()
         if mx.metal.is_available():
             mx.set_cache_limit(min(256*1024**2,self.options.workspace_bytes//4))
-            mx.set_memory_limit(self.options.cache_bytes+self.options.io_bytes+self.options.kv_bytes+self.options.workspace_bytes)
+            mx.set_memory_limit(self.options.mlx_memory_bytes)
         try:
             from .lossless import open_checkpoint
             self.checkpoint=open_checkpoint(self.root,self.options)
@@ -307,7 +311,10 @@ class ExperimentalQwenModel:
             snapshot=cache.snapshot();mx=self.mx;outputs=[]
             try:
                 for start in range(0,ids.shape[1],self.options.prefill_chunk):
-                    if psutil.virtual_memory().available<self.options.reserve_bytes:raise MemoryError('System reserve reached')
+                    available=psutil.virtual_memory().available
+                    if available<self.options.reserve_bytes+self.options.workspace_bytes:
+                        self.reader.trim();self.reader.io.drain()
+                    if available<self.options.reserve_bytes:raise MemoryError('System reserve reached')
                     part=ids[:,start:start+self.options.prefill_chunk]
                     x=self.reader.embedding(part,'model.embed_tokens.weight').astype(self.dtype);mx.eval(x)
                     for i,(mixer,mlp) in enumerate(zip(self.mixers,self.mlps)):
@@ -367,7 +374,14 @@ class ExperimentalQwenModel:
                             'tf32_environment_note':'Read at MLX initialization; the current environment alone does not prove the active GPU pipeline precision'},
                 'mtp_execution':False,'runtime':dict(self.stats),'io':dict(self.checkpoint.stats),'telemetry':telemetry(),
                 'lossless_transport':dict(getattr(self.checkpoint,'transport_stats',{})),
-                'cache':dict(self.reader.cache.stats)|{'bytes':self.reader.cache.bytes,'peak_bytes':self.reader.cache.peak_bytes}}
+                'weights':dict(self.reader.stats),
+                'cache':dict(self.reader.cache.stats)|{'bytes':self.reader.cache.bytes,
+                    'peak_bytes':self.reader.cache.peak_bytes,'capacity':self.reader.cache.capacity},
+                'compact_cache':dict(self.reader.compact_cache.stats)|{'bytes':self.reader.compact_cache.bytes,
+                    'peak_bytes':self.reader.compact_cache.peak_bytes,'capacity':self.reader.compact_cache.capacity,
+                    'budget_scope':'partition of cache_bytes; not additional memory'},
+                'prefetch':dict(self.reader.io.stats)|{'peak_bytes':self.reader.io.peak_bytes,
+                    'budget':self.reader.io.budget,'enabled':self.reader.prefetch_enabled}}
 
     def close(self):
         with self.lock:
