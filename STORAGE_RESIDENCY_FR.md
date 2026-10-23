@@ -18,8 +18,9 @@ des tuiles de sortie `('output', nom, début, fin)`. Ces dernières restent des
 poids partagés. Les tests couvrent classement, évictions, baisse de budget,
 vues NumPy conservant un gros tampon, métadonnées bornées, déclaration de
 lot atomique, enveloppe décodée/compacte commune et sélection par la CLI.
-Le groupe ciblé de tests passe : **61 tests**, avec les contrôles de cache
-adaptatif et d'intégrité du sidecar.
+Le groupe ciblé de cache/sidecar passe : **61 tests**. La vérification finale
+du dépôt compte **916 tests réussis, 1 ignoré et 11 sous-tests réussis**
+(`evidence-multitoken/tests-final-e2-f.log`).
 
 ## Inventaire réel du Granite officiel
 
@@ -55,6 +56,57 @@ Ces nombres décrivent des octets logiques et excluent les petites lectures
 des lignes d'embedding. La colonne de résidence parfaite est une limite
 analytique ; elle ne décrit pas le cache réel testé. Aucun débit de SSD ni
 temps de génération ne découle de ce tableau.
+
+## Union et résidence sur les traces définitives
+
+Le replay lit les routes réelles de `batch-cpu-128.json`, campagne primaire
+sur deux textes naturels prédéclarés, avec les mêmes positions pour le témoin
+token par token et le regroupement par union. Les anciens essais continuant
+après EOS sont conservés à part comme exploratoires.
+
+| Positions | Union réelle moyenne par couche | Source de l'union, MiB/position sans cache |
+|---:|---:|---:|
+| 1 | 8,000 | 817,60 |
+| 2 | 12,646 | 576,05 |
+| 4 | 20,271 | 425,28 |
+| 8 | 25,958 | 263,83 |
+| 16 | 29,188 | 146,44 |
+| 32 | 30,667 | 76,55 |
+
+L'union réelle est plus petite que l'attente indépendante pour ces deux
+textes. Les tailles ci-dessus excluent les lignes d'embedding. La différence
+avec les octets logiques enregistrés par le runtime est exactement celle de
+ces petites lectures : 2 048 octets par identifiant distinct dans chaque
+bloc, soit 59 392 octets pour les blocs de 32 positions étudiés.
+
+Le tableau suivant rejoue les 32 positions **token par token**, depuis un
+cache vide, à enveloppe FP32 strictement égale pour chaque politique. Les
+nombres sont des MiB sources manquants par position, moyennés sur les deux
+textes. Aucun temps de rechargement n'est fourni au replay ; les modes
+adaptatifs utilisent donc leur coût égal de secours.
+
+| Politique | 128 MiB | 256 MiB | 512 MiB |
+|---|---:|---:|---:|
+| LRU | 817,60 | 817,60 | 817,60 |
+| SLRU | 817,60 | 817,60 | 817,60 |
+| LFU | 799,00 | 722,49 | 705,69 |
+| Adaptive | 773,26 | 761,65 | 658,91 |
+| Shared | 776,60 | 771,60 | 582,85 |
+| Expert | 806,93 | 790,68 | 762,45 |
+| Hybrid | 773,26 | 761,65 | 658,91 |
+| Batch-aware | 816,10 | 773,23 | 602,54 |
+
+`shared` réduit ici les octets manquants de 11,54 % par rapport à `adaptive`
+avec 512 MiB, mais les augmente de 1,31 % avec 256 MiB. `hybrid` produit les
+mêmes octets que `adaptive` sur ces traces. Une préférence de classe ne
+constitue donc pas un meilleur choix universel.
+
+Pour un unique bloc union de 32 positions, tous les modes chargent les mêmes
+76,55 MiB par position depuis le cache vide : chaque poids de l'union n'est
+demandé qu'une fois dans ce bloc. Le bénéfice vient alors du regroupement,
+avant toute différence de résidence entre blocs. Le replay comprend 12
+unions observées et 576 combinaisons de budget/politique/exécution ; ce sont
+des analyses d'octets, sans nouvelle inférence ni mesure de SSD.
 
 ## Compression et quantification : échantillons entraînés
 
@@ -92,10 +144,88 @@ L'erreur L2 relative de sortie MLP est :
 | 8 bits | 0,888 % | 0,932 % |
 
 Ces probes ne sont ni des états cachés de génération ni une mesure de
-qualité du modèle. Aucune génération complète quantifiée, aucun noyau MLX
-quantifié, aucun SSD externe et aucun modèle géant ne sont validés par ces
-mesures. L'échantillon 4 bits ne justifie pas à lui seul une conversion
-intégrale.
+qualité du modèle. Leur résultat ne suffit pas à valider une génération
+complète ; celle-ci fait l'objet des mesures distinctes ci-dessous.
+
+## Conversion complète et génération quantifiée
+
+La conversion complète a produit 1 536 matrices Q4 pour `expert4`, puis
+1 536 matrices Q4 et 96 matrices linéaires Q8 pour `mixed`, groupe affine 64.
+Les originaux, routeurs, normalisations et embeddings sont conservés.
+
+| Ensemble de poids utilisés | Payload effectif |
+|---|---:|
+| Original BF16 | 2 669 256 704 octets |
+| Experts Q4, autres poids originaux | 1 008 312 320 octets |
+| Experts Q4 et matrices admissibles Q8 | 942 252 032 octets |
+
+Le « payload effectif » soustrait les poids remplacés et ajoute leur version
+compacte. **Les overlays locaux conservent le checkpoint original** : ils
+ajoutent physiquement 755 324 928 octets de fichiers pour `expert4` ou
+840 281 472 pour `mixed`. Le dossier existant n'a donc pas été réduit à la
+taille du payload effectif. Les manifestes et tous les fichiers sidecars
+ont été vérifiés par SHA-256 avant et après les essais définitifs, sans
+changement constaté.
+
+La génération réelle utilise les noyaux MLX quantifiés, avec accumulation
+FP32, budgets identiques, arrêt au premier EOS et comptage des tokens
+effectivement émis. La confirmation Metal, sans le profilage linéaire
+supplémentaire, porte sur quatre prompts et deux répétitions, soit 114
+nouveaux tokens par variante. Le contrôle CPU porte sur deux prompts,
+une répétition, soit 25 tokens par variante.
+
+| Variante | Tokens/s agrégés Metal | Tokens/s agrégés CPU |
+|---|---:|---:|
+| Original | 4,228 | 4,913 |
+| Experts Q4 | 4,728 | 4,114 |
+| Mixte Q4/Q8 | 4,983 | 3,955 |
+
+Ces débits incluent le préremplissage. Les charges CPU et Metal diffèrent :
+les colonnes ne sont pas une comparaison directe de dispositifs. Les
+variantes quantifiées produisent un contenu différent de l'original sur
+6 générations Metal sur 8 ; les nombres observés ne prouvent donc pas
+une accélération à résultat identique. Q4/Q8 améliore ici le débit agrégé
+Metal, mais le dégrade dans le petit contrôle CPU. Les contrôles de budgets
+et les audits finaux passent dans les deux confirmations.
+
+## Qualité sur 512 cibles humaines tenues à l'écart de l'expérience
+
+Une mesure indépendante utilise quatre fenêtres du [test WikiText-2 fourni
+par le dépôt officiel PyTorch](https://github.com/pytorch/examples/blob/d5678bc8ac0cdd79dbd5e44d4130271018bcec4e/word_language_model/data/wikitext-2/test.txt), au commit
+`d5678bc8ac0cdd79dbd5e44d4130271018bcec4e`. SHA-256 du fichier de
+1 256 449 octets :
+`d790b833ef8cf03a90db7bf1271b7520b83c45ce07ba3c1a9699df81e239eca0`.
+L'attribution WikiText/Salesforce et contributeurs Wikipédia, ainsi que les
+licences indiquées par la [fiche officielle Salesforce](https://huggingface.co/datasets/Salesforce/wikitext/blob/b08601e04326c79dfdd32d625aee71d232d685c3/README.md)
+(CC-BY-SA-3.0 et GFDL), figurent
+dans la provenance. Le texte reste dans `work/`, ignoré par Git.
+
+Les fenêtres sont fixées aux milieux des quatre quartiles du flux tokenisé,
+avant toute inférence. Chaque fenêtre possède 32 tokens humains de contexte
+non notés et 128 cibles humaines ; aucun texte généré par le modèle ne sert
+de référence. Le calcul de perplexité exponentie la NLL moyenne pondérée par
+le nombre de cibles.
+
+| Variante | NLL moyenne | PPL du sous-ensemble | Variation PPL | Accord top-1 avec l'original | Exactitude top-1 sur cibles humaines |
+|---|---:|---:|---:|---:|---:|
+| Original | 2,59409 | 13,38435 | — | 100 % | 51,758 % |
+| Experts Q4 | 2,64953 | 14,14743 | +5,701 % | 87,109 % | 52,148 % |
+| Mixte Q4/Q8 | 2,64526 | 14,08709 | +5,250 % | 86,719 % | 52,344 % |
+
+La KL moyenne original→variante vaut 0,06989 pour Q4 et 0,06974 pour le
+mixte. La légère hausse d'exactitude top-1 sur ce très petit ensemble
+coexiste avec la hausse de NLL/PPL et ne démontre pas une meilleure qualité
+générale.
+Les 512 cibles, le contexte limité et la version prétraitée du corpus ne
+constituent pas une PPL WikiText-2 standard ni une validation générale.
+Le test est tenu à l'écart de cette expérience ; un chevauchement avec le
+préentraînement de Granite reste inconnu.
+
+Dans cette mesure, le pic KV atteint 25 690 112 octets et la réservation
+conservatrice maximale des activations d'experts vaut 3 198 976 octets.
+Les budgets, positions KV, fichiers originaux, tokenizer et identités des
+sidecars sont vérifiés. Aucune mesure ci-dessus ne valide un modèle géant,
+un SSD externe physique ou une qualité générale de corpus.
 
 ## Reproductibilité
 
@@ -107,6 +237,16 @@ intégrale.
   SHA-256 des matrices échantillonnées.
 - `evidence-multitoken/storage-summary.json` : agrégats et limites.
 - `evidence-multitoken/storage-union-theory.json` : inventaire et hypothèses.
+- `evidence-multitoken/storage-replay-cpu128.json` : unions définitives et
+  replays à 128/256/512 MiB.
+- `evidence-multitoken/quantized-confirmation-metal.json` et
+  `quantized-cpu.json` : générations quantifiées avec budgets vérifiés et
+  audits finaux des sidecars.
+- `evidence-multitoken/corpus-quality-metal.json` : NLL/PPL, KL et top-1
+  sur les quatre fenêtres humaines prédéclarées ; provenance et token IDs.
+- `evidence-multitoken/array-audit.json` : SHA-256 des 13 NPZ présents,
+  correspondance des 9 hashes déclarés et 234 vérifications numériques des
+  tableaux batch, y compris les archives exploratoires ; aucune erreur.
 - `evidence-multitoken/draft-provenance.json` : identité du draft SmolLM2
   local, vérifiée contre l'API officielle au commit épinglé, sans
   téléchargement des fichiers du modèle.

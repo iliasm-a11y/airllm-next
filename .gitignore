@@ -22,3 +22,7 @@ dist-io-phase2/
 evidence-multitoken/**/*.npz
 evidence-multitoken/*.npz
 evidence-multitoken/*.xml
+# Public JSON is stored losslessly as published/*.json.gz; restore script checks hashes.
+evidence-multitoken/**/*.json
+!evidence-multitoken/MANIFEST.json
+!evidence-multitoken/validation-final.json

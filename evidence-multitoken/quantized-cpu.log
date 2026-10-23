@@ -1,0 +1,9 @@
+{"sidecar_ready": "expert4", "matrices": 1536, "seconds": 0.38882583300437545}
+{"sidecar_ready": "mixed", "matrices": 1632, "seconds": 0.407569874994806}
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+{"case": 0, "repeat": 0, "variant": "original", "seconds": 1.9018113749989425, "top1_agreement": 1.0, "max_abs_logit_error": 0.0}
+{"case": 0, "repeat": 0, "variant": "mixed", "seconds": 2.2351290420047008, "top1_agreement": 1.0, "max_abs_logit_error": 5.284194052219391}
+{"case": 0, "repeat": 0, "variant": "expert4", "seconds": 2.7926886249988456, "top1_agreement": 1.0, "max_abs_logit_error": 5.255233466625214}
+{"case": 1, "repeat": 0, "variant": "expert4", "seconds": 3.2839755000022706, "top1_agreement": 0.9375, "max_abs_logit_error": 6.006093919277191}
+{"case": 1, "repeat": 0, "variant": "original", "seconds": 3.1862279579945607, "top1_agreement": 1.0, "max_abs_logit_error": 0.0}
+{"case": 1, "repeat": 0, "variant": "mixed", "seconds": 4.085807458999625, "top1_agreement": 0.9375, "max_abs_logit_error": 5.982807099819183}
