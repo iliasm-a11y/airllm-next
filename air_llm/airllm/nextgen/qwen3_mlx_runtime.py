@@ -5,7 +5,9 @@ the checkpoint's existing 4/6/8-bit affine weights without requantizing them.
 Equations follow the Apache-2.0 Qwen/Transformers and MIT MLX-LM references.
 No full expert bank or complete quantized model is allocated.
 """
+from contextlib import contextmanager
 import math
+from threading import RLock
 import numpy as np
 
 from .attention import rms
@@ -20,7 +22,8 @@ def normalize_qwen3_mlx_config(config):
     if c.get('model_type') != 'qwen3_moe':
         raise NotImplementedError('This backend requires model_type=qwen3_moe')
     q = c.get('quantization') or c.get('quantization_config')
-    if not isinstance(q, dict) or q.get('bits') not in (4, 6, 8) or q.get('group_size') not in (32, 64, 128):
+    if (not isinstance(q, dict) or any(type(q.get(k)) is not int for k in ('bits', 'group_size'))
+            or q.get('bits') not in (4, 6, 8) or q.get('group_size') not in (32, 64, 128)):
         raise NotImplementedError('Only existing MLX affine 4/6/8-bit groups 32/64/128 are supported')
     if q.get('mode', 'affine') != 'affine' or set(q) - {'bits', 'group_size', 'mode'}:
         raise NotImplementedError('Mixed quantization and non-affine formats are unsupported')
@@ -59,6 +62,33 @@ class MLXCheckpointWeights(NativeWeights):
         super().__init__(*args, **kwargs)
         q = self.model_config['quantization']
         self.bits, self.group_size = q['bits'], q['group_size']
+        self.workspace_active_peak = 0
+        self._workspace_lock = RLock()
+        self._transient_bytes = 0
+
+    def reserve_workspace_peak(self, required):
+        with self._workspace_lock:
+            peak = max(self.workspace_active_peak, required)
+            if peak + self._transient_bytes > self.cfg.workspace_bytes:
+                raise MemoryError('Activation/live weights plus affine temporaries exceed workspace_bytes')
+            self.workspace_active_peak = peak
+
+    @contextmanager
+    def _temporary_workspace(self, required):
+        # Charge the actual sum of simultaneous differently sized loads. A
+        # multiplier of the current load size cannot safely bound other workers.
+        with self._workspace_lock:
+            total = self._transient_bytes + required
+            if self.workspace_active_peak + total > self.cfg.workspace_bytes:
+                raise MemoryError('Affine source/promotion temporaries exceed workspace_bytes')
+            self._transient_bytes = total
+            self.stats['affine_transient_bound_peak_bytes'] = max(
+                self.stats.get('affine_transient_bound_peak_bytes', 0), total)
+        try:
+            yield
+        finally:
+            with self._workspace_lock:
+                self._transient_bytes -= required
 
     def _packed(self, key):
         return self.cp.tensors[key]['dtype'] == 'U32'
@@ -99,18 +129,25 @@ class MLXCheckpointWeights(NativeWeights):
         if required > min(self.cfg.max_tensor_bytes, self.cfg.io_bytes):
             raise MemoryError('Affine packed matrix exceeds the bounded I/O allocation')
         keys = self._affine_keys(key)
-        raw = self.cp.read_arrays([dict(key=k, expert=expert, rows=rows) for k in keys],
-            mode=self.cfg.io_mode, max_batch_bytes=self.cp.max_read_bytes,
-            coalesce=self.cfg.coalesce_reads)
-        mx = self.mx
-        arrays = [self._array(raw[0])]
-        for k, value in zip(keys[1:], raw[1:]):
-            if self.cp.tensors[k]['dtype'] == 'BF16':
-                value = (value.astype(np.uint32) << 16).view(np.float32)
-            arrays.append(self._array(value, mx.float32))
-        with self.cp.io_lock:
-            self.cp.stats['quantized_logical_bytes'] += sum(a.nbytes for a in raw)
-        return PackedMatrix(*arrays, shape, self.bits, self.group_size)
+        # Source arrays, promoted arrays, and the packed MLX result can coexist.
+        # Charge this conservative transient bound to workspace, independently
+        # of the final payload reservation in the asynchronous I/O budget.
+        source_bytes = sum(self.cp.tensors[k]['bytes'] //
+            math.prod(self.cp.tensors[k]['shape'][:-1]) * count for k in keys)
+        transient = source_bytes + 2*required
+        with self._temporary_workspace(transient):
+            raw = self.cp.read_arrays([dict(key=k, expert=expert, rows=rows) for k in keys],
+                mode=self.cfg.io_mode, max_batch_bytes=self.cp.max_read_bytes,
+                coalesce=self.cfg.coalesce_reads)
+            mx = self.mx
+            arrays = [self._array(raw[0])]
+            for k, value in zip(keys[1:], raw[1:]):
+                if self.cp.tensors[k]['dtype'] == 'BF16':
+                    value = (value.astype(np.uint32) << 16).view(np.float32)
+                arrays.append(self._array(value, mx.float32))
+            with self.cp.io_lock:
+                self.cp.stats['quantized_logical_bytes'] += sum(a.nbytes for a in raw)
+            return PackedMatrix(*arrays, shape, self.bits, self.group_size)
 
     def embedding(self, ids, key):
         if not self._packed(key):
@@ -144,8 +181,13 @@ class Qwen3Attention:
         heads, kv, dim = c['num_attention_heads'], c['num_key_value_heads'], c['head_dim']
         total = cache.position + length
         scratch = 3*batch*heads*length*total*4 + 3*batch*length*(heads+2*kv)*dim*4
+        # A lazy attention graph can retain all four projection matrices even
+        # if the cache evicts them before the final attention result evaluates.
+        scratch += sum(self.r.estimate(self.p+name+'.weight')
+                       for name in ('q_proj', 'k_proj', 'v_proj', 'o_proj'))
         if scratch > self.r.cfg.workspace_bytes:
             raise MemoryError('Qwen3 attention workspace exceeds workspace_bytes')
+        self.r.reserve_workspace_peak(scratch)
         values = []
         for name, count in (('q_proj', heads), ('k_proj', kv), ('v_proj', kv)):
             y = self.r.linear(x, self.p+name+'.weight').astype(x.dtype)
@@ -180,8 +222,13 @@ class Qwen3MLXMoE:
         flat = x.reshape(-1, x.shape[-1])
         workspace = expert_workspace_bytes(flat.shape[0], c['hidden_size'],
             c['moe_intermediate_size'], c['num_experts'], c['num_experts_per_tok'])
+        # An expert's gate/up/down graph may retain all three matrices after a
+        # cache eviction; count them conservatively outside the weight cache.
+        live_weights = sum(self.r.estimate(key, expert) for key, expert in self.expert_keys(0))
+        workspace += live_weights
         if workspace > self.r.cfg.workspace_bytes:
-            raise MemoryError('Qwen3 MoE workspace exceeds workspace_bytes')
+            raise MemoryError('Qwen3 MoE workspace plus live expert weights exceeds workspace_bytes')
+        self.r.reserve_workspace_peak(workspace)
         logits = self.r.linear(flat, self.p+'gate.weight').astype(mx.float32)
         # Full-softmax then normalized top-k follows Qwen3's original equations.
         probabilities = mx.softmax(logits, axis=-1)
@@ -220,6 +267,13 @@ class Qwen3MLXMoE:
 class ExperimentalQwen3MLXModel(AirLLMNextLlamaModel):
     """Explicit local-only affine Qwen3-MoE adapter; ordinary generation only."""
     normalize_config = staticmethod(normalize_qwen3_mlx_config)
+
+    def __init__(self, model_local_path_or_repo_id, next_config=None, **kwargs):
+        sidecar = (next_config.get('quantized_dir') if isinstance(next_config, dict)
+                   else getattr(next_config, 'quantized_dir', None))
+        if sidecar:
+            raise NotImplementedError('Qwen3 MLX consumes checkpoint quantization directly; quantized_dir is unsupported')
+        super().__init__(model_local_path_or_repo_id, next_config=next_config, **kwargs)
 
     def _build_layers(self):
         self.reader.close()

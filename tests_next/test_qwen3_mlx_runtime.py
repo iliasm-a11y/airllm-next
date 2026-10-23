@@ -111,6 +111,8 @@ def test_quantized_qwen3_logits_and_incremental_generation(tmp_path, bits, group
 @pytest.mark.parametrize('change', [
     {'model_type': 'qwen3_5_moe_text'},
     {'quantization': {'bits': 3, 'group_size': 32}},
+    {'quantization': {'bits': 6.0, 'group_size': 32}},
+    {'quantization': {'bits': 6, 'group_size': 32.0}},
     {'quantization': {'bits': 6, 'group_size': 32, 'mode': 'mxfp4'}},
     {'norm_topk_prob': False},
     {'mlp_only_layers': [0]},
@@ -131,3 +133,62 @@ def test_affine_layout_rejects_wrong_scale_shape(tmp_path):
     with pytest.raises(ValueError, match='affine scales'):
         ExperimentalQwen3MLXModel(tmp_path, next_config=NextConfig(load_tokenizer=False,
             device='cpu', reserve_bytes=0, cache_dir=str(tmp_path/'meta')))
+
+
+@pytest.mark.parametrize('mapping', [False, True])
+def test_reject_sidecar_before_accessing_files(tmp_path, mapping):
+    options = {'quantized_dir': 'unsupported-sidecar'}
+    if not mapping:
+        options = NextConfig(**options)
+    with pytest.raises(NotImplementedError, match='quantized_dir'):
+        ExperimentalQwen3MLXModel(tmp_path/'does-not-exist', next_config=options)
+
+
+def test_affine_temporaries_guard_before_reading_payload(tmp_path):
+    fixture_checkpoint(tmp_path, bits=6, group_size=128, bf16_scales=True)
+    options = NextConfig(device='cpu', load_tokenizer=False, reserve_bytes=0,
+        workspace_bytes=1024, cache_dir=str(tmp_path/'meta'))
+    model = ExperimentalQwen3MLXModel(tmp_path, next_config=options)
+    try:
+        before = model.checkpoint.stats['logical_bytes']
+        with pytest.raises(MemoryError, match='source/promotion temporaries'):
+            model.reader._load('model.layers.0.self_attn.q_proj.weight')
+        assert model.checkpoint.stats['logical_bytes'] == before
+    finally:
+        model.close(save_profile=False)
+
+
+def test_different_sized_concurrent_loads_share_transient_budget(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+    fixture_checkpoint(tmp_path, bits=6, group_size=128, bf16_scales=True)
+    model = ExperimentalQwen3MLXModel(tmp_path, next_config=NextConfig(device='cpu',
+        load_tokenizer=False, reserve_bytes=0, cache_bytes=0, io_bytes=1024**2,
+        kv_bytes=1024**2, workspace_bytes=79000, max_tensor_bytes=1024**2,
+        cache_dir=str(tmp_path/'meta')))
+    entered, release = Event(), Event()
+    original = model.checkpoint.read_arrays
+
+    def blocked(requests, **kwargs):
+        entered.set()
+        assert release.wait(5), 'The concurrent-load test failed to release the reader'
+        return original(requests, **kwargs)
+    model.checkpoint.read_arrays = blocked
+    try:
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            pending = pool.submit(model.reader._load, 'model.layers.0.self_attn.q_proj.weight')
+            assert entered.wait(5)
+            try:
+                # The large worker fits alone. A much smaller selected row must
+                # still reject when its actual bytes exceed the remaining cap.
+                with pytest.raises(MemoryError, match='source/promotion temporaries'):
+                    model.reader._load('model.embed_tokens.weight', rows=(0, 1))
+                assert model.checkpoint.stats['logical_bytes'] == 0
+            finally:
+                release.set()
+            pending.result(timeout=5)
+        assert model.reader._transient_bytes == 0
+        assert model.reader.stats['affine_transient_bound_peak_bytes'] <= 79000
+    finally:
+        release.set()
+        model.close(save_profile=False)
