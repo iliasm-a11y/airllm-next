@@ -21,7 +21,7 @@ def _run(args):
     from .gguf_qwen import NativeGGUFQwenModel
     from .gguf_tokenizer import GGUFTokenizer
     begin = perf_counter()
-    with GGUFReader(args.model, memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20) as checkpoint:
+    with GGUFReader(args.model, memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20, bulk_metadata=args.bulk_metadata) as checkpoint:
         tokenizer = GGUFTokenizer(checkpoint.metadata)
     del checkpoint
     ids = tokenizer.apply_chat_template([{'role': 'user', 'content': args.prompt}])
@@ -33,7 +33,8 @@ def _run(args):
         policy=args.cache_policy, device=args.device, dtype='float32', prefetch=False, load_tokenizer=False,
         io_mode=args.io_mode,zero_copy_weights=args.zero_copy_weights)
     with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay,
-            expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,metal_simd_groups=args.simd_groups) as model:
+            expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,
+            metal_simd_groups=args.simd_groups,packed_copy_free=args.packed_copy_free,packed_direct_io=args.packed_direct_io,bulk_metadata=args.bulk_metadata) as model:
         output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
         generated = output.tolist()[0][len(ids):]
         result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
@@ -70,6 +71,10 @@ def main(argv=None):
     run.add_argument('--prefill-chunk', type=_positive, default=16)
     run.add_argument('--device', choices=['gpu', 'cpu', 'auto'], default='auto')
     run.add_argument('--kernel', choices=['reference', 'metal'], default='reference')
+    transport=run.add_mutually_exclusive_group()
+    transport.add_argument('--packed-direct-io', action='store_true', help='Experimental bounded read into one final writable host buffer')
+    transport.add_argument('--packed-copy-free', action='store_true', help='Experimental bounded zero-copy packed host reads')
+    run.add_argument('--bulk-metadata', action='store_true', help='Experimental bounded scalar-array metadata reads')
     run.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
     run.add_argument('--report', type=Path, required=True, help='Local JSON report and adjacent log/guard files')
     run.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)

@@ -33,6 +33,53 @@ class GGUFMemoryError(MemoryError):
     """The operation was rejected before its payload allocation or read."""
 
 
+class PackedBufferBudget:
+    """Bound live packed buffers independently of transient reader IO."""
+
+    def __init__(self, capacity_bytes):
+        if type(capacity_bytes) is not int or capacity_bytes < 0:
+            raise ValueError("Invalid capacity")
+        self.capacity_bytes = capacity_bytes
+        self.live_bytes = 0
+        self.peak_bytes = 0
+        self.lock = threading.RLock()
+
+    def _acquire(self, size):
+        if type(size) is not int or size < 0:
+            raise ValueError("Packed buffer size must be a nonnegative integer")
+        with self.lock:
+            if size > self.capacity_bytes - self.live_bytes:
+                raise GGUFMemoryError("Packed buffer budget exhausted")
+            self.live_bytes += size
+            self.peak_bytes = max(self.peak_bytes, self.live_bytes)
+
+    def _release(self, size):
+        if type(size) is not int or size < 0:
+            raise ValueError("Packed buffer size must be a nonnegative integer")
+        with self.lock:
+            if size > self.live_bytes:
+                raise ValueError("Packed buffer release exceeds live bytes")
+            self.live_bytes -= size
+
+
+class _PackedBuffer:
+    """Weak-referenceable buffer owner (PEP 688, Python >= 3.12).
+
+    Attaching a finalizer to an ndarray over ``bytes`` is insufficient: callers
+    can retain its underlying ``.base`` bytes after that ndarray is collected.
+    This provider stays in NumPy's buffer/base chain, including memoryviews,
+    and therefore keeps the accounting alive for the actual payload lifetime.
+    """
+
+    __slots__ = ("__payload", "__weakref__")
+
+    def __init__(self, payload: bytes | bytearray):
+        self.__payload = payload
+
+    def __buffer__(self, flags: int) -> memoryview:
+        return memoryview(self.__payload)
+
+
 class GGMLType(IntEnum):
     F32 = 0
     F16 = 1
@@ -150,11 +197,15 @@ class GGUFReader:
     def __init__(self, path: str | os.PathLike, *, memory_budget_bytes: int = 64 << 20,
                  max_metadata_bytes: int = 32 << 20, include_tokenizer_metadata: bool = True,
                  max_tensors: int = 100_000, max_metadata_items: int = 1_000_000,
-                 max_read_bytes: int | None = None, include_tokenizer: bool | None = None):
+                 max_read_bytes: int | None = None, include_tokenizer: bool | None = None,
+                 bulk_metadata: bool = False):
         if memory_budget_bytes <= 0 or max_metadata_bytes <= 0:
             raise ValueError("Memory limits must be positive")
         if max_read_bytes is not None and (type(max_read_bytes) is not int or max_read_bytes < 0):
             raise ValueError("max_read_bytes must be a nonnegative integer or None")
+        if type(bulk_metadata) is not bool:
+            raise ValueError('bulk_metadata must be boolean')
+        self.bulk_metadata = bulk_metadata
         self.path = Path(path)
         self.memory_budget_bytes = int(memory_budget_bytes)
         self.max_metadata_bytes = min(int(max_metadata_bytes), self.memory_budget_bytes)
@@ -203,7 +254,11 @@ class GGUFReader:
             # Holding the lock also prevents close racing with this syscall.
             result = os.pread(self._fd, count, offset)
             if len(result) != count:
-                raise GGUFError(f"Short GGUF read at offset {offset}: wanted {count}, got {len(result)}")
+                actual = len(result)
+                # A retained exception traceback must not keep an unaccounted
+                # short-read payload alive after the operation reservation ends.
+                del result
+                raise GGUFError(f"Short GGUF read at offset {offset}: wanted {count}, got {actual}")
             self.stats["read_calls"] += 1
             self.stats["bytes_read"] += count
             self.stats["logical_bytes"] += count
@@ -258,6 +313,24 @@ class GGUFReader:
             raise GGUFError("Truncated metadata array")
         if retain:
             self._charge_metadata(64 + count * 8)
+            if self.bulk_metadata and element_type in _SCALARS:
+                self._charge_metadata(40 * count)
+                if count == 0:
+                    return []
+                per_chunk = min(count, (64 << 10) // min_size,
+                                self.available_memory_bytes // min_size)
+                if per_chunk < 1:
+                    raise GGUFMemoryError("No room for bounded metadata buffer")
+                values = [None] * count
+                fmt = "<" + _SCALARS[element_type]
+                for start in range(0, count, per_chunk):
+                    length = min(per_chunk, count - start) * min_size
+                    with self._reservation(length):
+                        raw = self._take(length)
+                        for index, (value,) in enumerate(struct.iter_unpack(fmt, raw), start):
+                            values[index] = value
+                        del raw
+                return values
             return [self._value(element_type) for _ in range(count)]
         if element_type != 8:
             self._skip(count * min_size)
@@ -389,21 +462,49 @@ class GGUFReader:
                 self.stats["decoded_rows"] += count
             return out
 
-    def read_packed_rows(self, name: str, start: int, count: int, *, expert: int | None = None) -> np.ndarray:
-        """Return an owned contiguous uint8 row buffer, without dequantization.
+    def read_packed_rows(self, name: str, start: int, count: int, *,
+                         expert: int | None = None, copy: bool = True,
+                         owner_budget: PackedBufferBudget | None = None) -> np.ndarray:
+        """Read packed rows; ``copy=False`` shares immutable positional-read bytes.
 
-        The NumPy buffer keeps its allocation reservation alive until released.
-        It can be passed to ``np.frombuffer`` or a native/Metal codec.
+        The reader reserves the peak payload allocation (two encoded buffers
+        when copying). An optional owner budget accounts the retained payload
+        independently; otherwise the reader retains that charge until all
+        exported buffer views are released.
         """
+        if type(copy) is not bool:
+            raise ValueError("copy must be boolean")
+        if owner_budget is not None and not isinstance(owner_budget, PackedBufferBudget):
+            raise TypeError("Invalid owner budget")
         info, offset = self._selection(name, start, count, expert)
         encoded = count * info.row_bytes
-        with self._reservation(encoded * 2) as retained:
-            raw = self._pread(encoded, offset, tensor=True)
-            out = np.frombuffer(raw, dtype=np.uint8).copy().reshape(count, info.row_bytes)
-            owner = out.base
-            weakref.finalize(owner, self._release, encoded)
-            retained[0] = encoded
-            return out
+        with self._reservation(encoded * (2 if copy else 1)) as retained:
+            charged = False
+            if owner_budget is not None:
+                owner_budget._acquire(encoded)
+                charged = True
+            raw = storage = owner = out = None
+            try:
+                raw = self._pread(encoded, offset, tensor=True)
+                storage = bytearray(raw) if copy else raw
+                raw = None  # Release copy scratch before returning its reservation.
+                owner = _PackedBuffer(storage)
+                storage = None
+                release = owner_budget._release if owner_budget is not None else self._release
+                weakref.finalize(owner, release, encoded)
+                charged = False
+                if owner_budget is None:
+                    retained[0] = encoded
+                # Transfer accounting before the fallible conversion: even an
+                # exception traceback can retain the provider passed to NumPy.
+                out = np.frombuffer(owner, dtype=np.uint8).reshape(count, info.row_bytes)
+                return out
+            except BaseException:
+                raw = storage = owner = out = None
+                raise
+            finally:
+                if charged:
+                    owner_budget._release(encoded)
 
     def _selection(self, name: str, start: int, count: int, expert: int | None) -> tuple[TensorInfo, int]:
         info = self.tensors[name]

@@ -118,7 +118,7 @@ class GGUFWeights:
     Every tile is evaluated before advancing the disk cursor, bounding MLX's
     lazy graph lifetime. The GGUF reader separately reserves decoder/IO memory.
     """
-    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1):
+    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False):
         self.cp=checkpoint;self.mx=mx;self.cfg=options;self.model_config=config
         if kernel not in ('reference','metal'):raise ValueError('GGUF kernel must be reference or metal')
         if kernel=='metal' and not mx.metal.is_available():raise RuntimeError('Metal kernel requires a Metal device')
@@ -143,6 +143,19 @@ class GGUFWeights:
             cls=ResidencyWeightCache
         else:cls=WeightCache
         self.cache=cls(options.cache_bytes,options.policy)
+        if type(packed_copy_free) is not bool:
+            raise ValueError('packed_copy_free must be boolean')
+        if type(packed_direct_io) is not bool:
+            raise ValueError('packed_direct_io must be boolean')
+        if packed_copy_free and packed_direct_io:
+            raise ValueError('Choose one packed host transport')
+        self.packed_copy_free=packed_copy_free
+        self.packed_direct_io=packed_direct_io
+        self.packed_budget=None
+        if packed_copy_free or packed_direct_io:
+            from .gguf import PackedBufferBudget
+            transient=min(options.max_tensor_bytes,options.workspace_bytes//2)
+            self.packed_budget=PackedBufferBudget(options.cache_bytes+transient)
         kh=config['linear_num_key_heads'];vh=config['linear_num_value_heads'];hd=config['linear_value_head_dim']
         self.perm=v_head_permutation(kh,vh,hd);self.inverse=np.argsort(self.perm)
         self.head_perm=v_head_permutation(kh,vh);self.head_inverse=np.argsort(self.head_perm)
@@ -194,10 +207,20 @@ class GGUFWeights:
         desc=self.cp.tensors[name];cacheable=not (output_role or name=='output.weight') or self.cfg.output_tile_cache
         result=self.cache.get(ident,count*desc.row_bytes) if cacheable else None
         if result is not None:return result
-        begin=perf_counter();raw=self.cp.read_packed_rows(name,start,count,expert=expert)
-        # The independent copy belongs to cache_bytes. Keeping the reader's
-        # reserved result in a cache would permanently consume its IO budget.
-        result=raw.copy();del raw
+        begin=perf_counter()
+        if self.packed_direct_io:
+            from .gguf_packed_io import read_packed_rows_into
+            result=read_packed_rows_into(self.cp,name,start,count,expert=expert,owner_budget=self.packed_budget)
+            self.stats['packed_direct_io_loads']+=1
+            self.stats['packed_host_copy_bytes_avoided']+=2*result.nbytes
+        elif self.packed_copy_free:
+            result=self.cp.read_packed_rows(name,start,count,expert=expert,
+                copy=False,owner_budget=self.packed_budget)
+            self.stats['packed_copy_free_loads']+=1
+            self.stats['packed_host_copy_bytes_avoided']+=2*result.nbytes
+        else:
+            raw=self.cp.read_packed_rows(name,start,count,expert=expert)
+            result=raw.copy();del raw
         elapsed=perf_counter()-begin;self.stats['packed_read_seconds']+=elapsed;self.stats['loads']+=1
         if cacheable:
             self.cache.record_load(ident,elapsed);self.cache.put(ident,result)
@@ -436,7 +459,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -456,7 +479,8 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
         try:
             from .gguf import GGUFReader
             self.checkpoint=GGUFReader(self.root,memory_budget_bytes=self.options.io_bytes,
-                max_read_bytes=self.options.max_tensor_bytes,include_tokenizer_metadata=False)
+                max_read_bytes=self.options.max_tensor_bytes,include_tokenizer_metadata=False,
+                bulk_metadata=bulk_metadata)
             self.config=gguf_qwen_config(self.checkpoint);self._validate_layout()
             if self.options.io_mode=='pread_nocache':
                 # Apply only to this backend's own descriptor, never a service.
@@ -477,7 +501,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 self.allocator_limit_bytes=limit
             self.stats=defaultdict(float)
             if kernel=='metal' and self.device!='gpu':raise ValueError('Metal packed kernel requires device=gpu')
-            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups)
+            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io)
             if cache_decay_interval is not None:self.reader.cache.decay_interval=cache_decay_interval
             self.mixers=[(QwenDeltaNet if k=='linear_attention' else QwenFullAttention)(mx,self.reader,self.config,i) for i,k in enumerate(self.config['layer_types'])]
             self.mlps=[GGUFQwenSparseMLP(mx,self.reader,self.config,i) for i in range(self.config['num_hidden_layers'])]
@@ -521,6 +545,10 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 'decay_interval':getattr(self.reader.cache,'decay_interval',None)},
             'prefetch':{'enabled':False},'expert_batch':self.reader.expert_batch,'concat_tiles':self.reader.concat_tiles,
             'pipeline_tiles':self.reader.pipeline_tiles,
+            'packed_transport':('direct' if self.reader.packed_direct_io else 'readonly' if self.reader.packed_copy_free else 'legacy'),
+            'packed_buffer_budget':(None if self.reader.packed_budget is None else {
+                'capacity_bytes':self.reader.packed_budget.capacity_bytes,'live_bytes':self.reader.packed_budget.live_bytes,
+                'peak_bytes':self.reader.packed_budget.peak_bytes}),
             'metal_simd_groups':self.reader.metal_simd_groups,
             'numerics':{'compute_dtype':self.options.dtype,'text_mrope':'equal positions on all axes'}}
 
