@@ -1,0 +1,3380 @@
+{
+  "kind": "offline_route_reanalysis_51",
+  "archive_sha256": "2d796c8489d38eef38e6ae692b5332f170e62cec3f1ba2dac18f2472230296b8",
+  "script_sha256": "0b4db905b81adb2a2662e6fa01041c7722394d2aec9885f9be89ce357b75ebde",
+  "new_model_forwards": 0,
+  "historical_inference_timings_rebenchmarked": false,
+  "generation_speedup_measured": false,
+  "physical_io_measured": false,
+  "expert_bytes_measured": null,
+  "expert_load_seconds_measured": null,
+  "unique_free_decode_traces": 1,
+  "captured_source_reports": 6,
+  "decode_traces": [
+    {
+      "sources": [
+        {
+          "archive_member": "parity-baseline.json",
+          "member_sha256": "525fe946132172f8699f8db4a107e07e8e81c909274669a3d1faac9167dc80d0",
+          "historical_git_head": "76fd683c37534807e21b5fda07a3d717b163215d",
+          "task_id": "profile-colours",
+          "variant": "baseline",
+          "capture_count": 8,
+          "decode_hashes_verified": 0
+        },
+        {
+          "archive_member": "parity-expert-batch.json",
+          "member_sha256": "a854e19c10c9a84246f4049d2cc4fcb1b531e60a92a3f8eea71ec9b729e45200",
+          "historical_git_head": "76fd683c37534807e21b5fda07a3d717b163215d",
+          "task_id": "profile-colours",
+          "variant": "expert-batch",
+          "capture_count": 8,
+          "decode_hashes_verified": 0
+        },
+        {
+          "archive_member": "parity-final-candidate.json",
+          "member_sha256": "4d6ef5b8a20af9b707dbdb88409e97d69e6dcd4363ef449238dba1098f094504",
+          "historical_git_head": "97dd05b7af693a6387c699dcbd090c77da01ae2e",
+          "task_id": "profile-colours",
+          "variant": "combined",
+          "capture_count": 8,
+          "decode_hashes_verified": 7
+        },
+        {
+          "archive_member": "parity-pipeline-wide.json",
+          "member_sha256": "a423dc40ef6d65f6716932507f022d86670336c7605ef1c88c0a3c8aac6e1b6c",
+          "historical_git_head": "97dd05b7af693a6387c699dcbd090c77da01ae2e",
+          "task_id": "profile-colours",
+          "variant": "pipeline",
+          "capture_count": 8,
+          "decode_hashes_verified": 0
+        },
+        {
+          "archive_member": "parity-v2-combined.json",
+          "member_sha256": "1f3182f9f0ec566208c7687886a045395df216bc4e861c278ec72212137e68af",
+          "historical_git_head": "97dd05b7af693a6387c699dcbd090c77da01ae2e",
+          "task_id": "profile-colours",
+          "variant": "combined",
+          "capture_count": 8,
+          "decode_hashes_verified": 0
+        },
+        {
+          "archive_member": "pilot-wide-combined.json",
+          "member_sha256": "1945ee33502e5b32f5467ece0b65bac693516f233faf9cea4ddfeadcbcbd3b64",
+          "historical_git_head": "97dd05b7af693a6387c699dcbd090c77da01ae2e",
+          "task_id": "profile-colours",
+          "variant": "combined",
+          "capture_count": 8,
+          "decode_hashes_verified": 0
+        }
+      ],
+      "trace_sha256": "a1889697b69bf3ba14e9b2e4ed6199d2dab81999551221d2ed589bb587c16bf0",
+      "positions": [
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52
+      ],
+      "top_k": 8,
+      "decode_steps": 7,
+      "layers": 40,
+      "frequency": {
+        "requests": 2240,
+        "unique_layer_expert_pairs": 1017,
+        "by_layer": [
+          {
+            "layer": 0,
+            "unique_experts": 39,
+            "top_frequencies": [
+              {
+                "expert": 147,
+                "count": 3
+              },
+              {
+                "expert": 16,
+                "count": 2
+              },
+              {
+                "expert": 39,
+                "count": 2
+              },
+              {
+                "expert": 41,
+                "count": 2
+              },
+              {
+                "expert": 97,
+                "count": 2
+              },
+              {
+                "expert": 113,
+                "count": 2
+              },
+              {
+                "expert": 115,
+                "count": 2
+              },
+              {
+                "expert": 123,
+                "count": 2
+              },
+              {
+                "expert": 142,
+                "count": 2
+              },
+              {
+                "expert": 156,
+                "count": 2
+              },
+              {
+                "expert": 163,
+                "count": 2
+              },
+              {
+                "expert": 166,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 1,
+            "unique_experts": 35,
+            "top_frequencies": [
+              {
+                "expert": 106,
+                "count": 4
+              },
+              {
+                "expert": 152,
+                "count": 4
+              },
+              {
+                "expert": 197,
+                "count": 4
+              },
+              {
+                "expert": 155,
+                "count": 3
+              },
+              {
+                "expert": 223,
+                "count": 3
+              },
+              {
+                "expert": 0,
+                "count": 2
+              },
+              {
+                "expert": 5,
+                "count": 2
+              },
+              {
+                "expert": 34,
+                "count": 2
+              },
+              {
+                "expert": 70,
+                "count": 2
+              },
+              {
+                "expert": 105,
+                "count": 2
+              },
+              {
+                "expert": 123,
+                "count": 2
+              },
+              {
+                "expert": 140,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 2,
+            "unique_experts": 30,
+            "top_frequencies": [
+              {
+                "expert": 133,
+                "count": 5
+              },
+              {
+                "expert": 48,
+                "count": 4
+              },
+              {
+                "expert": 74,
+                "count": 4
+              },
+              {
+                "expert": 11,
+                "count": 3
+              },
+              {
+                "expert": 60,
+                "count": 3
+              },
+              {
+                "expert": 126,
+                "count": 3
+              },
+              {
+                "expert": 187,
+                "count": 3
+              },
+              {
+                "expert": 49,
+                "count": 2
+              },
+              {
+                "expert": 61,
+                "count": 2
+              },
+              {
+                "expert": 76,
+                "count": 2
+              },
+              {
+                "expert": 87,
+                "count": 2
+              },
+              {
+                "expert": 188,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 3,
+            "unique_experts": 26,
+            "top_frequencies": [
+              {
+                "expert": 97,
+                "count": 7
+              },
+              {
+                "expert": 98,
+                "count": 7
+              },
+              {
+                "expert": 160,
+                "count": 7
+              },
+              {
+                "expert": 238,
+                "count": 7
+              },
+              {
+                "expert": 11,
+                "count": 3
+              },
+              {
+                "expert": 27,
+                "count": 2
+              },
+              {
+                "expert": 145,
+                "count": 2
+              },
+              {
+                "expert": 146,
+                "count": 2
+              },
+              {
+                "expert": 211,
+                "count": 2
+              },
+              {
+                "expert": 5,
+                "count": 1
+              },
+              {
+                "expert": 40,
+                "count": 1
+              },
+              {
+                "expert": 46,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 4,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 30,
+                "count": 7
+              },
+              {
+                "expert": 4,
+                "count": 5
+              },
+              {
+                "expert": 63,
+                "count": 5
+              },
+              {
+                "expert": 100,
+                "count": 4
+              },
+              {
+                "expert": 88,
+                "count": 3
+              },
+              {
+                "expert": 203,
+                "count": 3
+              },
+              {
+                "expert": 14,
+                "count": 2
+              },
+              {
+                "expert": 29,
+                "count": 2
+              },
+              {
+                "expert": 113,
+                "count": 2
+              },
+              {
+                "expert": 149,
+                "count": 2
+              },
+              {
+                "expert": 154,
+                "count": 2
+              },
+              {
+                "expert": 161,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 5,
+            "unique_experts": 27,
+            "top_frequencies": [
+              {
+                "expert": 195,
+                "count": 6
+              },
+              {
+                "expert": 201,
+                "count": 5
+              },
+              {
+                "expert": 225,
+                "count": 5
+              },
+              {
+                "expert": 60,
+                "count": 4
+              },
+              {
+                "expert": 6,
+                "count": 3
+              },
+              {
+                "expert": 44,
+                "count": 3
+              },
+              {
+                "expert": 64,
+                "count": 3
+              },
+              {
+                "expert": 131,
+                "count": 3
+              },
+              {
+                "expert": 88,
+                "count": 2
+              },
+              {
+                "expert": 171,
+                "count": 2
+              },
+              {
+                "expert": 176,
+                "count": 2
+              },
+              {
+                "expert": 181,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 6,
+            "unique_experts": 24,
+            "top_frequencies": [
+              {
+                "expert": 44,
+                "count": 6
+              },
+              {
+                "expert": 70,
+                "count": 6
+              },
+              {
+                "expert": 27,
+                "count": 5
+              },
+              {
+                "expert": 71,
+                "count": 5
+              },
+              {
+                "expert": 11,
+                "count": 4
+              },
+              {
+                "expert": 158,
+                "count": 4
+              },
+              {
+                "expert": 246,
+                "count": 3
+              },
+              {
+                "expert": 25,
+                "count": 2
+              },
+              {
+                "expert": 36,
+                "count": 2
+              },
+              {
+                "expert": 54,
+                "count": 2
+              },
+              {
+                "expert": 87,
+                "count": 2
+              },
+              {
+                "expert": 103,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 7,
+            "unique_experts": 24,
+            "top_frequencies": [
+              {
+                "expert": 6,
+                "count": 7
+              },
+              {
+                "expert": 95,
+                "count": 5
+              },
+              {
+                "expert": 130,
+                "count": 5
+              },
+              {
+                "expert": 220,
+                "count": 5
+              },
+              {
+                "expert": 224,
+                "count": 5
+              },
+              {
+                "expert": 193,
+                "count": 4
+              },
+              {
+                "expert": 91,
+                "count": 2
+              },
+              {
+                "expert": 107,
+                "count": 2
+              },
+              {
+                "expert": 150,
+                "count": 2
+              },
+              {
+                "expert": 166,
+                "count": 2
+              },
+              {
+                "expert": 191,
+                "count": 2
+              },
+              {
+                "expert": 229,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 8,
+            "unique_experts": 23,
+            "top_frequencies": [
+              {
+                "expert": 32,
+                "count": 7
+              },
+              {
+                "expert": 82,
+                "count": 5
+              },
+              {
+                "expert": 96,
+                "count": 5
+              },
+              {
+                "expert": 144,
+                "count": 5
+              },
+              {
+                "expert": 158,
+                "count": 5
+              },
+              {
+                "expert": 228,
+                "count": 4
+              },
+              {
+                "expert": 42,
+                "count": 3
+              },
+              {
+                "expert": 63,
+                "count": 3
+              },
+              {
+                "expert": 33,
+                "count": 2
+              },
+              {
+                "expert": 36,
+                "count": 2
+              },
+              {
+                "expert": 176,
+                "count": 2
+              },
+              {
+                "expert": 186,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 9,
+            "unique_experts": 19,
+            "top_frequencies": [
+              {
+                "expert": 0,
+                "count": 7
+              },
+              {
+                "expert": 88,
+                "count": 7
+              },
+              {
+                "expert": 154,
+                "count": 7
+              },
+              {
+                "expert": 218,
+                "count": 5
+              },
+              {
+                "expert": 234,
+                "count": 5
+              },
+              {
+                "expert": 65,
+                "count": 4
+              },
+              {
+                "expert": 159,
+                "count": 4
+              },
+              {
+                "expert": 33,
+                "count": 2
+              },
+              {
+                "expert": 37,
+                "count": 2
+              },
+              {
+                "expert": 39,
+                "count": 2
+              },
+              {
+                "expert": 132,
+                "count": 2
+              },
+              {
+                "expert": 156,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 10,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 70,
+                "count": 6
+              },
+              {
+                "expert": 103,
+                "count": 6
+              },
+              {
+                "expert": 2,
+                "count": 5
+              },
+              {
+                "expert": 241,
+                "count": 5
+              },
+              {
+                "expert": 138,
+                "count": 4
+              },
+              {
+                "expert": 25,
+                "count": 3
+              },
+              {
+                "expert": 28,
+                "count": 3
+              },
+              {
+                "expert": 204,
+                "count": 3
+              },
+              {
+                "expert": 74,
+                "count": 2
+              },
+              {
+                "expert": 84,
+                "count": 2
+              },
+              {
+                "expert": 194,
+                "count": 2
+              },
+              {
+                "expert": 196,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 11,
+            "unique_experts": 27,
+            "top_frequencies": [
+              {
+                "expert": 30,
+                "count": 6
+              },
+              {
+                "expert": 110,
+                "count": 5
+              },
+              {
+                "expert": 146,
+                "count": 4
+              },
+              {
+                "expert": 37,
+                "count": 3
+              },
+              {
+                "expert": 136,
+                "count": 3
+              },
+              {
+                "expert": 237,
+                "count": 3
+              },
+              {
+                "expert": 240,
+                "count": 3
+              },
+              {
+                "expert": 242,
+                "count": 3
+              },
+              {
+                "expert": 7,
+                "count": 2
+              },
+              {
+                "expert": 26,
+                "count": 2
+              },
+              {
+                "expert": 36,
+                "count": 2
+              },
+              {
+                "expert": 55,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 12,
+            "unique_experts": 21,
+            "top_frequencies": [
+              {
+                "expert": 136,
+                "count": 7
+              },
+              {
+                "expert": 36,
+                "count": 5
+              },
+              {
+                "expert": 50,
+                "count": 5
+              },
+              {
+                "expert": 245,
+                "count": 5
+              },
+              {
+                "expert": 87,
+                "count": 4
+              },
+              {
+                "expert": 246,
+                "count": 4
+              },
+              {
+                "expert": 37,
+                "count": 3
+              },
+              {
+                "expert": 112,
+                "count": 3
+              },
+              {
+                "expert": 242,
+                "count": 3
+              },
+              {
+                "expert": 1,
+                "count": 2
+              },
+              {
+                "expert": 3,
+                "count": 2
+              },
+              {
+                "expert": 47,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 13,
+            "unique_experts": 27,
+            "top_frequencies": [
+              {
+                "expert": 4,
+                "count": 5
+              },
+              {
+                "expert": 225,
+                "count": 5
+              },
+              {
+                "expert": 117,
+                "count": 4
+              },
+              {
+                "expert": 193,
+                "count": 4
+              },
+              {
+                "expert": 226,
+                "count": 4
+              },
+              {
+                "expert": 185,
+                "count": 3
+              },
+              {
+                "expert": 239,
+                "count": 3
+              },
+              {
+                "expert": 20,
+                "count": 2
+              },
+              {
+                "expert": 33,
+                "count": 2
+              },
+              {
+                "expert": 104,
+                "count": 2
+              },
+              {
+                "expert": 108,
+                "count": 2
+              },
+              {
+                "expert": 112,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 14,
+            "unique_experts": 29,
+            "top_frequencies": [
+              {
+                "expert": 104,
+                "count": 6
+              },
+              {
+                "expert": 195,
+                "count": 6
+              },
+              {
+                "expert": 27,
+                "count": 5
+              },
+              {
+                "expert": 34,
+                "count": 5
+              },
+              {
+                "expert": 79,
+                "count": 3
+              },
+              {
+                "expert": 14,
+                "count": 2
+              },
+              {
+                "expert": 24,
+                "count": 2
+              },
+              {
+                "expert": 129,
+                "count": 2
+              },
+              {
+                "expert": 130,
+                "count": 2
+              },
+              {
+                "expert": 160,
+                "count": 2
+              },
+              {
+                "expert": 218,
+                "count": 2
+              },
+              {
+                "expert": 242,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 15,
+            "unique_experts": 27,
+            "top_frequencies": [
+              {
+                "expert": 27,
+                "count": 7
+              },
+              {
+                "expert": 237,
+                "count": 7
+              },
+              {
+                "expert": 9,
+                "count": 4
+              },
+              {
+                "expert": 40,
+                "count": 4
+              },
+              {
+                "expert": 97,
+                "count": 4
+              },
+              {
+                "expert": 175,
+                "count": 4
+              },
+              {
+                "expert": 154,
+                "count": 3
+              },
+              {
+                "expert": 155,
+                "count": 3
+              },
+              {
+                "expert": 87,
+                "count": 2
+              },
+              {
+                "expert": 4,
+                "count": 1
+              },
+              {
+                "expert": 7,
+                "count": 1
+              },
+              {
+                "expert": 65,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 16,
+            "unique_experts": 31,
+            "top_frequencies": [
+              {
+                "expert": 225,
+                "count": 7
+              },
+              {
+                "expert": 132,
+                "count": 5
+              },
+              {
+                "expert": 233,
+                "count": 5
+              },
+              {
+                "expert": 234,
+                "count": 4
+              },
+              {
+                "expert": 199,
+                "count": 3
+              },
+              {
+                "expert": 28,
+                "count": 2
+              },
+              {
+                "expert": 98,
+                "count": 2
+              },
+              {
+                "expert": 194,
+                "count": 2
+              },
+              {
+                "expert": 197,
+                "count": 2
+              },
+              {
+                "expert": 201,
+                "count": 2
+              },
+              {
+                "expert": 244,
+                "count": 2
+              },
+              {
+                "expert": 8,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 17,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 253,
+                "count": 7
+              },
+              {
+                "expert": 220,
+                "count": 6
+              },
+              {
+                "expert": 27,
+                "count": 5
+              },
+              {
+                "expert": 232,
+                "count": 5
+              },
+              {
+                "expert": 71,
+                "count": 4
+              },
+              {
+                "expert": 174,
+                "count": 4
+              },
+              {
+                "expert": 11,
+                "count": 2
+              },
+              {
+                "expert": 119,
+                "count": 2
+              },
+              {
+                "expert": 137,
+                "count": 2
+              },
+              {
+                "expert": 223,
+                "count": 2
+              },
+              {
+                "expert": 225,
+                "count": 2
+              },
+              {
+                "expert": 237,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 18,
+            "unique_experts": 23,
+            "top_frequencies": [
+              {
+                "expert": 121,
+                "count": 7
+              },
+              {
+                "expert": 133,
+                "count": 7
+              },
+              {
+                "expert": 4,
+                "count": 6
+              },
+              {
+                "expert": 84,
+                "count": 6
+              },
+              {
+                "expert": 30,
+                "count": 4
+              },
+              {
+                "expert": 235,
+                "count": 4
+              },
+              {
+                "expert": 122,
+                "count": 3
+              },
+              {
+                "expert": 66,
+                "count": 2
+              },
+              {
+                "expert": 97,
+                "count": 2
+              },
+              {
+                "expert": 110,
+                "count": 2
+              },
+              {
+                "expert": 17,
+                "count": 1
+              },
+              {
+                "expert": 36,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 19,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 184,
+                "count": 7
+              },
+              {
+                "expert": 93,
+                "count": 5
+              },
+              {
+                "expert": 23,
+                "count": 4
+              },
+              {
+                "expert": 47,
+                "count": 4
+              },
+              {
+                "expert": 165,
+                "count": 4
+              },
+              {
+                "expert": 215,
+                "count": 4
+              },
+              {
+                "expert": 132,
+                "count": 3
+              },
+              {
+                "expert": 197,
+                "count": 3
+              },
+              {
+                "expert": 222,
+                "count": 3
+              },
+              {
+                "expert": 13,
+                "count": 2
+              },
+              {
+                "expert": 49,
+                "count": 2
+              },
+              {
+                "expert": 118,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 20,
+            "unique_experts": 21,
+            "top_frequencies": [
+              {
+                "expert": 32,
+                "count": 7
+              },
+              {
+                "expert": 82,
+                "count": 6
+              },
+              {
+                "expert": 176,
+                "count": 6
+              },
+              {
+                "expert": 96,
+                "count": 5
+              },
+              {
+                "expert": 144,
+                "count": 5
+              },
+              {
+                "expert": 186,
+                "count": 4
+              },
+              {
+                "expert": 228,
+                "count": 4
+              },
+              {
+                "expert": 248,
+                "count": 4
+              },
+              {
+                "expert": 158,
+                "count": 2
+              },
+              {
+                "expert": 190,
+                "count": 2
+              },
+              {
+                "expert": 11,
+                "count": 1
+              },
+              {
+                "expert": 12,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 21,
+            "unique_experts": 24,
+            "top_frequencies": [
+              {
+                "expert": 88,
+                "count": 7
+              },
+              {
+                "expert": 154,
+                "count": 7
+              },
+              {
+                "expert": 33,
+                "count": 5
+              },
+              {
+                "expert": 216,
+                "count": 5
+              },
+              {
+                "expert": 218,
+                "count": 4
+              },
+              {
+                "expert": 0,
+                "count": 3
+              },
+              {
+                "expert": 65,
+                "count": 3
+              },
+              {
+                "expert": 12,
+                "count": 2
+              },
+              {
+                "expert": 32,
+                "count": 2
+              },
+              {
+                "expert": 83,
+                "count": 2
+              },
+              {
+                "expert": 127,
+                "count": 2
+              },
+              {
+                "expert": 252,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 22,
+            "unique_experts": 29,
+            "top_frequencies": [
+              {
+                "expert": 241,
+                "count": 6
+              },
+              {
+                "expert": 103,
+                "count": 5
+              },
+              {
+                "expert": 25,
+                "count": 3
+              },
+              {
+                "expert": 50,
+                "count": 3
+              },
+              {
+                "expert": 67,
+                "count": 3
+              },
+              {
+                "expert": 70,
+                "count": 3
+              },
+              {
+                "expert": 138,
+                "count": 3
+              },
+              {
+                "expert": 2,
+                "count": 2
+              },
+              {
+                "expert": 32,
+                "count": 2
+              },
+              {
+                "expert": 74,
+                "count": 2
+              },
+              {
+                "expert": 170,
+                "count": 2
+              },
+              {
+                "expert": 184,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 23,
+            "unique_experts": 32,
+            "top_frequencies": [
+              {
+                "expert": 30,
+                "count": 6
+              },
+              {
+                "expert": 110,
+                "count": 5
+              },
+              {
+                "expert": 146,
+                "count": 4
+              },
+              {
+                "expert": 24,
+                "count": 3
+              },
+              {
+                "expert": 26,
+                "count": 2
+              },
+              {
+                "expert": 61,
+                "count": 2
+              },
+              {
+                "expert": 71,
+                "count": 2
+              },
+              {
+                "expert": 99,
+                "count": 2
+              },
+              {
+                "expert": 124,
+                "count": 2
+              },
+              {
+                "expert": 136,
+                "count": 2
+              },
+              {
+                "expert": 171,
+                "count": 2
+              },
+              {
+                "expert": 173,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 24,
+            "unique_experts": 27,
+            "top_frequencies": [
+              {
+                "expert": 36,
+                "count": 6
+              },
+              {
+                "expert": 37,
+                "count": 5
+              },
+              {
+                "expert": 87,
+                "count": 5
+              },
+              {
+                "expert": 112,
+                "count": 4
+              },
+              {
+                "expert": 136,
+                "count": 4
+              },
+              {
+                "expert": 29,
+                "count": 3
+              },
+              {
+                "expert": 16,
+                "count": 2
+              },
+              {
+                "expert": 27,
+                "count": 2
+              },
+              {
+                "expert": 48,
+                "count": 2
+              },
+              {
+                "expert": 50,
+                "count": 2
+              },
+              {
+                "expert": 89,
+                "count": 2
+              },
+              {
+                "expert": 131,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 25,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 225,
+                "count": 7
+              },
+              {
+                "expert": 4,
+                "count": 5
+              },
+              {
+                "expert": 117,
+                "count": 5
+              },
+              {
+                "expert": 193,
+                "count": 5
+              },
+              {
+                "expert": 201,
+                "count": 4
+              },
+              {
+                "expert": 0,
+                "count": 3
+              },
+              {
+                "expert": 211,
+                "count": 3
+              },
+              {
+                "expert": 253,
+                "count": 3
+              },
+              {
+                "expert": 2,
+                "count": 2
+              },
+              {
+                "expert": 20,
+                "count": 2
+              },
+              {
+                "expert": 71,
+                "count": 2
+              },
+              {
+                "expert": 104,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 26,
+            "unique_experts": 32,
+            "top_frequencies": [
+              {
+                "expert": 130,
+                "count": 6
+              },
+              {
+                "expert": 195,
+                "count": 6
+              },
+              {
+                "expert": 34,
+                "count": 5
+              },
+              {
+                "expert": 104,
+                "count": 5
+              },
+              {
+                "expert": 105,
+                "count": 5
+              },
+              {
+                "expert": 119,
+                "count": 2
+              },
+              {
+                "expert": 239,
+                "count": 2
+              },
+              {
+                "expert": 26,
+                "count": 1
+              },
+              {
+                "expert": 33,
+                "count": 1
+              },
+              {
+                "expert": 50,
+                "count": 1
+              },
+              {
+                "expert": 56,
+                "count": 1
+              },
+              {
+                "expert": 57,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 27,
+            "unique_experts": 29,
+            "top_frequencies": [
+              {
+                "expert": 175,
+                "count": 6
+              },
+              {
+                "expert": 27,
+                "count": 5
+              },
+              {
+                "expert": 40,
+                "count": 5
+              },
+              {
+                "expert": 237,
+                "count": 5
+              },
+              {
+                "expert": 56,
+                "count": 3
+              },
+              {
+                "expert": 112,
+                "count": 3
+              },
+              {
+                "expert": 9,
+                "count": 2
+              },
+              {
+                "expert": 64,
+                "count": 2
+              },
+              {
+                "expert": 95,
+                "count": 2
+              },
+              {
+                "expert": 97,
+                "count": 2
+              },
+              {
+                "expert": 187,
+                "count": 2
+              },
+              {
+                "expert": 189,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 28,
+            "unique_experts": 29,
+            "top_frequencies": [
+              {
+                "expert": 225,
+                "count": 5
+              },
+              {
+                "expert": 171,
+                "count": 4
+              },
+              {
+                "expert": 197,
+                "count": 4
+              },
+              {
+                "expert": 199,
+                "count": 4
+              },
+              {
+                "expert": 255,
+                "count": 4
+              },
+              {
+                "expert": 28,
+                "count": 3
+              },
+              {
+                "expert": 83,
+                "count": 3
+              },
+              {
+                "expert": 132,
+                "count": 3
+              },
+              {
+                "expert": 98,
+                "count": 2
+              },
+              {
+                "expert": 114,
+                "count": 2
+              },
+              {
+                "expert": 187,
+                "count": 2
+              },
+              {
+                "expert": 194,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 29,
+            "unique_experts": 20,
+            "top_frequencies": [
+              {
+                "expert": 253,
+                "count": 7
+              },
+              {
+                "expert": 27,
+                "count": 5
+              },
+              {
+                "expert": 174,
+                "count": 5
+              },
+              {
+                "expert": 34,
+                "count": 4
+              },
+              {
+                "expert": 55,
+                "count": 4
+              },
+              {
+                "expert": 215,
+                "count": 4
+              },
+              {
+                "expert": 227,
+                "count": 4
+              },
+              {
+                "expert": 232,
+                "count": 4
+              },
+              {
+                "expert": 119,
+                "count": 3
+              },
+              {
+                "expert": 225,
+                "count": 3
+              },
+              {
+                "expert": 149,
+                "count": 2
+              },
+              {
+                "expert": 183,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 30,
+            "unique_experts": 23,
+            "top_frequencies": [
+              {
+                "expert": 133,
+                "count": 6
+              },
+              {
+                "expert": 4,
+                "count": 5
+              },
+              {
+                "expert": 30,
+                "count": 5
+              },
+              {
+                "expert": 47,
+                "count": 5
+              },
+              {
+                "expert": 84,
+                "count": 4
+              },
+              {
+                "expert": 235,
+                "count": 4
+              },
+              {
+                "expert": 38,
+                "count": 3
+              },
+              {
+                "expert": 122,
+                "count": 3
+              },
+              {
+                "expert": 166,
+                "count": 3
+              },
+              {
+                "expert": 209,
+                "count": 3
+              },
+              {
+                "expert": 128,
+                "count": 2
+              },
+              {
+                "expert": 145,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 31,
+            "unique_experts": 28,
+            "top_frequencies": [
+              {
+                "expert": 184,
+                "count": 7
+              },
+              {
+                "expert": 222,
+                "count": 6
+              },
+              {
+                "expert": 215,
+                "count": 5
+              },
+              {
+                "expert": 234,
+                "count": 4
+              },
+              {
+                "expert": 23,
+                "count": 3
+              },
+              {
+                "expert": 46,
+                "count": 3
+              },
+              {
+                "expert": 165,
+                "count": 3
+              },
+              {
+                "expert": 12,
+                "count": 2
+              },
+              {
+                "expert": 99,
+                "count": 2
+              },
+              {
+                "expert": 206,
+                "count": 2
+              },
+              {
+                "expert": 254,
+                "count": 2
+              },
+              {
+                "expert": 13,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 32,
+            "unique_experts": 21,
+            "top_frequencies": [
+              {
+                "expert": 41,
+                "count": 7
+              },
+              {
+                "expert": 160,
+                "count": 7
+              },
+              {
+                "expert": 198,
+                "count": 7
+              },
+              {
+                "expert": 130,
+                "count": 6
+              },
+              {
+                "expert": 5,
+                "count": 3
+              },
+              {
+                "expert": 51,
+                "count": 3
+              },
+              {
+                "expert": 57,
+                "count": 3
+              },
+              {
+                "expert": 191,
+                "count": 3
+              },
+              {
+                "expert": 19,
+                "count": 2
+              },
+              {
+                "expert": 132,
+                "count": 2
+              },
+              {
+                "expert": 227,
+                "count": 2
+              },
+              {
+                "expert": 248,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 33,
+            "unique_experts": 22,
+            "top_frequencies": [
+              {
+                "expert": 17,
+                "count": 7
+              },
+              {
+                "expert": 209,
+                "count": 7
+              },
+              {
+                "expert": 185,
+                "count": 6
+              },
+              {
+                "expert": 252,
+                "count": 5
+              },
+              {
+                "expert": 22,
+                "count": 3
+              },
+              {
+                "expert": 135,
+                "count": 3
+              },
+              {
+                "expert": 162,
+                "count": 3
+              },
+              {
+                "expert": 228,
+                "count": 3
+              },
+              {
+                "expert": 176,
+                "count": 2
+              },
+              {
+                "expert": 190,
+                "count": 2
+              },
+              {
+                "expert": 198,
+                "count": 2
+              },
+              {
+                "expert": 235,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 34,
+            "unique_experts": 21,
+            "top_frequencies": [
+              {
+                "expert": 214,
+                "count": 7
+              },
+              {
+                "expert": 243,
+                "count": 7
+              },
+              {
+                "expert": 153,
+                "count": 6
+              },
+              {
+                "expert": 146,
+                "count": 5
+              },
+              {
+                "expert": 162,
+                "count": 5
+              },
+              {
+                "expert": 17,
+                "count": 3
+              },
+              {
+                "expert": 191,
+                "count": 3
+              },
+              {
+                "expert": 29,
+                "count": 2
+              },
+              {
+                "expert": 80,
+                "count": 2
+              },
+              {
+                "expert": 88,
+                "count": 2
+              },
+              {
+                "expert": 92,
+                "count": 2
+              },
+              {
+                "expert": 103,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 35,
+            "unique_experts": 16,
+            "top_frequencies": [
+              {
+                "expert": 128,
+                "count": 7
+              },
+              {
+                "expert": 152,
+                "count": 7
+              },
+              {
+                "expert": 154,
+                "count": 7
+              },
+              {
+                "expert": 220,
+                "count": 6
+              },
+              {
+                "expert": 242,
+                "count": 6
+              },
+              {
+                "expert": 48,
+                "count": 5
+              },
+              {
+                "expert": 121,
+                "count": 4
+              },
+              {
+                "expert": 46,
+                "count": 3
+              },
+              {
+                "expert": 92,
+                "count": 3
+              },
+              {
+                "expert": 176,
+                "count": 2
+              },
+              {
+                "expert": 95,
+                "count": 1
+              },
+              {
+                "expert": 126,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 36,
+            "unique_experts": 19,
+            "top_frequencies": [
+              {
+                "expert": 61,
+                "count": 7
+              },
+              {
+                "expert": 93,
+                "count": 7
+              },
+              {
+                "expert": 94,
+                "count": 7
+              },
+              {
+                "expert": 42,
+                "count": 6
+              },
+              {
+                "expert": 254,
+                "count": 6
+              },
+              {
+                "expert": 47,
+                "count": 5
+              },
+              {
+                "expert": 148,
+                "count": 3
+              },
+              {
+                "expert": 9,
+                "count": 2
+              },
+              {
+                "expert": 84,
+                "count": 2
+              },
+              {
+                "expert": 218,
+                "count": 2
+              },
+              {
+                "expert": 14,
+                "count": 1
+              },
+              {
+                "expert": 21,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 37,
+            "unique_experts": 19,
+            "top_frequencies": [
+              {
+                "expert": 74,
+                "count": 7
+              },
+              {
+                "expert": 80,
+                "count": 7
+              },
+              {
+                "expert": 96,
+                "count": 7
+              },
+              {
+                "expert": 139,
+                "count": 6
+              },
+              {
+                "expert": 33,
+                "count": 5
+              },
+              {
+                "expert": 70,
+                "count": 5
+              },
+              {
+                "expert": 243,
+                "count": 4
+              },
+              {
+                "expert": 62,
+                "count": 2
+              },
+              {
+                "expert": 131,
+                "count": 2
+              },
+              {
+                "expert": 133,
+                "count": 2
+              },
+              {
+                "expert": 17,
+                "count": 1
+              },
+              {
+                "expert": 34,
+                "count": 1
+              }
+            ]
+          },
+          {
+            "layer": 38,
+            "unique_experts": 25,
+            "top_frequencies": [
+              {
+                "expert": 77,
+                "count": 7
+              },
+              {
+                "expert": 82,
+                "count": 6
+              },
+              {
+                "expert": 237,
+                "count": 6
+              },
+              {
+                "expert": 49,
+                "count": 4
+              },
+              {
+                "expert": 218,
+                "count": 4
+              },
+              {
+                "expert": 28,
+                "count": 3
+              },
+              {
+                "expert": 93,
+                "count": 3
+              },
+              {
+                "expert": 18,
+                "count": 2
+              },
+              {
+                "expert": 134,
+                "count": 2
+              },
+              {
+                "expert": 141,
+                "count": 2
+              },
+              {
+                "expert": 192,
+                "count": 2
+              },
+              {
+                "expert": 198,
+                "count": 2
+              }
+            ]
+          },
+          {
+            "layer": 39,
+            "unique_experts": 23,
+            "top_frequencies": [
+              {
+                "expert": 11,
+                "count": 7
+              },
+              {
+                "expert": 100,
+                "count": 7
+              },
+              {
+                "expert": 234,
+                "count": 5
+              },
+              {
+                "expert": 252,
+                "count": 5
+              },
+              {
+                "expert": 123,
+                "count": 4
+              },
+              {
+                "expert": 204,
+                "count": 4
+              },
+              {
+                "expert": 209,
+                "count": 4
+              },
+              {
+                "expert": 22,
+                "count": 2
+              },
+              {
+                "expert": 48,
+                "count": 2
+              },
+              {
+                "expert": 75,
+                "count": 2
+              },
+              {
+                "expert": 171,
+                "count": 2
+              },
+              {
+                "expert": 3,
+                "count": 1
+              }
+            ]
+          }
+        ]
+      },
+      "temporal_unions": [
+        {
+          "depth": 1,
+          "layer_windows": 280,
+          "ungrouped_expert_requests": 2240,
+          "union_expert_requests": 2240,
+          "ideal_request_reduction_factor": 1.0,
+          "saved_requests": 0
+        },
+        {
+          "depth": 2,
+          "layer_windows": 240,
+          "ungrouped_expert_requests": 3840,
+          "union_expert_requests": 2922,
+          "ideal_request_reduction_factor": 1.3141683778234086,
+          "saved_requests": 918
+        },
+        {
+          "depth": 4,
+          "layer_windows": 160,
+          "ungrouped_expert_requests": 5120,
+          "union_expert_requests": 2857,
+          "ideal_request_reduction_factor": 1.792089604480224,
+          "saved_requests": 2263
+        }
+      ],
+      "causal_prediction": [
+        {
+          "predictor": "previous_token",
+          "proposed_experts": 1920,
+          "actual_experts": 1920,
+          "correct_experts": 918,
+          "wrong_experts": 1002,
+          "recall": 0.478125
+        },
+        {
+          "predictor": "causal_frequency",
+          "proposed_experts": 1920,
+          "actual_experts": 1920,
+          "correct_experts": 908,
+          "wrong_experts": 1012,
+          "recall": 0.47291666666666665
+        },
+        {
+          "predictor": "causal_transition",
+          "proposed_experts": 1920,
+          "actual_experts": 1920,
+          "correct_experts": 973,
+          "wrong_experts": 947,
+          "recall": 0.5067708333333333
+        }
+      ],
+      "cold_global_cache_replays": [
+        {
+          "capacity_expert_units": 0,
+          "policy": "lru",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 2240,
+          "requests": 2240,
+          "final_resident_units": 0
+        },
+        {
+          "capacity_expert_units": 0,
+          "policy": "lfu",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 2240,
+          "requests": 2240,
+          "final_resident_units": 0
+        },
+        {
+          "capacity_expert_units": 0,
+          "policy": "lfu_admit",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 2240,
+          "requests": 2240,
+          "final_resident_units": 0
+        },
+        {
+          "capacity_expert_units": 64,
+          "policy": "lru",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 64
+        },
+        {
+          "capacity_expert_units": 64,
+          "policy": "lfu",
+          "hits": 6,
+          "misses": 2234,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 64
+        },
+        {
+          "capacity_expert_units": 64,
+          "policy": "lfu_admit",
+          "hits": 23,
+          "misses": 2217,
+          "bypassed_admissions": 1038,
+          "requests": 2240,
+          "final_resident_units": 64
+        },
+        {
+          "capacity_expert_units": 128,
+          "policy": "lru",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 128
+        },
+        {
+          "capacity_expert_units": 128,
+          "policy": "lfu",
+          "hits": 241,
+          "misses": 1999,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 128
+        },
+        {
+          "capacity_expert_units": 128,
+          "policy": "lfu_admit",
+          "hits": 279,
+          "misses": 1961,
+          "bypassed_admissions": 828,
+          "requests": 2240,
+          "final_resident_units": 128
+        },
+        {
+          "capacity_expert_units": 256,
+          "policy": "lru",
+          "hits": 0,
+          "misses": 2240,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 256
+        },
+        {
+          "capacity_expert_units": 256,
+          "policy": "lfu",
+          "hits": 610,
+          "misses": 1630,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 256
+        },
+        {
+          "capacity_expert_units": 256,
+          "policy": "lfu_admit",
+          "hits": 610,
+          "misses": 1630,
+          "bypassed_admissions": 478,
+          "requests": 2240,
+          "final_resident_units": 256
+        },
+        {
+          "capacity_expert_units": 512,
+          "policy": "lru",
+          "hits": 1149,
+          "misses": 1091,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 512
+        },
+        {
+          "capacity_expert_units": 512,
+          "policy": "lfu",
+          "hits": 1052,
+          "misses": 1188,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 512
+        },
+        {
+          "capacity_expert_units": 512,
+          "policy": "lfu_admit",
+          "hits": 1052,
+          "misses": 1188,
+          "bypassed_admissions": 0,
+          "requests": 2240,
+          "final_resident_units": 512
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Prefill aggregate histograms are excluded from chronological decode analysis.",
+    "Identical parity variants are deduplicated, never counted as independent sequences.",
+    "Expert histogram ordering is lost; equal-unit cache admissions use stable expert-id order.",
+    "No per-expert bytes, costs, KV memory or concurrent execution are recorded here.",
+    "Temporal union counts are not routes under rejected drafts or draft acceptance.",
+    "Cache replay and union factors are request counts, not measured speedups."
+  ],
+  "olmoe_teacher_forced": {
+    "evidence": "new offline reanalysis of inherited teacher-forced route identities",
+    "trace_sha256": "fa055bc19a2c0f8a654a0a4a5d919097a43c893d1581fc14fb9e06a657444b91",
+    "full_trace_shape": [
+      16,
+      8,
+      4096,
+      8
+    ],
+    "categories": [
+      "fr_prose",
+      "en_prose",
+      "chat",
+      "code",
+      "math",
+      "json_tool",
+      "translation",
+      "copy_edit"
+    ],
+    "position_range_zero_based": [
+      512,
+      1024
+    ],
+    "independent_free_generations": false,
+    "counterfactual_aligned_category_scheduling": true,
+    "requests": 524288,
+    "by_layer": [
+      {
+        "layer": 0,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 41,
+            "count": 1394
+          },
+          {
+            "expert": 21,
+            "count": 1240
+          },
+          {
+            "expert": 11,
+            "count": 1140
+          },
+          {
+            "expert": 51,
+            "count": 989
+          },
+          {
+            "expert": 40,
+            "count": 738
+          },
+          {
+            "expert": 60,
+            "count": 719
+          },
+          {
+            "expert": 17,
+            "count": 706
+          },
+          {
+            "expert": 19,
+            "count": 677
+          },
+          {
+            "expert": 12,
+            "count": 675
+          },
+          {
+            "expert": 22,
+            "count": 662
+          },
+          {
+            "expert": 53,
+            "count": 626
+          },
+          {
+            "expert": 47,
+            "count": 624
+          }
+        ]
+      },
+      {
+        "layer": 1,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 25,
+            "count": 1379
+          },
+          {
+            "expert": 15,
+            "count": 1146
+          },
+          {
+            "expert": 47,
+            "count": 1045
+          },
+          {
+            "expert": 18,
+            "count": 904
+          },
+          {
+            "expert": 61,
+            "count": 852
+          },
+          {
+            "expert": 12,
+            "count": 818
+          },
+          {
+            "expert": 21,
+            "count": 655
+          },
+          {
+            "expert": 37,
+            "count": 649
+          },
+          {
+            "expert": 55,
+            "count": 624
+          },
+          {
+            "expert": 49,
+            "count": 620
+          },
+          {
+            "expert": 62,
+            "count": 615
+          },
+          {
+            "expert": 59,
+            "count": 611
+          }
+        ]
+      },
+      {
+        "layer": 2,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 40,
+            "count": 1536
+          },
+          {
+            "expert": 61,
+            "count": 1302
+          },
+          {
+            "expert": 5,
+            "count": 1106
+          },
+          {
+            "expert": 60,
+            "count": 828
+          },
+          {
+            "expert": 45,
+            "count": 803
+          },
+          {
+            "expert": 15,
+            "count": 746
+          },
+          {
+            "expert": 35,
+            "count": 735
+          },
+          {
+            "expert": 27,
+            "count": 721
+          },
+          {
+            "expert": 50,
+            "count": 706
+          },
+          {
+            "expert": 29,
+            "count": 646
+          },
+          {
+            "expert": 10,
+            "count": 644
+          },
+          {
+            "expert": 14,
+            "count": 635
+          }
+        ]
+      },
+      {
+        "layer": 3,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 31,
+            "count": 1092
+          },
+          {
+            "expert": 23,
+            "count": 1058
+          },
+          {
+            "expert": 43,
+            "count": 1030
+          },
+          {
+            "expert": 16,
+            "count": 971
+          },
+          {
+            "expert": 35,
+            "count": 905
+          },
+          {
+            "expert": 15,
+            "count": 888
+          },
+          {
+            "expert": 9,
+            "count": 879
+          },
+          {
+            "expert": 57,
+            "count": 835
+          },
+          {
+            "expert": 30,
+            "count": 731
+          },
+          {
+            "expert": 52,
+            "count": 714
+          },
+          {
+            "expert": 59,
+            "count": 705
+          },
+          {
+            "expert": 38,
+            "count": 686
+          }
+        ]
+      },
+      {
+        "layer": 4,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 21,
+            "count": 1454
+          },
+          {
+            "expert": 17,
+            "count": 1451
+          },
+          {
+            "expert": 19,
+            "count": 1238
+          },
+          {
+            "expert": 62,
+            "count": 1100
+          },
+          {
+            "expert": 55,
+            "count": 1029
+          },
+          {
+            "expert": 47,
+            "count": 1002
+          },
+          {
+            "expert": 25,
+            "count": 868
+          },
+          {
+            "expert": 6,
+            "count": 762
+          },
+          {
+            "expert": 0,
+            "count": 750
+          },
+          {
+            "expert": 43,
+            "count": 724
+          },
+          {
+            "expert": 23,
+            "count": 706
+          },
+          {
+            "expert": 54,
+            "count": 703
+          }
+        ]
+      },
+      {
+        "layer": 5,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 0,
+            "count": 1727
+          },
+          {
+            "expert": 42,
+            "count": 1490
+          },
+          {
+            "expert": 2,
+            "count": 1358
+          },
+          {
+            "expert": 8,
+            "count": 959
+          },
+          {
+            "expert": 44,
+            "count": 890
+          },
+          {
+            "expert": 10,
+            "count": 839
+          },
+          {
+            "expert": 35,
+            "count": 757
+          },
+          {
+            "expert": 53,
+            "count": 752
+          },
+          {
+            "expert": 29,
+            "count": 733
+          },
+          {
+            "expert": 27,
+            "count": 722
+          },
+          {
+            "expert": 52,
+            "count": 720
+          },
+          {
+            "expert": 15,
+            "count": 691
+          }
+        ]
+      },
+      {
+        "layer": 6,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 18,
+            "count": 1895
+          },
+          {
+            "expert": 52,
+            "count": 1481
+          },
+          {
+            "expert": 24,
+            "count": 1466
+          },
+          {
+            "expert": 42,
+            "count": 1461
+          },
+          {
+            "expert": 57,
+            "count": 1050
+          },
+          {
+            "expert": 5,
+            "count": 967
+          },
+          {
+            "expert": 61,
+            "count": 782
+          },
+          {
+            "expert": 62,
+            "count": 772
+          },
+          {
+            "expert": 55,
+            "count": 725
+          },
+          {
+            "expert": 12,
+            "count": 704
+          },
+          {
+            "expert": 60,
+            "count": 676
+          },
+          {
+            "expert": 1,
+            "count": 673
+          }
+        ]
+      },
+      {
+        "layer": 7,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 17,
+            "count": 1754
+          },
+          {
+            "expert": 4,
+            "count": 1587
+          },
+          {
+            "expert": 27,
+            "count": 1230
+          },
+          {
+            "expert": 2,
+            "count": 1121
+          },
+          {
+            "expert": 30,
+            "count": 977
+          },
+          {
+            "expert": 46,
+            "count": 930
+          },
+          {
+            "expert": 35,
+            "count": 859
+          },
+          {
+            "expert": 0,
+            "count": 817
+          },
+          {
+            "expert": 58,
+            "count": 803
+          },
+          {
+            "expert": 26,
+            "count": 760
+          },
+          {
+            "expert": 59,
+            "count": 688
+          },
+          {
+            "expert": 48,
+            "count": 686
+          }
+        ]
+      },
+      {
+        "layer": 8,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 54,
+            "count": 1665
+          },
+          {
+            "expert": 3,
+            "count": 1528
+          },
+          {
+            "expert": 33,
+            "count": 1269
+          },
+          {
+            "expert": 16,
+            "count": 1033
+          },
+          {
+            "expert": 51,
+            "count": 1031
+          },
+          {
+            "expert": 27,
+            "count": 994
+          },
+          {
+            "expert": 57,
+            "count": 760
+          },
+          {
+            "expert": 11,
+            "count": 689
+          },
+          {
+            "expert": 42,
+            "count": 676
+          },
+          {
+            "expert": 20,
+            "count": 665
+          },
+          {
+            "expert": 49,
+            "count": 663
+          },
+          {
+            "expert": 61,
+            "count": 663
+          }
+        ]
+      },
+      {
+        "layer": 9,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 46,
+            "count": 1597
+          },
+          {
+            "expert": 5,
+            "count": 1506
+          },
+          {
+            "expert": 51,
+            "count": 1357
+          },
+          {
+            "expert": 4,
+            "count": 1024
+          },
+          {
+            "expert": 35,
+            "count": 910
+          },
+          {
+            "expert": 28,
+            "count": 909
+          },
+          {
+            "expert": 20,
+            "count": 817
+          },
+          {
+            "expert": 6,
+            "count": 734
+          },
+          {
+            "expert": 11,
+            "count": 713
+          },
+          {
+            "expert": 48,
+            "count": 692
+          },
+          {
+            "expert": 36,
+            "count": 648
+          },
+          {
+            "expert": 37,
+            "count": 640
+          }
+        ]
+      },
+      {
+        "layer": 10,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 56,
+            "count": 1466
+          },
+          {
+            "expert": 2,
+            "count": 1122
+          },
+          {
+            "expert": 19,
+            "count": 950
+          },
+          {
+            "expert": 16,
+            "count": 908
+          },
+          {
+            "expert": 43,
+            "count": 811
+          },
+          {
+            "expert": 62,
+            "count": 791
+          },
+          {
+            "expert": 17,
+            "count": 733
+          },
+          {
+            "expert": 49,
+            "count": 706
+          },
+          {
+            "expert": 11,
+            "count": 705
+          },
+          {
+            "expert": 34,
+            "count": 682
+          },
+          {
+            "expert": 28,
+            "count": 678
+          },
+          {
+            "expert": 9,
+            "count": 673
+          }
+        ]
+      },
+      {
+        "layer": 11,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 47,
+            "count": 1725
+          },
+          {
+            "expert": 13,
+            "count": 1546
+          },
+          {
+            "expert": 27,
+            "count": 1527
+          },
+          {
+            "expert": 59,
+            "count": 1136
+          },
+          {
+            "expert": 63,
+            "count": 895
+          },
+          {
+            "expert": 57,
+            "count": 725
+          },
+          {
+            "expert": 23,
+            "count": 723
+          },
+          {
+            "expert": 12,
+            "count": 699
+          },
+          {
+            "expert": 58,
+            "count": 676
+          },
+          {
+            "expert": 54,
+            "count": 671
+          },
+          {
+            "expert": 44,
+            "count": 664
+          },
+          {
+            "expert": 7,
+            "count": 644
+          }
+        ]
+      },
+      {
+        "layer": 12,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 31,
+            "count": 1909
+          },
+          {
+            "expert": 38,
+            "count": 1375
+          },
+          {
+            "expert": 43,
+            "count": 1373
+          },
+          {
+            "expert": 51,
+            "count": 1186
+          },
+          {
+            "expert": 8,
+            "count": 1185
+          },
+          {
+            "expert": 45,
+            "count": 1054
+          },
+          {
+            "expert": 37,
+            "count": 872
+          },
+          {
+            "expert": 2,
+            "count": 816
+          },
+          {
+            "expert": 50,
+            "count": 745
+          },
+          {
+            "expert": 48,
+            "count": 683
+          },
+          {
+            "expert": 10,
+            "count": 633
+          },
+          {
+            "expert": 52,
+            "count": 630
+          }
+        ]
+      },
+      {
+        "layer": 13,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 62,
+            "count": 1238
+          },
+          {
+            "expert": 11,
+            "count": 1225
+          },
+          {
+            "expert": 2,
+            "count": 1202
+          },
+          {
+            "expert": 6,
+            "count": 1171
+          },
+          {
+            "expert": 25,
+            "count": 1160
+          },
+          {
+            "expert": 21,
+            "count": 1114
+          },
+          {
+            "expert": 61,
+            "count": 1069
+          },
+          {
+            "expert": 7,
+            "count": 821
+          },
+          {
+            "expert": 31,
+            "count": 755
+          },
+          {
+            "expert": 41,
+            "count": 707
+          },
+          {
+            "expert": 14,
+            "count": 702
+          },
+          {
+            "expert": 27,
+            "count": 670
+          }
+        ]
+      },
+      {
+        "layer": 14,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 6,
+            "count": 1430
+          },
+          {
+            "expert": 36,
+            "count": 1283
+          },
+          {
+            "expert": 8,
+            "count": 1116
+          },
+          {
+            "expert": 7,
+            "count": 1114
+          },
+          {
+            "expert": 58,
+            "count": 1092
+          },
+          {
+            "expert": 39,
+            "count": 980
+          },
+          {
+            "expert": 28,
+            "count": 899
+          },
+          {
+            "expert": 46,
+            "count": 710
+          },
+          {
+            "expert": 11,
+            "count": 693
+          },
+          {
+            "expert": 3,
+            "count": 684
+          },
+          {
+            "expert": 34,
+            "count": 684
+          },
+          {
+            "expert": 24,
+            "count": 659
+          }
+        ]
+      },
+      {
+        "layer": 15,
+        "unique_experts": 64,
+        "top_frequencies": [
+          {
+            "expert": 8,
+            "count": 1470
+          },
+          {
+            "expert": 17,
+            "count": 1297
+          },
+          {
+            "expert": 58,
+            "count": 1290
+          },
+          {
+            "expert": 30,
+            "count": 1240
+          },
+          {
+            "expert": 44,
+            "count": 1104
+          },
+          {
+            "expert": 6,
+            "count": 1052
+          },
+          {
+            "expert": 36,
+            "count": 1006
+          },
+          {
+            "expert": 63,
+            "count": 832
+          },
+          {
+            "expert": 57,
+            "count": 795
+          },
+          {
+            "expert": 60,
+            "count": 770
+          },
+          {
+            "expert": 34,
+            "count": 763
+          },
+          {
+            "expert": 31,
+            "count": 690
+          }
+        ]
+      }
+    ],
+    "multi_sequence_union_replay": [
+      {
+        "streams": 1,
+        "category_combinations": 8,
+        "positions_per_stream": 512,
+        "ungrouped_expert_requests": 524288,
+        "union_expert_requests": 524288,
+        "ideal_request_reduction_factor": 1.0,
+        "saved_requests": 0
+      },
+      {
+        "streams": 2,
+        "category_combinations": 28,
+        "positions_per_stream": 512,
+        "ungrouped_expert_requests": 3670016,
+        "union_expert_requests": 3406888,
+        "ideal_request_reduction_factor": 1.0772341209925305,
+        "saved_requests": 263128
+      },
+      {
+        "streams": 4,
+        "category_combinations": 70,
+        "positions_per_stream": 512,
+        "ungrouped_expert_requests": 18350080,
+        "union_expert_requests": 14801090,
+        "ideal_request_reduction_factor": 1.2397789622250794,
+        "saved_requests": 3548990
+      },
+      {
+        "streams": 8,
+        "category_combinations": 1,
+        "positions_per_stream": 512,
+        "ungrouped_expert_requests": 524288,
+        "union_expert_requests": 329295,
+        "ideal_request_reduction_factor": 1.5921529327806374,
+        "saved_requests": 194993
+      }
+    ]
+  }
+}

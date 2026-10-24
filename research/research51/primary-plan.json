@@ -1,0 +1,170 @@
+[
+  {
+    "id": "explanation.r0.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/explanation-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "explanation.r0.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/explanation-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "explanation.r1.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/explanation-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "explanation.r1.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/explanation-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "long_context.r1.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/long_context-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "long_context.r1.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/long_context-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "short.r0.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/short-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "short.r0.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/short-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "short.r1.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/short-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "short.r1.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/short-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "long_context.r0.baseline",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/long_context-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru"
+    ],
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base"
+  },
+  {
+    "id": "long_context.r0.candidate",
+    "tasks": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/long_context-task.json",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--packed-direct-io",
+      "--zero-copy-weights",
+      "--bulk-metadata"
+    ]
+  }
+]

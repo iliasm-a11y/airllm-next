@@ -36,27 +36,25 @@ def retained_size(value):
     """
     arrays = []
     backend_bytes = 0
-
-    def visit(item):
-        nonlocal backend_bytes
+    pending = [value]
+    # A recursive local visitor captures itself and ``arrays``, making an
+    # unreachable cycle that retains inspected payloads until cyclic GC. That
+    # also kept rejected packed tiles alive beyond their admission budget.
+    while pending:
+        item = pending.pop()
         if isinstance(item, np.ndarray):
             arrays.append(item)
         elif isinstance(item, PackedMatrix):
-            for component in (item.weight, item.scales, item.biases):
-                visit(component)
+            pending.extend((item.weight, item.scales, item.biases))
         elif isinstance(item, dict):
-            for component in item.values():
-                visit(component)
+            pending.extend(item.values())
         elif isinstance(item, (tuple, list)):
-            for component in item:
-                visit(component)
+            pending.extend(item)
         else:
             size = item.nbytes
             if isinstance(size, bool) or int(size) != size or size < 0:
                 raise ValueError('Tensor byte size must be a nonnegative integer')
             backend_bytes += int(size)
-
-    visit(value)
     return backend_bytes + backing_bytes(arrays)
 
 

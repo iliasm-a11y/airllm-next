@@ -1,0 +1,54 @@
+[
+  {
+    "id": "screen-legacy",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--bulk-metadata"
+    ]
+  },
+  {
+    "id": "screen-readonly",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--bulk-metadata",
+      "--packed-copy-free"
+    ]
+  },
+  {
+    "id": "screen-direct",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--bulk-metadata",
+      "--packed-direct-io"
+    ]
+  },
+  {
+    "id": "screen-direct-dlpack",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--rows",
+      "8192",
+      "--cache-policy",
+      "lru",
+      "--bulk-metadata",
+      "--packed-direct-io",
+      "--zero-copy-weights"
+    ]
+  }
+]
