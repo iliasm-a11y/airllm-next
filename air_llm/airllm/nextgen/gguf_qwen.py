@@ -333,7 +333,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,packed_copy_free=False):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,packed_copy_free=False,bulk_metadata=False):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -353,7 +353,8 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
         try:
             from .gguf import GGUFReader
             self.checkpoint=GGUFReader(self.root,memory_budget_bytes=self.options.io_bytes,
-                max_read_bytes=self.options.max_tensor_bytes,include_tokenizer_metadata=False)
+                max_read_bytes=self.options.max_tensor_bytes,include_tokenizer_metadata=False,
+                bulk_metadata=bulk_metadata)
             self.config=gguf_qwen_config(self.checkpoint);self._validate_layout()
             if self.options.io_mode=='pread_nocache':
                 # Apply only to this backend's own descriptor, never a service.
