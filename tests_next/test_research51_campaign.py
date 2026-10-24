@@ -312,4 +312,3 @@ def test_campaign_rejects_worker_bypass_before_any_process_can_start(tmp_path, m
                         lambda *a, **kw: pytest.fail('Rejected plan must not start any process'))
     with pytest.raises((ValueError, RuntimeError)):
         campaign.main()
-
