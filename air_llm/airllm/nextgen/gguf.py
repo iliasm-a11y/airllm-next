@@ -33,6 +33,29 @@ class GGUFMemoryError(MemoryError):
     """The operation was rejected before its payload allocation or read."""
 
 
+class PackedBufferBudget:
+    """Bound live packed buffers independently of transient reader IO."""
+
+    def __init__(self, capacity_bytes):
+        if type(capacity_bytes) is not int or capacity_bytes < 0:
+            raise ValueError("Invalid capacity")
+        self.capacity_bytes = capacity_bytes
+        self.live_bytes = 0
+        self.peak_bytes = 0
+        self.lock = threading.RLock()
+
+    def _acquire(self, size):
+        with self.lock:
+            if size > self.capacity_bytes - self.live_bytes:
+                raise GGUFMemoryError("Packed buffer budget exhausted")
+            self.live_bytes += size
+            self.peak_bytes = max(self.peak_bytes, self.live_bytes)
+
+    def _release(self, size):
+        with self.lock:
+            self.live_bytes -= size
+
+
 class GGMLType(IntEnum):
     F32 = 0
     F16 = 1
@@ -389,21 +412,36 @@ class GGUFReader:
                 self.stats["decoded_rows"] += count
             return out
 
-    def read_packed_rows(self, name: str, start: int, count: int, *, expert: int | None = None) -> np.ndarray:
-        """Return an owned contiguous uint8 row buffer, without dequantization.
-
-        The NumPy buffer keeps its allocation reservation alive until released.
-        It can be passed to ``np.frombuffer`` or a native/Metal codec.
-        """
+    def read_packed_rows(self, name: str, start: int, count: int, *,
+                         expert: int | None = None, copy: bool = True,
+                         owner_budget: PackedBufferBudget | None = None) -> np.ndarray:
+        """Read packed rows, optionally sharing immutable pread bytes without copying."""
+        if type(copy) is not bool:
+            raise ValueError("copy must be boolean")
+        if owner_budget is not None and not isinstance(owner_budget, PackedBufferBudget):
+            raise TypeError("Invalid owner budget")
         info, offset = self._selection(name, start, count, expert)
         encoded = count * info.row_bytes
-        with self._reservation(encoded * 2) as retained:
-            raw = self._pread(encoded, offset, tensor=True)
-            out = np.frombuffer(raw, dtype=np.uint8).copy().reshape(count, info.row_bytes)
-            owner = out.base
-            weakref.finalize(owner, self._release, encoded)
-            retained[0] = encoded
-            return out
+        with self._reservation(encoded * (2 if copy else 1)) as retained:
+            charged = False
+            if owner_budget is not None:
+                owner_budget._acquire(encoded)
+                charged = True
+            try:
+                raw = self._pread(encoded, offset, tensor=True)
+                owner = np.frombuffer(raw, dtype=np.uint8)
+                if copy:
+                    owner = owner.copy()
+                out = owner.reshape(count, info.row_bytes)
+                release = owner_budget._release if owner_budget is not None else self._release
+                weakref.finalize(owner, release, encoded)
+                charged = False
+                if owner_budget is None:
+                    retained[0] = encoded
+                return out
+            finally:
+                if charged:
+                    owner_budget._release(encoded)
 
     def _selection(self, name: str, start: int, count: int, expert: int | None) -> tuple[TensorInfo, int]:
         info = self.tensors[name]
