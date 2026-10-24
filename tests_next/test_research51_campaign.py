@@ -312,3 +312,46 @@ def test_campaign_rejects_worker_bypass_before_any_process_can_start(tmp_path, m
                         lambda *a, **kw: pytest.fail('Rejected plan must not start any process'))
     with pytest.raises((ValueError, RuntimeError)):
         campaign.main()
+
+
+def test_final_protocol_drift_persists_stopped_status_and_fails_shell_exit(tmp_path, monkeypatch, harness):
+    _, campaign = harness
+    from dataclasses import asdict
+    from types import SimpleNamespace
+    import sys
+
+    monkeypatch.syspath_prepend(str(ROOT / 'air_llm'))
+    from airllm.nextgen.experiment_guard import ExperimentLimits
+
+    evidence, guard, source_files, protocol, tasks = evidence_pair()
+    engine = dict(git_head='frozen-head', source_sha256=source_files)
+    evidence.update(git_head=engine['git_head'], git_head_after=engine['git_head'],
+                    engine_head_unchanged=True)
+    plan = [dict(id='one', tasks=str(tmp_path / 'tasks.json'), engine_root=str(campaign.ROOT), args=[])]
+    states = {str(campaign.ROOT): engine}
+    output = tmp_path / 'output'
+    monkeypatch.setattr(sys, 'argv', [
+        'campaign_research51.py', '--model', str(tmp_path / 'model.gguf'),
+        '--tasks', str(tmp_path / 'tasks.json'), '--plan', str(tmp_path / 'plan.json'),
+        '--output', str(output),
+    ])
+    monkeypatch.setattr(campaign, 'prepare_campaign', lambda args: (plan, states, protocol, {'one': tasks}))
+    monkeypatch.setattr(campaign, 'engine_manifest', lambda root: deepcopy(engine))
+    checks = iter([True, True, False])
+    monkeypatch.setattr(campaign, 'protocol_unchanged', lambda expected: next(checks))
+
+    def completed_worker(command, **kwargs):
+        destination = Path(command[command.index('--output') + 1])
+        write_json(destination, evidence)
+        worker_guard = dict(guard, command=[*command, '--worker'],
+                            limits=asdict(ExperimentLimits(timeout_seconds=600.)))
+        write_json(destination.with_suffix('.guard.json'), worker_guard)
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(campaign.subprocess, 'run', completed_worker)
+    with pytest.raises(RuntimeError, match='finalization'):
+        campaign.main()
+    manifest = json.loads((output / 'campaign.json').read_text())
+    assert manifest['status'] == 'stopped'
+    assert manifest['protocol_unchanged'] is False
+    assert manifest['runs'][0]['status'] == 'completed'

@@ -1,0 +1,35 @@
+{
+  "kind": "independent_offline_route_count_crosschecks",
+  "new_model_forwards": 0,
+  "route_result_sha256": "7447fd87f173de2c91a5334d9740734ecabe8fd3b3a8c5cae2c60d7b90064649",
+  "checks": [
+    {
+      "kind": "qwen_union_independent_python_sets",
+      "depth": 1,
+      "requests": 2240,
+      "union": 2240,
+      "equal": true
+    },
+    {
+      "kind": "qwen_union_independent_python_sets",
+      "depth": 2,
+      "requests": 3840,
+      "union": 2922,
+      "equal": true
+    },
+    {
+      "kind": "qwen_union_independent_python_sets",
+      "depth": 4,
+      "requests": 5120,
+      "union": 2857,
+      "equal": true
+    },
+    {
+      "kind": "olmoe_8category_union_python_sets",
+      "union": 329295,
+      "equal": true
+    }
+  ],
+  "self_tests_passed": 7,
+  "route_hashes_verified": 7
+}

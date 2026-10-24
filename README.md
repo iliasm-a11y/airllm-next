@@ -1,3 +1,5 @@
+> Recherche AirLLM Next 5.1 : [résultats M5 et limites](RESEARCH_5_1_REPORT_FR.md), [reproduction](research/research51/README.md). Options expérimentales désactivées par défaut ; GLM-5.3 complet non validé.
+
 # AirLLM Next 5.0.0a1 — research generation
 
 The [native GGUF campaign](NATIVE_GGUF_REPORT_FR.md) executes the installed

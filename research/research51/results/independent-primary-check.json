@@ -1,0 +1,365 @@
+{
+  "kind": "independent_stdlib_raw_primary_verification",
+  "status": "passed",
+  "calculation_implementation_sha256": "b7c3124a3454b25324ca6ccc36acd9a0522fe25f1ea92f6a68e0b433f33888c2",
+  "implementation_path": "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/independent_primary_check.py",
+  "scope": {
+    "workers": 12,
+    "pairs": 6,
+    "prompts": 3,
+    "repetitions_per_prompt": 2,
+    "independent_of_analyzer": true,
+    "analyzer_code_imported": false,
+    "model_or_engine_executed": false,
+    "current_model_and_current_engine_sources_read": false,
+    "evidence_hashes_verified": true,
+    "system_swap_scope": "endpoint and sampled system-wide counters"
+  },
+  "raw_input_hashes": {
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/campaign.json": {
+      "sha256": "3ef9d3184e96e544b7668fe339fd74800fc924598cb6db050860974b30e239c4",
+      "bytes": 130756
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r0.baseline.json": {
+      "sha256": "39f7912518c635ae6fdf2d51c1183ca8f73a33487b63041ad49c4828079521f7",
+      "bytes": 95221
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r0.baseline.guard.json": {
+      "sha256": "4edba327e64bb532d8d74723021be6b9348788da77051bc96222330fab171c7b",
+      "bytes": 8525
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r0.candidate.json": {
+      "sha256": "60a0430366aa3d08b6c8a6b75cf16353f05efadef47e89fffa0fe4c43ec2305c",
+      "bytes": 96276
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r0.candidate.guard.json": {
+      "sha256": "0c8561ce476dea29bae830c62c9de7d060e1d4050a37ad5d759f62ee972eaee0",
+      "bytes": 8715
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r1.baseline.json": {
+      "sha256": "9c9d56ac65a10896c84daea81f3653880a01de0d1718b3ee64534db3bd951f22",
+      "bytes": 95210
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r1.baseline.guard.json": {
+      "sha256": "fb38710dd8b3929694f53f1521573a5fb511ad4e353f8785e51ad25a46b23de6",
+      "bytes": 8525
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r1.candidate.json": {
+      "sha256": "168bcdaec55059b86028908f3294dc67dc640889139e4344a96c51d8fb8c9820",
+      "bytes": 96261
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/explanation.r1.candidate.guard.json": {
+      "sha256": "643e6e6a7ad1f6ace9c5eba89a4ed1bfa52582162ec58b6a0ec2ee1e6720e5ad",
+      "bytes": 8715
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r0.baseline.json": {
+      "sha256": "3626b74b81267f0c023311d2b1cf0b4c744818091250b162bb85704789457a14",
+      "bytes": 46185
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r0.baseline.guard.json": {
+      "sha256": "0c30eadc2678c0808466605bdace6b7c49ee91811e77cb479505498ed58a4623",
+      "bytes": 8527
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r0.candidate.json": {
+      "sha256": "acf4157d29d1af7c248672bc29eea2f8185f7006c3dd0f4eda8d8844a8aed005",
+      "bytes": 47225
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r0.candidate.guard.json": {
+      "sha256": "5a9ef1de834e1323f111c058a0bb144d7f2ceba468a552910089e77982141b07",
+      "bytes": 8717
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r1.baseline.json": {
+      "sha256": "ae0822c8e5a97ccfb1e375f84b2792ab9e2356e7abe933a7c6eab2bbc84f79b5",
+      "bytes": 46178
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r1.baseline.guard.json": {
+      "sha256": "730e39d8c4f0e285b61ba23c26bc02f4950f58d9184fce3530209185e97a6ceb",
+      "bytes": 8522
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r1.candidate.json": {
+      "sha256": "b23ebfa5e6811d44912cbe11c794f9683709810ffb2538e471bfb496f263d666",
+      "bytes": 47224
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/long_context.r1.candidate.guard.json": {
+      "sha256": "b1f7c99cb335115e4a6aaa5a1a3724377033235d8f3cb0e99e90b5c672fbd115",
+      "bytes": 8717
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r0.baseline.json": {
+      "sha256": "a648dff77149b57b9c3cca20a43e083e7ab46862b18f4df449a8b3d2f90f580f",
+      "bytes": 26818
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r0.baseline.guard.json": {
+      "sha256": "baff9e636b621be19d809a362e84a644033578f20f7754e2b9ace91531c87e7a",
+      "bytes": 8505
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r0.candidate.json": {
+      "sha256": "e8aa071f2f8f3ea783f0aa7d1c09facf0808ed926f8a09d0700f808cdbd7fb62",
+      "bytes": 27750
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r0.candidate.guard.json": {
+      "sha256": "941ca42368bae086db43315f769ed3987cdf4d4c0920c5ec5641a30e8d23a931",
+      "bytes": 8696
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r1.baseline.json": {
+      "sha256": "94a7556d0c2806ee723097742788cb3a2886cbda6854d70aa0297d4a648c4740",
+      "bytes": 26818
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r1.baseline.guard.json": {
+      "sha256": "bda162b2ae1f646e03fe8c8d501e3d1b9fb66bab08018ae4458ed9b4f689ab82",
+      "bytes": 8505
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r1.candidate.json": {
+      "sha256": "5644d0890cbfbc1f2534947595261ee0343ac20b514691332506cc492835e87d",
+      "bytes": 27748
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/evidence-5.1/primary/short.r1.candidate.guard.json": {
+      "sha256": "b2af0578804d89ac1ad80216e172bf90b1eda772b44c3d2a86b75d46cce4969b",
+      "bytes": 8696
+    },
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next/research/research51/results/primary-analysis/summary.json": {
+      "sha256": "a0505bc177142f03aaeb55951b10e1eb51f00c9986aa679bf20532cb386d8b78",
+      "bytes": 68111
+    }
+  },
+  "recorded_engine_heads": {
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/airllm-next": "cdd426e1670a95c1798e45962c48e8d7ae87daaf",
+    "/Users/macbook/Documents/Codex/2026-10-24/files-pasted-by-the-user-mission/work/throughput-base": "ab59677fed6181d909866364a50dd07244af6b1b"
+  },
+  "aggregate": {
+    "baseline": {
+      "workers": 6,
+      "generated_tokens_including_eos": 372,
+      "decode_tokens_including_final_eos": 366,
+      "decode_step_seconds": 256.8041274190073,
+      "stream_decode_seconds": 257.06105270900116,
+      "decode_tok_s": 1.4237862801189107,
+      "forward_only_decode_tps": 1.425210738154634,
+      "end_to_end_tok_s": 0.7906833148771502,
+      "guard_elapsed_seconds": 470.479132417001,
+      "generation_tok_s": 0.8106049095665684,
+      "worker_wall_tok_s_excluding_imports": 0.7928087003845499,
+      "ttft_seconds": {
+        "n": 6,
+        "median": 20.373911541500092,
+        "q1": 15.5118091142499,
+        "q3": 55.07977065599971,
+        "iqr": 39.56796154174981,
+        "min": 13.547270791999836,
+        "max": 67.0208942499994
+      },
+      "peak_owned_rss_bytes_sampled": 541196288,
+      "peak_mlx_allocator_bytes": 175459072,
+      "minimum_available_bytes_sampled": 4487249920,
+      "minimum_reserve_headroom_bytes_sampled": 1266024448,
+      "maximum_system_swap_growth_bytes_sampled": 0,
+      "logical_read_bytes": 931978429952,
+      "process_storage_read_bytes": 279408844800,
+      "decode_logical_read_bytes_per_token": 1964699264.0,
+      "decode_process_storage_read_bytes_per_token": 190998942.07650274,
+      "cache_hits": 46,
+      "cache_misses": 853010
+    },
+    "candidate": {
+      "workers": 6,
+      "generated_tokens_including_eos": 372,
+      "decode_tokens_including_final_eos": 366,
+      "decode_step_seconds": 236.63111215799472,
+      "stream_decode_seconds": 236.89010824899924,
+      "decode_tok_s": 1.5450201897636484,
+      "forward_only_decode_tps": 1.546711236160813,
+      "end_to_end_tok_s": 0.8424686162504722,
+      "guard_elapsed_seconds": 441.5594751239987,
+      "generation_tok_s": 0.8608340729006465,
+      "worker_wall_tok_s_excluding_imports": 0.8448096498494962,
+      "ttft_seconds": {
+        "n": 6,
+        "median": 19.93269597949984,
+        "q1": 14.425030104750476,
+        "q3": 53.67170247925037,
+        "iqr": 39.246672374499894,
+        "min": 12.786635459000536,
+        "max": 65.08971341699998
+      },
+      "peak_owned_rss_bytes_sampled": 510377984,
+      "peak_mlx_allocator_bytes": 175491880,
+      "minimum_available_bytes_sampled": 4364304384,
+      "minimum_reserve_headroom_bytes_sampled": 1143078912,
+      "maximum_system_swap_growth_bytes_sampled": 0,
+      "logical_read_bytes": 931978429952,
+      "process_storage_read_bytes": 282310549504,
+      "decode_logical_read_bytes_per_token": 1964699264.0,
+      "decode_process_storage_read_bytes_per_token": 196785672.39344263,
+      "cache_hits": 46,
+      "cache_misses": 853010
+    }
+  },
+  "aggregate_decode_speedup": 1.0851489520144924,
+  "aggregate_decode_gain_percent": 8.514895201449235,
+  "aggregate_end_to_end_speedup": 1.0654943646829933,
+  "aggregate_end_to_end_gain_percent": 6.54943646829933,
+  "pairs": [
+    {
+      "task": "explanation",
+      "repeat": 0,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.0610970370794195,
+      "forward_only_decode_speedup": 1.0611866402168222,
+      "end_to_end_speedup": 1.048094206144863,
+      "ttft_speedup": 0.9717430406088483
+    },
+    {
+      "task": "explanation",
+      "repeat": 1,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.1166103792941522,
+      "forward_only_decode_speedup": 1.1167260402767558,
+      "end_to_end_speedup": 1.1123459805938298,
+      "ttft_speedup": 1.0772349024916412
+    },
+    {
+      "task": "long_context",
+      "repeat": 0,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.0736470703232812,
+      "forward_only_decode_speedup": 1.0734718820087445,
+      "end_to_end_speedup": 1.0428570116832034,
+      "ttft_speedup": 1.030642000919037
+    },
+    {
+      "task": "long_context",
+      "repeat": 1,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.082146698409235,
+      "forward_only_decode_speedup": 1.081995687328121,
+      "end_to_end_speedup": 1.0436102790790316,
+      "ttft_speedup": 1.029669524286076
+    },
+    {
+      "task": "short",
+      "repeat": 0,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.0553981218306874,
+      "forward_only_decode_speedup": 1.0562283682797604,
+      "end_to_end_speedup": 1.090284151549028,
+      "ttft_speedup": 1.0900299381092529
+    },
+    {
+      "task": "short",
+      "repeat": 1,
+      "equality": {
+        "prompt": true,
+        "full_input_ids": true,
+        "appended_input_ids": true,
+        "generated_ids": true,
+        "full_output_ids": true,
+        "text": true,
+        "raw_text": true,
+        "eos_token_ids": true,
+        "logits_routes_positions": true
+      },
+      "decode_speedup": 1.0524361188130409,
+      "forward_only_decode_speedup": 1.053708408070229,
+      "end_to_end_speedup": 1.0664147717289487,
+      "ttft_speedup": 1.0513471957927418
+    }
+  ],
+  "all_guard_violations_none": true,
+  "all_endpoint_and_sampled_swap_zero": true,
+  "summary_comparison": "matches within rel_tol=1e-12 / abs_tol=1e-9",
+  "failures": [],
+  "quality_observations": [
+    {
+      "task": "explanation",
+      "prompt": "Explique en français, en 100 mots maximum, comment un modèle d'intelligence artificielle de 24 Go peut fonctionner sur un ordinateur possédant seulement 16 Go de mémoire vive.",
+      "text": "Un modèle de 24 Go peut fonctionner sur 16 Go de RAM grâce au **swap** (mémoire virtuelle). Le système d’exploitation déplace les données inactives du modèle depuis la RAM vers le disque dur (SSD/HDD), libérant ainsi de l’espace mémoire. Seules les parties du modèle activement utilisées restent en RAM. Bien que cette méthode permette l’exécution, elle est **beaucoup plus lente** car l’accès au disque est bien plus lent que celui à la RAM. De plus, une partie de la mémoire est réservée au système et aux autres applications, ce qui peut causer des ralentissements ou des erreurs si la mémoire totale (RAM + swap) est insuffisante.",
+      "whitespace_words": 106,
+      "input_tokens": 72,
+      "generated_tokens_including_eos": 152,
+      "repeats_text_and_tokens_exact": true
+    },
+    {
+      "task": "long_context",
+      "prompt": "Dossier technique fictif pour une expérience locale. L'ordinateur possède 16 Gio de mémoire unifiée et utilise son SSD interne. Le modèle est stocké dans un fichier GGUF de 23,94 Go. Le système peut lire sélectivement les poids nécessaires à chaque couche. Le cache de poids est limité à 64 Mio, le budget des entrées et sorties à 64 Mio, les états de génération à 256 Mio et l'espace de travail à 128 Mio. La réserve système de 3 Gio est indépendante de ces budgets. Le superviseur vérifie la pression mémoire et l'augmentation du swap toutes les 50 millisecondes. Aucune application personnelle n'est fermée. Le modèle conserve ses poids d'origine. Question : quelle est la somme des quatre budgets de cache, entrées et sorties, états et travail ? Réponds par une seule phrase, en Mio, sans inclure la réserve système.",
+      "text": "La somme des quatre budgets de cache, entrées et sorties, états et travail est de 512 Mio.",
+      "whitespace_words": 17,
+      "input_tokens": 233,
+      "generated_tokens_including_eos": 26,
+      "repeats_text_and_tokens_exact": true
+    },
+    {
+      "task": "short",
+      "prompt": "Cite les trois couleurs du drapeau français, sans autre explication.",
+      "text": "Bleu, blanc, rouge",
+      "whitespace_words": 3,
+      "input_tokens": 45,
+      "generated_tokens_including_eos": 8,
+      "repeats_text_and_tokens_exact": true
+    }
+  ],
+  "quality_limits": [
+    "Explanation is 106 whitespace-delimited words despite a maximum of 100.",
+    "Swap is a generic possibility for some oversized workloads; the answer does not describe the measured selective-streaming engine with observed zero swap growth.",
+    "The task called long_context uses only 233 template-inclusive input tokens, without a reused prefix; this is not evidence of genuinely long-context or multiturn quality.",
+    "Identical complete responses certify preservation on these prompts, not general semantic quality."
+  ],
+  "measurement_limits": [
+    "EOS tokens are included in generated and final decode token totals.",
+    "Streaming seconds independently reconstructed as total_seconds - ttft_seconds; includes callback/journal instrumentation.",
+    "End-to-end rate uses parent guard elapsed including fresh worker startup/imports/supervision.",
+    "Fresh workers do not control OS page-cache state; storage counters are not certified physical SSD bandwidth.",
+    "Model integrity uses recorded stat identity, not a fresh complete model checksum.",
+    "Exactness covers recorded per-token logits/routes hashes, token IDs and positions; no full KV payload comparison was recorded.",
+    "Six paired observations across three prompts are descriptive and do not establish population or thermal confidence.",
+    "Expert profiler and stability runs are outside this independent primary verification."
+  ]
+}
