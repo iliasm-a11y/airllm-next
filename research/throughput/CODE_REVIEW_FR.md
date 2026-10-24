@@ -1,0 +1,12 @@
+# Revue locale avant publication
+
+Revue suivant le protocole Engineering code-review : correction, ressources, erreurs, concurrence et maintenabilité. La validation locale complète est conservée dans les preuves ; cette revue ne représente pas une approbation de fusion.
+
+- Les matrices compactées gardent le décodage Q4_K/Q6_K, la somme SIMD FP32 par ligne et l'ordre d'addition des experts. La sélection top-k reste celle du routeur existant. Les contrôles réels comparent les vecteurs complets de logits et les routes, en complément des tests indépendants des kernels.
+- Les groupes contiennent au plus huit experts, avec le même nombre de positions routées. Les tuiles combinées sont plafonnées par `max_tensor_bytes`, les sorties retenues et le travail partagent le plafond existant, et la réserve système est contrôlée avant allocation. Les options temporaires du lecteur sont restaurées dans `finally`, sous le verrou du modèle. Les sorties intermédiaires des groupes sont libérées avant les experts partagés.
+- La concaténation garde au plus deux charges de sortie pendant l'assemblage, puis libère les tuiles avant les permutations de têtes. Le pipeline optionnel réserve deux tuiles et attend la précédente avant une nouvelle soumission ; il reste désactivé dans les mesures retenues.
+- L'import sans copie ne prend que des buffers contigus dont le propriétaire complet est compté. Le repli par copie préserve les valeurs et la durée de vie est testée. Aucun gain supplémentaire fiable ne justifie son activation dans la configuration retenue.
+- Le superviseur ne signale plus un groupe après libération de son dernier processus possédé. Un descendant doit conserver son identité de création et son groupe ; un échec de nettoyage devient un échec documenté, avec sauvegarde des mesures. Les plafonds RSS, réserve, swap, pression et délai ne sont pas réduits.
+- Les archives de preuves excluent les poids et vecteurs binaires. La restauration exige un nouveau dossier, refuse les membres inattendus/liens/traversées de chemin, borne les tailles et vérifie les empreintes avant écriture de chaque fichier.
+
+Les options demeurent expérimentales et facultatives. Deux répétitions sur trois prompts ne constituent pas une validation générale de stabilité thermique ou de tous les checkpoints. Les probabilités brutes du routeur et les timestamps GPU ne sont pas intégralement capturés. Aucune fusion dans `main` n'est prévue.

@@ -1,0 +1,538 @@
+{
+  "reference": {
+    "groups": {
+      "prefill/allocation_guard": {
+        "calls": 37941,
+        "wall": 0.12746896307726274,
+        "cpu": 0.21489199999997388,
+        "exclusive_wall": 0.12746896307726274,
+        "exclusive_cpu": 0.21489199999997388
+      },
+      "prefill/software_cache_lookup": {
+        "calls": 19569,
+        "wall": 0.05347897494175413,
+        "cpu": 0.05692799999995857,
+        "exclusive_wall": 0.05347897494175413,
+        "exclusive_cpu": 0.05692799999995857
+      },
+      "prefill/pread": {
+        "calls": 19517,
+        "wall": 4.799753260021134,
+        "cpu": 1.209028999999974,
+        "exclusive_wall": 4.799753260021134,
+        "exclusive_cpu": 1.209028999999974
+      },
+      "prefill/cpu_dequant_rows": {
+        "calls": 868,
+        "wall": 0.06955434198971489,
+        "cpu": 0.035896000000015915,
+        "exclusive_wall": 0.01291293400390714,
+        "exclusive_cpu": 0.012945000000015972
+      },
+      "prefill/host_to_mlx_array_api": {
+        "calls": 31825,
+        "wall": 0.26147433311689383,
+        "cpu": 0.26943299999999426,
+        "exclusive_wall": 0.26147433311689383,
+        "exclusive_cpu": 0.26943299999999426
+      },
+      "prefill/eval_pending_graph_wall": {
+        "calls": 65223,
+        "wall": 8.38259651510998,
+        "cpu": 1.4935390000000803,
+        "exclusive_wall": 8.38259651510998,
+        "exclusive_cpu": 1.4935390000000803
+      },
+      "prefill/software_cache_admit_evict": {
+        "calls": 19395,
+        "wall": 0.06279842191543139,
+        "cpu": 0.062481999999975724,
+        "exclusive_wall": 0.06279842191543139,
+        "exclusive_cpu": 0.062481999999975724
+      },
+      "prefill/float_read_cache": {
+        "calls": 948,
+        "wall": 0.09513554399745772,
+        "cpu": 0.06304100000000257,
+        "exclusive_wall": 0.009516440003608295,
+        "exclusive_cpu": 0.010239999999992921
+      },
+      "prefill/packed_read_cache": {
+        "calls": 18743,
+        "wall": 5.458307945989873,
+        "cpu": 1.9064769999999926,
+        "exclusive_wall": 0.6043296020861817,
+        "exclusive_cpu": 0.6072590000000722
+      },
+      "prefill/packed_metal_call": {
+        "calls": 18743,
+        "wall": 6.959449367985144,
+        "cpu": 1.220307999999956,
+        "exclusive_wall": 0.1516113778561703,
+        "exclusive_cpu": 0.15645999999986615
+      },
+      "prefill/mixer_projection": {
+        "calls": 570,
+        "wall": 2.8553044129994305,
+        "cpu": 0.5124960000000036,
+        "exclusive_wall": 0.025603209977816732,
+        "exclusive_cpu": 0.040888000000028235
+      },
+      "prefill/deltanet_total": {
+        "calls": 90,
+        "wall": 2.777598251002928,
+        "cpu": 0.6088530000000028,
+        "exclusive_wall": 0.050703185022030084,
+        "exclusive_cpu": 0.05561800000001349
+      },
+      "prefill/moe_routing": {
+        "calls": 120,
+        "wall": 0.031105662997106265,
+        "cpu": 0.012547999999996229,
+        "exclusive_wall": 0.031105662997106265,
+        "exclusive_cpu": 0.012547999999996229
+      },
+      "prefill/selected_expert_projection": {
+        "calls": 17241,
+        "wall": 9.770820387933782,
+        "cpu": 3.228113000000074,
+        "exclusive_wall": 0.26316864088494185,
+        "exclusive_cpu": 0.3615150000001752
+      },
+      "prefill/shared_expert_projection": {
+        "calls": 480,
+        "wall": 0.36028816300949984,
+        "cpu": 0.09470699999999499,
+        "exclusive_wall": 0.013692830002582923,
+        "exclusive_cpu": 0.018248999999969984
+      },
+      "prefill/attention_total": {
+        "calls": 30,
+        "wall": 0.5992719149999175,
+        "cpu": 0.11710799999999888,
+        "exclusive_wall": 0.004096660002687713,
+        "exclusive_cpu": 0.005131999999994141
+      },
+      "prefill/output_projection": {
+        "calls": 1,
+        "wall": 0.1175483749993873,
+        "cpu": 0.0691550000000003,
+        "exclusive_wall": 0.001217588995132246,
+        "exclusive_cpu": 0.001264999999986749
+      },
+      "prefill/model_forward_total": {
+        "calls": 1,
+        "wall": 14.996546207999927,
+        "cpu": 4.806801,
+        "exclusive_wall": 0.1410176079853045,
+        "exclusive_cpu": 0.21837899999993216
+      },
+      "decode/allocation_guard": {
+        "calls": 22085,
+        "wall": 0.07699094501458603,
+        "cpu": 0.11071600000008175,
+        "exclusive_wall": 0.07699094501458603,
+        "exclusive_cpu": 0.11071600000008175
+      },
+      "decode/software_cache_lookup": {
+        "calls": 12054,
+        "wall": 0.032205438029450306,
+        "cpu": 0.03707299999991509,
+        "exclusive_wall": 0.032205438029450306,
+        "exclusive_cpu": 0.03707299999991509
+      },
+      "decode/pread": {
+        "calls": 12851,
+        "wall": 1.2999464689892193,
+        "cpu": 0.8260160000001271,
+        "exclusive_wall": 1.2999464689892193,
+        "exclusive_cpu": 0.8260160000001271
+      },
+      "decode/cpu_dequant_rows": {
+        "calls": 2079,
+        "wall": 0.07644046597488341,
+        "cpu": 0.07213599999996578,
+        "exclusive_wall": 0.02740412698676664,
+        "exclusive_cpu": 0.02783399999992131
+      },
+      "decode/host_to_mlx_array_api": {
+        "calls": 19033,
+        "wall": 0.26340565299778973,
+        "cpu": 0.2686210000001328,
+        "exclusive_wall": 0.26340565299778973,
+        "exclusive_cpu": 0.2686210000001328
+      },
+      "decode/eval_pending_graph_wall": {
+        "calls": 38752,
+        "wall": 3.700758716056953,
+        "cpu": 1.0202049999999598,
+        "exclusive_wall": 3.700758716056953,
+        "exclusive_cpu": 1.0202049999999598
+      },
+      "decode/software_cache_admit_evict": {
+        "calls": 11997,
+        "wall": 0.39342061603474576,
+        "cpu": 0.3925489999999803,
+        "exclusive_wall": 0.39342061603474576,
+        "exclusive_cpu": 0.3925489999999803
+      },
+      "decode/float_read_cache": {
+        "calls": 2114,
+        "wall": 0.15529199400680227,
+        "cpu": 0.15494300000003403,
+        "exclusive_wall": 0.02110324100794969,
+        "exclusive_cpu": 0.023129000000013278
+      },
+      "decode/packed_read_cache": {
+        "calls": 10794,
+        "wall": 2.136083670982771,
+        "cpu": 1.6746390000001021,
+        "exclusive_wall": 0.48920506695685617,
+        "exclusive_cpu": 0.49497500000015204
+      },
+      "decode/packed_metal_call": {
+        "calls": 10794,
+        "wall": 2.607827587974498,
+        "cpu": 0.8001650000000149,
+        "exclusive_wall": 0.09160671487734362,
+        "exclusive_cpu": 0.09161800000004039
+      },
+      "decode/mixer_projection": {
+        "calls": 1330,
+        "wall": 1.902132805005749,
+        "cpu": 1.0971610000000105,
+        "exclusive_wall": 0.0444013860569612,
+        "exclusive_cpu": 0.06065599999988169
+      },
+      "decode/deltanet_total": {
+        "calls": 210,
+        "wall": 1.8153501299984782,
+        "cpu": 1.0517109999999947,
+        "exclusive_wall": 0.06778743896666128,
+        "exclusive_cpu": 0.060714999999955666
+      },
+      "decode/moe_routing": {
+        "calls": 280,
+        "wall": 0.06443346100058989,
+        "cpu": 0.025250999999993695,
+        "exclusive_wall": 0.06443346100058989,
+        "exclusive_cpu": 0.025250999999993695
+      },
+      "decode/selected_expert_projection": {
+        "calls": 6720,
+        "wall": 2.735694039921327,
+        "cpu": 1.3713730000000117,
+        "exclusive_wall": 0.10879314293742937,
+        "exclusive_cpu": 0.13945999999998104
+      },
+      "decode/shared_expert_projection": {
+        "calls": 1120,
+        "wall": 0.34732250899378414,
+        "cpu": 0.21109099999998993,
+        "exclusive_wall": 0.018821213999217434,
+        "exclusive_cpu": 0.024459999999969284
+      },
+      "decode/attention_total": {
+        "calls": 70,
+        "wall": 0.40539204299875564,
+        "cpu": 0.2543669999999958,
+        "exclusive_wall": 0.008581008012697566,
+        "exclusive_cpu": 0.010216000000016656
+      },
+      "decode/output_projection": {
+        "calls": 7,
+        "wall": 0.6577653330004978,
+        "cpu": 0.3893820000000012,
+        "exclusive_wall": 0.008731722998163605,
+        "exclusive_cpu": 0.0099459999999576
+      },
+      "decode/model_forward_total": {
+        "calls": 7,
+        "wall": 6.8008873759999915,
+        "cpu": 3.7540199999999997,
+        "exclusive_wall": 0.08329101507661107,
+        "exclusive_cpu": 0.1305799999999202
+      }
+    },
+    "scope": "exclusive host wall/process-CPU intervals; inclusive groups nest and must not be summed",
+    "gpu_only_seconds": null,
+    "gpu_timestamp_unavailable_reason": "Installed MLX Python API exposes capture but no per-command GPU timestamps",
+    "os_page_cache_hits": null,
+    "os_cache_reason": "No per-read OS cache hit counter; process storage bytes are reported separately"
+  },
+  "candidate": {
+    "groups": {
+      "prefill/allocation_guard": {
+        "calls": 11168,
+        "wall": 0.05733067399251013,
+        "cpu": 0.06944000000003037,
+        "exclusive_wall": 0.05733067399251013,
+        "exclusive_cpu": 0.06944000000003037
+      },
+      "prefill/software_cache_lookup": {
+        "calls": 19119,
+        "wall": 0.032643673891470826,
+        "cpu": 0.03379800000001598,
+        "exclusive_wall": 0.032643673891470826,
+        "exclusive_cpu": 0.03379800000001598
+      },
+      "prefill/pread": {
+        "calls": 19146,
+        "wall": 4.418491487062056,
+        "cpu": 1.236928000000029,
+        "exclusive_wall": 4.418491487062056,
+        "exclusive_cpu": 1.236928000000029
+      },
+      "prefill/cpu_dequant_rows": {
+        "calls": 944,
+        "wall": 0.07618628200179955,
+        "cpu": 0.03692399999999685,
+        "exclusive_wall": 0.013696779989004426,
+        "exclusive_cpu": 0.013868999999990361
+      },
+      "prefill/host_to_mlx_array_api": {
+        "calls": 23931,
+        "wall": 0.5550798300455426,
+        "cpu": 0.5587890000000058,
+        "exclusive_wall": 0.5550798300455426,
+        "exclusive_cpu": 0.5587890000000058
+      },
+      "prefill/eval_pending_graph_wall": {
+        "calls": 21675,
+        "wall": 6.698751654964326,
+        "cpu": 1.0854839999998938,
+        "exclusive_wall": 6.698751654964326,
+        "exclusive_cpu": 1.0854839999998938
+      },
+      "prefill/software_cache_admit_evict": {
+        "calls": 19115,
+        "wall": 0.038455712961877,
+        "cpu": 0.03825700000001464,
+        "exclusive_wall": 0.038455712961877,
+        "exclusive_cpu": 0.03825700000001464
+      },
+      "prefill/float_read_cache": {
+        "calls": 948,
+        "wall": 0.10637044002305629,
+        "cpu": 0.06802999999997539,
+        "exclusive_wall": 0.009818348014960065,
+        "exclusive_cpu": 0.010410999999987958
+      },
+      "prefill/packed_read_cache": {
+        "calls": 18202,
+        "wall": 5.018405859019367,
+        "cpu": 1.8765250000000857,
+        "exclusive_wall": 0.5948337341123988,
+        "exclusive_cpu": 0.5945450000000172
+      },
+      "prefill/packed_metal_call": {
+        "calls": 961,
+        "wall": 2.5421487410076224,
+        "cpu": 0.24377599999999156,
+        "exclusive_wall": 0.01479966101305763,
+        "exclusive_cpu": 0.018504999999988003
+      },
+      "prefill/mixer_projection": {
+        "calls": 570,
+        "wall": 2.701964120004959,
+        "cpu": 0.5465619999999984,
+        "exclusive_wall": 0.01772500895003759,
+        "exclusive_cpu": 0.028001999999980542
+      },
+      "prefill/deltanet_total": {
+        "calls": 90,
+        "wall": 2.681871214000239,
+        "cpu": 0.6690410000000004,
+        "exclusive_wall": 0.0517643109542405,
+        "exclusive_cpu": 0.05544300000003721
+      },
+      "prefill/moe_routing": {
+        "calls": 120,
+        "wall": 0.03387658199881116,
+        "cpu": 0.01573900000000239,
+        "exclusive_wall": 0.03387658199881116,
+        "exclusive_cpu": 0.01573900000000239
+      },
+      "prefill/grouped_packed_metal_call": {
+        "calls": 4065,
+        "wall": 3.0137358409847366,
+        "cpu": 0.7127809999999646,
+        "exclusive_wall": 0.04143370597557805,
+        "exclusive_cpu": 0.04748799999996667
+      },
+      "prefill/selected_experts_group_projection": {
+        "calls": 4065,
+        "wall": 7.906768166985785,
+        "cpu": 2.665753999999982,
+        "exclusive_wall": 0.2979536770244522,
+        "exclusive_cpu": 0.3406759999999436
+      },
+      "prefill/shared_expert_projection": {
+        "calls": 480,
+        "wall": 0.361641625014272,
+        "cpu": 0.09509899999999005,
+        "exclusive_wall": 0.012815464015147882,
+        "exclusive_cpu": 0.017114999999998437
+      },
+      "prefill/attention_total": {
+        "calls": 30,
+        "wall": 0.5739283330030958,
+        "cpu": 0.12941200000000186,
+        "exclusive_wall": 0.004661205002776114,
+        "exclusive_cpu": 0.005197000000000784
+      },
+      "prefill/output_projection": {
+        "calls": 1,
+        "wall": 0.10610420900047757,
+        "cpu": 0.06760900000000003,
+        "exclusive_wall": 0.0006160719958643313,
+        "exclusive_cpu": 0.0012559999999988136
+      },
+      "prefill/model_forward_total": {
+        "calls": 1,
+        "wall": 13.056086666999363,
+        "cpu": 4.377405,
+        "exclusive_wall": 0.16133908503525163,
+        "exclusive_cpu": 0.20646300000009887
+      },
+      "decode/allocation_guard": {
+        "calls": 8918,
+        "wall": 0.039417026961018564,
+        "cpu": 0.05550399999998046,
+        "exclusive_wall": 0.039417026961018564,
+        "exclusive_cpu": 0.05550399999998046
+      },
+      "decode/software_cache_lookup": {
+        "calls": 11004,
+        "wall": 0.019762759904551785,
+        "cpu": 0.021417000000004016,
+        "exclusive_wall": 0.019762759904551785,
+        "exclusive_cpu": 0.021417000000004016
+      },
+      "decode/pread": {
+        "calls": 11221,
+        "wall": 1.2880900780037337,
+        "cpu": 0.8624259999997967,
+        "exclusive_wall": 1.2880900780037337,
+        "exclusive_cpu": 0.8624259999997967
+      },
+      "decode/cpu_dequant_rows": {
+        "calls": 2114,
+        "wall": 0.07053932899907522,
+        "cpu": 0.06850999999997587,
+        "exclusive_wall": 0.024595698010671185,
+        "exclusive_cpu": 0.025503000000011156
+      },
+      "decode/host_to_mlx_array_api": {
+        "calls": 13741,
+        "wall": 0.2906844550898313,
+        "cpu": 0.29254400000001635,
+        "exclusive_wall": 0.2906844550898313,
+        "exclusive_cpu": 0.29254400000001635
+      },
+      "decode/eval_pending_graph_wall": {
+        "calls": 19390,
+        "wall": 2.366357227008848,
+        "cpu": 0.6531719999999455,
+        "exclusive_wall": 2.366357227008848,
+        "exclusive_cpu": 0.6531719999999455
+      },
+      "decode/software_cache_admit_evict": {
+        "calls": 11004,
+        "wall": 0.02345522597352101,
+        "cpu": 0.023561000000058563,
+        "exclusive_wall": 0.02345522597352101,
+        "exclusive_cpu": 0.023561000000058563
+      },
+      "decode/float_read_cache": {
+        "calls": 2114,
+        "wall": 0.1298414239909107,
+        "cpu": 0.13150800000000018,
+        "exclusive_wall": 0.020435545015971,
+        "exclusive_cpu": 0.022595999999963645
+      },
+      "decode/packed_read_cache": {
+        "calls": 9107,
+        "wall": 1.765520674979598,
+        "cpu": 1.342388000000053,
+        "exclusive_wall": 0.487776021080208,
+        "exclusive_cpu": 0.4871900000001661
+      },
+      "decode/packed_metal_call": {
+        "calls": 2387,
+        "wall": 1.0729907339909914,
+        "cpu": 0.3393309999999863,
+        "exclusive_wall": 0.027808502951302216,
+        "exclusive_cpu": 0.030046999999975732
+      },
+      "decode/mixer_projection": {
+        "calls": 1330,
+        "wall": 1.3482142540178756,
+        "cpu": 0.8672760000000057,
+        "exclusive_wall": 0.034975242047948996,
+        "exclusive_cpu": 0.05685800000010932
+      },
+      "decode/deltanet_total": {
+        "calls": 210,
+        "wall": 1.3620436700093705,
+        "cpu": 0.8672939999999834,
+        "exclusive_wall": 0.06755428301767097,
+        "exclusive_cpu": 0.06131199999998049
+      },
+      "decode/moe_routing": {
+        "calls": 280,
+        "wall": 0.06427629700374382,
+        "cpu": 0.025417000000017786,
+        "exclusive_wall": 0.06427629700374382,
+        "exclusive_cpu": 0.025417000000017786
+      },
+      "decode/grouped_packed_metal_call": {
+        "calls": 840,
+        "wall": 0.5770954200070264,
+        "cpu": 0.15189599999997672,
+        "exclusive_wall": 0.00919699201676849,
+        "exclusive_cpu": 0.010817999999955141
+      },
+      "decode/selected_experts_group_projection": {
+        "calls": 840,
+        "wall": 1.6295361039929048,
+        "cpu": 0.7992850000000002,
+        "exclusive_wall": 0.10595562097114453,
+        "exclusive_cpu": 0.11628599999999256
+      },
+      "decode/shared_expert_projection": {
+        "calls": 1120,
+        "wall": 0.3066522689896374,
+        "cpu": 0.1743009999999936,
+        "exclusive_wall": 0.01864443598788057,
+        "exclusive_cpu": 0.025194999999983203
+      },
+      "decode/attention_total": {
+        "calls": 70,
+        "wall": 0.30077754000285495,
+        "cpu": 0.20553699999999875,
+        "exclusive_wall": 0.009044097994774347,
+        "exclusive_cpu": 0.010067999999997745
+      },
+      "decode/output_projection": {
+        "calls": 7,
+        "wall": 0.5441111660002207,
+        "cpu": 0.3857249999999981,
+        "exclusive_wall": 0.004415583013724245,
+        "exclusive_cpu": 0.008162000000006664
+      },
+      "decode/model_forward_total": {
+        "calls": 7,
+        "wall": 4.979038248998222,
+        "cpu": 2.8878910000000007,
+        "exclusive_wall": 0.07659315694490942,
+        "exclusive_cpu": 0.09981500000003951
+      }
+    },
+    "scope": "exclusive host wall/process-CPU intervals; inclusive groups nest and must not be summed",
+    "gpu_only_seconds": null,
+    "gpu_timestamp_unavailable_reason": "Installed MLX Python API exposes capture but no per-command GPU timestamps",
+    "os_page_cache_hits": null,
+    "os_cache_reason": "No per-read OS cache hit counter; process storage bytes are reported separately"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "scope": "Causal low-cost proposal study on real recorded tokens; oracle scoring only, no target block execution",
+  "generation_speedup_measured": false,
+  "recurrent_rollback_cost_measured": false,
+  "results": [
+    {
+      "id": "explanation",
+      "depth": 2,
+      "target_tokens": 152,
+      "proposal_rounds": 146,
+      "nonempty_rounds": 3,
+      "proposed_tokens": 6,
+      "matching_draft_tokens": 6,
+      "draft_wall_seconds": 0.00576162699417182,
+      "draft_cpu_seconds": 0.005706000000000072
+    },
+    {
+      "id": "explanation",
+      "depth": 4,
+      "target_tokens": 152,
+      "proposal_rounds": 146,
+      "nonempty_rounds": 3,
+      "proposed_tokens": 12,
+      "matching_draft_tokens": 6,
+      "draft_wall_seconds": 0.004775044996677025,
+      "draft_cpu_seconds": 0.004649000000000007
+    },
+    {
+      "id": "long_context",
+      "depth": 2,
+      "target_tokens": 26,
+      "proposal_rounds": 17,
+      "nonempty_rounds": 5,
+      "proposed_tokens": 10,
+      "matching_draft_tokens": 9,
+      "draft_wall_seconds": 0.0005784569993920741,
+      "draft_cpu_seconds": 0.000565000000000003
+    },
+    {
+      "id": "long_context",
+      "depth": 4,
+      "target_tokens": 26,
+      "proposal_rounds": 15,
+      "nonempty_rounds": 3,
+      "proposed_tokens": 12,
+      "matching_draft_tokens": 11,
+      "draft_wall_seconds": 0.0009537500018268474,
+      "draft_cpu_seconds": 0.0009480000000000183
+    },
+    {
+      "id": "short",
+      "depth": 2,
+      "target_tokens": 8,
+      "proposal_rounds": 8,
+      "nonempty_rounds": 0,
+      "proposed_tokens": 0,
+      "matching_draft_tokens": 0,
+      "draft_wall_seconds": 0.00017658199794823304,
+      "draft_cpu_seconds": 0.00013099999999999917
+    },
+    {
+      "id": "short",
+      "depth": 4,
+      "target_tokens": 8,
+      "proposal_rounds": 8,
+      "nonempty_rounds": 0,
+      "proposed_tokens": 0,
+      "matching_draft_tokens": 0,
+      "draft_wall_seconds": 0.00010704199939937098,
+      "draft_cpu_seconds": 0.00010299999999999199
+    }
+  ]
+}

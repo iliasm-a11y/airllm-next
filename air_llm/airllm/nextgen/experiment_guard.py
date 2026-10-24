@@ -104,10 +104,22 @@ def violation(limits, before, current, rss, elapsed):
 
 def _stop_group(process, observed):
     """Signal only the new session created for this experiment, including orphans."""
-    try:
-        os.killpg(process.pid, signal.SIGTERM)
-    except ProcessLookupError:
-        pass
+    def owned_group_alive():
+        # poll() only returns None for our unreaped child, whose PID cannot
+        # yet be reused. After exit, retain the group lease only through an
+        # observed member with the same creation identity and process group.
+        if process.poll() is None:return True
+        for pid,created in observed.items():
+            try:
+                member=psutil.Process(pid)
+                if member.create_time()==created and os.getpgid(pid)==process.pid:return True
+            except (psutil.NoSuchProcess,psutil.AccessDenied,ProcessLookupError):pass
+        return False
+    if owned_group_alive():
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
     # Remember identities while the parent lives: a child can detach into its
     # own session and then disappear from parent.children(). Never signal a PID
     # that has since been reused by another application.
@@ -125,10 +137,11 @@ def _stop_group(process, observed):
     except subprocess.TimeoutExpired:
         pass
     # The parent may already have exited while descendants still live.
-    try:
-        os.killpg(process.pid, signal.SIGKILL)
-    except ProcessLookupError:
-        pass
+    if owned_group_alive():
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
     for child in survivors:
         try:
             if child.is_running() and child.create_time() == observed[child.pid]:
@@ -203,11 +216,17 @@ def supervise(command, output, limits=None, env=None):
         raise
     finally:
         if process is not None:
-            report['exit_code'] = _stop_group(process, observed)
+            try:
+                report['exit_code'] = _stop_group(process, observed)
+            except BaseException as error:
+                # A cleanup failure is a failed experiment, never a reason to
+                # lose admission/sampling evidence or report a clean finish.
+                report['cleanup_error']=f'{type(error).__name__}: {error}'
+                report['exit_code']=process.poll()
         report['observed_descendant_count'] = len(observed)
         report['after'] = system_snapshot()
         report['elapsed_seconds'] = time.monotonic() - begin
         output.with_suffix('.guard.json').write_text(json.dumps(report, indent=2) + '\n')
-    if report['violation'] or report['exit_code']:
-        raise RuntimeError(f"Experiment stopped ({report['violation'] or report['exit_code']}); see {output.with_suffix('.guard.json')}")
+    if report['violation'] or report['exit_code'] or report.get('cleanup_error'):
+        raise RuntimeError(f"Experiment stopped ({report.get('cleanup_error') or report['violation'] or report['exit_code']}); see {output.with_suffix('.guard.json')}")
     return report

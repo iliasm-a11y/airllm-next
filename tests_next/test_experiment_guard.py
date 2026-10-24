@@ -85,3 +85,30 @@ def test_output_cannot_alias_model_or_its_links(tmp_path):
             validate_output_paths(output, protected=[model])
     assert model.read_bytes() == b'preserve'
     validate_output_paths(tmp_path / 'valid.json', protected=[model])
+
+
+def test_normal_exit_does_not_signal_a_released_process_group(monkeypatch):
+    from airllm.nextgen.experiment_guard import _stop_group
+    import airllm.nextgen.experiment_guard as guard
+    class Finished:
+        pid=2147483647
+        def poll(self):return 0
+        def wait(self,timeout=None):return 0
+    monkeypatch.setattr(guard.os,'killpg',lambda *a:pytest.fail('Finished unowned group must not be signalled'))
+    assert _stop_group(Finished(),{})==0
+
+
+def test_cleanup_failure_still_persists_sampling_evidence(tmp_path,monkeypatch):
+    import airllm.nextgen.experiment_guard as guard
+    original=guard._stop_group
+    def stop_then_fail(process,observed):
+        original(process,observed)
+        raise PermissionError('injected cleanup failure after owned process stopped')
+    monkeypatch.setattr(guard,'_stop_group',stop_then_fail)
+    output=tmp_path/'cleanup.json'
+    limits=ExperimentLimits(reserve_bytes=0,admitted_payload_bytes=0,timeout_seconds=2)
+    with pytest.raises(RuntimeError,match='cleanup failure'):
+        supervise([sys.executable,'-c','pass'],output,limits)
+    report=json.loads(output.with_suffix('.guard.json').read_text())
+    assert report['exit_code']==0 and report['sample_count']>0
+    assert report['cleanup_error'].startswith('PermissionError') and 'after' in report

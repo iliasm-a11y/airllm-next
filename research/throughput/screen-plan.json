@@ -1,0 +1,48 @@
+{
+  "purpose": "Exploratory screening; not the primary paired benchmark",
+  "seed": 9024,
+  "runs": [
+    {
+      "name": "combined-lru",
+      "variant": "combined",
+      "rows": 8192,
+      "cache": "lru",
+      "zero": false
+    },
+    {
+      "name": "combined-zero",
+      "variant": "combined",
+      "rows": 8192,
+      "cache": "adaptive",
+      "zero": true
+    },
+    {
+      "name": "concat-lru-zero",
+      "variant": "concat",
+      "rows": 8192,
+      "cache": "lru",
+      "zero": true
+    },
+    {
+      "name": "combined-wide",
+      "variant": "combined",
+      "rows": 8192,
+      "cache": "adaptive",
+      "zero": false
+    },
+    {
+      "name": "pipeline-zero",
+      "variant": "pipeline",
+      "rows": 8192,
+      "cache": "adaptive",
+      "zero": true
+    },
+    {
+      "name": "baseline",
+      "variant": "baseline",
+      "rows": 2048,
+      "cache": "adaptive",
+      "zero": false
+    }
+  ]
+}

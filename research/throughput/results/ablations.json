@@ -1,0 +1,50 @@
+{
+  "scope": "Two mirrored short-task blocks, exact tokens/logits/routes/positions, conditional remove-one effects",
+  "results": [
+    {
+      "case": "full",
+      "rates": [
+        1.4523220688123317,
+        1.4412341907034416
+      ],
+      "median_rate": 1.4467781297578868,
+      "median_full_over_removed": 1.0
+    },
+    {
+      "case": "no_expert_batch",
+      "rates": [
+        1.2640231897376033,
+        1.2443513946122666
+      ],
+      "median_rate": 1.2541872921749349,
+      "median_full_over_removed": 1.1535945597153159
+    },
+    {
+      "case": "no_concat",
+      "rates": [
+        1.448277173109516,
+        1.4412989685375697
+      ],
+      "median_rate": 1.444788070823543,
+      "median_full_over_removed": 1.0013739787913887
+    },
+    {
+      "case": "adaptive_cache",
+      "rates": [
+        1.3279110720294334,
+        1.3293958108211252
+      ],
+      "median_rate": 1.3286534414252793,
+      "median_full_over_removed": 1.0889082389194304
+    },
+    {
+      "case": "narrow_tiles",
+      "rates": [
+        1.3954924316187414,
+        1.3920065878629424
+      ],
+      "median_rate": 1.3937495097408419,
+      "median_full_over_removed": 1.0380441028250598
+    }
+  ]
+}
