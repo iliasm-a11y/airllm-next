@@ -132,3 +132,11 @@ Détails : [architecture](docs/NEXT_ARCHITECTURE.md),
 [compatibilité GLM](docs/GLM53_COMPATIBILITY.md),
 [validation](docs/NEXT_VALIDATION.md),
 [protocole M5](docs/M5_VALIDATION.md).
+
+## Recherche multi-agents locale
+
+L'[orchestrateur générique](research/orchestrator/README.md) ajoute un registre,
+des files prioritaires et des quotas persistants autour d'une instance partagée.
+Les agents logiques et les générations simultanées sont comptés séparément.
+Les [résultats et limites](ORCHESTRATOR_REPORT_FR.md) accompagnent cette extension
+facultative, indépendante de RONIN.
