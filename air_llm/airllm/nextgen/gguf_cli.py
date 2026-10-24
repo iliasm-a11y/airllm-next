@@ -30,9 +30,10 @@ def _run(args):
     options = NextConfig(cache_bytes=args.cache_mib << 20, io_bytes=64 << 20, kv_bytes=192 << 20,
         workspace_bytes=128 << 20, reserve_bytes=args.reserve_mib << 20, max_tensor_bytes=16 << 20,
         row_chunk=args.row_chunk, prefill_chunk=args.prefill_chunk, max_context=args.max_context,
-        policy='adaptive', device=args.device, dtype='float32', prefetch=False, load_tokenizer=False,
-        io_mode=args.io_mode)
-    with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay) as model:
+        policy=args.cache_policy, device=args.device, dtype='float32', prefetch=False, load_tokenizer=False,
+        io_mode=args.io_mode,zero_copy_weights=args.zero_copy_weights)
+    with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay,
+            expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,metal_simd_groups=args.simd_groups) as model:
         output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
         generated = output.tolist()[0][len(ids):]
         result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
@@ -55,6 +56,12 @@ def main(argv=None):
     run.add_argument('--max-context', type=_positive, default=256)
     run.add_argument('--cache-mib', type=_positive, default=256)
     run.add_argument('--cache-decay', type=_positive, help='Experimental adaptive-cache half-life in requests')
+    run.add_argument('--cache-policy',choices=['adaptive','lru'],default='adaptive')
+    run.add_argument('--expert-batch',action='store_true',help='Batch already-routed packed experts without changing their reduction order')
+    run.add_argument('--concat-tiles',action='store_true',help='Assemble evaluated row tiles with one concatenation')
+    run.add_argument('--pipeline-tiles',action='store_true',help='Experimental two-tile overlap; requires --concat-tiles and --kernel metal')
+    run.add_argument('--zero-copy-weights',action='store_true',help='Exact packed-buffer import with a portable copy fallback')
+    run.add_argument('--simd-groups',type=int,choices=[1,2,4,8],default=1,help='Independent SIMD row groups per Metal threadgroup; each row reduction is unchanged')
     run.add_argument('--reserve-mib', type=_positive, default=3072)
     run.add_argument('--max-rss-mib', type=_positive, default=2048)
     run.add_argument('--max-swap-growth-mib', type=_positive, default=128)
@@ -68,6 +75,11 @@ def main(argv=None):
     run.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
     raw = list(sys.argv[1:] if argv is None else argv)
     args = parser.parse_args(raw)
+    if args.command=='gguf-run':
+        if args.pipeline_tiles and (not args.concat_tiles or args.kernel!='metal'):
+            parser.error('--pipeline-tiles requires --concat-tiles and --kernel metal')
+        if args.expert_batch and args.kernel!='metal':parser.error('--expert-batch requires --kernel metal')
+        if args.cache_decay is not None and args.cache_policy!='adaptive':parser.error('--cache-decay requires --cache-policy adaptive')
     if args.command == 'gguf-inspect':
         from .gguf import GGUFReader
         with GGUFReader(args.model, include_tokenizer_metadata=False) as reader:

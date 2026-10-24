@@ -41,3 +41,12 @@ evidence-real-world/*.npz
 evidence-real-world/*.npy
 evidence-real-world/*.xml
 evidence-real-world/.*.tmp
+evidence-throughput/**/*.npy
+evidence-throughput/**/*.npz
+evidence-throughput/**/*.gputrace
+
+# Originals stay local; the public, hash-verified archive restores them exactly.
+evidence-throughput/*
+!evidence-throughput/raw-json-logs.tar.gz
+!evidence-throughput/raw-manifest.json
+!evidence-throughput/README.md

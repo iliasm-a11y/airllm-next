@@ -118,10 +118,19 @@ class GGUFWeights:
     Every tile is evaluated before advancing the disk cursor, bounding MLX's
     lazy graph lifetime. The GGUF reader separately reserves decoder/IO memory.
     """
-    def __init__(self,checkpoint,mx,options,config,*,kernel='reference'):
+    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1):
         self.cp=checkpoint;self.mx=mx;self.cfg=options;self.model_config=config
         if kernel not in ('reference','metal'):raise ValueError('GGUF kernel must be reference or metal')
         if kernel=='metal' and not mx.metal.is_available():raise RuntimeError('Metal kernel requires a Metal device')
+        if type(expert_batch) is not bool:raise ValueError('expert_batch must be boolean')
+        if type(concat_tiles) is not bool:raise ValueError('concat_tiles must be boolean')
+        if type(pipeline_tiles) is not bool:raise ValueError('pipeline_tiles must be boolean')
+        if type(metal_simd_groups) is not int or metal_simd_groups not in (1,2,4,8):raise ValueError('metal_simd_groups must be 1, 2, 4 or 8')
+        if pipeline_tiles and (kernel!='metal' or not concat_tiles):
+            raise ValueError('pipeline_tiles requires kernel=metal and concat_tiles=True')
+        if expert_batch and kernel!='metal':raise ValueError('expert_batch requires kernel=metal')
+        self.expert_batch=expert_batch;self.concat_tiles=concat_tiles;self.pipeline_tiles=pipeline_tiles
+        self.metal_simd_groups=metal_simd_groups
         self.kernel=kernel;self.dtype=getattr(mx,options.dtype);self.stats=defaultdict(float)
         self.spec=None;self.prefetch_enabled=False
         if options.compact_cache_bytes:raise NotImplementedError('GGUF compact-cache transport is not enabled')
@@ -242,22 +251,48 @@ class GGUFWeights:
         if self.reordered and key.endswith('linear_attn.out_proj.weight'):
             x=mx.take(x,mx.array(self.perm),axis=-1)
         outshape=(*x.shape[:-1],shape[0]);outbytes=math.prod(outshape)*4
-        self._guard(outbytes)
-        rows=self._rows_per_tile(name,outbytes,input_bytes=x.size*4,batch=x.size//x.shape[-1]);output=mx.zeros(outshape,dtype=x.dtype)
+        retained_outbytes=outbytes*(2 if self.concat_tiles else 1)
+        self._guard(retained_outbytes)
+        rows=self._rows_per_tile(name,retained_outbytes,input_bytes=x.size*4,batch=x.size//x.shape[-1])
+        pipeline=self.pipeline_tiles and desc.quant_type in (12,14)
+        if pipeline:
+            rows=min(rows,(self.cfg.workspace_bytes-retained_outbytes-x.size*4)//max(1,4*desc.row_bytes+4*x.size//x.shape[-1]))
+            if rows<1:raise MemoryError('Two packed tiles cannot fit workspace_bytes')
+        output=None if self.concat_tiles else mx.zeros(outshape,dtype=x.dtype)
+        tiles=[]
         for start in range(0,shape[0],rows):
             count=min(rows,shape[0]-start)
             if self.kernel=='metal' and desc.quant_type in (12,14):
-                required=outbytes+count*desc.row_bytes*2+x.size*4+count*(x.size//x.shape[-1])*4
+                required=retained_outbytes+count*desc.row_bytes*(4 if pipeline else 2)+x.size*4+count*(x.size//x.shape[-1])*4
                 self._guard(required);weight=self._packed_tile(name,start,count,expert,output_role=output_role)
                 from .gguf_metal import packed_matmul
-                begin=perf_counter();tile=packed_matmul(weight,x,int(desc.quant_type),max_workspace_bytes=self.cfg.workspace_bytes-outbytes)
+                if pipeline and tiles:
+                    # Reading the next known row tile overlaps the previous
+                    # submitted GPU job. Wait before submitting another: at
+                    # most two tile payloads coexist, charged above.
+                    wait=perf_counter();mx.eval(tiles[-1]);self.stats['tile_pipeline_wait_seconds']+=perf_counter()-wait
+                begin=perf_counter();tile=packed_matmul(weight,x,int(desc.quant_type),
+                    max_workspace_bytes=self.cfg.workspace_bytes-retained_outbytes,synchronize=not pipeline,
+                    zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
                 self.stats['packed_matmul_calls']+=1
             else:
-                self._guard(outbytes+x.size*4+count*shape[1]*12+count*(x.size//x.shape[-1])*4);weight=self._tile(name,start,count,expert,output_role=output_role)
+                self._guard(retained_outbytes+x.size*4+count*shape[1]*12+count*(x.size//x.shape[-1])*4);weight=self._tile(name,start,count,expert,output_role=output_role)
                 begin=perf_counter();tile=x.astype(weight.dtype)@weight.T
-            output[...,start:start+count]=tile.astype(output.dtype);mx.eval(output)
-            self.stats['matmul_seconds']+=perf_counter()-begin
+            if self.concat_tiles:
+                # Evaluated tiles total one output payload; concatenation adds
+                # at most another. No repeated full-output scatter/copy.
+                tile=tile.astype(x.dtype)
+                if pipeline:mx.async_eval(tile)
+                else:mx.eval(tile)
+                tiles.append(tile)
+            else:
+                output[...,start:start+count]=tile.astype(output.dtype);mx.eval(output)
+            self.stats['matmul_submission_seconds' if pipeline else 'matmul_seconds']+=perf_counter()-begin
             del tile,weight
+        if self.concat_tiles:
+            output=mx.concatenate(tiles,axis=-1) if len(tiles)>1 else tiles[0]
+            mx.eval(output)
+            tiles.clear()
         if self.reordered:
             if key.endswith('linear_attn.in_proj_qkv.weight'):
                 kd=2*self.model_config['linear_num_key_heads']*self.model_config['linear_key_head_dim']
@@ -270,6 +305,49 @@ class GGUFWeights:
         return output
 
     def output(self,x,key):return self.linear(x,key,output_role=True)
+
+    def linear_experts(self,x,key,experts):
+        """Batch independent quantized experts; bounded tiles and stable order.
+
+        Input [E, B, width] must already be routed. Packed tile identities and
+        cache bytes remain identical to ``linear``; an additional combined host
+        buffer and its MLX import are charged to workspace before allocation.
+        This helper does not change expert selection or reduce expert outputs.
+        """
+        from .gguf_metal import packed_expert_matmul
+        name=self.resolve(key);desc=self.cp.tensors[name];shape=tuple(desc.shape)
+        experts=list(experts)
+        if (not self.expert_batch or self.kernel!='metal' or desc.quant_type not in (12,14)):
+            raise ValueError('Expert batching requires the opt-in packed Metal path')
+        if (len(shape)!=3 or not experts or len(set(experts))!=len(experts)
+            or any(type(e) is not int or not 0<=e<shape[0] for e in experts)
+            or x.ndim!=3 or x.shape[0]!=len(experts) or x.shape[-1]!=shape[-1] or x.shape[1]<1):
+            raise ValueError('Invalid routed expert shapes or indices')
+        mx=self.mx;e=len(experts);batch=x.shape[1];outbytes=e*batch*shape[1]*4
+        # The same row tile on every expert; also cap the combined allocation,
+        # rather than multiplying max_tensor_bytes by the number of experts.
+        rows=min(self._rows_per_tile(name,outbytes,input_bytes=x.size*4,batch=e*batch),
+            self.cfg.max_tensor_bytes//(e*desc.row_bytes),
+            (self.cfg.workspace_bytes-outbytes-x.size*4)//max(1,3*e*desc.row_bytes+e*batch*4))
+        if rows<1:raise MemoryError('Grouped expert tile cannot fit tensor/workspace budget')
+        self._guard(outbytes+x.size*4+3*e*rows*desc.row_bytes+e*batch*rows*4)
+        output=mx.zeros((e,batch,shape[1]),dtype=x.dtype)
+        for start in range(0,shape[1],rows):
+            count=min(rows,shape[1]-start)
+            self._guard(outbytes+x.size*4+3*e*count*desc.row_bytes+e*batch*count*4)
+            packed=np.empty((e,count,desc.row_bytes),dtype=np.uint8)
+            for i,expert in enumerate(experts):
+                tile=self._packed_tile(name,start,count,expert)
+                packed[i]=tile
+                del tile
+            begin=perf_counter()
+            tile=packed_expert_matmul(packed,x,int(desc.quant_type),max_workspace_bytes=self.cfg.workspace_bytes-outbytes,
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+            output[:,:,start:start+count]=tile.astype(output.dtype);mx.eval(output)
+            self.stats['expert_batch_matmul_seconds']+=perf_counter()-begin
+            self.stats['expert_batch_matmul_calls']+=1
+            del tile,packed
+        return output
 
     def embedding(self,ids,key):
         name=self.resolve(key);shape=self.cp.tensors[name].shape
@@ -298,7 +376,45 @@ class GGUFQwenSparseMLP:
         host=np.asarray(ids);selected=np.unique(host);output=mx.zeros_like(flat)
         self.routes={int(e):int(np.count_nonzero(host==e)) for e in selected}
         self.r.stats['routed_expert_uses']+=len(selected)
-        for expert in selected:
+        grouped=(self.r.expert_batch and
+            all(self.r.cp.tensors[p+'ffn_'+part+'_exps.weight'].quant_type in (12,14)
+                for part in ('gate','up','down')))
+        if grouped:
+            experts=[int(e) for e in selected]
+            groups={};positions={};values={}
+            for expert in experts:
+                ti,ki=np.where(host==expert);positions[expert]=(ti,ki)
+                groups.setdefault(len(ti),[]).append(expert)
+            # Prefill is ragged: only batch experts with the same routed token
+            # count. Eight matrices per dispatch bounds combined weight tiles.
+            # Returned down projections together use top_k * tokens * hidden
+            # floats, charged along with current/group workspace below.
+            pending_bytes=host.size*(2*flat.shape[-1]+4*self.c['moe_intermediate_size'])*4
+            self.r._guard(pending_bytes)
+            for token_count,group in groups.items():
+                for offset in range(0,len(group),8):
+                    batch_experts=group[offset:offset+8]
+                    current=mx.stack([flat[mx.array(positions[e][0])] for e in batch_experts])
+                    # Keep grouped scratch and retained down outputs disjoint
+                    # within the same workspace ceiling, without extra budget.
+                    from dataclasses import replace
+                    original_cfg=self.r.cfg
+                    remaining=original_cfg.workspace_bytes-pending_bytes
+                    if remaining<1:raise MemoryError('Routed output retention exceeds workspace_bytes')
+                    self.r.cfg=replace(original_cfg,workspace_bytes=remaining)
+                    try:
+                        gate=self.r.linear_experts(current,p+'ffn_gate_exps.weight',batch_experts)
+                        up=self.r.linear_experts(current,p+'ffn_up_exps.weight',batch_experts)
+                        down=self.r.linear_experts((gate*mx.sigmoid(gate))*up,p+'ffn_down_exps.weight',batch_experts)
+                        for i,e in enumerate(batch_experts):values[e]=down[i]
+                    finally:self.r.cfg=original_cfg
+            for expert in experts:
+                # Apply independent results in the original sorted order.
+                ti,ki=positions[expert];indices=mx.array(ti);ranks=mx.array(ki)
+                output[indices]=output[indices]+(values[expert]*scores[indices,ranks,None]).astype(output.dtype);mx.eval(output)
+            del values,gate,up,down,current
+            self.r.stats['expert_batch_layers']+=1
+        for expert in (() if grouped else selected):
             expert=int(expert);ti,ki=np.where(host==expert);indices=mx.array(ti);ranks=mx.array(ki)
             current=flat[indices]
             gate=self.r.linear(current,p+'ffn_gate_exps.weight',expert)
@@ -320,7 +436,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -361,7 +477,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 self.allocator_limit_bytes=limit
             self.stats=defaultdict(float)
             if kernel=='metal' and self.device!='gpu':raise ValueError('Metal packed kernel requires device=gpu')
-            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel)
+            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups)
             if cache_decay_interval is not None:self.reader.cache.decay_interval=cache_decay_interval
             self.mixers=[(QwenDeltaNet if k=='linear_attention' else QwenFullAttention)(mx,self.reader,self.config,i) for i,k in enumerate(self.config['layer_types'])]
             self.mlps=[GGUFQwenSparseMLP(mx,self.reader,self.config,i) for i in range(self.config['num_hidden_layers'])]
@@ -403,7 +519,10 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
             'weights':dict(self.reader.stats),'kernel':self.reader.kernel,'cache':dict(self.reader.cache.stats)|{
                 'bytes':self.reader.cache.bytes,'peak_bytes':self.reader.cache.peak_bytes,'capacity':self.reader.cache.capacity,
                 'decay_interval':getattr(self.reader.cache,'decay_interval',None)},
-            'prefetch':{'enabled':False},'numerics':{'compute_dtype':self.options.dtype,'text_mrope':'equal positions on all axes'}}
+            'prefetch':{'enabled':False},'expert_batch':self.reader.expert_batch,'concat_tiles':self.reader.concat_tiles,
+            'pipeline_tiles':self.reader.pipeline_tiles,
+            'metal_simd_groups':self.reader.metal_simd_groups,
+            'numerics':{'compute_dtype':self.options.dtype,'text_mrope':'equal positions on all axes'}}
 
 
 GGUFQwenModel=NativeGGUFQwenModel
