@@ -1,5 +1,7 @@
 # AirLLM Next 5.1 — résultats de recherche sur MacBook Air M5
 
+> Les commits de validation locaux et leurs instantanés GitHub ont des SHA différents et des arbres Git identiques : [correspondance vérifiée](research/research51/PUBLICATION.md).
+
 24 octobre 2026. **Recherche publiée sur une branche dédiée ; aucune fusion dans main, aucune version stable 5.1 annoncée.**
 
 ## Résultat vérifié
