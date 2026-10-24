@@ -173,11 +173,15 @@ class GGUFReader:
     def __init__(self, path: str | os.PathLike, *, memory_budget_bytes: int = 64 << 20,
                  max_metadata_bytes: int = 32 << 20, include_tokenizer_metadata: bool = True,
                  max_tensors: int = 100_000, max_metadata_items: int = 1_000_000,
-                 max_read_bytes: int | None = None, include_tokenizer: bool | None = None):
+                 max_read_bytes: int | None = None, include_tokenizer: bool | None = None,
+                 bulk_metadata: bool = False):
         if memory_budget_bytes <= 0 or max_metadata_bytes <= 0:
             raise ValueError("Memory limits must be positive")
         if max_read_bytes is not None and (type(max_read_bytes) is not int or max_read_bytes < 0):
             raise ValueError("max_read_bytes must be a nonnegative integer or None")
+        if type(bulk_metadata) is not bool:
+            raise ValueError('bulk_metadata must be boolean')
+        self.bulk_metadata = bulk_metadata
         self.path = Path(path)
         self.memory_budget_bytes = int(memory_budget_bytes)
         self.max_metadata_bytes = min(int(max_metadata_bytes), self.memory_budget_bytes)
@@ -281,6 +285,24 @@ class GGUFReader:
             raise GGUFError("Truncated metadata array")
         if retain:
             self._charge_metadata(64 + count * 8)
+            if self.bulk_metadata and element_type in _SCALARS:
+                self._charge_metadata(40 * count)
+                if count == 0:
+                    return []
+                per_chunk = min(count, (64 << 10) // min_size,
+                                self.available_memory_bytes // min_size)
+                if per_chunk < 1:
+                    raise GGUFMemoryError("No room for bounded metadata buffer")
+                values = [None] * count
+                fmt = "<" + _SCALARS[element_type]
+                for start in range(0, count, per_chunk):
+                    length = min(per_chunk, count - start) * min_size
+                    with self._reservation(length):
+                        raw = self._take(length)
+                        for index, (value,) in enumerate(struct.iter_unpack(fmt, raw), start):
+                            values[index] = value
+                        del raw
+                return values
             return [self._value(element_type) for _ in range(count)]
         if element_type != 8:
             self._skip(count * min_size)
