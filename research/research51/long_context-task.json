@@ -1,0 +1,7 @@
+[
+  {
+    "id": "long_context",
+    "prompt": "Dossier technique fictif pour une expérience locale. L'ordinateur possède 16 Gio de mémoire unifiée et utilise son SSD interne. Le modèle est stocké dans un fichier GGUF de 23,94 Go. Le système peut lire sélectivement les poids nécessaires à chaque couche. Le cache de poids est limité à 64 Mio, le budget des entrées et sorties à 64 Mio, les états de génération à 256 Mio et l'espace de travail à 128 Mio. La réserve système de 3 Gio est indépendante de ces budgets. Le superviseur vérifie la pression mémoire et l'augmentation du swap toutes les 50 millisecondes. Aucune application personnelle n'est fermée. Le modèle conserve ses poids d'origine. Question : quelle est la somme des quatre budgets de cache, entrées et sorties, états et travail ? Réponds par une seule phrase, en Mio, sans inclure la réserve système.",
+    "max_new_tokens": 96
+  }
+]

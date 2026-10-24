@@ -57,6 +57,27 @@ def test_invalid_limits(field, value):
         ExperimentLimits(**{field: value})
 
 
+@pytest.mark.parametrize('value', [0, True, 1.5])
+def test_process_limit_must_be_a_positive_integer(value):
+    with pytest.raises(ValueError, match='max_processes'):
+        ExperimentLimits(max_processes=value)
+
+
+def test_owned_process_count_is_bounded_and_persisted(tmp_path):
+    code = ('import subprocess,sys,time; '
+            'subprocess.Popen([sys.executable,"-c","import time; time.sleep(30)"]); '
+            'time.sleep(30)')
+    output = tmp_path / 'process-count.json'
+    limits = ExperimentLimits(reserve_bytes=0, admitted_payload_bytes=0,
+                              timeout_seconds=2, max_processes=1)
+    with pytest.raises(RuntimeError, match='owned_process_count'):
+        supervise([sys.executable, '-c', code], output, limits)
+    report = json.loads(output.with_suffix('.guard.json').read_text())
+    assert report['sampled_peak_processes'] >= 2
+    assert report['violation'] == 'owned_process_count'
+    assert report['elapsed_seconds'] < 5
+
+
 def test_detached_observed_child_is_stopped(tmp_path):
     marker = tmp_path / 'child.pid'
     child = "import time; time.sleep(30)"

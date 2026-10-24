@@ -207,6 +207,22 @@ class GGUFWeights:
         desc=self.cp.tensors[name];cacheable=not (output_role or name=='output.weight') or self.cfg.output_tile_cache
         result=self.cache.get(ident,count*desc.row_bytes) if cacheable else None
         if result is not None:return result
+        if self.packed_budget is not None:
+            encoded=count*desc.row_bytes
+            with self.packed_budget.lock:
+                needs_room=encoded>self.packed_budget.capacity_bytes-self.packed_budget.live_bytes
+            if needs_room:
+                # An evaluated DLPack input may remain leased by the last
+                # submitted Metal command. Drain completed work only under
+                # pressure, without enlarging the budget or evicting demand
+                # cache entries. User-held aliases still fail closed below.
+                wait=perf_counter();self.mx.synchronize()
+                self.stats['packed_budget_sync_seconds']+=perf_counter()-wait
+                self.stats['packed_budget_syncs']+=1
+                with self.packed_budget.lock:
+                    if encoded>self.packed_budget.capacity_bytes-self.packed_budget.live_bytes:
+                        from .gguf import GGUFMemoryError
+                        raise GGUFMemoryError('Packed buffer budget exhausted after synchronization')
         begin=perf_counter()
         if self.packed_direct_io:
             from .gguf_packed_io import read_packed_rows_into

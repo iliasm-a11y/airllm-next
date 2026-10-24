@@ -62,6 +62,7 @@ class ExperimentLimits:
     admitted_payload_bytes: int = 768 * 1024**2
     timeout_seconds: float = 900.
     interval_seconds: float = .05
+    max_processes: int = 32
 
     def __post_init__(self):
         for field in ('rss_bytes', 'reserve_bytes', 'swap_growth_bytes', 'admitted_payload_bytes'):
@@ -69,6 +70,8 @@ class ExperimentLimits:
                 raise ValueError(f'{field} must be a nonnegative integer')
         if self.rss_bytes < 1:
             raise ValueError('rss_bytes must be positive')
+        if type(self.max_processes) is not int or self.max_processes < 1:
+            raise ValueError('max_processes must be a positive integer')
         for field in ('timeout_seconds', 'interval_seconds'):
             value = getattr(self, field)
             if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
@@ -88,7 +91,9 @@ def admission(limits, snapshot=None):
     return snapshot
 
 
-def violation(limits, before, current, rss, elapsed):
+def violation(limits, before, current, rss, elapsed, process_count=1):
+    if process_count > limits.max_processes:
+        return 'owned_process_count'
     if rss > limits.rss_bytes:
         return 'owned_process_tree_rss'
     if current['available_bytes'] < limits.reserve_bytes:
@@ -188,6 +193,7 @@ def supervise(command, output, limits=None, env=None):
                 except psutil.NoSuchProcess:
                     pass
                 active_pids = {member.pid for member in members} if 'members' in locals() else set()
+                process_count = len(active_pids)
                 for pid, created in list(observed.items()):
                     if pid in active_pids:
                         continue
@@ -195,16 +201,18 @@ def supervise(command, output, limits=None, env=None):
                         detached = psutil.Process(pid)
                         if detached.create_time() == created:
                             rss += detached.memory_info().rss
+                            process_count += 1
                     except (psutil.NoSuchProcess, psutil.AccessDenied):
                         pass
                 report['sample_count'] += 1
+                report['sampled_peak_processes'] = max(report.get('sampled_peak_processes', 0), process_count)
                 report['sampled_peak_rss_bytes'] = max(report['sampled_peak_rss_bytes'], rss)
                 report['minimum_available_bytes'] = min(report['minimum_available_bytes'], current['available_bytes'])
                 report['maximum_swap_growth_bytes'] = max(report['maximum_swap_growth_bytes'],
                                                          current['swap_used_bytes'] - before['swap_used_bytes'])
                 if current['pressure_level'] is not None:
                     report['peak_pressure_level'] = max(report['peak_pressure_level'] or 0, current['pressure_level'])
-                reason = violation(limits, before, current, rss, time.monotonic() - begin)
+                reason = violation(limits, before, current, rss, time.monotonic() - begin, process_count)
                 if reason:
                     report['violation'] = reason
                     break

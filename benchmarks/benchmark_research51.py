@@ -32,7 +32,63 @@ def source_manifest(root):
             for p in sorted((root / 'air_llm/airllm/nextgen').glob('*.py'))}
 
 
+def engine_manifest(root):
+    root = Path(root).resolve()
+    sources = source_manifest(root)
+    if not sources:
+        raise ValueError('Engine root contains no nextgen Python sources: ' + str(root))
+    return dict(git_head=subprocess.check_output(
+        ['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip(), source_sha256=sources)
+
+
+def protocol_manifest(paths):
+    return {str(Path(path).resolve()): hashlib.sha256(Path(path).read_bytes()).hexdigest()
+            for path in paths}
+
+
+def protocol_unchanged(expected):
+    try:
+        return bool(expected) and protocol_manifest(expected) == expected
+    except OSError:
+        return False
+
+
+def load_task_snapshot(path):
+    raw = Path(path).read_bytes()
+    tasks = json.loads(raw)
+    if not isinstance(tasks, list) or not tasks:
+        raise ValueError('Research tasks must be a nonempty list')
+    seen = set()
+    for task in tasks:
+        if not isinstance(task, dict):
+            raise ValueError('Every research task must be an object')
+        ident, prompt, count = task.get('id'), task.get('prompt'), task.get('max_new_tokens')
+        if not isinstance(ident, str) or not ident.strip() or ident in seen:
+            raise ValueError('Research task IDs must be unique nonempty strings')
+        if not isinstance(prompt, str) or not prompt.strip():
+            raise ValueError('Research task prompts must be nonempty strings')
+        if type(count) is not int or count < 1:
+            raise ValueError('Research task max_new_tokens must be a positive integer')
+        seen.add(ident)
+    return tasks, hashlib.sha256(raw).hexdigest()
+
+
+def load_tasks(path):
+    return load_task_snapshot(path)[0]
+
+
 def worker(args):
+    tasks, tasks_hash = load_task_snapshot(args.tasks)
+    protocol = (json.loads(args.expected_protocol_json) if args.expected_protocol_json
+                else protocol_manifest([Path(__file__), args.tasks]))
+    if not isinstance(protocol, dict) or not protocol_unchanged(protocol):
+        raise RuntimeError('Research protocol changed before worker startup')
+    if protocol.get(str(args.tasks)) != tasks_hash:
+        raise RuntimeError('Loaded tasks differ from the frozen protocol')
+    initial_engine = engine_manifest(args.engine_root)
+    if (args.expected_engine_head is not None and initial_engine['git_head'] != args.expected_engine_head
+        or args.expected_engine_sources_json is not None and initial_engine['source_sha256'] != json.loads(args.expected_engine_sources_json)):
+        raise RuntimeError('Engine differs from its frozen campaign manifest')
     sys.path.insert(0, str(args.engine_root / 'air_llm'))
     import importlib.metadata
     import numpy as np
@@ -45,10 +101,11 @@ def worker(args):
     from airllm.nextgen.physical_io import physical_read_bytes
 
     stat = args.model.stat()
-    sources = source_manifest(args.engine_root)
+    sources = initial_engine['source_sha256']
     report = dict(status='started', label=args.label, command=sys.argv,
-                  git_head=subprocess.check_output(['git', '-C', str(args.engine_root), 'rev-parse', 'HEAD'], text=True).strip(),
+                  git_head=initial_engine['git_head'], engine_root=str(args.engine_root),
                   source_sha256=sources, harness_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  protocol_sha256=protocol, tasks_sha256=tasks_hash, tasks_snapshot=tasks,
                   hardware=dict(platform=platform.platform(), machine=platform.machine(), python=sys.version,
                                 processor=subprocess.check_output(['sysctl', '-n', 'machdep.cpu.brand_string'], text=True).strip()),
                   versions={k: importlib.metadata.version(k) for k in ('mlx', 'numpy', 'psutil')},
@@ -110,7 +167,7 @@ def worker(args):
                 return result
 
             model.forward = forward
-            for task in json.loads(args.tasks.read_text()):
+            for task in tasks:
                 checks = []
                 chat = GGUFChatSession(model, tokenizer, system_prompt='Tu es un assistant utile. Réponds en français.')
                 item = dict(task, status='started', partial_ids=[])
@@ -148,15 +205,21 @@ def worker(args):
     finally:
         report.update(after=system_snapshot(), worker_wall_seconds=perf_counter() - start,
                       source_unchanged=source_manifest(args.engine_root) == sources,
+                      protocol_unchanged=protocol_unchanged(protocol),
                       model_stat_unchanged=(args.model.stat().st_size, args.model.stat().st_ino, args.model.stat().st_mtime_ns)
                       == (stat.st_size, stat.st_ino, stat.st_mtime_ns))
+        report['git_head_after'] = engine_manifest(args.engine_root)['git_head']
+        report['engine_head_unchanged'] = report['git_head_after'] == report['git_head']
         save(args.output, report)
-        if report['status'] == 'completed' and not report['source_unchanged']:
-            raise RuntimeError('Engine source changed during measurement')
+        if report['status'] == 'completed' and not all(report[key] for key in (
+                'source_unchanged', 'protocol_unchanged', 'model_stat_unchanged', 'engine_head_unchanged')):
+            report['status'] = 'invalid'
+            save(args.output, report)
+            raise RuntimeError('Engine, protocol or model identity changed during measurement')
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument('--model', type=Path, required=True)
     parser.add_argument('--tasks', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
@@ -169,13 +232,23 @@ def main():
     for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io', 'bulk-metadata', 'zero-copy-weights'):
         parser.add_argument('--' + flag, action='store_true')
     parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
+    parser.add_argument('--expected-protocol-json', help=argparse.SUPPRESS)
+    parser.add_argument('--expected-engine-head', help=argparse.SUPPRESS)
+    parser.add_argument('--expected-engine-sources-json', help=argparse.SUPPRESS)
     args = parser.parse_args()
+    for name in ('model', 'tasks', 'output', 'engine_root'):
+        setattr(args, name, getattr(args, name).expanduser().resolve())
+    load_tasks(args.tasks)  # Refuse empty/malformed tasks before any model launch.
     if args.worker:
         worker(args)
     else:
         sys.path.insert(0, str(ROOT / 'air_llm'))
         from airllm.nextgen.experiment_guard import ExperimentLimits, supervise, validate_output_paths
-        validate_output_paths(args.output, protected=[args.model, args.tasks, Path(__file__)])
+        protected = [args.model, args.tasks, Path(__file__)]
+        if args.expected_protocol_json:
+            protected.extend(map(Path, json.loads(args.expected_protocol_json)))
+        protected.extend(args.engine_root / name for name in source_manifest(args.engine_root))
+        validate_output_paths(args.output, protected=protected)
         if any(p.exists() for p in (args.output, args.output.with_suffix('.guard.json'), args.output.with_suffix('.log'))):
             raise FileExistsError('Refusing to overwrite prior experiment evidence')
         args.output.parent.mkdir(exist_ok=True, parents=True)

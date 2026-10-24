@@ -1,5 +1,4 @@
 """Transport integration: exact packed Metal math, eviction and live owners."""
-from dataclasses import replace
 import gc
 
 import mlx.core as mx
@@ -70,3 +69,41 @@ def test_cli_rejects_two_host_transports_before_model_open(tmp_path):
               '--packed-direct-io', '--packed-copy-free'])
     assert error.value.code == 2
     assert not output.exists()
+
+
+@pytest.mark.parametrize('release_on_sync', [False, True])
+def test_packed_backpressure_drains_before_read_without_increasing_budget(release_on_sync):
+    from collections import defaultdict
+    from types import SimpleNamespace
+    from airllm.nextgen.gguf import GGUFMemoryError, PackedBufferBudget
+    weights = GGUFWeights.__new__(GGUFWeights)
+    budget = PackedBufferBudget(8)
+    budget._acquire(6)
+    calls = []
+
+    def synchronize():
+        calls.append('sync')
+        if release_on_sync:
+            budget._release(6)
+
+    def read(*a, **kw):
+        calls.append('read')
+        return np.arange(4, dtype=np.uint8)
+
+    weights.cp = SimpleNamespace(tensors={'w': SimpleNamespace(row_bytes=4)}, read_packed_rows=read)
+    weights.cache = SimpleNamespace(get=lambda *a: None, record_load=lambda *a: None, put=lambda *a: None)
+    weights.cfg = SimpleNamespace(output_tile_cache=False)
+    weights.packed_budget = budget
+    weights.mx = SimpleNamespace(synchronize=synchronize)
+    weights.stats = defaultdict(float)
+    weights.packed_direct_io = False
+    weights.packed_copy_free = True
+    if release_on_sync:
+        np.testing.assert_array_equal(weights._packed_tile('w', 0, 1), np.arange(4, dtype=np.uint8))
+        assert calls == ['sync', 'read']
+    else:
+        with pytest.raises(GGUFMemoryError, match='after synchronization'):
+            weights._packed_tile('w', 0, 1)
+        assert calls == ['sync']
+    assert budget.capacity_bytes == 8
+    assert weights.stats['packed_budget_syncs'] == 1
