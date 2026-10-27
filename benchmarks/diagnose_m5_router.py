@@ -50,13 +50,13 @@ def checkpoint_digest(path):
     return h.hexdigest()
 
 
-def _call_with_locals(function, args, kwargs):
+def _call_with_locals(function, args, kwargs, *, locals_function=None):
     """Observe one Python return without altering the original call or result."""
     previous = sys.getprofile()
     if previous is not None:
         raise RuntimeError('Target router capture requires an unused Python profile hook')
     captured = {}
-    code = function.__code__
+    code = (function if locals_function is None else locals_function).__code__
 
     def profile(frame, event, argument):
         if frame.f_code is code and event == 'return':
@@ -127,6 +127,8 @@ def capture_worker(args):
     from benchmark_research51 import engine_manifest
 
     reference = json.loads(args.reference_report.read_text())
+    if reference.get('backend_options',{}).get('router_reference_chunk',0):
+        raise NotImplementedError('Target return-local capture supports the original router only; canonical router validation requires the complete RuntimeObserver ordered-route and full-logit evidence')
     expected = dict(git_head=reference['git_head'], source_sha256=reference['source_sha256'])
     if engine_manifest(args.engine_root) != expected:
         raise ValueError('Diagnostic engine differs from the original recorded source tree')
@@ -152,7 +154,8 @@ def capture_worker(args):
                 targeted = (layer == args.layer and start <= args.position < start + int(x.shape[1]))
                 if not targeted:
                     return original(*a, **kw)
-                result, local_values = _call_with_locals(original, a, kw)
+                arithmetic = original.__globals__.get('_original_qwen_route',original)
+                result, local_values = _call_with_locals(original, a, kw,locals_function=arithmetic)
                 locals_bank.update(local_values)
                 return result
 

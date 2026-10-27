@@ -39,6 +39,28 @@ def test_profile_is_restored_when_original_router_fails():
     assert sys.getprofile() is None
 
 
+def test_default_dispatcher_can_capture_unchanged_inner_router_locals():
+    def arithmetic(x):
+        logits=x*2
+        probabilities=logits/logits.sum()
+        return logits,probabilities
+    def dispatcher(x):
+        return arithmetic(x)
+    x=np.array([1.,2.],dtype=np.float32)
+    result,values=diagnostic._call_with_locals(dispatcher,(x,),{},locals_function=arithmetic)
+    assert values['x'] is x
+    assert result[0] is values['logits'] and result[1] is values['probabilities']
+    assert sys.getprofile() is None
+
+
+def test_target_capture_explicitly_refuses_canonical_dispatcher(tmp_path):
+    from types import SimpleNamespace
+    path=tmp_path/'report.json'
+    path.write_text(json.dumps(dict(backend_options=dict(router_reference_chunk=16))))
+    with pytest.raises(NotImplementedError,match='complete RuntimeObserver'):
+        diagnostic.capture_worker(SimpleNamespace(reference_report=path))
+
+
 def test_existing_profiler_is_preserved_instead_of_silently_replaced():
     def installed(frame,event,argument):
         pass

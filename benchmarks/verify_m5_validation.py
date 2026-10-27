@@ -101,7 +101,8 @@ def validate_config(config):
                 '--packed-copy-free','--packed-direct-io','--bulk-metadata','--zero-copy-weights',
                 '--expert-pipeline','--grouped-direct-io'}
     values = {'--rows','--prefill-chunk','--hyper-prefill-max-tokens','--cache-policy','--io-mode',
-              '--timeout','--string-buffer-bytes','--metal-batch-backend','--metal-token-tile','--speculative-depth'}
+              '--timeout','--string-buffer-bytes','--metal-batch-backend','--metal-token-tile','--speculative-depth',
+              '--router-reference-chunk'}
     for experiment in experiments:
         name = experiment.get('name','')
         require(isinstance(name,str) and re.fullmatch('[A-Za-z0-9_-]+',name) and name not in names,
@@ -138,6 +139,8 @@ def validate_config(config):
                     elif flag in ('--metal-token-tile','--speculative-depth'):
                         require(value in ('0','2','4','8','16') and (flag != '--metal-token-tile' or value != '0'),
                                 'Unknown speculation/tile depth')
+                    elif flag == '--router-reference-chunk':
+                        require(value in ('0','16'),'Unknown router reference chunk')
                     elif flag == '--cache-policy':
                         require(value in ('lru','adaptive'), 'Unknown cache policy')
                     elif flag == '--io-mode':

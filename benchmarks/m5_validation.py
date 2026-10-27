@@ -26,7 +26,7 @@ import time
 from benchmark_research51 import (ROOT, engine_manifest, load_tasks,
                                  protocol_manifest, protocol_unchanged, save)
 from campaign_research51 import validate_job_args, wait_before_job
-from plan_hyperstream3 import build_experiments
+from plan_hyperstream3 import build_experiments, apply_profile_jobs, PROFILES
 from m5_process_inventory import expected_read_error
 
 
@@ -280,6 +280,9 @@ def prepare(args):
         raise ValueError('At least two pairs are needed for alternating AB/BA order')
     if not re.fullmatch('[0-9a-f]{64}', args.expected_sha256):
         raise ValueError('Expected full checkpoint SHA-256 is required')
+    profile = getattr(args,'profile','retained')
+    if profile not in PROFILES:
+        raise ValueError('Unknown campaign profile: '+str(profile))
     roots = {key: Path(getattr(args, key)).expanduser().resolve(strict=True)
              for key in ('h1', 'h2', 'candidate')}
     folder = args.output.expanduser().absolute()
@@ -291,7 +294,7 @@ def prepare(args):
     if identity['bytes'] <= 0:
         raise ValueError('Empty checkpoint')
     tasks = roots['candidate'] / 'research/hyperstream2/context.json'
-    experiments = build_experiments(roots['h1'], roots['h2'], roots['candidate'], pairs=args.pairs)
+    experiments = build_experiments(roots['h1'], roots['h2'], roots['candidate'], pairs=args.pairs,profile=profile)
     numerical = ['--numerical-evidence', '--expert-batch', '--concat-tiles', '--bulk-metadata',
                  '--string-buffer-bytes', '65536', '--prefill-chunk', '16']
     direct = [*numerical, '--packed-direct-io']
@@ -314,6 +317,9 @@ def prepare(args):
     # prevent unrelated isolated transport/speculation trials from being run.
     combinations = [x for x in experiments if x.get('requires_prior_pass')]
     experiments = [x for x in experiments if not x.get('requires_prior_pass')] + combinations
+    # Apply centrally after custom transport/long-decode families are appended,
+    # so every current-candidate control and treatment declares the same router.
+    apply_profile_jobs(experiments,roots['candidate'],profile)
     manifests = {str(root): engine_manifest(root) for root in roots.values()}
     for label, expected in (('h1', 'c8f81e57463ed3d7fd3d7dba226a65500439a9ce'),
                             ('h2', '5e8234181e736c0319a64df25e6813e92dd3e6da')):
@@ -351,7 +357,7 @@ def prepare(args):
     for root in roots.values():
         paths.update((root / 'air_llm').rglob('*.py'))
     from verify_m5_validation import KERNEL_POLICY, FIDELITY_FAILURE_POLICY
-    config = dict(schema_version=1, origin=str(folder), expected_checkpoint_sha256=args.expected_sha256,
+    config = dict(schema_version=1, origin=str(folder), expected_checkpoint_sha256=args.expected_sha256,profile=profile,
                   kernel_qualification_policy=KERNEL_POLICY,
                   fidelity_failure_policy=FIDELITY_FAILURE_POLICY,
                   model_identity=identity, engine_manifests=manifests, engine_roots={k:str(v) for k,v in roots.items()},
@@ -639,6 +645,7 @@ def main():
         q.add_argument('--'+option, type=Path, required=True)
     q.add_argument('--expected-sha256', required=True)
     q.add_argument('--pairs', type=int, default=3)
+    q.add_argument('--profile',choices=PROFILES,default='retained')
     q.add_argument('--kernel-report', type=Path)
     q = sub.add_parser('run', allow_abbrev=False)
     q.add_argument('--campaign', type=Path, required=True)
