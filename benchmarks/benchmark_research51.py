@@ -18,6 +18,13 @@ from time import perf_counter
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def string_buffer_size(value):
+    number = int(value)
+    if not 0 <= number <= 65536:
+        raise argparse.ArgumentTypeError('String buffer must be between 0 and 65536 bytes')
+    return number
+
+
 def save(path, value):
     from tempfile import NamedTemporaryFile
     with NamedTemporaryFile('w', dir=path.parent, delete=False, encoding='utf-8') as f:
@@ -118,6 +125,8 @@ def worker(args):
     reader_kwargs = dict(memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20)
     if args.bulk_metadata:
         reader_kwargs['bulk_metadata'] = True
+    if args.string_buffer_bytes:
+        reader_kwargs['string_buffer_bytes'] = args.string_buffer_bytes
     with GGUFReader(args.model, **reader_kwargs) as checkpoint:
         tokenizer = GGUFTokenizer(checkpoint.metadata)
         report['tokenizer_io'] = dict(checkpoint.stats)
@@ -128,9 +137,11 @@ def worker(args):
                          policy=args.cache_policy, device='gpu', dtype='float32', prefetch=False,
                          load_tokenizer=False, io_mode=args.io_mode, zero_copy_weights=args.zero_copy_weights)
     kwargs = dict(kernel='metal')
-    for name in ('expert_batch', 'concat_tiles', 'packed_copy_free', 'packed_direct_io', 'bulk_metadata'):
+    for name in ('expert_batch', 'concat_tiles', 'packed_copy_free', 'packed_direct_io', 'bulk_metadata', 'expert_pipeline'):
         if getattr(args, name):
             kwargs[name] = True
+    if args.string_buffer_bytes:
+        kwargs['string_buffer_bytes'] = args.string_buffer_bytes
     report['options'] = asdict(options)
     report['backend_options'] = kwargs
     try:
@@ -229,7 +240,9 @@ def main():
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'], default='lru')
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
     parser.add_argument('--timeout', type=float, default=600)
-    for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io', 'bulk-metadata', 'zero-copy-weights'):
+    parser.add_argument('--string-buffer-bytes', type=string_buffer_size, default=0,
+                        metavar='0..65536', help='Bounded GGUF string-array read buffer; zero retains legacy parsing')
+    for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io', 'bulk-metadata', 'zero-copy-weights', 'expert-pipeline'):
         parser.add_argument('--' + flag, action='store_true')
     parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
     parser.add_argument('--expected-protocol-json', help=argparse.SUPPRESS)

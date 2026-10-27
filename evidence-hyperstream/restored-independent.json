@@ -1,0 +1,375 @@
+{
+  "status": "verified",
+  "worker_count": 8,
+  "pair_count": 4,
+  "all_tokens_logits_routes_positions_text_exact": true,
+  "aggregate": {
+    "baseline": {
+      "workers": 4,
+      "generated_tokens_including_eos": 144,
+      "decode_tokens_including_final_eos": 140,
+      "stream_decode_seconds": 95.0100417499998,
+      "decode_tok_s": 1.4735284546909515,
+      "end_to_end_tok_s": 0.8452073359504048,
+      "guard_elapsed_seconds": 170.3723972509979,
+      "peak_owned_rss_bytes_sampled": 437518336,
+      "peak_mlx_allocator_bytes": 163859200,
+      "minimum_available_bytes_sampled": 4124999680,
+      "maximum_system_swap_growth_bytes_sampled": 0,
+      "logical_read_bytes": 352701305344,
+      "process_storage_read_bytes": 101972795392,
+      "decode_logical_read_bytes_per_token": 1964699264.0,
+      "decode_process_storage_read_bytes_per_token": 210002388.1142857,
+      "median_ttft_seconds": 17.244911187499383
+    },
+    "candidate": {
+      "workers": 4,
+      "generated_tokens_including_eos": 144,
+      "decode_tokens_including_final_eos": 140,
+      "stream_decode_seconds": 88.40248891701049,
+      "decode_tok_s": 1.5836658188597796,
+      "end_to_end_tok_s": 0.9230619901291031,
+      "guard_elapsed_seconds": 156.00252370900853,
+      "peak_owned_rss_bytes_sampled": 483262464,
+      "peak_mlx_allocator_bytes": 163859200,
+      "minimum_available_bytes_sampled": 4290772992,
+      "maximum_system_swap_growth_bytes_sampled": 0,
+      "logical_read_bytes": 352701305344,
+      "process_storage_read_bytes": 99015004160,
+      "decode_logical_read_bytes_per_token": 1964699264.0,
+      "decode_process_storage_read_bytes_per_token": 199037747.2,
+      "median_ttft_seconds": 15.922769041495485
+    }
+  },
+  "pairs": [
+    {
+      "task": "explanation",
+      "repeat": 0,
+      "tokens_logits_routes_positions_text_exact": true,
+      "decode_speedup": 1.0360465152412552,
+      "end_to_end_speedup": 1.054818975718829
+    },
+    {
+      "task": "explanation",
+      "repeat": 1,
+      "tokens_logits_routes_positions_text_exact": true,
+      "decode_speedup": 1.1131980538981572,
+      "end_to_end_speedup": 1.1129915949992544
+    },
+    {
+      "task": "short",
+      "repeat": 0,
+      "tokens_logits_routes_positions_text_exact": true,
+      "decode_speedup": 1.060972663085117,
+      "end_to_end_speedup": 1.106840907055954
+    },
+    {
+      "task": "short",
+      "repeat": 1,
+      "tokens_logits_routes_positions_text_exact": true,
+      "decode_speedup": 1.083840587245911,
+      "end_to_end_speedup": 1.116385152351321
+    }
+  ],
+  "workers": [
+    {
+      "label": "short.r0.baseline",
+      "task": "short",
+      "repeat": 0,
+      "variant": "baseline",
+      "generated_tokens": 8,
+      "decode_tokens": 7,
+      "decode_seconds": 4.911273666999477,
+      "decode_tok_s": 1.4252921898926927,
+      "generation_seconds": 23.709102083994367,
+      "guard_elapsed_seconds": 25.336125041998457,
+      "ttft_seconds": 18.79782841699489,
+      "end_to_end_tok_s": 0.31575467782617866,
+      "rss_peak_bytes": 435568640,
+      "mlx_peak_bytes": 160025344,
+      "minimum_available_bytes": 4455858176,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 34268980608,
+      "process_storage_read_bytes": 22529564672,
+      "decode_logical_bytes": 13752894848,
+      "decode_storage_bytes": 2159001600
+    },
+    {
+      "label": "short.r0.candidate",
+      "task": "short",
+      "repeat": 0,
+      "variant": "candidate",
+      "generated_tokens": 8,
+      "decode_tokens": 7,
+      "decode_seconds": 4.629029416006233,
+      "decode_tok_s": 1.5121960503848686,
+      "generation_seconds": 21.966822541005968,
+      "guard_elapsed_seconds": 22.890484875002585,
+      "ttft_seconds": 17.337793124999735,
+      "end_to_end_tok_s": 0.3494901940122881,
+      "rss_peak_bytes": 410501120,
+      "mlx_peak_bytes": 160041728,
+      "minimum_available_bytes": 4477353984,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 34268980608,
+      "process_storage_read_bytes": 21805731840,
+      "decode_logical_bytes": 13752894848,
+      "decode_storage_bytes": 2170028032
+    },
+    {
+      "label": "explanation.r0.candidate",
+      "task": "explanation",
+      "repeat": 0,
+      "variant": "candidate",
+      "generated_tokens": 64,
+      "decode_tokens": 63,
+      "decode_seconds": 39.116437208002026,
+      "decode_tok_s": 1.6105761285210334,
+      "generation_seconds": 54.0071380829977,
+      "guard_elapsed_seconds": 54.887412042000506,
+      "ttft_seconds": 14.890700874995673,
+      "end_to_end_tok_s": 1.1660232759931628,
+      "rss_peak_bytes": 428064768,
+      "mlx_peak_bytes": 163842816,
+      "minimum_available_bytes": 4497195008,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 142081672064,
+      "process_storage_read_bytes": 27964280832,
+      "decode_logical_bytes": 123776053632,
+      "decode_storage_bytes": 11440455680
+    },
+    {
+      "label": "explanation.r0.baseline",
+      "task": "explanation",
+      "repeat": 0,
+      "variant": "baseline",
+      "generated_tokens": 64,
+      "decode_tokens": 63,
+      "decode_seconds": 40.52644845800387,
+      "decode_tok_s": 1.554540365541399,
+      "generation_seconds": 56.279824042001565,
+      "guard_elapsed_seconds": 57.89628375000029,
+      "ttft_seconds": 15.753375583997695,
+      "end_to_end_tok_s": 1.1054250092519915,
+      "rss_peak_bytes": 432275456,
+      "mlx_peak_bytes": 163859200,
+      "minimum_available_bytes": 4513759232,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 142081672064,
+      "process_storage_read_bytes": 27517636608,
+      "decode_logical_bytes": 123776053632,
+      "decode_storage_bytes": 11387731968
+    },
+    {
+      "label": "short.r1.candidate",
+      "task": "short",
+      "repeat": 1,
+      "variant": "candidate",
+      "generated_tokens": 8,
+      "decode_tokens": 7,
+      "decode_seconds": 4.7616739590012,
+      "decode_tok_s": 1.4700712523098298,
+      "generation_seconds": 21.716511166996497,
+      "guard_elapsed_seconds": 22.582885625000927,
+      "ttft_seconds": 16.954837207995297,
+      "end_to_end_tok_s": 0.35425056535482813,
+      "rss_peak_bytes": 407732224,
+      "mlx_peak_bytes": 159943424,
+      "minimum_available_bytes": 4515889152,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 34268980608,
+      "process_storage_read_bytes": 20349579264,
+      "decode_logical_bytes": 13752894848,
+      "decode_storage_bytes": 2108342272
+    },
+    {
+      "label": "short.r1.baseline",
+      "task": "short",
+      "repeat": 1,
+      "variant": "baseline",
+      "generated_tokens": 8,
+      "decode_tokens": 7,
+      "decode_seconds": 5.160895499997423,
+      "decode_tok_s": 1.3563537568244688,
+      "generation_seconds": 23.644641207996756,
+      "guard_elapsed_seconds": 25.21119820899912,
+      "ttft_seconds": 18.483745707999333,
+      "end_to_end_tok_s": 0.31731930920857243,
+      "rss_peak_bytes": 435044352,
+      "mlx_peak_bytes": 159976192,
+      "minimum_available_bytes": 4518952960,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 34268980608,
+      "process_storage_read_bytes": 21531537408,
+      "decode_logical_bytes": 13752894848,
+      "decode_storage_bytes": 2116681728
+    },
+    {
+      "label": "explanation.r1.baseline",
+      "task": "explanation",
+      "repeat": 1,
+      "variant": "baseline",
+      "generated_tokens": 64,
+      "decode_tokens": 63,
+      "decode_seconds": 44.41142412499903,
+      "decode_tok_s": 1.418553924834343,
+      "generation_seconds": 60.417500791998464,
+      "guard_elapsed_seconds": 61.92879025000002,
+      "ttft_seconds": 16.006076666999434,
+      "end_to_end_tok_s": 1.0334450219621394,
+      "rss_peak_bytes": 437518336,
+      "mlx_peak_bytes": 163859200,
+      "minimum_available_bytes": 4124999680,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 142081672064,
+      "process_storage_read_bytes": 30394056704,
+      "decode_logical_bytes": 123776053632,
+      "decode_storage_bytes": 13736919040
+    },
+    {
+      "label": "explanation.r1.candidate",
+      "task": "explanation",
+      "repeat": 1,
+      "variant": "candidate",
+      "generated_tokens": 64,
+      "decode_tokens": 63,
+      "decode_seconds": 39.89534833400103,
+      "decode_tok_s": 1.5791314684751834,
+      "generation_seconds": 54.646837125001184,
+      "guard_elapsed_seconds": 55.64174116700451,
+      "ttft_seconds": 14.751488791000156,
+      "end_to_end_tok_s": 1.150215623337681,
+      "rss_peak_bytes": 483262464,
+      "mlx_peak_bytes": 163859200,
+      "minimum_available_bytes": 4290772992,
+      "swap_initial_bytes": 53739520,
+      "swap_final_bytes": 53739520,
+      "swap_growth_bytes": 0,
+      "logical_read_bytes": 142081672064,
+      "process_storage_read_bytes": 28895412224,
+      "decode_logical_bytes": 123776053632,
+      "decode_storage_bytes": 12146458624
+    }
+  ],
+  "aggregate_decode_speedup": 1.0747439683422522,
+  "aggregate_end_to_end_speedup": 1.0921130838164739,
+  "current_small_input_hashes_checked": 0,
+  "model_identity": {
+    "path": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "bytes": 23938321664,
+    "inode": 2008453,
+    "mtime_ns": 1785061058288234344
+  },
+  "model_integrity_scope": "Recorded immutable stat identity; no model read or full-file SHA256 recomputation",
+  "memory_scope": "Sampled owned-process RSS and overlapping MLX allocator peak are separate measures",
+  "storage_scope": "Logical requests and process OS-accounted reads are separate; no cold-SSD/NAND certification",
+  "swap_scope": "Initial and final nonzero system swap retained per worker; growth is not total usage",
+  "inputs": [
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/campaign.json",
+      "bytes": 111011,
+      "sha256": "62896d16342fb1164a5b2a92cd5fddac258bff8d50ca1b389f9f4b7d1902c39c"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r0.baseline.json",
+      "bytes": 27802,
+      "sha256": "ae179b6c66b2f673a49cdc59b64eabe7eb6e2177ca2449099b54c718eafddc22"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r0.baseline.guard.json",
+      "bytes": 8206,
+      "sha256": "288b5a8b39099aa2df9d9e3d6edd5f0d7c76ac2468ebe207303b3d0dd77fb239"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r0.candidate.json",
+      "bytes": 28576,
+      "sha256": "a981a5dedcd6a07c12c4b0ffb53db9e3e72b13e09d006709f9b7047cc136585a"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r0.candidate.guard.json",
+      "bytes": 8278,
+      "sha256": "f8184a13c762462517f281db2172e8c27415c7244c142c7e01b220bc67b2258b"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r0.candidate.json",
+      "bytes": 54523,
+      "sha256": "fde13f56c1ffb15db75447a234f2b1de375248299a8432a194f127968d09f33b"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r0.candidate.guard.json",
+      "bytes": 8296,
+      "sha256": "23a191dba6d58f96cef0bc63520929f9dd646246d556eb686bcb2f126a7d94f5"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r0.baseline.json",
+      "bytes": 53656,
+      "sha256": "c52e2612bc507523a2f892810a2b59a4a919ae60e1f30cf9bcab05b8a0b6e430"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r0.baseline.guard.json",
+      "bytes": 8223,
+      "sha256": "23ce1bdd45bc33e384ca19b265144b0b5b69af17436e1b9a3135b93000d52bd9"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r1.candidate.json",
+      "bytes": 28573,
+      "sha256": "7ff5adf2c3dd295810b0962e6294429f0830724e8ca009dcfdbe58496f5285b4"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r1.candidate.guard.json",
+      "bytes": 8278,
+      "sha256": "e7e27ddc15baa0e9f40d6209904677265cc67e00f9bbcdbd2801646f6674598f"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r1.baseline.json",
+      "bytes": 27910,
+      "sha256": "8bb13ccbd5dd7b88a8da040e784429ac7e1ca3412623919e2c9dccc8ca5717e3"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/short.r1.baseline.guard.json",
+      "bytes": 8205,
+      "sha256": "0f0440dc7a78eb6d7a9839a7dabc8cdb97a1d45c870a654319d8b134a45344d1"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r1.baseline.json",
+      "bytes": 53761,
+      "sha256": "c07bb2c69883288f7dd18339d7e463c49938b9a1e57888d796ddc2fbbf5abb4d"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r1.baseline.guard.json",
+      "bytes": 8223,
+      "sha256": "e69c143c33dc241dd570004b745097c94ee2777787f85831271dfa04ea2a62ea"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r1.candidate.json",
+      "bytes": 54522,
+      "sha256": "6a00ac44363b3fb418491796c9a90527a862d91dbb3b770a9d6abd28288d717d"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/restored-evidence/primary-2/explanation.r1.candidate.guard.json",
+      "bytes": 8295,
+      "sha256": "2b8eb3cf0c56461c396442d6ba1acb3f10aaa55d7f7f7db923e11e5beed7d41c"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission/work/primary-analysis/summary.json",
+      "bytes": 44733,
+      "sha256": "4a0bf08f9e81b51ef2bf5e4b0fe2aa522a4078236afc2838383f4897eb622c61"
+    }
+  ],
+  "primary_summary_numeric_comparisons": 34,
+  "checker_sha256": "a9ebe83ece3593bdb8f536a840cbb4a82143995a7f48302acaf505a0ba02ab24"
+}

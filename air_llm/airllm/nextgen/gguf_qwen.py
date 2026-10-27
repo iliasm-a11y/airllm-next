@@ -118,18 +118,22 @@ class GGUFWeights:
     Every tile is evaluated before advancing the disk cursor, bounding MLX's
     lazy graph lifetime. The GGUF reader separately reserves decoder/IO memory.
     """
-    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False):
+    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False):
         self.cp=checkpoint;self.mx=mx;self.cfg=options;self.model_config=config
         if kernel not in ('reference','metal'):raise ValueError('GGUF kernel must be reference or metal')
         if kernel=='metal' and not mx.metal.is_available():raise RuntimeError('Metal kernel requires a Metal device')
         if type(expert_batch) is not bool:raise ValueError('expert_batch must be boolean')
+        if type(expert_pipeline) is not bool:raise ValueError('expert_pipeline must be boolean')
         if type(concat_tiles) is not bool:raise ValueError('concat_tiles must be boolean')
         if type(pipeline_tiles) is not bool:raise ValueError('pipeline_tiles must be boolean')
         if type(metal_simd_groups) is not int or metal_simd_groups not in (1,2,4,8):raise ValueError('metal_simd_groups must be 1, 2, 4 or 8')
         if pipeline_tiles and (kernel!='metal' or not concat_tiles):
             raise ValueError('pipeline_tiles requires kernel=metal and concat_tiles=True')
         if expert_batch and kernel!='metal':raise ValueError('expert_batch requires kernel=metal')
+        if expert_pipeline and (not expert_batch or kernel!='metal'):
+            raise ValueError('expert_pipeline requires expert_batch=True and kernel=metal')
         self.expert_batch=expert_batch;self.concat_tiles=concat_tiles;self.pipeline_tiles=pipeline_tiles
+        self.expert_pipeline=expert_pipeline
         self.metal_simd_groups=metal_simd_groups
         self.kernel=kernel;self.dtype=getattr(mx,options.dtype);self.stats=defaultdict(float)
         self.spec=None;self.prefetch_enabled=False
@@ -388,6 +392,120 @@ class GGUFWeights:
             del tile,packed
         return output
 
+    def _pack_expert_rows(self,name,count,experts):
+        """Prepare one complete grouped tile using the existing demand cache."""
+        packed=tile=None
+        try:
+            packed=np.empty((len(experts),count,self.cp.tensors[name].row_bytes),dtype=np.uint8)
+            for i,expert in enumerate(experts):
+                tile=self._packed_tile(name,0,count,expert)
+                packed[i]=tile
+                tile=None
+            return packed
+        finally:
+            # Retained exception tracebacks must not retain a grouped scratch
+            # allocation after the caller has drained pending device work.
+            packed=tile=None
+
+    def linear_expert_pair(self,x,gate_key,up_key,experts):
+        """Overlap one routed gate dispatch with preparation of its up weights.
+
+        Only single-tile projections qualify. The conservative peak includes
+        both grouped host buffers/imports, legacy read copies, FP32 inputs and
+        both original output scatters. The normal cache and IO reservations
+        still apply to every selected expert. There is at most one pending
+        dispatch; neither routing nor the per-matrix reduction changes.
+        """
+        experts=list(experts)
+        names=(self.resolve(gate_key),self.resolve(up_key))
+        descriptors=[self.cp.tensors[name] for name in names]
+        if (not experts or len(set(experts))!=len(experts) or x.ndim!=3 or
+            x.shape[0]!=len(experts) or x.shape[1]<1 or
+            any(len(d.shape)!=3 or d.shape[-1]!=x.shape[-1] or
+                any(type(e) is not int or not 0<=e<d.shape[0] for e in experts)
+                for d in descriptors)):
+            raise ValueError('Invalid paired routed expert shapes or indices')
+        if not self.expert_pipeline:
+            return (self.linear_experts(x,gate_key,experts),self.linear_experts(x,up_key,experts))
+        e=len(experts);batch=x.shape[1];input_bytes=x.size*4
+        packed_bytes=[e*d.shape[1]*d.row_bytes for d in descriptors]
+        output_bytes=[e*batch*d.shape[1]*4 for d in descriptors]
+        required=3*sum(packed_bytes)+2*sum(output_bytes)+2*input_bytes
+        reason=None
+        if any(d.quant_type not in (12,14) for d in descriptors):
+            reason='format'
+        else:
+            for name,d,outbytes in zip(names,descriptors,output_bytes):
+                try:
+                    rows=min(self._rows_per_tile(name,outbytes,input_bytes=input_bytes,batch=e*batch),
+                        self.cfg.max_tensor_bytes//(e*d.row_bytes),
+                        (self.cfg.workspace_bytes-outbytes-input_bytes)//max(1,3*e*d.row_bytes+e*batch*4))
+                except MemoryError:
+                    rows=0
+                if rows<d.shape[1]:reason='multi_tile';break
+        if reason is None and required>self.cfg.workspace_bytes:reason='workspace'
+        if reason is None:
+            from .experiment_guard import pressure_level
+            if pressure_level() not in (None,1):reason='pressure'
+            elif psutil.virtual_memory().available<self.cfg.reserve_bytes+required:reason='reserve'
+        if reason is not None:
+            self.stats['expert_pipeline_fallback_'+reason]+=1
+            return (self.linear_experts(x,gate_key,experts),self.linear_experts(x,up_key,experts))
+        self._guard(required)
+        from .gguf_metal import packed_expert_matmul
+        mx=self.mx;gate_packed=up_packed=gate_tile=up_tile=gate=up=None;pending=False
+        try:
+            begin=perf_counter()
+            gate_packed=self._pack_expert_rows(names[0],descriptors[0].shape[1],experts)
+            self.stats['expert_pipeline_gate_prepare_seconds']+=perf_counter()-begin
+            begin=perf_counter();pending=True
+            gate_tile=packed_expert_matmul(gate_packed,x,int(descriptors[0].quant_type),
+                max_workspace_bytes=self.cfg.workspace_bytes-output_bytes[0],synchronize=False,
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+            # Keep the original cast/scatter, even for the one-tile case.
+            gate=mx.zeros((e,batch,descriptors[0].shape[1]),dtype=x.dtype)
+            gate[:,:,:]=gate_tile.astype(gate.dtype)
+            mx.async_eval(gate)
+            elapsed=perf_counter()-begin
+            self.stats['expert_pipeline_submit_seconds']+=elapsed
+            self.stats['expert_batch_matmul_seconds']+=elapsed
+            self.stats['expert_batch_matmul_calls']+=1
+            begin=perf_counter()
+            self._guard(required)
+            up_packed=self._pack_expert_rows(names[1],descriptors[1].shape[1],experts)
+            self.stats['expert_pipeline_up_prepare_seconds']+=perf_counter()-begin
+            begin=perf_counter();mx.eval(gate)
+            elapsed=perf_counter()-begin
+            self.stats['expert_pipeline_wait_seconds']+=elapsed
+            self.stats['expert_batch_matmul_seconds']+=elapsed
+            begin=perf_counter()
+            up_tile=packed_expert_matmul(up_packed,x,int(descriptors[1].quant_type),
+                max_workspace_bytes=self.cfg.workspace_bytes-output_bytes[1],
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+            up=mx.zeros((e,batch,descriptors[1].shape[1]),dtype=x.dtype)
+            up[:,:,:]=up_tile.astype(up.dtype);mx.eval(up)
+            pending=False
+            elapsed=perf_counter()-begin
+            self.stats['expert_pipeline_up_matmul_seconds']+=elapsed
+            self.stats['expert_batch_matmul_seconds']+=elapsed
+            self.stats['expert_batch_matmul_calls']+=1
+            self.stats['expert_pipeline_pairs']+=1
+            self.stats['expert_pipeline_peak_workspace_bytes']=max(self.stats['expert_pipeline_peak_workspace_bytes'],required)
+            return gate,up
+        except BaseException as error:
+            if pending:
+                try:
+                    begin=perf_counter();mx.synchronize()
+                    self.stats['expert_pipeline_error_drain_seconds']+=perf_counter()-begin
+                    self.stats['expert_pipeline_error_drains']+=1
+                except BaseException as drain_error:
+                    error.add_note('Pending expert pipeline drain also failed: '+repr(drain_error))
+            raise
+        finally:
+            # Preserve group owners through the wait, including DLPack input
+            # leases. No scratch is reused while GPU work can still use it.
+            gate_packed=up_packed=gate_tile=up_tile=gate=up=None
+
     def embedding(self,ids,key):
         name=self.resolve(key);shape=self.cp.tensors[name].shape
         flat=np.asarray(ids).reshape(-1);self._guard(flat.size*shape[1]*12)
@@ -442,8 +560,11 @@ class GGUFQwenSparseMLP:
                     if remaining<1:raise MemoryError('Routed output retention exceeds workspace_bytes')
                     self.r.cfg=replace(original_cfg,workspace_bytes=remaining)
                     try:
-                        gate=self.r.linear_experts(current,p+'ffn_gate_exps.weight',batch_experts)
-                        up=self.r.linear_experts(current,p+'ffn_up_exps.weight',batch_experts)
+                        if self.r.expert_pipeline:
+                            gate,up=self.r.linear_expert_pair(current,p+'ffn_gate_exps.weight',p+'ffn_up_exps.weight',batch_experts)
+                        else:
+                            gate=self.r.linear_experts(current,p+'ffn_gate_exps.weight',batch_experts)
+                            up=self.r.linear_experts(current,p+'ffn_up_exps.weight',batch_experts)
                         down=self.r.linear_experts((gate*mx.sigmoid(gate))*up,p+'ffn_down_exps.weight',batch_experts)
                         for i,e in enumerate(batch_experts):values[e]=down[i]
                     finally:self.r.cfg=original_cfg
@@ -475,7 +596,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -496,7 +617,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
             from .gguf import GGUFReader
             self.checkpoint=GGUFReader(self.root,memory_budget_bytes=self.options.io_bytes,
                 max_read_bytes=self.options.max_tensor_bytes,include_tokenizer_metadata=False,
-                bulk_metadata=bulk_metadata)
+                bulk_metadata=bulk_metadata,string_buffer_bytes=string_buffer_bytes)
             self.config=gguf_qwen_config(self.checkpoint);self._validate_layout()
             if self.options.io_mode=='pread_nocache':
                 # Apply only to this backend's own descriptor, never a service.
@@ -517,7 +638,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 self.allocator_limit_bytes=limit
             self.stats=defaultdict(float)
             if kernel=='metal' and self.device!='gpu':raise ValueError('Metal packed kernel requires device=gpu')
-            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io)
+            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,expert_pipeline=expert_pipeline,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io)
             if cache_decay_interval is not None:self.reader.cache.decay_interval=cache_decay_interval
             self.mixers=[(QwenDeltaNet if k=='linear_attention' else QwenFullAttention)(mx,self.reader,self.config,i) for i,k in enumerate(self.config['layer_types'])]
             self.mlps=[GGUFQwenSparseMLP(mx,self.reader,self.config,i) for i in range(self.config['num_hidden_layers'])]
@@ -560,7 +681,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 'bytes':self.reader.cache.bytes,'peak_bytes':self.reader.cache.peak_bytes,'capacity':self.reader.cache.capacity,
                 'decay_interval':getattr(self.reader.cache,'decay_interval',None)},
             'prefetch':{'enabled':False},'expert_batch':self.reader.expert_batch,'concat_tiles':self.reader.concat_tiles,
-            'pipeline_tiles':self.reader.pipeline_tiles,
+            'pipeline_tiles':self.reader.pipeline_tiles,'expert_pipeline':self.reader.expert_pipeline,
             'packed_transport':('direct' if self.reader.packed_direct_io else 'readonly' if self.reader.packed_copy_free else 'legacy'),
             'packed_buffer_budget':(None if self.reader.packed_budget is None else {
                 'capacity_bytes':self.reader.packed_budget.capacity_bytes,'live_bytes':self.reader.packed_budget.live_bytes,

@@ -148,7 +148,8 @@ def test_cli_rejects_incompatible_performance_flags_before_model_read(tmp_path,f
 
 @pytest.mark.parametrize('tokens',[1,7])
 @pytest.mark.parametrize('concat',[False,True])
-def test_ragged_moe_expert_batch_matches_original_routes_and_outputs(tokens,concat):
+@pytest.mark.parametrize('expert_pipeline',[False,True])
+def test_ragged_moe_expert_batch_matches_original_routes_and_outputs(tokens,concat,expert_pipeline):
     if not mx.metal.is_available():pytest.skip('Metal unavailable')
     rng,gate=packed_fixture(12,6,256,256);_,up=packed_fixture(12,6,256,256);_,down=packed_fixture(14,6,256,256)
     packed={'blk.0.ffn_gate_exps.weight':gate,'blk.0.ffn_up_exps.weight':up,'blk.0.ffn_down_exps.weight':down}
@@ -165,12 +166,14 @@ def test_ragged_moe_expert_batch_matches_original_routes_and_outputs(tokens,conc
     config={'linear_num_key_heads':2,'linear_num_value_heads':4,'linear_value_head_dim':8,'gguf_v_head_reordered':False,
         'num_experts':6,'num_experts_per_tok':2,'moe_intermediate_size':256}
     cfg=NextConfig(cache_bytes=0,workspace_bytes=16<<20,io_bytes=16<<20,kv_bytes=1<<20,reserve_bytes=0,
-        max_tensor_bytes=4<<20,row_chunk=128,device='gpu',dtype='float32',prefetch=False)
+        max_tensor_bytes=4<<20,row_chunk=256 if expert_pipeline else 128,device='gpu',dtype='float32',prefetch=False)
     x=rng.normal(size=(1,tokens,256)).astype(np.float32)
     with mx.stream(mx.new_stream(mx.gpu)):
         base=GGUFQwenSparseMLP(mx,GGUFWeights(Checkpoint(),mx,cfg,config,kernel='metal'),config,0)
         expected=np.asarray(base(mx.array(x))).copy()
-        reader=GGUFWeights(Checkpoint(),mx,cfg,config,kernel='metal',expert_batch=True,concat_tiles=concat)
+        reader=GGUFWeights(Checkpoint(),mx,cfg,config,kernel='metal',expert_batch=True,
+                           expert_pipeline=expert_pipeline,concat_tiles=concat)
         candidate=GGUFQwenSparseMLP(mx,reader,config,0);actual=np.asarray(candidate(mx.array(x)))
     np.testing.assert_array_equal(actual,expected);assert candidate.routes==base.routes
     assert reader.cfg is cfg
+    if expert_pipeline:assert reader.stats['expert_pipeline_pairs']>0

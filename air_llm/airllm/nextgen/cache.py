@@ -22,6 +22,7 @@ class WeightCache:
         # assumption enters the score. Existing policies remain the default.
         self.costs={};self.priorities={};self.inflation=0.
         self.cost_trace=deque(maxlen=4096);self.load_trace=deque(maxlen=4096)
+        self._requests_since_history_prune=0
 
     def record_load(self,key,seconds):
         """Observe a successful demand/prefetch load, including conversion time."""
@@ -42,9 +43,18 @@ class WeightCache:
                 self.trace.append((key,int(size_hint)))
                 self.cost_trace.append((key,int(size_hint),self.costs.get(key)))
             self.freq[key]+=1
-            if sum(self.stats.values())%8192==8191:
-                self.freq=Counter({k:max(1,v//2) for k,v in self.freq.items() if k in self.sizes})
-                self.costs={k:v for k,v in self.costs.items() if k in self.sizes}
+            # Hits/misses and evictions advance independently. Summing their
+            # counters can skip the pruning residue forever (a full scan of an
+            # even-sized cache advances it by two per request). Count demand
+            # requests directly so nonresident history is periodically bounded.
+            self._requests_since_history_prune+=1
+            if self._requests_since_history_prune>=8192:
+                self._requests_since_history_prune=0
+                # Preserve the current miss as well as residents: its demand
+                # observation is still needed for LFU/cost admission below.
+                self.freq=Counter({k:max(1,v//2) for k,v in self.freq.items()
+                                   if k in self.sizes or k==key})
+                self.costs={k:v for k,v in self.costs.items() if k in self.sizes or k==key}
             if key not in self.data:
                 self.stats['misses']+=1;return None
             self.stats['hits']+=1;self.data.move_to_end(key)

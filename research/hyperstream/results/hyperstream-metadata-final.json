@@ -1,0 +1,463 @@
+{
+  "kind": "hyperstream_metadata_paired",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "model_identity": {
+    "st_dev": 16777233,
+    "st_ino": 2008453,
+    "st_size": 23938321664,
+    "st_mtime_ns": 1785061058288234344,
+    "st_ctime_ns": 1785061058291400099
+  },
+  "cache_regime": "process-warm; OS cache uncontrolled; no purge",
+  "bulk_metadata": true,
+  "string_buffer_bytes": 65536,
+  "source_sha256_before": {
+    "gguf.py": "c1a9eda1903e2df1170aa4204c16bc0e885d97d18a5116ab6218da9431990062",
+    "benchmark_hyperstream_metadata.py": "2108ea1ca75e1c54b162f1b58a179cb7d98575312f712168182ebda73ff0ceb8"
+  },
+  "before": {
+    "available_bytes": 4301979648,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 79167488,
+    "pressure_level": 1
+  },
+  "samples": [
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": false,
+      "repeat": 0,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.4128013750014361,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 504169,
+        "bytes_read": 4043356,
+        "logical_bytes": 4043356,
+        "index_bytes": 4043356,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 160,
+        "peak_reserved_bytes": 31364,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": false,
+      "repeat": 0,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.15366329199605389,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 8446,
+        "bytes_read": 10014052,
+        "logical_bytes": 10014052,
+        "index_bytes": 10014052,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 100711,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 184,
+        "string_buffer_read_bytes": 9937952
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": false,
+      "repeat": 1,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.16288279199943645,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 8446,
+        "bytes_read": 10014052,
+        "logical_bytes": 10014052,
+        "index_bytes": 10014052,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 100711,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 184,
+        "string_buffer_read_bytes": 9937952
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": false,
+      "repeat": 1,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.37298462499893503,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 504169,
+        "bytes_read": 4043356,
+        "logical_bytes": 4043356,
+        "index_bytes": 4043356,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 160,
+        "peak_reserved_bytes": 31364,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": false,
+      "repeat": 2,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.3740812499963795,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 504169,
+        "bytes_read": 4043356,
+        "logical_bytes": 4043356,
+        "index_bytes": 4043356,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 160,
+        "peak_reserved_bytes": 31364,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": false,
+      "repeat": 2,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.15539966699725483,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 8446,
+        "bytes_read": 10014052,
+        "logical_bytes": 10014052,
+        "index_bytes": 10014052,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 100711,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 184,
+        "string_buffer_read_bytes": 9937952
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": false,
+      "repeat": 3,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.159009958995739,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 8446,
+        "bytes_read": 10014052,
+        "logical_bytes": 10014052,
+        "index_bytes": 10014052,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 100711,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 184,
+        "string_buffer_read_bytes": 9937952
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": false,
+      "repeat": 3,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.37776237499929266,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 940530,
+      "fingerprint": "1baafef0ac2c9e19bc03953143dc717631eb56c0faf5134cbf25d77992527455",
+      "stats": {
+        "read_calls": 504169,
+        "bytes_read": 4043356,
+        "logical_bytes": 4043356,
+        "index_bytes": 4043356,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 160,
+        "peak_reserved_bytes": 31364,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": true,
+      "repeat": 0,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.7873275420060963,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 1000111,
+        "bytes_read": 12009270,
+        "logical_bytes": 12009270,
+        "index_bytes": 12009270,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 73178354,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": true,
+      "repeat": 0,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.3140953330002958,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 8489,
+        "bytes_read": 12010424,
+        "logical_bytes": 12010424,
+        "index_bytes": 12010424,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 121214479,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 192,
+        "string_buffer_read_bytes": 9939998
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": true,
+      "repeat": 1,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.31228933300008066,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 8489,
+        "bytes_read": 12010424,
+        "logical_bytes": 12010424,
+        "index_bytes": 12010424,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 121214479,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 192,
+        "string_buffer_read_bytes": 9939998
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": true,
+      "repeat": 1,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.7853545420002774,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 1000111,
+        "bytes_read": 12009270,
+        "logical_bytes": 12009270,
+        "index_bytes": 12009270,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 73178354,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": true,
+      "repeat": 2,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.8007332919951295,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 1000111,
+        "bytes_read": 12009270,
+        "logical_bytes": 12009270,
+        "index_bytes": 12009270,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 73178354,
+        "encoded_file_bytes": 23938321664
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": true,
+      "repeat": 2,
+      "order": [
+        "legacy",
+        "buffered"
+      ],
+      "parse_seconds": 0.312404415999481,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 8489,
+        "bytes_read": 12010424,
+        "logical_bytes": 12010424,
+        "index_bytes": 12010424,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 121214479,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 192,
+        "string_buffer_read_bytes": 9939998
+      }
+    },
+    {
+      "variant": "buffered",
+      "retain_tokenizer_metadata": true,
+      "repeat": 3,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.3192549169980339,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 8489,
+        "bytes_read": 12010424,
+        "logical_bytes": 12010424,
+        "index_bytes": 12010424,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 121214479,
+        "encoded_file_bytes": 23938321664,
+        "string_buffer_fills": 192,
+        "string_buffer_read_bytes": 9939998
+      }
+    },
+    {
+      "variant": "legacy",
+      "retain_tokenizer_metadata": true,
+      "repeat": 3,
+      "order": [
+        "buffered",
+        "legacy"
+      ],
+      "parse_seconds": 0.7882378750000498,
+      "tokenizer_seconds": null,
+      "metadata_bytes": 122119826,
+      "fingerprint": "ddf45aee3291a4e6883ada61786ebe5ab702f2031a5b299eb22e85a3e04d5ed9",
+      "stats": {
+        "read_calls": 1000111,
+        "bytes_read": 12009270,
+        "logical_bytes": 12009270,
+        "index_bytes": 12009270,
+        "tensor_bytes": 0,
+        "decoded_rows": 0,
+        "peak_operation_bytes": 65536,
+        "peak_reserved_bytes": 73178354,
+        "encoded_file_bytes": 23938321664
+      }
+    }
+  ],
+  "summary": {
+    "false": {
+      "legacy": {
+        "median_parse_seconds": 0.37592181249783607,
+        "median_read_calls": 504169.0,
+        "median_index_bytes": 4043356.0
+      },
+      "buffered": {
+        "median_parse_seconds": 0.1572048129964969,
+        "median_read_calls": 8446.0,
+        "median_index_bytes": 10014052.0
+      }
+    },
+    "true": {
+      "legacy": {
+        "median_parse_seconds": 0.7877827085030731,
+        "median_read_calls": 1000111.0,
+        "median_index_bytes": 12009270.0
+      },
+      "buffered": {
+        "median_parse_seconds": 0.3132498744998884,
+        "median_read_calls": 8489.0,
+        "median_index_bytes": 12010424.0
+      }
+    }
+  },
+  "after": {
+    "available_bytes": 4272570368,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 79167488,
+    "pressure_level": 1
+  },
+  "source_sha256_after": {
+    "gguf.py": "c1a9eda1903e2df1170aa4204c16bc0e885d97d18a5116ab6218da9431990062",
+    "benchmark_hyperstream_metadata.py": "2108ea1ca75e1c54b162f1b58a179cb7d98575312f712168182ebda73ff0ceb8"
+  }
+}

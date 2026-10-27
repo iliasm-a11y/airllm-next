@@ -126,7 +126,7 @@ def packed_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2, sy
     return result.reshape(*x.shape[:-1], rows)
 
 
-def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2,zero_copy=False,stats=None,simd_groups=1):
+def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2,synchronize=True,zero_copy=False,stats=None,simd_groups=1):
     """Independent expert matvecs, preserving each original SIMD reduction.
 
     ``packed`` is uint8 [experts, rows, row_bytes], ``x`` is FP32
@@ -134,6 +134,7 @@ def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024
     import; expert selection and the weighted output reduction stay in caller.
     """
     import mlx.core as mx
+    if type(synchronize) is not bool:raise ValueError('synchronize must be boolean')
     if type(zero_copy) is not bool:raise ValueError('zero_copy must be boolean')
     if type(simd_groups) is not int or simd_groups not in (1,2,4,8):raise ValueError('simd_groups must be 1, 2, 4 or 8')
     if type(max_workspace_bytes) is not int or max_workspace_bytes<1:
@@ -153,5 +154,5 @@ def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024
     source=mx.contiguous(x.astype(mx.float32))
     result=_kernel(quant_type,True)(inputs=[data,source],grid=(rows*32,batch,experts),
         threadgroup=(32*simd_groups,1,1),output_shapes=[(experts,batch,rows)],output_dtypes=[mx.float32])[0]
-    mx.eval(result)
+    if synchronize:mx.eval(result)
     return result

@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "control": "unchanged_restored_copy",
+      "expected": "verified",
+      "observed": "verified"
+    },
+    {
+      "control": "pending",
+      "expected": "pending",
+      "observed": "pending",
+      "reason": "Campaign is not completed: started"
+    },
+    {
+      "control": "relaxed_reserve",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Unexpected or relaxed guard limits"
+    },
+    {
+      "control": "changed_logits",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Paired per-token difference: logits_sha256"
+    },
+    {
+      "control": "changed_source",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Worker source/revision mismatch"
+    },
+    {
+      "control": "missing_run",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Expected exactly eight planned and completed workers"
+    },
+    {
+      "control": "changed_command",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Command chain mismatch: short.r0.candidate"
+    },
+    {
+      "control": "truncated_response",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "Turn incomplete or truncated"
+    },
+    {
+      "control": "nonfinite_timing",
+      "expected": "rejected",
+      "observed": "rejected",
+      "reason": "NaN"
+    }
+  ]
+}

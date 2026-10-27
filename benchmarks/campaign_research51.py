@@ -6,6 +6,7 @@ import math
 from pathlib import Path
 import subprocess
 import sys
+from time import monotonic, sleep
 
 from benchmark_research51 import (ROOT, engine_manifest, load_tasks, protocol_manifest,
                                  protocol_unchanged, save)
@@ -20,8 +21,9 @@ def validate_job_args(arguments):
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'])
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'])
     parser.add_argument('--timeout', type=float, default=600.)
+    parser.add_argument('--string-buffer-bytes', type=int, default=0)
     for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io',
-                 'bulk-metadata', 'zero-copy-weights'):
+                 'bulk-metadata', 'zero-copy-weights', 'expert-pipeline'):
         parser.add_argument('--' + flag, action='store_true')
     try:
         parsed, unknown = parser.parse_known_args(arguments)
@@ -31,6 +33,8 @@ def validate_job_args(arguments):
         raise ValueError('Reserved, abbreviated or unknown job arguments: ' + repr(unknown))
     if parsed.rows < 1 or not math.isfinite(parsed.timeout) or parsed.timeout <= 0:
         raise ValueError('Rows and timeout must be positive and finite')
+    if not 0 <= parsed.string_buffer_bytes <= 65536:
+        raise ValueError('String read buffer must be in 0..65536 bytes')
     return list(arguments)
 
 
@@ -124,13 +128,84 @@ def capture_engine_states(sources):
     return states
 
 
+def wait_before_job(limits, max_wait_seconds, run):
+    """Optionally wait for sampled recovery before launching any worker.
+
+    The worker retains its own fresh admission and all runtime protections.
+    Zero preserves the historical fail-fast path. Waiting never retries a
+    refused inference: no worker exists until this window has been observed.
+    """
+    if (isinstance(max_wait_seconds, bool) or not isinstance(max_wait_seconds, (int, float))
+            or not math.isfinite(max_wait_seconds) or max_wait_seconds < 0):
+        raise ValueError('Resource wait seconds must be finite and nonnegative')
+    from dataclasses import asdict
+    headroom = 256 << 20
+    run.update(launch_wait_seconds=0., launch_wait_samples=[], launch_wait_sample_count=0,
+               launch_wait_samples_truncated=False,
+               launch_wait_status='disabled' if max_wait_seconds == 0 else 'waiting',
+               launch_wait_policy=dict(max_wait_seconds=float(max_wait_seconds),
+                   headroom_bytes=headroom, observed_stable_seconds=5., poll_seconds=1.,
+                   required_pressure_level=1, admission_limits=asdict(limits)))
+    if max_wait_seconds == 0:
+        return
+    sys.path.insert(0, str(ROOT / 'air_llm'))
+    from airllm.nextgen.experiment_guard import admission, system_snapshot
+    start = monotonic()
+    stable_since = None
+    try:
+        while True:
+            snapshot = system_snapshot()
+            sampled_at = monotonic()
+            elapsed = sampled_at - start
+            reason = None
+            try:
+                admission(limits, snapshot)
+                if snapshot['pressure_level'] != 1:
+                    raise MemoryError('Normal pressure level 1 is required for the recovery window')
+                if snapshot['available_bytes'] < limits.reserve_bytes + limits.admitted_payload_bytes + headroom:
+                    raise MemoryError('Recovery window needs 256 MiB headroom above admission')
+            except MemoryError as error:
+                reason = str(error)
+            if reason is None:
+                if stable_since is None:
+                    stable_since = sampled_at
+            else:
+                stable_since = None
+            stable_seconds = 0. if stable_since is None else sampled_at - stable_since
+            sample = dict(snapshot, elapsed_seconds=elapsed, ready=reason is None,
+                          observed_stable_seconds=stable_seconds, reason=reason)
+            run['launch_wait_sample_count'] += 1
+            run['launch_wait_samples'].append(sample)
+            if len(run['launch_wait_samples']) > 60:
+                run['launch_wait_samples'].pop(0)
+                run['launch_wait_samples_truncated'] = True
+            run['launch_wait_seconds'] = elapsed
+            if stable_seconds >= 5. and elapsed <= max_wait_seconds:
+                run['launch_wait_status'] = 'ready'
+                return
+            if elapsed >= max_wait_seconds:
+                run.update(status='stopped', launch_wait_status='timed_out')
+                raise MemoryError('No stable resource window before the optional wait expired')
+            sleep(min(1., max_wait_seconds - elapsed))
+    except BaseException:
+        if run['launch_wait_status'] == 'waiting':
+            run.update(status='stopped', launch_wait_status='failed')
+        raise
+    finally:
+        run['launch_wait_seconds'] = max(0., monotonic() - start)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     p.add_argument('--model', type=Path, required=True)
     p.add_argument('--tasks', type=Path, required=True)
     p.add_argument('--plan', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--resource-wait-seconds', type=float, default=0.,
+                   help='Optional recovery window before each job; zero keeps fail-fast admission')
     args = p.parse_args()
+    if not math.isfinite(args.resource_wait_seconds) or args.resource_wait_seconds < 0:
+        p.error('--resource-wait-seconds must be finite and nonnegative')
     plan, sources, protocol, tasks_by_job = prepare_campaign(args)
     args.output.mkdir(parents=True, exist_ok=False)
     report = dict(status='started', plan=plan, engine_manifests=sources,
@@ -152,8 +227,22 @@ def main():
                        '--expected-engine-head', engine['git_head'],
                        '--expected-engine-sources-json', json.dumps(engine['source_sha256'], sort_keys=True),
                        *job['args']]
-            run = dict(id=job['id'], command=command, status='started')
+            # The same limits are checked again by the independent worker
+            # supervisor after launch; the recovery window adds only headroom.
+            sys.path.insert(0, str(ROOT / 'air_llm'))
+            from dataclasses import asdict
+            from airllm.nextgen.experiment_guard import ExperimentLimits
+            job_limits = ExperimentLimits(timeout_seconds=_job_timeout(job['args']))
+            run = dict(id=job['id'], command=command,
+                       status='waiting_for_resources' if args.resource_wait_seconds else 'started')
             report['runs'].append(run)
+            save(manifest, report)
+            wait_before_job(job_limits, args.resource_wait_seconds, run)
+            if args.resource_wait_seconds and (not protocol_unchanged(protocol)
+                    or capture_engine_states(sources) != sources):
+                run['status'] = 'stopped'
+                raise RuntimeError('Engine or protocol changed while waiting for resources')
+            run['status'] = 'started'
             save(manifest, report)
             result = subprocess.run(command, cwd=ROOT)
             run['exit_code'] = result.returncode
@@ -165,10 +254,7 @@ def main():
             except (OSError, ValueError) as error:
                 raise RuntimeError('Worker or guard evidence missing: ' + job['id']) from error
             # The parent supervisor belongs to ROOT even for a historical engine.
-            sys.path.insert(0, str(ROOT / 'air_llm'))
-            from dataclasses import asdict
-            from airllm.nextgen.experiment_guard import ExperimentLimits
-            limits = asdict(ExperimentLimits(timeout_seconds=_job_timeout(job['args'])))
+            limits = asdict(job_limits)
             validate_run_evidence(evidence, guard, engine['source_sha256'], protocol, tasks_by_job[job['id']],
                                   expected_head=engine['git_head'], expected_command=command, expected_limits=limits)
             if not protocol_unchanged(protocol) or capture_engine_states(sources) != sources:
