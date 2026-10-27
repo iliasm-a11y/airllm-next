@@ -44,8 +44,12 @@ def _run(args):
             expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,
             metal_simd_groups=args.simd_groups,packed_copy_free=args.packed_copy_free,packed_direct_io=args.packed_direct_io,
             bulk_metadata=args.bulk_metadata,string_buffer_bytes=args.string_buffer_bytes,expert_pipeline=args.expert_pipeline,
-            hyper_prefill=args.hyper_prefill,hyper_prefill_max_tokens=args.hyper_prefill_max_tokens) as model:
-        output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
+            hyper_prefill=args.hyper_prefill,hyper_prefill_max_tokens=args.hyper_prefill_max_tokens,
+            metal_batch_backend=args.metal_batch_backend,metal_token_tile=args.metal_token_tile,
+            grouped_direct_io=args.grouped_direct_io) as model:
+        generation=model.generate_speculative if args.speculative_depth else model.generate
+        extra=dict(max_depth=args.speculative_depth,candidate_depths=(args.speculative_depth,)) if args.speculative_depth else {}
+        output = generation([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044],**extra)
         generated = output.tolist()[0][len(ids):]
         result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
                   'generated_ids': generated, 'wall_seconds_including_tokenizer': perf_counter() - begin,
@@ -72,6 +76,12 @@ def main(argv=None):
     run.add_argument('--expert-pipeline',action='store_true',help='Experimental bounded gate/up overlap; requires --expert-batch')
     run.add_argument('--hyper-prefill',action='store_true',help='Experimental adaptive input blocks within existing memory budgets')
     run.add_argument('--hyper-prefill-max-tokens',type=_positive,default=128)
+    run.add_argument('--metal-batch-backend',choices=['off','reuse','tensorops'],default='off',
+                     help='Experimental measured multi-token kernel selection; original kernel remains fallback')
+    run.add_argument('--metal-token-tile',type=int,choices=[2,4,8,16],default=4)
+    run.add_argument('--grouped-direct-io',action='store_true',help='Experimental direct expert gather; bypasses individual tile cache')
+    run.add_argument('--speculative-depth',type=int,choices=[0,2,4,8,16],default=0,
+                     help='Experimental verified greedy prompt lookup with recurrent snapshot/replay')
     run.add_argument('--concat-tiles',action='store_true',help='Assemble evaluated row tiles with one concatenation')
     run.add_argument('--pipeline-tiles',action='store_true',help='Experimental two-tile overlap; requires --concat-tiles and --kernel metal')
     run.add_argument('--zero-copy-weights',action='store_true',help='Exact packed-buffer import with a portable copy fallback')
@@ -100,6 +110,9 @@ def main(argv=None):
             parser.error('--pipeline-tiles requires --concat-tiles and --kernel metal')
         if args.expert_batch and args.kernel!='metal':parser.error('--expert-batch requires --kernel metal')
         if args.expert_pipeline and not args.expert_batch:parser.error('--expert-pipeline requires --expert-batch')
+        if args.metal_batch_backend!='off' and args.kernel!='metal':parser.error('--metal-batch-backend requires --kernel metal')
+        if args.grouped_direct_io and not (args.packed_direct_io and args.expert_batch):
+            parser.error('--grouped-direct-io requires --packed-direct-io and --expert-batch')
         if args.cache_decay is not None and args.cache_policy!='adaptive':parser.error('--cache-decay requires --cache-policy adaptive')
     if args.command == 'gguf-inspect':
         from .gguf import GGUFReader

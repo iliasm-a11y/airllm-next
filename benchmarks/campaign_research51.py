@@ -26,6 +26,10 @@ def validate_job_args(arguments):
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'])
     parser.add_argument('--timeout', type=float, default=600.)
     parser.add_argument('--string-buffer-bytes', type=int, default=0)
+    parser.add_argument('--metal-batch-backend',choices=['off','reuse','tensorops'],default='off')
+    parser.add_argument('--metal-token-tile',type=int,choices=[2,4,8,16],default=4)
+    parser.add_argument('--grouped-direct-io',action='store_true')
+    parser.add_argument('--speculative-depth',type=int,choices=[0,2,4,8,16],default=0)
     for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io',
                  'bulk-metadata', 'zero-copy-weights', 'expert-pipeline'):
         parser.add_argument('--' + flag, action='store_true')

@@ -1,0 +1,25 @@
+{
+  "kind": "accidental_unguarded_inherited_tiny_gpu_tests",
+  "excluded_from_m5_campaign_evidence": true,
+  "new_h3_gpu_kernels_executed": false,
+  "real_checkpoint_loaded": false,
+  "tests": "test_transport_preserves_metal_results_under_cache_eviction",
+  "cases": 16,
+  "fixture": {
+    "experts": 4,
+    "rows": 13,
+    "width": 512
+  },
+  "cause": "Inherited test file included in --noconftest portable selection, but individual tests explicitly select GPU",
+  "guards_modified": false,
+  "resource_admission_applied": false,
+  "historical_log": "inherited-mixed-unguarded-tiny-gpu.log",
+  "current_snapshot_only": {
+    "available_bytes": 3854204928,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2895249408,
+    "pressure_level": 2
+  },
+  "correction": "Excluded exact GPU test from final inherited CPU suite; all new GPU tests remain opt-in and admission-gated",
+  "scope": "Tiny synthetic existing-kernel checks; not full-checkpoint, M5 candidate kernel, performance or memory stability validation"
+}

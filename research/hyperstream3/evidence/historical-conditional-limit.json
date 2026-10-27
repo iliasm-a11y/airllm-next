@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "conditional_scenario_not_measured",
+  "measurement_label": "Historical H1 logical traffic and distinct sequential historical read; workload/cache equivalence NOT established; conditional illustration only",
+  "caller_inputs_verified": false,
+  "physical_ssd_bandwidth_certified": false,
+  "inputs": {
+    "logical_bytes_per_token": 1964699000.0,
+    "effective_transport_bytes_per_second": 4390000000.0,
+    "additional_cache_coverage": 0.0,
+    "accepted_tokens_per_block": 1.0,
+    "target_pass_equivalents_per_block": 1.0,
+    "draft_logical_bytes_per_block": 0.0,
+    "draft_seconds_per_block": 0.0,
+    "compute_seconds_per_block": null
+  },
+  "assumptions": [
+    "Rate and byte counts use the same logical transport domain, not inferred physical SSD traffic.",
+    "Measured ordinary traffic already includes its baseline cache effects.",
+    "Additional cache coverage applies only to the remaining measured target traffic.",
+    "Pass equivalents include larger routed expert unions and all verification/replay traffic.",
+    "Tokens per block are verified final emitted tokens; no unverified proposal or free bonus is counted.",
+    "All draft traffic and time must be declared; zero is an explicit assumption, not a measurement.",
+    "Ideal overlap and serial scheduling are scenarios, not measured GPU/read attribution."
+  ],
+  "estimates": {
+    "target_logical_bytes_per_block": 1964699000.0,
+    "total_logical_bytes_per_block": 1964699000.0,
+    "logical_bytes_per_verified_final_token": 1964699000.0,
+    "transport_seconds_per_block": 0.4475396355353075,
+    "conditional_transport_ceiling_tokens_per_second": 2.2344389649508654,
+    "ideal_overlap_seconds_per_block": null,
+    "ideal_overlap_tokens_per_second": null,
+    "serial_seconds_per_block": null,
+    "serial_tokens_per_second": null
+  },
+  "limits": [
+    "No hardware experiment, source verification or physical SSD measurement is performed.",
+    "No full engine ceiling is established without measured compute, draft, replay and synchronization costs.",
+    "A changed workload/cache/route pattern can invalidate the declared effective rate and traffic model.",
+    "A null rate means that this declared domain provides no finite bound, not infinite engine performance."
+  ]
+}

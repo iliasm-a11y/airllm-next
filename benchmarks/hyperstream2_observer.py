@@ -212,6 +212,16 @@ class RuntimeObserver:
             return {layer: {position: list(ids) for position, ids in bank.items()}
                     for layer, bank in self._routing.items()}
 
+    def reset_routes(self):
+        """Start a separate forward evidence bank for branched verification.
+
+        A speculative rejection may legitimately route different input IDs at
+        a reused position. The harness saves each bank with its actual input
+        IDs; it must not merge rejected paths into a committed-prefix claim.
+        """
+        with self._mutex:
+            self._routing.clear()
+
     def routing_sha256(self):
         return hashlib.sha256(_canonical(self.routing)).hexdigest()
 

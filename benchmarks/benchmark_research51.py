@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import resource
 import subprocess
 import sys
 from time import perf_counter
@@ -110,6 +111,7 @@ def worker(args):
     from airllm.nextgen.physical_io import physical_read_bytes
 
     stat = args.model.stat()
+    cpu_start=resource.getrusage(resource.RUSAGE_SELF)
     sources = initial_engine['source_sha256']
     report = dict(status='started', label=args.label, command=sys.argv,
                   git_head=initial_engine['git_head'], engine_root=str(args.engine_root),
@@ -146,6 +148,10 @@ def worker(args):
         kwargs['string_buffer_bytes'] = args.string_buffer_bytes
     if args.hyper_prefill:
         kwargs.update(hyper_prefill=True, hyper_prefill_max_tokens=args.hyper_prefill_max_tokens)
+    if args.metal_batch_backend != 'off':
+        kwargs.update(metal_batch_backend=args.metal_batch_backend,metal_token_tile=args.metal_token_tile)
+    if args.grouped_direct_io:
+        kwargs['grouped_direct_io']=True
     report['options'] = asdict(options)
     report['backend_options'] = kwargs
     try:
@@ -170,8 +176,13 @@ def worker(args):
             checks = []
 
             def forward(*a, **kw):
+                supplied=np.asarray(a[0] if a else kw['input_ids']).tolist()[0]
+                cache=kw.get('past_key_values')
+                start_position=0 if cache is None else cache.position
                 if observer is not None:
                     observer.phase = 'prefill' if not checks else 'decode'
+                    if args.speculative_depth:
+                        observer.reset_routes()
                 logical = model.checkpoint.stats['logical_bytes']
                 disk = physical_read_bytes()
                 begin = perf_counter()
@@ -196,6 +207,14 @@ def worker(args):
                                    position=result.past_key_values.position, forward_seconds=elapsed,
                                    logical_bytes=model.checkpoint.stats['logical_bytes'] - logical,
                                    process_storage_read_bytes=None if disk is None or after_disk is None else after_disk - disk))
+                checks[-1].update(input_ids=supplied,start_position=start_position,
+                    finite_logits_checked=bool(np.isfinite(logits).all()))
+                if not checks[-1]['finite_logits_checked']:
+                    raise FloatingPointError('Non-finite logits in numerical evidence')
+                if observer is not None:
+                    checks[-1]['routing_by_layer_position']={layer:{position:ids for position,ids in bank.items()
+                        if start_position<=int(position)<result.past_key_values.position}
+                        for layer,bank in observer.routing.items()}
                 if args.numerical_evidence:
                     vector = np.asarray(logits, dtype='<f4')
                     vector_path = args.output.with_name(args.output.stem + '.step-' + str(len(checks)-1).zfill(3) + '.f32')
@@ -215,6 +234,7 @@ def worker(args):
                 read_calls = model.checkpoint.stats['read_calls']
                 disk = physical_read_bytes()
                 begin = perf_counter()
+                turn_cpu=resource.getrusage(resource.RUSAGE_SELF)
 
                 def emitted(event):
                     item['partial_ids'].append(event['token_id'])
@@ -223,8 +243,42 @@ def worker(args):
                     save(args.output, report)
 
                 save(args.output, report)
-                result = chat.reply(task['prompt'], max_new_tokens=task['max_new_tokens'], on_token=emitted)
+                if args.speculative_depth:
+                    messages=chat.messages+[{'role':'user','content':task['prompt']}]
+                    prompt_text=tokenizer.apply_chat_template(messages,tokenize=False,
+                        add_generation_prompt=True,enable_thinking=False,preserve_thinking=True)
+                    full_ids=tokenizer.encode(prompt_text)
+                    if len(full_ids)+task['max_new_tokens']>options.max_context:
+                        raise MemoryError('Speculative prompt plus output exceeds context limit')
+                    from airllm.nextgen.generation import eos_ids
+                    stops=sorted(eos_ids(model.config.get('eos_token_id') or tokenizer.eos_token_id,
+                        model.config['vocab_size']))
+                    full_output=model.generate_speculative([full_ids],max_new_tokens=task['max_new_tokens'],
+                        eos_token_id=stops,max_depth=args.speculative_depth,
+                        candidate_depths=(args.speculative_depth,))
+                    generated=full_output.tolist()[0][len(full_ids):]
+                    raw=tokenizer.decode(generated,skip_special_tokens=False)
+                    content=generated[:-1] if generated and generated[-1] in stops else generated
+                    result=dict(full_input_ids=full_ids,appended_input_ids=full_ids,
+                        generated_ids=generated,full_output_ids=full_output.tolist()[0],
+                        prompt_text=prompt_text,text=tokenizer.decode(content,skip_special_tokens=True),raw_text=raw,
+                        stop_reason='eos' if generated and generated[-1] in stops else 'max_new_tokens',
+                        eos_token_ids=stops,token_seconds=None,
+                        ttft_seconds=model.stats['ttft_seconds'],total_seconds=model.stats['generation_seconds'],
+                        decode_tokens_per_second=model.stats['decode_tokens_per_second'],
+                        native_cache_position=model.stats['speculative'].get('final_cache_position'),
+                        finite_logits_checked=True,speculative_metrics=model.stats['speculative'],
+                        partial_output_streamed=False,
+                        generation_parameters=dict(max_new_tokens=task['max_new_tokens'],temperature=0.,
+                            do_sample=False,enable_thinking=False,preserve_thinking=True,reuse_kv=False,
+                            speculative_depth=args.speculative_depth))
+                else:
+                    result = chat.reply(task['prompt'], max_new_tokens=task['max_new_tokens'], on_token=emitted)
                 item.update(result)
+                end_cpu=resource.getrusage(resource.RUSAGE_SELF)
+                item['cpu_seconds']=dict(user=end_cpu.ru_utime-turn_cpu.ru_utime,
+                    system=end_cpu.ru_stime-turn_cpu.ru_stime,scope='worker process; includes instrumentation')
+                item['pure_gpu_seconds']=None
                 item.update(status='completed', wall_seconds=perf_counter() - begin, step_checks=checks,
                             logical_read_bytes=model.checkpoint.stats['logical_bytes'] - logical,
                             read_calls=model.checkpoint.stats['read_calls'] - read_calls, metrics=model.metrics())
@@ -232,6 +286,8 @@ def worker(args):
                     item['routing_sha256'] = observer.routing_sha256()
                     item['routing_by_layer_position'] = observer.routing
                     item['observer_timings'] = observer.summary()
+                    if args.speculative_depth:
+                        item['routing_scope']='Per-forward banks in step_checks; final bank is not the committed full path'
                 if trace is not None:
                     trace_path = args.output.with_suffix('.trace.json')
                     save(trace_path, trace.export())
@@ -264,6 +320,9 @@ def worker(args):
                       model_stat_unchanged=(args.model.stat().st_size, args.model.stat().st_ino, args.model.stat().st_mtime_ns)
                       == (stat.st_size, stat.st_ino, stat.st_mtime_ns))
         report['git_head_after'] = engine_manifest(args.engine_root)['git_head']
+        cpu_end=resource.getrusage(resource.RUSAGE_SELF)
+        report['cpu_seconds']=dict(user=cpu_end.ru_utime-cpu_start.ru_utime,
+            system=cpu_end.ru_stime-cpu_start.ru_stime,scope='worker process after checkpoint stat')
         report['engine_head_unchanged'] = report['git_head_after'] == report['git_head']
         save(args.output, report)
         if restoration_error is not None:
@@ -288,6 +347,10 @@ def main():
     parser.add_argument('--hyper-prefill-max-tokens', type=int, default=128)
     parser.add_argument('--numerical-evidence', action='store_true')
     parser.add_argument('--request-trace', action='store_true')
+    parser.add_argument('--metal-batch-backend',choices=['off','reuse','tensorops'],default='off')
+    parser.add_argument('--metal-token-tile',type=int,choices=[2,4,8,16],default=4)
+    parser.add_argument('--grouped-direct-io',action='store_true')
+    parser.add_argument('--speculative-depth',type=int,choices=[0,2,4,8,16],default=0)
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'], default='lru')
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
     parser.add_argument('--timeout', type=float, default=600)
@@ -305,6 +368,8 @@ def main():
     load_tasks(args.tasks)  # Refuse empty/malformed tasks before any model launch.
     if args.prefill_chunk < 1 or args.hyper_prefill_max_tokens < 1:
         parser.error('Prefill sizes must be positive')
+    if args.grouped_direct_io and not (args.packed_direct_io and args.expert_batch):
+        parser.error('Grouped direct I/O requires direct packed I/O and expert batching')
     if (args.numerical_evidence or args.request_trace) and len(load_tasks(args.tasks)) != 1:
         parser.error('Numerical artifacts and traces require exactly one task per worker')
     if args.worker:
@@ -319,7 +384,8 @@ def main():
         extras = [args.output.with_suffix('.trace.json')] if args.request_trace else []
         if args.numerical_evidence:
             extras.extend(args.output.with_name(args.output.stem + '.step-' + str(i).zfill(3) + '.f32')
-                          for i in range(load_tasks(args.tasks)[0]['max_new_tokens']))
+                          for i in range(load_tasks(args.tasks)[0]['max_new_tokens']*4+1
+                              if args.speculative_depth else load_tasks(args.tasks)[0]['max_new_tokens']))
         destinations = validate_output_paths(args.output, protected=protected, extra_outputs=extras)
         if any(p.exists() or p.is_symlink() for p in destinations):
             raise FileExistsError('Refusing to overwrite prior experiment evidence')

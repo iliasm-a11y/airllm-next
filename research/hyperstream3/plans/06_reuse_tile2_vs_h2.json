@@ -1,0 +1,402 @@
+[
+  {
+    "id": "baseline-p00",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "candidate-p00",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "candidate-p01",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "baseline-p01",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "baseline-p02",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "candidate-p02",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "candidate-p03",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "baseline-p03",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "baseline-p04",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "candidate-p04",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "candidate-p05",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "baseline-p05",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "baseline-p06",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "candidate-p06",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "candidate-p07",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "baseline-p07",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "baseline-p08",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  },
+  {
+    "id": "candidate-p08",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "candidate-p09",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128",
+      "--metal-batch-backend",
+      "reuse",
+      "--metal-token-tile",
+      "2"
+    ]
+  },
+  {
+    "id": "baseline-p09",
+    "engine_root": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/h2",
+    "args": [
+      "--expert-batch",
+      "--concat-tiles",
+      "--packed-direct-io",
+      "--bulk-metadata",
+      "--zero-copy-weights",
+      "--expert-pipeline",
+      "--string-buffer-bytes",
+      "65536",
+      "--numerical-evidence",
+      "--hyper-prefill",
+      "--hyper-prefill-max-tokens",
+      "128"
+    ]
+  }
+]

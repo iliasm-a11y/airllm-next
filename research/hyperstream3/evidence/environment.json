@@ -1,0 +1,97 @@
+{
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "processor": {
+    "command": [
+      "sysctl",
+      "-n",
+      "machdep.cpu.brand_string"
+    ],
+    "returncode": 0,
+    "stdout": "Apple M5\n",
+    "stderr": ""
+  },
+  "versions": {
+    "mlx": "0.32.4",
+    "numpy": "2.5.3",
+    "psutil": "7.2.2",
+    "pytest": "9.1.1"
+  },
+  "snapshot": {
+    "available_bytes": 3826614272,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2912026624,
+    "pressure_level": 2
+  },
+  "vm_stat": {
+    "command": [
+      "vm_stat"
+    ],
+    "returncode": 0,
+    "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    37197.\nPages active:                                 198728.\nPages inactive:                               195201.\nPages speculative:                              2521.\nPages throttled:                                   0.\nPages wired down:                             217554.\nPages purgeable:                                3471.\n\"Translation faults\":                      252525448.\nPages copy-on-write:                         7557338.\nPages zero filled:                         254920114.\nPages reactivated:                          32940337.\nPages purged:                                3773196.\nFile-backed pages:                            150126.\nAnonymous pages:                              246324.\nPages stored in compressor:                   621653.\nPages occupied by compressor:                 357801.\nDecompressions:                             23180694.\nCompressions:                               30534192.\nPageins:                                   165438739.\nPageouts:                                     119676.\nSwapins:                                        6906.\nSwapouts:                                     184408.\nPages tagged:                                 114750.\nPages tagged resident:                         85104.\nPages tagged compressed:                       29646.\nPages tag-storage:                             32768.\nPages tag-storage holding tags:                 4108.\nPages tag-storage free:                           38.\nPages tag-storage non-tag pageable:            28549.\nPages tag-storage non-tag wired:                  19.\nBytes of compressed tags:                    4498880.\nTagged compressions:                         1690118.\nTagged decompressions:                       1578591.\n",
+    "stderr": ""
+  },
+  "swap": {
+    "command": [
+      "sysctl",
+      "vm.swapusage"
+    ],
+    "returncode": 0,
+    "stdout": "vm.swapusage: total = 4096.00M  used = 2777.12M  free = 1318.88M  (encrypted)\n",
+    "stderr": ""
+  },
+  "metal_compiler": {
+    "command": [
+      "xcrun",
+      "--find",
+      "metal"
+    ],
+    "returncode": 72,
+    "stdout": "",
+    "stderr": "xcrun: error: unable to find utility \"metal\", not a developer tool or in PATH\n"
+  },
+  "xctrace": {
+    "command": [
+      "xcrun",
+      "--find",
+      "xctrace"
+    ],
+    "returncode": 72,
+    "stdout": "",
+    "stderr": "xcrun: error: unable to find utility \"xctrace\", not a developer tool or in PATH\n"
+  },
+  "physical_disks": {
+    "command": [
+      "diskutil",
+      "list",
+      "physical"
+    ],
+    "returncode": 0,
+    "stdout": "/dev/disk0 (internal, physical):\n   #:                       TYPE NAME                    SIZE       IDENTIFIER\n   0:      GUID_partition_scheme                        *500.3 GB   disk0\n   1:             Apple_APFS_ISC Container disk1         576.7 MB   disk0s1\n   2:                 Apple_APFS Container disk3         494.3 GB   disk0s2\n   3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3\n\n",
+    "stderr": ""
+  },
+  "process_aggregates": {
+    "other": {
+      "count": 410,
+      "summed_rss_bytes": 3551248384
+    },
+    "node/npm": {
+      "count": 139,
+      "summed_rss_bytes": 1941192704
+    },
+    "Codex/ChatGPT": {
+      "count": 21,
+      "summed_rss_bytes": 2990243840
+    }
+  },
+  "process_rss_note": "Sum RSS includes shared pages and excludes attributable compressed ownership; not a physical-memory partition or causal attribution",
+  "model": {
+    "path": "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "bytes": 23938321664,
+    "inode": 2008453,
+    "mtime_ns": 1785061058288234344,
+    "current_full_sha256": null
+  },
+  "read_only_diagnosis": true,
+  "applications_closed": false,
+  "guards_lowered": false
+}

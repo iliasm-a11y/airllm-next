@@ -1,5 +1,6 @@
 """Transport integration: exact packed Metal math, eviction and live owners."""
 import gc
+import os
 
 import mlx.core as mx
 import numpy as np
@@ -18,6 +19,13 @@ from test_gguf_throughput import packed_fixture
 @pytest.mark.parametrize('zero_copy', [False, True])
 @pytest.mark.parametrize('policy', ['adaptive', 'lru'])
 def test_transport_preserves_metal_results_under_cache_eviction(tmp_path, kind, transport, zero_copy, policy):
+    if os.environ.get('AIRLLM_M5_GPU_TEST')!='1':
+        pytest.skip('Explicit GPU opt-in and normal-pressure admission required')
+    from airllm.nextgen.experiment_guard import admission, ExperimentLimits
+    try:
+        admission(ExperimentLimits())
+    except MemoryError as error:
+        pytest.skip('GPU resource admission refused: '+str(error))
     if not mx.metal.is_available():
         pytest.skip('Metal unavailable')
     rng, packed = packed_fixture(kind, 4, 13, 512)

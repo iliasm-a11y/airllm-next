@@ -90,7 +90,7 @@ def _kernel(quant_type, grouped=False):
                                source=code, header='#pragma clang fp contract(off)\n')
 
 
-def packed_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2, synchronize=True,zero_copy=False,stats=None,simd_groups=1):
+def packed_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2, synchronize=True,zero_copy=False,stats=None,simd_groups=1,batch_dispatch=None,batch_spare_workspace_bytes=None):
     """Multiply [..., width] by packed [rows, row_bytes].T; caller tiles reads."""
     import mlx.core as mx
     if type(synchronize) is not bool:raise ValueError('synchronize must be boolean')
@@ -98,6 +98,8 @@ def packed_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2, sy
     if type(simd_groups) is not int or simd_groups not in (1,2,4,8):raise ValueError('simd_groups must be 1, 2, 4 or 8')
     if type(max_workspace_bytes) is not int or max_workspace_bytes < 1:
         raise ValueError('max_workspace_bytes must be a positive integer')
+    if batch_spare_workspace_bytes is not None and (type(batch_spare_workspace_bytes) is not int or batch_spare_workspace_bytes<0):
+        raise ValueError('Batch spare workspace must be a nonnegative integer or None')
     if quant_type not in (12, 14):
         raise NotImplementedError('Fused Metal supports Q4_K and Q6_K only')
     if not mx.metal.is_available():
@@ -119,14 +121,19 @@ def packed_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2, sy
         raise MemoryError('Packed matvec exceeds workspace before device import')
     data = _import_packed(mx,packed,zero_copy,stats)
     source = mx.contiguous(x.astype(mx.float32)).reshape(batch, width)
-    result = _kernel(quant_type)(inputs=[data, source], grid=(rows * 32, batch, 1),
+    def baseline():
+        return _kernel(quant_type)(inputs=[data, source], grid=(rows * 32, batch, 1),
                                 threadgroup=(32*simd_groups, 1, 1),
                                 output_shapes=[(batch, rows)], output_dtypes=[mx.float32])[0]
+    spare=max_workspace_bytes-required
+    if batch_spare_workspace_bytes is not None:spare=min(spare,batch_spare_workspace_bytes)
+    result = (baseline() if batch_dispatch is None else batch_dispatch(data,source,quant_type,
+        grouped=False,baseline=baseline,spare_workspace=spare))
     if synchronize:mx.eval(result)
     return result.reshape(*x.shape[:-1], rows)
 
 
-def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2,synchronize=True,zero_copy=False,stats=None,simd_groups=1):
+def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024**2,synchronize=True,zero_copy=False,stats=None,simd_groups=1,batch_dispatch=None,batch_spare_workspace_bytes=None):
     """Independent expert matvecs, preserving each original SIMD reduction.
 
     ``packed`` is uint8 [experts, rows, row_bytes], ``x`` is FP32
@@ -139,6 +146,8 @@ def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024
     if type(simd_groups) is not int or simd_groups not in (1,2,4,8):raise ValueError('simd_groups must be 1, 2, 4 or 8')
     if type(max_workspace_bytes) is not int or max_workspace_bytes<1:
         raise ValueError('max_workspace_bytes must be a positive integer')
+    if batch_spare_workspace_bytes is not None and (type(batch_spare_workspace_bytes) is not int or batch_spare_workspace_bytes<0):
+        raise ValueError('Batch spare workspace must be a nonnegative integer or None')
     if quant_type not in (12,14):raise NotImplementedError('Fused Metal supports Q4_K and Q6_K only')
     if not mx.metal.is_available():raise RuntimeError('Metal is required for the fused packed kernel')
     if len(packed.shape)!=3 or packed.dtype not in (np.dtype('uint8'),mx.uint8):
@@ -152,7 +161,12 @@ def packed_expert_matmul(packed, x, quant_type, *, max_workspace_bytes=64 * 1024
     if required>max_workspace_bytes:raise MemoryError('Packed expert matvec exceeds workspace before device import')
     data=_import_packed(mx,packed,zero_copy,stats)
     source=mx.contiguous(x.astype(mx.float32))
-    result=_kernel(quant_type,True)(inputs=[data,source],grid=(rows*32,batch,experts),
+    def baseline():
+        return _kernel(quant_type,True)(inputs=[data,source],grid=(rows*32,batch,experts),
         threadgroup=(32*simd_groups,1,1),output_shapes=[(experts,batch,rows)],output_dtypes=[mx.float32])[0]
+    spare=max_workspace_bytes-required
+    if batch_spare_workspace_bytes is not None:spare=min(spare,batch_spare_workspace_bytes)
+    result=(baseline() if batch_dispatch is None else batch_dispatch(data,source,quant_type,
+        grouped=True,baseline=baseline,spare_workspace=spare))
     if synchronize:mx.eval(result)
     return result
