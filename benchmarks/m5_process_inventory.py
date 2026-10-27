@@ -43,6 +43,23 @@ def expected_read_error(error):
     return cause is not None and not isinstance(cause, SystemError) and expected_read_error(cause)
 
 
+def _lifetime_error(error):
+    """Recognize a departed process, rather than an inaccessible live one."""
+    if isinstance(error,(psutil.NoSuchProcess,psutil.ZombieProcess,ProcessLookupError)):
+        return True
+    if isinstance(error,OSError) and error.errno == errno.ESRCH:
+        return True
+    if (isinstance(error,SystemError)
+            and str(error) == '<built-in function proc_cmdline> returned a result with an exception set'):
+        cause = error.__cause__ or error.__context__
+        return cause is not None and not isinstance(cause,SystemError) and _lifetime_error(cause)
+    return False
+
+
+class _ProcessDisappeared(Exception):
+    """Internal control flow: abandon this PID for the current snapshot."""
+
+
 def _read(process, field, errors):
     try:
         return getattr(process, field)()
@@ -50,9 +67,65 @@ def _read(process, field, errors):
         if not expected_read_error(error):
             raise
         errors.append(dict(pid=process.pid, field=field, error_type=type(error).__name__,
-                           reason='disappeared' if isinstance(error, (psutil.NoSuchProcess, ProcessLookupError))
+                           reason='disappeared' if _lifetime_error(error)
                            else 'access_or_lifetime_unavailable'))
+        if _lifetime_error(error):
+            # Do not combine stale birth-time data with later permission errors
+            # from an exited/reused PID and invent an unidentified live model.
+            raise _ProcessDisappeared from None
         return None
+
+
+def _status(process,errors):
+    status = _read(process,'status',errors)
+    if status in ('zombie','dead'):
+        errors.append(dict(pid=process.pid,field='status',error_type='ProcessStatus',reason='disappeared'))
+        raise _ProcessDisappeared
+    return status
+
+
+def _inspect(process,backend,errors,include_commands):
+    pid = process.pid
+    born = _read(process,'create_time',errors)
+    _status(process,errors)  # Known zombies cannot be concurrent inference.
+    uids = _read(process,'uids',errors)
+    uid = None if uids is None else uids.real
+    executable = _read(process,'exe',errors)
+    # Read status before cmdline, which commonly becomes inaccessible for a
+    # zombie on Darwin. Privileged system arguments remain optional/unread.
+    command = _read(process,'cmdline',errors) if uid == os.getuid() else None
+    name = Path(executable).name if executable else _read(process,'name',errors)
+    try:
+        closing = backend.Process(pid)
+    except Exception as error:
+        if not expected_read_error(error):
+            raise
+        if _lifetime_error(error):
+            errors.append(dict(pid=pid,field='closing_identity',error_type=type(error).__name__,reason='disappeared'))
+            raise _ProcessDisappeared from None
+        closing_born = None
+    else:
+        closing_born = _read(closing,'create_time',errors)
+        _status(closing,errors)
+    if born is None or closing_born is None:
+        unknown = dict(pid=pid,reason='birth_time_unavailable') if uid in (None,os.getuid()) else None
+        return None,unknown
+    if born != closing_born:
+        return None,dict(pid=pid,reason='pid_reused_during_inventory')
+    lower_name = (name or '').lower()
+    possible = (not name or lower_name.startswith('python') or name in NATIVE or name == 'ollama')
+    unknown = None
+    if uid is None or (uid == os.getuid() and possible and command is None):
+        unknown = dict(pid=pid,created=born,reason='inference_identity_unavailable')
+    selected = (name in NATIVE or (name == 'ollama' and command and 'runner' in command[1:])
+                or (command and any(Path(arg).name in WORKERS or arg in (
+                    'airllm.nextgen.gguf_cli','airllm.nextgen.gguf_chat') for arg in command[1:])))
+    row = dict(pid=pid,created=born,uid=uid,executable=name,
+               inference_candidate=bool(selected),identity_verified=True)
+    if include_commands:
+        row['command'] = command
+        row['full_executable'] = executable
+    return row,unknown
 
 
 def inventory(*, backend=psutil, include_commands=False):
@@ -71,50 +144,17 @@ def inventory(*, backend=psutil, include_commands=False):
         except Exception as error:
             if not expected_read_error(error):
                 raise
-            if not isinstance(error, (psutil.NoSuchProcess, ProcessLookupError)):
+            if not _lifetime_error(error):
                 uncertain.append(dict(pid=pid, reason='identity_unavailable'))
             continue
-        born = _read(process, 'create_time', errors)
-        uids = _read(process, 'uids', errors)
-        uid = None if uids is None else uids.real
-        executable = _read(process, 'exe', errors)
-        # A command line is an optional diagnostic for another user's process.
-        # Avoid reading privileged system arguments at all: no authority to
-        # signal those processes is derived from this inventory.
-        command = _read(process, 'cmdline', errors) if uid == os.getuid() else None
-        name = Path(executable).name if executable else _read(process, 'name', errors)
         try:
-            closing = backend.Process(pid)
-            closing_born = _read(closing, 'create_time', errors)
-        except Exception as error:
-            if not expected_read_error(error):
-                raise
-            if isinstance(error, (psutil.NoSuchProcess, ProcessLookupError)):
-                continue
-            closing_born = None
-        if born is None or closing_born is None:
-            # A vanished PID is harmless; unavailable identity is never a lease.
-            gone = any(e.get('pid') == pid and e.get('field') == 'create_time'
-                       and e.get('reason') == 'disappeared' for e in errors)
-            if not gone and uid in (None, os.getuid()):
-                uncertain.append(dict(pid=pid, reason='birth_time_unavailable'))
+            row,unknown = _inspect(process,backend,errors,include_commands)
+        except _ProcessDisappeared:
             continue
-        if born != closing_born:
-            uncertain.append(dict(pid=pid, reason='pid_reused_during_inventory'))
-            continue
-        lower_name = (name or '').lower()
-        possible = (not name or lower_name.startswith('python') or name in NATIVE or name == 'ollama')
-        if uid is None or (uid == os.getuid() and possible and command is None):
-            uncertain.append(dict(pid=pid, created=born, reason='inference_identity_unavailable'))
-        selected = (name in NATIVE or (name == 'ollama' and command and 'runner' in command[1:])
-                    or (command and any(Path(arg).name in WORKERS or arg in (
-                        'airllm.nextgen.gguf_cli', 'airllm.nextgen.gguf_chat') for arg in command[1:])))
-        row = dict(pid=pid, created=born, uid=uid, executable=name,
-                   inference_candidate=bool(selected), identity_verified=True)
-        if include_commands:
-            row['command'] = command
-            row['full_executable'] = executable
-        rows.append(row)
+        if unknown is not None:
+            uncertain.append(unknown)
+        if row is not None:
+            rows.append(row)
     return dict(processes=rows, errors=errors, uncertain=uncertain, complete=not uncertain)
 
 

@@ -133,6 +133,48 @@ def test_admitted_flow_invokes_one_campaign_then_independent_verifier(tmp_path,m
     assert code == 0 and len(calls) == 2
 
 
+def test_explicit_300_second_recovery_wait_is_forwarded_and_pinned_without_guard_changes(tmp_path,monkeypatch):
+    args,config,calls = admitted_simulation(tmp_path,monkeypatch)
+    args.inter_worker_wait_seconds=300.
+    timers=[]
+    monkeypatch.setattr(supervisor.signal,'setitimer',lambda kind,seconds:timers.append(seconds))
+    code,state=supervisor.run(args)
+    assert code==0 and calls[0][-2:]==['--resource-wait-seconds','300']
+    assert state['identity']['inter_worker_wait_seconds']==300.
+    assert state['identity']['retained_limits']==asdict(ExperimentLimits())
+    assert state['identity']['headroom_bytes']==256<<20
+    assert state['identity']['disk_reserve_bytes']==5<<30
+    assert state['identity']['max_runtime_seconds']==60.
+    assert timers==[60.,0]
+    persisted=json.loads((args.output_dir/'state.json').read_text())
+    assert persisted['identity']['inter_worker_wait_seconds']==300.
+    assert persisted['attempts'][0]['command'][-2:]==['--resource-wait-seconds','300']
+    # The same frozen options are idempotent; changing the recovery policy may
+    # not reuse a prior supervisor's evidence/output identity.
+    assert supervisor.run(args)[0]==0 and len(calls)==2
+    args.inter_worker_wait_seconds=60.
+    with pytest.raises(RuntimeError,match='different frozen inputs/options'):
+        supervisor.run(args)
+    assert len(calls)==2
+
+
+@pytest.mark.parametrize('value',[0.,-1.,float('nan'),float('inf'),float('-inf'),3600.01,True,'300'])
+def test_invalid_inter_worker_wait_is_refused_before_any_campaign_or_worker(value):
+    with pytest.raises(ValueError,match='inter_worker_wait_seconds'):
+        supervisor.run(Namespace(max_wait_seconds=10.,max_runtime_seconds=60.,
+                                 inter_worker_wait_seconds=value))
+
+
+@pytest.mark.parametrize('value',[.01,3600.])
+def test_positive_bounded_inter_worker_wait_endpoints_are_accepted(tmp_path,monkeypatch,value):
+    args,config,calls=admitted_simulation(tmp_path,monkeypatch)
+    args.inter_worker_wait_seconds=value
+    code,state=supervisor.run(args)
+    assert code==0
+    assert float(calls[0][-1])==value
+    assert state['identity']['inter_worker_wait_seconds']==value
+
+
 def test_campaign_resource_refusal_has_no_retry(tmp_path,monkeypatch):
     args,config,calls = admitted_simulation(tmp_path,monkeypatch)
     def refuse(command,folder,**kwargs):

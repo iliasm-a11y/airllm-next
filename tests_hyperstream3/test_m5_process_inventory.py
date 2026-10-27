@@ -27,6 +27,7 @@ class Backend:
     def __init__(self, entries):
         self.entries = entries
         self.calls = {}
+        self.read_calls = []
     def pids(self):
         return list(self.entries)
     def Process(self, pid):
@@ -35,14 +36,18 @@ class Backend:
         if 'constructor_error' in entry:
             raise entry['constructor_error']
         second = self.calls[pid] > 1
+        read_calls = self.read_calls
         class Process:
             def __init__(self):
                 self.pid = pid
             def __getattr__(self, field):
                 def read():
+                    read_calls.append((pid,second,field))
                     defaults = dict(create_time=10., uids=SimpleNamespace(real=os.getuid()),
-                                    exe='/usr/bin/python3', name='python3', cmdline=['python3','idle.py'])
-                    value = entry.get('closing_birth' if field == 'create_time' and second else field,
+                                    exe='/usr/bin/python3', name='python3', cmdline=['python3','idle.py'],status='sleeping')
+                    key = ('closing_birth' if field == 'create_time' and second else
+                           'closing_status' if field == 'status' and second else field)
+                    value = entry.get(key,
                                       defaults[field])
                     if isinstance(value, BaseException):
                         raise value
@@ -136,3 +141,76 @@ def test_public_observation_never_contains_command_lines():
     result = inventory.inference_observation(backend=Backend({4:dict(cmdline=['python3','qwen_terminal.py','private prompt'])}))
     assert result['other_model_processes']
     assert 'private prompt' not in str(result)
+
+
+def test_exact_observed_exe_disappearance_never_reads_later_denied_arguments():
+    """Regression for real PID29572: stale birth alone did not mean live model."""
+    backend = Backend({29572:dict(create_time=1793123592.806082,closing_birth=1793123592.806082,
+        exe=psutil.NoSuchProcess(29572),cmdline=psutil.AccessDenied(29572)),
+        5:dict(exe='/usr/bin/node',cmdline=['node','service.js'])})
+    result = inventory.inference_observation(backend=backend)
+    assert result['process_inventory_complete']
+    assert result['process_inventory_uncertain']==[]
+    assert result['other_model_processes']==[]
+    assert result['process_inventory_count']==1
+    assert not any(pid==29572 and field=='cmdline' for pid,closing,field in backend.read_calls)
+    assert backend.calls[29572]==1
+    assert result['process_inventory_errors']==[
+        dict(pid=29572,field='exe',error_type='NoSuchProcess',reason='disappeared')]
+
+
+@pytest.mark.parametrize('field',['create_time','status','uids','exe','cmdline','name','closing_birth','closing_status'])
+@pytest.mark.parametrize('failure',[psutil.NoSuchProcess(4),psutil.ZombieProcess(4),
+                                    ProcessLookupError(errno.ESRCH,'process ended'),OSError(errno.ESRCH,'no process')])
+def test_lifetime_failure_in_any_field_abandons_pid_without_unknown_model(field,failure):
+    entry={field:failure}
+    if field=='name':
+        entry['exe']=psutil.AccessDenied(4)
+    backend=Backend({4:entry})
+    result=inventory.inference_observation(backend=backend)
+    assert result['process_inventory_complete']
+    assert result['process_inventory_uncertain']==[]
+    assert result['other_model_processes']==[]
+    assert result['process_inventory_count']==0
+    assert result['process_inventory_errors'][-1]['reason']=='disappeared'
+    target_field='create_time' if field=='closing_birth' else 'status' if field=='closing_status' else field
+    assert backend.read_calls[-1][2]==target_field
+
+
+@pytest.mark.parametrize('status',['zombie','dead'])
+def test_nonrunning_status_prevents_command_line_reads(status):
+    backend=Backend({4:dict(status=status,cmdline=AssertionError('dead process arguments must not be read'))})
+    result=inventory.inference_observation(backend=backend)
+    assert result['process_inventory_complete'] and result['process_inventory_count']==0
+    assert not any(field=='cmdline' for pid,closing,field in backend.read_calls)
+
+
+@pytest.mark.parametrize('late_status',['zombie','dead',psutil.NoSuchProcess(4),psutil.ZombieProcess(4)])
+def test_fresh_closing_liveness_discards_process_that_died_after_argument_denial(late_status):
+    backend=Backend({4:dict(status='running',cmdline=psutil.AccessDenied(4),closing_status=late_status)})
+    result=inventory.inference_observation(backend=backend)
+    assert result['process_inventory_complete']
+    assert result['process_inventory_uncertain']==[]
+    assert result['process_inventory_count']==0
+
+
+def test_observed_darwin_wrapper_with_lifetime_cause_is_departed_not_unknown():
+    try:
+        raise ProcessLookupError(errno.ESRCH,'process ended during sysctl')
+    except ProcessLookupError as cause:
+        try:
+            raise SystemError('<built-in function proc_cmdline> returned a result with an exception set') from cause
+        except SystemError as error:
+            wrapped=error
+    result=inventory.inference_observation(backend=Backend({4:dict(cmdline=wrapped)}))
+    assert result['process_inventory_complete'] and not result['process_inventory_uncertain']
+    assert result['process_inventory_errors'][-1]['reason']=='disappeared'
+
+
+def test_live_unknown_python_with_persistent_argument_denial_stays_fail_closed():
+    for attempt in range(2):
+        backend=Backend({4:dict(status='running',closing_status='running',cmdline=psutil.AccessDenied(4))})
+        result=inventory.inference_observation(backend=backend)
+        assert not result['process_inventory_complete']
+        assert result['process_inventory_uncertain']==[
+            dict(pid=4,created=10.,reason='inference_identity_unavailable')]

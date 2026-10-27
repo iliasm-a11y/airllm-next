@@ -4,8 +4,9 @@
 Suitable for a user LaunchAgent: this process has no dependency on Codex after
 launch. It closes no applications, changes no guard and retries no heavy worker.
 The existing campaign owns inference, kernel validation, hashes and resumption.
-Between workers it observes resource recovery for at most 60 seconds, preserving
-the same five-second stable window and all existing admission/runtime limits.
+Between workers it observes resource recovery for 60 seconds by default, with
+an explicit finite option bounded at one hour. The same five-second stable
+window and all existing admission/runtime limits remain in force.
 """
 from __future__ import annotations
 
@@ -235,6 +236,12 @@ def run(args):
         value = getattr(args,name)
         if type(value) not in (int,float) or not math.isfinite(value) or value <= 0:
             raise ValueError(name+' must be finite and positive')
+    inter_worker_wait = getattr(args,'inter_worker_wait_seconds',INTER_WORKER_WAIT_SECONDS)
+    if (type(inter_worker_wait) not in (int,float) or not math.isfinite(inter_worker_wait)
+            or not 0 < inter_worker_wait <= 3600):
+        raise ValueError('inter_worker_wait_seconds must be finite, positive and at most3600')
+    wait_value=float(inter_worker_wait)
+    wait_argument=str(int(wait_value)) if wait_value.is_integer() else repr(wait_value)
     campaign = args.campaign.expanduser().resolve(strict=True)
     output = args.output_dir.expanduser().absolute()
     if output.is_symlink():
@@ -269,7 +276,7 @@ def run(args):
             max_runtime_seconds=float(args.max_runtime_seconds),
             required_pressure_level=1, stable_seconds=STABLE_SECONDS,
             poll_seconds=POLL_SECONDS, headroom_bytes=HEADROOM_BYTES,
-            inter_worker_wait_seconds=INTER_WORKER_WAIT_SECONDS,
+            inter_worker_wait_seconds=float(inter_worker_wait),
             retained_limits=config['limits'])
         identity['disk_reserve_bytes'] = DISK_RESERVE_BYTES
         identity['process_inventory_sha256'] = digest(ROOT/'benchmarks/m5_process_inventory.py')
@@ -381,7 +388,7 @@ def run(args):
             state.update(status='campaign_running', campaign_launched=True,
                          campaign_started_unix=time.time())
             command = [sys.executable,str(ROOT/'benchmarks/m5_validation.py'),'run',
-                       '--campaign',str(campaign),'--resource-wait-seconds',str(INTER_WORKER_WAIT_SECONDS)]
+                       '--campaign',str(campaign),'--resource-wait-seconds',wait_argument]
             state['attempts'].append(dict(command=command, started_unix=time.time()))
             atomic_json(state_path,state)
             # This timer bounds the complete child/controller/verification phase;
@@ -465,6 +472,8 @@ def main():
     p.add_argument('--output-dir',type=Path,required=True)
     p.add_argument('--max-wait-seconds',type=float,default=1800.)
     p.add_argument('--max-runtime-seconds',type=float,default=28800.)
+    p.add_argument('--inter-worker-wait-seconds',type=float,default=INTER_WORKER_WAIT_SECONDS,
+                   help='Finite resource-recovery observation between workers, 0<seconds<=3600; included in the unchanged global runtime budget')
     args = p.parse_args()
     code,state = run(args)
     print(json.dumps(dict(status=state['status'],campaign=state['identity']['campaign'],
