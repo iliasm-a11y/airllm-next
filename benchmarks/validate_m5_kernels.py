@@ -111,6 +111,20 @@ def comparison(actual, expected):
             'atol': ATOL, 'rtol': RTOL}
 
 
+def save_tensor(folder, name, value, dtype):
+    """Retain original miniature operands/results for independent diagnosis."""
+    import numpy as np
+    array = np.ascontiguousarray(value, dtype=dtype)
+    raw = array.tobytes()
+    path = folder/name
+    with path.open('xb') as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    return dict(file=str(path.relative_to(folder.parent)), shape=list(array.shape),
+                dtype=np.dtype(dtype).str, bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+
+
 def sources():
     paths = [Path(__file__), ROOT/'air_llm/airllm/nextgen/gguf_m5.py',
              ROOT/'air_llm/airllm/nextgen/gguf_metal.py',
@@ -145,6 +159,8 @@ def run_worker(args):
               'gpu_seconds': None, 'gpu_timing_reason': 'MLX 0.32.4 Python API exposes no per-command-buffer GPU timestamps',
               'host_timing_scope': 'dispatch plus synchronous eval plus GPU synchronize; includes GPU duration',
               'cases': []}
+    tensors = args.output.with_name(args.output.stem+'.tensors')
+    tensors.mkdir(exist_ok=False)
     atomic_json(args.output, report)
     capture_started = False
     if args.capture:
@@ -177,14 +193,19 @@ def run_worker(args):
                         reference_compile_and_first = time.perf_counter()-ref_started
                         ref_host = np.array(reference)
                         ref_check = comparison(ref_host, expected)
-                        if not ref_check['accepted']:
-                            raise RuntimeError('Existing GPU reference differs from independent scalar oracle')
+                        stem = f'q{kind}-g{int(grouped)}-r{rows}-w{width}-b{batch}'
+                        evidence = dict(
+                            packed=save_tensor(tensors, stem+'-packed.u8', packed, 'u1'),
+                            input=save_tensor(tensors, stem+'-input.f32', inputs, '<f4'),
+                            scalar=save_tensor(tensors, stem+'-scalar.f32', expected, '<f4'),
+                            reference=save_tensor(tensors, stem+'-reference.f32', ref_host, '<f4'))
                         for backend, tile in variants:
                             admission(LIMITS)
                             case = {'kind': kind, 'grouped': grouped, 'rows': rows, 'width': width,
                                     'batch': batch, 'backend': backend, 'token_tile': tile,
                                     'explicit_workspace_charge_bytes': charge,
                                     'reference_vs_scalar': ref_check,
+                                    'numeric_evidence': evidence,
                                     'reference_compile_and_first_host_seconds': reference_compile_and_first,
                                     'gpu_seconds': None, 'selected': False}
                             def candidate():
@@ -197,11 +218,14 @@ def run_worker(args):
                                 mx.synchronize()
                                 case['compile_and_first_host_seconds'] = time.perf_counter()-started
                                 trial_host = np.array(trial)
+                                case['candidate_evidence'] = save_tensor(tensors,
+                                    stem+f'-{backend}{tile}.f32', trial_host, '<f4')
                                 case['candidate_vs_scalar'] = comparison(trial_host, expected)
                                 case['candidate_vs_reference'] = comparison(trial_host, ref_host)
                                 del trial, trial_host
                                 case['compiled_and_executed'] = True
-                                valid = case['candidate_vs_scalar']['accepted'] and case['candidate_vs_reference']['accepted']
+                                valid = (ref_check['accepted'] and case['candidate_vs_scalar']['accepted']
+                                         and case['candidate_vs_reference']['accepted'])
                                 if valid:
                                     timings = [[], []]
                                     cpu = [[], []]
@@ -224,7 +248,8 @@ def run_worker(args):
                                     case['selected'] = case['host_median_speedup'] > 1.03
                                     case['reason'] = 'measured_host_speed' if case['selected'] else 'not_faster'
                                 else:
-                                    case['reason'] = 'numerical_rejection'
+                                    case['reason'] = ('numerical_rejection' if ref_check['accepted']
+                                                      else 'reference_scalar_disagreement')
                             except (RuntimeError, ValueError, TypeError) as error:
                                 case.update(compiled_and_executed=False, reason='compilation_or_execution_unavailable',
                                             error=f'{type(error).__name__}: {error}',
@@ -245,8 +270,10 @@ def run_worker(args):
     report.update(status='completed', after=system_snapshot(), sources_after=sources(),
                   mlx_peak_bytes=mx.get_peak_memory())
     report['sources_unchanged'] = report['sources_before'] == report['sources_after']
-    report['all_candidates_numerically_valid'] = all(c.get('candidate_vs_scalar', {}).get('accepted', False)
-                                                   for c in report['cases'])
+    report['all_candidates_numerically_valid'] = all(
+        c.get('reference_vs_scalar', {}).get('accepted', False)
+        and c.get('candidate_vs_scalar', {}).get('accepted', False)
+        and c.get('candidate_vs_reference', {}).get('accepted', False) for c in report['cases'])
     report['selected_case_count'] = sum(c['selected'] for c in report['cases'])
     atomic_json(args.output, report)
     if not report['sources_unchanged']:
@@ -268,9 +295,10 @@ def main(argv=None):
         args.capture = args.capture.expanduser().absolute()
         if args.capture.suffix != '.gputrace' or args.capture.exists() or args.capture.is_symlink():
             parser.error('capture must be a new .gputrace path')
+    tensor_folder = args.output.with_name(args.output.stem+'.tensors')
     destinations = validate_output_paths(args.output, protected=[Path(__file__), *[
         ROOT/name for name in sources()]], extra_outputs=[args.output.with_name(args.output.name+'.partial'),
-        *([args.capture] if args.capture else [])])
+        tensor_folder, *([args.capture] if args.capture else [])])
     # Active supervisor log and guard belong to the parent during worker entry.
     checked = [args.output] if args.worker else destinations
     if any(p.exists() or p.is_symlink() for p in checked):

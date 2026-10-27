@@ -86,3 +86,31 @@ def test_private_worker_without_supervisor_token_refuses(tmp_path, monkeypatch):
 def test_capture_cannot_alias_kernel_source(tmp_path):
     with pytest.raises(SystemExit):
         runner.main(['--output', str(tmp_path/'report.json'), '--capture', str(ROOT/'benchmarks/validate_m5_kernels.py')])
+
+
+def test_raw_tensor_roundtrip_is_exact_and_rejects_corruption(tmp_path):
+    diagnostic_spec = importlib.util.spec_from_file_location('m5_diagnostic', ROOT/'benchmarks/diagnose_m5_numerics.py')
+    diagnostic = importlib.util.module_from_spec(diagnostic_spec)
+    diagnostic_spec.loader.exec_module(diagnostic)
+    tensor_folder = tmp_path/'report.tensors'
+    tensor_folder.mkdir()
+    original = np.array([[1.25, -2., .125]], dtype=np.float32)
+    descriptor = runner.save_tensor(tensor_folder, 'values.f32', original, '<f4')
+    restored = diagnostic.load_tensor(tmp_path, descriptor)
+    np.testing.assert_array_equal(original, restored)
+    (tensor_folder/'values.f32').write_bytes(b'corrupted')
+    with pytest.raises(ValueError, match='digest differs'):
+        diagnostic.load_tensor(tmp_path, descriptor)
+
+
+def test_raw_tensor_diagnostic_rejects_escape(tmp_path):
+    diagnostic_spec = importlib.util.spec_from_file_location('m5_diagnostic_escape', ROOT/'benchmarks/diagnose_m5_numerics.py')
+    diagnostic = importlib.util.module_from_spec(diagnostic_spec)
+    diagnostic_spec.loader.exec_module(diagnostic)
+    folder = tmp_path/'evidence'
+    folder.mkdir()
+    outside = tmp_path/'outside.f32'
+    outside.write_bytes(np.array([1.],dtype='<f4').tobytes())
+    descriptor = dict(file='../outside.f32',sha256=diagnostic.sha(outside),bytes=4,dtype='<f4',shape=[1])
+    with pytest.raises(ValueError, match='path or digest'):
+        diagnostic.load_tensor(folder, descriptor)

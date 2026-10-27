@@ -1,0 +1,48 @@
+{
+  "full_sha256_before_after_match": true,
+  "expected_sha256": "f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "paired_pilot_count": 1,
+  "counterbalanced_repetitions_completed": false,
+  "fidelity_status": "rejected_accepted_prefix_expert_routes_differ",
+  "performance_gain_qualified": false,
+  "variants": [
+    {
+      "variant": "baseline-p00",
+      "input_tokens": 364,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "text": "42",
+      "ttft_seconds": 158.07114570799604,
+      "generation_seconds": 160.52436408300127,
+      "logical_read_bytes": 139447912832,
+      "worker_status": "completed",
+      "guard_violation": null,
+      "max_swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "report_sha256": "d1fb84c30f507c855875586380695cf833f780ee70fbb082a764711937bfbeec",
+      "raw_report": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/recovery-campaign-m5-20261027-direct/sessions/0000/h1_vs_h2/baseline-p00/worker.json"
+    },
+    {
+      "variant": "candidate-p00",
+      "input_tokens": 364,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "text": "42",
+      "ttft_seconds": 53.47567408299801,
+      "generation_seconds": 55.98705429099937,
+      "logical_read_bytes": 40928599936,
+      "worker_status": "completed",
+      "guard_violation": null,
+      "max_swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "report_sha256": "761cce8e3969ca8f12092239eac21dba17a38d79148d239108082ff13b98a022",
+      "raw_report": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/recovery-campaign-m5-20261027-direct/sessions/0000/h1_vs_h2/candidate-p00/worker.json"
+    }
+  ]
+}

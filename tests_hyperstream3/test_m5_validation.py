@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import struct
 import sys
 import time
 
@@ -265,3 +266,89 @@ def test_quick_or_loose_kernel_report_cannot_qualify():
     report['cases'][0]['candidate_vs_reference']['atol'] = 100
     with pytest.raises(checker.RejectedEvidence,match='tolerances'):
         checker.kernel_eligibility(report,experiment)
+
+
+def test_inherited_scalar_negative_is_evidence_but_excludes_strict_backend():
+    report = kernel_fixture()
+    case = next(c for c in report['cases'] if c['backend'] == 'tensorops')
+    case['reference_vs_scalar']['accepted'] = False
+    checker.validate_kernel_grid(report)
+    reason = checker.kernel_eligibility(report,dict(plan=[dict(args=['--metal-batch-backend','tensorops'])]))
+    assert 'Some required' in reason
+
+
+def reference_exact_fixture():
+    # Control-flow fixture stands for independently recomputed raw parity; the
+    # artifact reader has separate tests below. It is no hardware measurement.
+    report = kernel_fixture()
+    cases = [c for c in report['cases'] if c['backend'] == 'reuse' and c['token_tile'] == 2]
+    cases[0].update(selected=True,host_seconds=[[2.,2.],[1.,1.]],host_median_speedup=2.)
+    cases[-1]['reference_vs_scalar']['accepted'] = False
+    cases[-1]['candidate_vs_scalar']['accepted'] = False
+    cases[-1].pop('host_seconds')
+    report.update(_reviewed_qualification_policy=checker.KERNEL_POLICY,
+        _recorded_c_diagnosis_verified=True,
+        _verified_raw_reference_bitwise={checker.kernel_case_key(c):True for c in report['cases']})
+    return report,cases
+
+
+def test_v2_reuse_only_exact_reference_preserves_scalar_negative():
+    report,cases = reference_exact_fixture()
+    experiment = dict(plan=[dict(args=['--metal-batch-backend','reuse','--metal-token-tile','2'])])
+    assert checker.kernel_eligibility(report,experiment) is None
+    assert report['_qualification_modes']['reuse/2'] == 'reference_exact_with_inherited_scalar_disagreement'
+    assert cases[-1]['reference_vs_scalar']['accepted'] is False
+    report['_recorded_c_diagnosis_verified'] = False
+    assert checker.kernel_eligibility(report,experiment) is not None
+    report['_recorded_c_diagnosis_verified'] = True
+    report['_verified_raw_reference_bitwise'][checker.kernel_case_key(cases[-1])] = False
+    assert checker.kernel_eligibility(report,experiment) is not None
+
+
+def test_reference_exact_alternative_never_qualifies_tensorops():
+    report,cases = reference_exact_fixture()
+    case = next(c for c in report['cases'] if c['backend'] == 'tensorops')
+    case['reference_vs_scalar']['accepted'] = False
+    assert checker.kernel_eligibility(report,dict(plan=[dict(args=['--metal-batch-backend','tensorops'])])) is not None
+
+
+def raw_kernel_fixture(tmp_path):
+    def tensor(name,raw,shape,dtype):
+        path = tmp_path/name
+        path.write_bytes(raw)
+        return dict(file=name,shape=shape,dtype=dtype,bytes=len(raw),sha256=bench.digest(path))
+    scalar = struct.pack('<2f',1.,2.01)
+    reference = struct.pack('<2f',1.,2.)
+    diff = abs(struct.unpack('<2f',scalar)[1]-2.)
+    negative = dict(accepted=False,atol=1e-4,rtol=5e-5,max_absolute_error=diff)
+    case = dict(kind=12,grouped=False,rows=1,width=256,batch=2,backend='reuse',token_tile=2,
+        compiled_and_executed=True,reference_vs_scalar=dict(negative),candidate_vs_scalar=dict(negative),
+        candidate_vs_reference=dict(accepted=True,atol=1e-4,rtol=5e-5,max_absolute_error=0.),
+        numeric_evidence=dict(packed=tensor('packed.u8',bytes(144),[1,144],'|u1'),
+            input=tensor('input.f32',bytes(2*256*4),[2,256],'<f4'),
+            scalar=tensor('scalar.f32',scalar,[2,1],'<f4'),
+            reference=tensor('reference.f32',reference,[2,1],'<f4')),
+        candidate_evidence=tensor('candidate.f32',reference,[2,1],'<f4'))
+    return dict(cases=[case])
+
+
+def test_raw_kernel_parity_recomputed_and_false_comparison_rejected(tmp_path):
+    report = raw_kernel_fixture(tmp_path)
+    proof = checker.validate_kernel_artifacts(report,tmp_path)
+    assert proof == {checker.kernel_case_key(report['cases'][0]):True}
+    report['cases'][0]['candidate_vs_scalar']['accepted'] = True
+    with pytest.raises(checker.RejectedEvidence,match='contradicts'):
+        checker.validate_kernel_artifacts(report,tmp_path)
+
+
+def test_raw_kernel_sidecars_survive_safe_campaign_copy(tmp_path):
+    original = tmp_path/'original'
+    original.mkdir()
+    report = raw_kernel_fixture(original)
+    source = original/'report.json'
+    bench.save(source,report)
+    target = tmp_path/'copied'/'report.json'
+    target.parent.mkdir()
+    assert bench.copy_kernel_sidecars(source,target) == 5
+    proof = checker.validate_kernel_artifacts(report,target.parent)
+    assert all(proof.values())

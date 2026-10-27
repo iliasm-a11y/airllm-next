@@ -90,7 +90,7 @@ def owned_cleanup(identities):
         raise RuntimeError('Owned child cleanup did not complete')
 
 
-def run_child(command, folder):
+def run_child(command, folder, monitor=None):
     """Track wrapper and worker identities, including independently-sessioned workers.
 
     The retained supervisor handles normal errors. This outer lease additionally
@@ -128,6 +128,8 @@ def run_child(command, folder):
                             dict(pid=p, created=t) for p, t in observed.items()]))
                 except psutil.NoSuchProcess:
                     pass
+                if monitor is not None:
+                    monitor()
                 code = process.poll()
                 if code is not None:
                     return code
@@ -153,6 +155,37 @@ def custom_pairs(name, baseline, candidate, base_args, candidate_args, pairs, ta
     return dict(name=name, speculative=False, requires_prior_pass=[],
                 tasks_kind='historical_364', notes='Isolated transport/control comparison; no SSD NAND claim.',
                 plan=jobs)
+
+
+def copy_kernel_sidecars(original,target):
+    """Copy only hash-declared relative raw tensors into campaign ownership."""
+    report = json.loads(Path(original).read_text())
+    seen = {}
+    for case in report.get('cases',[]):
+        descriptors = [*case.get('numeric_evidence',{}).values()]
+        if case.get('candidate_evidence') is not None:
+            descriptors.append(case['candidate_evidence'])
+        for descriptor in descriptors:
+            relative = Path(descriptor['file'])
+            if relative.is_absolute() or '..' in relative.parts or not relative.parts:
+                raise ValueError('Kernel sidecar path escapes its report directory')
+            source = (Path(original).parent/relative).resolve(strict=True)
+            if not source.is_relative_to(Path(original).parent.resolve()) or source.is_symlink():
+                raise ValueError('Kernel sidecar path escapes its report directory')
+            if (type(descriptor.get('bytes')) is not int or not 0 < descriptor['bytes'] <= 16 << 20
+                    or source.stat().st_size != descriptor['bytes'] or digest(source) != descriptor.get('sha256')):
+                raise ValueError('Kernel sidecar differs from recorded identity')
+            if str(relative) in seen:
+                if seen[str(relative)] != descriptor:
+                    raise ValueError('Kernel sidecar is described inconsistently')
+                continue
+            destination = Path(target).parent/relative
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copyfile(source,destination)
+            if digest(destination) != descriptor['sha256']:
+                raise ValueError('Copied kernel sidecar identity differs')
+            seen[str(relative)] = descriptor
+    return len(seen)
 
 
 def prepare(args):
@@ -214,6 +247,9 @@ def prepare(args):
     kernel_tool = ROOT/'benchmarks/validate_m5_kernels.py'
     if kernel_tool.is_file():
         paths.add(kernel_tool)
+    for path in (ROOT/'benchmarks/diagnose_m5_numerics.py',ROOT/'tests_next/reference/ggml_codec_reference.c'):
+        if path.is_file():
+            paths.add(path)
     task_snapshots = {}
     for experiment in experiments:
         for job in experiment['plan']:
@@ -224,7 +260,10 @@ def prepare(args):
     # Capture all engine Python sources as well as the worker's narrower manifest.
     for root in roots.values():
         paths.update((root / 'air_llm').rglob('*.py'))
+    from verify_m5_validation import KERNEL_POLICY, FIDELITY_FAILURE_POLICY
     config = dict(schema_version=1, origin=str(folder), expected_checkpoint_sha256=args.expected_sha256,
+                  kernel_qualification_policy=KERNEL_POLICY,
+                  fidelity_failure_policy=FIDELITY_FAILURE_POLICY,
                   model_identity=identity, engine_manifests=manifests, engine_roots={k:str(v) for k,v in roots.items()},
                   tasks_by_path=task_snapshots,
                   protocol_sha256=protocol_manifest(sorted(paths)), pairs=args.pairs,
@@ -249,6 +288,12 @@ def prepare(args):
         for src, dst in ((original, target),
                          (original.with_suffix('.guard.json'), target.with_suffix('.guard.json'))):
             shutil.copyfile(src, dst)
+        config['kernel_raw_sidecar_count'] = copy_kernel_sidecars(original,target)
+        diagnostic = original.with_name(original.stem+'-numeric-diagnosis.json')
+        if diagnostic.is_file():
+            copied_diagnostic = target.with_name('kernel-numeric-diagnosis.json')
+            shutil.copyfile(diagnostic,copied_diagnostic)
+            config.update(kernel_diagnosis=str(copied_diagnostic),kernel_diagnosis_sha256=digest(copied_diagnostic))
         config['kernel_report'] = str(target)
     with (folder / 'config.json').open('x') as f:
         json.dump(config, f, indent=2, ensure_ascii=False, allow_nan=False)
@@ -280,6 +325,8 @@ def unchanged(config):
         raise RuntimeError('Checkpoint file identity changed')
     if config.get('kernel_report') and digest(config['kernel_report']) != config['kernel_report_sha256']:
         raise RuntimeError('Kernel validation report changed')
+    if config.get('kernel_diagnosis') and digest(config['kernel_diagnosis']) != config['kernel_diagnosis_sha256']:
+        raise RuntimeError('Kernel C-codec diagnosis changed')
 
 
 def require_kernels(config, experiment, generated_report=None):
@@ -325,7 +372,8 @@ def run(args):
         state = json.loads((folder/'state.json').read_text())
         if state['config_sha256'] != digest(folder/'config.json'):
             raise RuntimeError('Frozen campaign configuration changed')
-        from verify_m5_validation import verify_manifest, validate_job, summarize_experiment, validate_config
+        from verify_m5_validation import (verify_manifest, validate_job, summarize_experiment,
+                                         validate_config, VerifiedFidelityRejection)
         validate_config(config)
         if args.experiment and not set(args.experiment) <= {x['name'] for x in config['experiments']}:
             raise ValueError('Unknown experiment selection; inspect config.json for frozen names')
@@ -335,7 +383,7 @@ def run(args):
         # attempt directories; creation-time identity prevents PID reuse kills.
         for lease in folder.glob('sessions/*/**/owned-processes.json'):
             owned_cleanup(json.loads(lease.read_text())['processes'])
-        if state['status'] in ('completed', 'completed_with_exclusions'):
+        if state['status'] in ('completed', 'completed_with_exclusions', 'completed_evidence_with_rejections'):
             from verify_m5_validation import verify
             return verify(folder)
         # A completed job is resumable only inside a completed pre/post-hash
@@ -441,7 +489,13 @@ def run(args):
                     new_keys.append(key)
                     session.pop('active', None)
                     save(folder/'state.json', state)
-                result = summarize_experiment(folder, config, experiment, state['jobs'])
+                try:
+                    result = summarize_experiment(folder, config, experiment, state['jobs'])
+                except VerifiedFidelityRejection as error:
+                    # Only a fully validated cross-recording fidelity mismatch
+                    # is a completed negative experiment. All guards, malformed
+                    # evidence, nonfinite outputs and input drift still abort.
+                    result = error.result
                 if new_keys:
                     block_index = len(session['integrity_blocks'])
                     after_started = time.time()
@@ -466,8 +520,11 @@ def run(args):
             if len(state['experiment_results']) != len(config['experiments']):
                 state['status'] = 'partial_selected_experiments_completed'
             else:
-                state['status'] = ('completed_with_exclusions' if any(
-                    x['status'] == 'excluded' for x in state['experiment_results'].values()) else 'completed')
+                if any(x['status'] == 'rejected_fidelity' for x in state['experiment_results'].values()):
+                    state['status'] = 'completed_evidence_with_rejections'
+                else:
+                    state['status'] = ('completed_with_exclusions' if any(
+                        x['status'] == 'excluded' for x in state['experiment_results'].values()) else 'completed')
         except BaseException as error:
             session['status'] = state['status'] = 'deferred_or_interrupted'
             session['error'] = f'{type(error).__name__}: {error}'

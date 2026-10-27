@@ -1,5 +1,10 @@
 # AirLLM Next — validation matérielle M5
 
+**Suite de la mission :** le [rapport de libération automatique et d'exécution
+réelle](M5_RESOURCE_RECOVERY_FR.md) documente les 80 processus arrêtés, les 160
+cas GPU réellement exécutés et la réponse du vrai modèle. Le présent document
+conserve le constat de la session initiale avant cette libération.
+
 27 octobre 2026. Branche `research/hyperstream-m5-validation`, issue de la PR #12,
 commit `3b137621d69f3549a85b7d0cc20460bd07b11fb9`. Aucune quatrième génération
 d'optimisations n'est ajoutée. Les chemins moteur, poids, précision et gardes

@@ -13,13 +13,23 @@ import math
 from pathlib import Path
 import re
 import statistics
+import struct
 import sys
 
-from verify_gguf_speculation import verify as verify_logits
+from verify_gguf_speculation import (verify as verify_logits, _recording,
+                                    RejectedEvidence as LogitEvidenceRejection)
 
 
 class RejectedEvidence(ValueError):
     pass
+
+
+class VerifiedFidelityRejection(RejectedEvidence):
+    """Valid completed recordings disagree; this never accepts their speed."""
+    def __init__(self, result):
+        self.result = result
+        super().__init__('Verified fidelity rejection: '+', '.join(
+            item['checker_reason'] for item in result['rejected_pairs']))
 
 
 def require(condition, reason):
@@ -42,6 +52,18 @@ def digest(path):
 RETAINED_LIMITS = dict(rss_bytes=2 << 30, reserve_bytes=3 << 30,
     swap_growth_bytes=128 << 20, admitted_payload_bytes=768 << 20,
     timeout_seconds=600., interval_seconds=.05, max_processes=32)
+KERNEL_POLICY = dict(version=2, tensorops='strict_scalar_and_reference',
+    reuse='strict_scalar_and_reference_or_full_grid_bitwise_reference_with_recorded_c_diagnosis',
+    full_model_fidelity_required=True, scalar_tolerances_unchanged=True)
+FIDELITY_FAILURE_POLICY = dict(version=1,
+    continue_only_on=['verified_generated_tokens_mismatch','verified_ordered_expert_routes_mismatch',
+                      'verified_full_logits_mismatch'],
+    malformed_nonfinite_source_resource_or_input_errors='stop_campaign',
+    rejected_candidates_cannot_supply_speedup_or_prerequisites=True)
+VERIFIED_FIDELITY_MESSAGES = {
+    'Turn transcripts or EOS differ: generated': 'verified_generated_tokens_mismatch',
+    'Accepted-prefix expert routes differ': 'verified_ordered_expert_routes_mismatch',
+    'Emitted full logits exceed numerical tolerance': 'verified_full_logits_mismatch'}
 
 
 def validate_config(config):
@@ -66,6 +88,9 @@ def validate_config(config):
                        ('h2','5e8234181e736c0319a64df25e6813e92dd3e6da')):
         require(manifests[roots[label]].get('git_head') == sha, 'Reference revision differs: '+label)
     require(config.get('numerical_tolerances') == dict(atol=1e-4,rtol=1e-4), 'Full-logit tolerances changed')
+    require(config.get('kernel_qualification_policy') == KERNEL_POLICY, 'Kernel qualification policy is not the reviewed version')
+    require(config.get('fidelity_failure_policy') == FIDELITY_FAILURE_POLICY,
+            'Fidelity failure policy is not the reviewed version')
     protocol = config.get('protocol_sha256',{})
     require(isinstance(protocol,dict) and protocol and all(isinstance(k,str) and Path(k).is_absolute()
             and isinstance(v,str) and re.fullmatch('[0-9a-f]{64}',v) for k,v in protocol.items()), 'Invalid protocol hashes')
@@ -247,6 +272,14 @@ def validate_kernel_report(path, config, folder=None):
     guard_accepted(guard, limits, command)
     require(isinstance(report.get('cases'), list) and report['cases'], 'No actual kernel cases')
     validate_kernel_grid(report)
+    report['_verified_raw_reference_bitwise'] = validate_kernel_artifacts(report,path.parent)
+    report['_recorded_c_diagnosis_verified'] = False
+    diagnostic_path = config.get('kernel_diagnosis')
+    if diagnostic_path is not None:
+        diagnostic_path = (evidence_path(folder,diagnostic_path,config) if folder is not None else Path(diagnostic_path))
+        validate_kernel_diagnosis(diagnostic_path,path,report,config)
+        report['_recorded_c_diagnosis_verified'] = True
+    report['_reviewed_qualification_policy'] = config.get('kernel_qualification_policy')
     return report
 
 
@@ -270,10 +303,91 @@ def validate_kernel_grid(report):
             error = comparison.get('max_absolute_error')
             require(type(error) in (int,float) and math.isfinite(error) and error >= 0,
                     'Kernel numerical comparison is missing a finite error')
-            if name == 'reference_vs_scalar':
-                require(comparison['accepted'] is True, 'Reference kernel failed independent scalar oracle')
     require(len(actual) == len(set(actual)) == len(expected) and set(actual) == expected,
             'Kernel report is quick, incomplete or duplicates required full-grid cases')
+
+
+def kernel_case_key(case):
+    return json.dumps([case[k] for k in ('kind','grouped','rows','width','batch','backend','token_tile')],separators=(',',':'))
+
+
+def validate_kernel_artifacts(report,base):
+    """Recompute recorded FP32 comparisons and bitwise reference parity."""
+    base = Path(base).resolve()
+    checked = {}
+    exact = {}
+    def tensor(descriptor,shape,dtype):
+        require(isinstance(descriptor,dict) and descriptor.get('shape') == shape and descriptor.get('dtype') == dtype,
+                'Raw kernel tensor shape or dtype differs')
+        size = math.prod(shape)*(1 if dtype == '|u1' else 4)
+        require(0 < size <= 16 << 20 and descriptor.get('bytes') == size,'Raw kernel tensor length is invalid')
+        path = inside(base,descriptor.get('file'))
+        require(path.stat().st_size == size,'Raw kernel tensor length differs')
+        raw = path.read_bytes()
+        value = hashlib.sha256(raw).hexdigest()
+        require(value == descriptor.get('sha256') and (path not in checked or checked[path] == value),
+                'Raw kernel tensor digest differs')
+        checked[path] = value
+        return raw
+    def values(raw):
+        result = tuple(x[0] for x in struct.iter_unpack('<f',raw))
+        require(all(math.isfinite(x) for x in result),'Raw kernel tensor is nonfinite')
+        return result
+    def compare(actual,expected,recorded):
+        accepted = all(abs(a-b) <= 1e-4+5e-5*abs(b) for a,b in zip(actual,expected))
+        maximum = max(abs(a-b) for a,b in zip(actual,expected))
+        require(recorded['accepted'] is accepted,'Recorded kernel numerical decision contradicts raw tensors')
+        # NumPy records a rounded FP32 subtraction; Python subtracts in FP64.
+        # This comparison tolerates metadata rounding, never a looser allclose.
+        require(math.isclose(recorded['max_absolute_error'],maximum,rel_tol=2e-7,abs_tol=1e-12),
+                'Recorded kernel maximum error contradicts raw tensors')
+    for case in report['cases']:
+        rows,width,batch = (case[k] for k in ('rows','width','batch'))
+        prefix = [2] if case['grouped'] else []
+        shape = prefix+[batch,rows]
+        evidence = case.get('numeric_evidence',{})
+        tensor(evidence.get('packed'),prefix+[rows,width//256*(144 if case['kind'] == 12 else 210)],'|u1')
+        values(tensor(evidence.get('input'),prefix+[batch,width],'<f4'))
+        scalar_raw = tensor(evidence.get('scalar'),shape,'<f4')
+        reference_raw = tensor(evidence.get('reference'),shape,'<f4')
+        scalar,reference = values(scalar_raw),values(reference_raw)
+        compare(reference,scalar,case['reference_vs_scalar'])
+        bitwise = False
+        if case.get('compiled_and_executed') is True:
+            candidate_raw = tensor(case.get('candidate_evidence'),shape,'<f4')
+            candidate = values(candidate_raw)
+            compare(candidate,scalar,case['candidate_vs_scalar'])
+            compare(candidate,reference,case['candidate_vs_reference'])
+            bitwise = candidate_raw == reference_raw
+        exact[kernel_case_key(case)] = bitwise
+    for path,expected in checked.items():
+        require(digest(path) == expected,'Raw kernel tensor changed during verification')
+    return exact
+
+
+def validate_kernel_diagnosis(path,kernel_path,report,config):
+    """Validate provenance/coverage of recorded C-codec evidence; do not execute C."""
+    diagnosis = read_json(path)
+    require(digest(path) == config.get('kernel_diagnosis_sha256'),'Kernel diagnosis digest differs')
+    require(diagnosis.get('schema') == 'airllm-m5-numerical-diagnosis-v1'
+            and diagnosis.get('report_sha256') == digest(kernel_path)
+            and diagnosis.get('compiler_exit_code') == 0,'C-codec diagnosis does not match kernel evidence')
+    candidate = Path(config['engine_roots']['candidate'])
+    for field,relative in (('c_decoder_sha256','tests_next/reference/ggml_codec_reference.c'),
+                           ('diagnostic_source_sha256','benchmarks/diagnose_m5_numerics.py'),
+                           ('scalar_oracle_source_sha256','benchmarks/validate_m5_kernels.py')):
+        expected = config['protocol_sha256'].get(str(candidate/relative))
+        require(expected is not None and diagnosis.get(field) == expected,'C-codec diagnosis source differs: '+field)
+    expected_shapes = {tuple(c[k] for k in ('kind','grouped','rows','width','batch')) for c in report['cases']}
+    shapes = diagnosis.get('shapes')
+    require(isinstance(shapes,list) and len(shapes) == len(expected_shapes),'C-codec diagnosis is incomplete')
+    actual = [tuple(s.get(k) for k in ('kind','grouped','rows','width','batch')) for s in shapes]
+    require(len(set(actual)) == len(actual) and set(actual) == expected_shapes,'C-codec diagnosis shape coverage differs')
+    require(all(s.get('independent_c_vs_scalar_weights_exact') is True
+                and s.get('independent_c_vs_vectorized_weights_exact') is True for s in shapes)
+            and diagnosis.get('all_scalar_weights_match_independent_c') is True
+            and diagnosis.get('all_vectorized_weights_match_independent_c') is True,
+            'Recorded C-codec comparison did not preserve all decoded weights')
 
 
 def kernel_eligibility(report, experiment):
@@ -291,16 +405,31 @@ def kernel_eligibility(report, experiment):
         tile = int(args[args.index('--metal-token-tile')+1]) if '--metal-token-tile' in args else 4
         cases = [c for c in report['cases'] if c.get('backend') == mode
                  and (mode != 'reuse' or c.get('token_tile') == tile)]
-        valid = [c for c in cases if c.get('compiled_and_executed') is True
+        strict = [c for c in cases if c.get('compiled_and_executed') is True
+                 and c.get('reference_vs_scalar', {}).get('accepted') is True
                  and c.get('candidate_vs_scalar', {}).get('accepted') is True
                  and c.get('candidate_vs_reference', {}).get('accepted') is True]
+        alternative = (mode == 'reuse' and report.get('_reviewed_qualification_policy') == KERNEL_POLICY
+            and report.get('_recorded_c_diagnosis_verified') is True and all(
+                c.get('compiled_and_executed') is True and report.get('_verified_raw_reference_bitwise',{}).get(kernel_case_key(c)) is True
+                for c in cases))
+        valid = cases if alternative else strict
+        qualifier = ('reference_exact_with_inherited_scalar_disagreement' if alternative and len(strict) != len(cases)
+                     else 'strict_scalar_and_reference')
+        report.setdefault('_qualification_modes',{})[mode+'/'+str(tile)] = qualifier
         if not valid:
             return 'No compiled numerically accepted kernel case for '+mode+'/'+str(tile)
         # Once admitted, every tested kind/grouped/shape for this backend must
         # retain its numerical acceptance. Runtime still calibrates real shapes.
         if len(valid) != len(cases):
             return 'Some required full-grid cases failed compilation or numerics for '+mode+'/'+str(tile)
-        for case in valid:
+        timed = [c for c in valid if 'host_seconds' in c]
+        if alternative:
+            require(all(c.get('selected') is False for c in valid if 'host_seconds' not in c),
+                    'Untimed inherited scalar disagreement cannot claim speed benefit')
+        else:
+            require(len(timed) == len(valid),'Missing paired kernel host timings')
+        for case in timed:
             timings = case.get('host_seconds')
             require(isinstance(timings,list) and len(timings) == 2 and all(isinstance(x,list) for x in timings)
                     and len(timings[0]) == len(timings[1]) >= 2, 'Missing paired kernel host timings')
@@ -312,7 +441,7 @@ def kernel_eligibility(report, experiment):
                     and case.get('selected') is (measured > 1.03), 'Kernel benefit contradicts raw timings')
             require(case.get('timing_order') == [[0,1] if n%2 == 0 else [1,0] for n in range(len(timings[0]))],
                     'Kernel timing order was not counterbalanced')
-        if not any(c.get('selected') is True for c in valid):
+        if not any(c.get('selected') is True for c in timed):
             return 'No observed host latency benefit for '+mode+'/'+str(tile)+'; reference retained'
     return None
 
@@ -383,6 +512,7 @@ def validate_job(folder, config, job, record):
 def summarize_experiment(folder, config, experiment, jobs):
     folder = Path(folder).resolve()
     by_pair = {}
+    immutable_recordings = {}
     for ordinal, job in enumerate(experiment['plan']):
         variant, pair_text = job['id'].split('-p')
         pair = int(pair_text)
@@ -392,15 +522,34 @@ def summarize_experiment(folder, config, experiment, jobs):
         require(key in jobs, 'Incomplete paired experiment')
         record = jobs[key]
         report = validate_job(folder, config, job, record)
+        # Validate every raw recording before any mismatch may be classified as
+        # a negative fidelity result. A first-pair route mismatch must never hide
+        # a later worker's corrupt/nonfinite/incoherent evidence.
+        recording = _recording(inside(folder,record['output']),serial=variant == 'baseline')
+        immutable_recordings[recording['path']] = recording['sha256']
+        for path,expected_digest in recording['artifacts'].items():
+            require(path not in immutable_recordings or immutable_recordings[path] == expected_digest,
+                    'Recording artifacts changed during experiment prevalidation')
+            immutable_recordings[path] = expected_digest
         by_pair.setdefault(pair, {})[variant] = (record, report)
     require(len(by_pair) >= config['pairs'] >= 2, 'Insufficient paired repetitions')
     results = []
+    rejected = []
     for pair in sorted(by_pair):
         group = by_pair[pair]
         require(set(group) == {'baseline', 'candidate'}, 'Incomplete pair')
         (a, ar), (b, br) = group['baseline'], group['candidate']
-        parity = verify_logits(inside(folder, a['output']), inside(folder, b['output']),
-                               **config['numerical_tolerances'])
+        try:
+            parity = verify_logits(inside(folder, a['output']), inside(folder, b['output']),
+                                   **config['numerical_tolerances'])
+        except LogitEvidenceRejection as error:
+            reason = str(error)
+            if reason not in VERIFIED_FIDELITY_MESSAGES:
+                raise
+            rejected.append(dict(pair=pair,category=VERIFIED_FIDELITY_MESSAGES[reason],
+                checker_reason=reason,baseline_report_sha256=immutable_recordings[inside(folder,a['output'])],
+                candidate_report_sha256=immutable_recordings[inside(folder,b['output'])]))
+            continue
         baseline = sum(x['wall_seconds'] for x in ar['turns'])
         candidate = sum(x['wall_seconds'] for x in br['turns'])
         require(baseline > 0 and candidate > 0, 'Zero request latency')
@@ -431,6 +580,18 @@ def summarize_experiment(folder, config, experiment, jobs):
             prefill_scope='first forward contains prefill; TTFT and full request are separately retained',
             emitted_tokens=[len(t['generated_ids']) for t in br['turns']],
             sustained_decode_evidence=all(len(t['generated_ids']) >= 64 for t in br['turns'])))
+    # The retained checker stops before its final digest recheck on a fidelity
+    # mismatch. Close that gap explicitly, including pairs after the first one.
+    for path,expected_digest in immutable_recordings.items():
+        require(digest(path) == expected_digest,'Recording evidence changed during fidelity comparison')
+    if rejected:
+        raise VerifiedFidelityRejection(dict(status='rejected_fidelity',
+            policy_version=FIDELITY_FAILURE_POLICY['version'],tasks_kind=experiment['tasks_kind'],
+            rejected_pairs=rejected,accepted_pair_numbers=[row['pair'] for row in results],
+            all_worker_controls_and_recordings_validated=True,
+            performance_comparison_accepted=False,eligible_as_combination_prerequisite=False,
+            numerical_tolerances=config['numerical_tolerances'],
+            scope='Recorded strict fidelity mismatch; cause is not inferred, routes retain their original order'))
     return dict(status='accepted', tasks_kind=experiment['tasks_kind'], pairs=results,
                 median_total_speedup=statistics.median(x['total_speedup'] for x in results),
                 median_worker_total_speedup=statistics.median(x['worker_total_speedup'] for x in results),
@@ -462,7 +623,8 @@ def verify(folder):
     config = read_json(folder/'config.json')
     state = read_json(folder/'state.json')
     require(state.get('config_sha256') == digest(folder/'config.json'), 'Frozen configuration changed')
-    require(state.get('status') in ('completed', 'completed_with_exclusions'), 'Campaign is incomplete or deferred')
+    require(state.get('status') in ('completed', 'completed_with_exclusions','completed_evidence_with_rejections'),
+            'Campaign is incomplete or deferred')
     validate_config(config)
     completed_sessions = [s for s in state['sessions'] if s.get('status') == 'completed']
     require(completed_sessions, 'No complete integrity session')
@@ -481,6 +643,7 @@ def verify(folder):
             sealed[key] = (session,block)
     results = {}
     skipped = {}
+    rejections = {}
     for experiment in config['experiments']:
         name = experiment['name']
         recorded = state['experiment_results'].get(name, {})
@@ -496,6 +659,7 @@ def verify(folder):
             require(reason is not None or unmet, 'Excluded experiment has no verified reason')
             skipped[name] = dict(status='excluded', reason=reason, unmet_prerequisites=unmet)
             continue
+        qualification_modes = {}
         for job in experiment['plan']:
             record = state['jobs'].get(name+'/'+job['id'], {})
             pair = sealed.get((record.get('session'),record.get('integrity_block')))
@@ -511,14 +675,33 @@ def verify(folder):
                 require(path is not None, 'Kernel experiment lacks admitted prerequisite')
                 report = validate_kernel_report(path, config, folder)
                 require(kernel_eligibility(report, experiment) is None, 'Kernel experiment lacked measured numerical prerequisite')
-        result = summarize_experiment(folder, config, experiment, state['jobs'])
+                qualification_modes.update(report.get('_qualification_modes',{}))
         for prereq in experiment.get('requires_prior_pass', []):
             require(prereq in results and results[prereq]['median_total_speedup'] > 1
                     and results[prereq]['median_worker_total_speedup'] > 1,
                     'Combination prerequisite lacks verified real measured benefit')
+        try:
+            result = summarize_experiment(folder, config, experiment, state['jobs'])
+        except VerifiedFidelityRejection as error:
+            # Recalculate the recorded failure from intact raw proofs; a stored
+            # status/message never authorizes skipping fidelity or guard checks.
+            require(recorded.get('status') == 'rejected_fidelity',
+                    'Recorded experiment conceals an independently verified fidelity rejection')
+            require(recorded == error.result,'Recorded fidelity rejection differs from independent recalculation')
+            rejections[name] = error.result
+            continue
+        require(recorded.get('status') == 'accepted','Recorded rejection/exclusion has no independently reproduced failure')
+        if qualification_modes:
+            result['kernel_qualification'] = dict(policy_version=2,modes=qualification_modes,
+                scalar_negatives_preserved=True,c_codec_evidence='recorded and source checked; not reexecuted by this verifier',
+                miniature_parity_is_full_model_parity=False)
         results[name] = result
-    require(set(state['experiment_results']) == set(results)|set(skipped), 'Missing recorded experiment outcomes')
-    return dict(status='accepted_evidence', verified_file_count=count, experiments=results, exclusions=skipped,
+    require(set(state['experiment_results']) == set(results)|set(skipped)|set(rejections),
+            'Missing recorded experiment outcomes')
+    require((state['status'] == 'completed_evidence_with_rejections') == bool(rejections),
+            'Campaign terminal status misrepresents fidelity rejections')
+    return dict(status='completed_evidence_with_rejections' if rejections else 'accepted_evidence',
+                verified_file_count=count, experiments=results, exclusions=skipped,rejected_fidelity=rejections,
                 checkpoint_sha256=config['expected_checkpoint_sha256'],
                 authenticity_certified=False, physical_ssd_certified=False,
                 full_recurrent_state_parity_validated=False)

@@ -1,0 +1,1385 @@
+{
+  "authorization": "Explicit user instruction 2026-10-27: graceful stop of verified safe nonessential processes; forced stop only own mission processes",
+  "started_utc": "2026-10-27T13:04:48.379447+00:00",
+  "script_sha256": "2c3bc6ca86012ffe60e96caa02b23104b09a8fc0687743dc2ee72aa7382e9676",
+  "plan_sha256": "97627706d9ea78f208b6f3f1e496cea81e1fdb7e0cfc9192fa4163dea3b56057",
+  "before": {
+    "available_bytes": 3094659072,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3450208256,
+    "pressure_level": 2
+  },
+  "signal": "SIGTERM",
+  "force_used": false,
+  "actions": [
+    {
+      "wrapper_pid": 48706,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 48706,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793086075.548891,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 48813,
+          "ppid": 48706,
+          "uid": 501,
+          "create_time": 1793086076.305828,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 48813,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.385952+00:00"
+        },
+        {
+          "pid": 48706,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.385970+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 48712,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 48712,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793086075.54904,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 48792,
+          "ppid": 48712,
+          "uid": 501,
+          "create_time": 1793086076.279989,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 48792,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.391673+00:00"
+        },
+        {
+          "pid": 48712,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.391691+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 56191,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 56191,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793089455.48219,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 56218,
+          "ppid": 56191,
+          "uid": 501,
+          "create_time": 1793089457.979377,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 56218,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.397430+00:00"
+        },
+        {
+          "pid": 56191,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.397444+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 56193,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 56193,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793089455.482248,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 56239,
+          "ppid": 56193,
+          "uid": 501,
+          "create_time": 1793089458.0206,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 56239,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.403090+00:00"
+        },
+        {
+          "pid": 56193,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.403104+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 58662,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 58662,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793092999.388022,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 58710,
+          "ppid": 58662,
+          "uid": 501,
+          "create_time": 1793093002.10479,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 58710,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.409294+00:00"
+        },
+        {
+          "pid": 58662,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.409309+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 58665,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 58665,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793092999.388158,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 58689,
+          "ppid": 58665,
+          "uid": 501,
+          "create_time": 1793093001.925639,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 58689,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.415412+00:00"
+        },
+        {
+          "pid": 58665,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.415431+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 61528,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 61528,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095844.131361,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 61691,
+          "ppid": 61528,
+          "uid": 501,
+          "create_time": 1793095856.727494,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 61691,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.421320+00:00"
+        },
+        {
+          "pid": 61528,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.421337+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 61530,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 61530,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095844.131524,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 61712,
+          "ppid": 61530,
+          "uid": 501,
+          "create_time": 1793095856.958379,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 61712,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.428370+00:00"
+        },
+        {
+          "pid": 61530,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.428386+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 62632,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 62632,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095943.238022,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 62738,
+          "ppid": 62632,
+          "uid": 501,
+          "create_time": 1793095947.427747,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 62738,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.437229+00:00"
+        },
+        {
+          "pid": 62632,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.437263+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 62642,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 62642,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095943.238926,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 62759,
+          "ppid": 62642,
+          "uid": 501,
+          "create_time": 1793095947.474872,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 62759,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.443814+00:00"
+        },
+        {
+          "pid": 62642,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.443832+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 66610,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 66610,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793096890.438946,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 66694,
+          "ppid": 66610,
+          "uid": 501,
+          "create_time": 1793096891.061619,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 66694,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.453628+00:00"
+        },
+        {
+          "pid": 66610,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.453647+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 66615,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 66615,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793096890.43922,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 66715,
+          "ppid": 66615,
+          "uid": 501,
+          "create_time": 1793096891.074883,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 66715,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.464684+00:00"
+        },
+        {
+          "pid": 66615,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.464702+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 74879,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 74879,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793098273.097886,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 74922,
+          "ppid": 74879,
+          "uid": 501,
+          "create_time": 1793098273.637744,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 74922,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.474414+00:00"
+        },
+        {
+          "pid": 74879,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.474442+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 74880,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 74880,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793098273.097944,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 74901,
+          "ppid": 74880,
+          "uid": 501,
+          "create_time": 1793098273.602306,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 74901,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.484591+00:00"
+        },
+        {
+          "pid": 74880,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.484632+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76364,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76364,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099214.379076,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 76614,
+          "ppid": 76364,
+          "uid": 501,
+          "create_time": 1793099222.2681,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 76614,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.495458+00:00"
+        },
+        {
+          "pid": 76364,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.495477+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76371,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76371,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099214.379486,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 76593,
+          "ppid": 76371,
+          "uid": 501,
+          "create_time": 1793099222.227393,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 76593,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.506362+00:00"
+        },
+        {
+          "pid": 76371,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.506423+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76765,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76765,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.172895,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 76987,
+          "ppid": 76765,
+          "uid": 501,
+          "create_time": 1793099265.857245,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 76987,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.516261+00:00"
+        },
+        {
+          "pid": 76765,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.516281+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76766,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76766,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.172929,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77070,
+          "ppid": 76766,
+          "uid": 501,
+          "create_time": 1793099266.066905,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77070,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.524475+00:00"
+        },
+        {
+          "pid": 76766,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.524517+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76784,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76784,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.178069,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77134,
+          "ppid": 76784,
+          "uid": 501,
+          "create_time": 1793099266.376265,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77134,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.532774+00:00"
+        },
+        {
+          "pid": 76784,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.532794+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76785,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76785,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.17813,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77029,
+          "ppid": 76785,
+          "uid": 501,
+          "create_time": 1793099266.055252,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77029,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.539181+00:00"
+        },
+        {
+          "pid": 76785,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.539231+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76802,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76802,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.245839,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77113,
+          "ppid": 76802,
+          "uid": 501,
+          "create_time": 1793099266.174424,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77113,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.547777+00:00"
+        },
+        {
+          "pid": 76802,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.547815+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76804,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76804,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.248859,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77008,
+          "ppid": 76804,
+          "uid": 501,
+          "create_time": 1793099265.929939,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77008,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.562234+00:00"
+        },
+        {
+          "pid": 76804,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.562266+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76813,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76813,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.323596,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77322,
+          "ppid": 76813,
+          "uid": 501,
+          "create_time": 1793099267.631918,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77322,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.573241+00:00"
+        },
+        {
+          "pid": 76813,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.573258+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76822,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76822,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.324553,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77343,
+          "ppid": 76822,
+          "uid": 501,
+          "create_time": 1793099267.855607,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77343,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.579709+00:00"
+        },
+        {
+          "pid": 76822,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.579725+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76832,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76832,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.328122,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77092,
+          "ppid": 76832,
+          "uid": 501,
+          "create_time": 1793099266.09014,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77092,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.587935+00:00"
+        },
+        {
+          "pid": 76832,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.587970+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76841,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76841,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.329214,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77237,
+          "ppid": 76841,
+          "uid": 501,
+          "create_time": 1793099267.385879,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77237,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.597884+00:00"
+        },
+        {
+          "pid": 76841,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.597921+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76850,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76850,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.343982,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77215,
+          "ppid": 76850,
+          "uid": 501,
+          "create_time": 1793099267.254008,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77215,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.608044+00:00"
+        },
+        {
+          "pid": 76850,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.608082+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76867,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76867,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.345737,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77258,
+          "ppid": 76867,
+          "uid": 501,
+          "create_time": 1793099267.39203,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77258,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.617602+00:00"
+        },
+        {
+          "pid": 76867,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.617623+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76869,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76869,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.346576,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77397,
+          "ppid": 76869,
+          "uid": 501,
+          "create_time": 1793099268.219634,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77397,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.626945+00:00"
+        },
+        {
+          "pid": 76869,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.626980+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76879,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76879,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.350438,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77301,
+          "ppid": 76879,
+          "uid": 501,
+          "create_time": 1793099267.449187,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77301,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.641700+00:00"
+        },
+        {
+          "pid": 76879,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.641865+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76888,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76888,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.364561,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77279,
+          "ppid": 76888,
+          "uid": 501,
+          "create_time": 1793099267.415367,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77279,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.651092+00:00"
+        },
+        {
+          "pid": 76888,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.651127+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76898,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76898,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.372746,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77434,
+          "ppid": 76898,
+          "uid": 501,
+          "create_time": 1793099269.008805,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77434,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.658058+00:00"
+        },
+        {
+          "pid": 76898,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.658077+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76908,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76908,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.379921,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77071,
+          "ppid": 76908,
+          "uid": 501,
+          "create_time": 1793099266.066916,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77071,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.665645+00:00"
+        },
+        {
+          "pid": 76908,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.665665+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 76917,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 76917,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.381446,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77155,
+          "ppid": 76917,
+          "uid": 501,
+          "create_time": 1793099266.579188,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77155,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.678138+00:00"
+        },
+        {
+          "pid": 76917,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.678176+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 77765,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 77765,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099326.516149,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77813,
+          "ppid": 77765,
+          "uid": 501,
+          "create_time": 1793099332.353766,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77813,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.690396+00:00"
+        },
+        {
+          "pid": 77765,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.690430+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 77767,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 77767,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099326.516422,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77790,
+          "ppid": 77767,
+          "uid": 501,
+          "create_time": 1793099330.007532,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 77790,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.705164+00:00"
+        },
+        {
+          "pid": 77767,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.705183+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 82006,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 82006,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793101185.795758,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 82046,
+          "ppid": 82006,
+          "uid": 501,
+          "create_time": 1793101187.103188,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 82046,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.712373+00:00"
+        },
+        {
+          "pid": 82006,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.712390+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 82012,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 82012,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793101185.796095,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 82067,
+          "ppid": 82012,
+          "uid": 501,
+          "create_time": 1793101187.134961,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 82067,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.728086+00:00"
+        },
+        {
+          "pid": 82012,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.728106+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 85048,
+      "role": "firebase_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 85048,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.687199,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 85069,
+          "ppid": 85048,
+          "uid": 501,
+          "create_time": 1793102823.112929,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 85069,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.735784+00:00"
+        },
+        {
+          "pid": 85048,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.735819+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 85695,
+      "role": "playwright_mcp",
+      "reason": "Duplicate restartable stdio MCP service for idle chat; exact Node pair, no browser/dev descendants, no IP sockets, no TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 85695,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793103042.301091,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 85719,
+          "ppid": 85695,
+          "uid": 501,
+          "create_time": 1793103047.17258,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 85719,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.749986+00:00"
+        },
+        {
+          "pid": 85695,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T13:04:48.750025+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    }
+  ],
+  "stopped_process_count": 80,
+  "remaining_signalled_pids": [],
+  "after": {
+    "available_bytes": 5777031168,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3223453696,
+    "pressure_level": 1
+  },
+  "ended_utc": "2026-10-27T13:04:48.771895+00:00"
+}
