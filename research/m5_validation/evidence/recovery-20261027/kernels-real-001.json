@@ -1,0 +1,2555 @@
+{
+  "schema": "airllm-m5-kernels-v1",
+  "status": "failed",
+  "scope": "small synthetic packed tensor compilation/numerics only",
+  "real_checkpoint_validated": false,
+  "sources_before": {
+    "benchmarks/validate_m5_kernels.py": "7c34af1fecd2cabbad6f64ba3295900a68a26cf7d8ef58f688880673d44fa5e0",
+    "air_llm/airllm/nextgen/gguf_m5.py": "d355958dfe77424a1b85cbe3967059aaeb56f6e6f66557057c2e565f2462b061",
+    "air_llm/airllm/nextgen/gguf_metal.py": "a6051e8b9a2f9e7a2d5ab4290e87cbc2a98964788728485aa4149d3a530c69a6",
+    "air_llm/airllm/nextgen/experiment_guard.py": "7865947ae2277d034e4b276bde962cc563ea359070a019cb4e68d2da63a73d61"
+  },
+  "limits": {
+    "rss_bytes": 536870912,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 268435456,
+    "timeout_seconds": 600,
+    "interval_seconds": 0.05,
+    "max_processes": 32
+  },
+  "before": {
+    "available_bytes": 5805752320,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3223453696,
+    "pressure_level": 1
+  },
+  "versions": {
+    "mlx": "0.32.4",
+    "numpy": "2.5.3",
+    "psutil": "7.2.2"
+  },
+  "device_info": {
+    "device_name": "Apple M5",
+    "max_recommended_working_set_size": 12713115648,
+    "memory_size": 17179869184,
+    "architecture": "applegpu_g17g",
+    "max_buffer_length": 9534832640,
+    "resource_limit": 499000
+  },
+  "strict_fp32": true,
+  "allocator_guideline_bytes": 134217728,
+  "allocator_note": "MLX limit is a guideline; explicit charge and global RSS/reserve/swap/pressure supervision also apply",
+  "gpu_seconds": null,
+  "gpu_timing_reason": "MLX 0.32.4 Python API exposes no per-command-buffer GPU timestamps",
+  "host_timing_scope": "dispatch plus synchronous eval plus GPU synchronize; includes GPU duration",
+  "cases": [
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 2,
+      "backend": "reuse",
+      "token_tile": 2,
+      "explicit_workspace_charge_bytes": 34032,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.004334792000008747,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.18922229199961293,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0004037079997942783,
+          0.00042783399840118363,
+          0.0005878750016563572,
+          0.00024812500487314537,
+          0.0005884999991394579,
+          0.0005388330027926713
+        ],
+        [
+          0.000542583002243191,
+          0.0007487080001737922,
+          0.0005226670036790892,
+          0.000680665994877927,
+          0.0005920829935348593,
+          0.0005128749980940484
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          0.000128000000000017,
+          0.00010599999999999499,
+          9.000000000000674e-05,
+          8.800000000000474e-05,
+          8.400000000000074e-05,
+          7.899999999999574e-05
+        ],
+        [
+          0.00011799999999997923,
+          0.00017000000000000348,
+          8.400000000000074e-05,
+          0.00014299999999997648,
+          9.899999999998799e-05,
+          8.299999999999974e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.8519396939634232,
+      "reason": "not_faster",
+      "mlx_active_bytes": 4936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 5088
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 2,
+      "backend": "reuse",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 34032,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.004334792000008747,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.03412570900400169,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0004190840045339428,
+          0.0002406249986961484,
+          0.0007099169961293228,
+          0.0007196670048870146,
+          0.000255541002843529,
+          0.0005903329947614111
+        ],
+        [
+          0.0006068749935366213,
+          0.0007126249984139577,
+          0.0002545409952290356,
+          0.0005913749992032535,
+          0.0006154169968795031,
+          0.0005263749990263022
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          0.00011600000000000499,
+          9.400000000001074e-05,
+          0.00015199999999998548,
+          0.00015799999999999148,
+          9.900000000001574e-05,
+          8.799999999997699e-05
+        ],
+        [
+          9.799999999998699e-05,
+          0.00015400000000001524,
+          9.800000000001474e-05,
+          8.299999999999974e-05,
+          0.00015399999999998748,
+          9.699999999998599e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.8424093514803682,
+      "reason": "not_faster",
+      "mlx_active_bytes": 4936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 5088
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 2,
+      "backend": "reuse",
+      "token_tile": 8,
+      "explicit_workspace_charge_bytes": 34032,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.004334792000008747,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.03588899999886053,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0003505829954519868,
+          0.0004307909985072911,
+          0.0004343750042608008,
+          0.00048100000276463106,
+          0.00048787499690661207,
+          0.0007119169968063943
+        ],
+        [
+          0.0005257500015432015,
+          0.0004751660017063841,
+          0.0004395829964778386,
+          0.000475791995995678,
+          0.0004954999967594631,
+          0.0004976249983883463
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          0.00010499999999999399,
+          9.600000000001274e-05,
+          8.299999999999974e-05,
+          8.299999999999974e-05,
+          7.899999999999574e-05,
+          0.00015399999999998748
+        ],
+        [
+          0.00010399999999999299,
+          9.400000000001074e-05,
+          7.899999999999574e-05,
+          7.90000000000235e-05,
+          7.60000000000205e-05,
+          7.699999999999374e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.942430302991486,
+      "reason": "not_faster",
+      "mlx_active_bytes": 4936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 5088
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 2,
+      "backend": "reuse",
+      "token_tile": 16,
+      "explicit_workspace_charge_bytes": 34032,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.004334792000008747,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.03923087500152178,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0008202500030165538,
+          0.00023437500203726813,
+          0.0005987919939798303,
+          0.00021887500042794272,
+          0.0005455829959828407,
+          0.0002381250014877878
+        ],
+        [
+          0.0005872910041944124,
+          0.0007118329958757386,
+          0.0005864170016138814,
+          0.0007298749987967312,
+          0.0005585000035353005,
+          0.0007355409979936667
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          0.00020699999999998497,
+          9.900000000001574e-05,
+          9.299999999998199e-05,
+          0.00010000000000001674,
+          0.00015299999999998648,
+          8.299999999999974e-05
+        ],
+        [
+          0.00011200000000000099,
+          0.00017399999999997973,
+          9.999999999998899e-05,
+          0.00015899999999999248,
+          8.299999999999974e-05,
+          0.00017900000000001248
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.6032588093425334,
+      "reason": "not_faster",
+      "mlx_active_bytes": 4936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 5088
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 2,
+      "backend": "tensorops",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 34032,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00018310546875,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.004334792000008747,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.1734557079980732,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00030517578125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0003662109375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00026775000151246786,
+          0.00032037499477155507,
+          0.0003056249988730997,
+          0.00025962499785237014,
+          0.0003077079963986762,
+          0.0003707919968292117
+        ],
+        [
+          0.00045879199751652777,
+          0.00046879200090188533,
+          0.0003970420002588071,
+          0.0005868749940418638,
+          0.0004410420006024651,
+          0.0004616250007529743
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          0.00012200000000001099,
+          9.499999999998399e-05,
+          9.099999999997999e-05,
+          9.699999999998599e-05,
+          8.700000000000374e-05,
+          8.199999999999874e-05
+        ],
+        [
+          0.00011400000000000299,
+          8.999999999997899e-05,
+          9.000000000000674e-05,
+          0.00014400000000000523,
+          8.600000000000274e-05,
+          8.700000000000374e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.6663642636162933,
+      "reason": "not_faster",
+      "mlx_active_bytes": 4936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 5088
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 16,
+      "backend": "reuse",
+      "token_tile": 2,
+      "explicit_workspace_charge_bytes": 69088,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005005829953006469,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00025208400620613247,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00024454099911963567,
+          0.000275709004199598,
+          0.00028220799867995083,
+          0.00032700000156182796,
+          0.0002905830042436719,
+          0.0003477909995126538
+        ],
+        [
+          0.00029999999969732016,
+          0.00030587500077672303,
+          0.00030841600528219715,
+          0.0003321249969303608,
+          0.00027595800202107057,
+          0.000323874999594409
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          9.200000000000874e-05,
+          8.600000000000274e-05,
+          7.199999999998874e-05,
+          9.200000000000874e-05,
+          8.400000000000074e-05,
+          8.999999999997899e-05
+        ],
+        [
+          8.900000000000574e-05,
+          9.000000000000674e-05,
+          7.60000000000205e-05,
+          9.100000000000774e-05,
+          8.099999999999774e-05,
+          8.199999999999874e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9324424373367483,
+      "reason": "not_faster",
+      "mlx_active_bytes": 20336,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 21552
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 16,
+      "backend": "reuse",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 69088,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005005829953006469,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00024083300377242267,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0002674589995876886,
+          0.000323334003041964,
+          0.0003354170039528981,
+          0.000371000001905486,
+          0.0003144590009469539,
+          0.00029633400117745623
+        ],
+        [
+          0.0003398749977350235,
+          0.0003195000026607886,
+          0.00031262500124285,
+          0.00031379199936054647,
+          0.0003447079943725839,
+          0.0003382089998922311
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.799999999999474e-05,
+          9.100000000000774e-05,
+          9.100000000000774e-05,
+          8.600000000000274e-05,
+          7.999999999999674e-05,
+          7.699999999999374e-05
+        ],
+        [
+          9.100000000000774e-05,
+          8.900000000000574e-05,
+          7.699999999999374e-05,
+          8.400000000000074e-05,
+          9.000000000000674e-05,
+          8.299999999999974e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9697191334058161,
+      "reason": "not_faster",
+      "mlx_active_bytes": 20336,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 21552
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 16,
+      "backend": "reuse",
+      "token_tile": 8,
+      "explicit_workspace_charge_bytes": 69088,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005005829953006469,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.0002553329977672547,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0002667909939191304,
+          0.0002829169970937073,
+          0.00030012500064913183,
+          0.00029454100149450824,
+          0.00025266699958592653,
+          0.00022904099751031026
+        ],
+        [
+          0.00033854099456220865,
+          0.0003516249998938292,
+          0.00037891700048930943,
+          0.0003594590016291477,
+          0.0003584590012906119,
+          0.00046954199933679774
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          8.400000000000074e-05,
+          7.399999999999074e-05,
+          0.00011800000000000699,
+          8.699999999997599e-05,
+          9.999999999998899e-05,
+          8.299999999999974e-05
+        ],
+        [
+          8.199999999999874e-05,
+          9.799999999998699e-05,
+          8.400000000000074e-05,
+          0.00010100000000001774,
+          7.10000000000155e-05,
+          0.00013699999999999823
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.7656974595666709,
+      "reason": "not_faster",
+      "mlx_active_bytes": 20336,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 21552
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 16,
+      "backend": "reuse",
+      "token_tile": 16,
+      "explicit_workspace_charge_bytes": 69088,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005005829953006469,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.0002719999974942766,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00024120799935190007,
+          0.0003161249987897463,
+          0.0003249159999541007,
+          0.00031641700479667634,
+          0.0003215830001863651,
+          0.0003264170009060763
+        ],
+        [
+          0.0003880419972119853,
+          0.00040374999662162736,
+          0.0003937919973395765,
+          0.00040066599467536435,
+          0.0003837080002995208,
+          0.0003635419998317957
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.799999999999474e-05,
+          8.700000000000374e-05,
+          8.800000000000474e-05,
+          9.100000000000774e-05,
+          8.700000000000374e-05,
+          8.400000000000074e-05
+        ],
+        [
+          8.900000000000574e-05,
+          8.600000000000274e-05,
+          8.900000000000574e-05,
+          8.800000000000474e-05,
+          9.000000000000674e-05,
+          8.400000000000074e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.8160300133137348,
+      "reason": "not_faster",
+      "mlx_active_bytes": 20336,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 21552
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 16,
+      "backend": "tensorops",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 69088,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005005829953006469,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00022337500558933243,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.00091552734375,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00017875000048661605,
+          0.0001558339936309494,
+          0.00015250000433297828,
+          0.00016945799870882183,
+          0.00014591700164601207,
+          0.0001520000005257316
+        ],
+        [
+          0.00022408299992093816,
+          0.0002058749960269779,
+          0.0002014580022660084,
+          0.00017987499450100586,
+          0.00018854199879569933,
+          0.00021512500097742304
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.899999999999574e-05,
+          7.499999999999174e-05,
+          7.799999999999474e-05,
+          7.80000000000225e-05,
+          7.199999999998874e-05,
+          7.00000000000145e-05
+        ],
+        [
+          7.699999999999374e-05,
+          7.599999999999274e-05,
+          7.30000000000175e-05,
+          6.899999999998574e-05,
+          6.80000000000125e-05,
+          8.199999999999874e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.7569580644241087,
+      "reason": "not_faster",
+      "mlx_active_bytes": 20336,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 21552
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 32,
+      "backend": "reuse",
+      "token_tile": 2,
+      "explicit_workspace_charge_bytes": 109152,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.00047745800111442804,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00022958400222705677,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015250000433297828,
+          0.00015799999528098851,
+          0.00016362500173272565,
+          0.00017629200010560453,
+          0.00017312500131083652,
+          0.00016987499839160591
+        ],
+        [
+          0.00016983399837045,
+          0.00015945899940561503,
+          0.0001784999985829927,
+          0.00016524999955436215,
+          0.00017204100004164502,
+          0.00016825000056996942
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.499999999999174e-05,
+          7.599999999999274e-05,
+          7.899999999999574e-05,
+          7.099999999998774e-05,
+          7.80000000000225e-05,
+          7.299999999998974e-05
+        ],
+        [
+          7.499999999999174e-05,
+          7.899999999999574e-05,
+          7.599999999999274e-05,
+          7.30000000000175e-05,
+          7.699999999999374e-05,
+          7.20000000000165e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9864412429146175,
+      "reason": "not_faster",
+      "mlx_active_bytes": 37936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 40368
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 32,
+      "backend": "reuse",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 109152,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.00047745800111442804,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00017587500042282045,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015962500037858263,
+          0.00016375000268453732,
+          0.00015041699953144416,
+          0.0001619159957044758,
+          0.0001568749939906411,
+          0.0001757500067469664
+        ],
+        [
+          0.00017712499538902193,
+          0.00017250000382773578,
+          0.00015141699986997992,
+          0.0001641669950913638,
+          0.00017145799938589334,
+          0.00017104099970310926
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.70000000000215e-05,
+          7.50000000000195e-05,
+          7.00000000000145e-05,
+          7.599999999999274e-05,
+          7.199999999998874e-05,
+          7.799999999999474e-05
+        ],
+        [
+          8.600000000000274e-05,
+          7.399999999999074e-05,
+          7.199999999998874e-05,
+          7.899999999999574e-05,
+          7.499999999999174e-05,
+          7.399999999999074e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9388085715237433,
+      "reason": "not_faster",
+      "mlx_active_bytes": 37936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 40368
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 32,
+      "backend": "reuse",
+      "token_tile": 8,
+      "explicit_workspace_charge_bytes": 109152,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.00047745800111442804,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00017762500647222623,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015316600183723494,
+          0.00018149999959859997,
+          0.00016645799769321457,
+          0.00015204199735308066,
+          0.00017862499953480437,
+          0.00017579200357431546
+        ],
+        [
+          0.0001773330004652962,
+          0.00018199999612988904,
+          0.0001457920006942004,
+          0.0001568750012665987,
+          0.00016970899741863832,
+          0.00018187500245403498
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.499999999999174e-05,
+          7.999999999999674e-05,
+          7.699999999999374e-05,
+          6.50000000000095e-05,
+          6.0000000000004494e-05,
+          6.999999999998674e-05
+        ],
+        [
+          7.699999999999374e-05,
+          7.699999999999374e-05,
+          7.699999999999374e-05,
+          6.40000000000085e-05,
+          7.699999999999374e-05,
+          6.999999999998674e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9861918826953989,
+      "reason": "not_faster",
+      "mlx_active_bytes": 37936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 40368
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 32,
+      "backend": "reuse",
+      "token_tile": 16,
+      "explicit_workspace_charge_bytes": 109152,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.00047745800111442804,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00018899999849963933,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0001704579990473576,
+          0.0001693339945632033,
+          0.0001794159979908727,
+          0.00015604199870722368,
+          0.00016170799790415913,
+          0.00017633300012676045
+        ],
+        [
+          0.0001830830005928874,
+          0.0001838750031311065,
+          0.00017600000137463212,
+          0.00017087499873014167,
+          0.00016795899864519015,
+          0.00018470899522071704
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.40000000000185e-05,
+          7.399999999999074e-05,
+          7.80000000000225e-05,
+          7.199999999998874e-05,
+          7.699999999999374e-05,
+          7.599999999999274e-05
+        ],
+        [
+          7.699999999999374e-05,
+          8.20000000000265e-05,
+          7.599999999999274e-05,
+          7.40000000000185e-05,
+          7.399999999999074e-05,
+          7.799999999999474e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9462770216043154,
+      "reason": "not_faster",
+      "mlx_active_bytes": 37936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 40368
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 32,
+      "backend": "tensorops",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 109152,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.00047745800111442804,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.0002083750005112961,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00014775000454392284,
+          0.00018270800501341,
+          0.00017816699983086437,
+          0.00016016699373722076,
+          0.0001520000005257316,
+          0.00017091700283344835
+        ],
+        [
+          0.00020158299594186246,
+          0.0001913330052047968,
+          0.00019624999549705535,
+          0.0002148749990737997,
+          0.00026745800278149545,
+          0.00021383300190791488
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.20000000000165e-05,
+          7.199999999998874e-05,
+          8.800000000000474e-05,
+          7.00000000000145e-05,
+          7.699999999999374e-05,
+          6.899999999998574e-05
+        ],
+        [
+          7.299999999998974e-05,
+          7.099999999998774e-05,
+          7.799999999999474e-05,
+          7.50000000000195e-05,
+          6.90000000000135e-05,
+          7.299999999998974e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.796993852630576,
+      "reason": "not_faster",
+      "mlx_active_bytes": 37936,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 40368
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 64,
+      "backend": "reuse",
+      "token_tile": 2,
+      "explicit_workspace_charge_bytes": 189280,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0004723750025732443,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.000151916996401269,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00018279199866810814,
+          0.00018799999816110358,
+          0.00015979100135155022,
+          0.0001855830050772056,
+          0.00016895900625968352,
+          0.00016962500376394019
+        ],
+        [
+          0.00017837499763118103,
+          0.00016150000010384247,
+          0.0001793749979697168,
+          0.00016362499445676804,
+          0.00014525000005960464,
+          0.00016491700080223382
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.399999999999074e-05,
+          7.199999999998874e-05,
+          7.099999999998774e-05,
+          7.799999999999474e-05,
+          6.80000000000125e-05,
+          7.00000000000145e-05
+        ],
+        [
+          7.60000000000205e-05,
+          7.299999999998974e-05,
+          7.399999999999074e-05,
+          7.599999999999274e-05,
+          6.80000000000125e-05,
+          7.399999999999074e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.072669575024115,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 73136,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 78000
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 64,
+      "backend": "reuse",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 189280,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0004723750025732443,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.00017420900258002803,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00017412500164937228,
+          0.0001770410017343238,
+          0.00016783300088718534,
+          0.0001625829972908832,
+          0.00015866699686739594,
+          0.000185958000656683
+        ],
+        [
+          0.00014720899343956262,
+          0.00015241700020851567,
+          0.00015174999862210825,
+          0.00015529200027231127,
+          0.0001492080045863986,
+          0.0001767919966368936
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.199999999998874e-05,
+          6.499999999998174e-05,
+          6.40000000000085e-05,
+          6.90000000000135e-05,
+          7.099999999998774e-05,
+          6.90000000000135e-05
+        ],
+        [
+          6.60000000000105e-05,
+          6.80000000000125e-05,
+          7.00000000000145e-05,
+          7.199999999998874e-05,
+          6.799999999998474e-05,
+          7.899999999999574e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.1242442600651021,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 73136,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 78000
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 64,
+      "backend": "reuse",
+      "token_tile": 8,
+      "explicit_workspace_charge_bytes": 189280,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0004723750025732443,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.00017591699725016952,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015949999942677096,
+          0.00016037499881349504,
+          0.00015349999739555642,
+          0.0001894590022857301,
+          0.00017837500490713865,
+          0.00018466699839336798
+        ],
+        [
+          0.00016187500295927748,
+          0.00015712499589426443,
+          0.00016195799980778247,
+          0.00014791600551689044,
+          0.00017662499885773286,
+          0.00017674999980954453
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.199999999998874e-05,
+          6.60000000000105e-05,
+          6.60000000000105e-05,
+          7.30000000000175e-05,
+          8.199999999999874e-05,
+          6.899999999998574e-05
+        ],
+        [
+          7.00000000000145e-05,
+          6.899999999998574e-05,
+          6.599999999998274e-05,
+          6.599999999998274e-05,
+          6.80000000000125e-05,
+          7.799999999999474e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.0460638688030937,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 73136,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 78000
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 64,
+      "backend": "reuse",
+      "token_tile": 16,
+      "explicit_workspace_charge_bytes": 189280,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0004723750025732443,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.0001899999988381751,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015866699686739594,
+          0.00015795799845363945,
+          0.00020133300131419674,
+          0.00015991699910955504,
+          0.00017029199807439,
+          0.00016650000179652125
+        ],
+        [
+          0.00017845800175564364,
+          0.00016212500486290082,
+          0.0001818329983507283,
+          0.00019212500046705827,
+          0.00018354199710302055,
+          0.0001775839991751127
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.199999999998874e-05,
+          7.00000000000145e-05,
+          6.50000000000095e-05,
+          6.80000000000125e-05,
+          7.299999999998974e-05,
+          7.70000000000215e-05
+        ],
+        [
+          6.60000000000105e-05,
+          6.599999999998274e-05,
+          6.999999999998674e-05,
+          7.20000000000165e-05,
+          7.30000000000175e-05,
+          6.999999999998674e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9059815560469322,
+      "reason": "not_faster",
+      "mlx_active_bytes": 73136,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 78000
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 64,
+      "backend": "tensorops",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 189280,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0004723750025732443,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00021099999867146835,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00015954199625412002,
+          0.00015962500037858263,
+          0.00016187500295927748,
+          0.00015208299737423658,
+          0.00017425000260118395,
+          0.0002606249981909059
+        ],
+        [
+          0.0002121659999829717,
+          0.00019099999917671084,
+          0.0001984999980777502,
+          0.00021187499805819243,
+          0.00020329100516391918,
+          0.0002085410014842637
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.20000000000165e-05,
+          7.10000000000155e-05,
+          6.699999999998374e-05,
+          7.00000000000145e-05,
+          7.199999999998874e-05,
+          7.70000000000215e-05
+        ],
+        [
+          7.899999999999574e-05,
+          6.70000000000115e-05,
+          7.20000000000165e-05,
+          7.699999999999374e-05,
+          7.20000000000165e-05,
+          7.699999999999374e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.7806581279451381,
+      "reason": "not_faster",
+      "mlx_active_bytes": 73136,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 78000
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 128,
+      "backend": "reuse",
+      "token_tile": 2,
+      "explicit_workspace_charge_bytes": 349536,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005222920008236542,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.00019895899458788335,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00017800000205170363,
+          0.00017541700071888044,
+          0.0001903750016936101,
+          0.00019554099708329886,
+          0.00018862500292016193,
+          0.00018049999926006421
+        ],
+        [
+          0.00018637500033946708,
+          0.00018158299644710496,
+          0.0001673340011620894,
+          0.00016154199693119153,
+          0.00017799999477574602,
+          0.00018287499551661313
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          8.099999999999774e-05,
+          7.00000000000145e-05,
+          7.399999999999074e-05,
+          7.499999999999174e-05,
+          7.399999999999074e-05,
+          7.499999999999174e-05
+        ],
+        [
+          7.799999999999474e-05,
+          7.499999999999174e-05,
+          6.80000000000125e-05,
+          7.10000000000155e-05,
+          6.999999999998674e-05,
+          7.399999999999074e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.0265363245489594,
+      "reason": "not_faster",
+      "mlx_active_bytes": 143536,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 153264
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 128,
+      "backend": "reuse",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 349536,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005222920008236542,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.00018283400277141482,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00020154199592070654,
+          0.00017304199718637392,
+          0.00017787500109989196,
+          0.00017541700071888044,
+          0.0001763340042089112,
+          0.00018025000463239849
+        ],
+        [
+          0.0001727090057102032,
+          0.00016083299851743504,
+          0.00016629199672024697,
+          0.00018008299957728013,
+          0.00015670800348743796,
+          0.0001692079968051985
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          8.600000000000274e-05,
+          7.399999999999074e-05,
+          7.199999999998874e-05,
+          7.10000000000155e-05,
+          7.399999999999074e-05,
+          7.599999999999274e-05
+        ],
+        [
+          7.399999999999074e-05,
+          7.799999999999474e-05,
+          7.699999999999374e-05,
+          7.599999999999274e-05,
+          7.10000000000155e-05,
+          7.899999999999574e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.0557645667493545,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 143536,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 153264
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 128,
+      "backend": "reuse",
+      "token_tile": 8,
+      "explicit_workspace_charge_bytes": 349536,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005222920008236542,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.0001734160032356158,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00018887500482378528,
+          0.0001965000046766363,
+          0.00019749999773921445,
+          0.00018858299881685525,
+          0.00018937500135507435,
+          0.00018470800569048151
+        ],
+        [
+          0.0001568750012665987,
+          0.00017445899720769376,
+          0.00017637499695410952,
+          0.0001879579940577969,
+          0.00017404199752490968,
+          0.00018054099928122014
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.699999999999374e-05,
+          7.499999999999174e-05,
+          7.50000000000195e-05,
+          7.299999999998974e-05,
+          6.90000000000135e-05,
+          7.699999999999374e-05
+        ],
+        [
+          6.999999999998674e-05,
+          7.50000000000195e-05,
+          7.599999999999274e-05,
+          8.800000000000474e-05,
+          7.399999999999074e-05,
+          8.400000000000074e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.0781452552297774,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 143536,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 153264
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 128,
+      "backend": "reuse",
+      "token_tile": 16,
+      "explicit_workspace_charge_bytes": 349536,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005222920008236542,
+      "gpu_seconds": null,
+      "selected": true,
+      "compile_and_first_host_seconds": 0.0001947920027305372,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.00019979100034106523,
+          0.00019387499924050644,
+          0.00018516700220061466,
+          0.00019116699695587158,
+          0.00018466699839336798,
+          0.00019658399833133444
+        ],
+        [
+          0.00019629099551821128,
+          0.0001774159973138012,
+          0.0001998329971684143,
+          0.00017829200078267604,
+          0.0001797500008251518,
+          0.00018212500435765833
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.499999999999174e-05,
+          7.00000000000145e-05,
+          7.499999999999174e-05,
+          7.30000000000175e-05,
+          7.699999999999374e-05,
+          7.699999999999374e-05
+        ],
+        [
+          8.099999999999774e-05,
+          6.899999999998574e-05,
+          7.60000000000205e-05,
+          6.899999999998574e-05,
+          7.699999999999374e-05,
+          7.999999999999674e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 1.0640193179461634,
+      "reason": "measured_host_speed",
+      "mlx_active_bytes": 143536,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 153264
+    },
+    {
+      "kind": 12,
+      "grouped": false,
+      "rows": 19,
+      "width": 256,
+      "batch": 128,
+      "backend": "tensorops",
+      "token_tile": 4,
+      "explicit_workspace_charge_bytes": 349536,
+      "reference_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "reference_compile_and_first_host_seconds": 0.0005222920008236542,
+      "gpu_seconds": null,
+      "selected": false,
+      "compile_and_first_host_seconds": 0.0002137080009561032,
+      "candidate_vs_scalar": {
+        "accepted": true,
+        "max_absolute_error": 0.0,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "candidate_vs_reference": {
+        "accepted": true,
+        "max_absolute_error": 0.0010986328125,
+        "atol": 0.0001,
+        "rtol": 5e-05
+      },
+      "compiled_and_executed": true,
+      "host_seconds": [
+        [
+          0.0001768750007613562,
+          0.0001993749974644743,
+          0.00020408300042618066,
+          0.00026308400265406817,
+          0.0002728749968810007,
+          0.00026866599364439026
+        ],
+        [
+          0.00020879099611192942,
+          0.00021458399714902043,
+          0.00021941699378658086,
+          0.00029629199707414955,
+          0.0003141249981126748,
+          0.00030958300339989364
+        ]
+      ],
+      "host_cpu_process_seconds": [
+        [
+          7.799999999999474e-05,
+          8.299999999999974e-05,
+          8.600000000000274e-05,
+          6.60000000000105e-05,
+          7.20000000000165e-05,
+          7.899999999999574e-05
+        ],
+        [
+          7.399999999999074e-05,
+          7.90000000000235e-05,
+          7.799999999999474e-05,
+          7.699999999999374e-05,
+          7.999999999999674e-05,
+          7.899999999999574e-05
+        ]
+      ],
+      "timing_order": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "host_median_speedup": 0.9058732955198942,
+      "reason": "not_faster",
+      "mlx_active_bytes": 143536,
+      "mlx_cache_bytes": 0,
+      "mlx_peak_bytes": 153264
+    }
+  ],
+  "error": "Experiment stopped (1); see /Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/research/m5_validation/evidence/recovery-20261027/kernels-real-001.guard.json",
+  "after": {
+    "available_bytes": 5762023424,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3223453696,
+    "pressure_level": 1
+  }
+}

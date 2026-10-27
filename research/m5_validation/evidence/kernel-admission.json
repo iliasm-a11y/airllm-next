@@ -1,0 +1,31 @@
+{
+  "schema": "airllm-m5-kernels-v1",
+  "status": "deferred",
+  "model_worker_launched": false,
+  "gpu_worker_launched": false,
+  "reason": "macOS memory pressure is above normal before launch",
+  "limits": {
+    "rss_bytes": 536870912,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 268435456,
+    "timeout_seconds": 600,
+    "interval_seconds": 0.05,
+    "max_processes": 32
+  },
+  "snapshot": {
+    "available_bytes": 3308126208,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3373465600,
+    "pressure_level": 2
+  },
+  "sources_before": {
+    "benchmarks/validate_m5_kernels.py": "41b009224c4812c92ec358bca225cd315ed587693db7aeb4362bc5abfc33ec22",
+    "air_llm/airllm/nextgen/gguf_m5.py": "d355958dfe77424a1b85cbe3967059aaeb56f6e6f66557057c2e565f2462b061",
+    "air_llm/airllm/nextgen/gguf_metal.py": "a6051e8b9a2f9e7a2d5ab4290e87cbc2a98964788728485aa4149d3a530c69a6",
+    "air_llm/airllm/nextgen/experiment_guard.py": "7865947ae2277d034e4b276bde962cc563ea359070a019cb4e68d2da63a73d61"
+  },
+  "cases": [],
+  "gpu_seconds": null,
+  "real_checkpoint_validated": false
+}

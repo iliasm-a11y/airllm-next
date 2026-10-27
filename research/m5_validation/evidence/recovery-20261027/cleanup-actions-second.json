@@ -1,0 +1,161 @@
+{
+  "authorization": "Explicit user instruction 2026-10-27: graceful stop of verified safe nonessential processes; forced stop only own mission processes",
+  "started_utc": "2026-10-27T14:04:54.858585+00:00",
+  "script_sha256": "e5d80372ddbd934fa14d4c6f39f13281314c74d43e73a2b8662d6797f2f51da3",
+  "plan_sha256": "e708d05a31d2210b323221f3a219c834bdf14e4b2ad2f56b3ebd4d0d83074aaf",
+  "before": {
+    "available_bytes": 5596774400,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2242248704,
+    "pressure_level": 1
+  },
+  "signal": "SIGTERM",
+  "force_used": false,
+  "actions": [
+    {
+      "wrapper_pid": 85036,
+      "role": "firebase_mcp",
+      "reason": "Unused restartable duplicate MCP service for current mission; no Firebase/Playwright tool requests in mission; exact Node pair, no browser/dev descendants, IP sockets, TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 85036,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.674964,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 85111,
+          "ppid": 85036,
+          "uid": 501,
+          "create_time": 1793102823.695839,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 85111,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.864557+00:00"
+        },
+        {
+          "pid": 85036,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.864575+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 85038,
+      "role": "playwright_mcp",
+      "reason": "Unused restartable duplicate MCP service for current mission; no Firebase/Playwright tool requests in mission; exact Node pair, no browser/dev descendants, IP sockets, TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 85038,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.675112,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 85090,
+          "ppid": 85038,
+          "uid": 501,
+          "create_time": 1793102823.599459,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 85090,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.869990+00:00"
+        },
+        {
+          "pid": 85038,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.870008+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 91477,
+      "role": "playwright_mcp",
+      "reason": "Unused restartable duplicate MCP service for current mission; no Firebase/Playwright tool requests in mission; exact Node pair, no browser/dev descendants, IP sockets, TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 91477,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105967.368652,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 91502,
+          "ppid": 91477,
+          "uid": 501,
+          "create_time": 1793105968.083853,
+          "role": "playwright_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 91502,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.875723+00:00"
+        },
+        {
+          "pid": 91477,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.875744+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    },
+    {
+      "wrapper_pid": 91478,
+      "role": "firebase_mcp",
+      "reason": "Unused restartable duplicate MCP service for current mission; no Firebase/Playwright tool requests in mission; exact Node pair, no browser/dev descendants, IP sockets, TTY or unsaved document identified",
+      "identities": [
+        {
+          "pid": 91478,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105967.368708,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 91523,
+          "ppid": 91478,
+          "uid": 501,
+          "create_time": 1793105968.109247,
+          "role": "firebase_mcp"
+        }
+      ],
+      "signals": [
+        {
+          "pid": 91523,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.881675+00:00"
+        },
+        {
+          "pid": 91478,
+          "signal": "SIGTERM",
+          "at_utc": "2026-10-27T14:04:54.881694+00:00"
+        }
+      ],
+      "status": "sigterm_sent"
+    }
+  ],
+  "stopped_process_count": 8,
+  "remaining_signalled_pids": [],
+  "after": {
+    "available_bytes": 5947326464,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2242248704,
+    "pressure_level": 1
+  },
+  "ended_utc": "2026-10-27T14:04:54.892381+00:00"
+}

@@ -1,0 +1,1924 @@
+{
+  "schema": "airllm.m5.resource-recovery-audit.v1",
+  "observed_at_utc": "2026-10-27T13:02:19.067592+00:00",
+  "raw_private_audit_sha256": "76c419eb5a4c76dc21e88d00d33cebad70834e88ed15073fd2d33030c544d02a",
+  "read_only": true,
+  "signals_sent": false,
+  "protected_supervisor_pids": [
+    46251,
+    46217
+  ],
+  "criteria": [
+    "Exact MCP role identified from local executable/argv and parent-child relationship",
+    "UID501 and process creation identity stable across four samples over15seconds",
+    "Working directory associated with a Codex chat observed idle; active and unmatched chats excluded",
+    "Exactly one known Node child, no browser/application/development child",
+    "No IP socket or listener observed, standard streams are pipes, no TTY",
+    "Only firebase-debug.log among observed regular open files",
+    "Auxiliary tool server, no unsaved user document/browser process identified",
+    "CPU inactivity is corroborating evidence, not the eligibility criterion"
+  ],
+  "selected_group_count": 40,
+  "selected_process_count": 80,
+  "selected_rss_sum_indicator_bytes": 1266450432,
+  "rss_note": "SumRSSincludes shared pages and omits compressed ownership; not exclusive physical memory or guaranteed reclaimable bytes.",
+  "action_recommendation": "Root may revalidate identities, UID, parent, role, descendants and inactive-chat context immediately before targeted SIGTERM; never broadkill or SIGKILL this batch.",
+  "groups": [
+    {
+      "wrapper_pid": 48706,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 48706,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793086075.548891,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 48813,
+          "ppid": 48706,
+          "uid": 501,
+          "create_time": 1793086076.305828,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 5586944,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 48712,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 48712,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793086075.54904,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 48792,
+          "ppid": 48712,
+          "uid": 501,
+          "create_time": 1793086076.279989,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 5750784,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 56191,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 56191,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793089455.48219,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 56218,
+          "ppid": 56191,
+          "uid": 501,
+          "create_time": 1793089457.979377,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 5652480,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 56193,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 56193,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793089455.482248,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 56239,
+          "ppid": 56193,
+          "uid": 501,
+          "create_time": 1793089458.0206,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 5816320,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 58662,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 58662,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793092999.388022,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 58710,
+          "ppid": 58662,
+          "uid": 501,
+          "create_time": 1793093002.10479,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 6799360,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 58665,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 58665,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793092999.388158,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 58689,
+          "ppid": 58665,
+          "uid": 501,
+          "create_time": 1793093001.925639,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 6324224,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 61528,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 61528,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095844.131361,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 61691,
+          "ppid": 61528,
+          "uid": 501,
+          "create_time": 1793095856.727494,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 19202048,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 61530,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 61530,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095844.131524,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 61712,
+          "ppid": 61530,
+          "uid": 501,
+          "create_time": 1793095856.958379,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 15695872,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 62632,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 62632,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095943.238022,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 62738,
+          "ppid": 62632,
+          "uid": 501,
+          "create_time": 1793095947.427747,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 14794752,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 62642,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 62642,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793095943.238926,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 62759,
+          "ppid": 62642,
+          "uid": 501,
+          "create_time": 1793095947.474872,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 15695872,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 66610,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 66610,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793096890.438946,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 66694,
+          "ppid": 66610,
+          "uid": 501,
+          "create_time": 1793096891.061619,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 14909440,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 66615,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 66615,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793096890.43922,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 66715,
+          "ppid": 66615,
+          "uid": 501,
+          "create_time": 1793096891.074883,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 15810560,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 74879,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 74879,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793098273.097886,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 74922,
+          "ppid": 74879,
+          "uid": 501,
+          "create_time": 1793098273.637744,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32129024,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 74880,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 74880,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793098273.097944,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 74901,
+          "ppid": 74880,
+          "uid": 501,
+          "create_time": 1793098273.602306,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28606464,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76364,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76364,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099214.379076,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 76614,
+          "ppid": 76364,
+          "uid": 501,
+          "create_time": 1793099222.2681,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32538624,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76371,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76371,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099214.379486,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 76593,
+          "ppid": 76371,
+          "uid": 501,
+          "create_time": 1793099222.227393,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28688384,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76765,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76765,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.172895,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 76987,
+          "ppid": 76765,
+          "uid": 501,
+          "create_time": 1793099265.857245,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28639232,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76766,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76766,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.172929,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77070,
+          "ppid": 76766,
+          "uid": 501,
+          "create_time": 1793099266.066905,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32555008,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76784,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76784,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.178069,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77134,
+          "ppid": 76784,
+          "uid": 501,
+          "create_time": 1793099266.376265,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32800768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76785,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76785,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.17813,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77029,
+          "ppid": 76785,
+          "uid": 501,
+          "create_time": 1793099266.055252,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28639232,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76802,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76802,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.245839,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77113,
+          "ppid": 76802,
+          "uid": 501,
+          "create_time": 1793099266.174424,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32800768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76804,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76804,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.248859,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77008,
+          "ppid": 76804,
+          "uid": 501,
+          "create_time": 1793099265.929939,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28672000,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76813,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76813,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.323596,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77322,
+          "ppid": 76813,
+          "uid": 501,
+          "create_time": 1793099267.631918,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32800768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76822,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76822,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.324553,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77343,
+          "ppid": 76822,
+          "uid": 501,
+          "create_time": 1793099267.855607,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32800768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76832,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76832,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.328122,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77092,
+          "ppid": 76832,
+          "uid": 501,
+          "create_time": 1793099266.09014,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28672000,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76841,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76841,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.329214,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77237,
+          "ppid": 76841,
+          "uid": 501,
+          "create_time": 1793099267.385879,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28704768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76850,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76850,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.343982,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77215,
+          "ppid": 76850,
+          "uid": 501,
+          "create_time": 1793099267.254008,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32555008,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76867,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76867,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.345737,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77258,
+          "ppid": 76867,
+          "uid": 501,
+          "create_time": 1793099267.39203,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28672000,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76869,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76869,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.346576,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77397,
+          "ppid": 76869,
+          "uid": 501,
+          "create_time": 1793099268.219634,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32555008,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76879,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76879,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.350438,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77301,
+          "ppid": 76879,
+          "uid": 501,
+          "create_time": 1793099267.449187,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28672000,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76888,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76888,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.364561,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77279,
+          "ppid": 76888,
+          "uid": 501,
+          "create_time": 1793099267.415367,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28655616,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76898,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76898,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.372746,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77434,
+          "ppid": 76898,
+          "uid": 501,
+          "create_time": 1793099269.008805,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32555008,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76908,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76908,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.379921,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77071,
+          "ppid": 76908,
+          "uid": 501,
+          "create_time": 1793099266.066916,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28672000,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 76917,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 76917,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099258.381446,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77155,
+          "ppid": 76917,
+          "uid": 501,
+          "create_time": 1793099266.579188,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32800768,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 77765,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 77765,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099326.516149,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 77813,
+          "ppid": 77765,
+          "uid": 501,
+          "create_time": 1793099332.353766,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 32555008,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 77767,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 77767,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793099326.516422,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 77790,
+          "ppid": 77767,
+          "uid": 501,
+          "create_time": 1793099330.007532,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 28688384,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 82006,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 82006,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793101185.795758,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 82046,
+          "ppid": 82006,
+          "uid": 501,
+          "create_time": 1793101187.103188,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 94699520,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 82012,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 82012,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793101185.796095,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 82067,
+          "ppid": 82012,
+          "uid": 501,
+          "create_time": 1793101187.134961,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 104792064,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 85036,
+      "role": "firebase_mcp",
+      "thread_status": "active",
+      "process_identities": [
+        {
+          "pid": 85036,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.674964,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 85111,
+          "ppid": 85036,
+          "uid": 501,
+          "create_time": 1793102823.695839,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 104792064,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 85038,
+      "role": "playwright_mcp",
+      "thread_status": "active",
+      "process_identities": [
+        {
+          "pid": 85038,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.675112,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 85090,
+          "ppid": 85038,
+          "uid": 501,
+          "create_time": 1793102823.599459,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 94666752,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 85048,
+      "role": "firebase_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 85048,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793102819.687199,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 85069,
+          "ppid": 85048,
+          "uid": 501,
+          "create_time": 1793102823.112929,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 104792064,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 85695,
+      "role": "playwright_mcp",
+      "thread_status": "idle",
+      "process_identities": [
+        {
+          "pid": 85695,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793103042.301091,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 85719,
+          "ppid": 85695,
+          "uid": 501,
+          "create_time": 1793103047.17258,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 94699520,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": true
+    },
+    {
+      "wrapper_pid": 88226,
+      "role": "playwright_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 88226,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793104261.24757,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 88258,
+          "ppid": 88226,
+          "uid": 501,
+          "create_time": 1793104263.527653,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 94732288,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 88230,
+      "role": "firebase_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 88230,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793104261.248381,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 88273,
+          "ppid": 88230,
+          "uid": 501,
+          "create_time": 1793104263.565257,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 106332160,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 89896,
+      "role": "firebase_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 89896,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793104987.942497,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 89943,
+          "ppid": 89896,
+          "uid": 501,
+          "create_time": 1793104988.812534,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 106332160,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 89900,
+      "role": "playwright_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 89900,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793104987.942807,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 89928,
+          "ppid": 89900,
+          "uid": 501,
+          "create_time": 1793104988.782774,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 94748672,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 90466,
+      "role": "firebase_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 90466,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105307.426037,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 90513,
+          "ppid": 90466,
+          "uid": 501,
+          "create_time": 1793105307.941151,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 106725376,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 90468,
+      "role": "playwright_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 90468,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105307.426201,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 90497,
+          "ppid": 90468,
+          "uid": 501,
+          "create_time": 1793105307.905436,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 95158272,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 90949,
+      "role": "playwright_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 90949,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105619.849289,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 90990,
+          "ppid": 90949,
+          "uid": 501,
+          "create_time": 1793105620.328927,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 97746944,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 90961,
+      "role": "firebase_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 90961,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105619.851484,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 91005,
+          "ppid": 90961,
+          "uid": 501,
+          "create_time": 1793105620.346142,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.0,
+      "rss_sum_indicator_bytes": 109297664,
+      "network_ip_connection_count": 0,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 91477,
+      "role": "playwright_mcp",
+      "thread_status": "active",
+      "process_identities": [
+        {
+          "pid": 91477,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105967.368652,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 91502,
+          "ppid": 91477,
+          "uid": 501,
+          "create_time": 1793105968.083853,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.00020856400000002218,
+      "rss_sum_indicator_bytes": 160612352,
+      "network_ip_connection_count": 1,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "2026-10-27T12_59_27_440Z-debug-0.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 91478,
+      "role": "firebase_mcp",
+      "thread_status": "active",
+      "process_identities": [
+        {
+          "pid": 91478,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105967.368708,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 91523,
+          "ppid": 91478,
+          "uid": 501,
+          "create_time": 1793105968.109247,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 7.289599999998897e-05,
+      "rss_sum_indicator_bytes": 135823360,
+      "network_ip_connection_count": 1,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "2026-10-27T12_59_27_440Z-debug-0.log",
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 91722,
+      "role": "firebase_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 91722,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105980.986439,
+          "role": "firebase_mcp"
+        },
+        {
+          "pid": 91790,
+          "ppid": 91722,
+          "uid": 501,
+          "create_time": 1793105982.644226,
+          "role": "firebase_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.00014987999999999113,
+      "rss_sum_indicator_bytes": 259702784,
+      "network_ip_connection_count": 1,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "2026-10-27T12_59_41_099Z-debug-0.log",
+        "firebase-debug.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    },
+    {
+      "wrapper_pid": 91724,
+      "role": "playwright_mcp",
+      "thread_status": "unmatched",
+      "process_identities": [
+        {
+          "pid": 91724,
+          "ppid": 46251,
+          "uid": 501,
+          "create_time": 1793105980.989207,
+          "role": "playwright_mcp"
+        },
+        {
+          "pid": 91775,
+          "ppid": 91724,
+          "uid": 501,
+          "create_time": 1793105982.623165,
+          "role": "playwright_mcp"
+        }
+      ],
+      "identities_stable_15_seconds": true,
+      "cpu_delta_seconds": 0.00041545600000003624,
+      "rss_sum_indicator_bytes": 187039744,
+      "network_ip_connection_count": 1,
+      "unknown_descendant_count": 0,
+      "descendant_roles": [
+        "node"
+      ],
+      "open_file_basenames": [
+        "2026-10-27T12_59_41_096Z-debug-0.log"
+      ],
+      "standard_stream_types": [
+        "PIPE"
+      ],
+      "eligible_sigterm_under_authorization": false
+    }
+  ]
+}

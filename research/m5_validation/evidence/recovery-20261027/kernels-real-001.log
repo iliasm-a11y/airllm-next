@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/benchmarks/validate_m5_kernels.py", line 315, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/benchmarks/validate_m5_kernels.py", line 280, in main
+    run_worker(args)
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/benchmarks/validate_m5_kernels.py", line 181, in run_worker
+    raise RuntimeError('Existing GPU reference differs from independent scalar oracle')
+RuntimeError: Existing GPU reference differs from independent scalar oracle

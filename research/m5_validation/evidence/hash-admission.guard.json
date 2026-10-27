@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/benchmarks/hash_checkpoint_guarded.py",
+    "--model",
+    "/Users/macbook/.ollama/models/blobs/sha256-f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+    "--output",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/research/m5_validation/evidence/hash-admission.json",
+    "--worker"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 134217728,
+    "admitted_payload_bytes": 67108864,
+    "timeout_seconds": 120,
+    "interval_seconds": 0.05,
+    "max_processes": 32
+  },
+  "before": {
+    "available_bytes": 3652829184,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3222470656,
+    "pressure_level": 2
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": null,
+  "sample_count": 0,
+  "sampled_peak_rss_bytes": 0,
+  "minimum_available_bytes": 3652829184,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 2,
+  "exception": "MemoryError: macOS memory pressure is above normal before launch",
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 3652829184,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 3222470656,
+    "pressure_level": 2
+  },
+  "elapsed_seconds": 2.554100501583889e-05
+}

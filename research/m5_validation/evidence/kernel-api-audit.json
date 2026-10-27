@@ -1,0 +1,67 @@
+{
+  "schema": "airllm-m5-api-audit-v1",
+  "scope": "static installed API and SDK inspection; no MLX import or GPU initialization",
+  "mlx_version": "0.32.4",
+  "python": "3.12.13",
+  "files": {
+    "installed_fast_stub": {
+      "path": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/mlx/core/fast.pyi",
+      "sha256": "e6ead453b46633174ef101388f4e6b7c02ed837fbee91db16aa3be39ea6f2d4b",
+      "bytes": 14364
+    },
+    "installed_core_stub": {
+      "path": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/mlx/core/__init__.pyi",
+      "sha256": "bcdbd51e4d664df491b5537cfb2d36102f3c49614ca2aba4497fdc99102e7f1e",
+      "bytes": 179060
+    },
+    "installed_metal_stub": {
+      "path": "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/lib/python3.12/site-packages/mlx/core/metal.pyi",
+      "sha256": "aecdeb33b024ad2096af9e8e584c679bbdd05d375770418351cbea410353b2b9",
+      "bytes": 717
+    },
+    "sdk27_matmul_header": {
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/MetalPerformancePrimitives.framework/Versions/A/Headers/MPPTensorOpsMatMul2d.h",
+      "sha256": "2f572492dbdd7328799522fb4dd00094f8d6c59537ed4b7a5734b6725303f1b0",
+      "bytes": 33290
+    },
+    "sdk27_impl_header": {
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/MetalPerformancePrimitives.framework/Versions/A/Headers/__impl/MPPTensorOpsMatMul2dImpl.h",
+      "sha256": "7b344600caeca7391f15b113654d77faf99832f445ac23cb764f28d92910bdbb",
+      "bytes": 3720004
+    }
+  },
+  "observations": {
+    "compile_options_math_mode_safe_in_installed_stub": true,
+    "fp32_fp32_fp32_listed_in_sdk_header": true,
+    "inline_tensor_operands_documented_in_sdk_header": true,
+    "per_command_gpu_timestamp_api_in_installed_metal_stub": false,
+    "hardware_compilation_confirmed": false,
+    "numerical_gpu_validation_confirmed": false
+  },
+  "metal_compiler": {
+    "command": [
+      "xcrun",
+      "--find",
+      "metal"
+    ],
+    "exit_code": 72,
+    "stdout": "",
+    "stderr": "xcrun: error: unable to find utility \"metal\", not a developer tool or in PATH\n"
+  },
+  "xctrace": {
+    "command": [
+      "xcrun",
+      "--find",
+      "xctrace"
+    ],
+    "exit_code": 72,
+    "stdout": "",
+    "stderr": "xcrun: error: unable to find utility \"xctrace\", not a developer tool or in PATH\n"
+  },
+  "official_sources": [
+    "https://raw.githubusercontent.com/ml-explore/mlx/v0.32.4/python/src/fast.cpp",
+    "https://developer.apple.com/download/files/Metal-Performance-Primitives-Programming-Guide.pdf",
+    "https://developer.apple.com/videos/play/wwdc2026/330/",
+    "https://developer.apple.com/documentation/metal/converting-gpu-timestamps-into-cpu-time"
+  ]
+}

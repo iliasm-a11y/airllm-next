@@ -1,0 +1,113 @@
+{
+  "schema": "airllm-m5-pair-forensics-v1",
+  "status": "diagnostic_completed",
+  "scope": "Recorded accepted-prefix ordered routes, selected expert sets, emitted full logits and tokens only",
+  "serial_report_sha256": "d1fb84c30f507c855875586380695cf833f780ee70fbb082a764711937bfbeec",
+  "candidate_report_sha256": "761cce8e3969ca8f12092239eac21dba17a38d79148d239108082ff13b98a022",
+  "diagnostic_source_sha256": "509995f6b9a233df459fea1b5f65252669225ca4cc057e1d1f9c4b5e78603f95",
+  "atol": 0.0001,
+  "rtol": 0.0001,
+  "router_scores_recorded": false,
+  "router_inputs_recorded": false,
+  "hidden_state_parity_validated": false,
+  "performance_gain_qualified": false,
+  "turns": [
+    {
+      "id": "context",
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "eos": [
+        248044,
+        248046
+      ],
+      "stop": "eos",
+      "accepted_prefix_route_positions": 14640,
+      "ordered_route_differences": [
+        {
+          "layer": 30,
+          "position": 154,
+          "serial": [
+            184,
+            163,
+            234,
+            37,
+            15,
+            172,
+            193,
+            104
+          ],
+          "candidate": [
+            184,
+            163,
+            234,
+            37,
+            15,
+            172,
+            104,
+            193
+          ],
+          "selected_set_equal": true
+        }
+      ],
+      "ordered_route_difference_count": 1,
+      "selected_set_difference_count": 0,
+      "logits": [
+        {
+          "output_index": 0,
+          "elements": 248320,
+          "max_absolute_error": 1.049041748046875e-05,
+          "max_relative_error": 0.782608695652174,
+          "violating_elements": 0,
+          "bitwise_equal": false,
+          "worst_tolerance_scaled_error": 0.08558172225741183,
+          "worst_tolerance_scaled_element": {
+            "vocabulary_index": 161224,
+            "serial": -0.10041415691375732,
+            "candidate": -0.10042357444763184,
+            "absolute_error": 9.417533874511719e-06,
+            "allowed_error": 0.00011004141569137574
+          }
+        },
+        {
+          "output_index": 1,
+          "elements": 248320,
+          "max_absolute_error": 6.67572021484375e-06,
+          "max_relative_error": 0.02631578947368421,
+          "violating_elements": 0,
+          "bitwise_equal": false,
+          "worst_tolerance_scaled_error": 0.04994626412370031,
+          "worst_tolerance_scaled_element": {
+            "vocabulary_index": 44631,
+            "serial": -0.22917670011520386,
+            "candidate": -0.22918283939361572,
+            "absolute_error": 6.139278411865234e-06,
+            "allowed_error": 0.0001229176700115204
+          }
+        },
+        {
+          "output_index": 2,
+          "elements": 248320,
+          "max_absolute_error": 1.1324882507324219e-05,
+          "max_relative_error": 0.08412698412698413,
+          "violating_elements": 0,
+          "bitwise_equal": false,
+          "worst_tolerance_scaled_error": 0.07364007391704852,
+          "worst_tolerance_scaled_element": {
+            "vocabulary_index": 128989,
+            "serial": 0.0846027135848999,
+            "candidate": 0.0846107006072998,
+            "absolute_error": 7.987022399902344e-06,
+            "allowed_error": 0.00010846027135849
+          }
+        }
+      ],
+      "full_logits_elements_checked": 744960,
+      "full_logits_within_retained_tolerance": true,
+      "strict_ordered_route_gate_passed": false
+    }
+  ],
+  "strict_existing_fidelity_gate_passed": false
+}
