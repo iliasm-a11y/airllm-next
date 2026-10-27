@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic_cache_metadata_memory_probe",
+  "status": "complete",
+  "model_inference_executed": false,
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "baseline_commit": "ca3a42935be876bbdbbc1e2adbd16c8547746175",
+  "baseline_source_sha256": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+  "source_manifest_before": {
+    "air_llm/airllm/nextgen/cache.py": "ba1aa735381bfe11a2f18f791183c767fb50e4eb9c29df0fc59caec3c2c4898f",
+    "benchmarks/benchmark_hyperstream_cache.py": "5293560ce2fbb77aaf2d0a7255c9a6ffce58c3070b4a103b9177f22add4713bc"
+  },
+  "source_manifest_after": {
+    "air_llm/airllm/nextgen/cache.py": "ba1aa735381bfe11a2f18f791183c767fb50e4eb9c29df0fc59caec3c2c4898f",
+    "benchmarks/benchmark_hyperstream_cache.py": "5293560ce2fbb77aaf2d0a7255c9a6ffce58c3070b4a103b9177f22add4713bc"
+  },
+  "sources_unchanged": true,
+  "protocol": "One-byte fake payload, LRU capacity two, unique demand keys and successful load-cost observations; fresh cache and tracemalloc per row; alternate variant order.",
+  "limits": [
+    "Synthetic metadata churn, not model throughput or RSS.",
+    "One measurement per variant and request count.",
+    "Timing includes tracemalloc and is not used as a throughput claim.",
+    "No GPU, tensor payload, physical storage, or model generation measured."
+  ],
+  "measurements": [
+    {
+      "variant": "baseline",
+      "requests": 100000,
+      "source_sha256": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+      "resident_entries": 2,
+      "resident_payload_bytes": 2,
+      "frequency_entries": 100000,
+      "cost_entries": 100000,
+      "request_trace_entries": 4096,
+      "cost_trace_entries": 4096,
+      "load_trace_entries": 4096,
+      "stats": {
+        "misses": 100000,
+        "evictions": 99998
+      },
+      "python_traced_live_bytes": 14305978,
+      "python_traced_peak_bytes": 15496638,
+      "seconds_with_tracemalloc": 0.854047000000719
+    },
+    {
+      "variant": "candidate",
+      "requests": 100000,
+      "source_sha256": "ba1aa735381bfe11a2f18f791183c767fb50e4eb9c29df0fc59caec3c2c4898f",
+      "resident_entries": 2,
+      "resident_payload_bytes": 2,
+      "frequency_entries": 1699,
+      "cost_entries": 1699,
+      "request_trace_entries": 4096,
+      "cost_trace_entries": 4096,
+      "load_trace_entries": 4096,
+      "stats": {
+        "misses": 100000,
+        "evictions": 99998
+      },
+      "python_traced_live_bytes": 1171215,
+      "python_traced_peak_bytes": 1720477,
+      "seconds_with_tracemalloc": 0.8077894999951241
+    },
+    {
+      "variant": "candidate",
+      "requests": 200000,
+      "source_sha256": "ba1aa735381bfe11a2f18f791183c767fb50e4eb9c29df0fc59caec3c2c4898f",
+      "resident_entries": 2,
+      "resident_payload_bytes": 2,
+      "frequency_entries": 3395,
+      "cost_entries": 3395,
+      "request_trace_entries": 4096,
+      "cost_trace_entries": 4096,
+      "load_trace_entries": 4096,
+      "stats": {
+        "misses": 200000,
+        "evictions": 199998
+      },
+      "python_traced_live_bytes": 1279968,
+      "python_traced_peak_bytes": 1729553,
+      "seconds_with_tracemalloc": 1.619156959000975
+    },
+    {
+      "variant": "baseline",
+      "requests": 200000,
+      "source_sha256": "9657caf3b8f38506fa133c072e8409ea4f4ae8d459f0b2a02a424dfd95d28892",
+      "resident_entries": 2,
+      "resident_payload_bytes": 2,
+      "frequency_entries": 200000,
+      "cost_entries": 200000,
+      "request_trace_entries": 4096,
+      "cost_trace_entries": 4096,
+      "load_trace_entries": 4096,
+      "stats": {
+        "misses": 200000,
+        "evictions": 199998
+      },
+      "python_traced_live_bytes": 27895522,
+      "python_traced_peak_bytes": 30251451,
+      "seconds_with_tracemalloc": 1.754419875003805
+    }
+  ]
+}
