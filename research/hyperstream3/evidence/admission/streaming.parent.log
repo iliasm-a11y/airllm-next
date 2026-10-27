@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next/benchmarks/benchmark_research51.py", line 389, in <module>
+    main()
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next/benchmarks/benchmark_research51.py", line 382, in main
+    supervise([sys.executable, str(Path(__file__).resolve()), *sys.argv[1:], '--worker'], args.output,
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next/air_llm/airllm/nextgen/experiment_guard.py", line 176, in supervise
+    admission(limits, before)
+  File "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-4/work/airllm-next/air_llm/airllm/nextgen/experiment_guard.py", line 86, in admission
+    raise MemoryError('macOS memory pressure is above normal before launch')
+MemoryError: macOS memory pressure is above normal before launch

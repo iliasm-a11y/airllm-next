@@ -6,7 +6,7 @@ The numerical blocks/session are shared with :mod:`qwen_runtime`. Layout
 adaptation follows ggml-org/llama.cpp conversion/qwen.py (Apache-2.0): real RMS
 weights, negative exponential A, and tiled linear-attention V heads. Text-only
 M-RoPE has equal temporal/height/width positions and reduces to ordinary RoPE.
-Vision, MTP, sampling and speculative decoding are deliberately unsupported.
+Vision, MTP and sampling are deliberately unsupported. Greedy speculation is opt-in.
 """
 from collections import defaultdict
 import math
@@ -118,7 +118,7 @@ class GGUFWeights:
     Every tile is evaluated before advancing the disk cursor, bounding MLX's
     lazy graph lifetime. The GGUF reader separately reserves decoder/IO memory.
     """
-    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False):
+    def __init__(self,checkpoint,mx,options,config,*,kernel='reference',expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,metal_batch_backend="off",metal_token_tile=4,grouped_direct_io=False):
         self.cp=checkpoint;self.mx=mx;self.cfg=options;self.model_config=config
         if kernel not in ('reference','metal'):raise ValueError('GGUF kernel must be reference or metal')
         if kernel=='metal' and not mx.metal.is_available():raise RuntimeError('Metal kernel requires a Metal device')
@@ -135,7 +135,24 @@ class GGUFWeights:
         self.expert_batch=expert_batch;self.concat_tiles=concat_tiles;self.pipeline_tiles=pipeline_tiles
         self.expert_pipeline=expert_pipeline
         self.metal_simd_groups=metal_simd_groups
+        if metal_batch_backend not in ('off','reuse','tensorops'):
+            raise ValueError('Unknown Metal batch backend')
+        if type(metal_token_tile) is not int or metal_token_tile not in (2,4,8,16):
+            raise ValueError('Metal token tile must be 2, 4, 8 or 16')
+        if metal_batch_backend!='off' and kernel!='metal':
+            raise ValueError('Metal batch backend requires kernel=metal')
+        if type(grouped_direct_io) is not bool:
+            raise ValueError('grouped_direct_io must be boolean')
+        if grouped_direct_io and (not packed_direct_io or not expert_batch):
+            raise ValueError('Grouped direct I/O requires direct packed I/O and expert batching')
+        self.grouped_direct_io=grouped_direct_io
+        self.metal_batch_backend=metal_batch_backend
+        self.batch_dispatch=None
         self.kernel=kernel;self.dtype=getattr(mx,options.dtype);self.stats=defaultdict(float)
+        if metal_batch_backend!='off':
+            from .gguf_m5 import M5BatchDispatcher
+            self.batch_dispatch=M5BatchDispatcher(metal_batch_backend,self.stats,token_tile=metal_token_tile,
+                workspace_bytes=options.workspace_bytes,guard=self._guard)
         self.spec=None;self.prefetch_enabled=False
         if options.compact_cache_bytes:raise NotImplementedError('GGUF compact-cache transport is not enabled')
         if options.policy=='batch-aware':raise NotImplementedError('GGUF batch-aware tile admission is not enabled')
@@ -316,7 +333,8 @@ class GGUFWeights:
                     wait=perf_counter();mx.eval(tiles[-1]);self.stats['tile_pipeline_wait_seconds']+=perf_counter()-wait
                 begin=perf_counter();tile=packed_matmul(weight,x,int(desc.quant_type),
                     max_workspace_bytes=self.cfg.workspace_bytes-retained_outbytes,synchronize=not pipeline,
-                    zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+                    zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups,
+                    batch_dispatch=self.batch_dispatch,batch_spare_workspace_bytes=self.cfg.workspace_bytes-required)
                 self.stats['packed_matmul_calls']+=1
             else:
                 self._guard(retained_outbytes+x.size*4+count*shape[1]*12+count*(x.size//x.shape[-1])*4);weight=self._tile(name,start,count,expert,output_role=output_role)
@@ -377,23 +395,50 @@ class GGUFWeights:
         output=mx.zeros((e,batch,shape[1]),dtype=x.dtype)
         for start in range(0,shape[1],rows):
             count=min(rows,shape[1]-start)
-            self._guard(outbytes+x.size*4+3*e*count*desc.row_bytes+e*batch*count*4)
-            packed=np.empty((e,count,desc.row_bytes),dtype=np.uint8)
-            for i,expert in enumerate(experts):
-                tile=self._packed_tile(name,start,count,expert)
-                packed[i]=tile
-                del tile
+            required=outbytes+x.size*4+3*e*count*desc.row_bytes+e*batch*count*4
+            self._guard(required)
+            if self.grouped_direct_io:
+                packed=self._grouped_packed_tile(name,start,count,experts)
+            else:
+                packed=np.empty((e,count,desc.row_bytes),dtype=np.uint8)
+                for i,expert in enumerate(experts):
+                    tile=self._packed_tile(name,start,count,expert)
+                    packed[i]=tile
+                    del tile
             begin=perf_counter()
             tile=packed_expert_matmul(packed,x,int(desc.quant_type),max_workspace_bytes=self.cfg.workspace_bytes-outbytes,
-                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups,
+                batch_dispatch=self.batch_dispatch,batch_spare_workspace_bytes=self.cfg.workspace_bytes-required)
             output[:,:,start:start+count]=tile.astype(output.dtype);mx.eval(output)
             self.stats['expert_batch_matmul_seconds']+=perf_counter()-begin
             self.stats['expert_batch_matmul_calls']+=1
             del tile,packed
         return output
 
+    def _grouped_packed_tile(self,name,start,count,experts):
+        from .gguf_packed_io import read_packed_experts_into
+        required=len(experts)*count*self.cp.tensors[name].row_bytes
+        if self.packed_budget is not None:
+            with self.packed_budget.lock:
+                room=self.packed_budget.capacity_bytes-self.packed_budget.live_bytes
+            if required>room:
+                wait=perf_counter()
+                self.trim()
+                # Keep imported owners alive until all prior device work is done.
+                self.mx.synchronize()
+                self.stats['grouped_direct_io_budget_sync_seconds']+=perf_counter()-wait
+                self.stats['grouped_direct_io_budget_syncs']+=1
+        begin=perf_counter()
+        result=read_packed_experts_into(self.cp,name,start,count,experts,owner_budget=self.packed_budget)
+        self.stats['grouped_direct_io_loads']+=1
+        self.stats['grouped_direct_io_bytes']+=result.nbytes
+        self.stats['grouped_direct_io_read_seconds']+=perf_counter()-begin
+        return result
+
     def _pack_expert_rows(self,name,count,experts):
-        """Prepare one complete grouped tile using the existing demand cache."""
+        """Prepare a group through demand cache, or explicit direct gather."""
+        if self.grouped_direct_io:
+            return self._grouped_packed_tile(name,0,count,experts)
         packed=tile=None
         try:
             packed=np.empty((len(experts),count,self.cp.tensors[name].row_bytes),dtype=np.uint8)
@@ -461,7 +506,8 @@ class GGUFWeights:
             begin=perf_counter();pending=True
             gate_tile=packed_expert_matmul(gate_packed,x,int(descriptors[0].quant_type),
                 max_workspace_bytes=self.cfg.workspace_bytes-output_bytes[0],synchronize=False,
-                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups,
+                batch_dispatch=self.batch_dispatch,batch_spare_workspace_bytes=self.cfg.workspace_bytes-required)
             # Keep the original cast/scatter, even for the one-tile case.
             gate=mx.zeros((e,batch,descriptors[0].shape[1]),dtype=x.dtype)
             gate[:,:,:]=gate_tile.astype(gate.dtype)
@@ -481,7 +527,8 @@ class GGUFWeights:
             begin=perf_counter()
             up_tile=packed_expert_matmul(up_packed,x,int(descriptors[1].quant_type),
                 max_workspace_bytes=self.cfg.workspace_bytes-output_bytes[1],
-                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups)
+                zero_copy=self.cfg.zero_copy_weights,stats=self.stats,simd_groups=self.metal_simd_groups,
+                batch_dispatch=self.batch_dispatch,batch_spare_workspace_bytes=self.cfg.workspace_bytes-required)
             up=mx.zeros((e,batch,descriptors[1].shape[1]),dtype=x.dtype)
             up[:,:,:]=up_tile.astype(up.dtype);mx.eval(up)
             pending=False
@@ -596,7 +643,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0,hyper_prefill=False,hyper_prefill_max_tokens=128,request_trace=None):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0,hyper_prefill=False,hyper_prefill_max_tokens=128,request_trace=None,metal_batch_backend="off",metal_token_tile=4,grouped_direct_io=False):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -644,7 +691,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 self.allocator_limit_bytes=limit
             self.stats=defaultdict(float)
             if kernel=='metal' and self.device!='gpu':raise ValueError('Metal packed kernel requires device=gpu')
-            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,expert_pipeline=expert_pipeline,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io)
+            self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,expert_pipeline=expert_pipeline,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io,metal_batch_backend=metal_batch_backend,metal_token_tile=metal_token_tile,grouped_direct_io=grouped_direct_io)
             if cache_decay_interval is not None:self.reader.cache.decay_interval=cache_decay_interval
             self.mixers=[(QwenDeltaNet if k=='linear_attention' else QwenFullAttention)(mx,self.reader,self.config,i) for i,k in enumerate(self.config['layer_types'])]
             self.mlps=[GGUFQwenSparseMLP(mx,self.reader,self.config,i) for i in range(self.config['num_hidden_layers'])]
@@ -676,6 +723,11 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
             if actual is None or tuple(actual.shape)!=expected:
                 raise ValueError(f'Missing/invalid GGUF Qwen tensor {name}; expected {expected}')
 
+    def generate_speculative(self,*args,**kwargs):
+        """Explicit greedy snapshot/replay verifier; ordinary generate is unchanged."""
+        from .gguf_speculative import generate_gguf_speculative
+        return generate_gguf_speculative(self,*args,**kwargs)
+
     def metrics(self):
         return {'backend':'next-gguf-qwen-experimental','compute_device':self.device,'experimental':True,
             'full_qwen_checkpoint_validated':False,'metal_validated':False,'mtp_execution':False,
@@ -693,6 +745,9 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 'capacity_bytes':self.reader.packed_budget.capacity_bytes,'live_bytes':self.reader.packed_budget.live_bytes,
                 'peak_bytes':self.reader.packed_budget.peak_bytes}),
             'metal_simd_groups':self.reader.metal_simd_groups,
+            'grouped_direct_io':self.reader.grouped_direct_io,
+            'metal_batch_backend':self.reader.metal_batch_backend,
+            'metal_batch_calibrations':([] if self.reader.batch_dispatch is None else self.reader.batch_dispatch.records),
             'numerics':{'compute_dtype':self.options.dtype,'text_mrope':'equal positions on all axes'}}
 
 

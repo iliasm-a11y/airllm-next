@@ -1,0 +1,35 @@
+name: HyperStream 3 portable correctness
+
+on:
+  pull_request:
+    paths:
+      - 'air_llm/airllm/nextgen/**'
+      - 'benchmarks/**'
+      - 'tests_hyperstream3/**'
+      - 'tests_next/test_gguf_speculative_portable.py'
+      - 'tests_next/test_verify_gguf_speculation.py'
+      - '.github/workflows/hyperstream3.yml'
+  push:
+    branches: ['research/hyperstream-3-m5-native']
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.5.3 psutil==7.2.2 pytest==9.1.1
+      # No Torch or MLX; conftest disabled. Hardware tests require both
+      # explicit opt-in and normal-pressure admission and remain skipped.
+      - name: Transport ownership, M5 fallback, recurrent verification and evidence falsification
+        env:
+          PYTHONPATH: air_llm
+        run: python -m pytest --noconftest -q tests_hyperstream3 tests_next/test_gguf_speculative_portable.py tests_next/test_verify_gguf_speculation.py
+      - name: Retained independent H2 evidence checks
+        run: python -m unittest discover -s tests_next -p test_verify_hyperstream2.py
