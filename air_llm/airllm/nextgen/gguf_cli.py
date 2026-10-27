@@ -43,7 +43,8 @@ def _run(args):
     with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay,
             expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,
             metal_simd_groups=args.simd_groups,packed_copy_free=args.packed_copy_free,packed_direct_io=args.packed_direct_io,
-            bulk_metadata=args.bulk_metadata,string_buffer_bytes=args.string_buffer_bytes,expert_pipeline=args.expert_pipeline) as model:
+            bulk_metadata=args.bulk_metadata,string_buffer_bytes=args.string_buffer_bytes,expert_pipeline=args.expert_pipeline,
+            hyper_prefill=args.hyper_prefill,hyper_prefill_max_tokens=args.hyper_prefill_max_tokens) as model:
         output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
         generated = output.tolist()[0][len(ids):]
         result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
@@ -69,6 +70,8 @@ def main(argv=None):
     run.add_argument('--cache-policy',choices=['adaptive','lru'],default='adaptive')
     run.add_argument('--expert-batch',action='store_true',help='Batch already-routed packed experts without changing their reduction order')
     run.add_argument('--expert-pipeline',action='store_true',help='Experimental bounded gate/up overlap; requires --expert-batch')
+    run.add_argument('--hyper-prefill',action='store_true',help='Experimental adaptive input blocks within existing memory budgets')
+    run.add_argument('--hyper-prefill-max-tokens',type=_positive,default=128)
     run.add_argument('--concat-tiles',action='store_true',help='Assemble evaluated row tiles with one concatenation')
     run.add_argument('--pipeline-tiles',action='store_true',help='Experimental two-tile overlap; requires --concat-tiles and --kernel metal')
     run.add_argument('--zero-copy-weights',action='store_true',help='Exact packed-buffer import with a portable copy fallback')

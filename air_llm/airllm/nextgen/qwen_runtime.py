@@ -6,6 +6,7 @@ reference in evidence-ooc/sources. No NVIDIA kernels or remote inference are
 used. Full Qwen3.8 weights, MTP and Metal/M5 are not validated by this module.
 """
 from collections import defaultdict
+from contextlib import nullcontext
 from dataclasses import dataclass
 import json
 import math
@@ -310,28 +311,49 @@ class ExperimentalQwenModel:
             if cache.position+ids.shape[1]>cache.limit:raise MemoryError('Qwen context limit exceeded')
             snapshot=cache.snapshot();mx=self.mx;outputs=[]
             try:
-                for start in range(0,ids.shape[1],self.options.prefill_chunk):
+                start=0
+                while start<ids.shape[1]:
                     available=psutil.virtual_memory().available
                     if available<self.options.reserve_bytes+self.options.workspace_bytes:
                         self.reader.trim();self.reader.drain()
                     if available<self.options.reserve_bytes:raise MemoryError('System reserve reached')
-                    part=ids[:,start:start+self.options.prefill_chunk]
+                    policy=getattr(self,'prefill_policy',None)
+                    chunk=self.options.prefill_chunk
+                    if policy is not None:
+                        decision=policy.select(self.config,self.options,
+                            cache_position=cache.position,remaining_tokens=ids.shape[1]-start,
+                            batch_size=ids.shape[0],available_bytes=int(available),
+                            cache_payload_bytes=cache.bytes,retained_bytes=cache.retained,
+                            dtype_bytes=4 if self.options.dtype=='float32' else 2)
+                        chunk=decision.chunk_tokens
+                        self.stats['hyperprefill_blocks']+=1
+                        self.stats['hyperprefill_max_chunk_tokens']=max(self.stats['hyperprefill_max_chunk_tokens'],chunk)
+                        self.stats['hyperprefill_peak_workspace_estimate_bytes']=max(
+                            self.stats['hyperprefill_peak_workspace_estimate_bytes'],decision.estimated_workspace_bytes)
+                    trace=getattr(self,'request_trace',None)
+                    def span(name,**fields):
+                        return trace.span(name,**fields) if trace is not None else nullcontext()
+                    part=ids[:,start:start+chunk]
                     x=self.reader.embedding(part,'model.embed_tokens.weight').astype(self.dtype);mx.eval(x)
                     for i,(mixer,mlp) in enumerate(zip(self.mixers,self.mlps)):
                         if self.reader.spec and hasattr(mlp,'expert_keys'):
                             self.reader.begin_layer(i,mlp.expert_keys)
                         p=f'model.layers.{i}.'
                         norm=zero_centered_rms(mx,x,self.reader.get(p+'input_layernorm.weight'),self.config['rms_norm_eps'])
-                        x=x+mixer(norm,cache);mx.eval(x)
+                        with span('layer.attention',layer=i,chunk_start=start,chunk_tokens=part.shape[1],position=cache.position):
+                            x=x+mixer(norm,cache);mx.eval(x)
                         norm=zero_centered_rms(mx,x,self.reader.get(p+'post_attention_layernorm.weight'),self.config['rms_norm_eps'])
-                        x=x+mlp(norm).astype(x.dtype);mx.eval(x)
+                        with span('layer.moe',layer=i,chunk_start=start,chunk_tokens=part.shape[1],position=cache.position):
+                            x=x+mlp(norm).astype(x.dtype);mx.eval(x)
                     x=zero_centered_rms(mx,x,self.reader.get('model.norm.weight'),self.config['rms_norm_eps'])
                     if start+part.shape[1]>keep_from:
                         head='model.embed_tokens.weight' if self.config.get('tie_word_embeddings',False) else 'lm_head.weight'
-                        logits=self.reader.output(x[:,max(0,keep_from-start):],head);mx.eval(logits);outputs.append(logits)
+                        with span('output.head',chunk_start=start,chunk_tokens=part.shape[1],position=cache.position):
+                            logits=self.reader.output(x[:,max(0,keep_from-start):],head);mx.eval(logits);outputs.append(logits)
                     cache.position+=part.shape[1]
                     for bank in cache.banks.values():
                         for value in bank.values():mx.eval(value)
+                    start+=part.shape[1]
                 logits=mx.concatenate(outputs,axis=1) if len(outputs)>1 else outputs[0]
                 cache.release(snapshot)
                 return SimpleNamespace(logits=logits,past_key_values=cache if use_cache else None)

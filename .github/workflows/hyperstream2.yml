@@ -1,0 +1,44 @@
+name: HyperStream 2 evidence and trace checks
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/hyperstream2.yml'
+      - 'air_llm/airllm/nextgen/**'
+      - 'benchmarks/benchmark_research51.py'
+      - 'benchmarks/campaign_research51.py'
+      - 'benchmarks/verify_hyperstream2.py'
+      - 'benchmarks/hyperstream2_observer.py'
+      - 'tests_next/test_request_trace.py'
+      - 'tests_next/test_verify_hyperstream2.py'
+      - 'tests_next/test_hyperstream2_observer.py'
+      - 'tests_next/test_hyperstream2_harness.py'
+      - 'tests_next/test_hyperprefill*.py'
+      - 'tests_next/test_analyze_research51.py'
+  push:
+    branches: ['research/hyperstream-2-prefill']
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-and-trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # unittest avoids tests_next/conftest.py, which imports Apple MLX/Torch.
+      # These synthetic falsification tests never run or download a model.
+      - name: Independent evidence verifier
+        run: python -m unittest discover -s tests_next -p test_verify_hyperstream2.py -v
+      - name: Monotonic trace accounting
+        run: python -m unittest discover -s tests_next -p test_request_trace.py -v
+      - name: Observer restoration and complete routing
+        run: python -m unittest discover -s tests_next -p test_hyperstream2_observer.py -v
+      - name: Planner memory and position admission
+        run: python -m unittest discover -s tests_next -p test_hyperprefill_stdlib.py -v
+      - name: Harness artifact protection and cleanup failure evidence
+        run: python -m unittest discover -s tests_next -p test_hyperstream2_harness.py -v

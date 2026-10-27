@@ -87,7 +87,9 @@ def load_tasks(path):
 def worker(args):
     tasks, tasks_hash = load_task_snapshot(args.tasks)
     protocol = (json.loads(args.expected_protocol_json) if args.expected_protocol_json
-                else protocol_manifest([Path(__file__), args.tasks]))
+                else protocol_manifest([Path(__file__), args.tasks,
+                    ROOT / 'benchmarks/hyperstream2_observer.py',
+                    ROOT / 'air_llm/airllm/nextgen/request_trace.py']))
     if not isinstance(protocol, dict) or not protocol_unchanged(protocol):
         raise RuntimeError('Research protocol changed before worker startup')
     if protocol.get(str(args.tasks)) != tasks_hash:
@@ -133,7 +135,7 @@ def worker(args):
     report['tokenizer_seconds'] = perf_counter() - tokenizer_start
     options = NextConfig(cache_bytes=64 << 20, io_bytes=64 << 20, kv_bytes=256 << 20,
                          workspace_bytes=128 << 20, reserve_bytes=3 << 30, max_tensor_bytes=16 << 20,
-                         row_chunk=args.rows, prefill_chunk=16, max_context=1280,
+                         row_chunk=args.rows, prefill_chunk=args.prefill_chunk, max_context=1280,
                          policy=args.cache_policy, device='gpu', dtype='float32', prefetch=False,
                          load_tokenizer=False, io_mode=args.io_mode, zero_copy_weights=args.zero_copy_weights)
     kwargs = dict(kernel='metal')
@@ -142,15 +144,34 @@ def worker(args):
             kwargs[name] = True
     if args.string_buffer_bytes:
         kwargs['string_buffer_bytes'] = args.string_buffer_bytes
+    if args.hyper_prefill:
+        kwargs.update(hyper_prefill=True, hyper_prefill_max_tokens=args.hyper_prefill_max_tokens)
     report['options'] = asdict(options)
     report['backend_options'] = kwargs
     try:
         with NativeGGUFQwenModel(args.model, options, **kwargs) as model:
             report['initialization_seconds'] = perf_counter() - start
+            report['model_initialization_seconds'] = report['initialization_seconds'] - report['tokenizer_seconds']
+            report['model_config'] = model.config
+            observer = None
+            trace = None
+            if args.numerical_evidence or args.request_trace:
+                from hyperstream2_observer import RuntimeObserver
+                if args.request_trace:
+                    # Import diagnostics from the harness checkout even when the
+                    # measured model is the untouched PR #10 checkout.
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location('hs2_trace', ROOT / 'air_llm/airllm/nextgen/request_trace.py')
+                    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+                    trace = module.RequestTrace(max_records=300000)
+                observer = RuntimeObserver(model, trace=trace)
+                observer.__enter__()
             original = model.forward
             checks = []
 
             def forward(*a, **kw):
+                if observer is not None:
+                    observer.phase = 'prefill' if not checks else 'decode'
                 logical = model.checkpoint.stats['logical_bytes']
                 disk = physical_read_bytes()
                 begin = perf_counter()
@@ -175,6 +196,13 @@ def worker(args):
                                    position=result.past_key_values.position, forward_seconds=elapsed,
                                    logical_bytes=model.checkpoint.stats['logical_bytes'] - logical,
                                    process_storage_read_bytes=None if disk is None or after_disk is None else after_disk - disk))
+                if args.numerical_evidence:
+                    vector = np.asarray(logits, dtype='<f4')
+                    vector_path = args.output.with_name(args.output.stem + '.step-' + str(len(checks)-1).zfill(3) + '.f32')
+                    # One task per numerical worker gives stable unique names.
+                    with vector_path.open('xb') as f: f.write(vector.tobytes())
+                    checks[-1]['logits_artifact'] = dict(path=vector_path.name,
+                        sha256=hashlib.sha256(vector.tobytes()).hexdigest(), dtype='float32', shape=list(vector.shape))
                 return result
 
             model.forward = forward
@@ -200,6 +228,15 @@ def worker(args):
                 item.update(status='completed', wall_seconds=perf_counter() - begin, step_checks=checks,
                             logical_read_bytes=model.checkpoint.stats['logical_bytes'] - logical,
                             read_calls=model.checkpoint.stats['read_calls'] - read_calls, metrics=model.metrics())
+                if observer is not None:
+                    item['routing_sha256'] = observer.routing_sha256()
+                    item['routing_by_layer_position'] = observer.routing
+                    item['observer_timings'] = observer.summary()
+                if trace is not None:
+                    trace_path = args.output.with_suffix('.trace.json')
+                    save(trace_path, trace.export())
+                    item['request_trace'] = dict(path=trace_path.name,
+                        sha256=hashlib.sha256(trace_path.read_bytes()).hexdigest())
                 end_disk = physical_read_bytes()
                 item['process_storage_read_bytes'] = None if disk is None or end_disk is None else end_disk - disk
                 if getattr(model.reader, 'packed_budget', None) is not None:
@@ -214,6 +251,13 @@ def worker(args):
         report.update(status='failed', error=f'{type(error).__name__}: {error}')
         raise
     finally:
+        restoration_error = None
+        if 'observer' in locals() and observer is not None:
+            try:
+                observer.__exit__(None, None, None)
+            except BaseException as error:
+                restoration_error = error
+                report.update(status='failed', observer_restoration_error=f'{type(error).__name__}: {error}')
         report.update(after=system_snapshot(), worker_wall_seconds=perf_counter() - start,
                       source_unchanged=source_manifest(args.engine_root) == sources,
                       protocol_unchanged=protocol_unchanged(protocol),
@@ -222,6 +266,8 @@ def worker(args):
         report['git_head_after'] = engine_manifest(args.engine_root)['git_head']
         report['engine_head_unchanged'] = report['git_head_after'] == report['git_head']
         save(args.output, report)
+        if restoration_error is not None:
+            raise RuntimeError('Observer restoration failed; evidence invalid') from restoration_error
         if report['status'] == 'completed' and not all(report[key] for key in (
                 'source_unchanged', 'protocol_unchanged', 'model_stat_unchanged', 'engine_head_unchanged')):
             report['status'] = 'invalid'
@@ -237,6 +283,11 @@ def main():
     parser.add_argument('--engine-root', type=Path, default=ROOT)
     parser.add_argument('--label', default='baseline')
     parser.add_argument('--rows', type=int, default=8192)
+    parser.add_argument('--prefill-chunk', type=int, default=16)
+    parser.add_argument('--hyper-prefill', action='store_true')
+    parser.add_argument('--hyper-prefill-max-tokens', type=int, default=128)
+    parser.add_argument('--numerical-evidence', action='store_true')
+    parser.add_argument('--request-trace', action='store_true')
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'], default='lru')
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
     parser.add_argument('--timeout', type=float, default=600)
@@ -252,6 +303,10 @@ def main():
     for name in ('model', 'tasks', 'output', 'engine_root'):
         setattr(args, name, getattr(args, name).expanduser().resolve())
     load_tasks(args.tasks)  # Refuse empty/malformed tasks before any model launch.
+    if args.prefill_chunk < 1 or args.hyper_prefill_max_tokens < 1:
+        parser.error('Prefill sizes must be positive')
+    if (args.numerical_evidence or args.request_trace) and len(load_tasks(args.tasks)) != 1:
+        parser.error('Numerical artifacts and traces require exactly one task per worker')
     if args.worker:
         worker(args)
     else:
@@ -261,8 +316,12 @@ def main():
         if args.expected_protocol_json:
             protected.extend(map(Path, json.loads(args.expected_protocol_json)))
         protected.extend(args.engine_root / name for name in source_manifest(args.engine_root))
-        validate_output_paths(args.output, protected=protected)
-        if any(p.exists() for p in (args.output, args.output.with_suffix('.guard.json'), args.output.with_suffix('.log'))):
+        extras = [args.output.with_suffix('.trace.json')] if args.request_trace else []
+        if args.numerical_evidence:
+            extras.extend(args.output.with_name(args.output.stem + '.step-' + str(i).zfill(3) + '.f32')
+                          for i in range(load_tasks(args.tasks)[0]['max_new_tokens']))
+        destinations = validate_output_paths(args.output, protected=protected, extra_outputs=extras)
+        if any(p.exists() or p.is_symlink() for p in destinations):
             raise FileExistsError('Refusing to overwrite prior experiment evidence')
         args.output.parent.mkdir(exist_ok=True, parents=True)
         supervise([sys.executable, str(Path(__file__).resolve()), *sys.argv[1:], '--worker'], args.output,

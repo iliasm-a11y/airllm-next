@@ -1,0 +1,36 @@
+{
+  "status": "deferred",
+  "inference_workers_launched": 0,
+  "reason": "No stable normal-pressure resource window in 600s; no inference launched",
+  "observed_seconds": 598.3917260410017,
+  "sample_count": 299,
+  "pressure_levels": [
+    2
+  ],
+  "available_min_bytes": 2710962176,
+  "available_max_bytes": 4669030400,
+  "swap_initial_bytes": 419102720,
+  "swap_final_bytes": 695336960,
+  "thermal_temperature_celsius": null,
+  "thermal_note": "pmset reported no thermal warning; temperature and sustained throttle not measured",
+  "metal_instruments": "xcrun could not find xctrace; no pure GPU execution trace recorded",
+  "hardware": {
+    "chip": "Apple M5",
+    "model": "Mac17,3",
+    "physical_bytes": 17179869184,
+    "mlx": "0.32.4",
+    "metal_available": true,
+    "storage": "internal physical disk0; no external physical disk enumerated"
+  },
+  "tests": {
+    "portable": 32,
+    "existing_protocol": 111,
+    "existing_protocol_subtests": 20,
+    "tiny_cpu": 20,
+    "tiny_gpu_deselected": 1
+  },
+  "current_checkpoint_full_hash_verified": false,
+  "current_real_numerical_validation": false,
+  "current_gain_measured": false,
+  "safety_limits_weakened": false
+}

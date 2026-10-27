@@ -18,6 +18,10 @@ def validate_job_args(arguments):
         raise ValueError('Job args must be a list of strings')
     parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False, exit_on_error=False)
     parser.add_argument('--rows', type=int, default=8192)
+    parser.add_argument('--prefill-chunk', type=int, default=16)
+    parser.add_argument('--hyper-prefill-max-tokens', type=int, default=128)
+    for flag in ('hyper-prefill', 'numerical-evidence', 'request-trace'):
+        parser.add_argument('--' + flag, action='store_true')
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'])
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'])
     parser.add_argument('--timeout', type=float, default=600.)
@@ -33,6 +37,8 @@ def validate_job_args(arguments):
         raise ValueError('Reserved, abbreviated or unknown job arguments: ' + repr(unknown))
     if parsed.rows < 1 or not math.isfinite(parsed.timeout) or parsed.timeout <= 0:
         raise ValueError('Rows and timeout must be positive and finite')
+    if parsed.prefill_chunk < 1 or parsed.hyper_prefill_max_tokens < 1:
+        raise ValueError('Prefill sizes must be positive')
     if not 0 <= parsed.string_buffer_bytes <= 65536:
         raise ValueError('String read buffer must be in 0..65536 bytes')
     return list(arguments)
@@ -53,6 +59,8 @@ def prepare_campaign(args):
     plan, tasks_by_job, ids = [], {}, set()
     roots = {ROOT.resolve()}
     protocol_paths = {Path(__file__).resolve(), ROOT / 'benchmarks/benchmark_research51.py',
+                      ROOT / 'benchmarks/hyperstream2_observer.py',
+                      ROOT / 'air_llm/airllm/nextgen/request_trace.py',
                       args.plan, args.tasks}
     for job in raw_plan:
         if not isinstance(job, dict) or set(job) - {'id', 'args', 'tasks', 'engine_root'}:
