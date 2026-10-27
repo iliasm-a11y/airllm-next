@@ -78,6 +78,9 @@ def fixture_inputs(tmp_path,monkeypatch):
     (campaign/'config.json').write_text('{}')
     config = dict(limits=asdict(ExperimentLimits()))
     monkeypatch.setattr(supervisor,'preparation',lambda folder:(config,dict(status='deferred_or_interrupted')))
+    monkeypatch.setattr(supervisor,'inference_observation',lambda **kwargs:dict(
+        process_inventory_complete=True,other_model_processes=[],process_inventory_errors=[],
+        process_inventory_uncertain=[]))
     args = Namespace(campaign=campaign,output_dir=tmp_path/'supervisor',
                      max_wait_seconds=.002,max_runtime_seconds=60.)
     return args,config
@@ -262,3 +265,111 @@ def test_runtime_disk_monitor_stops_only_through_owned_child_cleanup(tmp_path,mo
     code,state = supervisor.run(args)
     assert code == 75 and state['status'] == 'disk_reserve'
     assert len(calls) == 1 and state['last_disk_snapshot']['disk_free_bytes'] == 4 << 30
+
+
+def test_uncertain_inventory_defers_without_worker_and_is_bounded():
+    clock = Clock()
+    samples,record = [],{}
+    observation = dict(snapshot(),process_inventory_complete=False,process_inventory_uncertain=[dict(pid=4)])
+    assert not supervisor.wait_for_resources(ExperimentLimits(),3.,record,
+        lambda:observation,samples.append,monotonic=clock.monotonic,sleeper=clock.sleep)
+    assert record['waited_seconds'] == 3.
+    assert all('unavailable' in row['reason'] for row in samples)
+
+
+def test_other_model_blocks_admission_without_signals():
+    ready, reason = supervisor.ready(dict(snapshot(),other_model_processes=[dict(pid=4,created=10.)]),ExperimentLimits())
+    assert not ready and 'Another model' in reason
+
+
+def test_concurrent_output_directories_cannot_claim_same_campaign(tmp_path,monkeypatch):
+    args,config = fixture_inputs(tmp_path,monkeypatch)
+    args.output_dir = tmp_path/'another-output'
+    with supervisor.campaign_supervisor_lock(args.campaign):
+        with pytest.raises(RuntimeError,match='Another supervisor'):
+            supervisor.run(args)
+    assert not (args.output_dir/'state.json').exists()
+
+
+def test_interrupted_wait_keeps_original_deadline_and_resumes(tmp_path,monkeypatch):
+    args,config = fixture_inputs(tmp_path,monkeypatch)
+    args.max_wait_seconds = 5.
+    monkeypatch.setattr(supervisor,'system_snapshot',lambda:snapshot(2))
+    original = supervisor.wait_for_resources
+    def interrupted(limits,seconds,state,observe,persist):
+        persist(dict(observe(),ready=False,reason='simulated interruption'))
+        raise RuntimeError('simulated process crash')
+    monkeypatch.setattr(supervisor,'wait_for_resources',interrupted)
+    # Simulate an abrupt death after a persisted waiting state by restoring only
+    # that saved state; no completed result is relabeled or reused.
+    captured = []
+    real_atomic = supervisor.atomic_json
+    def capture(path,state):
+        real_atomic(path,state)
+        if Path(path).name == 'state.json' and state.get('status') == 'waiting_for_resources':
+            captured.append(json.loads(Path(path).read_text()))
+    monkeypatch.setattr(supervisor,'atomic_json',capture)
+    with pytest.raises(RuntimeError,match='simulated'):
+        supervisor.run(args)
+    waiting = captured[-1]
+    deadline = waiting['wait_deadline_unix']
+    real_atomic(args.output_dir/'state.json',waiting)
+    (args.output_dir/'manifest.json').unlink()
+    remaining = []
+    def expired(limits,seconds,state,*rest,**kwargs):
+        remaining.append(seconds)
+        return False
+    monkeypatch.setattr(supervisor,'wait_for_resources',expired)
+    code,state = supervisor.run(args)
+    assert code == 75 and state['wait_deadline_unix'] == deadline
+    assert 0 < remaining[0] <= args.max_wait_seconds
+
+
+def test_atomic_state_write_failure_keeps_original_and_removes_temp(tmp_path):
+    path = tmp_path/'state.json'
+    supervisor.atomic_json(path,dict(status='valid'))
+    before = path.read_bytes()
+    with pytest.raises(ValueError):
+        supervisor.atomic_json(path,dict(value=float('nan')))
+    assert path.read_bytes() == before
+    assert [p.name for p in tmp_path.iterdir()] == ['state.json']
+
+
+def test_new_owned_descendant_is_reconciled_before_persisted_lease(tmp_path,monkeypatch):
+    import os
+    args,config,calls = admitted_simulation(tmp_path,monkeypatch)
+    actual = supervisor.psutil.Process
+    own_birth = actual().create_time()
+    spawned = []
+    child_pid, child_birth = 9999999, own_birth+1
+    class Own:
+        pid = os.getpid()
+        def create_time(self):
+            return own_birth
+        def children(self,recursive=False):
+            return [Child()] if spawned else []
+    class Child:
+        pid = child_pid
+        def create_time(self):
+            return child_birth
+        def parents(self):
+            return [Own()]
+    monkeypatch.setattr(supervisor.psutil,'Process',lambda pid=None:Child() if pid == child_pid else Own())
+    def observation(**kwargs):
+        return dict(process_inventory_complete=True,process_inventory_uncertain=[],
+                    other_model_processes=[dict(pid=child_pid,created=child_birth)] if spawned else [])
+    monkeypatch.setattr(supervisor,'inference_observation',observation)
+    def child(command,folder,monitor=None):
+        calls.append(command)
+        Path(folder).mkdir()
+        if len(calls) == 1:
+            spawned.append(True)
+            assert not list(args.output_dir.glob('**/owned-processes.json'))
+            monitor()
+        else:
+            Path(command[command.index('--output')+1]).write_text('{"status":"accepted_evidence"}')
+        return 0
+    monkeypatch.setattr(supervisor,'run_child',child)
+    code,state = supervisor.run(args)
+    assert code == 0 and state['status'] == 'completed_evidence_verified'
+    assert state['last_disk_snapshot']['other_model_processes'] == []

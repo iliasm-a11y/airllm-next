@@ -19,6 +19,8 @@ import sys
 import psutil
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT/'benchmarks'))
+from m5_process_inventory import inventory, expected_read_error
 
 
 def command(argv, timeout=15):
@@ -68,14 +70,31 @@ def snapshot():
                 pressure_level=pressure())
 
 
-def process_inventory(include_command_lines=False):
+def process_inventory(include_command_lines=False, *, diagnostics=None):
+    """Enrich trusted identities with optional per-process accounting fields."""
     rows = []
-    for proc in psutil.process_iter(['pid', 'ppid', 'name', 'exe', 'cmdline',
-                                     'create_time', 'status', 'memory_info']):
+    observed = inventory(include_commands=True)
+    errors = list(observed['errors'])
+    for identity in observed['processes']:
         try:
-            info = proc.info
-            cmd = info['cmdline'] or []
-            executable = Path(info['exe'] or (cmd[0] if cmd else info['name'] or '')).name
+            proc = psutil.Process(identity['pid'])
+            if proc.create_time() != identity['created']:
+                errors.append(dict(pid=identity['pid'],reason='pid_reused_before_accounting'))
+                continue
+            accounting = {}
+            for field in ('ppid','status','memory_info'):
+                try:
+                    accounting[field] = getattr(proc,field)()
+                except Exception as error:
+                    if not expected_read_error(error):
+                        raise
+                    errors.append(dict(pid=proc.pid,field=field,error_type=type(error).__name__))
+                    accounting[field] = None
+            if psutil.Process(proc.pid).create_time() != identity['created']:
+                errors.append(dict(pid=proc.pid,reason='pid_reused_during_accounting'))
+                continue
+            cmd = identity['command'] or []
+            executable = identity['executable'] or ''
             full = ' '.join(cmd)
             if executable in ('node', 'npm', 'npx') or executable.startswith('npm '):
                 category = 'node/npm'
@@ -83,26 +102,22 @@ def process_inventory(include_command_lines=False):
                 category = 'Codex/ChatGPT'
             else:
                 category = 'other'
-            worker_names = {'benchmark_research51.py', 'profile_native_gguf.py',
-                            'qwen_terminal.py', 'interactive_airllm.py',
-                            'gguf_cli.py', 'campaign_research51.py'}
-            model_candidate = (
-                ('python' in executable.lower() and any(
-                    Path(str(arg)).name in worker_names or
-                    str(arg) in ('airllm.nextgen.gguf_cli', 'airllm.nextgen.gguf_chat')
-                    for arg in cmd[1:]))
-                or executable in ('llama-server', 'llama-cli', 'llama-bench')
-                or (executable == 'ollama' and 'runner' in cmd[1:]))
-            row = dict(pid=info['pid'], ppid=info['ppid'], name=info['name'],
-                             exe=executable, create_time=info['create_time'],
-                             status=info['status'], rss_bytes=info['memory_info'].rss,
-                             category=category, inference_candidate=model_candidate)
+            row = dict(pid=identity['pid'], ppid=accounting['ppid'], name=executable,
+                       exe=executable, create_time=identity['created'],
+                       status=accounting['status'], rss_bytes=(None if accounting['memory_info'] is None
+                                                              else accounting['memory_info'].rss),
+                       category=category, inference_candidate=identity['inference_candidate'])
             if include_command_lines:
-                row.update(command=cmd, full_executable=info['exe'])
+                row.update(command=cmd, full_executable=identity['full_executable'])
             rows.append(row)
-        except (psutil.Error, AttributeError):
-            continue
-    rows.sort(key=lambda row: row['rss_bytes'], reverse=True)
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
+            errors.append(dict(pid=identity['pid'],field='accounting_identity',error_type=type(error).__name__))
+    rows.sort(key=lambda row: row['rss_bytes'] if row['rss_bytes'] is not None else -1, reverse=True)
+    if diagnostics is not None:
+        diagnostics.update(errors=errors,uncertain=observed['uncertain'],
+                           complete=observed['complete'],trusted_identity_count=len(observed['processes']))
     return rows
 
 
@@ -144,12 +159,16 @@ def configured_budgets():
 def collect(footprint_count=5, include_command_lines=False):
     before = snapshot()
     raw_vm = command(['vm_stat'])
-    rows = process_inventory(include_command_lines)
+    inventory_diagnostics = {}
+    rows = process_inventory(include_command_lines,diagnostics=inventory_diagnostics)
     groups = {}
     for row in rows:
-        group = groups.setdefault(row['category'], dict(count=0, summed_rss_bytes=0))
+        group = groups.setdefault(row['category'], dict(count=0, summed_rss_bytes=0,unavailable_rss_count=0))
         group['count'] += 1
-        group['summed_rss_bytes'] += row['rss_bytes']
+        if row['rss_bytes'] is None:
+            group['unavailable_rss_count'] += 1
+        else:
+            group['summed_rss_bytes'] += row['rss_bytes']
     targets = [row for row in rows if row['pid'] != os.getpid()][:footprint_count]
     footprint = command(['footprint', '-f', 'bytes', '--noCategories', '--swapped', '--wired',
                          *[str(row['pid']) for row in targets]]) if targets else None
@@ -157,7 +176,9 @@ def collect(footprint_count=5, include_command_lines=False):
     for row in targets:
         try:
             identities_after[str(row['pid'])] = psutil.Process(row['pid']).create_time() == row['create_time']
-        except psutil.Error:
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
             identities_after[str(row['pid'])] = False
     budgets = configured_budgets()
     guard = budgets['air_llm/airllm/nextgen/experiment_guard.py']['literal_integer_budgets']
@@ -180,6 +201,7 @@ def collect(footprint_count=5, include_command_lines=False):
         vm=vm_pages(raw_vm.get('stdout', '')),
         **raw_system,
         processes=rows, process_groups=groups, top_physical_footprint=footprint,
+        process_inventory_diagnostics=inventory_diagnostics,
         process_inventory_privacy=dict(command_lines_included=include_command_lines,
             executable_paths_included=include_command_lines,
             note='Full process arguments are used transiently for classification; omitted from default reports.'),

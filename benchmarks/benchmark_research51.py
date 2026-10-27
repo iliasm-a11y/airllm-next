@@ -28,11 +28,24 @@ def string_buffer_size(value):
 
 def save(path, value):
     from tempfile import NamedTemporaryFile
-    with NamedTemporaryFile('w', dir=path.parent, delete=False, encoding='utf-8') as f:
-        json.dump(value, f, indent=2, ensure_ascii=False, allow_nan=False)
-        f.write('\n')
-        temporary = f.name
-    os.replace(temporary, path)
+    path = Path(path)
+    temporary = None
+    try:
+        with NamedTemporaryFile('w', dir=path.parent, delete=False, encoding='utf-8') as f:
+            temporary = f.name
+            json.dump(value, f, indent=2, ensure_ascii=False, allow_nan=False)
+            f.write('\n')
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temporary, path)
+        directory = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    finally:
+        if temporary is not None:
+            Path(temporary).unlink(missing_ok=True)
 
 
 def source_manifest(root):

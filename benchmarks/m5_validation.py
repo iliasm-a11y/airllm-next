@@ -27,6 +27,7 @@ from benchmark_research51 import (ROOT, engine_manifest, load_tasks,
                                  protocol_manifest, protocol_unchanged, save)
 from campaign_research51 import validate_job_args, wait_before_job
 from plan_hyperstream3 import build_experiments
+from m5_process_inventory import expected_read_error
 
 
 def digest(path):
@@ -75,16 +76,21 @@ def owned_cleanup(identities):
             if p.create_time() == item['created'] and p.pid != os.getpid():
                 p.terminate()
                 owned.append(p)
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
     _, alive = psutil.wait_procs(owned, timeout=2)
     for p in alive:
         try:
             expected = next(x['created'] for x in identities if x['pid'] == p.pid)
-            if p.create_time() == expected:
-                p.kill()
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
+            # create_time on the old psutil instance is cached. A fresh handle
+            # must confirm the saved lease before escalation after the wait.
+            current = psutil.Process(p.pid)
+            if current.create_time() == expected:
+                current.kill()
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
     _, alive = psutil.wait_procs(alive, timeout=3)
     if alive:
         raise RuntimeError('Owned child cleanup did not complete')
@@ -102,6 +108,17 @@ def run_child(command, folder, monitor=None):
     folder.mkdir(parents=True, exist_ok=True)
     lease = folder / 'owned-processes.json'
     observed = {}
+    diagnostic_errors = []
+    diagnostic_counts = {}
+    def diagnostic(pid,field,error):
+        key = field+':'+type(error).__name__
+        diagnostic_counts[key] = diagnostic_counts.get(key,0)+1
+        # Aggregate repeated OS denials at 20 Hz; long bounded campaigns must
+        # not grow an unbounded in-memory list of optional observations.
+        if len(diagnostic_errors) < 64:
+            row = dict(pid=pid,field=field,error_type=type(error).__name__)
+            if row not in diagnostic_errors:
+                diagnostic_errors.append(row)
     process = None
     with (folder / 'controller-child.log').open('x') as log:
         try:
@@ -110,10 +127,23 @@ def run_child(command, folder, monitor=None):
                 env=dict(os.environ, MLX_ENABLE_TF32='0', PYTHONDONTWRITEBYTECODE='1',
                          OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1',
                          HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1'))
-            owner = psutil.Process(process.pid)
+            try:
+                owner = psutil.Process(process.pid)
+            except Exception as error:
+                if not expected_read_error(error):
+                    raise
+                owner = None
+                diagnostic(process.pid,'root_identity',error)
             while True:
                 try:
-                    members = [owner, *owner.children(recursive=True)]
+                    members = [] if owner is None else [owner]
+                    if owner is not None:
+                        try:
+                            members.extend(owner.children(recursive=True))
+                        except Exception as error:
+                            if not expected_read_error(error):
+                                raise
+                            diagnostic(owner.pid,'children',error)
                     changed = False
                     for p in members:
                         try:
@@ -121,13 +151,17 @@ def run_child(command, folder, monitor=None):
                             if observed.get(p.pid) != identity:
                                 observed[p.pid] = identity
                                 changed = True
-                        except psutil.NoSuchProcess:
-                            pass
+                        except Exception as error:
+                            if not expected_read_error(error):
+                                raise
+                            diagnostic(p.pid,'birth_time',error)
                     if changed:
                         save(lease, dict(controller_pid=os.getpid(), processes=[
                             dict(pid=p, created=t) for p, t in observed.items()]))
-                except psutil.NoSuchProcess:
-                    pass
+                except Exception as error:
+                    if not expected_read_error(error):
+                        raise
+                    diagnostic(process.pid,'child_inventory',error)
                 if monitor is not None:
                     monitor()
                 code = process.poll()
@@ -142,7 +176,60 @@ def run_child(command, folder, monitor=None):
                 from airllm.nextgen.experiment_guard import _stop_group
                 _stop_group(process, observed)
             owned_cleanup([dict(pid=p, created=t) for p, t in observed.items()])
-            save(folder / 'cleanup.json', dict(status='completed', observed_processes=len(observed)))
+            save(folder / 'cleanup.json', dict(status='completed', observed_processes=len(observed),
+                                               process_inventory_errors=diagnostic_errors,
+                                               process_inventory_error_counts=diagnostic_counts))
+
+
+def worker_resource_refusal(output, command, limits):
+    """Recognize only measured resource stops in this attempt's own raw guard.
+
+    A wrapper's nonzero code alone cannot distinguish a temporary admission
+    refusal from a programming error. Malformed guard evidence remains fatal.
+    No checkpoint/logit/route acceptance criterion is changed by this classifier.
+    """
+    output = Path(output)
+    guard_path = output.with_suffix('.guard.json')
+    if not guard_path.is_file():
+        return None
+    guard = json.loads(guard_path.read_text())
+    if (guard.get('command') != command+['--worker'] or guard.get('limits') != limits
+            or guard.get('cleanup_error')):
+        return None
+    if output.is_file():
+        worker = json.loads(output.read_text())
+        if worker.get('status') in ('failed','invalid') or worker.get('error'):
+            return None
+        if any(worker.get(flag) is False for flag in (
+                'source_unchanged','protocol_unchanged','model_stat_unchanged','engine_head_unchanged')):
+            return None
+    violation = guard.get('violation')
+    exception = guard.get('exception')
+    if exception is not None:
+        # An admission failure happens before any child is created. Refuse to
+        # reinterpret arbitrary exceptions or exceptions raised during a run.
+        before = guard.get('before',{})
+        known = {
+            'MemoryError: macOS memory pressure is above normal before launch':
+                before.get('pressure_level') in (2,4),
+            'MemoryError: Requested payload exceeds available memory after system reserve':
+                before.get('available_bytes', float('inf')) < limits['reserve_bytes']+limits['admitted_payload_bytes'],
+        }
+        if (known.get(exception) is not True or guard.get('sample_count') != 0
+                or guard.get('exit_code') is not None or violation is not None):
+            return None
+        reason = 'worker_admission_resources'
+    else:
+        measured = {
+            'macos_memory_pressure': guard.get('peak_pressure_level') in (2,4),
+            'system_reserve': guard.get('minimum_available_bytes',float('inf')) < limits['reserve_bytes'],
+            'system_swap_growth': guard.get('maximum_swap_growth_bytes',0) > limits['swap_growth_bytes'],
+        }
+        if (measured.get(violation) is not True or guard.get('exit_code') not in (-15,-9)
+                or guard.get('sample_count',0) < 1):
+            return None
+        reason = violation
+    return dict(reason=reason,guard_path=str(guard_path),guard_sha256=digest(guard_path))
 
 
 def custom_pairs(name, baseline, candidate, base_args, candidate_args, pairs, tasks):
@@ -237,6 +324,9 @@ def prepare(args):
                        manifests[str(roots['candidate'])]['git_head']], capture_output=True).returncode:
         raise ValueError('Candidate must descend from the retained PR #12 revision')
     paths = {Path(__file__).resolve(), ROOT / 'benchmarks/verify_m5_validation.py',
+             ROOT / 'benchmarks/m5_autonomous_supervisor.py',
+             ROOT / 'benchmarks/m5_process_inventory.py',
+             ROOT / 'benchmarks/diagnose_m5_memory.py',
              ROOT / 'benchmarks/hash_checkpoint_guarded.py',
              ROOT / 'benchmarks/benchmark_research51.py',
              ROOT / 'benchmarks/campaign_research51.py', ROOT / 'benchmarks/plan_hyperstream3.py',
@@ -481,6 +571,10 @@ def run(args):
                     code = run_child(command, attempt)
                     record.update(exit_code=code, ended_unix=time.time(),
                                   controller_wall_seconds=time.monotonic()-process_start)
+                    resource_refusal = worker_resource_refusal(output,command,config['limits'])
+                    if resource_refusal is not None:
+                        session['active']['resource_refusal'] = resource_refusal
+                        raise MemoryError('Worker deferred by verified resource guard: '+resource_refusal['reason'])
                     if code:
                         raise RuntimeError('Worker refused or failed: ' + key)
                     validate_job(folder, config, job, record)
