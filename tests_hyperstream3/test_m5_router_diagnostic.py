@@ -1,6 +1,8 @@
 """Portable controls for targeted captures; these tests never import MLX."""
 from pathlib import Path
+import hashlib
 import json
+import os
 import sys
 
 import numpy as np
@@ -8,6 +10,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'benchmarks'))
+sys.path.insert(0, str(ROOT/'air_llm'))
 import diagnose_m5_router as diagnostic
 
 
@@ -132,3 +135,49 @@ def test_artifact_path_cannot_escape_capture_folder(tmp_path,name):
 def test_nonfinite_capture_is_not_saved_as_good_evidence(tmp_path):
     with pytest.raises(FloatingPointError,match='Non-finite'):
         diagnostic._artifact(tmp_path,'bad',np.array([np.nan],dtype=np.float32))
+
+
+def test_checkpoint_hash_requests_nocache_on_correct_fd_before_reads_and_keeps_sha(tmp_path,monkeypatch):
+    import fcntl
+    from airllm.nextgen import physical_io
+    path = tmp_path/'checkpoint.gguf'
+    payload = b'router-checkpoint-bytes' * 100000
+    path.write_bytes(payload)
+    observed = []
+    def request(fd):
+        observed.append(fd)
+        assert os.fstat(fd).st_ino == path.stat().st_ino
+        assert os.lseek(fd,0,os.SEEK_CUR) == 0
+        assert fcntl.fcntl(fd,fcntl.F_GETFL) & os.O_ACCMODE == os.O_RDONLY
+    monkeypatch.setattr(physical_io,'set_fd_nocache',request)
+    assert diagnostic.checkpoint_digest(path) == hashlib.sha256(payload).hexdigest()
+    assert len(observed) == 1
+    with pytest.raises(OSError):
+        os.fstat(observed[0])
+
+
+@pytest.mark.parametrize('error',[PermissionError('OS denied fd policy'),NotImplementedError('Darwin only')])
+def test_checkpoint_hash_fails_closed_on_policy_failure_without_leaking_fd(tmp_path,monkeypatch,error):
+    from airllm.nextgen import physical_io
+    path = tmp_path/'checkpoint.gguf'
+    path.write_bytes(b'unchanged original checkpoint')
+    observed = []
+    def request(fd):
+        observed.append(fd)
+        assert os.lseek(fd,0,os.SEEK_CUR) == 0
+        raise error
+    monkeypatch.setattr(physical_io,'set_fd_nocache',request)
+    with pytest.raises(type(error),match=str(error)):
+        diagnostic.checkpoint_digest(path)
+    with pytest.raises(OSError):
+        os.fstat(observed[0])
+
+
+def test_regular_evidence_digest_does_not_request_checkpoint_fd_policy(tmp_path,monkeypatch):
+    from airllm.nextgen import physical_io
+    path = tmp_path/'artifact.npy'
+    path.write_bytes(b'ordinary artifact bytes')
+    def rejected(fd):
+        raise AssertionError('Artifact digest must not invoke checkpoint caching policy')
+    monkeypatch.setattr(physical_io,'set_fd_nocache',rejected)
+    assert diagnostic.digest(path) == hashlib.sha256(path.read_bytes()).hexdigest()

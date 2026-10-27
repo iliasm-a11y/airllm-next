@@ -34,6 +34,22 @@ def digest(path):
     return h.hexdigest()
 
 
+def checkpoint_digest(path):
+    """Hash all checkpoint bytes with Darwin fd caching disabled; fail closed.
+
+    The separately opened read-only descriptor keeps the same 1 MiB hash buffer.
+    F_NOCACHE is a per-descriptor policy, never a cache purge or cold-NAND proof.
+    Other evidence hashes intentionally keep the ordinary digest() path.
+    """
+    from airllm.nextgen.physical_io import set_fd_nocache
+    h = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        set_fd_nocache(stream.fileno())
+        while block := stream.read(1 << 20):
+            h.update(block)
+    return h.hexdigest()
+
+
 def _call_with_locals(function, args, kwargs):
     """Observe one Python return without altering the original call or result."""
     previous = sys.getprofile()
@@ -192,11 +208,18 @@ def capture_worker(args):
         target_request=dict(layer=args.layer, absolute_position=args.position),
         original_options=reference['options'], original_backend_options=reference['backend_options'],
         full_input_ids=inputs)
+    report['checkpoint_hash_cache_policy'] = dict(
+        requested='Darwin F_NOCACHE on a separately opened read-only checkpoint descriptor',
+        applied_before=False, applied_after=False, buffer_bytes=1 << 20,
+        failure_policy='abort; no cached fallback', cache_purged=False,
+        cold_cache_claimed=False, physical_ssd_bandwidth_certified=False)
     _save(args.output_dir / 'capture.json', report)
-    before = digest(args.model)
+    before = checkpoint_digest(args.model)
     if before != args.expected_sha256:
         raise ValueError('Complete checkpoint hash differs before diagnostic inference')
     report['checkpoint_sha256_before'] = before
+    report['checkpoint_hash_cache_policy']['applied_before'] = True
+    _save(args.output_dir / 'capture.json', report)
     try:
         with NativeGGUFQwenModel(args.model, NextConfig(**reference['options']),
                                  **reference['backend_options']) as model:
@@ -208,10 +231,11 @@ def capture_worker(args):
         raise ValueError('Target route was not reached')
     if engine_manifest(args.engine_root) != expected:
         raise ValueError('Original engine sources changed during the diagnostic')
-    after = digest(args.model)
+    after = checkpoint_digest(args.model)
     if after != before:
         raise ValueError('Complete checkpoint hash changed during diagnostic inference')
     report['checkpoint_sha256_after'] = after
+    report['checkpoint_hash_cache_policy']['applied_after'] = True
     report['integrity_checked_before_after'] = True
     _save(args.output_dir / 'capture.json', report)
     return report
