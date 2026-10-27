@@ -1,0 +1,31 @@
+{
+  "base_commit": "3b137621d69f3549a85b7d0cc20460bd07b11fb9",
+  "branch": "research/hyperstream-m5-validation",
+  "hardware_success_criterion_met": false,
+  "autonomous_fallback_deliverable_ready": true,
+  "new_gpu_compilation_performed": false,
+  "real_checkpoint_inference_performed": false,
+  "checkpoint_full_hash_completed_this_session": false,
+  "source_sha256": {
+    "benchmarks/diagnose_m5_memory.py": "1823908f02e03ec0b94a8318f8ca4ecfc366fe2f8a0badae6cc5f1d732a57388",
+    "benchmarks/m5_validation.py": "49f547f862b92437039e76b117f14dfe9f850ccb4959ebcf57d9244f868db1ca",
+    "benchmarks/validate_m5_kernels.py": "7c34af1fecd2cabbad6f64ba3295900a68a26cf7d8ef58f688880673d44fa5e0",
+    "benchmarks/verify_m5_validation.py": "885586fe519c0bed13849627a7afd87299868004375d92b1675d54fd164fe242",
+    "tests_hyperstream3/test_m5_kernel_runner.py": "69276fd74119121ba5a6a0017ed304799b89e4ea8b7ec27398070bd5b6cf4951",
+    "tests_hyperstream3/test_m5_kernels.py": "0229f1f83f8ff909a6fec0efe6b35c1e7d7dc26af52f05f5c41e71193af2668b",
+    "tests_hyperstream3/test_m5_memory_diagnostic.py": "30f817d6e699c06481f05b234fcb2313e7917263a1015627607f2dbf63c14e81",
+    "tests_hyperstream3/test_m5_validation.py": "3d87d89f177409b9fb0bf1bc436720b0323361e81a0bddb522c50edd86a32a5d",
+    "air_llm/airllm/nextgen/experiment_guard.py": "7865947ae2277d034e4b276bde962cc563ea359070a019cb4e68d2da63a73d61",
+    "air_llm/airllm/nextgen/gguf_m5.py": "d355958dfe77424a1b85cbe3967059aaeb56f6e6f66557057c2e565f2462b061"
+  },
+  "engine_and_guard_modified": false,
+  "pytest_passed": 242,
+  "pytest_gpu_skipped": 64,
+  "pytest_subtests_passed": 49,
+  "independent_h2_unittest_passed": 8,
+  "real_smoke_attempts": 2,
+  "real_smoke_exit_codes": [
+    75,
+    75
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "captured_utc": "2026-10-27T12:37:52.082694+00:00",
+  "hardware_compilation_performed": false,
+  "inference_performed": false,
+  "checks": [
+    {
+      "name": "portable-final",
+      "command": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "-m",
+        "pytest",
+        "--noconftest",
+        "-q",
+        "tests_hyperstream3",
+        "tests_next/test_gguf_speculative_portable.py",
+        "tests_next/test_verify_gguf_speculation.py",
+        "--junitxml=/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/airllm-next/research/m5_validation/evidence/portable-final.xml"
+      ],
+      "exit_code": 0,
+      "output_tail": "........................................................................................................................ [ 39%]\n.........................................sssssssssssssssssssssssssssssss [ 62%]\nsssssssssssssssssssssssssssssssss....................................... [ 86%]\n..........................................      [100%]\n242 passed, 64 skipped, 49 subtests passed in 0.82s\n"
+    },
+    {
+      "name": "h2-verifier-final",
+      "command": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests_next",
+        "-p",
+        "test_verify_hyperstream2.py"
+      ],
+      "exit_code": 0,
+      "output_tail": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.142s\n\nOK\n"
+    }
+  ]
+}
