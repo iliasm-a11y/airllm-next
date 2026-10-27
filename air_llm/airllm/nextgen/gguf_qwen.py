@@ -596,7 +596,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0,hyper_prefill=False,hyper_prefill_max_tokens=128,request_trace=None):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -605,6 +605,12 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 row_chunk=256,prefill_chunk=1,max_context=512,policy='adaptive',prefetch=False,
                 dtype='float32',load_tokenizer=False)
         self.options=next_config if isinstance(next_config,NextConfig) else NextConfig(**next_config)
+        if type(hyper_prefill) is not bool:
+            raise ValueError('hyper_prefill must be boolean')
+        from .hyperprefill import HyperPrefillPolicy
+        policy=HyperPrefillPolicy(max_chunk_tokens=hyper_prefill_max_tokens)
+        self.prefill_policy=policy if hyper_prefill else None
+        self.request_trace=request_trace
         if cache_decay_interval is not None:
             if self.options.policy!='adaptive' or type(cache_decay_interval) is not int or cache_decay_interval<1:
                 raise ValueError('cache_decay_interval requires adaptive policy and a positive integer')

@@ -1,0 +1,20 @@
+{
+  "minimum_pairs": 10,
+  "comparison": {
+    "options": {},
+    "backend_options": {
+      "hyper_prefill": [null, true],
+      "hyper_prefill_max_tokens": [null, 128]
+    },
+    "numerical": {"mode": "tolerance", "rtol": 0.0001, "atol": 0.0001}
+  },
+  "acceptance": {
+    "output_token_ids": "exact",
+    "per_token_expert_routes_all_layers": "exact",
+    "positions_and_stop_conditions": "exact",
+    "logits": "all elements within atol + rtol * abs(reference); bitwise equality reported separately",
+    "checkpoint": "full SHA-256 before and after must agree",
+    "guards": "unchanged PR10 RSS, reserve, swap, pressure, process limits"
+  },
+  "scope": "Qwen35 MoE GGUF native only; instrumented profiles separate from timing pairs; OS page cache uncontrolled"
+}
