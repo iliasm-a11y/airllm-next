@@ -1,0 +1,104 @@
+{
+  "schema": "airllm.sealed-target-independent-verification.v1",
+  "campaign": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-001",
+  "campaign_status": "deferred_or_interrupted",
+  "full_campaign_complete": false,
+  "experiment": "h1_vs_h2",
+  "sealed_workers": 4,
+  "manifest_files_verified": 348,
+  "source_and_stat_unchanged": true,
+  "full_checkpoint_hash_brackets_verified": true,
+  "workers": [
+    {
+      "job": "baseline-p00",
+      "ttft_seconds": 160.81946737499675,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 139447912832
+    },
+    {
+      "job": "candidate-p00",
+      "ttft_seconds": 53.3947591249962,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 40928599936
+    },
+    {
+      "job": "candidate-p01",
+      "ttft_seconds": 53.659374625000055,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 40928599936
+    },
+    {
+      "job": "baseline-p01",
+      "ttft_seconds": 158.9624843329948,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 139447912832
+    }
+  ],
+  "experiment_result": {
+    "status": "rejected_fidelity",
+    "policy_version": 1,
+    "tasks_kind": "historical_364",
+    "rejected_pairs": [
+      {
+        "pair": 0,
+        "category": "verified_ordered_expert_routes_mismatch",
+        "checker_reason": "Accepted-prefix expert routes differ",
+        "baseline_report_sha256": "f7e8269d75e56f8446bf5c3149ddfb3f1990893aa1aa47a9061ef042c284d11b",
+        "candidate_report_sha256": "62e7568ec97e9e2dc46cb48f1f698cbf64d7907a6594a66a65ff28eec555f4d3"
+      },
+      {
+        "pair": 1,
+        "category": "verified_ordered_expert_routes_mismatch",
+        "checker_reason": "Accepted-prefix expert routes differ",
+        "baseline_report_sha256": "4acde3d8137473db411a7c5934982e85760a23c590cca7f28340c3ae11faebb9",
+        "candidate_report_sha256": "8fabc50c4f94c10a7c0a55a7d9e795cd61bfa8817bf6dfaf3ae21e7c3615e4e8"
+      }
+    ],
+    "accepted_pair_numbers": [],
+    "all_worker_controls_and_recordings_validated": true,
+    "performance_comparison_accepted": false,
+    "eligible_as_combination_prerequisite": false,
+    "numerical_tolerances": {
+      "atol": 0.0001,
+      "rtol": 0.0001
+    },
+    "scope": "Recorded strict fidelity mismatch; cause is not inferred, routes retain their original order"
+  },
+  "pairs": [
+    {
+      "pair": 0,
+      "order": "AB",
+      "observed_ttft_reduction_percent": 66.79832361309157,
+      "diagnosis": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/Analyse-paire-scellee-00.json",
+      "qualified_performance_gain": false
+    },
+    {
+      "pair": 1,
+      "order": "BA",
+      "observed_ttft_reduction_percent": 66.24400099800005,
+      "diagnosis": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/Analyse-paire-scellee-01.json",
+      "qualified_performance_gain": false
+    }
+  ],
+  "strict_verifier_unchanged": true
+}

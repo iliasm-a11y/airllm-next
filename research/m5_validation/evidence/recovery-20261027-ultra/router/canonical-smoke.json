@@ -1,0 +1,109 @@
+{
+  "schema": "airllm.router-canonical16-smoke.v1",
+  "checkpoint_sha256": "f5ee307a2982106a6eb82b62b2c00b575c9072145a759ae4660378acda8dcf2d",
+  "capture_sha256": "d2e710259ba754f6ba9fb95374fd94a10d8ab1549d076be957f1b3dee7ffc158",
+  "historical_h1_report_sha256": "f7e8269d75e56f8446bf5c3149ddfb3f1990893aa1aa47a9061ef042c284d11b",
+  "sources_before_after": {
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/airllm-next/air_llm/airllm/nextgen/qwen_moe.py": "2cb7dd151772544fffe599e2791e555877ed8696fa2530664195553de8726702",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/airllm-next/air_llm/airllm/nextgen/gguf_qwen.py": "94a0510c6da58230823e84ab78ed6a52304b0b939dd609cacba1a08e53e98b28"
+  },
+  "same_recorded_h2_input_and_weights": true,
+  "results": {
+    "chunk0": {
+      "target_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        104,
+        193
+      ],
+      "matching_historical_h1_route_positions": 127,
+      "mismatching_positions": [
+        154
+      ],
+      "stats": {
+        "qwen_router_tie_checks": 1,
+        "qwen_router_tie_check_seconds": 0.00970937499369029
+      },
+      "ids_bitwise_equal_original_h2": true,
+      "scores_bitwise_equal_original_h2": true
+    },
+    "chunk16": {
+      "target_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        193,
+        104
+      ],
+      "matching_historical_h1_route_positions": 128,
+      "mismatching_positions": [],
+      "stats": {
+        "router_reference16_retained_peak_bytes": 32768,
+        "qwen_router_tie_checks": 8,
+        "qwen_router_tie_check_seconds": 0.004727791005279869,
+        "router_reference16_calls": 1,
+        "router_reference16_blocks": 8,
+        "router_reference16_seconds": 0.0052968749951105565
+      },
+      "ids_bitwise_equal_original_h2": false,
+      "scores_bitwise_equal_original_h2": false
+    }
+  },
+  "artifacts": {
+    "chunk0": {
+      "ids": {
+        "file": "chunk0-ids.npy",
+        "sha256": "bdb98cec72ba9860e8ac03f4a362089f4bafb99066334934ff773f99b8d298b5",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "uint32"
+      },
+      "normalized_scores": {
+        "file": "chunk0-scores.npy",
+        "sha256": "68d200156bbdbd9e1c9b3ddcc5c692648f09fde635ce00318446bd7ff84006b0",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "float32"
+      }
+    },
+    "chunk16": {
+      "ids": {
+        "file": "chunk16-ids.npy",
+        "sha256": "0bd62eed8db3b4ed5fdac6106d75a817d061cb018dd1c7780b456d616b87b42e",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "uint32"
+      },
+      "normalized_scores": {
+        "file": "chunk16-scores.npy",
+        "sha256": "d86a373a81d93194a57a37be7da7822ad7f2dccd09055020c488e79eeb5636b1",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  "complete_generation": false,
+  "model_fidelity_qualified": false,
+  "performance_gain_qualified": false,
+  "all_128_layer30_routes_checked": true
+}
