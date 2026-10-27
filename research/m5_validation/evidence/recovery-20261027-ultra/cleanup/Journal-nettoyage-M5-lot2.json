@@ -1,0 +1,109 @@
+{
+  "schema": "airllm.m5.cleanup-journal.v1",
+  "started_utc": "2026-10-27T16:28:17.683696+00:00",
+  "reviewed_audit_sha256": "330babe68fabec0ee6a7c3df3c237f799a32f4c8ead84606e4ad1deb9438d77f",
+  "authorized_group_count": 4,
+  "authorized_pid_count": 8,
+  "before": {
+    "timestamp_utc": "2026-10-27T16:28:17.683792+00:00",
+    "available_ram_bytes": 4318838784,
+    "swap_used_bytes": 4788256768
+  },
+  "actions": [
+    {
+      "pid": 15971,
+      "create_time": 1793117488.368193,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118497.741416,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 15678,
+      "create_time": 1793117459.28893,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118497.747427,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 15950,
+      "create_time": 1793117488.328808,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118497.8771951,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 15690,
+      "create_time": 1793117459.291571,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118497.8853362,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 17793,
+      "create_time": 1793117706.089527,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118498.016682,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 17765,
+      "create_time": 1793117704.118619,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118498.024995,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 17814,
+      "create_time": 1793117706.142154,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118498.157364,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 17768,
+      "create_time": 1793117704.118771,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793118498.166304,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    }
+  ],
+  "signals_sent": 8,
+  "sigkill_sent": 0,
+  "files_deleted": 0,
+  "status": "completed_clean_exit",
+  "guard_limits_preserved": true,
+  "checkpoint_preserved": true,
+  "historical_evidence_preserved": true,
+  "ended_utc": "2026-10-27T16:28:18.280729+00:00",
+  "after": {
+    "timestamp_utc": "2026-10-27T16:28:18.280741+00:00",
+    "available_ram_bytes": 4637245440,
+    "swap_used_bytes": 4788256768
+  },
+  "survivors": [],
+  "stopped_count": 8
+}
