@@ -115,6 +115,7 @@ def test_job_arguments_allow_the_supported_comparison_controls(harness):
         '--rows', '8192', '--cache-policy', 'lru', '--io-mode', 'pread_nocache',
         '--timeout', '600', '--expert-batch', '--concat-tiles', '--packed-copy-free',
         '--packed-direct-io', '--bulk-metadata', '--zero-copy-weights',
+        '--expert-pipeline', '--string-buffer-bytes', '65536',
     ]
     assert campaign.validate_job_args(arguments) == arguments
     assert campaign.validate_job_args([]) == []
@@ -128,6 +129,8 @@ def test_job_arguments_allow_the_supported_comparison_controls(harness):
     ['--row', '8192'], ['--cache-p', 'lru'], ['--io-m', 'pread'],
     ['--time', '600'], ['--expert-b'], ['--packed-direct'],
     ['--unknown'], ['--profile'], ['--rows'], ['--rows', '--worker'],
+    ['--string-buffer-bytes', '-1'], ['--string-buffer-bytes', '65537'],
+    ['--string-buffer', '65536'], ['--expert-p'],
     '--worker', None, [None],
 ])
 def test_job_arguments_cannot_override_ownership_or_abbreviate_flags(harness, arguments):

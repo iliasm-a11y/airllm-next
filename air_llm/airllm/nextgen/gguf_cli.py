@@ -15,13 +15,21 @@ def _positive(value):
     return number
 
 
+def _string_buffer_size(value):
+    number = int(value)
+    if not 0 <= number <= 65536:
+        raise argparse.ArgumentTypeError('String buffer must be between 0 and 65536 bytes')
+    return number
+
+
 def _run(args):
     from .config import NextConfig
     from .gguf import GGUFReader
     from .gguf_qwen import NativeGGUFQwenModel
     from .gguf_tokenizer import GGUFTokenizer
     begin = perf_counter()
-    with GGUFReader(args.model, memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20, bulk_metadata=args.bulk_metadata) as checkpoint:
+    with GGUFReader(args.model, memory_budget_bytes=256 << 20, max_metadata_bytes=192 << 20,
+                    bulk_metadata=args.bulk_metadata, string_buffer_bytes=args.string_buffer_bytes) as checkpoint:
         tokenizer = GGUFTokenizer(checkpoint.metadata)
     del checkpoint
     ids = tokenizer.apply_chat_template([{'role': 'user', 'content': args.prompt}])
@@ -34,7 +42,8 @@ def _run(args):
         io_mode=args.io_mode,zero_copy_weights=args.zero_copy_weights)
     with NativeGGUFQwenModel(args.model, options, kernel=args.kernel,cache_decay_interval=args.cache_decay,
             expert_batch=args.expert_batch,concat_tiles=args.concat_tiles,pipeline_tiles=args.pipeline_tiles,
-            metal_simd_groups=args.simd_groups,packed_copy_free=args.packed_copy_free,packed_direct_io=args.packed_direct_io,bulk_metadata=args.bulk_metadata) as model:
+            metal_simd_groups=args.simd_groups,packed_copy_free=args.packed_copy_free,packed_direct_io=args.packed_direct_io,
+            bulk_metadata=args.bulk_metadata,string_buffer_bytes=args.string_buffer_bytes,expert_pipeline=args.expert_pipeline) as model:
         output = model.generate([ids], max_new_tokens=args.max_new_tokens, eos_token_id=[248046, 248044])
         generated = output.tolist()[0][len(ids):]
         result = {'text': tokenizer.decode(generated, skip_special_tokens=True), 'input_ids': ids,
@@ -59,6 +68,7 @@ def main(argv=None):
     run.add_argument('--cache-decay', type=_positive, help='Experimental adaptive-cache half-life in requests')
     run.add_argument('--cache-policy',choices=['adaptive','lru'],default='adaptive')
     run.add_argument('--expert-batch',action='store_true',help='Batch already-routed packed experts without changing their reduction order')
+    run.add_argument('--expert-pipeline',action='store_true',help='Experimental bounded gate/up overlap; requires --expert-batch')
     run.add_argument('--concat-tiles',action='store_true',help='Assemble evaluated row tiles with one concatenation')
     run.add_argument('--pipeline-tiles',action='store_true',help='Experimental two-tile overlap; requires --concat-tiles and --kernel metal')
     run.add_argument('--zero-copy-weights',action='store_true',help='Exact packed-buffer import with a portable copy fallback')
@@ -75,6 +85,8 @@ def main(argv=None):
     transport.add_argument('--packed-direct-io', action='store_true', help='Experimental bounded read into one final writable host buffer')
     transport.add_argument('--packed-copy-free', action='store_true', help='Experimental bounded zero-copy packed host reads')
     run.add_argument('--bulk-metadata', action='store_true', help='Experimental bounded scalar-array metadata reads')
+    run.add_argument('--string-buffer-bytes', type=_string_buffer_size, default=0,
+                     metavar='0..65536', help='Bounded string-array parser buffer; zero uses legacy reads')
     run.add_argument('--io-mode', choices=['pread', 'pread_nocache'], default='pread')
     run.add_argument('--report', type=Path, required=True, help='Local JSON report and adjacent log/guard files')
     run.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
@@ -84,6 +96,7 @@ def main(argv=None):
         if args.pipeline_tiles and (not args.concat_tiles or args.kernel!='metal'):
             parser.error('--pipeline-tiles requires --concat-tiles and --kernel metal')
         if args.expert_batch and args.kernel!='metal':parser.error('--expert-batch requires --kernel metal')
+        if args.expert_pipeline and not args.expert_batch:parser.error('--expert-pipeline requires --expert-batch')
         if args.cache_decay is not None and args.cache_policy!='adaptive':parser.error('--cache-decay requires --cache-policy adaptive')
     if args.command == 'gguf-inspect':
         from .gguf import GGUFReader

@@ -20,8 +20,9 @@ def validate_job_args(arguments):
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'])
     parser.add_argument('--io-mode', choices=['pread', 'pread_nocache'])
     parser.add_argument('--timeout', type=float, default=600.)
+    parser.add_argument('--string-buffer-bytes', type=int, default=0)
     for flag in ('expert-batch', 'concat-tiles', 'packed-copy-free', 'packed-direct-io',
-                 'bulk-metadata', 'zero-copy-weights'):
+                 'bulk-metadata', 'zero-copy-weights', 'expert-pipeline'):
         parser.add_argument('--' + flag, action='store_true')
     try:
         parsed, unknown = parser.parse_known_args(arguments)
@@ -31,6 +32,8 @@ def validate_job_args(arguments):
         raise ValueError('Reserved, abbreviated or unknown job arguments: ' + repr(unknown))
     if parsed.rows < 1 or not math.isfinite(parsed.timeout) or parsed.timeout <= 0:
         raise ValueError('Rows and timeout must be positive and finite')
+    if not 0 <= parsed.string_buffer_bytes <= 65536:
+        raise ValueError('String read buffer must be in 0..65536 bytes')
     return list(arguments)
 
 
