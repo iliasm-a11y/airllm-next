@@ -26,13 +26,33 @@ def string_buffer_size(value):
     return number
 
 
+def router_reference_options(value):
+    """Keep unsupported new keywords away from the retained historical engines."""
+    if type(value) is not int or value not in (0,16):
+        raise ValueError('router_reference_chunk must be 0 or 16')
+    return {} if value == 0 else dict(router_reference_chunk=value)
+
+
 def save(path, value):
     from tempfile import NamedTemporaryFile
-    with NamedTemporaryFile('w', dir=path.parent, delete=False, encoding='utf-8') as f:
-        json.dump(value, f, indent=2, ensure_ascii=False, allow_nan=False)
-        f.write('\n')
-        temporary = f.name
-    os.replace(temporary, path)
+    path = Path(path)
+    temporary = None
+    try:
+        with NamedTemporaryFile('w', dir=path.parent, delete=False, encoding='utf-8') as f:
+            temporary = f.name
+            json.dump(value, f, indent=2, ensure_ascii=False, allow_nan=False)
+            f.write('\n')
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temporary, path)
+        directory = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    finally:
+        if temporary is not None:
+            Path(temporary).unlink(missing_ok=True)
 
 
 def source_manifest(root):
@@ -141,6 +161,7 @@ def worker(args):
                          policy=args.cache_policy, device='gpu', dtype='float32', prefetch=False,
                          load_tokenizer=False, io_mode=args.io_mode, zero_copy_weights=args.zero_copy_weights)
     kwargs = dict(kernel='metal')
+    kwargs.update(router_reference_options(getattr(args,'router_reference_chunk',0)))
     for name in ('expert_batch', 'concat_tiles', 'packed_copy_free', 'packed_direct_io', 'bulk_metadata', 'expert_pipeline'):
         if getattr(args, name):
             kwargs[name] = True
@@ -345,6 +366,7 @@ def main():
     parser.add_argument('--prefill-chunk', type=int, default=16)
     parser.add_argument('--hyper-prefill', action='store_true')
     parser.add_argument('--hyper-prefill-max-tokens', type=int, default=128)
+    parser.add_argument('--router-reference-chunk',type=int,choices=[0,16],default=0)
     parser.add_argument('--numerical-evidence', action='store_true')
     parser.add_argument('--request-trace', action='store_true')
     parser.add_argument('--metal-batch-backend',choices=['off','reuse','tensorops'],default='off')

@@ -137,6 +137,67 @@ def qwen_route(mx, x, weight, config, *, tie_policy='error',
     return selected, scores.astype(logits.dtype)
 
 
+def qwen_route_reference_chunks(mx, x, weight, config, *, reference_chunk=0,
+                                **route_options):
+    """Opt-in canonical 16-row calls to the unchanged FP32 router above.
+
+    Concatenation follows input token positions, never expert IDs. Every row
+    uses the same original router arithmetic and its existing boundary-tie
+    policy. Blocks are relative to the supplied input chunk; this is not a
+    guarantee of global H1 alignment for arbitrary adaptive chunk boundaries.
+    The complete model still requires independent ordered-route/logit checks.
+    """
+    if type(reference_chunk) is not int or reference_chunk not in (0, 16):
+        raise ValueError('router_reference_chunk must be 0 or 16')
+    if reference_chunk == 0:
+        return qwen_route(mx, x, weight, config, **route_options)
+    workspace = route_options.get('workspace_bytes')
+    if type(workspace) is not int or workspace < 1:
+        raise ValueError('Canonical router requires a positive workspace_bytes budget')
+    flat = x.reshape(-1, x.shape[-1])
+    rows = int(flat.shape[0])
+    top_k = config['num_experts_per_tok']
+    if type(top_k) is not int or top_k < 1:
+        raise ValueError('Invalid canonical router top-k expert count')
+    stats = route_options.get('stats')
+    start = perf_counter()
+    blocks = 0
+    try:
+        if rows <= reference_chunk:
+            blocks = 1
+            return qwen_route(mx, x, weight, config, **route_options)
+        # Retained block outputs can coexist with their concatenations. Charge
+        # conservative 64-bit index + score storage for both copies, inside
+        # the existing workspace ceiling, not as a separate allowance.
+        retained = 2 * rows * top_k * (8 + 8)
+        if retained >= workspace:
+            raise MemoryError('Canonical router output retention exceeds workspace_bytes')
+        reserve = route_options.get('reserve_bytes', 0)
+        if type(reserve) is not int or reserve < 0:
+            raise ValueError('Canonical router reserve_bytes must be nonnegative')
+        import psutil
+        if psutil.virtual_memory().available < reserve + retained:
+            raise MemoryError('System reserve reached before canonical router retention')
+        options = dict(route_options, workspace_bytes=workspace-retained)
+        if stats is not None:
+            stats['router_reference16_retained_peak_bytes'] = max(
+                stats.get('router_reference16_retained_peak_bytes', 0), retained)
+        selected_blocks, score_blocks = [], []
+        for begin in range(0, rows, reference_chunk):
+            selected, scores = qwen_route(mx, flat[begin:begin+reference_chunk],
+                                          weight, config, **options)
+            selected_blocks.append(selected)
+            score_blocks.append(scores)
+            blocks += 1
+        return (mx.concatenate(selected_blocks, axis=0),
+                mx.concatenate(score_blocks, axis=0))
+    finally:
+        if stats is not None:
+            stats['router_reference16_calls'] = stats.get('router_reference16_calls', 0) + 1
+            stats['router_reference16_blocks'] = stats.get('router_reference16_blocks', 0) + blocks
+            stats['router_reference16_seconds'] = stats.get('router_reference16_seconds', 0.) + perf_counter()-start
+
+
 class QwenSparseMLP:
     """Demand-load each actually selected expert once per input block.
 

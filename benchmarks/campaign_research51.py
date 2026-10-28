@@ -20,6 +20,7 @@ def validate_job_args(arguments):
     parser.add_argument('--rows', type=int, default=8192)
     parser.add_argument('--prefill-chunk', type=int, default=16)
     parser.add_argument('--hyper-prefill-max-tokens', type=int, default=128)
+    parser.add_argument('--router-reference-chunk',type=int,choices=[0,16],default=0)
     for flag in ('hyper-prefill', 'numerical-evidence', 'request-trace'):
         parser.add_argument('--' + flag, action='store_true')
     parser.add_argument('--cache-policy', choices=['adaptive', 'lru'])

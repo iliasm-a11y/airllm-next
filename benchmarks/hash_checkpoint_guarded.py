@@ -8,6 +8,43 @@ from pathlib import Path
 import sys
 
 ROOT=Path(__file__).resolve().parents[1]
+HASH_READ_BYTES=1<<20
+
+
+def file_identity(stat):
+    return (stat.st_dev,stat.st_ino,stat.st_size,stat.st_mtime_ns,stat.st_ctime_ns)
+
+
+def checkpoint_hash(model):
+    """Hash every byte; Darwin avoids populating the OS data cache for this FD.
+
+    F_NOCACHE changes only the separately opened hash descriptor. It neither
+    purges existing cached pages nor changes model-forward reads. A failed
+    request is fatal: an ordinary-cache fallback would silently change policy.
+    """
+    before=model.stat()
+    digest=hashlib.sha256()
+    policy='darwin_f_nocache' if sys.platform=='darwin' else 'ordinary_os_cache'
+    with model.open('rb',buffering=0) as stream:
+        opened=os.fstat(stream.fileno())
+        if file_identity(before)!=file_identity(opened):
+            raise RuntimeError('Checkpoint changed before hash descriptor opened')
+        if sys.platform=='darwin':
+            sys.path.insert(0,str(ROOT/'air_llm'))
+            from airllm.nextgen.physical_io import set_fd_nocache
+            set_fd_nocache(stream.fileno())
+        count=0
+        while block:=stream.read(HASH_READ_BYTES):
+            digest.update(block)
+            count+=len(block)
+        closed=os.fstat(stream.fileno())
+    after=model.stat()
+    stable=(file_identity(before)==file_identity(closed)==file_identity(after)
+            and count==before.st_size)
+    return dict(sha256=digest.hexdigest(),bytes=count,stable_file=stable,
+                hash_io_policy=policy,hash_io_policy_applied=True,
+                hash_read_buffer_bytes=HASH_READ_BYTES,
+                hash_io_scope='checkpoint_hash_descriptor_only')
 
 
 def main():
@@ -25,16 +62,11 @@ def main():
         raise FileExistsError('Refusing to overwrite checkpoint or prior evidence')
     a.output.parent.mkdir(parents=True,exist_ok=True)
     if a.worker:
-        before=a.model.stat(); h=hashlib.sha256()
-        with a.model.open('rb',buffering=0) as f:
-            while block:=f.read(1<<20):h.update(block)
-        after=a.model.stat()
-        identity=lambda s:(s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
-        stable=identity(before)==identity(after)
+        result=checkpoint_hash(a.model)
         with a.output.open('x') as f:
-            json.dump(dict(sha256=h.hexdigest(),bytes=before.st_size,stable_file=stable),f,indent=2)
+            json.dump(result,f,indent=2)
             f.write('\n')
-        if not stable:raise RuntimeError('Checkpoint changed during hashing')
+        if not result['stable_file']:raise RuntimeError('Checkpoint changed during hashing')
     else:
         supervise([sys.executable,str(Path(__file__).resolve()),'--model',str(a.model),
             '--output',str(a.output),'--worker'],a.output,

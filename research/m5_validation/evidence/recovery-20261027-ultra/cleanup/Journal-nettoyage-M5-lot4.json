@@ -1,0 +1,69 @@
+{
+  "schema": "airllm.m5.cleanup-journal.v1",
+  "started_utc": "2026-10-27T17:39:26.215433+00:00",
+  "reviewed_audit_sha256": "c6836f507607a87e8565ff4507dcc00f386aa610927595cda9221b3147f6825d",
+  "authorized_group_count": 2,
+  "authorized_pid_count": 4,
+  "before": {
+    "timestamp_utc": "2026-10-27T17:39:26.215533+00:00",
+    "available_ram_bytes": 4640407552,
+    "swap_used_bytes": 3549036544
+  },
+  "actions": [
+    {
+      "pid": 24261,
+      "create_time": 1793120433.85141,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793122766.253192,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 24235,
+      "create_time": 1793120433.187072,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793122766.259412,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 24282,
+      "create_time": 1793120433.875894,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793122766.3908129,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 24237,
+      "create_time": 1793120433.187209,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793122766.398759,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    }
+  ],
+  "signals_sent": 4,
+  "sigkill_sent": 0,
+  "files_deleted": 0,
+  "status": "completed_clean_exit",
+  "guard_limits_preserved": true,
+  "checkpoint_preserved": true,
+  "historical_evidence_preserved": true,
+  "ended_utc": "2026-10-27T17:39:26.509841+00:00",
+  "after": {
+    "timestamp_utc": "2026-10-27T17:39:26.509852+00:00",
+    "available_ram_bytes": 4836032512,
+    "swap_used_bytes": 3549036544
+  },
+  "survivors": [],
+  "stopped_count": 4
+}

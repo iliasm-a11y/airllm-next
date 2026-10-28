@@ -20,9 +20,19 @@ import psutil
 
 from .cache import WeightCache
 from .config import NextConfig
-from .qwen_moe import qwen_route
+from .qwen_moe import qwen_route as _original_qwen_route, qwen_route_reference_chunks
 from .qwen_runtime import (ExperimentalQwenModel, QwenDeltaNet, QwenFullAttention,
                            normalize_qwen_config)
+
+
+def qwen_route(mx, x, weight, config, *, router_reference_chunk=0, **options):
+    """One whole-input observer boundary around optional canonical routing."""
+    if type(router_reference_chunk) is not int or router_reference_chunk not in (0, 16):
+        raise ValueError('router_reference_chunk must be 0 or 16')
+    if router_reference_chunk == 0:
+        return _original_qwen_route(mx, x, weight, config, **options)
+    return qwen_route_reference_chunks(mx, x, weight, config,
+                                      reference_chunk=router_reference_chunk, **options)
 
 
 def v_head_permutation(key_heads, value_heads, head_dim=1):
@@ -575,6 +585,7 @@ class GGUFQwenSparseMLP:
         # Explicit local CPU-reference convention only for exact probability
         # boundary ties. The generic Qwen route keeps its fail-closed default.
         ids,scores=qwen_route(mx,x,self.r.get(p+'ffn_gate_inp.weight'),self.c,
+            router_reference_chunk=getattr(self.r,'router_reference_chunk',0),
             tie_policy='torch_cpu_reference',workspace_bytes=self.r.cfg.workspace_bytes,
             reserve_bytes=self.r.cfg.reserve_bytes,stats=self.r.stats)
         host=np.asarray(ids);selected=np.unique(host);output=mx.zeros_like(flat)
@@ -643,7 +654,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
     128 MiB for compute workspace. Risky real-checkpoint experiments still
     require a supervised child process with independent swap/RSS limits.
     """
-    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0,hyper_prefill=False,hyper_prefill_max_tokens=128,request_trace=None,metal_batch_backend="off",metal_token_tile=4,grouped_direct_io=False):
+    def __init__(self,path,next_config=None,*,kernel='reference',cache_decay_interval=None,expert_batch=False,expert_pipeline=False,concat_tiles=False,pipeline_tiles=False,metal_simd_groups=1,packed_copy_free=False,packed_direct_io=False,bulk_metadata=False,string_buffer_bytes=0,hyper_prefill=False,hyper_prefill_max_tokens=128,request_trace=None,metal_batch_backend="off",metal_token_tile=4,grouped_direct_io=False,router_reference_chunk=0):
         self.root=Path(path).expanduser().resolve();self.lock=RLock();self.closed=False
         self.checkpoint=None;self.reader=None
         if next_config is None:
@@ -652,6 +663,8 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 row_chunk=256,prefill_chunk=1,max_context=512,policy='adaptive',prefetch=False,
                 dtype='float32',load_tokenizer=False)
         self.options=next_config if isinstance(next_config,NextConfig) else NextConfig(**next_config)
+        if type(router_reference_chunk) is not int or router_reference_chunk not in (0,16):
+            raise ValueError('router_reference_chunk must be 0 or 16')
         if type(hyper_prefill) is not bool:
             raise ValueError('hyper_prefill must be boolean')
         from .hyperprefill import HyperPrefillPolicy
@@ -692,6 +705,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
             self.stats=defaultdict(float)
             if kernel=='metal' and self.device!='gpu':raise ValueError('Metal packed kernel requires device=gpu')
             self.reader=GGUFWeights(self.checkpoint,mx,self.options,self.config,kernel=kernel,expert_batch=expert_batch,expert_pipeline=expert_pipeline,concat_tiles=concat_tiles,pipeline_tiles=pipeline_tiles,metal_simd_groups=metal_simd_groups,packed_copy_free=packed_copy_free,packed_direct_io=packed_direct_io,metal_batch_backend=metal_batch_backend,metal_token_tile=metal_token_tile,grouped_direct_io=grouped_direct_io)
+            self.reader.router_reference_chunk=router_reference_chunk
             if cache_decay_interval is not None:self.reader.cache.decay_interval=cache_decay_interval
             self.mixers=[(QwenDeltaNet if k=='linear_attention' else QwenFullAttention)(mx,self.reader,self.config,i) for i,k in enumerate(self.config['layer_types'])]
             self.mlps=[GGUFQwenSparseMLP(mx,self.reader,self.config,i) for i in range(self.config['num_hidden_layers'])]
@@ -746,6 +760,7 @@ class NativeGGUFQwenModel(ExperimentalQwenModel):
                 'peak_bytes':self.reader.packed_budget.peak_bytes}),
             'metal_simd_groups':self.reader.metal_simd_groups,
             'grouped_direct_io':self.reader.grouped_direct_io,
+            'router_reference_chunk':getattr(self.reader,'router_reference_chunk',0),
             'metal_batch_backend':self.reader.metal_batch_backend,
             'metal_batch_calibrations':([] if self.reader.batch_dispatch is None else self.reader.batch_dispatch.records),
             'numerics':{'compute_dtype':self.options.dtype,'text_mrope':'equal positions on all axes'}}

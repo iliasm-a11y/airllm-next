@@ -1,0 +1,240 @@
+{
+  "schema": "airllm.sealed-target-independent-verification.v1",
+  "campaign": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-manifest-final-001",
+  "campaign_status": "partial_selected_experiments_completed",
+  "full_campaign_complete": false,
+  "experiment": "h1_vs_h2_reference16",
+  "sealed_workers": 4,
+  "manifest_files_verified": 350,
+  "source_and_stat_unchanged": true,
+  "full_checkpoint_hash_brackets_verified": true,
+  "workers": [
+    {
+      "job": "baseline-p00",
+      "ttft_seconds": 154.65431608300423,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 139447912832
+    },
+    {
+      "job": "candidate-p00",
+      "ttft_seconds": 52.891130415999214,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 40928599936
+    },
+    {
+      "job": "candidate-p01",
+      "ttft_seconds": 54.07026533399767,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 40928599936
+    },
+    {
+      "job": "baseline-p01",
+      "ttft_seconds": 154.8854782499984,
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "stop_reason": "eos",
+      "logical_read_bytes": 139447912832
+    }
+  ],
+  "experiment_result": {
+    "status": "accepted",
+    "tasks_kind": "historical_364",
+    "pairs": [
+      {
+        "pair": 0,
+        "full_recorded_logits": {
+          "status": "accepted",
+          "scope": "recorded emitted logits/tokens and accepted-prefix expert routes",
+          "serial_report_sha256": "94d82a8baa6de575daed9fd3e7024c035b9067a25dfd082a20f42d5fdd195dfd",
+          "candidate_report_sha256": "84e739a907149e827ad9984157c838bcf305fcfacf140712d280b3549a2ef32c",
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "exact_tokens": true,
+          "recorded_accepted_prefix_routes_equal": true,
+          "full_recurrent_state_parity_validated": false,
+          "checkpoint_hash_integrity_validated": false,
+          "guard_compliance_validated": false,
+          "timing_speedup_validated": false,
+          "comparisons": [
+            {
+              "id": "context",
+              "emitted_tokens": 3,
+              "full_logits_elements_checked": 744960,
+              "logits_max_absolute_error": 0.0,
+              "logits_max_relative_error": 0.0,
+              "logits_bitwise_exact": true,
+              "candidate_rows_checked": 3,
+              "candidate_rows_matching_emitted_prefix": 3,
+              "recorded_routes_checked": 14640
+            }
+          ]
+        },
+        "baseline_request_seconds": 156.27209645800758,
+        "candidate_request_seconds": 54.56057079099992,
+        "total_speedup": 2.8641946774461817,
+        "baseline_worker_seconds": 157.10174091700173,
+        "candidate_worker_seconds": 55.44635462500446,
+        "worker_total_speedup": 2.833400716413448,
+        "baseline_process_wall_seconds": 157.76256266600103,
+        "candidate_process_wall_seconds": 56.16975104100129,
+        "process_total_speedup": 2.8086747714235325,
+        "baseline_initialization_seconds": 0.7177811669971561,
+        "candidate_initialization_seconds": 0.7667446249979548,
+        "baseline_ttft_seconds": [
+          154.65431608300423
+        ],
+        "candidate_ttft_seconds": [
+          52.891130415999214
+        ],
+        "baseline_logical_read_bytes": 139447912832,
+        "candidate_logical_read_bytes": 40928599936,
+        "baseline_read_calls": 186076,
+        "candidate_read_calls": 55053,
+        "baseline_decode_tokens_per_second": [
+          1.238557726110261
+        ],
+        "candidate_decode_tokens_per_second": [
+          1.2002393877382869
+        ],
+        "baseline_worker_cpu_seconds": {
+          "user": 13.050561,
+          "system": 24.383768999999997,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_worker_cpu_seconds": {
+          "user": 5.115601,
+          "system": 7.591398,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_logical_bytes_per_emitted_token": 13642866645.333334,
+        "candidate_first_forward_seconds": [
+          52.883671417002915
+        ],
+        "prefill_scope": "first forward contains prefill; TTFT and full request are separately retained",
+        "emitted_tokens": [
+          3
+        ],
+        "sustained_decode_evidence": false
+      },
+      {
+        "pair": 1,
+        "full_recorded_logits": {
+          "status": "accepted",
+          "scope": "recorded emitted logits/tokens and accepted-prefix expert routes",
+          "serial_report_sha256": "81d6f14506cb1cc6e2ddac8fdc2fa8d8bb339133f4e7875feebe7bd4dee46912",
+          "candidate_report_sha256": "dcec9dd8092dccc5f3a3429d0728a7847c5e67f6f5b4e1bd521e9dc82ad0b63d",
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "exact_tokens": true,
+          "recorded_accepted_prefix_routes_equal": true,
+          "full_recurrent_state_parity_validated": false,
+          "checkpoint_hash_integrity_validated": false,
+          "guard_compliance_validated": false,
+          "timing_speedup_validated": false,
+          "comparisons": [
+            {
+              "id": "context",
+              "emitted_tokens": 3,
+              "full_logits_elements_checked": 744960,
+              "logits_max_absolute_error": 0.0,
+              "logits_max_relative_error": 0.0,
+              "logits_bitwise_exact": true,
+              "candidate_rows_checked": 3,
+              "candidate_rows_matching_emitted_prefix": 3,
+              "recorded_routes_checked": 14640
+            }
+          ]
+        },
+        "baseline_request_seconds": 156.4034797919885,
+        "candidate_request_seconds": 56.29641804199491,
+        "total_speedup": 2.778213698699581,
+        "baseline_worker_seconds": 157.29288537500543,
+        "candidate_worker_seconds": 57.16672916599782,
+        "worker_total_speedup": 2.7514760363194193,
+        "baseline_process_wall_seconds": 157.83743854099885,
+        "candidate_process_wall_seconds": 57.801331708004,
+        "process_total_speedup": 2.730688616974242,
+        "baseline_initialization_seconds": 0.775414792005904,
+        "candidate_initialization_seconds": 0.7506089579983382,
+        "baseline_ttft_seconds": [
+          154.8854782499984
+        ],
+        "candidate_ttft_seconds": [
+          54.07026533399767
+        ],
+        "baseline_logical_read_bytes": 139447912832,
+        "candidate_logical_read_bytes": 40928599936,
+        "baseline_read_calls": 186076,
+        "candidate_read_calls": 55053,
+        "baseline_decode_tokens_per_second": [
+          1.319193847813317
+        ],
+        "candidate_decode_tokens_per_second": [
+          0.8997951900132628
+        ],
+        "baseline_worker_cpu_seconds": {
+          "user": 13.111041,
+          "system": 24.338514,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_worker_cpu_seconds": {
+          "user": 5.278439,
+          "system": 7.74852,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_logical_bytes_per_emitted_token": 13642866645.333334,
+        "candidate_first_forward_seconds": [
+          54.06156733300304
+        ],
+        "prefill_scope": "first forward contains prefill; TTFT and full request are separately retained",
+        "emitted_tokens": [
+          3
+        ],
+        "sustained_decode_evidence": false
+      }
+    ],
+    "median_total_speedup": 2.8212041880728815,
+    "median_worker_total_speedup": 2.7924383763664338,
+    "median_process_total_speedup": 2.769681694198887,
+    "timing_scope": "instrumented request wall latency; includes draft, calibration, verification and replay",
+    "pure_gpu_seconds": null,
+    "physical_ssd_certified": false,
+    "full_recurrent_state_parity_validated": false
+  },
+  "pairs": [
+    {
+      "pair": 0,
+      "order": "AB",
+      "observed_ttft_reduction_percent": 65.80041750169319,
+      "diagnosis": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/Analyse-paire-source-finale-00.json",
+      "qualified_performance_gain": true
+    },
+    {
+      "pair": 1,
+      "order": "BA",
+      "observed_ttft_reduction_percent": 65.09016471723473,
+      "diagnosis": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/Analyse-paire-source-finale-01.json",
+      "qualified_performance_gain": true
+    }
+  ],
+  "numeric_verifier_functions_unchanged": true,
+  "verifier_schema_allowlist_addition": "router-reference-chunk {0,16}"
+}

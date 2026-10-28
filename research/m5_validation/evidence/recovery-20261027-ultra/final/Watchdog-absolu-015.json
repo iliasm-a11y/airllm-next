@@ -1,0 +1,44 @@
+{
+  "schema": "airllm.external-absolute-deadline.v1",
+  "status": "supervisor_gone_before_watchdog_signal",
+  "watchdog_pid": 5644,
+  "pid": 5545,
+  "created": 1793210610.192073,
+  "exe": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python",
+  "command": [
+    "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/airllm-next/benchmarks/m5_autonomous_supervisor.py",
+    "--campaign",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005",
+    "--output-dir",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/supervisor-recovery-015",
+    "--max-wait-seconds",
+    "876.8426216669905",
+    "--max-runtime-seconds",
+    "4686.182445049286",
+    "--inter-worker-wait-seconds",
+    "300"
+  ],
+  "uid": 501,
+  "started_unix": 1793210799.1893399,
+  "deadline_unix": 1793215306.373835,
+  "monotonic_wait_budget_seconds": 4507.184495210648,
+  "pins": {
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/supervisor-launch-015.json": "d446eda0692c1de93af124e55ce205bc65dbdd9f8b640d9262e8175a76b59c3c",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/Revision-reprise-20261028-03.json": "5b792b9016ba5a2106a7b4db91ec2f77ea6e1fdeca94bf4a3a1ad8ce8453335a",
+    "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/absolute_deadline_guard015.py": "3a2da14afb26e7a3f6993fc8e146df548c0047ee9da382397d3767ec4ab1d638"
+  },
+  "signal_intent": false,
+  "sigterm_sent": false,
+  "sigkill_sent": 0,
+  "sample_count": 931,
+  "access_denied_count": 0,
+  "last_observation": {
+    "unix": 1793211735.609374,
+    "created": 1793210610.192073,
+    "status": "sleeping"
+  },
+  "last_update_unix": 1793211736.617683,
+  "ended_unix": 1793211736.617677,
+  "elapsed_monotonic_seconds": 937.4203020830028
+}

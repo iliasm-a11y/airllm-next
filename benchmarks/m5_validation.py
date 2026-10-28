@@ -26,7 +26,9 @@ import time
 from benchmark_research51 import (ROOT, engine_manifest, load_tasks,
                                  protocol_manifest, protocol_unchanged, save)
 from campaign_research51 import validate_job_args, wait_before_job
-from plan_hyperstream3 import build_experiments
+from plan_hyperstream3 import build_experiments, apply_profile_jobs, PROFILES
+from m5_process_inventory import expected_read_error
+from m5_manifest_recovery import inspect_index, validate_recovery_records
 
 
 def digest(path):
@@ -65,9 +67,20 @@ def campaign_lock(folder):
             fcntl.flock(f, fcntl.LOCK_UN)
 
 
+def validate_lease_identities(identities):
+    if not isinstance(identities,list):
+        raise ValueError('Invalid saved process identities')
+    for item in identities:
+        if (not isinstance(item,dict) or type(item.get('pid')) is not int or item['pid'] <= 0
+                or type(item.get('created')) not in (int,float)
+                or not math.isfinite(item['created']) or item['created'] <= 0):
+            raise ValueError('Invalid saved process identity')
+
+
 def owned_cleanup(identities):
     """Only saved PID + creation-time identities from our child tree are eligible."""
     import psutil
+    validate_lease_identities(identities)
     owned = []
     for item in identities:
         try:
@@ -75,19 +88,43 @@ def owned_cleanup(identities):
             if p.create_time() == item['created'] and p.pid != os.getpid():
                 p.terminate()
                 owned.append(p)
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
     _, alive = psutil.wait_procs(owned, timeout=2)
     for p in alive:
         try:
             expected = next(x['created'] for x in identities if x['pid'] == p.pid)
-            if p.create_time() == expected:
-                p.kill()
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
+            # create_time on the old psutil instance is cached. A fresh handle
+            # must confirm the saved lease before escalation after the wait.
+            current = psutil.Process(p.pid)
+            if current.create_time() == expected:
+                current.kill()
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
     _, alive = psutil.wait_procs(alive, timeout=3)
     if alive:
         raise RuntimeError('Owned child cleanup did not complete')
+
+
+def require_leases_quiescent(identities):
+    """A denied optional cleanup read is not proof an owned writer has stopped."""
+    import psutil
+    validate_lease_identities(identities)
+    for item in identities:
+        try:
+            process=psutil.Process(item['pid'])
+            if process.create_time()!=item['created']:
+                continue  # Reused PID belongs to someone else; never signal it.
+            if process.status() not in (psutil.STATUS_ZOMBIE,psutil.STATUS_DEAD) and process.is_running():
+                raise RuntimeError('Owned campaign writer remains alive before index recovery')
+        except (psutil.NoSuchProcess,ProcessLookupError):
+            continue
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
+            raise RuntimeError('Owned campaign writer identity is unavailable before index recovery') from error
 
 
 def run_child(command, folder, monitor=None):
@@ -102,6 +139,17 @@ def run_child(command, folder, monitor=None):
     folder.mkdir(parents=True, exist_ok=True)
     lease = folder / 'owned-processes.json'
     observed = {}
+    diagnostic_errors = []
+    diagnostic_counts = {}
+    def diagnostic(pid,field,error):
+        key = field+':'+type(error).__name__
+        diagnostic_counts[key] = diagnostic_counts.get(key,0)+1
+        # Aggregate repeated OS denials at 20 Hz; long bounded campaigns must
+        # not grow an unbounded in-memory list of optional observations.
+        if len(diagnostic_errors) < 64:
+            row = dict(pid=pid,field=field,error_type=type(error).__name__)
+            if row not in diagnostic_errors:
+                diagnostic_errors.append(row)
     process = None
     with (folder / 'controller-child.log').open('x') as log:
         try:
@@ -110,10 +158,23 @@ def run_child(command, folder, monitor=None):
                 env=dict(os.environ, MLX_ENABLE_TF32='0', PYTHONDONTWRITEBYTECODE='1',
                          OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1',
                          HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1'))
-            owner = psutil.Process(process.pid)
+            try:
+                owner = psutil.Process(process.pid)
+            except Exception as error:
+                if not expected_read_error(error):
+                    raise
+                owner = None
+                diagnostic(process.pid,'root_identity',error)
             while True:
                 try:
-                    members = [owner, *owner.children(recursive=True)]
+                    members = [] if owner is None else [owner]
+                    if owner is not None:
+                        try:
+                            members.extend(owner.children(recursive=True))
+                        except Exception as error:
+                            if not expected_read_error(error):
+                                raise
+                            diagnostic(owner.pid,'children',error)
                     changed = False
                     for p in members:
                         try:
@@ -121,13 +182,17 @@ def run_child(command, folder, monitor=None):
                             if observed.get(p.pid) != identity:
                                 observed[p.pid] = identity
                                 changed = True
-                        except psutil.NoSuchProcess:
-                            pass
+                        except Exception as error:
+                            if not expected_read_error(error):
+                                raise
+                            diagnostic(p.pid,'birth_time',error)
                     if changed:
                         save(lease, dict(controller_pid=os.getpid(), processes=[
                             dict(pid=p, created=t) for p, t in observed.items()]))
-                except psutil.NoSuchProcess:
-                    pass
+                except Exception as error:
+                    if not expected_read_error(error):
+                        raise
+                    diagnostic(process.pid,'child_inventory',error)
                 if monitor is not None:
                     monitor()
                 code = process.poll()
@@ -142,7 +207,60 @@ def run_child(command, folder, monitor=None):
                 from airllm.nextgen.experiment_guard import _stop_group
                 _stop_group(process, observed)
             owned_cleanup([dict(pid=p, created=t) for p, t in observed.items()])
-            save(folder / 'cleanup.json', dict(status='completed', observed_processes=len(observed)))
+            save(folder / 'cleanup.json', dict(status='completed', observed_processes=len(observed),
+                                               process_inventory_errors=diagnostic_errors,
+                                               process_inventory_error_counts=diagnostic_counts))
+
+
+def worker_resource_refusal(output, command, limits):
+    """Recognize only measured resource stops in this attempt's own raw guard.
+
+    A wrapper's nonzero code alone cannot distinguish a temporary admission
+    refusal from a programming error. Malformed guard evidence remains fatal.
+    No checkpoint/logit/route acceptance criterion is changed by this classifier.
+    """
+    output = Path(output)
+    guard_path = output.with_suffix('.guard.json')
+    if not guard_path.is_file():
+        return None
+    guard = json.loads(guard_path.read_text())
+    if (guard.get('command') != command+['--worker'] or guard.get('limits') != limits
+            or guard.get('cleanup_error')):
+        return None
+    if output.is_file():
+        worker = json.loads(output.read_text())
+        if worker.get('status') in ('failed','invalid') or worker.get('error'):
+            return None
+        if any(worker.get(flag) is False for flag in (
+                'source_unchanged','protocol_unchanged','model_stat_unchanged','engine_head_unchanged')):
+            return None
+    violation = guard.get('violation')
+    exception = guard.get('exception')
+    if exception is not None:
+        # An admission failure happens before any child is created. Refuse to
+        # reinterpret arbitrary exceptions or exceptions raised during a run.
+        before = guard.get('before',{})
+        known = {
+            'MemoryError: macOS memory pressure is above normal before launch':
+                before.get('pressure_level') in (2,4),
+            'MemoryError: Requested payload exceeds available memory after system reserve':
+                before.get('available_bytes', float('inf')) < limits['reserve_bytes']+limits['admitted_payload_bytes'],
+        }
+        if (known.get(exception) is not True or guard.get('sample_count') != 0
+                or guard.get('exit_code') is not None or violation is not None):
+            return None
+        reason = 'worker_admission_resources'
+    else:
+        measured = {
+            'macos_memory_pressure': guard.get('peak_pressure_level') in (2,4),
+            'system_reserve': guard.get('minimum_available_bytes',float('inf')) < limits['reserve_bytes'],
+            'system_swap_growth': guard.get('maximum_swap_growth_bytes',0) > limits['swap_growth_bytes'],
+        }
+        if (measured.get(violation) is not True or guard.get('exit_code') not in (-15,-9)
+                or guard.get('sample_count',0) < 1):
+            return None
+        reason = violation
+    return dict(reason=reason,guard_path=str(guard_path),guard_sha256=digest(guard_path))
 
 
 def custom_pairs(name, baseline, candidate, base_args, candidate_args, pairs, tasks):
@@ -193,6 +311,9 @@ def prepare(args):
         raise ValueError('At least two pairs are needed for alternating AB/BA order')
     if not re.fullmatch('[0-9a-f]{64}', args.expected_sha256):
         raise ValueError('Expected full checkpoint SHA-256 is required')
+    profile = getattr(args,'profile','retained')
+    if profile not in PROFILES:
+        raise ValueError('Unknown campaign profile: '+str(profile))
     roots = {key: Path(getattr(args, key)).expanduser().resolve(strict=True)
              for key in ('h1', 'h2', 'candidate')}
     folder = args.output.expanduser().absolute()
@@ -204,7 +325,7 @@ def prepare(args):
     if identity['bytes'] <= 0:
         raise ValueError('Empty checkpoint')
     tasks = roots['candidate'] / 'research/hyperstream2/context.json'
-    experiments = build_experiments(roots['h1'], roots['h2'], roots['candidate'], pairs=args.pairs)
+    experiments = build_experiments(roots['h1'], roots['h2'], roots['candidate'], pairs=args.pairs,profile=profile)
     numerical = ['--numerical-evidence', '--expert-batch', '--concat-tiles', '--bulk-metadata',
                  '--string-buffer-bytes', '65536', '--prefill-chunk', '16']
     direct = [*numerical, '--packed-direct-io']
@@ -227,6 +348,9 @@ def prepare(args):
     # prevent unrelated isolated transport/speculation trials from being run.
     combinations = [x for x in experiments if x.get('requires_prior_pass')]
     experiments = [x for x in experiments if not x.get('requires_prior_pass')] + combinations
+    # Apply centrally after custom transport/long-decode families are appended,
+    # so every current-candidate control and treatment declares the same router.
+    apply_profile_jobs(experiments,roots['candidate'],profile)
     manifests = {str(root): engine_manifest(root) for root in roots.values()}
     for label, expected in (('h1', 'c8f81e57463ed3d7fd3d7dba226a65500439a9ce'),
                             ('h2', '5e8234181e736c0319a64df25e6813e92dd3e6da')):
@@ -237,6 +361,10 @@ def prepare(args):
                        manifests[str(roots['candidate'])]['git_head']], capture_output=True).returncode:
         raise ValueError('Candidate must descend from the retained PR #12 revision')
     paths = {Path(__file__).resolve(), ROOT / 'benchmarks/verify_m5_validation.py',
+             ROOT / 'benchmarks/m5_autonomous_supervisor.py',
+             ROOT / 'benchmarks/m5_process_inventory.py',
+             ROOT / 'benchmarks/m5_manifest_recovery.py',
+             ROOT / 'benchmarks/diagnose_m5_memory.py',
              ROOT / 'benchmarks/hash_checkpoint_guarded.py',
              ROOT / 'benchmarks/benchmark_research51.py',
              ROOT / 'benchmarks/campaign_research51.py', ROOT / 'benchmarks/plan_hyperstream3.py',
@@ -261,7 +389,7 @@ def prepare(args):
     for root in roots.values():
         paths.update((root / 'air_llm').rglob('*.py'))
     from verify_m5_validation import KERNEL_POLICY, FIDELITY_FAILURE_POLICY
-    config = dict(schema_version=1, origin=str(folder), expected_checkpoint_sha256=args.expected_sha256,
+    config = dict(schema_version=1, origin=str(folder), expected_checkpoint_sha256=args.expected_sha256,profile=profile,
                   kernel_qualification_policy=KERNEL_POLICY,
                   fidelity_failure_policy=FIDELITY_FAILURE_POLICY,
                   model_identity=identity, engine_manifests=manifests, engine_roots={k:str(v) for k,v in roots.items()},
@@ -307,9 +435,17 @@ def prepare(args):
 
 def write_manifest(folder):
     """Hash raw evidence without recursion or relying on its claims."""
+    from verify_m5_validation import finder_metadata_ignored, read_json, require_no_finder_evidence
     folder = Path(folder)
+    try:
+        (folder/'manifest.json').lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        require_no_finder_evidence(read_json(folder/'manifest.json').get('files'))
+    paths=[path for path in sorted(folder.rglob('*')) if not finder_metadata_ignored(path)]
     files = {str(p.relative_to(folder)): dict(sha256=digest(p), bytes=p.stat().st_size)
-             for p in sorted(folder.rglob('*')) if p.is_file()
+             for p in paths if p.is_file()
              and p.name not in ('manifest.json', '.runner.lock') and not p.is_symlink()}
     save(folder / 'manifest.json', dict(schema_version=1, files=files,
                                       authenticity_certified=False))
@@ -373,16 +509,34 @@ def run(args):
         if state['config_sha256'] != digest(folder/'config.json'):
             raise RuntimeError('Frozen campaign configuration changed')
         from verify_m5_validation import (verify_manifest, validate_job, summarize_experiment,
-                                         validate_config, VerifiedFidelityRejection)
+                                         validate_config, VerifiedFidelityRejection, read_json)
         validate_config(config)
         if args.experiment and not set(args.experiment) <= {x['name'] for x in config['experiments']}:
             raise ValueError('Unknown experiment selection; inspect config.json for frozen names')
-        verify_manifest(folder, allow_interrupted=state.get('status') == 'running')
+        recovery=inspect_index(folder,config,state)
         unchanged(config)
         # A stale process lease can only originate in our exclusively-created
         # attempt directories; creation-time identity prevents PID reuse kills.
+        saved_leases=[]
         for lease in folder.glob('sessions/*/**/owned-processes.json'):
-            owned_cleanup(json.loads(lease.read_text())['processes'])
+            identities=read_json(lease)['processes']
+            saved_leases.extend(identities)
+            owned_cleanup(identities)
+        require_leases_quiescent(saved_leases)
+        # A crash can persist its atomic state before the final global index.
+        # Reindex only after owned writers are stopped, frozen inputs and all
+        # old immutable hashes are rechecked, and sealed claims are revalidated.
+        recovery=inspect_index(folder,config,state)
+        unchanged(config)
+        if recovery['needed']:
+            validate_recovery_records(folder,config,state)
+            unchanged(config)
+            if (digest(folder/'state.json') != recovery['state_sha256']
+                    or digest(folder/'config.json') != recovery['config_sha256']
+                    or digest(folder/'manifest.json') != recovery['manifest_sha256']):
+                raise RuntimeError('Campaign changed during index recovery')
+            write_manifest(folder)
+            verify_manifest(folder)
         if state['status'] in ('completed', 'completed_with_exclusions', 'completed_evidence_with_rejections'):
             from verify_m5_validation import verify
             return verify(folder)
@@ -481,6 +635,10 @@ def run(args):
                     code = run_child(command, attempt)
                     record.update(exit_code=code, ended_unix=time.time(),
                                   controller_wall_seconds=time.monotonic()-process_start)
+                    resource_refusal = worker_resource_refusal(output,command,config['limits'])
+                    if resource_refusal is not None:
+                        session['active']['resource_refusal'] = resource_refusal
+                        raise MemoryError('Worker deferred by verified resource guard: '+resource_refusal['reason'])
                     if code:
                         raise RuntimeError('Worker refused or failed: ' + key)
                     validate_job(folder, config, job, record)
@@ -545,6 +703,7 @@ def main():
         q.add_argument('--'+option, type=Path, required=True)
     q.add_argument('--expected-sha256', required=True)
     q.add_argument('--pairs', type=int, default=3)
+    q.add_argument('--profile',choices=PROFILES,default='retained')
     q.add_argument('--kernel-report', type=Path)
     q = sub.add_parser('run', allow_abbrev=False)
     q.add_argument('--campaign', type=Path, required=True)

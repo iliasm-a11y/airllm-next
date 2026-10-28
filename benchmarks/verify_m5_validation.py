@@ -10,9 +10,11 @@ import argparse
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import statistics
+import stat
 import struct
 import sys
 
@@ -101,7 +103,8 @@ def validate_config(config):
                 '--packed-copy-free','--packed-direct-io','--bulk-metadata','--zero-copy-weights',
                 '--expert-pipeline','--grouped-direct-io'}
     values = {'--rows','--prefill-chunk','--hyper-prefill-max-tokens','--cache-policy','--io-mode',
-              '--timeout','--string-buffer-bytes','--metal-batch-backend','--metal-token-tile','--speculative-depth'}
+              '--timeout','--string-buffer-bytes','--metal-batch-backend','--metal-token-tile','--speculative-depth',
+              '--router-reference-chunk'}
     for experiment in experiments:
         name = experiment.get('name','')
         require(isinstance(name,str) and re.fullmatch('[A-Za-z0-9_-]+',name) and name not in names,
@@ -138,6 +141,8 @@ def validate_config(config):
                     elif flag in ('--metal-token-tile','--speculative-depth'):
                         require(value in ('0','2','4','8','16') and (flag != '--metal-token-tile' or value != '0'),
                                 'Unknown speculation/tile depth')
+                    elif flag == '--router-reference-chunk':
+                        require(value in ('0','16'),'Unknown router reference chunk')
                     elif flag == '--cache-policy':
                         require(value in ('lru','adaptive'), 'Unknown cache policy')
                     elif flag == '--io-mode':
@@ -177,12 +182,57 @@ def evidence_path(folder, path, config):
     return inside(Path(folder).resolve(), relative)
 
 
+FINDER_METADATA_NAME='.DS_Store'
+FINDER_METADATA_MAGIC=b'\x00\x00\x00\x01Bud1'
+
+
+def require_no_finder_evidence(files):
+    """Never discard a path that an existing index declares as evidence."""
+    require(isinstance(files,dict),'Missing evidence file hashes')
+    require(not any(Path(name).name==FINDER_METADATA_NAME for name in files),
+            'A manifest cannot relabel declared evidence as ignored Finder metadata')
+
+
+def finder_metadata_ignored(path):
+    """Only ordinary, unaliased Finder databases are non-evidence metadata.
+
+    The exact name and observed Apple database header are mandatory. Existing
+    manifest entries never use this rule to waive an immutable evidence hash.
+    Read only the 8-byte signature; a symlink/device/FIFO must never be followed.
+    """
+    path=Path(path)
+    if path.name!=FINDER_METADATA_NAME:
+        return False
+    before=path.lstat()
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1,
+            'Finder metadata must be an unaliased regular file')
+    require(hasattr(os,'O_NOFOLLOW') and hasattr(os,'O_NONBLOCK'),
+            'Safe nonfollowing Finder metadata reads are unavailable')
+    descriptor=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    try:
+        opened=os.fstat(descriptor)
+        require(stat.S_ISREG(opened.st_mode) and opened.st_nlink==1
+                and (opened.st_dev,opened.st_ino)==(before.st_dev,before.st_ino),
+                'Finder metadata identity changed before classification')
+        require(os.read(descriptor,len(FINDER_METADATA_MAGIC))==FINDER_METADATA_MAGIC,
+                'A non-Finder file cannot be excluded as metadata')
+        after=path.lstat()
+        require(stat.S_ISREG(after.st_mode) and after.st_nlink==1
+                and (after.st_dev,after.st_ino)==(opened.st_dev,opened.st_ino),
+                'Finder metadata identity changed during classification')
+    finally:
+        os.close(descriptor)
+    return True
+
+
 def verify_manifest(folder, *, allow_interrupted=False):
     folder = Path(folder).resolve(strict=True)
     manifest = read_json(folder/'manifest.json')
     files = manifest.get('files')
     require(isinstance(files, dict) and files, 'Missing evidence file hashes')
-    actual = {str(p.relative_to(folder)) for p in folder.rglob('*') if p.is_file()
+    require_no_finder_evidence(files)
+    paths=[path for path in folder.rglob('*') if not finder_metadata_ignored(path)]
+    actual = {str(p.relative_to(folder)) for p in paths if p.is_file()
               and p.name not in ('manifest.json', '.runner.lock')}
     require(set(files) <= actual, 'Evidence manifest has missing files')
     if not allow_interrupted:

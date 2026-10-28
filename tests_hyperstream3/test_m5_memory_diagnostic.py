@@ -53,15 +53,40 @@ def test_reservations_are_from_current_sources_and_keep_original_guards():
 
 
 def test_default_inventory_omits_private_arguments_and_executable_directories(monkeypatch):
-    process = SimpleNamespace(info=dict(pid=123, ppid=1, name='python',
-        exe='/private/runtime/bin/python', cmdline=['python', '/private/model/qwen_terminal.py',
-                                                  '--token', 'private-test-sentinel'],
-        create_time=1.0, status='sleeping', memory_info=SimpleNamespace(rss=100)))
-    monkeypatch.setattr(diagnostic.psutil, 'process_iter', lambda attrs: [process])
+    command = ['python','/private/model/qwen_terminal.py','--token','private-test-sentinel']
+    row = dict(pid=123,created=1.,executable='python',command=command,
+               full_executable='/private/runtime/bin/python',inference_candidate=True)
+    monkeypatch.setattr(diagnostic,'inventory',lambda **kwargs:dict(processes=[row],errors=[],uncertain=[],complete=True))
+    process = SimpleNamespace(pid=123,create_time=lambda:1.,ppid=lambda:1,status=lambda:'sleeping',
+                              memory_info=lambda:SimpleNamespace(rss=100))
+    monkeypatch.setattr(diagnostic.psutil,'Process',lambda pid:process)
     public = diagnostic.process_inventory()[0]
     assert public['exe'] == 'python'
     assert public['inference_candidate'] is True
     assert 'command' not in public and 'full_executable' not in public
     private = diagnostic.process_inventory(include_command_lines=True)[0]
-    assert private['command'] == process.info['cmdline']
-    assert private['full_executable'] == process.info['exe']
+    assert private['command'] == command
+    assert private['full_executable'] == '/private/runtime/bin/python'
+
+
+def test_accounting_permission_denied_is_unknown_not_zero_and_other_processes_survive(monkeypatch):
+    import psutil
+    row = dict(pid=123,created=1.,executable='python',command=[],full_executable='/python',inference_candidate=False)
+    monkeypatch.setattr(diagnostic,'inventory',lambda **kwargs:dict(processes=[row],errors=[],uncertain=[],complete=True))
+    def denied():
+        raise psutil.AccessDenied(123)
+    process = SimpleNamespace(pid=123,create_time=lambda:1.,ppid=lambda:1,status=lambda:'sleeping',memory_info=denied)
+    monkeypatch.setattr(diagnostic.psutil,'Process',lambda pid:process)
+    observations = {}
+    rows = diagnostic.process_inventory(diagnostics=observations)
+    assert rows[0]['rss_bytes'] is None
+    assert observations['errors'][0]['field'] == 'memory_info'
+
+
+def test_diagnostic_accounting_rechecks_birth_time_before_retaining_row(monkeypatch):
+    row = dict(pid=123,created=1.,executable='python',command=[],full_executable='/python',inference_candidate=False)
+    monkeypatch.setattr(diagnostic,'inventory',lambda **kwargs:dict(processes=[row],errors=[],uncertain=[],complete=True))
+    monkeypatch.setattr(diagnostic.psutil,'Process',lambda pid:SimpleNamespace(create_time=lambda:2.))
+    observations = {}
+    assert diagnostic.process_inventory(diagnostics=observations) == []
+    assert observations['errors'][0]['reason'] == 'pid_reused_before_accounting'

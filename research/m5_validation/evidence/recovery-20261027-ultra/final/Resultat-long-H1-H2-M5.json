@@ -1,0 +1,174 @@
+{
+  "schema": "airllm.m5.sealed-long-result-extract.v1",
+  "campaign": "campaign-recovery-005",
+  "config_sha256": "b14bafb51bbfd1cb03bb8d8ae76ce077567ede27711501ad652f21e0b2cf6f07",
+  "candidate_source": "a5d289704f436e59fc9b4aab5d62a1dba80f1347",
+  "state_sha256_at_extraction": "363ba5248096d8ad1729d9f0a03a7aed92594fc6b198fc8289e0733a145de530",
+  "observed_at_utc": "2026-10-27T19:19:06.546458+00:00",
+  "full_campaign_complete": false,
+  "result": {
+    "status": "accepted",
+    "tasks_kind": "general_long_noncopy",
+    "pairs": [
+      {
+        "pair": 0,
+        "full_recorded_logits": {
+          "status": "accepted",
+          "scope": "recorded emitted logits/tokens and accepted-prefix expert routes",
+          "serial_report_sha256": "e0b0cbe644d344b432622cadf403e9ed07460573ed4baa1dd8e1a90f342b7109",
+          "candidate_report_sha256": "7cc47fe1fcd9a8573012f315f8cdb46bae2c92a2d3b2a13a33ca502f94657b0f",
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "exact_tokens": true,
+          "recorded_accepted_prefix_routes_equal": true,
+          "full_recurrent_state_parity_validated": false,
+          "checkpoint_hash_integrity_validated": false,
+          "guard_compliance_validated": false,
+          "timing_speedup_validated": false,
+          "comparisons": [
+            {
+              "id": "general_long_noncopy",
+              "emitted_tokens": 319,
+              "full_logits_elements_checked": 79214080,
+              "logits_max_absolute_error": 0.0,
+              "logits_max_relative_error": 0.0,
+              "logits_bitwise_exact": true,
+              "candidate_rows_checked": 319,
+              "candidate_rows_matching_emitted_prefix": 319,
+              "recorded_routes_checked": 16920
+            }
+          ]
+        },
+        "baseline_request_seconds": 398.46148370800074,
+        "candidate_request_seconds": 377.73854770799517,
+        "total_speedup": 1.05486052754146,
+        "baseline_worker_seconds": 399.3231990829954,
+        "candidate_worker_seconds": 378.76550458300335,
+        "worker_total_speedup": 1.0542755194209799,
+        "baseline_process_wall_seconds": 408.6881634580059,
+        "candidate_process_wall_seconds": 388.8333054579998,
+        "process_total_speedup": 1.051062647466938,
+        "baseline_initialization_seconds": 0.7240272499911953,
+        "candidate_initialization_seconds": 0.8822095000068657,
+        "baseline_ttft_seconds": [
+          36.76934920900385
+        ],
+        "candidate_ttft_seconds": [
+          15.838818709002226
+        ],
+        "baseline_logical_read_bytes": 655926703232,
+        "candidate_logical_read_bytes": 635842815872,
+        "baseline_read_calls": 550148,
+        "candidate_read_calls": 524822,
+        "baseline_decode_tokens_per_second": [
+          0.8792082971204993
+        ],
+        "candidate_decode_tokens_per_second": [
+          0.8787058664652626
+        ],
+        "baseline_worker_cpu_seconds": {
+          "user": 47.468255000000006,
+          "system": 106.220346,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_worker_cpu_seconds": {
+          "user": 45.646595999999995,
+          "system": 99.853306,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_logical_bytes_per_emitted_token": 1993237667.310345,
+        "candidate_first_forward_seconds": [
+          15.833922916994197
+        ],
+        "prefill_scope": "first forward contains prefill; TTFT and full request are separately retained",
+        "emitted_tokens": [
+          319
+        ],
+        "sustained_decode_evidence": true
+      },
+      {
+        "pair": 1,
+        "full_recorded_logits": {
+          "status": "accepted",
+          "scope": "recorded emitted logits/tokens and accepted-prefix expert routes",
+          "serial_report_sha256": "8e6fa0052d9c65402f79faaeef0e2568b30c41598f2ea752ef6af84899e7a718",
+          "candidate_report_sha256": "291968f07a1814deba00fcfc8e34d750d431a157ea34093b0e257edbb0533254",
+          "atol": 0.0001,
+          "rtol": 0.0001,
+          "exact_tokens": true,
+          "recorded_accepted_prefix_routes_equal": true,
+          "full_recurrent_state_parity_validated": false,
+          "checkpoint_hash_integrity_validated": false,
+          "guard_compliance_validated": false,
+          "timing_speedup_validated": false,
+          "comparisons": [
+            {
+              "id": "general_long_noncopy",
+              "emitted_tokens": 319,
+              "full_logits_elements_checked": 79214080,
+              "logits_max_absolute_error": 0.0,
+              "logits_max_relative_error": 0.0,
+              "logits_bitwise_exact": true,
+              "candidate_rows_checked": 319,
+              "candidate_rows_matching_emitted_prefix": 319,
+              "recorded_routes_checked": 16920
+            }
+          ]
+        },
+        "baseline_request_seconds": 401.6272504170047,
+        "candidate_request_seconds": 377.75675804101047,
+        "total_speedup": 1.0631901133940873,
+        "baseline_worker_seconds": 402.56602762499824,
+        "candidate_worker_seconds": 378.6456197910011,
+        "worker_total_speedup": 1.0631736023968807,
+        "baseline_process_wall_seconds": 412.36013179199654,
+        "candidate_process_wall_seconds": 388.06378770800075,
+        "process_total_speedup": 1.0626091504891397,
+        "baseline_initialization_seconds": 0.8008982089959318,
+        "candidate_initialization_seconds": 0.752742416007095,
+        "baseline_ttft_seconds": [
+          37.710432541993214
+        ],
+        "candidate_ttft_seconds": [
+          15.49398199999996
+        ],
+        "baseline_logical_read_bytes": 655926703232,
+        "candidate_logical_read_bytes": 635842815872,
+        "baseline_read_calls": 550148,
+        "candidate_read_calls": 524822,
+        "baseline_decode_tokens_per_second": [
+          0.8738369018024774
+        ],
+        "candidate_decode_tokens_per_second": [
+          0.8778202720137562
+        ],
+        "baseline_worker_cpu_seconds": {
+          "user": 47.422464,
+          "system": 103.20544199999999,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_worker_cpu_seconds": {
+          "user": 45.418398,
+          "system": 100.088277,
+          "scope": "worker process after checkpoint stat"
+        },
+        "candidate_logical_bytes_per_emitted_token": 1993237667.310345,
+        "candidate_first_forward_seconds": [
+          15.489163707999978
+        ],
+        "prefill_scope": "first forward contains prefill; TTFT and full request are separately retained",
+        "emitted_tokens": [
+          319
+        ],
+        "sustained_decode_evidence": true
+      }
+    ],
+    "median_total_speedup": 1.0590253204677738,
+    "median_worker_total_speedup": 1.0587245609089302,
+    "median_process_total_speedup": 1.0568358989780389,
+    "timing_scope": "instrumented request wall latency; includes draft, calibration, verification and replay",
+    "pure_gpu_seconds": null,
+    "physical_ssd_certified": false,
+    "full_recurrent_state_parity_validated": false
+  }
+}

@@ -56,6 +56,52 @@ def test_process_cleanup_after_early_identity_error(tmp_path, monkeypatch):
     assert child[0].poll() is not None
 
 
+def resource_guard(tmp_path, **updates):
+    output = tmp_path/'worker.json'
+    command = ['python','benchmark_research51.py']
+    limits = asdict(ExperimentLimits())
+    raw = dict(command=command+['--worker'],limits=limits,violation='macos_memory_pressure',
+               exit_code=-15,sample_count=3,peak_pressure_level=2,
+               minimum_available_bytes=4 << 30,maximum_swap_growth_bytes=0)
+    raw.update(updates)
+    bench.save(output.with_suffix('.guard.json'),raw)
+    return output,command,limits
+
+
+def test_measured_worker_resource_guard_is_distinct_from_programming_error(tmp_path):
+    output,command,limits = resource_guard(tmp_path)
+    evidence = bench.worker_resource_refusal(output,command,limits)
+    assert evidence['reason'] == 'macos_memory_pressure'
+    assert evidence['guard_sha256'] == bench.digest(output.with_suffix('.guard.json'))
+
+
+@pytest.mark.parametrize('updates', [dict(violation='timeout'),dict(violation='owned_process_tree_rss'),
+    dict(exception='RuntimeError: programming bug'),dict(cleanup_error='failed'),
+    dict(exit_code=0),dict(peak_pressure_level=1),dict(command=['another worker']),dict(sample_count=0)])
+def test_worker_guard_errors_and_unmeasured_claims_are_never_resource_retries(tmp_path,updates):
+    output,command,limits = resource_guard(tmp_path,**updates)
+    assert bench.worker_resource_refusal(output,command,limits) is None
+
+
+def test_real_admission_exception_requires_no_spawn_and_measured_pressure(tmp_path):
+    output,command,limits = resource_guard(tmp_path,violation=None,exit_code=None,sample_count=0,
+        exception='MemoryError: macOS memory pressure is above normal before launch',before=dict(pressure_level=2))
+    assert bench.worker_resource_refusal(output,command,limits)['reason'] == 'worker_admission_resources'
+
+
+def test_worker_failure_cannot_be_reclassified_from_resource_guard(tmp_path):
+    output,command,limits = resource_guard(tmp_path)
+    bench.save(output,dict(status='failed',error='FloatingPointError: nonfinite'))
+    assert bench.worker_resource_refusal(output,command,limits) is None
+
+
+def test_malformed_guard_remains_programming_or_integrity_failure(tmp_path):
+    output,command,limits = resource_guard(tmp_path)
+    output.with_suffix('.guard.json').write_text('broken')
+    with pytest.raises(json.JSONDecodeError):
+        bench.worker_resource_refusal(output,command,limits)
+
+
 def test_owned_cleanup_ignores_reused_pid_identity(tmp_path):
     import psutil
     current = psutil.Process()
