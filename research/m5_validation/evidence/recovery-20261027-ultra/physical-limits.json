@@ -1,0 +1,41 @@
+{
+  "schema": "airllm.m5.physical-limit-analysis.v1",
+  "timestamp_utc": "2026-10-27T16:24:17.040344+00:00",
+  "historical_run": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-5/work/resource-recovery/h1-functional-pilot/h1-long-real-001.json",
+  "historical_run_sha256": "883c5e5106d62a107610a359e3d2fa6f40f1179380f805ecd1cc85bbb208daef",
+  "new_benchmark": false,
+  "observed": {
+    "decode_forward_steps": 318,
+    "decode_elapsed_seconds": 216.69966941700113,
+    "decode_tokens_per_second": 1.4674687822807142,
+    "decode_logical_bytes": 624774365952,
+    "decode_os_process_storage_read_bytes": 79870738432,
+    "decode_existing_eval_calls": 868140,
+    "decode_eval_host_wall_seconds": 110.239350931,
+    "decode_direct_read_syscall_host_wall_seconds": 70.013773918
+  },
+  "derived": {
+    "logical_bytes_per_decode_step": 1964699264.0,
+    "os_process_storage_bytes_per_decode_step": 251165844.12578616,
+    "logical_gb_per_second_observed": 2.8831348364898957,
+    "existing_eval_calls_per_step": 2730.0,
+    "hypothetical_logical_gb_per_second_at_unchanged_bytes_per_final_token": {
+      "3": 5.894097792,
+      "5": 9.82349632,
+      "10": 19.64699264
+    }
+  },
+  "interpretation": [
+    "Logical reads count requests, including cached pages; they are not SSD NAND bytes.",
+    "OS process storage counters are separate accounting and do not certify SSD service bandwidth.",
+    "Host eval times include pending GPU and host synchronization; nested totals overlap and cannot be added.",
+    "Hypothetical required logical throughput holds bytes/final-token fixed; speculation and weight reuse may change that ratio, and the estimates are not measured gains.",
+    "This MoE run does not reread the entire 23.94 GB checkpoint per decoded token.",
+    "Unified CPU/GPU RAM is one shared physical pool; the OS, active applications, KV/recurrent state, tiles and packed caches all compete with weights."
+  ],
+  "primary_sources": {
+    "apple_spec": "https://www.apple.com/macbook-air/specs/",
+    "mlx_unified_memory": "https://github.com/ml-explore/mlx/blob/main/docs/src/usage/unified_memory.rst",
+    "mlx_lazy_evaluation": "https://github.com/ml-explore/mlx/blob/main/docs/src/usage/lazy_evaluation.rst"
+  }
+}

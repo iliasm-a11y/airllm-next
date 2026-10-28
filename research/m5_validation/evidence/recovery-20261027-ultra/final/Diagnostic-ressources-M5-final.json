@@ -1,0 +1,335 @@
+{
+  "schema": "airllm.m5.final-readonly-resource-diagnostic.v1",
+  "timestamp_utc": "2026-10-28T18:46:40.372887+00:00",
+  "timestamp_paris": "2026-10-28T19:46:40.372887+01:00",
+  "read_only": true,
+  "snapshots": {
+    "before": {
+      "timestamp_utc": "2026-10-28T18:46:40.284033+00:00",
+      "virtual_memory": {
+        "total": 17179869184,
+        "available": 6097600512,
+        "percent": 64.5,
+        "used": 6470615040,
+        "free": 2805776384,
+        "active": 3309699072,
+        "inactive": 3149463552,
+        "wired": 3160915968
+      },
+      "swap_memory": {
+        "total": 6442450944,
+        "used": 4694147072,
+        "free": 1748303872,
+        "percent": 72.9,
+        "sin": 11246573666304,
+        "sout": 4105584640
+      },
+      "pressure_level": 1
+    },
+    "after": {
+      "timestamp_utc": "2026-10-28T18:46:40.372521+00:00",
+      "virtual_memory": {
+        "total": 17179869184,
+        "available": 6095585280,
+        "percent": 64.5,
+        "used": 6474301440,
+        "free": 2801483776,
+        "active": 3313385472,
+        "inactive": 3151675392,
+        "wired": 3160915968
+      },
+      "swap_memory": {
+        "total": 6442450944,
+        "used": 4694147072,
+        "free": 1748303872,
+        "percent": 72.9,
+        "sin": 11246573797376,
+        "sout": 4105584640
+      },
+      "pressure_level": 1
+    }
+  },
+  "vm": {
+    "page_bytes": 16384,
+    "derived_bytes": {
+      "compressor_physical_bytes": 3963273216,
+      "compressor_uncompressed_logical_bytes": 8271544320,
+      "wired_bytes": 3161112576,
+      "free_bytes": 2804334592,
+      "file_backed_resident_bytes": 1806368768
+    }
+  },
+  "disks": [
+    {
+      "role": "outputs",
+      "device": 16777233,
+      "total_bytes": 494332366848,
+      "used_bytes": 373328375808,
+      "free_bytes": 121003991040,
+      "retained_disk_floor_bytes": 5368709120,
+      "retained_floor_met": true
+    },
+    {
+      "role": "campaign_evidence",
+      "device": 16777233,
+      "total_bytes": 494332366848,
+      "used_bytes": 373328375808,
+      "free_bytes": 121003991040,
+      "retained_disk_floor_bytes": 5368709120,
+      "retained_floor_met": true
+    },
+    {
+      "role": "work",
+      "device": 16777233,
+      "total_bytes": 494332366848,
+      "used_bytes": 373328375808,
+      "free_bytes": 121003991040,
+      "retained_disk_floor_bytes": 5368709120,
+      "retained_floor_met": true
+    },
+    {
+      "role": "checkpoint_volume",
+      "device": 16777233,
+      "total_bytes": 494332366848,
+      "used_bytes": 373328375808,
+      "free_bytes": 121003991040,
+      "retained_disk_floor_bytes": 5368709120,
+      "retained_floor_met": true
+    }
+  ],
+  "process_groups": {
+    "Codex/ChatGPT": {
+      "count": 194,
+      "summed_rss_bytes": 4350623744
+    },
+    "node/npm": {
+      "count": 57,
+      "summed_rss_bytes": 1066614784
+    },
+    "other": {
+      "count": 627,
+      "summed_rss_bytes": 1956315136
+    }
+  },
+  "largest_processes": [
+    {
+      "pid": 46246,
+      "created": 1793044987.135106,
+      "name": "Codex (Renderer)",
+      "rss_bytes": 1516683264,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 46251,
+      "created": 1793044988.553929,
+      "name": "codex",
+      "rss_bytes": 669483008,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 47446,
+      "created": 1793085837.265647,
+      "name": "Codex (Renderer)",
+      "rss_bytes": 256770048,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 46217,
+      "created": 1793044983.332922,
+      "name": "ChatGPT",
+      "rss_bytes": 248135680,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 902,
+      "created": 1792793468.837318,
+      "name": "node",
+      "rss_bytes": 126222336,
+      "category": "node/npm",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 717,
+      "created": 1792793465.0742,
+      "name": "corespotlightd",
+      "rss_bytes": 120209408,
+      "category": "other",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 424,
+      "created": 1792793461.813054,
+      "name": "loginwindow",
+      "rss_bytes": 80134144,
+      "category": "other",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 1032,
+      "created": 1792793471.195609,
+      "name": "Creative Cloud UI Helper (Renderer)",
+      "rss_bytes": 67633152,
+      "category": "other",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 72301,
+      "created": 1793097858.448865,
+      "name": "Gemini",
+      "rss_bytes": 66715648,
+      "category": "other",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 46232,
+      "created": 1793044983.60208,
+      "name": "Codex (Service)",
+      "rss_bytes": 63897600,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 47426,
+      "created": 1793085837.222055,
+      "name": "Codex (Renderer)",
+      "rss_bytes": 58949632,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    },
+    {
+      "pid": 46233,
+      "created": 1793044983.603015,
+      "name": "Codex (Service)",
+      "rss_bytes": 58916864,
+      "category": "Codex/ChatGPT",
+      "mcp_helper_candidate": false,
+      "inference_candidate": false,
+      "identity_unchanged": true
+    }
+  ],
+  "current_inference_candidates": [],
+  "current_mcp_helper_candidate_count": 48,
+  "process_inventory_errors": [
+    {
+      "field": "exe",
+      "type": "AccessDenied",
+      "count": 1
+    },
+    {
+      "field": "rss_bytes",
+      "type": "AccessDenied",
+      "count": 227
+    },
+    {
+      "field": "command",
+      "type": "AccessDenied",
+      "count": 226
+    }
+  ],
+  "old_controllers_and_keepers": [
+    {
+      "label": "supervisor-015",
+      "pid": 5545,
+      "expected_created": 1793210610.192073,
+      "status": "gone",
+      "original_alive": false
+    },
+    {
+      "label": "watchdog-015",
+      "pid": 5644,
+      "expected_created": 1793210799.141916,
+      "status": "gone",
+      "original_alive": false
+    },
+    {
+      "label": "keeper-launch.json",
+      "pid": 69413,
+      "expected_created": 1793183753.930538,
+      "status": "gone",
+      "original_alive": false
+    },
+    {
+      "label": "keeper-v2-launch.json",
+      "pid": 71861,
+      "expected_created": 1793185177.467476,
+      "status": "gone",
+      "original_alive": false
+    },
+    {
+      "label": "keeper-v3-launch.json",
+      "pid": 91256,
+      "expected_created": 1793195359.005385,
+      "status": "gone",
+      "original_alive": false
+    },
+    {
+      "label": "keeper-v4-launch.json",
+      "pid": 97973,
+      "expected_created": 1793205551.227868,
+      "status": "gone",
+      "original_alive": false
+    }
+  ],
+  "finder_metadata_flags_held": [
+    {
+      "campaign_relative_path": ".DS_Store",
+      "original_flags": 32768,
+      "current_flags": 32770,
+      "inode": 34560039,
+      "user_immutable_current": true,
+      "restoration_performed": false
+    },
+    {
+      "campaign_relative_path": "sessions/.DS_Store",
+      "original_flags": 32768,
+      "current_flags": 32770,
+      "inode": 34560042,
+      "user_immutable_current": true,
+      "restoration_performed": false
+    },
+    {
+      "campaign_relative_path": "sessions/0005/.DS_Store",
+      "original_flags": 32768,
+      "current_flags": 32770,
+      "inode": 34560040,
+      "user_immutable_current": true,
+      "restoration_performed": false
+    }
+  ],
+  "finder_flags_restored": false,
+  "signals_sent_by_this_audit": 0,
+  "files_deleted_by_this_audit": 0,
+  "limitations": [
+    "Sequential before/after snapshots, not a simultaneous physical-memory partition.",
+    "Summed RSS includes shared pages and is not exclusive recoverable physical memory.",
+    "Compressed physical bytes and their logical uncompressed bytes describe the same data and are not added.",
+    "New MCP helpers may exist after the closed cleanup budget; no new helper was signalled by this audit.",
+    "No current model or checkpoint contents were read, no chat API was used, and no Finder flags were restored."
+  ]
+}

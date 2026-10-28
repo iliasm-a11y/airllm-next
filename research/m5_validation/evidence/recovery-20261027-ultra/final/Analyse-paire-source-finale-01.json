@@ -1,0 +1,69 @@
+{
+  "schema": "airllm-m5-pair-forensics-v1",
+  "status": "diagnostic_completed",
+  "scope": "Recorded accepted-prefix ordered routes, selected expert sets, emitted full logits and tokens only",
+  "serial_report_sha256": "81d6f14506cb1cc6e2ddac8fdc2fa8d8bb339133f4e7875feebe7bd4dee46912",
+  "candidate_report_sha256": "dcec9dd8092dccc5f3a3429d0728a7847c5e67f6f5b4e1bd521e9dc82ad0b63d",
+  "diagnostic_source_sha256": "509995f6b9a233df459fea1b5f65252669225ca4cc057e1d1f9c4b5e78603f95",
+  "atol": 0.0001,
+  "rtol": 0.0001,
+  "router_scores_recorded": false,
+  "router_inputs_recorded": false,
+  "hidden_state_parity_validated": false,
+  "performance_gain_qualified": false,
+  "turns": [
+    {
+      "id": "context",
+      "generated_ids": [
+        19,
+        17,
+        248046
+      ],
+      "eos": [
+        248044,
+        248046
+      ],
+      "stop": "eos",
+      "accepted_prefix_route_positions": 14640,
+      "ordered_route_differences": [],
+      "ordered_route_difference_count": 0,
+      "selected_set_difference_count": 0,
+      "logits": [
+        {
+          "output_index": 0,
+          "elements": 248320,
+          "max_absolute_error": 0.0,
+          "max_relative_error": 0.0,
+          "violating_elements": 0,
+          "bitwise_equal": true,
+          "worst_tolerance_scaled_error": 0.0,
+          "worst_tolerance_scaled_element": {}
+        },
+        {
+          "output_index": 1,
+          "elements": 248320,
+          "max_absolute_error": 0.0,
+          "max_relative_error": 0.0,
+          "violating_elements": 0,
+          "bitwise_equal": true,
+          "worst_tolerance_scaled_error": 0.0,
+          "worst_tolerance_scaled_element": {}
+        },
+        {
+          "output_index": 2,
+          "elements": 248320,
+          "max_absolute_error": 0.0,
+          "max_relative_error": 0.0,
+          "violating_elements": 0,
+          "bitwise_equal": true,
+          "worst_tolerance_scaled_error": 0.0,
+          "worst_tolerance_scaled_element": {}
+        }
+      ],
+      "full_logits_elements_checked": 744960,
+      "full_logits_within_retained_tolerance": true,
+      "strict_ordered_route_gate_passed": true
+    }
+  ],
+  "strict_existing_fidelity_gate_passed": true
+}

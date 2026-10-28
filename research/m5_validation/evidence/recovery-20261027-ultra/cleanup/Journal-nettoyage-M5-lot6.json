@@ -1,0 +1,528 @@
+{
+  "schema": "airllm.m5.cleanup-journal.v1",
+  "started_utc": "2026-10-27T18:48:43.997334+00:00",
+  "reviewed_audit_sha256": "c9e3590513e37c3b383d7c5f1fdbd194c43d8e5325ccee41f14804f65654f51a",
+  "authorized_group_count": 26,
+  "authorized_pid_count": 52,
+  "before": {
+    "timestamp_utc": "2026-10-27T18:48:43.997404+00:00",
+    "available_ram_bytes": 5295030272,
+    "swap_used_bytes": 5589893120
+  },
+  "actions": [
+    {
+      "pid": 33638,
+      "create_time": 1793125682.132726,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126924.32905,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 32099,
+      "create_time": 1793125656.312678,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126924.336052,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35880,
+      "create_time": 1793126539.555087,
+      "role": "child",
+      "mission": "mission-codex-installation-qwen-3-8",
+      "unix": 1793126924.472667,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35300,
+      "create_time": 1793126535.295717,
+      "role": "launcher",
+      "mission": "mission-codex-installation-qwen-3-8",
+      "unix": 1793126924.48172,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35716,
+      "create_time": 1793126538.915147,
+      "role": "child",
+      "mission": "mission-codex-installation-qwen-3-8",
+      "unix": 1793126924.621409,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35303,
+      "create_time": 1793126535.295896,
+      "role": "launcher",
+      "mission": "mission-codex-installation-qwen-3-8",
+      "unix": 1793126924.630566,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35958,
+      "create_time": 1793126540.534292,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126924.7621949,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35320,
+      "create_time": 1793126535.303972,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126924.771641,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35564,
+      "create_time": 1793126538.643354,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126924.912342,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35321,
+      "create_time": 1793126535.304017,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126924.922432,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 36067,
+      "create_time": 1793126542.005154,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126925.0615401,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35337,
+      "create_time": 1793126535.309666,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126925.071278,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35795,
+      "create_time": 1793126539.176739,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126925.2085152,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35339,
+      "create_time": 1793126535.30996,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126925.217559,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35859,
+      "create_time": 1793126539.522299,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126925.357381,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35359,
+      "create_time": 1793126535.31876,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126925.366967,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35937,
+      "create_time": 1793126540.407537,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126925.5037959,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35366,
+      "create_time": 1793126535.319937,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126925.513282,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35656,
+      "create_time": 1793126538.882339,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126925.64289,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35381,
+      "create_time": 1793126535.32668,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126925.652265,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35838,
+      "create_time": 1793126539.410082,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126925.7840152,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35384,
+      "create_time": 1793126535.327416,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126925.793198,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35774,
+      "create_time": 1793126538.936259,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793126925.923268,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35399,
+      "create_time": 1793126535.336308,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793126925.932596,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35606,
+      "create_time": 1793126538.760047,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793126926.071255,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35402,
+      "create_time": 1793126535.336622,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-7",
+      "unix": 1793126926.080766,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35693,
+      "create_time": 1793126538.890281,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-5",
+      "unix": 1793126926.224517,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35411,
+      "create_time": 1793126535.341553,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-5",
+      "unix": 1793126926.2341619,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35816,
+      "create_time": 1793126539.24729,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-5",
+      "unix": 1793126926.375726,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35420,
+      "create_time": 1793126535.34282,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-5",
+      "unix": 1793126926.38535,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 36214,
+      "create_time": 1793126555.249008,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.5253131,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35432,
+      "create_time": 1793126535.356501,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.5344481,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35676,
+      "create_time": 1793126538.889298,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.670939,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35438,
+      "create_time": 1793126535.357651,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.680369,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35758,
+      "create_time": 1793126538.924005,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.8181918,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35447,
+      "create_time": 1793126535.380079,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.827612,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35916,
+      "create_time": 1793126539.827904,
+      "role": "child",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.969627,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35470,
+      "create_time": 1793126535.409979,
+      "role": "launcher",
+      "mission": "referenced-chatgpt-conversation-this-is-an",
+      "unix": 1793126926.9796748,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35543,
+      "create_time": 1793126538.522666,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.114356,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35471,
+      "create_time": 1793126535.410004,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.1238241,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 36147,
+      "create_time": 1793126550.220033,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.267224,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35474,
+      "create_time": 1793126535.419678,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.2789729,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35597,
+      "create_time": 1793126538.666668,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126927.4215739,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35484,
+      "create_time": 1793126535.44194,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126927.434467,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 36116,
+      "create_time": 1793126545.185697,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126927.578178,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35492,
+      "create_time": 1793126535.443436,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-3",
+      "unix": 1793126927.588068,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 36089,
+      "create_time": 1793126542.117577,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.729853,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35512,
+      "create_time": 1793126535.466421,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.741013,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35730,
+      "create_time": 1793126538.918179,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.882518,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35517,
+      "create_time": 1793126535.467768,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126927.893239,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    },
+    {
+      "pid": 35751,
+      "create_time": 1793126538.922341,
+      "role": "child",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126928.02975,
+      "signal": "SIGTERM",
+      "verification": "identity_uid_parent_executable_command_cwd_descendants_files_terminal_connections_checked",
+      "sent": true
+    },
+    {
+      "pid": 35519,
+      "create_time": 1793126535.468428,
+      "role": "launcher",
+      "mission": "files-pasted-by-the-user-mission-4",
+      "unix": 1793126928.0399182,
+      "signal": null,
+      "outcome": "already_exited_after_child_termination"
+    }
+  ],
+  "signals_sent": 30,
+  "sigkill_sent": 0,
+  "files_deleted": 0,
+  "status": "completed_clean_exit",
+  "network_exception_scope": "npm launcher only, remote TLS443 resolving to registry.npmjs.org; child must have no IP connections",
+  "guard_limits_preserved": true,
+  "checkpoint_preserved": true,
+  "historical_evidence_preserved": true,
+  "ended_utc": "2026-10-27T18:48:48.154183+00:00",
+  "after": {
+    "timestamp_utc": "2026-10-27T18:48:48.154208+00:00",
+    "available_ram_bytes": 7734673408,
+    "swap_used_bytes": 5589893120
+  },
+  "survivors": [],
+  "stopped_count": 52
+}

@@ -1,0 +1,345 @@
+{
+  "schema": "airllm-controlled-router-reference-v1",
+  "status": "diagnostic_completed",
+  "probe_sha256": "1cb350eb62473a4a1ec264427ba5abbd53a7d15705513b35f9b612b845259923",
+  "capture_sha256": "d2e710259ba754f6ba9fb95374fd94a10d8ab1549d076be957f1b3dee7ffc158",
+  "diagnostic_helpers_sha256": "09a52afdbae5274ddd69f14745ff5e4cc5af1cda007b812cbfd265ab49e8428f",
+  "versions": {
+    "mlx": "0.32.4",
+    "torch": "2.14.1"
+  },
+  "cpu_reference_device": "cpu",
+  "cpu_reference_dtype": "float32",
+  "cpu_threads": 1,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MLX_ENABLE_TF32": "0"
+  },
+  "target": {
+    "layer": 30,
+    "absolute_position": 154
+  },
+  "input_shape": [
+    128,
+    2048
+  ],
+  "weight_shape": [
+    256,
+    2048
+  ],
+  "results": {
+    "gpu_original128": {
+      "selected_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        104,
+        193
+      ],
+      "normalized_selected_weights": [
+        0.17033399641513824,
+        0.1432681381702423,
+        0.13876023888587952,
+        0.11623908579349518,
+        0.11175699532032013,
+        0.11097022891044617,
+        0.10433565825223923,
+        0.10433565825223923
+      ],
+      "expert_193": {
+        "logit": -4.525256156921387,
+        "probability": 0.012111574411392212,
+        "logit_fp32_bits": "0xc090cee6",
+        "probability_fp32_bits": "0x3c466fa0"
+      },
+      "expert_104": {
+        "logit": -4.525256156921387,
+        "probability": 0.012111574411392212,
+        "logit_fp32_bits": "0xc090cee6",
+        "probability_fp32_bits": "0x3c466fa0"
+      },
+      "logit_gap_193_minus_104": 0.0,
+      "probability_gap_193_minus_104": 0.0,
+      "equal_target_probabilities": true,
+      "entire_logits_bitwise_equal_capture": true,
+      "entire_probabilities_bitwise_equal_capture": true,
+      "entire_selected_bitwise_equal_capture": true
+    },
+    "gpu_contiguous16": {
+      "selected_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        193,
+        104
+      ],
+      "normalized_selected_weights": [
+        0.17033399641513824,
+        0.14326834678649902,
+        0.13876023888587952,
+        0.116239033639431,
+        0.11175700277090073,
+        0.11097023636102676,
+        0.10433560609817505,
+        0.10433550179004669
+      ],
+      "expert_193": {
+        "logit": -4.525257110595703,
+        "probability": 0.012111565098166466,
+        "logit_fp32_bits": "0xc090cee8",
+        "probability_fp32_bits": "0x3c466f96"
+      },
+      "expert_104": {
+        "logit": -4.5252580642700195,
+        "probability": 0.012111552990972996,
+        "logit_fp32_bits": "0xc090ceea",
+        "probability_fp32_bits": "0x3c466f89"
+      },
+      "logit_gap_193_minus_104": 9.5367431640625e-07,
+      "probability_gap_193_minus_104": 1.210719347000122e-08,
+      "equal_target_probabilities": false,
+      "original_chunk_slice": [
+        16,
+        32
+      ],
+      "target_row": 10
+    },
+    "torch_cpu_reference_complete128": {
+      "selected_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        104,
+        193
+      ],
+      "normalized_selected_weights": [
+        0.17033372819423676,
+        0.1432678997516632,
+        0.13876000046730042,
+        0.11623973399400711,
+        0.11175702512264252,
+        0.11097026616334915,
+        0.1043357327580452,
+        0.10433568060398102
+      ],
+      "expert_193": {
+        "logit": -4.525254726409912,
+        "probability": 0.012111594900488853,
+        "logit_fp32_bits": "0xc090cee3",
+        "probability_fp32_bits": "0x3c466fb6"
+      },
+      "expert_104": {
+        "logit": -4.525254249572754,
+        "probability": 0.012111600488424301,
+        "logit_fp32_bits": "0xc090cee2",
+        "probability_fp32_bits": "0x3c466fbc"
+      },
+      "logit_gap_193_minus_104": -4.76837158203125e-07,
+      "probability_gap_193_minus_104": -5.587935447692871e-09,
+      "equal_target_probabilities": false
+    },
+    "captured_original128": {
+      "selected_ids": [
+        184,
+        163,
+        234,
+        37,
+        15,
+        172,
+        104,
+        193
+      ],
+      "normalized_selected_weights": [
+        0.17033399641513824,
+        0.1432681381702423,
+        0.13876023888587952,
+        0.11623908579349518,
+        0.11175699532032013,
+        0.11097022891044617,
+        0.10433565825223923,
+        0.10433565825223923
+      ],
+      "expert_193": {
+        "logit": -4.525256156921387,
+        "probability": 0.012111574411392212,
+        "logit_fp32_bits": "0xc090cee6",
+        "probability_fp32_bits": "0x3c466fa0"
+      },
+      "expert_104": {
+        "logit": -4.525256156921387,
+        "probability": 0.012111574411392212,
+        "logit_fp32_bits": "0xc090cee6",
+        "probability_fp32_bits": "0x3c466fa0"
+      },
+      "logit_gap_193_minus_104": 0.0,
+      "probability_gap_193_minus_104": 0.0,
+      "equal_target_probabilities": true
+    }
+  },
+  "artifacts": {
+    "gpu_original128": {
+      "logits": {
+        "file": "gpu_original128-logits.npy",
+        "sha256": "5b593738a4b6d6beae3845e6f66100b003bfa1458962016e0d27d5eca8d16335",
+        "bytes": 131200,
+        "shape": [
+          128,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "probabilities": {
+        "file": "gpu_original128-probabilities.npy",
+        "sha256": "27b31968d6eab29acf0882ffc929de4ead53c37fb7cdeaf8b18cca9181048d17",
+        "bytes": 131200,
+        "shape": [
+          128,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "order": {
+        "file": "gpu_original128-order.npy",
+        "sha256": "b41797c155c0798bcb4fda5561852f82b3b54b08de4b732777205123c5e9c91b",
+        "bytes": 131200,
+        "shape": [
+          128,
+          256
+        ],
+        "dtype": "uint32"
+      },
+      "selected": {
+        "file": "gpu_original128-selected.npy",
+        "sha256": "bdb98cec72ba9860e8ac03f4a362089f4bafb99066334934ff773f99b8d298b5",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "uint32"
+      },
+      "normalized": {
+        "file": "gpu_original128-normalized.npy",
+        "sha256": "68d200156bbdbd9e1c9b3ddcc5c692648f09fde635ce00318446bd7ff84006b0",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "float32"
+      }
+    },
+    "gpu_contiguous16": {
+      "logits": {
+        "file": "gpu_contiguous16-logits.npy",
+        "sha256": "91a9a889a36ff66c373f3906b97c7e28bb966efec722c58d3b07c0e7f988c524",
+        "bytes": 16512,
+        "shape": [
+          16,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "probabilities": {
+        "file": "gpu_contiguous16-probabilities.npy",
+        "sha256": "4bd60c737d67aa8d7ce4d5b3cadbba443ff5ded1ef8a1490768ab953eee7e300",
+        "bytes": 16512,
+        "shape": [
+          16,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "order": {
+        "file": "gpu_contiguous16-order.npy",
+        "sha256": "fc832030ed8235d76a7e9b4d32eed0e08b1731e4165c2a71682e1205f6c49354",
+        "bytes": 16512,
+        "shape": [
+          16,
+          256
+        ],
+        "dtype": "uint32"
+      },
+      "selected": {
+        "file": "gpu_contiguous16-selected.npy",
+        "sha256": "79824fda4dc450f8b16469f52c8b234236f2fa6b3113852bc6a160aafa422883",
+        "bytes": 640,
+        "shape": [
+          16,
+          8
+        ],
+        "dtype": "uint32"
+      },
+      "normalized": {
+        "file": "gpu_contiguous16-normalized.npy",
+        "sha256": "58a0dcd3cc9b8debd58f8fd299852f4ed582ad605c74e9c1dcb0806056c2f047",
+        "bytes": 640,
+        "shape": [
+          16,
+          8
+        ],
+        "dtype": "float32"
+      }
+    },
+    "torch_cpu_reference_complete128": {
+      "logits": {
+        "file": "torch_cpu_reference_complete128-logits.npy",
+        "sha256": "d6c406eb6ea245df3744a466e5965e9f4465950e0570ec2f414d0ea0fe271eda",
+        "bytes": 131200,
+        "shape": [
+          128,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "probabilities": {
+        "file": "torch_cpu_reference_complete128-probabilities.npy",
+        "sha256": "ce2f0c4487951a862844bfe241214ffa33b4b27b774aa280f2f87905ca3a9ed2",
+        "bytes": 131200,
+        "shape": [
+          128,
+          256
+        ],
+        "dtype": "float32"
+      },
+      "selected": {
+        "file": "torch_cpu_reference_complete128-selected.npy",
+        "sha256": "da0f16402f2f4abfa558a7db0733d43c03167082b314f9f262a3089e6c0810f4",
+        "bytes": 8320,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "int64"
+      },
+      "normalized": {
+        "file": "torch_cpu_reference_complete128-normalized.npy",
+        "sha256": "57aa7c58f193aaf9faa461510bf54b145dcd36bc7556da2ddd7c40a8914890a3",
+        "bytes": 4224,
+        "shape": [
+          128,
+          8
+        ],
+        "dtype": "float32"
+      }
+    }
+  },
+  "ordinary_gpu128_replay_control_passed": true,
+  "actual_h1_activations_used": false,
+  "same_h2_target_input_and_weights_for_every_variant": true,
+  "engine_modified": false,
+  "fidelity_verifier_modified": false,
+  "complete_generation": false,
+  "performance_gain_qualified": false,
+  "scope": "Numerical router convention comparison on the same real H2 capture; no runtime fix or full-model equivalence is inferred."
+}

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "supervisor_sha256": "a8da2a4213cc77fb8bae7eceb89ff30618c58561d0c58eadd061accaa2a3d637",
+    "campaign": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005",
+    "campaign_config_sha256": "b14bafb51bbfd1cb03bb8d8ae76ce077567ede27711501ad652f21e0b2cf6f07",
+    "interpreter": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+    "max_wait_seconds": 876.8426216669905,
+    "max_runtime_seconds": 4686.182445049286,
+    "required_pressure_level": 1,
+    "stable_seconds": 5.0,
+    "poll_seconds": 1.0,
+    "headroom_bytes": 268435456,
+    "inter_worker_wait_seconds": 300.0,
+    "retained_limits": {
+      "rss_bytes": 2147483648,
+      "reserve_bytes": 3221225472,
+      "swap_growth_bytes": 134217728,
+      "admitted_payload_bytes": 805306368,
+      "timeout_seconds": 600.0,
+      "interval_seconds": 0.05,
+      "max_processes": 32
+    },
+    "disk_reserve_bytes": 5368709120,
+    "process_inventory_sha256": "a23fb9cf54f4936f8999e3e7a2ce498634e75a0288a89cf7a1a4d76dded13cd7"
+  },
+  "status": "campaign_deferred_resources",
+  "started_unix": 1793210618.1332638,
+  "wait_deadline_unix": 1793211494.9758854,
+  "sample_count": 6,
+  "campaign_launched": true,
+  "prior_campaign_status": "deferred_or_interrupted",
+  "attempts": [
+    {
+      "command": [
+        "/Users/macbook/Documents/Codex/2026-10-22/files-pasted-by-the-user-mission/work/validation-venv/bin/python",
+        "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/work/airllm-next/benchmarks/m5_validation.py",
+        "run",
+        "--campaign",
+        "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005",
+        "--resource-wait-seconds",
+        "300"
+      ],
+      "started_unix": 1793210631.608674,
+      "exit_code": 75,
+      "ended_unix": 1793211736.110923
+    }
+  ],
+  "last_observation": {
+    "available_bytes": 4587585536,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 4761255936,
+    "pressure_level": 1,
+    "disk_free_bytes": 121327169536,
+    "disk_free_by_path": {
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005": 121327169536,
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/supervisor-recovery-015": 121327169536
+    },
+    "disk_reserve_bytes": 5368709120,
+    "other_model_processes": [],
+    "process_inventory_errors": [
+      {
+        "pid": 0,
+        "field": "exe",
+        "error_type": "AccessDenied",
+        "reason": "access_or_lifetime_unavailable"
+      }
+    ],
+    "process_inventory_uncertain": [],
+    "process_inventory_complete": true,
+    "process_inventory_count": 905,
+    "elapsed_seconds": 5.634600290999515,
+    "ready": true,
+    "reason": null,
+    "continuous_ready_seconds": 5.55806450000091,
+    "unix_seconds": 1793210623.7687979
+  },
+  "last_updated_unix": 1793210623.7687979,
+  "last_snapshot": {
+    "available_bytes": 4587585536,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 4761255936,
+    "pressure_level": 1,
+    "disk_free_bytes": 121327169536,
+    "disk_free_by_path": {
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005": 121327169536,
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/supervisor-recovery-015": 121327169536
+    },
+    "disk_reserve_bytes": 5368709120,
+    "other_model_processes": [],
+    "process_inventory_errors": [
+      {
+        "pid": 0,
+        "field": "exe",
+        "error_type": "AccessDenied",
+        "reason": "access_or_lifetime_unavailable"
+      }
+    ],
+    "process_inventory_uncertain": [],
+    "process_inventory_complete": true,
+    "process_inventory_count": 905
+  },
+  "waited_seconds": 5.634600290999515,
+  "continuous_ready_seconds": 5.55806450000091,
+  "disk_before_launch": {
+    "disk_free_bytes": 121326039040,
+    "disk_free_by_path": {
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005": 121326039040,
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/supervisor-recovery-015": 121326039040
+    },
+    "disk_reserve_bytes": 5368709120
+  },
+  "campaign_started_unix": 1793210631.608667,
+  "last_disk_snapshot": {
+    "disk_free_bytes": 121105793024,
+    "disk_free_by_path": {
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/campaign-recovery-005": 121105793024,
+      "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/supervisor-recovery-015": 121105793024
+    },
+    "disk_reserve_bytes": 5368709120,
+    "other_model_processes": [],
+    "process_inventory_errors": [
+      {
+        "pid": 0,
+        "field": "exe",
+        "error_type": "AccessDenied",
+        "reason": "access_or_lifetime_unavailable"
+      }
+    ],
+    "process_inventory_uncertain": [],
+    "process_inventory_complete": true,
+    "process_inventory_count": 916,
+    "unix_seconds": 1793211735.604137
+  },
+  "reason": "The guarded campaign stopped; raw logs and sealed results are retained",
+  "ended_unix": 1793211736.110943,
+  "supervisor_source_unchanged": true
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "airllm.final-selected-evidence-package-summary.v1",
+  "status": "verified_partial_selection",
+  "archive": "Preuves-finales-M5-selection.zip",
+  "archive_bytes": 1185847216,
+  "archive_sha256": "1dc1df5c6a2cc3ca89b2fa2b0c87e2488c2333243b4d6df28721d85c8cd4a104",
+  "manifest": "Manifest-preuves-finales-M5-selection.json",
+  "manifest_sha256": "85725dedc62c3e81fae664dd72942af9504ba98842ee158eecb629e40623810d",
+  "archive_member_count": 2019,
+  "payload_file_count": 2018,
+  "selection_payload_bytes": 1349186219,
+  "full_campaign_complete": false,
+  "archive_is_full_campaign": false,
+  "selected_long_workers": 4,
+  "selected_long_emitted_tokens_per_worker": 319,
+  "c5_verification_sha256": "e41eee4e294c412bc9eded8113e5f5692d9057da09af954dd644260ffd12fb51",
+  "final_source_verification_sha256": "f260c0a5ae5ca1555c51fe62331d85e5044402a7d81b03c601e782b1fbce7320",
+  "campaigns": [
+    {
+      "campaign": "campaign-recovery-005",
+      "status": "deferred_or_interrupted",
+      "config_sha256": "b14bafb51bbfd1cb03bb8d8ae76ce077567ede27711501ad652f21e0b2cf6f07",
+      "original_full_manifest_sha256": "d8191e78432bda6dab6e46bd6b108e0491d4926d351c18f7d74134c101f26190",
+      "selected_job_keys": [
+        "general_long_h1_vs_h2_reference16/baseline-p00",
+        "general_long_h1_vs_h2_reference16/candidate-p00",
+        "general_long_h1_vs_h2_reference16/candidate-p01",
+        "general_long_h1_vs_h2_reference16/baseline-p01"
+      ],
+      "original_recorded_jobs": 88,
+      "original_planned_jobs": 100,
+      "original_manifest_fully_reproduced": false,
+      "source_heads": {
+        "h1": "c8f81e57463ed3d7fd3d7dba226a65500439a9ce",
+        "h2": "5e8234181e736c0319a64df25e6813e92dd3e6da",
+        "candidate": "a5d289704f436e59fc9b4aab5d62a1dba80f1347"
+      },
+      "full_campaign_complete": false,
+      "independent_verification_scope": "available_sealed_evidence_only",
+      "sealed_jobs_verified": 88,
+      "accepted_experiments_verified": 22,
+      "missing_experiments": {
+        "general_long_speculation16": {
+          "planned_jobs": 4,
+          "missing_job_keys": [
+            "general_long_speculation16/baseline-p00",
+            "general_long_speculation16/candidate-p00",
+            "general_long_speculation16/candidate-p01",
+            "general_long_speculation16/baseline-p01"
+          ]
+        }
+      },
+      "blocked_experiments": {
+        "combined_tensorops_grouped_spec8": {
+          "planned_jobs": 4,
+          "missing_job_keys": [
+            "combined_tensorops_grouped_spec8/baseline-p00",
+            "combined_tensorops_grouped_spec8/candidate-p00",
+            "combined_tensorops_grouped_spec8/candidate-p01",
+            "combined_tensorops_grouped_spec8/baseline-p01"
+          ],
+          "unmet_prerequisites": [
+            "tensorops_vs_h2_reference16"
+          ]
+        }
+      },
+      "excluded_experiments": {
+        "tensorops_vs_h2_reference16": {
+          "planned_jobs": 4,
+          "reason": "Some required full-grid cases failed compilation or numerics for tensorops/4"
+        }
+      },
+      "omitted_original_manifest_member_count": 9560,
+      "omitted_member_list_in_full_local_manifest": true
+    },
+    {
+      "campaign": "campaign-manifest-final-001",
+      "status": "partial_selected_experiments_completed",
+      "config_sha256": "7d769cc5b6c03bd971cd8677f34575bc050161bd0753b711e54a6a3b8a7f2f01",
+      "original_full_manifest_sha256": "09b3c5636442ed02daa9a28a33adfe716e6abdf0bf54a0af0968c230b73a69d9",
+      "selected_job_keys": [
+        "h1_vs_h2_reference16/baseline-p00",
+        "h1_vs_h2_reference16/candidate-p00",
+        "h1_vs_h2_reference16/candidate-p01",
+        "h1_vs_h2_reference16/baseline-p01"
+      ],
+      "original_recorded_jobs": 4,
+      "original_planned_jobs": 100,
+      "original_manifest_fully_reproduced": false,
+      "source_heads": {
+        "h1": "c8f81e57463ed3d7fd3d7dba226a65500439a9ce",
+        "h2": "5e8234181e736c0319a64df25e6813e92dd3e6da",
+        "candidate": "5f0e0c5f376dae7da4f9f039b1ef51d7942e198a"
+      },
+      "full_campaign_complete": false,
+      "independent_verification_scope": "sealed_four_worker_target",
+      "omitted_original_manifest_member_count": 318,
+      "omitted_member_list_in_full_local_manifest": true
+    }
+  ],
+  "omissions": [
+    "C5 is incomplete: 88 sealed workers / 100 planned, 22 accepted experiments; 4 speculation16 workers missing, 4 combination workers blocked and unexecuted, 4 TensorOps workers excluded."
+  ],
+  "raw_archive_and_full_manifest_publicly_uploaded": false,
+  "validation": "Packager streaming SHA and ZIP CRC/SHA verification completed; original campaign evidence preserved",
+  "packager_sha256": "7eda5cdb2d50d4949b3de2ac7aa35af4499ec4f303ac24f9c2087cbdeb679ac3"
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "airllm-router-comparison-v1",
+  "captures": [
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/router-h1-001/capture.json",
+      "sha256": "a853da33f49c5d8612848b76f211cc0cba3009ce2fe27bb60dd701208ea4265d"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-10-27/files-pasted-by-the-user-mission-7/outputs/router-h2-004/capture.json",
+      "sha256": "d2e710259ba754f6ba9fb95374fd94a10d8ab1549d076be957f1b3dee7ffc158"
+    }
+  ],
+  "strict_ordered_route_pass": false,
+  "selected_set_equal": true,
+  "reference_ids": [
+    184,
+    163,
+    234,
+    37,
+    15,
+    172,
+    193,
+    104
+  ],
+  "candidate_ids": [
+    184,
+    163,
+    234,
+    37,
+    15,
+    172,
+    104,
+    193
+  ],
+  "affected_experts": [
+    {
+      "expert": 104,
+      "reference_fsum_fp64": -4.5252582965566255,
+      "candidate_fsum_fp64": -4.525257665510003,
+      "reference_logit": -4.525258541107178,
+      "candidate_logit": -4.525256156921387,
+      "reference_probability": 0.012111550197005272,
+      "candidate_probability": 0.012111574411392212
+    },
+    {
+      "expert": 193,
+      "reference_fsum_fp64": -4.525257671884949,
+      "candidate_fsum_fp64": -4.525256953554325,
+      "reference_logit": -4.5252580642700195,
+      "candidate_logit": -4.525256156921387,
+      "reference_probability": 0.01211155578494072,
+      "candidate_probability": 0.012111574411392212
+    }
+  ],
+  "activation_bitwise_equal": false,
+  "maximum_activation_absolute_difference": 5.7220458984375e-06,
+  "maximum_router_logit_absolute_difference": 5.7220458984375e-06,
+  "maximum_router_probability_absolute_difference": 2.421438694000244e-08,
+  "captured_router_weights_bitwise_equal": true,
+  "reference_boundary_tie": false,
+  "candidate_boundary_tie": false,
+  "original_expert_weight_pairing_preserved": true,
+  "performance_gain_qualified": false,
+  "complete_generation": false,
+  "cause": "See measured activation/logit/probability differences and controlled replays; rank permutation alone does not establish its cause."
+}
