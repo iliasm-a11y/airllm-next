@@ -5,6 +5,9 @@ __version__ = '5.0.0a1'
 
 
 def __getattr__(name):
+    if name == 'NativeGGUFGLM5Model':
+        from .gguf_glm5 import NativeGGUFGLM5Model
+        return NativeGGUFGLM5Model
     if name == 'AirLLMNextModel':
         from .runtime import AirLLMNextModel
         return AirLLMNextModel

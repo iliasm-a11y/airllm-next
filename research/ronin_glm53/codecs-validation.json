@@ -1,0 +1,62 @@
+{
+  "scope": "synthetic codec decoding only; no checkpoint tensor computation, inference, Metal or M5 validation",
+  "run_timestamp_utc": "2026-10-28T22:03:49.251088+00:00",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "gguf": "0.19.0",
+  "upstream_scalar_reference": "https://github.com/ggml-org/llama.cpp/blob/74a4fb0037243f1b6196d0f990ff0aff031356cf/ggml/src/ggml-quants.c",
+  "checks": [
+    {
+      "codec": "Q2_K",
+      "blocks": 37,
+      "fp32_values": 9472,
+      "max_abs_error": 0.0,
+      "fp32_bit_patterns_equal": true
+    },
+    {
+      "codec": "Q8_0",
+      "blocks": 37,
+      "fp32_values": 1184,
+      "max_abs_error": 0.0,
+      "fp32_bit_patterns_equal": true
+    },
+    {
+      "codec": "Q4_K",
+      "blocks": 41,
+      "fp32_values": 10496,
+      "max_abs_error": 0.0,
+      "fp32_bit_patterns_equal": true
+    },
+    {
+      "codec": "Q6_K",
+      "blocks": 41,
+      "fp32_values": 10496,
+      "max_abs_error": 0.0,
+      "fp32_bit_patterns_equal": true
+    },
+    {
+      "codec": "BF16",
+      "all_possible_bf16_patterns": 65536,
+      "fp32_bit_patterns_equal": true,
+      "finite_max_abs_error": 0.0
+    }
+  ],
+  "regression": {
+    "command": "python -m pytest -q tests_next/test_gguf_split.py tests_next/test_glm53_codecs.py tests_next/test_gguf.py tests_next/test_gguf_packed_io.py",
+    "passed": 106,
+    "skipped": 1,
+    "skip_reason": "optional real-checkpoint test has no local checkpoint",
+    "seconds": 2.48
+  },
+  "split_reader_audit": {
+    "passed": "shared retained decoded/packed arrays, concurrency serialization, metadata-only shard 1, partial init closes fds, idempotent close preserving retained values",
+    "fixes": [
+      "total rather than per-shard metadata budget",
+      "positive integer shared budget validation",
+      "closed reads fail explicitly; close shares read lock",
+      "integer split metadata completeness",
+      "secondary metadata cannot introduce contradictory or unadvertised first-shard config"
+    ]
+  }
+}

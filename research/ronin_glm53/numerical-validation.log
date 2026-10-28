@@ -1,0 +1,9 @@
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_kda` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `fused_recurrent_kda` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+/workspace/scratch/12a9d6e1e6bc/airllm-next/research/ronin_glm53/numerical-validation.json
+five_layer_f32 maxabs prefill 1.7881393432617188e-07 decode 8.940696716308594e-08 routes True
+five_layer_mixed_q2_k_q8_0 maxabs prefill 2.5974586606025696e-06 decode 2.682209014892578e-06 routes True
+45_layer_288_expert_top8_f32 maxabs prefill 2.086162567138672e-07 decode 1.1920928955078125e-07 routes True
+five_layer_f32_sparse_kpool maxabs prefill 1.7881393432617188e-07 decode 8.940696716308594e-08 routes True

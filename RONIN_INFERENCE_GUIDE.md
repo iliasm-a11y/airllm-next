@@ -1,5 +1,11 @@
 # RONIN local inference in the V5 research branch
 
+GLM-5.3 Flash uses the separate `glm5-next` architecture. The experimental
+native GGUF port, its exact validation scope, download checks and local
+conversation adapter are documented in [RONIN_GLM53_FLASH_FR.md](RONIN_GLM53_FLASH_FR.md).
+The older `--backend glm` command below selects `glm_moe_dsa`, not this model.
+No real GLM-5.3 Flash conversation or M5 qualification is claimed by this port.
+
 The engine now includes a bounded asynchronous local job API. One loaded Next
 model and its weight caches serve several logical agents. **Only one native
 KV/recurrent context is resident at a time.** Registered jobs are not concurrent

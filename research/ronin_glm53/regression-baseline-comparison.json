@@ -1,0 +1,29 @@
+{
+  "base_commit": "0fb55ba32121c437fb1d80319e1fc40f26546310",
+  "environment_unchanged": true,
+  "candidate_failures": 33,
+  "baseline_targeted_failures": 33,
+  "candidate_only": [],
+  "baseline_only": [],
+  "identical_failure_cases": true,
+  "baseline_summary": {
+    "failed": 13,
+    "passed": 96,
+    "errors": 20
+  },
+  "candidate_initial_summary": {
+    "failed": 13,
+    "passed": 1869,
+    "errors": 20,
+    "skipped": 137,
+    "subtests_passed": 126
+  },
+  "scope": "baseline rerun includes every failing/error module; not the entire baseline suite",
+  "causes": [
+    "macOS sandbox-exec unavailable on Linux",
+    "Popen child PID unobservable by psutil in this environment",
+    "Transformers Granite routing reference API changed vs PR14 lock",
+    "accelerate not installed",
+    "inherited fstat injected-error cases fail on both branches"
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "suite_attributes": {
+    "name": "pytest",
+    "errors": "20",
+    "failures": "13",
+    "skipped": "137",
+    "tests": "2165",
+    "time": "58.513",
+    "timestamp": "2026-10-29T01:04:09.272662+03:00",
+    "hostname": "87c1b377a7ca"
+  },
+  "failures": [
+    {
+      "classname": "tests_next.test_experiment_guard",
+      "name": "test_subprocess_failure_and_timeout_are_persisted",
+      "kind": "failure",
+      "message": "psutil.NoSuchProcess: process PID not found (pid=44)"
+    },
+    {
+      "classname": "tests_next.test_experiment_guard",
+      "name": "test_owned_process_count_is_bounded_and_persisted",
+      "kind": "failure",
+      "message": "psutil.NoSuchProcess: process PID not found (pid=45)"
+    },
+    {
+      "classname": "tests_next.test_experiment_guard",
+      "name": "test_detached_observed_child_is_stopped",
+      "kind": "failure",
+      "message": "psutil.NoSuchProcess: process PID not found (pid=46)"
+    },
+    {
+      "classname": "tests_next.test_experiment_guard",
+      "name": "test_cleanup_failure_still_persists_sampling_evidence",
+      "kind": "failure",
+      "message": "psutil.NoSuchProcess: process PID not found (pid=47)"
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_granite_logits_routes_cached_decode_and_generation[1-False-True]",
+      "kind": "failure",
+      "message": "AssertionError: \nArrays are not equal\n\n(shapes (1, 2), (1, 6) mismatch)\n ACTUAL: array([[3, 4]], dtype=uint32)\n DESIRED: array([[-0.103203, -0.048996, -0.046634,  0.087465,  0.089105,  0.089879]],\n      dtype=float32)"
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_granite_logits_routes_cached_decode_and_generation[1-True-False]",
+      "kind": "failure",
+      "message": "AssertionError: \nArrays are not equal\n\n(shapes (1, 2), (1, 6) mismatch)\n ACTUAL: array([[3, 4]], dtype=uint32)\n DESIRED: array([[-0.103203, -0.048996, -0.046634,  0.087465,  0.089105,  0.089879]],\n      dtype=float32)"
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_granite_logits_routes_cached_decode_and_generation[4-False-True]",
+      "kind": "failure",
+      "message": "AssertionError: \nArrays are not equal\n\n(shapes (4, 2), (4, 6) mismatch)\n ACTUAL: array([[2, 5],\n       [0, 5],\n       [1, 5],\n       [3, 4]], dtype=uint32)\n DESIRED: array([[ 0.005214,  0.008587,  0.022057,  0.031891,  0.055281,  0.062012],\n       [-0.087894, -0.027111, -0.008683,  0.013049,  0.063848,  0.086511],\n       [-0.086892,  0.022051,  0.037803,  0.044635,  0.083498,  0.1176  ],..."
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_granite_logits_routes_cached_decode_and_generation[4-True-False]",
+      "kind": "failure",
+      "message": "AssertionError: \nArrays are not equal\n\n(shapes (4, 2), (4, 6) mismatch)\n ACTUAL: array([[2, 5],\n       [0, 5],\n       [1, 5],\n       [3, 4]], dtype=uint32)\n DESIRED: array([[ 0.005214,  0.008587,  0.022057,  0.031891,  0.055281,  0.062012],\n       [-0.087894, -0.027111, -0.008683,  0.013049,  0.063848,  0.086511],\n       [-0.086892,  0.022051,  0.037803,  0.044635,  0.083498,  0.1176  ],..."
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_official_streamed_reference_matches_full_official_model_and_releases_layers[False]",
+      "kind": "failure",
+      "message": "ModuleNotFoundError: No module named 'accelerate'"
+    },
+    {
+      "classname": "tests_next.test_granite_runtime",
+      "name": "test_official_streamed_reference_matches_full_official_model_and_releases_layers[True]",
+      "kind": "failure",
+      "message": "ModuleNotFoundError: No module named 'accelerate'"
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_exact_code_and_no_mutation",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_fenced_code_is_exact_and_format_violation_separate",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_output_input_alias_refused_without_mutation[direct]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_output_input_alias_refused_without_mutation[symlink]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_output_input_alias_refused_without_mutation[hardlink]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_distinct_output_accepted",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_wrong_generated_code_is_executed_without_repair",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_input_mutation_fails_even_with_correct_return_value",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_returned_input_alias_is_explicit_even_when_values_and_mutation_checks_pass",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_incomplete_response_retained_without_executing_partial_code[response0]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_incomplete_response_retained_without_executing_partial_code[response1]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_incomplete_response_retained_without_executing_partial_code[response2]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_incomplete_response_retained_without_executing_partial_code[response3]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_completed_response_still_executes_function_cases",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_unsafe_ast_rejected_before_execution[import os\\ndef f():\\n    return 1\\n]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_unsafe_ast_rejected_before_execution[def f():\\n    return open(\"x\")\\n]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_unsafe_ast_rejected_before_execution[def f():\\n    return [].__class__\\n]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_unsafe_ast_rejected_before_execution[f()\\n]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_unsafe_ast_rejected_before_execution[@print\\ndef f():\\n    return 1\\n]",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_next.test_real_world_code_checks",
+      "name": "test_infinite_generated_loop_is_terminated",
+      "kind": "error",
+      "message": "failed on setup with \"RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution\""
+    },
+    {
+      "classname": "tests_hyperstream3.test_m5_finder_metadata",
+      "name": "test_access_io_and_programming_errors_are_never_silently_ignored[permission-fstat]",
+      "kind": "failure",
+      "message": "PermissionError: denied"
+    },
+    {
+      "classname": "tests_hyperstream3.test_m5_finder_metadata",
+      "name": "test_access_io_and_programming_errors_are_never_silently_ignored[io-fstat]",
+      "kind": "failure",
+      "message": "OSError: [Errno 5] injected I/O failure"
+    },
+    {
+      "classname": "tests_hyperstream3.test_m5_finder_metadata",
+      "name": "test_access_io_and_programming_errors_are_never_silently_ignored[programming-fstat]",
+      "kind": "failure",
+      "message": "RuntimeError: injected programming error"
+    }
+  ]
+}

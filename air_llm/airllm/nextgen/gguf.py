@@ -83,12 +83,17 @@ class _PackedBuffer:
 class GGMLType(IntEnum):
     F32 = 0
     F16 = 1
+    Q8_0 = 8
+    Q2_K = 10
     Q4_K = 12
     Q6_K = 14
+    BF16 = 30
 
 
-_LAYOUT = {GGMLType.F32: (1, 4), GGMLType.F16: (1, 2),
+_LAYOUT = {GGMLType.F32: (1, 4), GGMLType.F16: (1, 2), GGMLType.BF16: (1, 2),
+           GGMLType.Q8_0: (32, 34), GGMLType.Q2_K: (256, 84),
            GGMLType.Q4_K: (256, 144), GGMLType.Q6_K: (256, 210)}
+_QUANTIZED = frozenset(_LAYOUT) - {GGMLType.F32, GGMLType.F16, GGMLType.BF16}
 _SCALARS = {0: "B", 1: "b", 2: "H", 3: "h", 4: "I", 5: "i",
             6: "f", 7: "?", 10: "Q", 11: "q", 12: "d"}
 
@@ -121,13 +126,42 @@ class TensorInfo:
 
 def _decode_into(raw: bytes, kind: GGMLType, output: np.ndarray) -> None:
     """Decode into an existing FP32 allocation using small vectorized slices."""
+    if kind == GGMLType.BF16:
+        # A BF16 value is exactly the upper 16 bits of IEEE FP32. Construct
+        # those bits in the already-budgeted output, preserving signed zero
+        # and NaN payloads without a floating-point cast or extra full array.
+        bits = output.reshape(-1).view(np.uint32)
+        bits[:] = np.frombuffer(raw, dtype="<u2")
+        bits <<= 16
+        return
     if kind in (GGMLType.F32, GGMLType.F16):
         dt = "<f4" if kind == GGMLType.F32 else "<f2"
         output.reshape(-1)[:] = np.frombuffer(raw, dtype=dt)
         return
-    block_bytes = _LAYOUT[kind][1]
+    block_elements, block_bytes = _LAYOUT[kind]
     blocks = np.frombuffer(raw, dtype=np.uint8).reshape(-1, block_bytes)
-    out = output.reshape(-1, 256)
+    out = output.reshape(-1, block_elements)
+    if kind == GGMLType.Q8_0:
+        d = blocks[:, :2].copy().view("<f2").reshape(-1).astype(np.float32)
+        # Signed quants follow the FP16 scale, with no implicit zero point.
+        out[:] = blocks[:, 2:34].view(np.int8).astype(np.float32) * d[:, None]
+        return
+    if kind == GGMLType.Q2_K:
+        # block_q2_K: scales[16], qs[64], FP16 d, FP16 dmin.
+        d = blocks[:, 80:82].copy().view("<f2").reshape(-1).astype(np.float32)
+        dm = blocks[:, 82:84].copy().view("<f2").reshape(-1).astype(np.float32)
+        for group in range(16):
+            half, sub = divmod(group, 8)
+            shift, lane = divmod(sub, 2)
+            scale_min = blocks[:, group]
+            scale = d * (scale_min & 15).astype(np.float32)
+            minimum = dm * (scale_min >> 4).astype(np.float32)
+            start = 16 + half * 32 + lane * 16
+            values = ((blocks[:, start:start + 16] >> (2 * shift)) & 3).astype(np.float32)
+            values *= scale[:, None]
+            values -= minimum[:, None]
+            out[:, group * 16:(group + 1) * 16] = values
+        return
     if kind == GGMLType.Q4_K:
         d = blocks[:, :2].copy().view("<f2").reshape(-1).astype(np.float32)
         dm = blocks[:, 2:4].copy().view("<f2").reshape(-1).astype(np.float32)
@@ -481,12 +515,12 @@ class GGUFReader:
             raise ValueError("count must be nonnegative")
         info = self.tensors[name]
         output = count * info.width * 4
-        scratch = output * 3 + 8192 if info.quant_type in (GGMLType.Q4_K, GGMLType.Q6_K) else 0
+        scratch = output * 3 + 8192 if info.quant_type in _QUANTIZED else 0
         return count * info.row_bytes + output + scratch
 
     def max_rows(self, name: str, *, extra_bytes: int = 0) -> int:
         info = self.tensors[name]
-        quant = info.quant_type in (GGMLType.Q4_K, GGMLType.Q6_K)
+        quant = info.quant_type in _QUANTIZED
         available = self.available_memory_bytes - extra_bytes - (8192 if quant else 0)
         each = info.row_bytes + info.width * (16 if quant else 4)
         rows = max(0, available // each)
