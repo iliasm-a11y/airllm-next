@@ -1,0 +1,33 @@
+{
+  "scope": "new GLM5 Next paths and inherited GGUF reader/chat/packed IO; CPU only",
+  "passed": 199,
+  "skipped": 2,
+  "failed": 0,
+  "errors": 0,
+  "seconds": 28.81,
+  "real_tokenizer_parity_executed": true,
+  "metal_executed": false,
+  "trained_model_inference_executed": false,
+  "junit_attributes": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "2",
+    "tests": "201",
+    "time": "28.807",
+    "timestamp": "2026-10-29T01:14:30.427416+03:00",
+    "hostname": "87c1b377a7ca"
+  },
+  "skipped_cases": [
+    {
+      "classname": "tests_next.test_glm53_runtime",
+      "name": "test_official_hf_full_logits_cached_decode_and_greedy[gpu]",
+      "reason": "Metal device unavailable; no M5 benchmark is claimed"
+    },
+    {
+      "classname": "tests_next.test_gguf",
+      "name": "test_real_checkpoint_sample_upstream_parity_without_mapping",
+      "reason": "Set AIRLLM_TEST_GGUF to opt into <=16 MiB real-checkpoint reads"
+    }
+  ]
+}

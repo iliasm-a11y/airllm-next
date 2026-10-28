@@ -1,0 +1,1189 @@
+............................................................................................................................ [  6%]
+........................................................................ [  9%]
+...................F.......FF..F........................................ [ 13%]
+......................................s................................. [ 16%]
+sssssssssssss........................ss.....ss..s....................... [ 20%]
+...............................................ssssssssssssssss.sss...ss [ 23%]
+ssssss.................................................................. [ 27%]
+.......s................FFFF.........................FF................. [ 30%]
+.........s....................................... [ 33%]
+........................................................................ [ 36%]
+........................................................................ [ 40%]
+........................................................................ [ 43%]
+........................................................................ [ 47%]
+..s......................................................s........ [ 50%]
+ss...EEEEEEEEEEEEEEEEEEEE....s.......................................... [ 54%]
+..................................................................ssssss [ 57%]
+ssssssssss.............................................................. [ 61%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 71%]
+................... [ 72%]
+ssss.................................................................... [ 76%]
+................................................ [ 78%]
+........................................................................ [ 82%]
+.......F....F....F...................................................... [ 85%]
+...........................sssssssssssssssssssssssssssssssssssssssssssss [ 89%]
+sssssssssssssssssss..................................................... [ 92%]
+........................................................................ [ 96%]
+........................................................................ [ 99%]
+.....                                                                    [100%]
+==================================== ERRORS ====================================
+______________ ERROR at setup of test_exact_code_and_no_mutation _______________
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+__ ERROR at setup of test_fenced_code_is_exact_and_format_violation_separate ___
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+__ ERROR at setup of test_output_input_alias_refused_without_mutation[direct] __
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_output_input_alias_refused_without_mutation[symlink] __
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_output_input_alias_refused_without_mutation[hardlink] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_______________ ERROR at setup of test_distinct_output_accepted ________________
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+____ ERROR at setup of test_wrong_generated_code_is_executed_without_repair ____
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+__ ERROR at setup of test_input_mutation_fails_even_with_correct_return_value __
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_returned_input_alias_is_explicit_even_when_values_and_mutation_checks_pass _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_incomplete_response_retained_without_executing_partial_code[response0] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_incomplete_response_retained_without_executing_partial_code[response1] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_incomplete_response_retained_without_executing_partial_code[response2] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_incomplete_response_retained_without_executing_partial_code[response3] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+___ ERROR at setup of test_completed_response_still_executes_function_cases ____
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_unsafe_ast_rejected_before_execution[import os\ndef f():\n    return 1\n] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_unsafe_ast_rejected_before_execution[def f():\n    return open("x")\n] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_unsafe_ast_rejected_before_execution[def f():\n    return [].__class__\n] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+______ ERROR at setup of test_unsafe_ast_rejected_before_execution[f()\n] ______
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_ ERROR at setup of test_unsafe_ast_rejected_before_execution[@print\ndef f():\n    return 1\n] _
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+_________ ERROR at setup of test_infinite_generated_loop_is_terminated _________
+
+    @pytest.fixture(scope='module', autouse=True)
+    def sandbox_is_verified():
+>       result = checker.verify_sandbox()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_real_world_code_checks.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/check_real_world_code.py:205: in verify_sandbox
+    result = run_restricted(inner, program)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+directory = PosixPath('/tmp/airllm-code-probes-8mtejxbb/allowed')
+program = "import json, os, socket, resource\nresult = {'rlimit_as': resource.getrlimit(resource.RLIMIT_AS),\n          'rlimit_...e('controlled probe')\nresult['inside_write_allowed'] = os.path.exists('inside-sentinel')\nprint(json.dumps(result))\n"
+timeout = 4
+
+    def run_restricted(directory, program, timeout=4):
+        sandbox = shutil.which('sandbox-exec')
+        if not sandbox:
+>           raise RuntimeError('macOS sandbox-exec is required; refusing unsandboxed execution')
+E           RuntimeError: macOS sandbox-exec is required; refusing unsandboxed execution
+
+benchmarks/check_real_world_code.py:127: RuntimeError
+=================================== FAILURES ===================================
+______________ test_subprocess_failure_and_timeout_are_persisted _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_subprocess_failure_and_ti0')
+
+    def test_subprocess_failure_and_timeout_are_persisted(tmp_path):
+        limits = ExperimentLimits(reserve_bytes=0, admitted_payload_bytes=0, timeout_seconds=.2)
+        output = tmp_path / 'failure.json'
+        with pytest.raises(RuntimeError):
+>           supervise([sys.executable, '-c', 'raise SystemExit(7)'], output, limits)
+
+tests_next/test_experiment_guard.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+air_llm/airllm/nextgen/experiment_guard.py:213: in supervise
+    owner = psutil.Process(process.pid)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:314: in __init__
+    self._init(pid)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = psutil.Process(pid=44, status='terminated'), pid = 44
+_ignore_nsp = False
+
+    def _init(self, pid, _ignore_nsp=False):
+        if pid is None:
+            pid = os.getpid()
+        else:
+            if pid < 0:
+                msg = f"pid must be a positive integer (got {pid})"
+                raise ValueError(msg)
+            try:
+                _psplatform.cext.check_pid_range(pid)
+            except OverflowError as err:
+                msg = "process PID out of range"
+                raise NoSuchProcess(pid, msg=msg) from err
+    
+        self._pid = pid
+        self._name = None
+        self._exe = None
+        self._create_time = None
+        self._gone = False
+        self._pid_reused = False
+        self._hash = None
+        self._lock = threading.RLock()
+        # used for caching on Windows only (on POSIX ppid may change)
+        self._ppid = None
+        # platform-specific modules define an _psplatform.Process
+        # implementation class
+        self._proc = _psplatform.Process(pid)
+        self._last_sys_cpu_times = None
+        self._last_proc_cpu_times = None
+        self._exitcode = _SENTINEL
+        self._ident = (self.pid, None)
+        try:
+            self._ident = self._get_ident()
+        except AccessDenied:
+            # This should happen on Windows only, since we use the fast
+            # create time method. AFAIK, on all other platforms we are
+            # able to get create time for all PIDs.
+            pass
+        except ZombieProcess:
+            # Zombies can still be queried by this class (although
+            # not always) and pids() return them so just go on.
+            pass
+        except NoSuchProcess:
+            if not _ignore_nsp:
+                msg = "process PID not found"
+>               raise NoSuchProcess(pid, msg=msg) from None
+E               psutil.NoSuchProcess: process PID not found (pid=44)
+
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:360: NoSuchProcess
+______________ test_owned_process_count_is_bounded_and_persisted _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_owned_process_count_is_bo0')
+
+    def test_owned_process_count_is_bounded_and_persisted(tmp_path):
+        code = ('import subprocess,sys,time; '
+                'subprocess.Popen([sys.executable,"-c","import time; time.sleep(30)"]); '
+                'time.sleep(30)')
+        output = tmp_path / 'process-count.json'
+        limits = ExperimentLimits(reserve_bytes=0, admitted_payload_bytes=0,
+                                  timeout_seconds=2, max_processes=1)
+        with pytest.raises(RuntimeError, match='owned_process_count'):
+>           supervise([sys.executable, '-c', code], output, limits)
+
+tests_next/test_experiment_guard.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+air_llm/airllm/nextgen/experiment_guard.py:213: in supervise
+    owner = psutil.Process(process.pid)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:314: in __init__
+    self._init(pid)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = psutil.Process(pid=45, status='terminated'), pid = 45
+_ignore_nsp = False
+
+    def _init(self, pid, _ignore_nsp=False):
+        if pid is None:
+            pid = os.getpid()
+        else:
+            if pid < 0:
+                msg = f"pid must be a positive integer (got {pid})"
+                raise ValueError(msg)
+            try:
+                _psplatform.cext.check_pid_range(pid)
+            except OverflowError as err:
+                msg = "process PID out of range"
+                raise NoSuchProcess(pid, msg=msg) from err
+    
+        self._pid = pid
+        self._name = None
+        self._exe = None
+        self._create_time = None
+        self._gone = False
+        self._pid_reused = False
+        self._hash = None
+        self._lock = threading.RLock()
+        # used for caching on Windows only (on POSIX ppid may change)
+        self._ppid = None
+        # platform-specific modules define an _psplatform.Process
+        # implementation class
+        self._proc = _psplatform.Process(pid)
+        self._last_sys_cpu_times = None
+        self._last_proc_cpu_times = None
+        self._exitcode = _SENTINEL
+        self._ident = (self.pid, None)
+        try:
+            self._ident = self._get_ident()
+        except AccessDenied:
+            # This should happen on Windows only, since we use the fast
+            # create time method. AFAIK, on all other platforms we are
+            # able to get create time for all PIDs.
+            pass
+        except ZombieProcess:
+            # Zombies can still be queried by this class (although
+            # not always) and pids() return them so just go on.
+            pass
+        except NoSuchProcess:
+            if not _ignore_nsp:
+                msg = "process PID not found"
+>               raise NoSuchProcess(pid, msg=msg) from None
+E               psutil.NoSuchProcess: process PID not found (pid=45)
+
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:360: NoSuchProcess
+___________________ test_detached_observed_child_is_stopped ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_detached_observed_child_i0')
+
+    def test_detached_observed_child_is_stopped(tmp_path):
+        marker = tmp_path / 'child.pid'
+        child = "import time; time.sleep(30)"
+        code = ('import subprocess,sys,time; from pathlib import Path; '
+                f'p=subprocess.Popen([sys.executable,"-c",{child!r}],start_new_session=True); '
+                f'Path({str(marker)!r}).write_text(str(p.pid)); time.sleep(30)')
+        limits = ExperimentLimits(reserve_bytes=0, admitted_payload_bytes=0, timeout_seconds=.4)
+        with pytest.raises(RuntimeError):
+>           supervise([sys.executable, '-c', code], tmp_path / 'detached.json', limits)
+
+tests_next/test_experiment_guard.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+air_llm/airllm/nextgen/experiment_guard.py:213: in supervise
+    owner = psutil.Process(process.pid)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:314: in __init__
+    self._init(pid)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = psutil.Process(pid=46, status='terminated'), pid = 46
+_ignore_nsp = False
+
+    def _init(self, pid, _ignore_nsp=False):
+        if pid is None:
+            pid = os.getpid()
+        else:
+            if pid < 0:
+                msg = f"pid must be a positive integer (got {pid})"
+                raise ValueError(msg)
+            try:
+                _psplatform.cext.check_pid_range(pid)
+            except OverflowError as err:
+                msg = "process PID out of range"
+                raise NoSuchProcess(pid, msg=msg) from err
+    
+        self._pid = pid
+        self._name = None
+        self._exe = None
+        self._create_time = None
+        self._gone = False
+        self._pid_reused = False
+        self._hash = None
+        self._lock = threading.RLock()
+        # used for caching on Windows only (on POSIX ppid may change)
+        self._ppid = None
+        # platform-specific modules define an _psplatform.Process
+        # implementation class
+        self._proc = _psplatform.Process(pid)
+        self._last_sys_cpu_times = None
+        self._last_proc_cpu_times = None
+        self._exitcode = _SENTINEL
+        self._ident = (self.pid, None)
+        try:
+            self._ident = self._get_ident()
+        except AccessDenied:
+            # This should happen on Windows only, since we use the fast
+            # create time method. AFAIK, on all other platforms we are
+            # able to get create time for all PIDs.
+            pass
+        except ZombieProcess:
+            # Zombies can still be queried by this class (although
+            # not always) and pids() return them so just go on.
+            pass
+        except NoSuchProcess:
+            if not _ignore_nsp:
+                msg = "process PID not found"
+>               raise NoSuchProcess(pid, msg=msg) from None
+E               psutil.NoSuchProcess: process PID not found (pid=46)
+
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:360: NoSuchProcess
+____________ test_cleanup_failure_still_persists_sampling_evidence _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_cleanup_failure_still_per0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f19914a7680>
+
+    def test_cleanup_failure_still_persists_sampling_evidence(tmp_path,monkeypatch):
+        import airllm.nextgen.experiment_guard as guard
+        original=guard._stop_group
+        def stop_then_fail(process,observed):
+            original(process,observed)
+            raise PermissionError('injected cleanup failure after owned process stopped')
+        monkeypatch.setattr(guard,'_stop_group',stop_then_fail)
+        output=tmp_path/'cleanup.json'
+        limits=ExperimentLimits(reserve_bytes=0,admitted_payload_bytes=0,timeout_seconds=2)
+        with pytest.raises(RuntimeError,match='cleanup failure'):
+>           supervise([sys.executable,'-c','pass'],output,limits)
+
+tests_next/test_experiment_guard.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+air_llm/airllm/nextgen/experiment_guard.py:213: in supervise
+    owner = psutil.Process(process.pid)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:314: in __init__
+    self._init(pid)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = psutil.Process(pid=47, status='terminated'), pid = 47
+_ignore_nsp = False
+
+    def _init(self, pid, _ignore_nsp=False):
+        if pid is None:
+            pid = os.getpid()
+        else:
+            if pid < 0:
+                msg = f"pid must be a positive integer (got {pid})"
+                raise ValueError(msg)
+            try:
+                _psplatform.cext.check_pid_range(pid)
+            except OverflowError as err:
+                msg = "process PID out of range"
+                raise NoSuchProcess(pid, msg=msg) from err
+    
+        self._pid = pid
+        self._name = None
+        self._exe = None
+        self._create_time = None
+        self._gone = False
+        self._pid_reused = False
+        self._hash = None
+        self._lock = threading.RLock()
+        # used for caching on Windows only (on POSIX ppid may change)
+        self._ppid = None
+        # platform-specific modules define an _psplatform.Process
+        # implementation class
+        self._proc = _psplatform.Process(pid)
+        self._last_sys_cpu_times = None
+        self._last_proc_cpu_times = None
+        self._exitcode = _SENTINEL
+        self._ident = (self.pid, None)
+        try:
+            self._ident = self._get_ident()
+        except AccessDenied:
+            # This should happen on Windows only, since we use the fast
+            # create time method. AFAIK, on all other platforms we are
+            # able to get create time for all PIDs.
+            pass
+        except ZombieProcess:
+            # Zombies can still be queried by this class (although
+            # not always) and pids() return them so just go on.
+            pass
+        except NoSuchProcess:
+            if not _ignore_nsp:
+                msg = "process PID not found"
+>               raise NoSuchProcess(pid, msg=msg) from None
+E               psutil.NoSuchProcess: process PID not found (pid=47)
+
+/root/.local/lib/python3.12/site-packages/psutil/__init__.py:360: NoSuchProcess
+____ test_granite_logits_routes_cached_decode_and_generation[1-False-True] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_granite_logits_routes_cac0')
+legacy = False, tied = True, prefill_chunk = 1
+
+    @pytest.mark.parametrize('legacy,tied', [(False, True), (True, False)])
+    @pytest.mark.parametrize('prefill_chunk', [1, 4])
+    def test_granite_logits_routes_cached_decode_and_generation(tmp_path, legacy, tied, prefill_chunk):
+        root = tmp_path/'granite'
+        ref = checkpoint(root, legacy=legacy, tied=tied)
+        ids = torch.tensor([[1, 7, 8, 9]])
+        routes = {}
+        handles = [layer.block_sparse_moe.router.register_forward_hook(
+            lambda module, inputs, output, i=i: routes.__setitem__(i, output[0].detach().numpy()))
+            for i, layer in enumerate(ref.model.layers)]
+        with torch.inference_mode(), AirLLMNextGraniteMoeModel(root,
+                next_config=options(tmp_path, prefill_chunk=prefill_chunk)) as model:
+            wanted = ref(ids, use_cache=True)
+            expected_routes = {i: v.copy() for i,v in routes.items()}
+            actual = model(ids)
+            np.testing.assert_allclose(np.asarray(actual.logits), wanted.logits.numpy(), atol=4e-6, rtol=3e-4)
+            for i, mlp in enumerate(model.mlps):
+>               np.testing.assert_array_equal(np.sort(mlp.last_route_ids, axis=-1),
+                    np.sort(expected_routes[i][-prefill_chunk:], axis=-1))
+E               AssertionError: 
+E               Arrays are not equal
+E               
+E               (shapes (1, 2), (1, 6) mismatch)
+E                ACTUAL: array([[3, 4]], dtype=uint32)
+E                DESIRED: array([[-0.103203, -0.048996, -0.046634,  0.087465,  0.089105,  0.089879]],
+E                     dtype=float32)
+
+tests_next/test_granite_runtime.py:60: AssertionError
+____ test_granite_logits_routes_cached_decode_and_generation[1-True-False] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_granite_logits_routes_cac1')
+legacy = True, tied = False, prefill_chunk = 1
+
+    @pytest.mark.parametrize('legacy,tied', [(False, True), (True, False)])
+    @pytest.mark.parametrize('prefill_chunk', [1, 4])
+    def test_granite_logits_routes_cached_decode_and_generation(tmp_path, legacy, tied, prefill_chunk):
+        root = tmp_path/'granite'
+        ref = checkpoint(root, legacy=legacy, tied=tied)
+        ids = torch.tensor([[1, 7, 8, 9]])
+        routes = {}
+        handles = [layer.block_sparse_moe.router.register_forward_hook(
+            lambda module, inputs, output, i=i: routes.__setitem__(i, output[0].detach().numpy()))
+            for i, layer in enumerate(ref.model.layers)]
+        with torch.inference_mode(), AirLLMNextGraniteMoeModel(root,
+                next_config=options(tmp_path, prefill_chunk=prefill_chunk)) as model:
+            wanted = ref(ids, use_cache=True)
+            expected_routes = {i: v.copy() for i,v in routes.items()}
+            actual = model(ids)
+            np.testing.assert_allclose(np.asarray(actual.logits), wanted.logits.numpy(), atol=4e-6, rtol=3e-4)
+            for i, mlp in enumerate(model.mlps):
+>               np.testing.assert_array_equal(np.sort(mlp.last_route_ids, axis=-1),
+                    np.sort(expected_routes[i][-prefill_chunk:], axis=-1))
+E               AssertionError: 
+E               Arrays are not equal
+E               
+E               (shapes (1, 2), (1, 6) mismatch)
+E                ACTUAL: array([[3, 4]], dtype=uint32)
+E                DESIRED: array([[-0.103203, -0.048996, -0.046634,  0.087465,  0.089105,  0.089879]],
+E                     dtype=float32)
+
+tests_next/test_granite_runtime.py:60: AssertionError
+____ test_granite_logits_routes_cached_decode_and_generation[4-False-True] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_granite_logits_routes_cac2')
+legacy = False, tied = True, prefill_chunk = 4
+
+    @pytest.mark.parametrize('legacy,tied', [(False, True), (True, False)])
+    @pytest.mark.parametrize('prefill_chunk', [1, 4])
+    def test_granite_logits_routes_cached_decode_and_generation(tmp_path, legacy, tied, prefill_chunk):
+        root = tmp_path/'granite'
+        ref = checkpoint(root, legacy=legacy, tied=tied)
+        ids = torch.tensor([[1, 7, 8, 9]])
+        routes = {}
+        handles = [layer.block_sparse_moe.router.register_forward_hook(
+            lambda module, inputs, output, i=i: routes.__setitem__(i, output[0].detach().numpy()))
+            for i, layer in enumerate(ref.model.layers)]
+        with torch.inference_mode(), AirLLMNextGraniteMoeModel(root,
+                next_config=options(tmp_path, prefill_chunk=prefill_chunk)) as model:
+            wanted = ref(ids, use_cache=True)
+            expected_routes = {i: v.copy() for i,v in routes.items()}
+            actual = model(ids)
+            np.testing.assert_allclose(np.asarray(actual.logits), wanted.logits.numpy(), atol=4e-6, rtol=3e-4)
+            for i, mlp in enumerate(model.mlps):
+>               np.testing.assert_array_equal(np.sort(mlp.last_route_ids, axis=-1),
+                    np.sort(expected_routes[i][-prefill_chunk:], axis=-1))
+E               AssertionError: 
+E               Arrays are not equal
+E               
+E               (shapes (4, 2), (4, 6) mismatch)
+E                ACTUAL: array([[2, 5],
+E                      [0, 5],
+E                      [1, 5],
+E                      [3, 4]], dtype=uint32)
+E                DESIRED: array([[ 0.005214,  0.008587,  0.022057,  0.031891,  0.055281,  0.062012],
+E                      [-0.087894, -0.027111, -0.008683,  0.013049,  0.063848,  0.086511],
+E                      [-0.086892,  0.022051,  0.037803,  0.044635,  0.083498,  0.1176  ],...
+
+tests_next/test_granite_runtime.py:60: AssertionError
+____ test_granite_logits_routes_cached_decode_and_generation[4-True-False] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_granite_logits_routes_cac3')
+legacy = True, tied = False, prefill_chunk = 4
+
+    @pytest.mark.parametrize('legacy,tied', [(False, True), (True, False)])
+    @pytest.mark.parametrize('prefill_chunk', [1, 4])
+    def test_granite_logits_routes_cached_decode_and_generation(tmp_path, legacy, tied, prefill_chunk):
+        root = tmp_path/'granite'
+        ref = checkpoint(root, legacy=legacy, tied=tied)
+        ids = torch.tensor([[1, 7, 8, 9]])
+        routes = {}
+        handles = [layer.block_sparse_moe.router.register_forward_hook(
+            lambda module, inputs, output, i=i: routes.__setitem__(i, output[0].detach().numpy()))
+            for i, layer in enumerate(ref.model.layers)]
+        with torch.inference_mode(), AirLLMNextGraniteMoeModel(root,
+                next_config=options(tmp_path, prefill_chunk=prefill_chunk)) as model:
+            wanted = ref(ids, use_cache=True)
+            expected_routes = {i: v.copy() for i,v in routes.items()}
+            actual = model(ids)
+            np.testing.assert_allclose(np.asarray(actual.logits), wanted.logits.numpy(), atol=4e-6, rtol=3e-4)
+            for i, mlp in enumerate(model.mlps):
+>               np.testing.assert_array_equal(np.sort(mlp.last_route_ids, axis=-1),
+                    np.sort(expected_routes[i][-prefill_chunk:], axis=-1))
+E               AssertionError: 
+E               Arrays are not equal
+E               
+E               (shapes (4, 2), (4, 6) mismatch)
+E                ACTUAL: array([[2, 5],
+E                      [0, 5],
+E                      [1, 5],
+E                      [3, 4]], dtype=uint32)
+E                DESIRED: array([[ 0.005214,  0.008587,  0.022057,  0.031891,  0.055281,  0.062012],
+E                      [-0.087894, -0.027111, -0.008683,  0.013049,  0.063848,  0.086511],
+E                      [-0.086892,  0.022051,  0.037803,  0.044635,  0.083498,  0.1176  ],...
+
+tests_next/test_granite_runtime.py:60: AssertionError
+_ test_official_streamed_reference_matches_full_official_model_and_releases_layers[False] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_official_streamed_referen0')
+legacy = False
+
+    @pytest.mark.parametrize('legacy', [False, True])
+    def test_official_streamed_reference_matches_full_official_model_and_releases_layers(tmp_path, legacy):
+        import importlib.util
+        from pathlib import Path
+        spec = importlib.util.spec_from_file_location('benchmark_granite_moe',
+            Path(__file__).resolve().parents[1]/'benchmarks/benchmark_granite_moe.py')
+        benchmark = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(benchmark)
+        root = tmp_path/'granite'
+        original = checkpoint(root, legacy=legacy)
+>       streamed, routes, mapping, stats, handles = benchmark.build_official_streamed_reference(root)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_granite_runtime.py:272: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-root/pytest-10/test_official_streamed_referen0/granite')
+
+    def build_official_streamed_reference(root):
+        import torch
+>       from accelerate import init_empty_weights
+E       ModuleNotFoundError: No module named 'accelerate'
+
+benchmarks/benchmark_granite_moe.py:59: ModuleNotFoundError
+_ test_official_streamed_reference_matches_full_official_model_and_releases_layers[True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_official_streamed_referen1')
+legacy = True
+
+    @pytest.mark.parametrize('legacy', [False, True])
+    def test_official_streamed_reference_matches_full_official_model_and_releases_layers(tmp_path, legacy):
+        import importlib.util
+        from pathlib import Path
+        spec = importlib.util.spec_from_file_location('benchmark_granite_moe',
+            Path(__file__).resolve().parents[1]/'benchmarks/benchmark_granite_moe.py')
+        benchmark = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(benchmark)
+        root = tmp_path/'granite'
+        original = checkpoint(root, legacy=legacy)
+>       streamed, routes, mapping, stats, handles = benchmark.build_official_streamed_reference(root)
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests_next/test_granite_runtime.py:272: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-root/pytest-10/test_official_streamed_referen1/granite')
+
+    def build_official_streamed_reference(root):
+        import torch
+>       from accelerate import init_empty_weights
+E       ModuleNotFoundError: No module named 'accelerate'
+
+benchmarks/benchmark_granite_moe.py:59: ModuleNotFoundError
+_ test_access_io_and_programming_errors_are_never_silently_ignored[permission-fstat] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_access_io_and_programming2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f19341d54c0>
+phase = 'fstat', kind = 'permission'
+
+    @pytest.mark.parametrize('phase',['first-lstat','open','fstat','read','second-lstat'])
+    @pytest.mark.parametrize('kind',['permission','io','programming'])
+    def test_access_io_and_programming_errors_are_never_silently_ignored(tmp_path,monkeypatch,phase,kind):
+        path=finder(tmp_path/'.DS_Store')
+        error={'permission':PermissionError('denied'),
+               'io':OSError(errno.EIO,'injected I/O failure'),
+               'programming':RuntimeError('injected programming error')}[kind]
+        real_lstat=Path.lstat;calls=0
+        def lstat(value,*args,**kwargs):
+            nonlocal calls
+            if value==path:
+                calls+=1
+                if calls==({'first-lstat':1,'second-lstat':2}.get(phase)):
+                    raise error
+            return real_lstat(value,*args,**kwargs)
+        monkeypatch.setattr(Path,'lstat',lstat)
+        if phase in ('open','fstat','read'):
+            def fail(*args,**kwargs):
+                raise error
+            monkeypatch.setattr(checker.os,phase,fail)
+        with pytest.raises(type(error)) as raised:
+>           checker.finder_metadata_ignored(path)
+
+tests_hyperstream3/test_m5_finder_metadata.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/verify_m5_validation.py:213: in finder_metadata_ignored
+    opened=os.fstat(descriptor)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (11,), kwargs = {}
+
+    def fail(*args,**kwargs):
+>       raise error
+E       PermissionError: denied
+
+tests_hyperstream3/test_m5_finder_metadata.py:186: PermissionError
+__ test_access_io_and_programming_errors_are_never_silently_ignored[io-fstat] __
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_access_io_and_programming7')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f18f43ad8b0>
+phase = 'fstat', kind = 'io'
+
+    @pytest.mark.parametrize('phase',['first-lstat','open','fstat','read','second-lstat'])
+    @pytest.mark.parametrize('kind',['permission','io','programming'])
+    def test_access_io_and_programming_errors_are_never_silently_ignored(tmp_path,monkeypatch,phase,kind):
+        path=finder(tmp_path/'.DS_Store')
+        error={'permission':PermissionError('denied'),
+               'io':OSError(errno.EIO,'injected I/O failure'),
+               'programming':RuntimeError('injected programming error')}[kind]
+        real_lstat=Path.lstat;calls=0
+        def lstat(value,*args,**kwargs):
+            nonlocal calls
+            if value==path:
+                calls+=1
+                if calls==({'first-lstat':1,'second-lstat':2}.get(phase)):
+                    raise error
+            return real_lstat(value,*args,**kwargs)
+        monkeypatch.setattr(Path,'lstat',lstat)
+        if phase in ('open','fstat','read'):
+            def fail(*args,**kwargs):
+                raise error
+            monkeypatch.setattr(checker.os,phase,fail)
+        with pytest.raises(type(error)) as raised:
+>           checker.finder_metadata_ignored(path)
+
+tests_hyperstream3/test_m5_finder_metadata.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/verify_m5_validation.py:213: in finder_metadata_ignored
+    opened=os.fstat(descriptor)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (11,), kwargs = {}
+
+    def fail(*args,**kwargs):
+>       raise error
+E       OSError: [Errno 5] injected I/O failure
+
+tests_hyperstream3/test_m5_finder_metadata.py:186: OSError
+_ test_access_io_and_programming_errors_are_never_silently_ignored[programming-fstat] _
+
+tmp_path = PosixPath('/tmp/pytest-of-root/pytest-10/test_access_io_and_programming12')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f18f4392060>
+phase = 'fstat', kind = 'programming'
+
+    @pytest.mark.parametrize('phase',['first-lstat','open','fstat','read','second-lstat'])
+    @pytest.mark.parametrize('kind',['permission','io','programming'])
+    def test_access_io_and_programming_errors_are_never_silently_ignored(tmp_path,monkeypatch,phase,kind):
+        path=finder(tmp_path/'.DS_Store')
+        error={'permission':PermissionError('denied'),
+               'io':OSError(errno.EIO,'injected I/O failure'),
+               'programming':RuntimeError('injected programming error')}[kind]
+        real_lstat=Path.lstat;calls=0
+        def lstat(value,*args,**kwargs):
+            nonlocal calls
+            if value==path:
+                calls+=1
+                if calls==({'first-lstat':1,'second-lstat':2}.get(phase)):
+                    raise error
+            return real_lstat(value,*args,**kwargs)
+        monkeypatch.setattr(Path,'lstat',lstat)
+        if phase in ('open','fstat','read'):
+            def fail(*args,**kwargs):
+                raise error
+            monkeypatch.setattr(checker.os,phase,fail)
+        with pytest.raises(type(error)) as raised:
+>           checker.finder_metadata_ignored(path)
+
+tests_hyperstream3/test_m5_finder_metadata.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+benchmarks/verify_m5_validation.py:213: in finder_metadata_ignored
+    opened=os.fstat(descriptor)
+           ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (11,), kwargs = {}
+
+    def fail(*args,**kwargs):
+>       raise error
+E       RuntimeError: injected programming error
+
+tests_hyperstream3/test_m5_finder_metadata.py:186: RuntimeError
+=========================== short test summary info ============================
+FAILED tests_next/test_experiment_guard.py::test_subprocess_failure_and_timeout_are_persisted
+FAILED tests_next/test_experiment_guard.py::test_owned_process_count_is_bounded_and_persisted
+FAILED tests_next/test_experiment_guard.py::test_detached_observed_child_is_stopped
+FAILED tests_next/test_experiment_guard.py::test_cleanup_failure_still_persists_sampling_evidence
+FAILED tests_next/test_granite_runtime.py::test_granite_logits_routes_cached_decode_and_generation[1-False-True]
+FAILED tests_next/test_granite_runtime.py::test_granite_logits_routes_cached_decode_and_generation[1-True-False]
+FAILED tests_next/test_granite_runtime.py::test_granite_logits_routes_cached_decode_and_generation[4-False-True]
+FAILED tests_next/test_granite_runtime.py::test_granite_logits_routes_cached_decode_and_generation[4-True-False]
+FAILED tests_next/test_granite_runtime.py::test_official_streamed_reference_matches_full_official_model_and_releases_layers[False]
+FAILED tests_next/test_granite_runtime.py::test_official_streamed_reference_matches_full_official_model_and_releases_layers[True]
+FAILED tests_hyperstream3/test_m5_finder_metadata.py::test_access_io_and_programming_errors_are_never_silently_ignored[permission-fstat]
+FAILED tests_hyperstream3/test_m5_finder_metadata.py::test_access_io_and_programming_errors_are_never_silently_ignored[io-fstat]
+FAILED tests_hyperstream3/test_m5_finder_metadata.py::test_access_io_and_programming_errors_are_never_silently_ignored[programming-fstat]
+ERROR tests_next/test_real_world_code_checks.py::test_exact_code_and_no_mutation
+ERROR tests_next/test_real_world_code_checks.py::test_fenced_code_is_exact_and_format_violation_separate
+ERROR tests_next/test_real_world_code_checks.py::test_output_input_alias_refused_without_mutation[direct]
+ERROR tests_next/test_real_world_code_checks.py::test_output_input_alias_refused_without_mutation[symlink]
+ERROR tests_next/test_real_world_code_checks.py::test_output_input_alias_refused_without_mutation[hardlink]
+ERROR tests_next/test_real_world_code_checks.py::test_distinct_output_accepted
+ERROR tests_next/test_real_world_code_checks.py::test_wrong_generated_code_is_executed_without_repair
+ERROR tests_next/test_real_world_code_checks.py::test_input_mutation_fails_even_with_correct_return_value
+ERROR tests_next/test_real_world_code_checks.py::test_returned_input_alias_is_explicit_even_when_values_and_mutation_checks_pass
+ERROR tests_next/test_real_world_code_checks.py::test_incomplete_response_retained_without_executing_partial_code[response0]
+ERROR tests_next/test_real_world_code_checks.py::test_incomplete_response_retained_without_executing_partial_code[response1]
+ERROR tests_next/test_real_world_code_checks.py::test_incomplete_response_retained_without_executing_partial_code[response2]
+ERROR tests_next/test_real_world_code_checks.py::test_incomplete_response_retained_without_executing_partial_code[response3]
+ERROR tests_next/test_real_world_code_checks.py::test_completed_response_still_executes_function_cases
+ERROR tests_next/test_real_world_code_checks.py::test_unsafe_ast_rejected_before_execution[import os\ndef f():\n    return 1\n]
+ERROR tests_next/test_real_world_code_checks.py::test_unsafe_ast_rejected_before_execution[def f():\n    return open("x")\n]
+ERROR tests_next/test_real_world_code_checks.py::test_unsafe_ast_rejected_before_execution[def f():\n    return [].__class__\n]
+ERROR tests_next/test_real_world_code_checks.py::test_unsafe_ast_rejected_before_execution[f()\n]
+ERROR tests_next/test_real_world_code_checks.py::test_unsafe_ast_rejected_before_execution[@print\ndef f():\n    return 1\n]
+ERROR tests_next/test_real_world_code_checks.py::test_infinite_generated_loop_is_terminated
+13 failed, 1869 passed, 137 skipped, 20 errors, 126 subtests passed in 58.55s

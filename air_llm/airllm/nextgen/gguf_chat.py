@@ -77,8 +77,11 @@ class GGUFChatSession:
             if self.model.closed:
                 raise RuntimeError('Model is closed')
             proposed = self.messages + [{'role': 'user', 'content': prompt}]
-            render_options = dict(add_generation_prompt=True,
-                                  enable_thinking=False, preserve_thinking=True)
+            # Architecture-specific templates may not expose Qwen's thinking
+            # toggle (GLM5 always emits its own thinking prefix).
+            render_options = dict(getattr(self.tokenizer, 'chat_template_options',
+                {'enable_thinking': False, 'preserve_thinking': True}))
+            render_options['add_generation_prompt'] = True
             prompt_text = self.tokenizer.apply_chat_template(
                 proposed, tokenize=False, **render_options)
             full_ids = token_batch([self.tokenizer.encode(prompt_text)],
@@ -181,7 +184,8 @@ class GGUFChatSession:
                 'finite_logits_checked': True,
                 'generation_parameters': {
                     'max_new_tokens': count, 'temperature': temperature,
-                    'do_sample': False, 'enable_thinking': False,
-                    'preserve_thinking': True, 'reuse_kv': self.reuse_kv,
+                    'do_sample': False, **{k: v for k, v in render_options.items()
+                                           if k != 'add_generation_prompt'},
+                    'reuse_kv': self.reuse_kv,
                 },
             }

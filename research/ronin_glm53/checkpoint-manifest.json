@@ -1,0 +1,54 @@
+{
+  "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+  "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "variant": "Q2_K_S",
+  "payload_bytes": 110027352864,
+  "payload_gib": 102.47095754742622,
+  "files": [
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "size": 9430112,
+      "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d"
+    },
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "size": 110017922752,
+      "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4"
+    }
+  ],
+  "source_metadata_url": "https://huggingface.co/api/models/ggml-org/GLM-5.3-Flash-GGUF/revision/119034bc3d9d76eb41f91508e6f9fb19fde42672?blobs=true",
+  "original_model_revision": "f9fed3bbc82291073373d67452e9f25317ef7577",
+  "original_model_repository": "zai-org/GLM-5.3-Flash-BF16",
+  "required_external_tokenizer_files": [],
+  "tokenizer_source": "metadata-only first GGUF shard: vocabulary, merges, IDs, flags and chat template",
+  "optional_excluded_files": [
+    "mmproj-GLM-5.3-Flash-Q8_0.gguf",
+    "mtp-GLM-5.3-Flash-Q4_0.gguf",
+    "mtp-GLM-5.3-Flash-Q8_0.gguf"
+  ],
+  "tensor_count": 1383,
+  "tensor_type_counts": {
+    "Q8_0": 306,
+    "F32": 726,
+    "BF16": 225,
+    "Q2_K": 126
+  },
+  "tensor_type_encoded_bytes": {
+    "Q8_0": 8953004032,
+    "F32": 384756984,
+    "BF16": 796917760,
+    "Q2_K": 99883155456
+  },
+  "tensor_data_start_in_second_shard": 86720,
+  "routed_expert_encoded_bytes": 99883155456,
+  "non_routed_tensor_encoded_bytes": 10134678776,
+  "top8_routed_bytes_per_decode_token_no_cache": 2774532096,
+  "local_audit": {
+    "first_shard": "complete metadata-only shard SHA256 verified",
+    "second_shard": "one bounded HTTP range bytes=0-1048575; GGUF directory ends at byte86719; no complete weight shard downloaded",
+    "second_shard_header_bytes": 86719,
+    "second_shard_header_sha256": "0f1bc0f78f46ad103698d98b417d09c8922e3f58af5636ce1e1bcfb1a16edca7",
+    "real_inference_executed": false,
+    "m5_observed": false
+  }
+}

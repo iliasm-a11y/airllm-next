@@ -1,0 +1,231 @@
+{
+  "validation_scope": "Real tokenizer metadata only; no full checkpoint inference. CPU tokenizers and Transformers renderer.",
+  "checkpoint_repository": "ggml-org/GLM-5.3-Flash-GGUF",
+  "checkpoint_revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "source_repository": "zai-org/GLM-5.3-Flash-BF16",
+  "source_revision": "f9fed3bbc82291073373d67452e9f25317ef7577",
+  "source_files": {
+    "tokenizer.json": {
+      "sha256": "19e773648cb4e65de8660ea6365e10acca112d42a854923df93db4a6f333a82d",
+      "bytes": 20217442
+    },
+    "tokenizer_config.json": {
+      "sha256": "98b1271574f41abf89427ae2dda030d94dc9478f0edc5a8bd240db213c6fd5fc",
+      "bytes": 761
+    },
+    "chat_template.jinja": {
+      "sha256": "2614a3c896d53e265f564c23701173c0049f985dacfbae79fc4bcd9f5ba083f4",
+      "bytes": 10830
+    }
+  },
+  "vocabulary": {
+    "gguf": 154880,
+    "source_with_added_tokens": 154856,
+    "gguf_unused_padding": 24
+  },
+  "templates_identical": true,
+  "encode_decode_cases": [
+    {
+      "text": "Bonjour, café et café. 123456!",
+      "token_ids": [
+        80917,
+        11,
+        51609,
+        1842,
+        40702,
+        53481,
+        13,
+        220,
+        108714,
+        100461,
+        21,
+        0
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "你好 world\nHi",
+      "token_ids": [
+        109377,
+        1879,
+        198,
+        13041
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "[gMASK]<sop><|user|>Bonjour",
+      "token_ids": [
+        154822,
+        154824,
+        154827,
+        80917
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "000000000123456789",
+      "token_ids": [
+        99752,
+        99752,
+        99752,
+        108714,
+        100461,
+        21,
+        100928,
+        24
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "<think>été</think>",
+      "token_ids": [
+        154841,
+        38575,
+        154842
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "\r\n  \tfoo_bar:=True; 🧑🏽‍💻",
+      "token_ids": [
+        319,
+        256,
+        197,
+        7974,
+        14378,
+        14200,
+        2514,
+        26,
+        11157,
+        100,
+        239,
+        151821,
+        124564,
+        152011
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "[PAD154856]",
+      "token_ids": [
+        42105,
+        1808,
+        124211,
+        23,
+        101917,
+        60
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    },
+    {
+      "text": "Hello\u0000World",
+      "token_ids": [
+        9703,
+        188,
+        10129
+      ],
+      "exact_encode_match": true,
+      "exact_decode_match": true
+    }
+  ],
+  "chat_cases": [
+    {
+      "conversation": 0,
+      "reasoning_effort": "low",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 0,
+      "reasoning_effort": "low",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 0,
+      "reasoning_effort": "high",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 0,
+      "reasoning_effort": "high",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 0,
+      "reasoning_effort": "max",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 0,
+      "reasoning_effort": "max",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "low",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "low",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "high",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "high",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "max",
+      "clear_thinking": false,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    },
+    {
+      "conversation": 1,
+      "reasoning_effort": "max",
+      "clear_thinking": true,
+      "render_exact_match": true,
+      "token_ids_exact_match": true
+    }
+  ],
+  "limitations": [
+    "Vision, audio, video and tool messages rejected.",
+    "No enable_thinking=False template option exists for this model.",
+    "skip_special_tokens follows GGUF token types; source tokenizer special flags differ for 7 control tokens.",
+    "Real tokenizer parity does not establish model-logit or inference fidelity."
+  ]
+}

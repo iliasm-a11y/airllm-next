@@ -67,6 +67,12 @@ class AutoModel:
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *inputs, **kwargs):
+        if kwargs.get('backend') == 'next-gguf-glm5':
+            kwargs.pop('backend')
+            if inputs:
+                raise TypeError('Native GLM5 GGUF accepts keyword options after the local checkpoint path')
+            from .nextgen.gguf_glm5 import NativeGGUFGLM5Model
+            return NativeGGUFGLM5Model(pretrained_model_name_or_path, **kwargs)
         if kwargs.get('backend') == 'next-qwen-experimental':
             kwargs.pop('backend')
             if inputs: raise TypeError('Experimental Next Qwen accepts keyword options after the local checkpoint path')

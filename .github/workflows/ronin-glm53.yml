@@ -1,0 +1,55 @@
+name: GLM5 Next synthetic correctness
+
+on:
+  pull_request:
+    paths:
+      - 'air_llm/airllm/nextgen/**'
+      - 'air_llm/airllm/auto_model.py'
+      - 'tests_next/test_glm53*'
+      - 'tests_next/test_glm5_next*'
+      - 'tests_next/test_gguf_split.py'
+      - 'tests_next/test_ronin_glm53.py'
+      - 'tests_next/reference_glm53_torch.py'
+      - 'tests_next/fixtures/glm53/**'
+      - 'research/ronin_glm53/checkpoint-*.json'
+      - 'research/ronin_glm53/numerical_validation.py'
+      - 'requirements-ronin-glm53-*.txt'
+      - '.github/workflows/ronin-glm53.yml'
+  push:
+    branches: ['research/ronin-glm53-flash']
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-cpu:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MLX_ENABLE_TF32: '0'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      PYTHONPATH: air_llm
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-ronin-glm53-tests.txt --extra-index-url https://download.pytorch.org/whl/cpu
+      # No trained model or real tokenizer assets are downloaded. Metal and
+      # opt-in real-asset tests remain skipped, never reported as qualified.
+      - name: Codecs, shards, equations, decoder and conversation contracts
+        run: >-
+          python -m pytest -q --junitxml=glm53-tests.xml
+          tests_next/test_glm53_codecs.py tests_next/test_gguf_split.py
+          tests_next/test_glm53_download.py tests_next/test_glm5_next_ops.py
+          tests_next/test_glm53_runtime.py tests_next/test_glm53_runtime_guards.py
+          tests_next/test_glm53_real_layout.py
+          tests_next/test_glm5_next_tokenizer.py tests_next/test_ronin_glm53.py
+          tests_next/test_gguf.py tests_next/test_gguf_chat.py
+          tests_next/test_gguf_packed_io.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: glm53-synthetic-cpu-test-results
+          path: glm53-tests.xml
