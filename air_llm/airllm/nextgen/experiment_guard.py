@@ -17,20 +17,53 @@ import time
 import psutil
 
 
+def _output_path_snapshot(path):
+    """Resolve once and retain link/target metadata without hiding OS failures."""
+    def optional_stat(method):
+        try:
+            return method()
+        except (FileNotFoundError,NotADirectoryError):
+            # These are the same absent-target cases accepted by Path.exists.
+            # AccessDenied, I/O errors and programming errors must propagate.
+            return None
+    def stamp(value):
+        return None if value is None else (value.st_dev,value.st_ino,value.st_mode,
+            value.st_size,value.st_mtime_ns,value.st_ctime_ns)
+    canonical=path.resolve()
+    entry=optional_stat(path.lstat)
+    target=optional_stat(path.stat)
+    inode=None if target is None else (target.st_dev,target.st_ino)
+    return canonical,inode,stamp(entry),stamp(target)
+
+
 def validate_output_paths(output, protected=(), extra_outputs=()):
-    """Reject direct, symlink and hardlink collisions before opening a log."""
+    """Reject direct/symlink/hardlink collisions with linear path observations.
+
+    Canonical paths also cover absent targets and dangling symlinks; existing
+    target device/inode pairs preserve samefile's hardlink rule. A second full
+    observation refuses detected path/link/target drift. This is not a filesystem
+    transaction: callers must still create their outputs exclusively afterward.
+    """
     report = Path(output)
     destinations = [report, report.with_suffix('.log'), report.with_suffix('.guard.json'),
                     *map(Path, extra_outputs)]
-    def aliases(a, b):
-        if a.resolve() == b.resolve():
-            return True
-        return a.exists() and b.exists() and a.samefile(b)
-    for i, destination in enumerate(destinations):
-        if any(aliases(destination, previous) for previous in destinations[:i]):
+    sources=list(map(Path,protected))
+    paths=destinations+sources
+    observed=[_output_path_snapshot(path) for path in paths]
+    protected_paths={value[0] for value in observed[len(destinations):]}
+    protected_inodes={value[1] for value in observed[len(destinations):] if value[1] is not None}
+    seen_paths,seen_inodes=set(),set()
+    for canonical,inode,entry,target in observed[:len(destinations)]:
+        if canonical in seen_paths or (inode is not None and inode in seen_inodes):
             raise ValueError('Experiment report/log/guard outputs must be distinct files')
-        if any(aliases(destination, Path(source)) for source in protected):
+        if canonical in protected_paths or (inode is not None and inode in protected_inodes):
             raise ValueError('Experiment output aliases a protected input file')
+        seen_paths.add(canonical)
+        if inode is not None:
+            seen_inodes.add(inode)
+    for path,before in zip(paths,observed):
+        if _output_path_snapshot(path)!=before:
+            raise RuntimeError('Experiment path changed during output validation: '+str(path))
     return destinations
 
 

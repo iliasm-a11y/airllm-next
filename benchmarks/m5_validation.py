@@ -28,6 +28,7 @@ from benchmark_research51 import (ROOT, engine_manifest, load_tasks,
 from campaign_research51 import validate_job_args, wait_before_job
 from plan_hyperstream3 import build_experiments, apply_profile_jobs, PROFILES
 from m5_process_inventory import expected_read_error
+from m5_manifest_recovery import inspect_index, validate_recovery_records
 
 
 def digest(path):
@@ -66,9 +67,20 @@ def campaign_lock(folder):
             fcntl.flock(f, fcntl.LOCK_UN)
 
 
+def validate_lease_identities(identities):
+    if not isinstance(identities,list):
+        raise ValueError('Invalid saved process identities')
+    for item in identities:
+        if (not isinstance(item,dict) or type(item.get('pid')) is not int or item['pid'] <= 0
+                or type(item.get('created')) not in (int,float)
+                or not math.isfinite(item['created']) or item['created'] <= 0):
+            raise ValueError('Invalid saved process identity')
+
+
 def owned_cleanup(identities):
     """Only saved PID + creation-time identities from our child tree are eligible."""
     import psutil
+    validate_lease_identities(identities)
     owned = []
     for item in identities:
         try:
@@ -94,6 +106,25 @@ def owned_cleanup(identities):
     _, alive = psutil.wait_procs(alive, timeout=3)
     if alive:
         raise RuntimeError('Owned child cleanup did not complete')
+
+
+def require_leases_quiescent(identities):
+    """A denied optional cleanup read is not proof an owned writer has stopped."""
+    import psutil
+    validate_lease_identities(identities)
+    for item in identities:
+        try:
+            process=psutil.Process(item['pid'])
+            if process.create_time()!=item['created']:
+                continue  # Reused PID belongs to someone else; never signal it.
+            if process.status() not in (psutil.STATUS_ZOMBIE,psutil.STATUS_DEAD) and process.is_running():
+                raise RuntimeError('Owned campaign writer remains alive before index recovery')
+        except (psutil.NoSuchProcess,ProcessLookupError):
+            continue
+        except Exception as error:
+            if not expected_read_error(error):
+                raise
+            raise RuntimeError('Owned campaign writer identity is unavailable before index recovery') from error
 
 
 def run_child(command, folder, monitor=None):
@@ -332,6 +363,7 @@ def prepare(args):
     paths = {Path(__file__).resolve(), ROOT / 'benchmarks/verify_m5_validation.py',
              ROOT / 'benchmarks/m5_autonomous_supervisor.py',
              ROOT / 'benchmarks/m5_process_inventory.py',
+             ROOT / 'benchmarks/m5_manifest_recovery.py',
              ROOT / 'benchmarks/diagnose_m5_memory.py',
              ROOT / 'benchmarks/hash_checkpoint_guarded.py',
              ROOT / 'benchmarks/benchmark_research51.py',
@@ -403,9 +435,17 @@ def prepare(args):
 
 def write_manifest(folder):
     """Hash raw evidence without recursion or relying on its claims."""
+    from verify_m5_validation import finder_metadata_ignored, read_json, require_no_finder_evidence
     folder = Path(folder)
+    try:
+        (folder/'manifest.json').lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        require_no_finder_evidence(read_json(folder/'manifest.json').get('files'))
+    paths=[path for path in sorted(folder.rglob('*')) if not finder_metadata_ignored(path)]
     files = {str(p.relative_to(folder)): dict(sha256=digest(p), bytes=p.stat().st_size)
-             for p in sorted(folder.rglob('*')) if p.is_file()
+             for p in paths if p.is_file()
              and p.name not in ('manifest.json', '.runner.lock') and not p.is_symlink()}
     save(folder / 'manifest.json', dict(schema_version=1, files=files,
                                       authenticity_certified=False))
@@ -469,16 +509,34 @@ def run(args):
         if state['config_sha256'] != digest(folder/'config.json'):
             raise RuntimeError('Frozen campaign configuration changed')
         from verify_m5_validation import (verify_manifest, validate_job, summarize_experiment,
-                                         validate_config, VerifiedFidelityRejection)
+                                         validate_config, VerifiedFidelityRejection, read_json)
         validate_config(config)
         if args.experiment and not set(args.experiment) <= {x['name'] for x in config['experiments']}:
             raise ValueError('Unknown experiment selection; inspect config.json for frozen names')
-        verify_manifest(folder, allow_interrupted=state.get('status') == 'running')
+        recovery=inspect_index(folder,config,state)
         unchanged(config)
         # A stale process lease can only originate in our exclusively-created
         # attempt directories; creation-time identity prevents PID reuse kills.
+        saved_leases=[]
         for lease in folder.glob('sessions/*/**/owned-processes.json'):
-            owned_cleanup(json.loads(lease.read_text())['processes'])
+            identities=read_json(lease)['processes']
+            saved_leases.extend(identities)
+            owned_cleanup(identities)
+        require_leases_quiescent(saved_leases)
+        # A crash can persist its atomic state before the final global index.
+        # Reindex only after owned writers are stopped, frozen inputs and all
+        # old immutable hashes are rechecked, and sealed claims are revalidated.
+        recovery=inspect_index(folder,config,state)
+        unchanged(config)
+        if recovery['needed']:
+            validate_recovery_records(folder,config,state)
+            unchanged(config)
+            if (digest(folder/'state.json') != recovery['state_sha256']
+                    or digest(folder/'config.json') != recovery['config_sha256']
+                    or digest(folder/'manifest.json') != recovery['manifest_sha256']):
+                raise RuntimeError('Campaign changed during index recovery')
+            write_manifest(folder)
+            verify_manifest(folder)
         if state['status'] in ('completed', 'completed_with_exclusions', 'completed_evidence_with_rejections'):
             from verify_m5_validation import verify
             return verify(folder)

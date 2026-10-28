@@ -209,6 +209,7 @@ def test_controller_seals_negative_experiment_then_continues(tmp_path,monkeypatc
     bench.save(tmp_path/'config.json',config)
     bench.save(tmp_path/'state.json',dict(config_sha256=bench.digest(tmp_path/'config.json'),
         status='prepared_no_worker_launched',sessions=[],jobs={},experiment_results={}))
+    bench.write_manifest(tmp_path)
     monkeypatch.setattr(checker,'validate_config',lambda config:None)
     monkeypatch.setattr(checker,'verify_manifest',lambda *a,**k:2)
     monkeypatch.setattr(checker,'validate_job',lambda *a:None)

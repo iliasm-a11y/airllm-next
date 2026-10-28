@@ -31,6 +31,7 @@ from m5_validation import (campaign_lock, digest, owned_cleanup, run_child,
                            unchanged)
 from verify_m5_validation import validate_config, verify_manifest
 from m5_process_inventory import inference_observation, expected_read_error
+from m5_manifest_recovery import inspect_index
 import psutil
 
 HEADROOM_BYTES = 256 << 20
@@ -137,13 +138,13 @@ def preparation(campaign):
         if config['engine_roots']['candidate'] != str(ROOT):
             raise ValueError('External supervisor must use its own frozen candidate checkout')
         for relative in ('benchmarks/m5_validation.py','benchmarks/verify_m5_validation.py',
-                         'benchmarks/validate_m5_kernels.py'):
+                         'benchmarks/validate_m5_kernels.py','benchmarks/m5_manifest_recovery.py'):
             path = ROOT/relative
             if config['protocol_sha256'].get(str(path)) != digest(path):
                 raise RuntimeError('Actual supervisor child entrypoint is outside the frozen protocol: '+relative)
         if state.get('config_sha256') != digest(campaign/'config.json'):
             raise RuntimeError('Campaign configuration identity changed')
-        verify_manifest(campaign, allow_interrupted=state.get('status') == 'running')
+        inspect_index(campaign,config,state)
         unchanged(config)
     return config, state
 
@@ -269,7 +270,18 @@ def run(args):
                 atomic_json(previous_path,previous)
                 write_file_manifest(output)
                 return 130,previous
-        config, prior = preparation(campaign)
+        try:
+            config, prior = preparation(campaign)
+        except Exception as error:
+            # Preparation can fail before a supervisor state exists. Keep an
+            # atomic diagnostic, while preserving the original fatal exception
+            # and its exit1; integrity/programming failures are never resource75.
+            if not (output/'state.json').exists():
+                journal=output/('startup-failure-'+str(time.time_ns())+'.json')
+                atomic_json(journal,dict(status='startup_failed',exit_code=1,
+                    phase='campaign_preparation',campaign=str(campaign),
+                    error_type=type(error).__name__,error=str(error),unix_seconds=time.time()))
+            raise
         identity = dict(supervisor_sha256=digest(__file__),
             campaign=str(campaign), campaign_config_sha256=digest(campaign/'config.json'),
             interpreter=str(Path(sys.executable).resolve()), max_wait_seconds=float(args.max_wait_seconds),
