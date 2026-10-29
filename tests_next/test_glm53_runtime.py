@@ -1,8 +1,10 @@
-"""Independent miniature GLM5-Next HF -> F32 GGUF end-to-end validation.
+"""Independent miniature GLM5-Next HF -> mixed GGUF end-to-end validation.
 
-The miniature includes dense and sparse KDA plus KPool DSA. It does not test
-trained 313B weights, Q2_K end-to-end fidelity, or Apple Metal performance.
+The miniature includes dense and sparse KDA plus KPool DSA. Quantized fixtures
+load the independent HF model from upstream-decoded identical packed bytes.
+They do not test trained 313B weights or Apple Metal performance.
 """
+from collections import Counter, defaultdict
 from dataclasses import replace
 
 import mlx.core as mx
@@ -16,8 +18,18 @@ from airllm.nextgen.gguf_glm5 import NativeGGUFGLM5Model
 from test_gguf import _fixture
 
 
-def export_glm53_fixture(tmp_path, *, layers=5, quantized=False, experts=4, top_k=2, sparse_dsa=False):
-    """Convert an independently initialized official HF miniature to GGUF F32."""
+def export_glm53_fixture(tmp_path, *, layers=5, quantized=False, experts=4, top_k=2,
+                        sparse_dsa=False, quantization_profile='q2_k', shards=1,
+                        architecture='glm5-next'):
+    """Export independent HF weights; optional packed fixtures use upstream gguf.
+
+    The synthetic AJ profile keeps every expert gate/up in IQ2_S, uses IQ3_XXS
+    for interior expert down, and IQ3_S for boundary expert down. One boundary
+    layer at either end substitutes for AJ's four at either end on 42 MoE
+    layers; this tiny schedule is not a trained AJ checkpoint.
+    """
+    if quantization_profile not in ('q2_k', 'aj') or shards not in (1, 3):
+        raise ValueError('Unsupported miniature quantization profile or shard count')
     torch.manual_seed(5353)
     hidden = 256 if quantized else 8
     c = Glm5NextTextConfig(
@@ -63,9 +75,11 @@ def export_glm53_fixture(tmp_path, *, layers=5, quantized=False, experts=4, top_
     quant_rng = np.random.default_rng(5353256)
     if quantized:
         from gguf import GGMLQuantizationType
+        from gguf.constants import GGML_QUANT_SIZES
         from gguf.quants import dequantize as upstream_dequantize
     def synthetic_blocks(shape, kind):
-        block, size = (256, 84) if kind == 10 else (32, 34)
+        block, size = GGML_QUANT_SIZES[GGMLQuantizationType(kind)]
+        assert shape[-1] % block == 0, 'every packed matrix row must contain complete blocks'
         raw = quant_rng.integers(0, 256, (int(np.prod(shape)) // block, size), dtype=np.uint8)
         if kind == 10:
             raw[:, 80:82] = np.frombuffer(np.float16(0.001).tobytes(), dtype=np.uint8)
@@ -130,17 +144,19 @@ def export_glm53_fixture(tmp_path, *, layers=5, quantized=False, experts=4, top_
         p = f'blk.{number}.'
         array = parameter.detach().numpy().copy()
         if quantized and suffix == 'mlp.experts.gate_up_proj':
+            kind = 22 if quantization_profile == 'aj' else 10
             parts = []
             for label, part in zip(('ffn_gate_exps.weight', 'ffn_up_exps.weight'), np.split(array, 2, axis=1)):
-                decoded, raw = synthetic_blocks(part.shape, 10)
+                decoded, raw = synthetic_blocks(part.shape, kind)
                 parts.append(decoded)
-                encoded[p + label] = (10, raw)
+                encoded[p + label] = (kind, raw)
             array = np.concatenate(parts, axis=1)
             with torch.no_grad():
                 parameter.copy_(torch.tensor(array))
         elif quantized and suffix == 'mlp.experts.down_proj':
-            array, raw = synthetic_blocks(array.shape, 10)
-            encoded[p + names[suffix]] = (10, raw)
+            kind = (21 if int(number) in (3, layers - 1) else 18) if quantization_profile == 'aj' else 10
+            array, raw = synthetic_blocks(array.shape, kind)
+            encoded[p + names[suffix]] = (kind, raw)
             with torch.no_grad():
                 parameter.copy_(torch.tensor(array))
         elif quantized and array.ndim == 2 and array.shape[-1] % 32 == 0 and suffix in names:
@@ -181,17 +197,27 @@ def export_glm53_fixture(tmp_path, *, layers=5, quantized=False, experts=4, top_
         'expert_weights_norm': c.norm_topk_prob, 'expert_gating_func': 2,
         'leading_dense_block_count': 3, 'swiglu_clamp_exp': c.swiglu_limit,
     }
-    metadata = [('general.architecture', 8, 'glm5-next'), ('general.alignment', 4, 32)]
+    metadata = [('general.architecture', 8, architecture), ('general.alignment', 4, 32)]
     for name, value in values.items():
         if isinstance(value, list):
             kind, value = 9, (4, value)
         else:
             kind = 7 if isinstance(value, bool) else 4 if isinstance(value, int) else 6
-        metadata.append(('glm5-next.' + name, kind, value))
-    path = _fixture(tmp_path / 'tiny-glm53.gguf',
-        [(name, array.shape[::-1], encoded.get(name, (0, None))[0],
+        metadata.append((architecture + '.' + name, kind, value))
+    records = [(name, array.shape[::-1], encoded.get(name, (0, None))[0],
           encoded[name][1] if name in encoded else np.asarray(array, dtype='<f4').tobytes())
-         for name, array in tensors.items()], metadata=metadata)
+         for name, array in tensors.items()]
+    if shards == 1:
+        path = _fixture(tmp_path / 'tiny-glm53.gguf', records, metadata=metadata)
+    else:
+        paths = []
+        for shard in range(shards):
+            shard_metadata = (metadata if shard == 0 else []) + [
+                ('split.no', 4, shard), ('split.count', 4, shards),
+                ('split.tensors.count', 4, len(records))]
+            paths.append(_fixture(tmp_path / f'tiny-glm53-{shard + 1:05d}-of-{shards:05d}.gguf',
+                                  records[shard::shards], metadata=shard_metadata))
+        path = paths[0]
     options = NextConfig(cache_bytes=32 << 10, io_bytes=(4 if layers > 5 else 1) << 20, kv_bytes=1 << 20,
         workspace_bytes=1 << 20, reserve_bytes=0, max_tensor_bytes=64 << 10,
         row_chunk=3, prefill_chunk=1, max_context=32, policy='adaptive',
@@ -268,6 +294,101 @@ def test_mixed_q2_k_q8_0_full_logits_and_cached_decode(tmp_path):
             follow_logits = head(follow_ref.last_hidden_state).numpy()
         follow = model.forward([[11, 3]], past_key_values=actual.past_key_values)
         np.testing.assert_allclose(np.asarray(follow.logits), follow_logits, rtol=4e-4, atol=5e-5)
+
+
+@pytest.mark.parametrize('architecture', ['glm5-next', 'glm5next'])
+def test_mixed_aj_iq_three_shards_logits_routes_and_cached_decode(tmp_path, monkeypatch, record_property, architecture):
+    """Portable fidelity of identical IQ bytes, not a trained-model/M5 result."""
+    pytest.importorskip('gguf')
+    path, ref, head, options = export_glm53_fixture(
+        tmp_path, layers=6, quantized=True, quantization_profile='aj',
+        shards=3, architecture=architecture)
+    reference_routes = defaultdict(list)
+    native_routes = defaultdict(list)
+    expert_calls = []
+
+    def observe_reference(layer_id):
+        def capture(module, args, output):
+            # Official HF returns router_logits, topk_weights, topk_indices.
+            assert len(output) == 3
+            reference_routes[layer_id].extend(
+                tuple(sorted(row)) for row in output[2].detach().cpu().tolist())
+        return capture
+
+    handles = [layer.mlp.gate.register_forward_hook(observe_reference(i))
+               for i, layer in enumerate(ref.layers) if hasattr(layer.mlp, 'gate')]
+    ids = torch.tensor([[1, 8, 12, 5]])
+    try:
+        with torch.inference_mode():
+            expected = ref(ids, use_cache=True)
+            expected_logits = head(expected.last_hidden_state).numpy()
+        with NativeGGUFGLM5Model(path, options) as model:
+            assert len(model.checkpoint.readers) == 3
+            assert all(reader.tensors for reader in model.checkpoint.readers)
+            assert model.checkpoint.stats['tensor_bytes'] == 0
+            # AJ's real boundary promotion concerns down only: gate/up remain
+            # IQ2_S even at either end. Reduce four boundary layers to one for
+            # this three-MoE-layer fixture, keeping a genuine interior layer.
+            for layer in (3, 4, 5):
+                for family in ('gate', 'up'):
+                    assert int(model.checkpoint.tensors[f'blk.{layer}.ffn_{family}_exps.weight'].quant_type) == 22
+            for layer in (3, 5):
+                assert int(model.checkpoint.tensors[f'blk.{layer}.ffn_down_exps.weight'].quant_type) == 21
+            assert int(model.checkpoint.tensors['blk.4.ffn_down_exps.weight'].quant_type) == 18
+
+            original_mlp, original_linear = model._mlp, model.reader.linear
+
+            def capture_native(hidden, layer_id):
+                output = original_mlp(hidden, layer_id)
+                if layer_id in model.last_routes:
+                    native_routes[layer_id].append(tuple(sorted(model.last_routes[layer_id])))
+                return output
+
+            def capture_expert_reads(hidden, key, *, expert=None, **kwargs):
+                if '_exps.weight' in key:
+                    expert_calls.append((int(key.split('.')[1]), key.split('.')[2], expert))
+                return original_linear(hidden, key, expert=expert, **kwargs)
+
+            monkeypatch.setattr(model, '_mlp', capture_native)
+            monkeypatch.setattr(model.reader, 'linear', capture_expert_reads)
+
+            def compare_logits(label, actual, expected_array):
+                actual_array = np.asarray(actual)
+                assert np.isfinite(actual_array).all()
+                record_property(label + '_max_abs_error', float(np.max(np.abs(actual_array - expected_array))))
+                # Fixed before testing: same envelope as the inherited mixed
+                # Q2_K/Q8_0 HF-vs-MLX miniature, with no post-hoc widening.
+                np.testing.assert_allclose(actual_array, expected_array, rtol=4e-4, atol=5e-5)
+                np.testing.assert_array_equal(actual_array.argmax(-1), expected_array.argmax(-1))
+
+            actual = model.forward(ids.numpy())
+            compare_logits('aj_prefill', actual.logits, expected_logits)
+            assert dict(native_routes) == dict(reference_routes)
+
+            follow_ids = torch.tensor([[11, 3]])
+            with torch.inference_mode():
+                follow_ref = ref(follow_ids, use_cache=True, past_key_values=expected.past_key_values)
+                follow_logits = head(follow_ref.last_hidden_state).numpy()
+            follow = model.forward(follow_ids.numpy(), past_key_values=actual.past_key_values)
+            compare_logits('aj_cached_continuation', follow.logits, follow_logits)
+            assert dict(native_routes) == dict(reference_routes)
+            assert set(native_routes) == {3, 4, 5}
+            assert all(len(routes) == 6 for routes in native_routes.values())
+            expected_calls = Counter(
+                (layer_id, f'ffn_{family}_exps', expert)
+                for layer_id, routes in reference_routes.items()
+                for selected in routes for expert in selected
+                for family in ('gate', 'up', 'down'))
+            assert Counter(expert_calls) == expected_calls
+            assert model.stats['routed_expert_evaluations'] == 6 * 3 * 2
+            assert follow.past_key_values.position == 6
+            assert model.reader.cache.peak_bytes <= options.cache_bytes
+            assert model.checkpoint.stats['peak_reserved_bytes'] <= options.io_bytes
+            assert model.checkpoint.stats['shared_retained_peak_bytes'] <= options.io_bytes
+            record_property('aj_routed_expert_evaluations', int(model.stats['routed_expert_evaluations']))
+    finally:
+        for handle in handles:
+            handle.remove()
 
 
 def test_45_layers_288_experts_top8_schedule_and_logits(tmp_path):

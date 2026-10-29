@@ -8,15 +8,21 @@ on:
       - 'tests_next/test_glm53*'
       - 'tests_next/test_glm5_next*'
       - 'tests_next/test_gguf_split.py'
+      - 'tests_next/test_gguf_iq.py'
+      - 'tests_next/test_iq_ggml_reference.py'
+      - 'tests_next/fixtures/iq_ggml/**'
       - 'tests_next/test_ronin_glm53.py'
       - 'tests_next/reference_glm53_torch.py'
       - 'tests_next/fixtures/glm53/**'
       - 'research/ronin_glm53/checkpoint-*.json'
       - 'research/ronin_glm53/numerical_validation.py'
+      - 'research/ronin_aj_iq3xxs/**'
+      - 'scripts/inspect_glm53_aj.py'
+      - 'tests_next/test_glm53_aj_inspection.py'
       - 'requirements-ronin-glm53-*.txt'
       - '.github/workflows/ronin-glm53.yml'
   push:
-    branches: ['research/ronin-glm53-flash']
+    branches: ['research/ronin-glm53-flash', 'research/ronin-aj-iq3xxs']
 
 permissions:
   contents: read
@@ -48,6 +54,8 @@ jobs:
           tests_next/test_glm5_next_tokenizer.py tests_next/test_ronin_glm53.py
           tests_next/test_gguf.py tests_next/test_gguf_chat.py
           tests_next/test_gguf_packed_io.py
+          tests_next/test_gguf_iq.py tests_next/test_iq_ggml_reference.py
+          tests_next/test_glm53_aj_layout.py tests_next/test_glm53_aj_inspection.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -24,7 +24,7 @@ setuptools.setup(
     license="Apache-2.0",
     python_requires='>=3.12',
     packages=setuptools.find_packages(exclude=('tests','tests.*')),
-    license_files=['LICENSE','NOTICE_NEXT.txt','NOTICE_ULTRA.txt'],
+    license_files=['LICENSE','NOTICE_NEXT.txt','NOTICE_ULTRA.txt','NOTICE-IQ-GGML.txt'],
     # Keep the dependency surface small and pinned to a tested range so a plain
     # `pip install airllm` gives users a known-good stack with no manual upgrades.
     install_requires=[

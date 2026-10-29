@@ -1,0 +1,137 @@
+{
+  "recorded_at_utc": "2026-10-29T10:32:33.292648+00:00",
+  "host_system": "Linux",
+  "mac_target_accessible": false,
+  "weight_download_attempted": false,
+  "destination_created": false,
+  "cli_help_exit_code": 0,
+  "profiles": [
+    {
+      "command": [
+        "/workspace/scratch/fcf9c7718538/ronin-venv/bin/python",
+        "scripts/download_glm53_flash.py",
+        "--profile",
+        "Q2_K_S",
+        "--destination",
+        "/workspace/scratch/fcf9c7718538/models/glm53-aj-iq3xxs"
+      ],
+      "exit_code": 2,
+      "report": {
+        "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+        "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+        "variant": "Q2_K_S",
+        "destination": "/workspace/scratch/fcf9c7718538/models/glm53-aj-iq3xxs",
+        "filesystem_probe": "/workspace/scratch/fcf9c7718538",
+        "payload_bytes": 110027352864,
+        "payload_gb": 110.027352864,
+        "payload_gib": 102.47095754742622,
+        "free_bytes": 26621943808,
+        "free_gb": 26.621943808,
+        "free_gib": 24.793617248535156,
+        "remaining_download_bytes": 110027352864,
+        "temporary_duplicate_weight_bytes": 0,
+        "metadata_headroom_bytes": 67108864,
+        "reserve_bytes": 34359738368,
+        "estimated_free_after_bytes": -83472517920,
+        "download_allowed": false,
+        "files": [
+          {
+            "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+            "size": 9430112,
+            "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+            "status": "absent",
+            "verified_partial_bytes": 0,
+            "remaining_bytes": 9430112
+          },
+          {
+            "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+            "size": 110017922752,
+            "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+            "status": "absent",
+            "verified_partial_bytes": 0,
+            "remaining_bytes": 110017922752
+          }
+        ],
+        "host_system": "Linux",
+        "macos_system_volume_free_bytes": null,
+        "macos_system_volume_estimated_free_after_bytes": null,
+        "destination_shares_system_storage": null,
+        "macos_system_volume_minimum_bytes": null,
+        "macos_system_volume_allowed": null,
+        "vision": false,
+        "mtp": false,
+        "engine_validated": false
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/scratch/fcf9c7718538/ronin-venv/bin/python",
+        "scripts/download_glm53_flash.py",
+        "--profile",
+        "AJ-IQ3_XXS",
+        "--destination",
+        "/workspace/scratch/fcf9c7718538/models/glm53-aj-iq3xxs"
+      ],
+      "exit_code": 2,
+      "report": {
+        "model_id": "aj9o9/GLM-5.3-Flash-GGUF",
+        "revision": "07c62fcdeaf1c05d22bd123c3da8058a1b1e63e2",
+        "variant": "AJ-IQ3_XXS",
+        "destination": "/workspace/scratch/fcf9c7718538/models/glm53-aj-iq3xxs",
+        "filesystem_probe": "/workspace/scratch/fcf9c7718538",
+        "payload_bytes": 112411167424,
+        "payload_gb": 112.411167424,
+        "payload_gib": 104.69105786085129,
+        "free_bytes": 26621943808,
+        "free_gb": 26.621943808,
+        "free_gib": 24.793617248535156,
+        "remaining_download_bytes": 112411167424,
+        "temporary_duplicate_weight_bytes": 0,
+        "metadata_headroom_bytes": 67108864,
+        "reserve_bytes": 34359738368,
+        "estimated_free_after_bytes": -85856332480,
+        "download_allowed": false,
+        "files": [
+          {
+            "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+            "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+            "size": 39842483616,
+            "sha256": "0f98b1934ecae99b403a667e94a79ee3630a0d66c48cd719e5210da728603c80",
+            "status": "absent",
+            "verified_partial_bytes": 0,
+            "remaining_bytes": 39842483616
+          },
+          {
+            "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+            "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+            "size": 39974541184,
+            "sha256": "abecd5f47280372702d6fa4a093ef3ffe149fae5a1d3f28e1f1feb8cc94fdf89",
+            "status": "absent",
+            "verified_partial_bytes": 0,
+            "remaining_bytes": 39974541184
+          },
+          {
+            "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00003-of-00003.gguf",
+            "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00003-of-00003.gguf",
+            "size": 32594142624,
+            "sha256": "5651239c136bb26344e28001176a3f6b2dfe78664d0ab90e8762d013c9c349f8",
+            "status": "absent",
+            "verified_partial_bytes": 0,
+            "remaining_bytes": 32594142624
+          }
+        ],
+        "host_system": "Linux",
+        "macos_system_volume_free_bytes": null,
+        "macos_system_volume_estimated_free_after_bytes": null,
+        "destination_shares_system_storage": null,
+        "macos_system_volume_minimum_bytes": null,
+        "macos_system_volume_allowed": null,
+        "vision": false,
+        "mtp": false,
+        "engine_validated": false
+      },
+      "stderr": ""
+    }
+  ]
+}

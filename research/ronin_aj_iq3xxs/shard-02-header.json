@@ -1,0 +1,7005 @@
+{
+  "gguf_version": 3,
+  "metadata_count": 3,
+  "tensor_count": 469,
+  "alignment": 32,
+  "header_bytes": 29670,
+  "data_start": 29696,
+  "header_sha256": "002f295d3cdf35e408bd633863969024c2ffbce95049146bdb83491974736f51",
+  "prefix_downloaded_bytes": 1048576,
+  "metadata": {
+    "split.no": 1,
+    "split.tensors.count": 1383,
+    "split.count": 3
+  },
+  "tensors": [
+    {
+      "name": "blk.17.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 0,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 29696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 773849088,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 773878784,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 778567680,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 778597376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 785448960,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 785478656,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 785465344,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 785495040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 1559314432,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 1559344128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1566195712,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 1566225408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1566195808,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 1566225504,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1567768672,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 1567798368,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1567768704,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 1567798400,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1567768800,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 1567798496,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1569341664,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 1569371360,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1569341696,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 1569371392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 1569341952,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 1569371648,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1569620480,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 1569650176,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1569751552,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 1569781248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1569882624,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 1569912320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1570013696,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 1570043392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 1570046464,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 1570076160,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 1570603520,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 1570633216,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 1571717632,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 1571747328,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 1572274688,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 1572304384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.17.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1573388800,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 1573418496,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 1573389312,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 1573419008,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1600914432,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 1600944128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 1600930816,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 1600960512,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 1628455936,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 1628485632,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 1655981056,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 1656010752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 1683506176,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 1683535872,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 1683507328,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 1683537024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 2608351360,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 2608381056,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 2615232640,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 2615262336,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 3389081728,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 3389111424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 3393800320,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 3393830016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 3400681600,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 3400711296,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 3400697984,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 3400727680,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4174547072,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 4174576768,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4181428352,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 4181458048,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4181428448,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 4181458144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4183001312,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 4183031008,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4183001344,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 4183031040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4183001440,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 4183031136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4184574304,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 4184604000,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4184574336,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 4184604032,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 4184574592,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 4184604288,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4184853120,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 4184882816,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4184984192,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 4185013888,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4185115264,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 4185144960,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4185246336,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 4185276032,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 4185279104,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 4185308800,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 4185836160,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 4185865856,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 4186950272,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 4186979968,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 4187507328,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 4187537024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.18.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4188621440,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 4188651136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_k_b.weight",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4188621952,
+      "nbytes": 6881280,
+      "row_bytes": 210,
+      "absolute_offset": 4188651648,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_kv_a_mqa.weight",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4195503232,
+      "nbytes": 1720320,
+      "row_bytes": 3360,
+      "absolute_offset": 4195532928,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_kv_a_norm.weight",
+      "dimensions": [
+        512
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4197223552,
+      "nbytes": 2048,
+      "row_bytes": 2048,
+      "absolute_offset": 4197253248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4197225600,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 4197255296,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_output.weight",
+      "dimensions": [
+        16384,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4197241984,
+      "nbytes": 55050240,
+      "row_bytes": 13440,
+      "absolute_offset": 4197271680,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_q_a.weight",
+      "dimensions": [
+        4096,
+        1536
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4252292224,
+      "nbytes": 5160960,
+      "row_bytes": 3360,
+      "absolute_offset": 4252321920,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_q_a_norm.weight",
+      "dimensions": [
+        1536
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4257453184,
+      "nbytes": 6144,
+      "row_bytes": 6144,
+      "absolute_offset": 4257482880,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        16384
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4257459328,
+      "nbytes": 20643840,
+      "row_bytes": 1260,
+      "absolute_offset": 4257489024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.attn_v_b.weight",
+      "dimensions": [
+        512,
+        256,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 4278103168,
+      "nbytes": 6881280,
+      "row_bytes": 420,
+      "absolute_offset": 4278132864,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 4284984448,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 4285014144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 4284985600,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 4285015296,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 5209829632,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 5209859328,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 5216710912,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 5216740608,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 5990560000,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 5990589696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 5995278592,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 5995308288,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6002159872,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 6002189568,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 6002176256,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 6002205952,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 6776025344,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 6776055040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6782906624,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 6782936320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6782906720,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 6782936416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6784479584,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 6784509280,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6784479616,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 6784509312,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6784479712,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 6784509408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6786052576,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 6786082272,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer.attn_k.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 6786052608,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 6786082304,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        4096
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 6786609664,
+      "nbytes": 6684672,
+      "row_bytes": 1632,
+      "absolute_offset": 6786639360,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer.k_norm.bias",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6793294336,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 6793324032,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer.k_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6793294848,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 6793324544,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer.proj.weight",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 6793295360,
+      "nbytes": 139264,
+      "row_bytes": 4352,
+      "absolute_offset": 6793325056,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer_compressor_ape.weight",
+      "dimensions": [
+        128,
+        4
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6793434624,
+      "nbytes": 2048,
+      "row_bytes": 512,
+      "absolute_offset": 6793464320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.19.indexer_compressor_gate.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 6793436672,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 6793466368,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 6793993728,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 6794023424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6821518848,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 6821548544,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 6821535232,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 6821564928,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 6849060352,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 6849090048,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 6876585472,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 6876615168,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 6904110592,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 6904140288,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 6904111744,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 6904141440,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 7828955776,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 7828985472,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 7835837056,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 7835866752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 8609686144,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 8609715840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 8614404736,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 8614434432,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 8621286016,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 8621315712,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 8621302400,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 8621332096,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 9395151488,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 9395181184,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9402032768,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 9402062464,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9402032864,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 9402062560,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9403605728,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 9403635424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9403605760,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 9403635456,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9403605856,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 9403635552,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405178720,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 9405208416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405178752,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 9405208448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 9405179008,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 9405208704,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405457536,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 9405487232,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405588608,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 9405618304,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405719680,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 9405749376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9405850752,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 9405880448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 9405883520,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 9405913216,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 9406440576,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 9406470272,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 9407554688,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 9407584384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 9408111744,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 9408141440,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.20.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9409225856,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 9409255552,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 9409226368,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 9409256064,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9436751488,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 9436781184,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 9436767872,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 9436797568,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 9464292992,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 9464322688,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 9491818112,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 9491847808,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 9519343232,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 9519372928,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 9519344384,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 9519374080,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 10444188416,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 10444218112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 10451069696,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 10451099392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 11224918784,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 11224948480,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 11229637376,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 11229667072,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 11236518656,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 11236548352,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 11236535040,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 11236564736,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 12010384128,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 12010413824,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12017265408,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 12017295104,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12017265504,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 12017295200,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12018838368,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 12018868064,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12018838400,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 12018868096,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12018838496,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 12018868192,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12020411360,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 12020441056,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12020411392,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 12020441088,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 12020411648,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 12020441344,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12020690176,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 12020719872,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12020821248,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 12020850944,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12020952320,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 12020982016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12021083392,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 12021113088,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 12021116160,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 12021145856,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 12021673216,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 12021702912,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 12022787328,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 12022817024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 12023344384,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 12023374080,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.21.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12024458496,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 12024488192,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 12024459008,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 12024488704,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12051984128,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 12052013824,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 12052000512,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 12052030208,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 12079525632,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 12079555328,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 12107050752,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 12107080448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 12134575872,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 12134605568,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 12134577024,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 12134606720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 13059421056,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 13059450752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 13066302336,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 13066332032,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 13840151424,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 13840181120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 13844870016,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 13844899712,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 13851751296,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 13851780992,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 13851767680,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 13851797376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14625616768,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 14625646464,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14632498048,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 14632527744,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14632498144,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 14632527840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14634071008,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 14634100704,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14634071040,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 14634100736,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14634071136,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 14634100832,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14635644000,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 14635673696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14635644032,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 14635673728,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 14635644288,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 14635673984,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14635922816,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 14635952512,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14636053888,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 14636083584,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14636184960,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 14636214656,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14636316032,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 14636345728,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 14636348800,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 14636378496,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 14636905856,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 14636935552,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 14638019968,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 14638049664,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 14638577024,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 14638606720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.22.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14639691136,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 14639720832,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_k_b.weight",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14639691648,
+      "nbytes": 6881280,
+      "row_bytes": 210,
+      "absolute_offset": 14639721344,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_kv_a_mqa.weight",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14646572928,
+      "nbytes": 1720320,
+      "row_bytes": 3360,
+      "absolute_offset": 14646602624,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_kv_a_norm.weight",
+      "dimensions": [
+        512
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14648293248,
+      "nbytes": 2048,
+      "row_bytes": 2048,
+      "absolute_offset": 14648322944,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14648295296,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 14648324992,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_output.weight",
+      "dimensions": [
+        16384,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14648311680,
+      "nbytes": 55050240,
+      "row_bytes": 13440,
+      "absolute_offset": 14648341376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_q_a.weight",
+      "dimensions": [
+        4096,
+        1536
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14703361920,
+      "nbytes": 5160960,
+      "row_bytes": 3360,
+      "absolute_offset": 14703391616,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_q_a_norm.weight",
+      "dimensions": [
+        1536
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14708522880,
+      "nbytes": 6144,
+      "row_bytes": 6144,
+      "absolute_offset": 14708552576,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        16384
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14708529024,
+      "nbytes": 20643840,
+      "row_bytes": 1260,
+      "absolute_offset": 14708558720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.attn_v_b.weight",
+      "dimensions": [
+        512,
+        256,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 14729172864,
+      "nbytes": 6881280,
+      "row_bytes": 420,
+      "absolute_offset": 14729202560,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 14736054144,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 14736083840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 14736055296,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 14736084992,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 15660899328,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 15660929024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 15667780608,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 15667810304,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 16441629696,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 16441659392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 16446348288,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 16446377984,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 16453229568,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 16453259264,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 16453245952,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 16453275648,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 17227095040,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 17227124736,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17233976320,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 17234006016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17233976416,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 17234006112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17235549280,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 17235578976,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17235549312,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 17235579008,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17235549408,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 17235579104,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17237122272,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 17237151968,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer.attn_k.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 17237122304,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 17237152000,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        4096
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 17237679360,
+      "nbytes": 6684672,
+      "row_bytes": 1632,
+      "absolute_offset": 17237709056,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer.k_norm.bias",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17244364032,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 17244393728,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer.k_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17244364544,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 17244394240,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer.proj.weight",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 17244365056,
+      "nbytes": 139264,
+      "row_bytes": 4352,
+      "absolute_offset": 17244394752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer_compressor_ape.weight",
+      "dimensions": [
+        128,
+        4
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17244504320,
+      "nbytes": 2048,
+      "row_bytes": 512,
+      "absolute_offset": 17244534016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.23.indexer_compressor_gate.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 17244506368,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 17244536064,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 17245063424,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 17245093120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17272588544,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 17272618240,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 17272604928,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 17272634624,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 17300130048,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 17300159744,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 17327655168,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 17327684864,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 17355180288,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 17355209984,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 17355181440,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 17355211136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 18280025472,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 18280055168,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 18286906752,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 18286936448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19060755840,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 19060785536,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19065474432,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 19065504128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19072355712,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 19072385408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 19072372096,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 19072401792,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19846221184,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 19846250880,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19853102464,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 19853132160,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19853102560,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 19853132256,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19854675424,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 19854705120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19854675456,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 19854705152,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19854675552,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 19854705248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856248416,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 19856278112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856248448,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 19856278144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 19856248704,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 19856278400,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856527232,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 19856556928,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856658304,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 19856688000,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856789376,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 19856819072,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19856920448,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 19856950144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 19856953216,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 19856982912,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 19857510272,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 19857539968,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 19858624384,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 19858654080,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 19859181440,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 19859211136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.24.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19860295552,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 19860325248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19860296064,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 19860325760,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19887821184,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 19887850880,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19887837568,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 19887867264,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19915362688,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 19915392384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 19942887808,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 19942917504,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 19970412928,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 19970442624,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 19970414080,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 19970443776,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 20895258112,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 20895287808,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 20902139392,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 20902169088,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 21675988480,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 21676018176,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 21680707072,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 21680736768,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 21687588352,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 21687618048,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 21687604736,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 21687634432,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 22461453824,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 22461483520,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22468335104,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 22468364800,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22468335200,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 22468364896,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22469908064,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 22469937760,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22469908096,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 22469937792,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22469908192,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 22469937888,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22471481056,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 22471510752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22471481088,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 22471510784,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 22471481344,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 22471511040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22471759872,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 22471789568,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22471890944,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 22471920640,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22472022016,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 22472051712,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22472153088,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 22472182784,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 22472185856,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 22472215552,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 22472742912,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 22472772608,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 22473857024,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 22473886720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 22474414080,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 22474443776,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.25.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22475528192,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 22475557888,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 22475528704,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 22475558400,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22503053824,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 22503083520,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 22503070208,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 22503099904,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 22530595328,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 22530625024,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 22558120448,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 22558150144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 22585645568,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 22585675264,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 22585646720,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 22585676416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 23510490752,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 23510520448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 23517372032,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 23517401728,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 24291221120,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 24291250816,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 24295939712,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 24295969408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 24302820992,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 24302850688,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 24302837376,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 24302867072,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25076686464,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 25076716160,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25083567744,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 25083597440,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25083567840,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 25083597536,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25085140704,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 25085170400,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25085140736,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 25085170432,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25085140832,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 25085170528,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25086713696,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 25086743392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25086713728,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 25086743424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 25086713984,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 25086743680,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25086992512,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 25087022208,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25087123584,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 25087153280,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25087254656,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 25087284352,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25087385728,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 25087415424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 25087418496,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 25087448192,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 25087975552,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 25088005248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 25089089664,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 25089119360,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 25089646720,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 25089676416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.26.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25090760832,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 25090790528,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_k_b.weight",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25090761344,
+      "nbytes": 6881280,
+      "row_bytes": 210,
+      "absolute_offset": 25090791040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_kv_a_mqa.weight",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25097642624,
+      "nbytes": 1720320,
+      "row_bytes": 3360,
+      "absolute_offset": 25097672320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_kv_a_norm.weight",
+      "dimensions": [
+        512
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25099362944,
+      "nbytes": 2048,
+      "row_bytes": 2048,
+      "absolute_offset": 25099392640,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25099364992,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 25099394688,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_output.weight",
+      "dimensions": [
+        16384,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25099381376,
+      "nbytes": 55050240,
+      "row_bytes": 13440,
+      "absolute_offset": 25099411072,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_q_a.weight",
+      "dimensions": [
+        4096,
+        1536
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25154431616,
+      "nbytes": 5160960,
+      "row_bytes": 3360,
+      "absolute_offset": 25154461312,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_q_a_norm.weight",
+      "dimensions": [
+        1536
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25159592576,
+      "nbytes": 6144,
+      "row_bytes": 6144,
+      "absolute_offset": 25159622272,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        16384
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25159598720,
+      "nbytes": 20643840,
+      "row_bytes": 1260,
+      "absolute_offset": 25159628416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.attn_v_b.weight",
+      "dimensions": [
+        512,
+        256,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 25180242560,
+      "nbytes": 6881280,
+      "row_bytes": 420,
+      "absolute_offset": 25180272256,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 25187123840,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 25187153536,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 25187124992,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 25187154688,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 26111969024,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 26111998720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 26118850304,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 26118880000,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 26892699392,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 26892729088,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 26897417984,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 26897447680,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 26904299264,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 26904328960,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 26904315648,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 26904345344,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 27678164736,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 27678194432,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27685046016,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 27685075712,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27685046112,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 27685075808,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27686618976,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 27686648672,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27686619008,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 27686648704,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27686619104,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 27686648800,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27688191968,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 27688221664,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer.attn_k.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 27688192000,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 27688221696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        4096
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 27688749056,
+      "nbytes": 6684672,
+      "row_bytes": 1632,
+      "absolute_offset": 27688778752,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer.k_norm.bias",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27695433728,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 27695463424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer.k_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27695434240,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 27695463936,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer.proj.weight",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 27695434752,
+      "nbytes": 139264,
+      "row_bytes": 4352,
+      "absolute_offset": 27695464448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer_compressor_ape.weight",
+      "dimensions": [
+        128,
+        4
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27695574016,
+      "nbytes": 2048,
+      "row_bytes": 512,
+      "absolute_offset": 27695603712,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.27.indexer_compressor_gate.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 27695576064,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 27695605760,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 27696133120,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 27696162816,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27723658240,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 27723687936,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 27723674624,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 27723704320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 27751199744,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 27751229440,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 27778724864,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 27778754560,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 27806249984,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 27806279680,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 27806251136,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 27806280832,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 28731095168,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 28731124864,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 28737976448,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 28738006144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 29511825536,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 29511855232,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 29516544128,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 29516573824,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 29523425408,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 29523455104,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 29523441792,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 29523471488,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 30297290880,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 30297320576,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30304172160,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 30304201856,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30304172256,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 30304201952,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30305745120,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 30305774816,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30305745152,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 30305774848,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30305745248,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 30305774944,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307318112,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 30307347808,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307318144,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 30307347840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 30307318400,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 30307348096,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307596928,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 30307626624,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307728000,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 30307757696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307859072,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 30307888768,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30307990144,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 30308019840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 30308022912,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 30308052608,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 30308579968,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 30308609664,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 30309694080,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 30309723776,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 30310251136,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 30310280832,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.28.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30311365248,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 30311394944,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 30311365760,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 30311395456,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30338890880,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 30338920576,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 30338907264,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 30338936960,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 30366432384,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 30366462080,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 30393957504,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 30393987200,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 30421482624,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 30421512320,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 30421483776,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 30421513472,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 31346327808,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 31346357504,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 31353209088,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 31353238784,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32127058176,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 32127087872,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 32131776768,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 32131806464,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32138658048,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 32138687744,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 32138674432,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 32138704128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 32912523520,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 32912553216,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32919404800,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 32919434496,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32919404896,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 32919434592,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32920977760,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 32921007456,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32920977792,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 32921007488,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32920977888,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 32921007584,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32922550752,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 32922580448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32922550784,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 32922580480,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 32922551040,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 32922580736,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32922829568,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 32922859264,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32922960640,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 32922990336,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32923091712,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 32923121408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32923222784,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 32923252480,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 32923255552,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 32923285248,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 32923812608,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 32923842304,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 32924926720,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 32924956416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 32925483776,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 32925513472,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.29.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32926597888,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 32926627584,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 32926598400,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 32926628096,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 32954123520,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 32954153216,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 32954139904,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 32954169600,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 32981665024,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 32981694720,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 33009190144,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 33009219840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 33036715264,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 33036744960,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 33036716416,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 33036746112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 33961560448,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 33961590144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 33968441728,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 33968471424,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 34742290816,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 34742320512,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 34747009408,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 34747039104,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 34753890688,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 34753920384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 34753907072,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 34753936768,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35527756160,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 35527785856,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35534637440,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 35534667136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35534637536,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 35534667232,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35536210400,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 35536240096,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35536210432,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 35536240128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35536210528,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 35536240224,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35537783392,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 35537813088,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_a",
+      "dimensions": [
+        64
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35537783424,
+      "nbytes": 256,
+      "row_bytes": 256,
+      "absolute_offset": 35537813120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_beta.weight",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 35537783680,
+      "nbytes": 278528,
+      "row_bytes": 4352,
+      "absolute_offset": 35537813376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_conv1d_k.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35538062208,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 35538091904,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_conv1d_q.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35538193280,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 35538222976,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_conv1d_v.weight",
+      "dimensions": [
+        4,
+        1,
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35538324352,
+      "nbytes": 131072,
+      "row_bytes": 16,
+      "absolute_offset": 35538354048,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_dt.bias",
+      "dimensions": [
+        8192
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35538455424,
+      "nbytes": 32768,
+      "row_bytes": 32768,
+      "absolute_offset": 35538485120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_f_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 35538488192,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 35538517888,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_f_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 35539045248,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 35539074944,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_g_a.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 35540159360,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 35540189056,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_g_b.weight",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 35540716416,
+      "nbytes": 1114112,
+      "row_bytes": 136,
+      "absolute_offset": 35540746112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.30.ssm_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35541830528,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 35541860224,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_k_b.weight",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35541831040,
+      "nbytes": 6881280,
+      "row_bytes": 210,
+      "absolute_offset": 35541860736,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_kv_a_mqa.weight",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35548712320,
+      "nbytes": 1720320,
+      "row_bytes": 3360,
+      "absolute_offset": 35548742016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_kv_a_norm.weight",
+      "dimensions": [
+        512
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35550432640,
+      "nbytes": 2048,
+      "row_bytes": 2048,
+      "absolute_offset": 35550462336,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35550434688,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 35550464384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_output.weight",
+      "dimensions": [
+        16384,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35550451072,
+      "nbytes": 55050240,
+      "row_bytes": 13440,
+      "absolute_offset": 35550480768,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_q_a.weight",
+      "dimensions": [
+        4096,
+        1536
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35605501312,
+      "nbytes": 5160960,
+      "row_bytes": 3360,
+      "absolute_offset": 35605531008,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_q_a_norm.weight",
+      "dimensions": [
+        1536
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35610662272,
+      "nbytes": 6144,
+      "row_bytes": 6144,
+      "absolute_offset": 35610691968,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        16384
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35610668416,
+      "nbytes": 20643840,
+      "row_bytes": 1260,
+      "absolute_offset": 35610698112,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.attn_v_b.weight",
+      "dimensions": [
+        512,
+        256,
+        64
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 35631312256,
+      "nbytes": 6881280,
+      "row_bytes": 420,
+      "absolute_offset": 35631341952,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 35638193536,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 35638223232,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 35638194688,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 35638224384,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 36563038720,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 36563068416,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 36569920000,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 36569949696,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 37343769088,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 37343798784,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 37348487680,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 37348517376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 37355368960,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 37355398656,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_up_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 37355385344,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 37355415040,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.ffn_up_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 38129234432,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 38129264128,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_attn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38136115712,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 38136145408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_attn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38136115808,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 38136145504,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_attn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38137688672,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 38137718368,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_ffn_base.weight",
+      "dimensions": [
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38137688704,
+      "nbytes": 96,
+      "row_bytes": 96,
+      "absolute_offset": 38137718400,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_ffn_fn.weight",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38137688800,
+      "nbytes": 1572864,
+      "row_bytes": 65536,
+      "absolute_offset": 38137718496,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.hc_ffn_scale.weight",
+      "dimensions": [
+        3
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38139261664,
+      "nbytes": 12,
+      "row_bytes": 12,
+      "absolute_offset": 38139291360,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer.attn_k.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 38139261696,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 38139291392,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer.attn_q_b.weight",
+      "dimensions": [
+        1536,
+        4096
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 38139818752,
+      "nbytes": 6684672,
+      "row_bytes": 1632,
+      "absolute_offset": 38139848448,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer.k_norm.bias",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38146503424,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 38146533120,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer.k_norm.weight",
+      "dimensions": [
+        128
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38146503936,
+      "nbytes": 512,
+      "row_bytes": 512,
+      "absolute_offset": 38146533632,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer.proj.weight",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 38146504448,
+      "nbytes": 139264,
+      "row_bytes": 4352,
+      "absolute_offset": 38146534144,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer_compressor_ape.weight",
+      "dimensions": [
+        128,
+        4
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38146643712,
+      "nbytes": 2048,
+      "row_bytes": 512,
+      "absolute_offset": 38146673408,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.31.indexer_compressor_gate.weight",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "type_id": 8,
+      "type": "Q8_0",
+      "offset": 38146645760,
+      "nbytes": 557056,
+      "row_bytes": 4352,
+      "absolute_offset": 38146675456,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.attn_k.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 38147202816,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 38147232512,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.attn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38174727936,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 38174757632,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.attn_output.weight",
+      "dimensions": [
+        8192,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 38174744320,
+      "nbytes": 27525120,
+      "row_bytes": 6720,
+      "absolute_offset": 38174774016,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.attn_q.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 38202269440,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 38202299136,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.attn_v.weight",
+      "dimensions": [
+        4096,
+        8192
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 38229794560,
+      "nbytes": 27525120,
+      "row_bytes": 3360,
+      "absolute_offset": 38229824256,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.exp_probs_b.bias",
+      "dimensions": [
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 38257319680,
+      "nbytes": 1152,
+      "row_bytes": 1152,
+      "absolute_offset": 38257349376,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_down_exps.weight",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ],
+      "type_id": 18,
+      "type": "IQ3_XXS",
+      "offset": 38257320832,
+      "nbytes": 924844032,
+      "row_bytes": 784,
+      "absolute_offset": 38257350528,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_down_shexp.weight",
+      "dimensions": [
+        2048,
+        4096
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 39182164864,
+      "nbytes": 6881280,
+      "row_bytes": 1680,
+      "absolute_offset": 39182194560,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_gate_exps.weight",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ],
+      "type_id": 22,
+      "type": "IQ2_S",
+      "offset": 39189046144,
+      "nbytes": 773849088,
+      "row_bytes": 1312,
+      "absolute_offset": 39189075840,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_gate_inp.weight",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 39962895232,
+      "nbytes": 4718592,
+      "row_bytes": 16384,
+      "absolute_offset": 39962924928,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_gate_shexp.weight",
+      "dimensions": [
+        4096,
+        2048
+      ],
+      "type_id": 14,
+      "type": "Q6_K",
+      "offset": 39967613824,
+      "nbytes": 6881280,
+      "row_bytes": 3360,
+      "absolute_offset": 39967643520,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    },
+    {
+      "name": "blk.32.ffn_norm.weight",
+      "dimensions": [
+        4096
+      ],
+      "type_id": 0,
+      "type": "F32",
+      "offset": 39974495104,
+      "nbytes": 16384,
+      "row_bytes": 16384,
+      "absolute_offset": 39974524800,
+      "shard_index": 1,
+      "shard_name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf"
+    }
+  ],
+  "file": {
+    "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+    "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+    "size": 39974541184,
+    "sha256": "abecd5f47280372702d6fa4a093ef3ffe149fae5a1d3f28e1f1feb8cc94fdf89"
+  },
+  "requests": [
+    {
+      "start": 0,
+      "count": 1048576,
+      "file_size": 39974541184,
+      "sha256": "8b3a6faed39ee7b2df5ea6ef1afe925c1188ff7b0215fbbf695d93a91517c58d"
+    }
+  ],
+  "tensor_type_counts": {
+    "IQ2_S": 31,
+    "F32": 238,
+    "Q6_K": 114,
+    "Q8_0": 71,
+    "IQ3_XXS": 15
+  }
+}

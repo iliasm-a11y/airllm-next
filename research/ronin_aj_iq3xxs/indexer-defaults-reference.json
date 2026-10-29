@@ -1,0 +1,56 @@
+{
+  "repository": "ggml-org/llama.cpp",
+  "revision": "7df8b876b91208a86a6d792e1140b3deec14535b",
+  "conclusion": {
+    "indexer_kpool_select_tail_if_absent": true,
+    "indexer_types_if_absent": "all full (1), explicitly filled before optional read"
+  },
+  "sources": [
+    {
+      "path": "src/models/glm5-next.cpp",
+      "git_blob_sha": "d0917ed8a574c11e1c90be9ff515b43e680aa257",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/7df8b876b91208a86a6d792e1140b3deec14535b/src/models/glm5-next.cpp",
+      "excerpts": [
+        {
+          "start_line": 39,
+          "end_line": 48,
+          "text": "    // DSA indexer with k-pool compression\n    ml.get_key(LLM_KV_ATTENTION_INDEXER_HEAD_COUNT,        hparams.indexer_n_head);\n    ml.get_key(LLM_KV_ATTENTION_INDEXER_KEY_LENGTH,        hparams.indexer_head_size);\n    ml.get_key(LLM_KV_ATTENTION_INDEXER_TOP_K,             hparams.indexer_top_k);\n    ml.get_key(LLM_KV_ATTENTION_INDEXER_KPOOL,             hparams.indexer_kpool);\n    ml.get_key(LLM_KV_ATTENTION_INDEXER_KPOOL_SELECT_TAIL, hparams.indexer_kpool_select_tail, false);\n    GGML_ASSERT(hparams.indexer_kpool > 1 && hparams.indexer_top_k % hparams.indexer_kpool == 0);\n    std::fill(hparams.is_indexer_full_impl.begin(), hparams.is_indexer_full_impl.end(), 1);\n    ml.get_key_or_arr(LLM_KV_ATTENTION_INDEXER_TYPES, hparams.is_indexer_full_impl, hparams.n_layer(), false);\n"
+        }
+      ]
+    },
+    {
+      "path": "src/llama-hparams.h",
+      "git_blob_sha": "2ac7bdeaebb47d2cad9ac3905dd93e2a3dd7a233",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/7df8b876b91208a86a6d792e1140b3deec14535b/src/llama-hparams.h",
+      "excerpts": [
+        {
+          "start_line": 314,
+          "end_line": 324,
+          "text": "    // DSA (deepseek sparse attention)\n    uint32_t indexer_n_head    = 0;\n    uint32_t indexer_head_size = 0;\n    uint32_t indexer_top_k     = 0;\n    uint32_t indexer_kpool     = 0; // k-pool size\n    bool     indexer_kpool_select_tail = true;\n    // head-size slots per cached indexer row, the last one holds the pooled key\n    uint32_t indexer_kpool_row = 3;\n    // pools are consecutive cells in sequence order, not runs of consecutive positions\n    bool     indexer_kpool_by_order = false;\n    // MSA"
+        }
+      ]
+    },
+    {
+      "path": "src/llama-model-loader.cpp",
+      "git_blob_sha": "a71e3017a93301682c2175cfbb67d28d98625f10",
+      "url": "https://github.com/ggml-org/llama.cpp/blob/7df8b876b91208a86a6d792e1140b3deec14535b/src/llama-model-loader.cpp",
+      "excerpts": [
+        {
+          "start_line": 423,
+          "end_line": 436,
+          "text": "    bool llama_model_loader::get_key(const std::string & key, T & result, bool required) {\n        auto it = kv_overrides.find(key);\n\n        const struct llama_model_kv_override * override =\n            it != kv_overrides.end() ? &it->second : nullptr;\n\n        const bool found = GGUFMeta::GKV<T>::set(metadata, key, result, override);\n\n        if (required && !found) {\n            throw std::runtime_error(format(\"key not found in model: %s\", key.c_str()));\n        }\n\n        return found;\n    }"
+        },
+        {
+          "start_line": 463,
+          "end_line": 473,
+          "text": "    bool llama_model_loader::get_key_or_arr(const std::string & key, std::array<T, N_MAX> & result, uint32_t n, bool required) {\n        const int kid = gguf_find_key(metadata, key.c_str());\n\n        if (kid < 0) {\n            if (required) {\n                throw std::runtime_error(format(\"key not found in model: %s\", key.c_str()));\n            }\n            return false;\n        }\n\n        if (n > N_MAX) {"
+        },
+        {
+          "start_line": 256,
+          "end_line": 263,
+          "text": "        static bool set(const gguf_context * ctx, const int k, T & target, const struct llama_model_kv_override * ovrd = nullptr) {\n            if (try_override<T>(target, ovrd)) {\n                return true;\n            }\n            if (k < 0) { return false; }\n            target = get_kv(ctx, k);\n            return true;\n        }"
+        }
+      ]
+    }
+  ]
+}

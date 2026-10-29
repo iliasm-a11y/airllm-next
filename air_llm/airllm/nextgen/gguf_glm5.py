@@ -34,11 +34,22 @@ def _qualified_topk(scores,count,role):
 
 
 def gguf_glm5_config(checkpoint):
-    """Interpret the checkpoint's own architecture metadata, never a GLM alias."""
+    """Interpret the two verified GGUF spellings, not other GLM architectures.
+
+    The AJ checkpoint uses ``glm5next`` and that exact metadata prefix. Its
+    captured 45-layer tensor directory is validated independently of Q2_K_S.
+    """
     m = checkpoint.metadata
-    if m.get('general.architecture') != 'glm5-next':
-        raise NotImplementedError('GLM5-Next requires general.architecture=glm5-next')
-    p = 'glm5-next.'
+    architecture = m.get('general.architecture')
+    if architecture not in ('glm5-next', 'glm5next'):
+        raise NotImplementedError('GLM5-Next requires general.architecture=glm5-next or glm5next')
+    p = architecture + '.'
+    other = 'glm5next.' if architecture == 'glm5-next' else 'glm5-next.'
+    if any(key.startswith(other) for key in m):
+        raise ValueError('Mixed GLM5-Next architecture metadata prefixes')
+    mtp = m.get(p + 'nextn_predict_layers', 0)
+    if type(mtp) is not int or mtp != 0:
+        raise NotImplementedError('GLM5-Next MTP blocks are not supported')
     def integer(name):
         value = m.get(p + name)
         if type(value) is not int or value < 1:
@@ -63,6 +74,11 @@ def gguf_glm5_config(checkpoint):
     emb = checkpoint.tensors.get('token_embd.weight')
     if emb is None or len(emb.shape) != 2:
         raise ValueError('Missing GLM5-Next embeddings')
+    if p + 'vocab_size' in m and m[p + 'vocab_size'] != emb.shape[0]:
+        raise ValueError('GLM5-Next vocabulary metadata differs from embeddings')
+    if (p + 'expert_shared_feed_forward_length' in m
+            and m[p + 'expert_shared_feed_forward_length'] != integer('expert_feed_forward_length')):
+        raise NotImplementedError('Different GLM5-Next shared-expert width is unsupported')
     c = dict(model_type='glm5_next_text', hidden_size=integer('embedding_length'),
              vocab_size=emb.shape[0], num_hidden_layers=layers,
              num_attention_heads=integer('attention.head_count'), layer_types=kinds,
@@ -413,6 +429,8 @@ class NativeGGUFGLM5Model:
             if sum(banks)+max(banks)>self.options.kv_bytes:
                 raise MemoryError('GLM5 context/recurrent state exceeds kv_bytes')
             mx=self.mx;outputs=[]
+            is_prefill = cache.position == 0 or ids.shape[1] > 1
+            forward_begin = perf_counter()
             try:
                 with mx.stream(self.stream):
                     for index in range(ids.shape[1]):
@@ -436,6 +454,9 @@ class NativeGGUFGLM5Model:
                     result=mx.concatenate(outputs,axis=1);mx.eval(result)
             except BaseException:
                 cache.valid=False;raise
+            phase = 'prefill' if is_prefill else 'decode'
+            self.stats[phase + '_forward_seconds'] += perf_counter() - forward_begin
+            self.stats[phase + '_forward_tokens'] += ids.shape[1]
             return SimpleNamespace(logits=result,past_key_values=cache)
 
     def generate(self,input_ids,*,max_new_tokens=128,temperature=0.,eos_token_id=None,on_token=None,**kwargs):
