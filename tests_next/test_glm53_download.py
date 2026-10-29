@@ -16,11 +16,14 @@ class Response(io.BytesIO):
         self.headers = headers or {}
 
 
-def fake_checkpoint(monkeypatch, payloads=(b"abcdefghij", b"klmnopqrstuv")):
+def fake_checkpoint(monkeypatch, payloads=(b"abcdefghij", b"klmnopqrstuv"),
+                    profile="Q2_K_S"):
     files = tuple({"name": f"shard-{index}.gguf", "size": len(payload),
                    "sha256": hashlib.sha256(payload).hexdigest()}
                   for index, payload in enumerate(payloads))
-    monkeypatch.setattr(download, "FILES", files)
+    if profile == "AJ-IQ3_XXS":
+        files = tuple({**entry, "path": "AJ-IQ3_XXS/" + entry["name"]} for entry in files)
+    monkeypatch.setattr(download, "AJ_FILES" if profile == "AJ-IQ3_XXS" else "FILES", files)
     monkeypatch.setattr(download, "TOTAL_BYTES", sum(len(p) for p in payloads))
     monkeypatch.setattr(download, "IO_CHUNK_BYTES", 4)
     monkeypatch.setattr(download.shutil, "disk_usage", lambda path: SimpleNamespace(free=1000 * download.GIB))
@@ -29,8 +32,8 @@ def fake_checkpoint(monkeypatch, payloads=(b"abcdefghij", b"klmnopqrstuv")):
     def opener(request, timeout):
         requests.append(request)
         if "/api/models/" in request.full_url:
-            data = {"sha": download.REVISION, "gated": False, "siblings": [
-                {"rfilename": entry["name"], "size": entry["size"],
+            data = {"sha": download._profile(profile)["revision"], "gated": False, "siblings": [
+                {"rfilename": entry.get("path", entry["name"]), "size": entry["size"],
                  "lfs": {"size": entry["size"], "sha256": entry["sha256"]}} for entry in files]}
             return Response(json.dumps(data).encode())
         entry = next(e for e in files if e["name"] in request.full_url)
@@ -211,3 +214,164 @@ def test_partial_metadata_read_has_a_bound(tmp_path, monkeypatch):
     marker.write_bytes(b" " * 4097)
     with pytest.raises(download.DownloadSafetyError, match="identity verification"):
         download.preflight(tmp_path)
+
+
+# AJ is an explicit additive profile; the legacy constants and default remain Q2.
+def test_aj_profile_has_three_immutable_shards_and_hub_paths():
+    spec = download._profile("AJ-IQ3_XXS")
+    assert spec["model_id"] == "aj9o9/GLM-5.3-Flash-GGUF"
+    assert spec["revision"] == "07c62fcdeaf1c05d22bd123c3da8058a1b1e63e2"
+    assert spec["total_bytes"] == 112411167424
+    assert [e["size"] for e in spec["files"]] == [39842483616, 39974541184, 32594142624]
+    for index, entry in enumerate(spec["files"], 1):
+        assert entry["name"].endswith(f"{index:05d}-of-00003.gguf")
+        assert entry["path"] == "AJ-IQ3_XXS/" + entry["name"]
+        assert len(entry["sha256"]) == 64
+    assert download._profile()["files"] is download.FILES
+    manifest = json.loads((Path(__file__).parents[1] / "research/ronin_aj_iq3xxs/checkpoint-manifest.json").read_text())
+    assert manifest["model_id"] == spec["model_id"]
+    assert manifest["revision"] == spec["revision"]
+    assert manifest["files"] == list(spec["files"])
+    assert manifest["total_bytes"] == spec["total_bytes"]
+
+
+def test_unknown_profile_is_rejected_before_filesystem_or_network(tmp_path, monkeypatch):
+    monkeypatch.setattr(download.shutil, "disk_usage", lambda _: pytest.fail("unexpected disk probe"))
+    with pytest.raises(download.DownloadSafetyError, match="Unknown checkpoint profile"):
+        download.preflight(tmp_path / "new", profile="AJ-IQ2_XXS")
+    assert not (tmp_path / "new").exists()
+
+
+def test_aj_dry_run_uses_exact_bytes_and_creates_nothing(tmp_path, monkeypatch):
+    free = 140_000_000_000
+    monkeypatch.setattr(download.shutil, "disk_usage", lambda _: SimpleNamespace(free=free))
+    target = tmp_path / "absent"
+    report = download.preflight(target, profile="AJ-IQ3_XXS")
+    assert report["remaining_download_bytes"] == 112411167424
+    assert report["estimated_free_after_bytes"] == free - 112411167424 - 64 * 1024**2
+    assert report["payload_gb"] == 112411167424 / 10**9
+    assert report["payload_gib"] == 112411167424 / 1024**3
+    assert not report["download_allowed"]
+    assert not target.exists()
+
+
+def test_aj_download_uses_all_three_remote_paths_without_cache_or_merge(tmp_path, monkeypatch):
+    files, payloads, requests, opener = fake_checkpoint(
+        monkeypatch, (b"a"*10, b"b"*12, b"c"*9), profile="AJ-IQ3_XXS")
+    report = download.download_checkpoint(tmp_path, profile="AJ-IQ3_XXS", opener=opener)
+    assert report["variant"] == "AJ-IQ3_XXS"
+    assert [e["status"] for e in report["files"]] == ["verified"]*3
+    assert sorted(p.name for p in tmp_path.iterdir()) == sorted(e["name"] for e in files)
+    for entry, payload in zip(files, payloads):
+        assert (tmp_path / entry["name"]).read_bytes() == payload
+        assert any(entry["path"] in request.full_url for request in requests)
+    assert all(download.AJ_REVISION in request.full_url for request in requests)
+    assert download.REVISION == "119034bc3d9d76eb41f91508e6f9fb19fde42672"
+
+
+def test_aj_resume_preserves_profile_identity_and_reuses_verified_prefix(tmp_path, monkeypatch):
+    files, payloads, requests, opener = fake_checkpoint(
+        monkeypatch, (b"a"*10, b"b"*12, b"c"*9), profile="AJ-IQ3_XXS")
+    _, partial, marker = download._paths(tmp_path, files[0])
+    partial.write_bytes(payloads[0][:4])
+    download._write_marker(marker, files[0], 4, hashlib.sha256(payloads[0][:4]), "AJ-IQ3_XXS")
+    download.download_checkpoint(tmp_path, profile="AJ-IQ3_XXS", opener=opener)
+    first = next(r for r in requests if "/api/models/" not in r.full_url)
+    assert first.get_header("Range") == "bytes=4-7"
+
+
+def test_aj_rejects_partial_recorded_for_other_repository(tmp_path, monkeypatch):
+    files, payloads, _, opener = fake_checkpoint(
+        monkeypatch, (b"a"*10, b"b"*12, b"c"*9), profile="AJ-IQ3_XXS")
+    _, partial, marker = download._paths(tmp_path, files[0])
+    partial.write_bytes(payloads[0][:4])
+    download._write_marker(marker, files[0], 4, hashlib.sha256(payloads[0][:4]))
+    with pytest.raises(download.DownloadSafetyError, match="identity verification"):
+        download.download_checkpoint(tmp_path, profile="AJ-IQ3_XXS", opener=opener)
+    assert partial.read_bytes() == payloads[0][:4]
+
+
+@pytest.mark.parametrize("headers", [{"Content-Length": "5"}, {"Content-Encoding": "gzip"}])
+def test_http_range_length_and_encoding_are_validated_before_body(tmp_path, monkeypatch, headers):
+    _, _, _, opener = fake_checkpoint(monkeypatch)
+    class UnreadableResponse(Response):
+        def read(self, *args):
+            pytest.fail("HTTP payload read before range header validation")
+    def broken(request, timeout):
+        if "/api/models/" in request.full_url:
+            return opener(request, timeout)
+        return UnreadableResponse(b"never read", 206,
+                                  {"Content-Range": "bytes 0-3/10", **headers})
+    with pytest.raises(download.DownloadSafetyError):
+        download.download_checkpoint(tmp_path, opener=broken)
+
+
+def test_ignored_http_range_is_not_read(tmp_path, monkeypatch):
+    _, _, _, opener = fake_checkpoint(monkeypatch)
+    class UnreadableResponse(Response):
+        def read(self, *args):
+            pytest.fail("server's full checkpoint body must never be read")
+    def broken(request, timeout):
+        if "/api/models/" in request.full_url:
+            return opener(request, timeout)
+        return UnreadableResponse(b"never read", 200)
+    with pytest.raises(download.DownloadSafetyError, match="exact requested byte range"):
+        download.download_checkpoint(tmp_path, opener=broken)
+
+
+def test_aj_remote_etag_is_not_accepted_instead_of_lfs_sha256(tmp_path, monkeypatch):
+    files, _, _, _ = fake_checkpoint(monkeypatch, (b"a", b"b", b"c"), profile="AJ-IQ3_XXS")
+    def wrong_identity(request, timeout):
+        return Response(json.dumps({"sha": download.AJ_REVISION, "siblings": [
+            {"rfilename": e["path"], "size": e["size"], "etag": e["sha256"],
+             "lfs": {"size": e["size"], "oid": e["sha256"]}} for e in files]}).encode())
+    target = tmp_path / "new"
+    with pytest.raises(download.DownloadSafetyError, match="Hub identity differs"):
+        download.download_checkpoint(target, opener=wrong_identity, profile="AJ-IQ3_XXS")
+    assert not target.exists()
+
+
+@pytest.mark.parametrize("shared", [True, None])
+def test_shared_or_unknown_apfs_pool_accounts_for_incoming_bytes(tmp_path, monkeypatch, shared):
+    monkeypatch.setattr(download.platform, "system", lambda: "Darwin")
+    monkeypatch.setattr(download, "_shared_system_storage", lambda _: shared)
+    monkeypatch.setattr(download.shutil, "disk_usage", lambda path: SimpleNamespace(
+        free=130_000_000_000 if path == Path("/") else 300_000_000_000))
+    report = download.preflight(tmp_path, profile="AJ-IQ3_XXS")
+    assert report["estimated_free_after_bytes"] > download.MIN_RESERVE_BYTES
+    assert report["macos_system_volume_free_bytes"] > download.MIN_RESERVE_BYTES
+    assert report["macos_system_volume_estimated_free_after_bytes"] < download.MIN_RESERVE_BYTES
+    assert not report["download_allowed"]
+    assert report["destination_shares_system_storage"] is shared
+
+
+def test_separate_storage_does_not_subtract_payload_from_boot_volume(tmp_path, monkeypatch):
+    monkeypatch.setattr(download.platform, "system", lambda: "Darwin")
+    monkeypatch.setattr(download, "_shared_system_storage", lambda _: False)
+    monkeypatch.setattr(download.shutil, "disk_usage", lambda path: SimpleNamespace(
+        free=40*download.GIB if path == Path("/") else 300*download.GIB))
+    report = download.preflight(tmp_path, profile="AJ-IQ3_XXS")
+    assert report["download_allowed"]
+    assert report["macos_system_volume_estimated_free_after_bytes"] == 40*download.GIB
+
+
+@pytest.mark.parametrize("volumes,expected", [
+    ([{"APFSContainerReference": "disk3", "APFSContainerUUID": "same-pool"},
+      {"APFSContainerUUID": "same-pool"}], True),
+    ([{"APFSContainerReference": "disk3"},
+      {"APFSContainerUUID": "uncomparable-uuid"}], None),
+    ([{"APFSContainerUUID": "boot-pool"},
+      {"APFSContainerUUID": "external-pool"}], False),
+])
+def test_apfs_discovery_compares_a_common_identifier_kind(monkeypatch, volumes, expected):
+    import plistlib
+    boot_device = Path("/").stat().st_dev
+    class DifferentFilesystem:
+        def stat(self):
+            return SimpleNamespace(st_dev=boot_device + 1)
+        def __str__(self):
+            return "/mounted-volume"
+    replies = iter(volumes)
+    monkeypatch.setattr(download.subprocess, "run", lambda *args, **kwargs:
+                        SimpleNamespace(stdout=plistlib.dumps(next(replies))))
+    assert download._shared_system_storage(DifferentFilesystem()) is expected

@@ -8,9 +8,32 @@ from collections import Counter
 import json
 import os
 from pathlib import Path
+import platform
 import shutil
 import sys
+from time import perf_counter
 import traceback
+
+
+def _resource_snapshot(model=None):
+    """Report allocator and OS counters separately; unified memory overlaps."""
+    from .experiment_guard import system_snapshot
+    result = system_snapshot()
+    if model is not None:
+        result['mlx_allocator_bytes'] = {}
+        for label, name in (('active', 'get_active_memory'),
+                            ('cached', 'get_cache_memory'),
+                            ('process_lifetime_peak', 'get_peak_memory')):
+            function = getattr(model.mx, name, None)
+            if function is not None:
+                try:
+                    result['mlx_allocator_bytes'][label] = int(function())
+                except RuntimeError:
+                    result['mlx_allocator_bytes'][label] = None
+        result['memory_counter_scope'] = (
+            'MLX allocator counters overlap OS/unified memory; do not sum them. '
+            'Peak is since worker start, not a system-wide GPU peak.')
+    return result
 
 
 def inspect_model(path):
@@ -35,6 +58,10 @@ def _worker(args):
     from .ronin_glm53 import diagnostics, load_conversation
     from ..ultra.checkpoint import atomic_json
     result = diagnostics() | {'status': 'starting', 'inference_performed': False}
+    result['host'] = {'system': platform.system(), 'release': platform.release(),
+                      'machine': platform.machine(), 'python': platform.python_version()}
+    result['cache_condition'] = 'fresh worker; OS file cache not controlled or purged'
+    begin = perf_counter()
     model = None
     try:
         # Reuse the same conservative disk policy as the installer.
@@ -51,7 +78,11 @@ def _worker(args):
             row_chunk=128, prefill_chunk=1, device=args.device, dtype='float32',
             policy='adaptive', prefetch=False, load_tokenizer=False)
         before = physical_read_bytes()
+        result['resources_before_load'] = _resource_snapshot()
+        load_begin = perf_counter()
         model, session = load_conversation(args.model, next_config=options)
+        result['load_and_tokenizer_seconds'] = perf_counter() - load_begin
+        result['resources_after_load'] = _resource_snapshot(model)
         def event(value):
             print(json.dumps({'event': 'token', **value}), flush=True)
         response = session.reply(args.prompt, max_new_tokens=args.max_new_tokens,
@@ -59,6 +90,17 @@ def _worker(args):
         after = physical_read_bytes()
         result.update(status='generated', inference_performed=True,
                       response=response, metrics=model.metrics(),
+                      resources_after_generation=_resource_snapshot(model),
+                      load_and_generation_seconds=perf_counter() - begin,
+                      timing_scope={
+                          'ttft_seconds': 'prefill plus first greedy token, synchronized by MLX item()',
+                          'decode_tokens_per_second': 'tokens after first divided by elapsed decode time',
+                          'prefill_forward_seconds': (
+                              'metrics.runtime.prefill_forward_seconds: synchronized initial or '
+                              'multi-token forward, includes weight IO, excludes greedy selection'),
+                          'decode_forward_seconds': (
+                              'metrics.runtime.decode_forward_seconds: synchronized single-token '
+                              'continuations, excludes greedy selection')},
                       observed_read_counter=physical_read_counter_info(),
                       observed_read_bytes=(None if before is None or after is None else after-before))
         # A generation by itself does not certify fidelity, M5 or RONIN.
@@ -67,6 +109,7 @@ def _worker(args):
         traceback.print_exc()
         raise
     finally:
+        result['worker_elapsed_seconds'] = perf_counter() - begin
         if model is not None:
             model.close()
         atomic_json(args.report, result)

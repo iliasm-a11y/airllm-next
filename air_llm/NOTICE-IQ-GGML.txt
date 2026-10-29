@@ -1,0 +1,40 @@
+IQ CODECS — UPSTREAM PROVENANCE
+
+The IQ2_S, IQ3_XXS and IQ3_S layouts, dequantization definitions and immutable
+codebooks derive from ggml-org/llama.cpp commit
+7df8b876b91208a86a6d792e1140b3deec14535b:
+  ggml/include/ggml.h
+  ggml/src/ggml-common.h
+  ggml/src/ggml-quants.c
+
+https://github.com/ggml-org/llama.cpp/tree/7df8b876b91208a86a6d792e1140b3deec14535b
+
+The production implementation is an original bounded NumPy translation of the
+referenced C functions. Codebook byte order follows the little-endian GGUF
+layout. The 11,400-byte payload includes three grids, ksigns_iq2xs and
+kmask_iq2xs. NumPy views are read-only; reader budgets reserve 16 KiB for their
+payload and view headers before lazy import. The reservation is conservative
+per reader, even when readers share the same process-global codebooks.
+
+MIT License
+
+Copyright (c) 2023-2026 The ggml authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+

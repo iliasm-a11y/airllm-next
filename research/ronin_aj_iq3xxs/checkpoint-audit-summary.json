@@ -1,0 +1,1370 @@
+{
+  "model_id": "aj9o9/GLM-5.3-Flash-GGUF",
+  "revision": "07c62fcdeaf1c05d22bd123c3da8058a1b1e63e2",
+  "ggml_reference": "7df8b876b91208a86a6d792e1140b3deec14535b",
+  "audited_at_utc": "2026-10-29T10:34:47.672268+00:00",
+  "files": [
+    {
+      "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+      "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+      "size": 39842483616,
+      "sha256": "0f98b1934ecae99b403a667e94a79ee3630a0d66c48cd719e5210da728603c80"
+    },
+    {
+      "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+      "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00002-of-00003.gguf",
+      "size": 39974541184,
+      "sha256": "abecd5f47280372702d6fa4a093ef3ffe149fae5a1d3f28e1f1feb8cc94fdf89"
+    },
+    {
+      "name": "GLM-5.3-Flash-AJ-IQ3_XXS-00003-of-00003.gguf",
+      "path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00003-of-00003.gguf",
+      "size": 32594142624,
+      "sha256": "5651239c136bb26344e28001176a3f6b2dfe78664d0ab90e8762d013c9c349f8"
+    }
+  ],
+  "payload_bytes": 112411167424,
+  "http_bytes_read": 12585232,
+  "http_budget_bytes": 25165824,
+  "tensor_count": 1383,
+  "tensor_type_counts": {
+    "Q6_K": 339,
+    "F32": 704,
+    "Q8_0": 214,
+    "IQ3_S": 8,
+    "IQ2_S": 84,
+    "IQ3_XXS": 34
+  },
+  "tensor_type_encoded_bytes": {
+    "F32": 355921144,
+    "IQ2_S": 65003323392,
+    "IQ3_S": 8304721920,
+    "IQ3_XXS": 31444697088,
+    "Q6_K": 7082557440,
+    "Q8_0": 210427904
+  },
+  "tensor_families": {
+    "blk.*.attn_k.weight": {
+      "Q6_K": 34
+    },
+    "blk.*.attn_k_b.weight": {
+      "Q6_K": 11
+    },
+    "blk.*.attn_kv_a_mqa.weight": {
+      "Q6_K": 11
+    },
+    "blk.*.attn_kv_a_norm.weight": {
+      "F32": 11
+    },
+    "blk.*.attn_norm.weight": {
+      "F32": 45
+    },
+    "blk.*.attn_output.weight": {
+      "Q6_K": 45
+    },
+    "blk.*.attn_q.weight": {
+      "Q6_K": 34
+    },
+    "blk.*.attn_q_a.weight": {
+      "Q6_K": 11
+    },
+    "blk.*.attn_q_a_norm.weight": {
+      "F32": 11
+    },
+    "blk.*.attn_q_b.weight": {
+      "Q6_K": 11
+    },
+    "blk.*.attn_v.weight": {
+      "Q6_K": 34
+    },
+    "blk.*.attn_v_b.weight": {
+      "Q6_K": 11
+    },
+    "blk.*.exp_probs_b.bias": {
+      "F32": 42
+    },
+    "blk.*.ffn_down.weight": {
+      "Q6_K": 3
+    },
+    "blk.*.ffn_down_exps.weight": {
+      "IQ3_S": 8,
+      "IQ3_XXS": 34
+    },
+    "blk.*.ffn_down_shexp.weight": {
+      "Q6_K": 42
+    },
+    "blk.*.ffn_gate.weight": {
+      "Q6_K": 3
+    },
+    "blk.*.ffn_gate_exps.weight": {
+      "IQ2_S": 42
+    },
+    "blk.*.ffn_gate_inp.weight": {
+      "F32": 42
+    },
+    "blk.*.ffn_gate_shexp.weight": {
+      "Q6_K": 42
+    },
+    "blk.*.ffn_norm.weight": {
+      "F32": 45
+    },
+    "blk.*.ffn_up.weight": {
+      "Q6_K": 3
+    },
+    "blk.*.ffn_up_exps.weight": {
+      "IQ2_S": 42
+    },
+    "blk.*.ffn_up_shexp.weight": {
+      "Q6_K": 42
+    },
+    "blk.*.hc_attn_base.weight": {
+      "F32": 45
+    },
+    "blk.*.hc_attn_fn.weight": {
+      "F32": 45
+    },
+    "blk.*.hc_attn_scale.weight": {
+      "F32": 45
+    },
+    "blk.*.hc_ffn_base.weight": {
+      "F32": 45
+    },
+    "blk.*.hc_ffn_fn.weight": {
+      "F32": 45
+    },
+    "blk.*.hc_ffn_scale.weight": {
+      "F32": 45
+    },
+    "blk.*.indexer.attn_k.weight": {
+      "Q8_0": 11
+    },
+    "blk.*.indexer.attn_q_b.weight": {
+      "Q8_0": 11
+    },
+    "blk.*.indexer.k_norm.bias": {
+      "F32": 11
+    },
+    "blk.*.indexer.k_norm.weight": {
+      "F32": 11
+    },
+    "blk.*.indexer.proj.weight": {
+      "Q8_0": 11
+    },
+    "blk.*.indexer_compressor_ape.weight": {
+      "F32": 11
+    },
+    "blk.*.indexer_compressor_gate.weight": {
+      "Q8_0": 11
+    },
+    "blk.*.ssm_a": {
+      "F32": 34
+    },
+    "blk.*.ssm_beta.weight": {
+      "Q8_0": 34
+    },
+    "blk.*.ssm_conv1d_k.weight": {
+      "F32": 34
+    },
+    "blk.*.ssm_conv1d_q.weight": {
+      "F32": 34
+    },
+    "blk.*.ssm_conv1d_v.weight": {
+      "F32": 34
+    },
+    "blk.*.ssm_dt.bias": {
+      "F32": 34
+    },
+    "blk.*.ssm_f_a.weight": {
+      "Q8_0": 34
+    },
+    "blk.*.ssm_f_b.weight": {
+      "Q8_0": 34
+    },
+    "blk.*.ssm_g_a.weight": {
+      "Q8_0": 34
+    },
+    "blk.*.ssm_g_b.weight": {
+      "Q8_0": 34
+    },
+    "blk.*.ssm_norm.weight": {
+      "F32": 34
+    },
+    "output.weight": {
+      "Q6_K": 1
+    },
+    "output_norm.weight": {
+      "F32": 1
+    },
+    "token_embd.weight": {
+      "Q6_K": 1
+    }
+  },
+  "routed_experts": [
+    {
+      "name": "blk.3.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.3.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.3.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.4.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.4.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.4.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.5.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.5.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.5.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.6.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.6.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.6.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.7.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.7.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.7.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.8.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.8.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.8.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.9.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.9.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.9.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.10.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.10.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.10.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.11.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.11.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.11.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.12.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.12.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.12.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.13.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.13.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.13.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.14.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.14.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.14.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.15.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.15.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.15.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.16.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.16.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.16.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.17.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.17.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.17.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.18.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.18.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.18.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.19.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.19.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.19.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.20.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.20.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.20.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.21.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.21.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.21.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.22.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.22.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.22.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.23.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.23.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.23.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.24.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.24.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.24.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.25.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.25.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.25.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.26.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.26.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.26.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.27.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.27.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.27.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.28.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.28.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.28.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.29.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.29.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.29.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.30.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.30.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.30.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.31.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.31.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.31.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.32.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.32.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.32.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.33.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.33.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.33.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.34.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.34.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.34.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.35.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.35.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.35.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.36.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.36.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.36.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.37.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.37.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.37.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.38.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.38.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.38.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.39.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.39.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.39.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.40.ffn_down_exps.weight",
+      "type": "IQ3_XXS",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.40.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.40.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.41.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.41.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.41.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.42.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.42.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.42.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.43.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.43.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.43.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.44.ffn_down_exps.weight",
+      "type": "IQ3_S",
+      "dimensions": [
+        2048,
+        4096,
+        288
+      ]
+    },
+    {
+      "name": "blk.44.ffn_gate_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    },
+    {
+      "name": "blk.44.ffn_up_exps.weight",
+      "type": "IQ2_S",
+      "dimensions": [
+        4096,
+        2048,
+        288
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "file": "sample-IQ3_S.bin",
+      "type_id": 21,
+      "tensor": "blk.3.ffn_down_exps.weight",
+      "remote_path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+      "absolute_offset": 1870205600,
+      "bytes": 880,
+      "sha256": "f29b9087aca282f93c22f1d9e56309b935c78774a0f9c6ec2e633da244f6e2f2"
+    },
+    {
+      "file": "sample-IQ2_S.bin",
+      "type_id": 22,
+      "tensor": "blk.3.ffn_gate_exps.weight",
+      "remote_path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+      "absolute_offset": 2915177120,
+      "bytes": 656,
+      "sha256": "8be9408a6d441d5884dcba16cd97a9d901cf1165ed9464996560eed87658e4e8"
+    },
+    {
+      "file": "sample-IQ3_XXS.bin",
+      "type_id": 18,
+      "tensor": "blk.7.ffn_down_exps.weight",
+      "remote_path": "AJ-IQ3_XXS/GLM-5.3-Flash-AJ-IQ3_XXS-00001-of-00003.gguf",
+      "absolute_offset": 12774260128,
+      "bytes": 784,
+      "sha256": "b1a628af7193ba7ef6c2ba6161e1b81e2ca015c4b123b3ee7955b72f96785acd"
+    }
+  ],
+  "full_weights_downloaded": false,
+  "real_checkpoint_generation_validated": false,
+  "m5_execution_validated": false
+}

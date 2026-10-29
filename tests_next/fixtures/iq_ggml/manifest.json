@@ -1,0 +1,41 @@
+{
+  "repository": "https://github.com/ggml-org/llama.cpp",
+  "revision": "7df8b876b91208a86a6d792e1140b3deec14535b",
+  "source_sha256": {
+    "ggml-common.h": "0061131b615c5721fc88a78feeb22c1f8c450f1c2646a317d80796a653bf595c",
+    "ggml-quants.c": "57a90557099ff9d248d68cab88462a97d110b3e0a83d88732e38508c28075080",
+    "LICENSE": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+    "ggml.h": "2b4dd92fa992cb4ef484917a6c62fef5097698744160ccc09214fd0c459c92c7"
+  },
+  "vendored_sha256": {
+    "ggml-common.h": "0061131b615c5721fc88a78feeb22c1f8c450f1c2646a317d80796a653bf595c",
+    "ggml-iq-dequant.c.inc": "8d9918a59e16f105adaa6829f8a1bb4d2648425ec2fa81b72924dd6afe54c573",
+    "LICENSE": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+  },
+  "functions": [
+    "dequantize_row_iq2_s",
+    "dequantize_row_iq3_xxs",
+    "dequantize_row_iq3_s"
+  ],
+  "extraction": "Function bodies and signatures copied byte-for-byte; concatenated with one newline between functions. ggml-common.h is the complete unmodified upstream file.",
+  "numeric_policy": "FP32 bitwise parity for finite FP16 block scales; NaN/Inf classification for special scales. C built with no fast math and no floating-point contraction.",
+  "ggml_types": {
+    "IQ2_S": 22,
+    "IQ3_XXS": 18,
+    "IQ3_S": 21
+  },
+  "block_layouts": {
+    "IQ2_S": {
+      "elements": 256,
+      "bytes": 82
+    },
+    "IQ3_XXS": {
+      "elements": 256,
+      "bytes": 98
+    },
+    "IQ3_S": {
+      "elements": 256,
+      "bytes": 110
+    }
+  }
+}

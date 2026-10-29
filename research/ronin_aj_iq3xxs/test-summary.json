@@ -1,0 +1,57 @@
+{
+  "base_sha": "eeddbddd0589e92de463a3f904e70d3b8a942e1e",
+  "baseline": {
+    "tests": 201,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 3,
+    "passed": 198,
+    "seconds": 45.541,
+    "skips": [
+      {
+        "class": "tests_next.test_glm53_runtime",
+        "name": "test_official_hf_full_logits_cached_decode_and_greedy[gpu]",
+        "reason": "Metal device unavailable; no M5 benchmark is claimed"
+      },
+      {
+        "class": "tests_next.test_glm5_next_tokenizer",
+        "name": "test_real_gguf_vocabulary_against_independent_source_tokenizer",
+        "reason": "Verified real tokenizer assets were not provided"
+      },
+      {
+        "class": "tests_next.test_gguf",
+        "name": "test_real_checkpoint_sample_upstream_parity_without_mapping",
+        "reason": "Set AIRLLM_TEST_GGUF to opt into <=16 MiB real-checkpoint reads"
+      }
+    ]
+  },
+  "current": {
+    "tests": 279,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 3,
+    "passed": 276,
+    "seconds": 87.748,
+    "skips": [
+      {
+        "class": "tests_next.test_glm53_runtime",
+        "name": "test_official_hf_full_logits_cached_decode_and_greedy[gpu]",
+        "reason": "Metal device unavailable; no M5 benchmark is claimed"
+      },
+      {
+        "class": "tests_next.test_glm5_next_tokenizer",
+        "name": "test_real_gguf_vocabulary_against_independent_source_tokenizer",
+        "reason": "Verified real tokenizer assets were not provided"
+      },
+      {
+        "class": "tests_next.test_gguf",
+        "name": "test_real_checkpoint_sample_upstream_parity_without_mapping",
+        "reason": "Set AIRLLM_TEST_GGUF to opt into <=16 MiB real-checkpoint reads"
+      }
+    ]
+  },
+  "new_targeted_failures": 0,
+  "real_checkpoint_generation_validated": false,
+  "m5_execution_validated": false,
+  "ronin_ready": false
+}

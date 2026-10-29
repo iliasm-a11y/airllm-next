@@ -87,13 +87,24 @@ class GGMLType(IntEnum):
     Q2_K = 10
     Q4_K = 12
     Q6_K = 14
+    IQ3_XXS = 18
+    IQ3_S = 21
+    IQ2_S = 22
     BF16 = 30
 
 
 _LAYOUT = {GGMLType.F32: (1, 4), GGMLType.F16: (1, 2), GGMLType.BF16: (1, 2),
            GGMLType.Q8_0: (32, 34), GGMLType.Q2_K: (256, 84),
-           GGMLType.Q4_K: (256, 144), GGMLType.Q6_K: (256, 210)}
+           GGMLType.Q4_K: (256, 144), GGMLType.Q6_K: (256, 210),
+           GGMLType.IQ2_S: (256, 82), GGMLType.IQ3_XXS: (256, 98),
+           GGMLType.IQ3_S: (256, 110)}
 _QUANTIZED = frozenset(_LAYOUT) - {GGMLType.F32, GGMLType.F16, GGMLType.BF16}
+# All three IQ decoders share 11,400 bytes of immutable packed codebooks.
+# Reserve 16 KiB conservatively for those bytes and the NumPy view headers.
+# Readers charge this once to their metadata budget before any tensor IO;
+# direct dequantization reserves it before the lazy codec import as well.
+_IQ_TYPES = frozenset({GGMLType.IQ2_S, GGMLType.IQ3_XXS, GGMLType.IQ3_S})
+IQ_CODEBOOK_BUDGET_BYTES = 16 << 10
 _SCALARS = {0: "B", 1: "b", 2: "H", 3: "h", 4: "I", 5: "i",
             6: "f", 7: "?", 10: "Q", 11: "q", 12: "d"}
 
@@ -126,6 +137,11 @@ class TensorInfo:
 
 def _decode_into(raw: bytes, kind: GGMLType, output: np.ndarray) -> None:
     """Decode into an existing FP32 allocation using small vectorized slices."""
+    if kind in _IQ_TYPES:
+        if output.size:
+            from .gguf_iq import decode_iq
+            decode_iq(raw, int(kind), output)
+        return
     if kind == GGMLType.BF16:
         # A BF16 value is exactly the upper 16 bits of IEEE FP32. Construct
         # those bits in the already-budgeted output, preserving signed zero
@@ -212,6 +228,8 @@ def dequantize(raw: bytes, quant_type: int | GGMLType, *, memory_budget_bytes: i
         raise GGUFError(f"Truncated {kind.name} block")
     elements = len(raw) // size * block
     need = len(raw) + elements * 16 + 8192
+    if kind in _IQ_TYPES and elements:
+        need += IQ_CODEBOOK_BUDGET_BYTES
     if need > memory_budget_bytes:
         raise GGUFMemoryError(f"Dequantization needs <= {need} bytes; budget {memory_budget_bytes}")
     out = np.empty(elements, dtype=np.float32)
@@ -496,6 +514,11 @@ class GGUFReader:
                 raise GGUFError(f"Unaligned tensor offset for {name}")
             pending.append((name, dims, kind, relative, nbytes, row_bytes))
         self.data_offset = (self._cursor + alignment - 1) // alignment * alignment
+        if any(kind in _IQ_TYPES for _, _, kind, _, _, _ in pending):
+            # Indexing itself does not import or allocate the codebooks. This
+            # conservative reservation remains charged for the reader lifetime
+            # so later decoding cannot leave fixed tables unaccounted.
+            self._charge_metadata(IQ_CODEBOOK_BUDGET_BYTES)
         if self.data_offset > self.file_size:
             raise GGUFError("Missing GGUF alignment padding")
         spans = []

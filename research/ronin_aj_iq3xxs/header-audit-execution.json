@@ -1,0 +1,23 @@
+{
+  "source_base_commit": "eeddbddd0589e92de463a3f904e70d3b8a942e1e",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "executed_command": "python3 scripts/inspect_glm53_aj.py --manifest /workspace/scratch/fcf9c7718538/aj-audit-manifest.json --output-dir research/ronin_aj_iq3xxs --sample-blocks 8",
+  "reproduction_command": "python3 scripts/inspect_glm53_aj.py --manifest research/ronin_aj_iq3xxs/checkpoint-manifest.json --output-dir outputs/aj-header-audit --sample-blocks 8",
+  "executed_input_selection_equals_repository_manifest": true,
+  "http_audit_bytes_read": 12585232,
+  "http_auxiliary_probe_bytes": 65792,
+  "http_total_investigation_bytes": 12651024,
+  "http_budget_bytes": 25165824,
+  "all_tensor_names_and_dimensions_match_q2": true,
+  "real_gguf_headers_and_small_codec_blocks_inspected": true,
+  "full_shard_sha256_locally_verified": false,
+  "full_weights_downloaded": false,
+  "generation_executed": false,
+  "m5_observed": false,
+  "script_unit_tests": {
+    "command": "python3 -m unittest discover -s tests_next -p test_glm53_aj_inspection.py -v",
+    "passed": 11,
+    "failures": 0
+  }
+}
