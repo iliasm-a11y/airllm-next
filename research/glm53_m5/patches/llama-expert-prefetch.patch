@@ -1,0 +1,77 @@
+--- a/ggml/src/ggml-cpu/ggml-cpu.c
++++ b/ggml/src/ggml-cpu/ggml-cpu.c
+@@ -35,6 +35,10 @@
+ #include <limits.h>
+ #include <stdarg.h>
+ #include <signal.h>
++#if defined(__APPLE__)
++#include <sys/mman.h>
++#include <unistd.h>
++#endif
+ #if defined(__gnu_linux__)
+ #include <syscall.h>
+ #endif
+@@ -1482,6 +1486,51 @@
+ 
+ // ggml_compute_forward_mul_mat_id
+ 
++#if defined(__APPLE__)
++static void ggml_cpu_prefetch_experts(const struct ggml_tensor * src0, const int64_t * counts, int n_experts) {
++    const char * enabled = getenv("AIRLLM_EXPERT_PREFETCH");
++    if (!enabled || strcmp(enabled, "1") != 0 || src0->type != GGML_TYPE_Q2_K ||
++            !src0->buffer || ggml_backend_buffer_get_usage(src0->buffer) != GGML_BACKEND_BUFFER_USAGE_WEIGHTS ||
++            !src0->data || !ggml_is_contiguous(src0) || src0->ne[3] != 1 || n_experts <= 0) {
++        return;
++    }
++    const long page_size_long = sysconf(_SC_PAGESIZE);
++    if (page_size_long <= 0) {
++        return;
++    }
++    const uintptr_t page_size = (uintptr_t) page_size_long;
++    const size_t stride = src0->nb[2];
++    if (stride == 0 || (size_t) n_experts > ggml_nbytes(src0)/stride) {
++        return;
++    }
++    for (int first = 0; first < n_experts;) {
++        if (counts[first] == 0) {
++            ++first;
++            continue;
++        }
++        int last = first + 1;
++        while (last < n_experts && counts[last] != 0) {
++            ++last;
++        }
++        const uintptr_t start = (uintptr_t) src0->data;
++        const size_t offset = (size_t) first*stride;
++        const size_t length = (size_t) (last - first)*stride;
++        if (offset > UINTPTR_MAX - start || length > UINTPTR_MAX - start - offset) {
++            return;
++        }
++        const uintptr_t address = start + offset;
++        const uintptr_t aligned = address - address%page_size;
++        const uintptr_t end = address + length;
++        const uintptr_t padding = (page_size - end%page_size)%page_size;
++        if (padding > UINTPTR_MAX - end) {
++            return;
++        }
++        (void) posix_madvise((void *) aligned, (size_t) (end + padding - aligned), POSIX_MADV_WILLNEED);
++        first = last;
++    }
++}
++#endif
++
+ #define MMID_MATRIX_ROW(row_id, i1) matrix_rows[(row_id)*ids->ne[0]*ids->ne[1] + (i1)]
+ 
+ struct mmid_row_mapping {
+@@ -1672,6 +1721,11 @@
+                 matrix_row_counts[i02] += 1;
+             }
+         }
++#if defined(__APPLE__)
++        if (ids->ne[1] == 1) {
++            ggml_cpu_prefetch_experts(src0, matrix_row_counts, n_as);
++        }
++#endif
+     }
+ 
+     // reset current_chunk

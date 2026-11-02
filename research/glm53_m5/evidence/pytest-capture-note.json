@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-02T15:41:53.332398+00:00",
+  "scope": "Portable CPU control-flow tests only; no model weights, native inference, GPU execution or runtime compilation. This does not revise historical PR14 evidence.",
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "pytest": "9.2.0",
+  "reference_commit": "0fb55ba32121c437fb1d80319e1fc40f26546310",
+  "source_comparison": {
+    "tests_hyperstream3/test_m5_finder_metadata.py": {
+      "current_sha256": "521ebe1c626e959b4336c8556245751bab4292472536ca649f414df4a6e8fc34",
+      "clean_reference_sha256": "521ebe1c626e959b4336c8556245751bab4292472536ca649f414df4a6e8fc34",
+      "identical": true
+    },
+    "benchmarks/verify_m5_validation.py": {
+      "current_sha256": "953f655abdc421aa1595c458b88ab6c04a64c3d91f96c060ca5db0e454fee060",
+      "clean_reference_sha256": "953f655abdc421aa1595c458b88ab6c04a64c3d91f96c060ca5db0e454fee060",
+      "identical": true
+    }
+  },
+  "initial_broad_run": {
+    "raw_log": "work/portable-tests.log (left unchanged, outside this evidence note)",
+    "result": {
+      "failed": 3,
+      "passed": 585,
+      "skipped": 64,
+      "subtests_passed": 70
+    },
+    "capture": "default fd"
+  },
+  "isolated_reproduction": [
+    {
+      "tree": "current research working tree",
+      "command": "PYTHONPATH=air_llm ../venv/bin/python -m pytest --noconftest  -q tests_hyperstream3/test_m5_finder_metadata.py -k 'access_io_and_programming and fstat'",
+      "exit_code": 1,
+      "failed": 3,
+      "deselected": 54
+    },
+    {
+      "tree": "clean PR14 reference worktree",
+      "command": "PYTHONPATH=air_llm ../venv/bin/python -m pytest --noconftest  -q tests_hyperstream3/test_m5_finder_metadata.py -k 'access_io_and_programming and fstat'",
+      "exit_code": 1,
+      "failed": 3,
+      "deselected": 54
+    },
+    {
+      "tree": "clean PR14 reference worktree",
+      "command": "PYTHONPATH=air_llm ../venv/bin/python -m pytest --noconftest --capture=sys -q tests_hyperstream3/test_m5_finder_metadata.py -k 'access_io_and_programming and fstat'",
+      "exit_code": 0,
+      "passed": 3,
+      "deselected": 54
+    },
+    {
+      "tree": "clean PR14 reference worktree",
+      "command": "PYTHONPATH=air_llm ../venv/bin/python -m pytest --noconftest -s -q tests_hyperstream3/test_m5_finder_metadata.py -k 'access_io_and_programming and fstat'",
+      "exit_code": 0,
+      "passed": 3,
+      "deselected": 54
+    }
+  ],
+  "direct_call_check": {
+    "result": "The same three unmodified test functions called directly with pytest.MonkeyPatch and pytest.raises all pass.",
+    "passed": 3
+  },
+  "cause": {
+    "test_mock": "checker.os is the shared os module; monkeypatch.setattr(checker.os, fstat, fail) therefore replaces os.fstat process-wide until fixture teardown.",
+    "runner_behavior": "Installed pytest 9.2.0 FDCapture.snap and FDCaptureBinary.snap call os.fstat(self.tmpfile.fileno()) to check for empty captured output. The snapshot occurs after the test call and before monkeypatch fixture teardown.",
+    "locations": [
+      "installed _pytest/capture.py:570",
+      "installed _pytest/capture.py:595",
+      "tests_hyperstream3/test_m5_finder_metadata.py:187"
+    ],
+    "effect": "The application correctly raises and pytest.raises catches the injected exception. FD capture then reuses the still-patched os.fstat and raises the same exception again, producing a reported failure.",
+    "classification": "Pre-existing test-harness/environment compatibility issue, independently reproduced on unmodified PR14; not a GLM backend regression."
+  },
+  "validated_workaround": {
+    "command": "PYTHONPATH=air_llm ../venv/bin/python -m pytest --noconftest --capture=sys -q tests_hyperstream3 tests_next/test_gguf_speculative_portable.py tests_next/test_verify_gguf_speculation.py tests_next/test_glm_native.py integrations/ronin/tests research/glm53_m5/test_compare_fidelity.py research/glm53_m5/test_benchmark_two_slots.py",
+    "exit_code": 0,
+    "passed": 597,
+    "skipped": 64,
+    "subtests_passed": 74,
+    "pytest_elapsed_seconds": 5.75,
+    "comparison_note": "The broader working tree had additional tests by this later run; totals must not be presented as the same fixed suite as the initial 585-pass run."
+  },
+  "recommended_minimal_actions": [
+    "Keep historical code and scientific evidence unchanged.",
+    "Use --capture=sys for this portable rerun, or align a new CI environment with its explicitly pinned validated pytest dependency.",
+    "If a future test-only fix is desired, scope the os.fstat patch with monkeypatch.context() around the tested call so it is restored before the test returns; no such code change was made here."
+  ],
+  "unchanged_artifacts": [
+    "Historical PR14 checkout source files",
+    "Historical benchmark/evidence contents",
+    "Original work/portable-tests.log"
+  ],
+  "existing_hyperstream_ci": {
+    "path": ".github/workflows/hyperstream3.yml",
+    "pinned_dependencies": [
+      "numpy==2.5.3",
+      "psutil==7.2.2",
+      "pytest==9.1.1"
+    ],
+    "source_line": 27,
+    "scope": "Read from the existing workflow; this note did not modify it or install those versions."
+  }
+}

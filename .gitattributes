@@ -1,3 +1,5 @@
 # Preserve captured diagnostic logs byte for byte, including pytest whitespace.
 evidence-io-wall/*.log -whitespace
 evidence-io-wall/**/*.log -whitespace
+# Unified diff context uses a single space on otherwise blank lines.
+research/glm53_m5/patches/*.patch -whitespace
