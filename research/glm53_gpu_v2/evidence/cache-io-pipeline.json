@@ -1,0 +1,1059 @@
+{
+  "schema": 1,
+  "mode": "io",
+  "measured_at_utc": "2026-11-02T19:17:08.101567+00:00",
+  "captures": [
+    {
+      "source": {
+        "capture_name": "stock-cpu4",
+        "manifest_sha256": "10c447678eb8ff4c18894a083e0e842d74900aefaadec8d2b658f50fe1bd7765",
+        "steps": 4,
+        "layers": 42,
+        "selected_groups": 378,
+        "selected_expert_elements": 3024,
+        "execution_order": "step, layer, token column, original route rank"
+      },
+      "results": {
+        "results": [
+          {
+            "policy": "lru",
+            "scope": "actual internal-file IO with exact packed-byte hash consumer",
+            "requests": [
+              {
+                "ordinal": 0,
+                "key": [
+                  3,
+                  25
+                ],
+                "spans": [
+                  {
+                    "offset": 54450820800,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "5fa874858a20eaaeb86d4c76346e7c15ad9633aef6904b6948c87a2bf653baa9",
+                "request_consume_seconds": 0.005437875000097847
+              },
+              {
+                "ordinal": 1,
+                "key": [
+                  3,
+                  124
+                ],
+                "spans": [
+                  {
+                    "offset": 54723319488,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "0af7b78aa162ea5a0f79bc9ae87ca3b32710028ee9d6ac591136842b48c21172",
+                "request_consume_seconds": 0.005134834000273258
+              },
+              {
+                "ordinal": 2,
+                "key": [
+                  3,
+                  274
+                ],
+                "spans": [
+                  {
+                    "offset": 55136196288,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "e2ffd8b52cb0006dd5f898cb7048164cc6fe51513cab9efcf3a7cb1016ebedcc",
+                "request_consume_seconds": 0.005040582999754406
+              },
+              {
+                "ordinal": 3,
+                "key": [
+                  3,
+                  131
+                ],
+                "spans": [
+                  {
+                    "offset": 54742587072,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "27e9d7a1cd6f0b1741ff05284173b6c4e671ef0cbf362182e377c2ec203a15e3",
+                "request_consume_seconds": 0.004933500000333879
+              },
+              {
+                "ordinal": 4,
+                "key": [
+                  3,
+                  76
+                ],
+                "spans": [
+                  {
+                    "offset": 54591198912,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "03b780fbb8b49819218f88cc3a9b8e652cdac73f8012d09736b692faafdcf795",
+                "request_consume_seconds": 0.00512737500048388
+              },
+              {
+                "ordinal": 5,
+                "key": [
+                  3,
+                  240
+                ],
+                "spans": [
+                  {
+                    "offset": 55042610880,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "1939b4eea6385b7bebe9ea131142636337771ab9a17ea624542e7cf7c1fcde05",
+                "request_consume_seconds": 0.0048788750000312575
+              },
+              {
+                "ordinal": 6,
+                "key": [
+                  3,
+                  262
+                ],
+                "spans": [
+                  {
+                    "offset": 55103166144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "370bb6b0320d76698181c75a4eb4b4fb19c89050e7214220efb098be300ddd32",
+                "request_consume_seconds": 0.004971708000084618
+              },
+              {
+                "ordinal": 7,
+                "key": [
+                  3,
+                  21
+                ],
+                "spans": [
+                  {
+                    "offset": 54439810752,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "88d198c3b6ca3698e7b8c74f7fc375462a7005808d6712601da1b18976a67357",
+                "request_consume_seconds": 0.004993667000235291
+              },
+              {
+                "ordinal": 8,
+                "key": [
+                  3,
+                  7
+                ],
+                "spans": [
+                  {
+                    "offset": 54401275584,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "cc3939e833ba90ee5de2839d8eeca25ae2c7cd531d56a078df8ea856b945385d",
+                "request_consume_seconds": 0.004801999999472173
+              },
+              {
+                "ordinal": 9,
+                "key": [
+                  3,
+                  12
+                ],
+                "spans": [
+                  {
+                    "offset": 54415038144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "49dde5711bcb01cf17fcca85ddfa279175e23ab466dd503f85709aeb5cad0393",
+                "request_consume_seconds": 0.004732750000584929
+              },
+              {
+                "ordinal": 10,
+                "key": [
+                  3,
+                  10
+                ],
+                "spans": [
+                  {
+                    "offset": 54409533120,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "b687f29f0cd66bf750450c50403ec142881a06a589b0a81501b0e9df0e0a7002",
+                "request_consume_seconds": 0.004855291999774636
+              },
+              {
+                "ordinal": 11,
+                "key": [
+                  3,
+                  273
+                ],
+                "spans": [
+                  {
+                    "offset": 55133443776,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "f232827461968d53a6a1a120092c129c5a7f6ae411cb0730824360c1ae599387",
+                "request_consume_seconds": 0.004689665999649151
+              }
+            ],
+            "cache_before_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.009451582000110648,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 16515072,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 16515072,
+              "pinned_leases": 0,
+              "entries": 6,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.009575582000252325,
+              "policy": "lru",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "cache_after_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.009451582000110648,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 0,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 0,
+              "pinned_leases": 0,
+              "entries": 0,
+              "enabled": true,
+              "closed": true,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.009575582000252325,
+              "policy": "lru",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "elapsed_seconds": 0.05977066699961142
+          },
+          {
+            "policy": "slru",
+            "scope": "actual internal-file IO with exact packed-byte hash consumer",
+            "requests": [
+              {
+                "ordinal": 0,
+                "key": [
+                  3,
+                  25
+                ],
+                "spans": [
+                  {
+                    "offset": 54450820800,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "5fa874858a20eaaeb86d4c76346e7c15ad9633aef6904b6948c87a2bf653baa9",
+                "request_consume_seconds": 0.004501624999647902
+              },
+              {
+                "ordinal": 1,
+                "key": [
+                  3,
+                  124
+                ],
+                "spans": [
+                  {
+                    "offset": 54723319488,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "0af7b78aa162ea5a0f79bc9ae87ca3b32710028ee9d6ac591136842b48c21172",
+                "request_consume_seconds": 0.004580333000376413
+              },
+              {
+                "ordinal": 2,
+                "key": [
+                  3,
+                  274
+                ],
+                "spans": [
+                  {
+                    "offset": 55136196288,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "e2ffd8b52cb0006dd5f898cb7048164cc6fe51513cab9efcf3a7cb1016ebedcc",
+                "request_consume_seconds": 0.004341249999924912
+              },
+              {
+                "ordinal": 3,
+                "key": [
+                  3,
+                  131
+                ],
+                "spans": [
+                  {
+                    "offset": 54742587072,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "27e9d7a1cd6f0b1741ff05284173b6c4e671ef0cbf362182e377c2ec203a15e3",
+                "request_consume_seconds": 0.004352915999334073
+              },
+              {
+                "ordinal": 4,
+                "key": [
+                  3,
+                  76
+                ],
+                "spans": [
+                  {
+                    "offset": 54591198912,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "03b780fbb8b49819218f88cc3a9b8e652cdac73f8012d09736b692faafdcf795",
+                "request_consume_seconds": 0.004191084000012779
+              },
+              {
+                "ordinal": 5,
+                "key": [
+                  3,
+                  240
+                ],
+                "spans": [
+                  {
+                    "offset": 55042610880,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "1939b4eea6385b7bebe9ea131142636337771ab9a17ea624542e7cf7c1fcde05",
+                "request_consume_seconds": 0.004363082999589096
+              },
+              {
+                "ordinal": 6,
+                "key": [
+                  3,
+                  262
+                ],
+                "spans": [
+                  {
+                    "offset": 55103166144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "370bb6b0320d76698181c75a4eb4b4fb19c89050e7214220efb098be300ddd32",
+                "request_consume_seconds": 0.004308583000238286
+              },
+              {
+                "ordinal": 7,
+                "key": [
+                  3,
+                  21
+                ],
+                "spans": [
+                  {
+                    "offset": 54439810752,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "88d198c3b6ca3698e7b8c74f7fc375462a7005808d6712601da1b18976a67357",
+                "request_consume_seconds": 0.0044281250002313755
+              },
+              {
+                "ordinal": 8,
+                "key": [
+                  3,
+                  7
+                ],
+                "spans": [
+                  {
+                    "offset": 54401275584,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "cc3939e833ba90ee5de2839d8eeca25ae2c7cd531d56a078df8ea856b945385d",
+                "request_consume_seconds": 0.004179875000772881
+              },
+              {
+                "ordinal": 9,
+                "key": [
+                  3,
+                  12
+                ],
+                "spans": [
+                  {
+                    "offset": 54415038144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "49dde5711bcb01cf17fcca85ddfa279175e23ab466dd503f85709aeb5cad0393",
+                "request_consume_seconds": 0.004253582999808714
+              },
+              {
+                "ordinal": 10,
+                "key": [
+                  3,
+                  10
+                ],
+                "spans": [
+                  {
+                    "offset": 54409533120,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "b687f29f0cd66bf750450c50403ec142881a06a589b0a81501b0e9df0e0a7002",
+                "request_consume_seconds": 0.004366042000583548
+              },
+              {
+                "ordinal": 11,
+                "key": [
+                  3,
+                  273
+                ],
+                "spans": [
+                  {
+                    "offset": 55133443776,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "f232827461968d53a6a1a120092c129c5a7f6ae411cb0730824360c1ae599387",
+                "request_consume_seconds": 0.004109000000426022
+              }
+            ],
+            "cache_before_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.0036455830004342715,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 16515072,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 16515072,
+              "pinned_leases": 0,
+              "entries": 6,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.0037813770004504477,
+              "policy": "slru",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "cache_after_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.0036455830004342715,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 0,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 0,
+              "pinned_leases": 0,
+              "entries": 0,
+              "enabled": true,
+              "closed": true,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.0037813770004504477,
+              "policy": "slru",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "elapsed_seconds": 0.05213908299992909
+          },
+          {
+            "policy": "lfu",
+            "scope": "actual internal-file IO with exact packed-byte hash consumer",
+            "requests": [
+              {
+                "ordinal": 0,
+                "key": [
+                  3,
+                  25
+                ],
+                "spans": [
+                  {
+                    "offset": 54450820800,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "5fa874858a20eaaeb86d4c76346e7c15ad9633aef6904b6948c87a2bf653baa9",
+                "request_consume_seconds": 0.004265208000106213
+              },
+              {
+                "ordinal": 1,
+                "key": [
+                  3,
+                  124
+                ],
+                "spans": [
+                  {
+                    "offset": 54723319488,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "0af7b78aa162ea5a0f79bc9ae87ca3b32710028ee9d6ac591136842b48c21172",
+                "request_consume_seconds": 0.004462042000341171
+              },
+              {
+                "ordinal": 2,
+                "key": [
+                  3,
+                  274
+                ],
+                "spans": [
+                  {
+                    "offset": 55136196288,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "e2ffd8b52cb0006dd5f898cb7048164cc6fe51513cab9efcf3a7cb1016ebedcc",
+                "request_consume_seconds": 0.0042777500002557645
+              },
+              {
+                "ordinal": 3,
+                "key": [
+                  3,
+                  131
+                ],
+                "spans": [
+                  {
+                    "offset": 54742587072,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "27e9d7a1cd6f0b1741ff05284173b6c4e671ef0cbf362182e377c2ec203a15e3",
+                "request_consume_seconds": 0.004414625000208616
+              },
+              {
+                "ordinal": 4,
+                "key": [
+                  3,
+                  76
+                ],
+                "spans": [
+                  {
+                    "offset": 54591198912,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "03b780fbb8b49819218f88cc3a9b8e652cdac73f8012d09736b692faafdcf795",
+                "request_consume_seconds": 0.004208624999591848
+              },
+              {
+                "ordinal": 5,
+                "key": [
+                  3,
+                  240
+                ],
+                "spans": [
+                  {
+                    "offset": 55042610880,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "1939b4eea6385b7bebe9ea131142636337771ab9a17ea624542e7cf7c1fcde05",
+                "request_consume_seconds": 0.00433308300034696
+              },
+              {
+                "ordinal": 6,
+                "key": [
+                  3,
+                  262
+                ],
+                "spans": [
+                  {
+                    "offset": 55103166144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "370bb6b0320d76698181c75a4eb4b4fb19c89050e7214220efb098be300ddd32",
+                "request_consume_seconds": 0.0044815829996878165
+              },
+              {
+                "ordinal": 7,
+                "key": [
+                  3,
+                  21
+                ],
+                "spans": [
+                  {
+                    "offset": 54439810752,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "88d198c3b6ca3698e7b8c74f7fc375462a7005808d6712601da1b18976a67357",
+                "request_consume_seconds": 0.004139790999943216
+              },
+              {
+                "ordinal": 8,
+                "key": [
+                  3,
+                  7
+                ],
+                "spans": [
+                  {
+                    "offset": 54401275584,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "cc3939e833ba90ee5de2839d8eeca25ae2c7cd531d56a078df8ea856b945385d",
+                "request_consume_seconds": 0.004396667000037269
+              },
+              {
+                "ordinal": 9,
+                "key": [
+                  3,
+                  12
+                ],
+                "spans": [
+                  {
+                    "offset": 54415038144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "49dde5711bcb01cf17fcca85ddfa279175e23ab466dd503f85709aeb5cad0393",
+                "request_consume_seconds": 0.004704375000073924
+              },
+              {
+                "ordinal": 10,
+                "key": [
+                  3,
+                  10
+                ],
+                "spans": [
+                  {
+                    "offset": 54409533120,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "b687f29f0cd66bf750450c50403ec142881a06a589b0a81501b0e9df0e0a7002",
+                "request_consume_seconds": 0.0049300830005449825
+              },
+              {
+                "ordinal": 11,
+                "key": [
+                  3,
+                  273
+                ],
+                "spans": [
+                  {
+                    "offset": 55133443776,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "f232827461968d53a6a1a120092c129c5a7f6ae411cb0730824360c1ae599387",
+                "request_consume_seconds": 0.004980333000276005
+              }
+            ],
+            "cache_before_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.0036527920010485104,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 16515072,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 16515072,
+              "pinned_leases": 0,
+              "entries": 6,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.0038087930015535676,
+              "policy": "lfu",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "cache_after_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.0036527920010485104,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 0,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 0,
+              "pinned_leases": 0,
+              "entries": 0,
+              "enabled": true,
+              "closed": true,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.0038087930015535676,
+              "policy": "lfu",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "elapsed_seconds": 0.05375879199982592
+          },
+          {
+            "policy": "weighted",
+            "scope": "actual internal-file IO with exact packed-byte hash consumer",
+            "requests": [
+              {
+                "ordinal": 0,
+                "key": [
+                  3,
+                  25
+                ],
+                "spans": [
+                  {
+                    "offset": 54450820800,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "5fa874858a20eaaeb86d4c76346e7c15ad9633aef6904b6948c87a2bf653baa9",
+                "request_consume_seconds": 0.004988291999325156
+              },
+              {
+                "ordinal": 1,
+                "key": [
+                  3,
+                  124
+                ],
+                "spans": [
+                  {
+                    "offset": 54723319488,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "0af7b78aa162ea5a0f79bc9ae87ca3b32710028ee9d6ac591136842b48c21172",
+                "request_consume_seconds": 0.004399415999614575
+              },
+              {
+                "ordinal": 2,
+                "key": [
+                  3,
+                  274
+                ],
+                "spans": [
+                  {
+                    "offset": 55136196288,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "e2ffd8b52cb0006dd5f898cb7048164cc6fe51513cab9efcf3a7cb1016ebedcc",
+                "request_consume_seconds": 0.004551832999823091
+              },
+              {
+                "ordinal": 3,
+                "key": [
+                  3,
+                  131
+                ],
+                "spans": [
+                  {
+                    "offset": 54742587072,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "27e9d7a1cd6f0b1741ff05284173b6c4e671ef0cbf362182e377c2ec203a15e3",
+                "request_consume_seconds": 0.004997041000024183
+              },
+              {
+                "ordinal": 4,
+                "key": [
+                  3,
+                  76
+                ],
+                "spans": [
+                  {
+                    "offset": 54591198912,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "03b780fbb8b49819218f88cc3a9b8e652cdac73f8012d09736b692faafdcf795",
+                "request_consume_seconds": 0.004940249999890511
+              },
+              {
+                "ordinal": 5,
+                "key": [
+                  3,
+                  240
+                ],
+                "spans": [
+                  {
+                    "offset": 55042610880,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "1939b4eea6385b7bebe9ea131142636337771ab9a17ea624542e7cf7c1fcde05",
+                "request_consume_seconds": 0.004434749999745691
+              },
+              {
+                "ordinal": 6,
+                "key": [
+                  3,
+                  262
+                ],
+                "spans": [
+                  {
+                    "offset": 55103166144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "370bb6b0320d76698181c75a4eb4b4fb19c89050e7214220efb098be300ddd32",
+                "request_consume_seconds": 0.004163832999438455
+              },
+              {
+                "ordinal": 7,
+                "key": [
+                  3,
+                  21
+                ],
+                "spans": [
+                  {
+                    "offset": 54439810752,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "88d198c3b6ca3698e7b8c74f7fc375462a7005808d6712601da1b18976a67357",
+                "request_consume_seconds": 0.004410250000546512
+              },
+              {
+                "ordinal": 8,
+                "key": [
+                  3,
+                  7
+                ],
+                "spans": [
+                  {
+                    "offset": 54401275584,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "cc3939e833ba90ee5de2839d8eeca25ae2c7cd531d56a078df8ea856b945385d",
+                "request_consume_seconds": 0.004199791999781155
+              },
+              {
+                "ordinal": 9,
+                "key": [
+                  3,
+                  12
+                ],
+                "spans": [
+                  {
+                    "offset": 54415038144,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "49dde5711bcb01cf17fcca85ddfa279175e23ab466dd503f85709aeb5cad0393",
+                "request_consume_seconds": 0.004359625000688538
+              },
+              {
+                "ordinal": 10,
+                "key": [
+                  3,
+                  10
+                ],
+                "spans": [
+                  {
+                    "offset": 54409533120,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "b687f29f0cd66bf750450c50403ec142881a06a589b0a81501b0e9df0e0a7002",
+                "request_consume_seconds": 0.004336750000220491
+              },
+              {
+                "ordinal": 11,
+                "key": [
+                  3,
+                  273
+                ],
+                "spans": [
+                  {
+                    "offset": 55133443776,
+                    "length": 2752512
+                  }
+                ],
+                "sha256_original_packed_bytes": "f232827461968d53a6a1a120092c129c5a7f6ae411cb0730824360c1ae599387",
+                "request_consume_seconds": 0.004394499999762047
+              }
+            ],
+            "cache_before_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.003381416999218345,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 16515072,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 16515072,
+              "pinned_leases": 0,
+              "entries": 6,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.003524874001413991,
+              "policy": "weighted",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "cache_after_close": {
+              "fills_submitted": 12,
+              "selected_requests": 12,
+              "read_seconds": 0.003381416999218345,
+              "logical_bytes_read": 33030144,
+              "evictions": 6,
+              "capacity_bytes": 16777216,
+              "reserved_bytes": 0,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 16515072,
+              "resident_bytes": 0,
+              "pinned_leases": 0,
+              "entries": 0,
+              "enabled": true,
+              "closed": true,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 12,
+              "selected_experts": 12,
+              "unique_selected_experts": 12,
+              "hits": 0,
+              "misses": 12,
+              "read_syscalls": 12,
+              "source_spans": 12,
+              "coalesced_spans": 12,
+              "consumer_wait_seconds": 0.003524874001413991,
+              "policy": "weighted",
+              "target_capacity_bytes": 16777216,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 12,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            },
+            "elapsed_seconds": 0.054340249999768275
+          }
+        ],
+        "same_original_bytes_across_policies": true,
+        "shared_logical_read_bytes": 132120576,
+        "shared_read_budget_bytes": 134217728,
+        "physical_ssd_traffic_measured": false,
+        "model_or_gpu_executed": false
+      }
+    }
+  ],
+  "validated_bank_metadata": {
+    "3": [
+      {
+        "tensor": "blk.3.ffn_gate_exps.weight",
+        "offset": 54382008000,
+        "width": 4096,
+        "rows": 2048,
+        "experts": 288,
+        "expert_bytes": 2752512
+      }
+    ]
+  },
+  "limits": [
+    "No tokens/s or whole-model fidelity is measured",
+    "File cache and background workload are uncontrolled",
+    "Logical read bytes are not NAND or physical SSD traffic",
+    "No Fanxiang volume was mounted during inspection; /Volumes/SSD was a root-filesystem directory",
+    "Weighted ranking is tested only during real reads with observed load costs; omitted from metadata replay",
+    "No reusable buffer pool: evicted payloads are freed; an uncharged spare pool would violate the payload budget"
+  ]
+}

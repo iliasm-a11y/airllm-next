@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "mode": "execute",
+  "accepted": true,
+  "started_utc": "2026-11-02T20:24:07.027423+00:00",
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "scope": "three fixed int8[16,32] by int8[32,8] partial-dot fixtures; no floating reduction/model test",
+  "host_compiled": true,
+  "device_execution_attempted": true,
+  "payload_charged_bytes": 9312,
+  "shader_sha256": "b79d329aca8e0be5796f4d38ad2fae7e70b381187b0a6fbe691d001bb723ea60",
+  "host_source_sha256": "d4ca7d7cf9b5bd03a80560095d2d4d5e6f17ce5f4d44eac0965f898947e857eb",
+  "host_compile_wall_seconds": 0.38234933400053706,
+  "host_compile_returncode": 0,
+  "host_compile_diagnostics": "",
+  "sdk_version": "27.0",
+  "guard_passed": true,
+  "guard_failure": null,
+  "sampled_peak_rss_bytes": 10797056,
+  "sampled_system_swap_growth_bytes": 0,
+  "wall_seconds": 0.07665362500119954,
+  "guard_limits": {
+    "rss_bytes": 1073741824,
+    "swap_growth_bytes": 8388608,
+    "available_memory_floor_bytes": 1073741824,
+    "timeout_seconds": 45
+  },
+  "process_returncode": 0,
+  "process_stderr": "",
+  "native": {
+    "math_mode": "safe",
+    "thread_execution_width": 32,
+    "device_payload_bytes_per_command": 1280,
+    "static_threadgroup_memory_bytes": 0,
+    "stage": "device_complete_reference_not_yet_checked",
+    "language_version": "4.1",
+    "commands": [
+      {
+        "command_wall_seconds": 0.001462208,
+        "gpu_seconds": 6.874999598949216e-06,
+        "valid_gpu_timestamps": true,
+        "name": "seeded_full_int8"
+      },
+      {
+        "command_wall_seconds": 0.000191917,
+        "gpu_seconds": 5.916666850680485e-06,
+        "valid_gpu_timestamps": true,
+        "name": "zeros"
+      },
+      {
+        "command_wall_seconds": 0.000171041,
+        "gpu_seconds": 5.999998393235728e-06,
+        "valid_gpu_timestamps": true,
+        "name": "signed_extremes"
+      }
+    ],
+    "hardware_neural_accelerator_utilization_measured": false,
+    "mode": "execute",
+    "supports_metal4_family": true,
+    "device_execution_attempted": true,
+    "shader_library_compiled": true,
+    "commands_completed": 3,
+    "timing_scope": "single cold/warm mixed command per fixture, no benchmark or speed ratio",
+    "device": "Apple M5",
+    "shader_compile_wall_seconds": 0.000455917,
+    "pipeline_compiled": true
+  },
+  "payload_plus_static_threadgroup_bytes": 9312,
+  "comparisons": {
+    "seeded_full_int8": {
+      "passed": true,
+      "elements": 128,
+      "mismatches": 0,
+      "max_abs_integer_error": 0
+    },
+    "zeros": {
+      "passed": true,
+      "elements": 128,
+      "mismatches": 0,
+      "max_abs_integer_error": 0
+    },
+    "signed_extremes": {
+      "passed": true,
+      "elements": 128,
+      "mismatches": 0,
+      "max_abs_integer_error": 0
+    }
+  },
+  "finished_utc": "2026-11-02T20:24:07.511430+00:00"
+}

@@ -1,0 +1,170 @@
+{
+  "scope": "small synthetic fixtures independent native oracle; no decode throughput",
+  "results": [
+    {
+      "width": 32,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 32,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 32,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 64,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 64,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 64,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 96,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 96,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 96,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 256,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 256,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 256,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 512,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 512,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 512,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 4096,
+      "input": "normal",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 4096,
+      "input": "zero",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    },
+    {
+      "width": 4096,
+      "input": "ties_even",
+      "qs_exact": true,
+      "scales_exact": true,
+      "matvec_bitexact": true,
+      "max_abs_error": 0.0
+    }
+  ],
+  "follow_up_validation": {
+    "pytest_tests_passed": 7,
+    "gpu_parameter_cases": 6,
+    "inputs_per_case": 3,
+    "output_modes": [
+      "prepared_activation",
+      "fused_inline"
+    ],
+    "all_native_outputs_bitexact": true,
+    "mlx_version": "0.32.4",
+    "scope": "Explicit actual M5 GPU fixture tests; no whole-model or throughput claim"
+  },
+  "source_sha256": {
+    "q8_compatible.py": "e5731d3e439cbfa0fb2584af5d690c4b656fb2b5e85c56dd2994990e15a56547",
+    "q8_oracle.py": "bae586bb6ce31677111ec0a27431e4f3bcaf11eb3c1babcaa71bc94f8aaac882",
+    "test_q8_compatible.py": "e0e1c8d643418247c3755d56b929bbe87ab4907f695ef5c96dff7c2b8de8a816",
+    "kernels_q8/q8_activation.metal": "7d41b8eb4fd1dc1a9b1e138e637a1ec574d9d403b80d9df3ad3c8666aeff02aa",
+    "kernels_q8/q8_inline_helpers.metal": "b1dbcaa46cf95415ab74fe8bc585b6ae5833c6ce106f6a9311dcc9c4e6140132",
+    "kernels_q8/q8_matvec.metal": "1ba607a40f8e51a6311c58a6c11e3e20f2feeb1bb9b22ebfc9700d71ca167d16",
+    "kernels_q8/q8_matvec_inline.metal": "5f415d19cbdc71d2d10e2812116ee02e671be99fb8b332c7181e1d89ea80c3dc"
+  }
+}

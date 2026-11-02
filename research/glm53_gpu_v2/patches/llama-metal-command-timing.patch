@@ -1,0 +1,96 @@
+--- a/ggml/src/ggml-metal/ggml-metal-context.m
++++ b/ggml/src/ggml-metal/ggml-metal-context.m
+@@ -16,6 +16,21 @@
+ #undef MAX
+ #define MIN(a, b) ((a) < (b) ? (a) : (b))
+ #define MAX(a, b) ((a) > (b) ? (a) : (b))
++
++
++static void airllm_metal_commit(id<MTLCommandBuffer> command, const char * origin) {
++    const char * timing = getenv("AIRLLM_METAL_COMMAND_TIMING");
++    if (timing && strcmp(timing, "1") == 0) {
++        [command addCompletedHandler:^(id<MTLCommandBuffer> completed) {
++            const double start = completed.GPUStartTime;
++            const double end = completed.GPUEndTime;
++            fprintf(stderr, "AIRLLM_GPU_TIME origin=%s start=%.9f end=%.9f seconds=%.9f status=%lu\n",
++                    origin, start, end, end >= start ? end-start : -1.0,
++                    (unsigned long) completed.status);
++        }];
++    }
++    [command commit];
++}
+
+ // max number of MTLCommandBuffer used to submit a graph for processing
+ #define GGML_METAL_MAX_COMMAND_BUFFERS 8
+@@ -353,7 +368,7 @@
+                            size:size];
+
+         [encoder endEncoding];
+-        [cmd_buf commit];
++        airllm_metal_commit(cmd_buf, __func__);
+
+         [ctx->buf_refs addObject:buf_src];
+         [buf_src release];
+@@ -399,7 +414,7 @@
+                            size:size];
+
+         [encoder endEncoding];
+-        [cmd_buf commit];
++        airllm_metal_commit(cmd_buf, __func__);
+
+         [ctx->buf_refs addObject:buf_dst];
+         [buf_dst release];
+@@ -429,7 +444,7 @@
+
+         ggml_metal_event_encode_signal(ctx_dst->ev_sync, sync_cmd_buf);
+
+-        [sync_cmd_buf commit];
++        airllm_metal_commit(sync_cmd_buf, __func__);
+
+         [ctx_dst->cmd_bufs_ext addObject:sync_cmd_buf];
+         ctx_dst->cmd_buf_last = sync_cmd_buf;
+@@ -454,7 +469,7 @@
+         ggml_metal_event_t ev_cpy = ggml_metal_get_ev_cpy(ctx_src);
+         ggml_metal_event_encode_signal(ev_cpy, cmd_buf);
+
+-        [cmd_buf commit];
++        airllm_metal_commit(cmd_buf, __func__);
+
+         // do not wait here for completion
+         //[cmd_buf waitUntilCompleted];
+@@ -655,7 +670,7 @@
+                     break;
+                 }
+
+-                [next_buffer commit];
++                airllm_metal_commit(next_buffer, __func__);
+             }
+
+             [ctx->capture_scope endScope];
+@@ -692,7 +707,7 @@
+
+         ggml_metal_event_encode_signal(ev, cmd_buf);
+
+-        [cmd_buf commit];
++        airllm_metal_commit(cmd_buf, __func__);
+
+         [ctx->cmd_bufs_ext addObject:cmd_buf];
+         ctx->cmd_buf_last = cmd_buf;
+@@ -708,7 +723,7 @@
+
+         ggml_metal_event_encode_wait(ev, cmd_buf);
+
+-        [cmd_buf commit];
++        airllm_metal_commit(cmd_buf, __func__);
+
+         [ctx->cmd_bufs_ext addObject:cmd_buf];
+         ctx->cmd_buf_last = cmd_buf;
+@@ -782,7 +797,7 @@
+         ggml_metal_op_free(ctx_op);
+
+         if (cb_idx < 2 || ctx->abort_callback == NULL) {
+-            [cmd_buf commit];
++            airllm_metal_commit(cmd_buf, __func__);
+         }
+     });
+ }

@@ -1,0 +1,123 @@
+--- a/ggml/src/ggml-metal/ggml-metal-device.cpp
++++ b/ggml/src/ggml-metal/ggml-metal-device.cpp
+@@ -1043,16 +1043,18 @@
+     const ggml_type tsrc1 = op->src[1]->type;
+
+     const char * cpu_arith = std::getenv("AIRLLM_METAL_Q8_CPU_ARITH");
+-    if (cpu_arith && std::strcmp(cpu_arith, "1") == 0 && op->op == GGML_OP_MUL_MAT &&
++    const bool mode_head = cpu_arith && std::strcmp(cpu_arith, "1") == 0;
++    const bool mode_selective = cpu_arith && std::strcmp(cpu_arith, "2") == 0;
++    const bool head = ne00 == 4096 && ne01 == 154880 && std::strcmp(op->src[0]->name, "output.weight") == 0;
++    if ((mode_selective || (mode_head && head)) && op->op == GGML_OP_MUL_MAT &&
+             tsrc0 == GGML_TYPE_Q8_0 && tsrc1 == GGML_TYPE_F32 && op->type == GGML_TYPE_F32 &&
+-            std::strcmp(op->src[0]->name, "output.weight") == 0 &&
+-            ne00 == 4096 && ne01 == 154880 && ne02 == 1 && ne03 == 1 &&
+-            ne11 == 1 && ne12 == 1 && ne13 == 1 &&
++            ne00 >= 64 && ne00 <= 65536 && ne00 % 64 == 0 && ne01 > 0 && ne01 % 8 == 0 &&
++            ne02 == 1 && ne03 == 1 && ne11 == 1 && ne12 == 1 && ne13 == 1 &&
+             ggml_is_contiguous(op->src[0]) && ggml_is_contiguous(op->src[1])) {
+         const char * kernel = "kernel_mul_mv_q8_0_f32_cpuarith";
+         ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, kernel);
+         if (!res.pipeline) {
+-            GGML_LOG_INFO("%s: experimental CPU-compatible Q8_0 output matvec\n", __func__);
++            GGML_LOG_INFO("%s: experimental CPU-compatible Q8_0 matvec\n", __func__);
+             res = ggml_metal_library_compile_pipeline(lib, kernel, kernel, nullptr);
+         }
+         res.nr0 = 8;
+--- a/ggml/src/ggml-metal/ggml-metal-device.m
++++ b/ggml/src/ggml-metal/ggml-metal-device.m
+@@ -350,7 +350,7 @@
+                 options.preprocessorMacros = prep;
+                 ggml_metal_compile_options_set_lang(options, ggml_metal_device_get_props(res->dev)->has_tensor);
+                 const char * cpu_arith = getenv("AIRLLM_METAL_Q8_CPU_ARITH");
+-                if (kind == GGML_METAL_LIB_MUL_MV && cpu_arith && strcmp(cpu_arith, "1") == 0) {
++                if (kind == GGML_METAL_LIB_MUL_MV && cpu_arith && (strcmp(cpu_arith, "1") == 0 || strcmp(cpu_arith, "2") == 0)) {
+                     options.fastMathEnabled = NO;
+                     GGML_LOG_INFO("%s: experimental Q8_0 MUL_MV safe math enabled\n", __func__);
+                 }
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -22,6 +22,59 @@
+ #include <stdexcept>
+ #include <string>
+ #include <unordered_map>
++
++// Private inference policy: pin every graph operation before scheduling.
++static void airllm_glm_q8_only_assign(
++        const llama_model & model, ggml_backend_sched_t sched, ggml_backend_t cpu,
++        const std::vector<ggml_backend_t> & backends, ggml_cgraph * gf, bool training) {
++    const char * enabled = std::getenv("AIRLLM_GLM_Q8_ONLY");
++    if (!enabled || std::strcmp(enabled, "1") != 0 || gf == nullptr) {
++        return;
++    }
++    const char * mode = std::getenv("AIRLLM_METAL_Q8_CPU_ARITH");
++    if (model.arch != LLM_ARCH_GLM5_NEXT || model.n_gpu_layers() != 0 || !cpu || training ||
++            !mode || std::strcmp(mode, "2") != 0) {
++        GGML_ABORT("AIRLLM_GLM_Q8_ONLY requires GLM inference, GPU layers 0, CPU backend and Q8 mode 2");
++    }
++    size_t n_cpu = 0;
++    size_t n_gpu = 0;
++    for (int i = 0; i < ggml_graph_n_nodes(gf); ++i) {
++        ggml_tensor * node = ggml_graph_node(gf, i);
++        if (node->op == GGML_OP_NONE) {
++            continue;
++        }
++        ggml_backend_t target = cpu;
++        const ggml_tensor * w = node->src[0];
++        const ggml_tensor * x = node->src[1];
++        const bool eligible = node->op == GGML_OP_MUL_MAT && w && x &&
++            w->type == GGML_TYPE_Q8_0 && x->type == GGML_TYPE_F32 && node->type == GGML_TYPE_F32 &&
++            w->ne[0] >= 64 && w->ne[0] <= 65536 && w->ne[0] % 64 == 0 && w->ne[1] > 0 && w->ne[1] % 8 == 0 &&
++            w->ne[2] == 1 && w->ne[3] == 1 && x->ne[1] == 1 && x->ne[2] == 1 && x->ne[3] == 1 &&
++            ggml_is_contiguous(w) && ggml_is_contiguous(x);
++        if (eligible && w->buffer && ggml_backend_buffer_get_usage(w->buffer) == GGML_BACKEND_BUFFER_USAGE_WEIGHTS) {
++            auto * device = ggml_backend_buft_get_device(ggml_backend_buffer_get_type(w->buffer));
++            if (device && std::strncmp(ggml_backend_dev_name(device), "MTL", 3) == 0) {
++                target = nullptr;
++                for (auto * backend : backends) {
++                    if (ggml_backend_get_device(backend) == device) {
++                        target = backend;
++                        break;
++                    }
++                }
++            }
++        }
++        if (!target || !ggml_backend_supports_op(target, node)) {
++            GGML_ABORT("AIRLLM_GLM_Q8_ONLY cannot place %s (%s) on its required backend", node->name, ggml_op_name(node->op));
++        }
++        ggml_backend_sched_set_tensor_backend(sched, node, target);
++        if (target == cpu) {
++            ++n_cpu;
++        } else {
++            ++n_gpu;
++        }
++    }
++    LLAMA_LOG_INFO("%s: experimental selective Q8 policy: %zu CPU ops, %zu Metal Q8 matvecs\n", __func__, n_cpu, n_gpu);
++}
+
+ //
+ // llama_context
+@@ -1560,6 +1613,7 @@
+         //const auto t_start_us = ggml_time_us();
+
+         gf = model.build_graph(gparams);
++        airllm_glm_q8_only_assign(model, sched.get(), backend_cpu, backend_ptrs, gf, cparams.training);
+
+         //LLAMA_LOG_INFO("graph build time: %.3f ms\n", (ggml_time_us() - t_start_us)/1000.0);
+
+@@ -2682,6 +2736,7 @@
+     res->reset();
+
+     auto * gf = model.build_graph(gparams);
++    airllm_glm_q8_only_assign(model, sched.get(), backend_cpu, backend_ptrs, gf, cparams.training);
+
+     // check the graph before scheduling: cross-backend copies break the producer chain that the check follows
+     if (!hadamard_verified && gf && (!model.hdmd.rot.empty() || !model.hdmd.inv.empty())) {
+@@ -3956,6 +4011,7 @@
+             res->reset();
+
+             auto * gf = model.build_graph(gparams);
++            airllm_glm_q8_only_assign(model, sched.get(), backend_cpu, backend_ptrs, gf, cparams.training);
+
+             struct ggml_context * ctx_compute_opt;
+             {

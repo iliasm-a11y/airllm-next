@@ -1,0 +1,3894 @@
+{
+  "schema_version": 1,
+  "scope": "named diagnostic outputs, in CPU evaluation order; not every internal operation",
+  "first_bit_difference": {
+    "key": [
+      0,
+      "hc_mixes-40",
+      0
+    ],
+    "op": "MUL_MAT",
+    "shape": [
+      24,
+      6,
+      1,
+      1
+    ],
+    "passed": true,
+    "elements": 144,
+    "criterion": "allclose_f32",
+    "mismatch_count": 0,
+    "bit_mismatch_count": 118,
+    "numeric_mismatch_count": 118,
+    "tolerance_mismatch_count": 0,
+    "max_abs_error_finite_pairs": 7.62939453125e-06,
+    "rmse_finite_pairs": 2.3682069531974745e-06,
+    "finite": true,
+    "finite_pairs": 144,
+    "nonfinite_reference": 0,
+    "nonfinite_candidate": 0
+  },
+  "first_tolerance_failure": {
+    "key": [
+      0,
+      "kda_q_conv-40",
+      0
+    ],
+    "op": "RESHAPE",
+    "shape": [
+      128,
+      64,
+      6,
+      1
+    ],
+    "passed": false,
+    "elements": 49152,
+    "criterion": "allclose_f32",
+    "mismatch_count": 16,
+    "bit_mismatch_count": 49152,
+    "numeric_mismatch_count": 49152,
+    "tolerance_mismatch_count": 16,
+    "max_abs_error_finite_pairs": 0.004960060119628906,
+    "rmse_finite_pairs": 7.89232868112708e-05,
+    "finite": true,
+    "finite_pairs": 49152,
+    "nonfinite_reference": 0,
+    "nonfinite_candidate": 0
+  },
+  "rows": [
+    {
+      "key": [
+        0,
+        "hc_mixes-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        24,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 144,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 118,
+      "numeric_mismatch_count": 118,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 7.62939453125e-06,
+      "rmse_finite_pairs": 2.3682069531974745e-06,
+      "finite": true,
+      "finite_pairs": 144,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_mixes-40 (view)",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 15,
+      "numeric_mismatch_count": 15,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 7.62939453125e-06,
+      "rmse_finite_pairs": 3.4772214319555547e-06,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_pre-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 19,
+      "numeric_mismatch_count": 19,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.30385160446167e-08,
+      "rmse_finite_pairs": 4.6999691986890536e-09,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_attn_pre-40",
+        0
+      ],
+      "op": "DSV4_HC_PRE",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 19191,
+      "numeric_mismatch_count": 19191,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.7881393432617188e-07,
+      "rmse_finite_pairs": 9.347149596732227e-09,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "norm-40",
+        0
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 15060,
+      "numeric_mismatch_count": 15060,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 7.152557373046875e-07,
+      "rmse_finite_pairs": 9.499590638867171e-08,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "attn_norm-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 14056,
+      "numeric_mismatch_count": 14056,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 2.384185791015625e-07,
+      "rmse_finite_pairs": 3.23611836573365e-08,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_q_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 16,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 16,
+      "max_abs_error_finite_pairs": 0.004960060119628906,
+      "rmse_finite_pairs": 7.89232868112708e-05,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_k_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 7,
+      "max_abs_error_finite_pairs": 0.0017603635787963867,
+      "rmse_finite_pairs": 5.5404452182135275e-05,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_v_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 89,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 89,
+      "max_abs_error_finite_pairs": 0.002962440252304077,
+      "rmse_finite_pairs": 0.00017755818123076067,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_g1-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 16121,
+      "bit_mismatch_count": 49150,
+      "numeric_mismatch_count": 49150,
+      "tolerance_mismatch_count": 16121,
+      "max_abs_error_finite_pairs": 0.025409221649169922,
+      "rmse_finite_pairs": 0.0022777713274217707,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_g1-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 16121,
+      "bit_mismatch_count": 49150,
+      "numeric_mismatch_count": 49150,
+      "tolerance_mismatch_count": 16121,
+      "max_abs_error_finite_pairs": 0.025409221649169922,
+      "rmse_finite_pairs": 0.0022777713274217707,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_beta-40",
+        0
+      ],
+      "op": "UNARY",
+      "shape": [
+        1,
+        64,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 380,
+      "numeric_mismatch_count": 380,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0006913542747497559,
+      "rmse_finite_pairs": 0.00013730312302714392,
+      "finite": true,
+      "finite_pairs": 384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "new_state-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        128,
+        128,
+        64,
+        1
+      ],
+      "passed": false,
+      "elements": 1048576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3,
+      "bit_mismatch_count": 1048574,
+      "numeric_mismatch_count": 1048574,
+      "tolerance_mismatch_count": 3,
+      "max_abs_error_finite_pairs": 0.001336604356765747,
+      "rmse_finite_pairs": 2.433482227571816e-05,
+      "finite": true,
+      "finite_pairs": 1048576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "cache_s_l40 (view) (copy of new_state-40)",
+        0
+      ],
+      "op": "CPY",
+      "shape": [
+        1048576,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 1048576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3,
+      "bit_mismatch_count": 1048574,
+      "numeric_mismatch_count": 1048574,
+      "tolerance_mismatch_count": 3,
+      "max_abs_error_finite_pairs": 0.001336604356765747,
+      "rmse_finite_pairs": 2.4334822275718155e-05,
+      "finite": true,
+      "finite_pairs": 1048576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "attn_output-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 5.388539284467697e-05,
+      "rmse_finite_pairs": 1.8910919551001838e-06,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_scan_out-40",
+        0
+      ],
+      "op": "CONT",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 5.388539284467697e-05,
+      "rmse_finite_pairs": 1.8910919551001838e-06,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_scan_out-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 49152,
+      "numeric_mismatch_count": 49152,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 5.388539284467697e-05,
+      "rmse_finite_pairs": 1.8910919551001838e-06,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "norm-40",
+        1
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3002,
+      "bit_mismatch_count": 49151,
+      "numeric_mismatch_count": 49151,
+      "tolerance_mismatch_count": 3002,
+      "max_abs_error_finite_pairs": 0.014689445495605469,
+      "rmse_finite_pairs": 0.0005746574039812138,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_normed-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 734,
+      "bit_mismatch_count": 49151,
+      "numeric_mismatch_count": 49151,
+      "tolerance_mismatch_count": 734,
+      "max_abs_error_finite_pairs": 0.00900876522064209,
+      "rmse_finite_pairs": 0.00032155969770895573,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_g2-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 49152,
+      "criterion": "allclose_f32",
+      "mismatch_count": 24818,
+      "bit_mismatch_count": 49150,
+      "numeric_mismatch_count": 49150,
+      "tolerance_mismatch_count": 24818,
+      "max_abs_error_finite_pairs": 0.019548416137695312,
+      "rmse_finite_pairs": 0.0021279727454772755,
+      "finite": true,
+      "finite_pairs": 49152,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "kda_out-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1142,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 1142,
+      "max_abs_error_finite_pairs": 0.0025072917342185974,
+      "rmse_finite_pairs": 0.0005029260868565542,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_mixes-40 (view)",
+        1
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 19,
+      "numeric_mismatch_count": 19,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 3.814697265625e-06,
+      "rmse_finite_pairs": 1.734348364098485e-06,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_post-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 12,
+      "numeric_mismatch_count": 12,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 2.384185791015625e-07,
+      "rmse_finite_pairs": 1.2922695021577373e-07,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_comb-40",
+        0
+      ],
+      "op": "DSV4_HC_COMB",
+      "shape": [
+        4,
+        4,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 96,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 86,
+      "numeric_mismatch_count": 86,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.1920928955078125e-07,
+      "rmse_finite_pairs": 3.94219510252263e-08,
+      "finite": true,
+      "finite_pairs": 96,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_attn_post-40",
+        0
+      ],
+      "op": "DSV4_HC_POST",
+      "shape": [
+        4096,
+        4,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 15045,
+      "bit_mismatch_count": 98298,
+      "numeric_mismatch_count": 98298,
+      "tolerance_mismatch_count": 15045,
+      "max_abs_error_finite_pairs": 0.0042400360107421875,
+      "rmse_finite_pairs": 0.0007576711133471663,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_attn_post-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        16384,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 15045,
+      "bit_mismatch_count": 98298,
+      "numeric_mismatch_count": 98298,
+      "tolerance_mismatch_count": 15045,
+      "max_abs_error_finite_pairs": 0.0042400360107421875,
+      "rmse_finite_pairs": 0.0007576711133471663,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_mixes-40",
+        1
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        24,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 144,
+      "criterion": "allclose_f32",
+      "mismatch_count": 111,
+      "bit_mismatch_count": 144,
+      "numeric_mismatch_count": 144,
+      "tolerance_mismatch_count": 111,
+      "max_abs_error_finite_pairs": 0.03368568420410156,
+      "rmse_finite_pairs": 0.00896353737232357,
+      "finite": true,
+      "finite_pairs": 144,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_mixes-40 (view)",
+        2
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 18,
+      "bit_mismatch_count": 24,
+      "numeric_mismatch_count": 24,
+      "tolerance_mismatch_count": 18,
+      "max_abs_error_finite_pairs": 0.025953292846679688,
+      "rmse_finite_pairs": 0.010734484662463252,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_pre-40",
+        1
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1,
+      "bit_mismatch_count": 24,
+      "numeric_mismatch_count": 24,
+      "tolerance_mismatch_count": 1,
+      "max_abs_error_finite_pairs": 0.00135725736618042,
+      "rmse_finite_pairs": 0.00047248207416925205,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_ffn_pre-40",
+        0
+      ],
+      "op": "DSV4_HC_PRE",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7853,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 7853,
+      "max_abs_error_finite_pairs": 0.005627632141113281,
+      "rmse_finite_pairs": 0.0011217645553864592,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "norm-40",
+        2
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 12893,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 12893,
+      "max_abs_error_finite_pairs": 0.009153127670288086,
+      "rmse_finite_pairs": 0.001998425722644061,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_norm-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7186,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 7186,
+      "max_abs_error_finite_pairs": 0.004845917224884033,
+      "rmse_finite_pairs": 0.0010390041111925353,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_logits-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        288,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 1728,
+      "criterion": "allclose_f32",
+      "mismatch_count": 973,
+      "bit_mismatch_count": 1728,
+      "numeric_mismatch_count": 1728,
+      "tolerance_mismatch_count": 973,
+      "max_abs_error_finite_pairs": 0.010272026062011719,
+      "rmse_finite_pairs": 0.0024792883075566807,
+      "finite": true,
+      "finite_pairs": 1728,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_probs-40",
+        0
+      ],
+      "op": "UNARY",
+      "shape": [
+        288,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 1728,
+      "criterion": "allclose_f32",
+      "mismatch_count": 9,
+      "bit_mismatch_count": 1728,
+      "numeric_mismatch_count": 1728,
+      "tolerance_mismatch_count": 9,
+      "max_abs_error_finite_pairs": 0.001591712236404419,
+      "rmse_finite_pairs": 0.00024810116100089255,
+      "finite": true,
+      "finite_pairs": 1728,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_probs-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        1,
+        288,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 1728,
+      "criterion": "allclose_f32",
+      "mismatch_count": 9,
+      "bit_mismatch_count": 1728,
+      "numeric_mismatch_count": 1728,
+      "tolerance_mismatch_count": 9,
+      "max_abs_error_finite_pairs": 0.001591712236404419,
+      "rmse_finite_pairs": 0.00024810116100089255,
+      "finite": true,
+      "finite_pairs": 1728,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_probs_biased-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        288,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 1728,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 1715,
+      "numeric_mismatch_count": 1715,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0015916824340820312,
+      "rmse_finite_pairs": 0.00024809133765625515,
+      "finite": true,
+      "finite_pairs": 1728,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_argsort-40",
+        0
+      ],
+      "op": "ARGSORT",
+      "shape": [
+        288,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 1728,
+      "criterion": "exact_i32",
+      "mismatch_count": 287,
+      "bit_mismatch_count": 287,
+      "numeric_mismatch_count": 287,
+      "tolerance_mismatch_count": 287,
+      "max_abs_error_finite_pairs": 283.0,
+      "rmse_finite_pairs": 45.54665394060452,
+      "finite": true,
+      "finite_pairs": 1728,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_topk-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        8,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 48,
+      "criterion": "exact_i32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "numeric_mismatch_count": 0,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights-40",
+        0
+      ],
+      "op": "GET_ROWS",
+      "shape": [
+        1,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 48,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2,
+      "bit_mismatch_count": 48,
+      "numeric_mismatch_count": 48,
+      "tolerance_mismatch_count": 2,
+      "max_abs_error_finite_pairs": 0.0011210441589355469,
+      "rmse_finite_pairs": 0.0005491120457629214,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        8,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 48,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2,
+      "bit_mismatch_count": 48,
+      "numeric_mismatch_count": 48,
+      "tolerance_mismatch_count": 2,
+      "max_abs_error_finite_pairs": 0.0011210441589355469,
+      "rmse_finite_pairs": 0.0005491120457629214,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights_sum-40",
+        0
+      ],
+      "op": "SUM_ROWS",
+      "shape": [
+        1,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 6,
+      "criterion": "allclose_f32",
+      "mismatch_count": 5,
+      "bit_mismatch_count": 6,
+      "numeric_mismatch_count": 6,
+      "tolerance_mismatch_count": 5,
+      "max_abs_error_finite_pairs": 0.0059816837310791016,
+      "rmse_finite_pairs": 0.0037846501501524812,
+      "finite": true,
+      "finite_pairs": 6,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights_sum_clamped-40",
+        0
+      ],
+      "op": "CLAMP",
+      "shape": [
+        1,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 6,
+      "criterion": "allclose_f32",
+      "mismatch_count": 5,
+      "bit_mismatch_count": 6,
+      "numeric_mismatch_count": 6,
+      "tolerance_mismatch_count": 5,
+      "max_abs_error_finite_pairs": 0.0059816837310791016,
+      "rmse_finite_pairs": 0.0037846501501524812,
+      "finite": true,
+      "finite_pairs": 6,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights_norm-40",
+        0
+      ],
+      "op": "DIV",
+      "shape": [
+        8,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 48,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 48,
+      "numeric_mismatch_count": 48,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.00020091235637664795,
+      "rmse_finite_pairs": 7.950759055394933e-05,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights_norm-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        1,
+        8,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 48,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 48,
+      "numeric_mismatch_count": 48,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.00020091235637664795,
+      "rmse_finite_pairs": 7.950759055394933e-05,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weights_scaled-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        1,
+        8,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 48,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 48,
+      "numeric_mismatch_count": 48,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0005022883415222168,
+      "rmse_finite_pairs": 0.00019876834048657998,
+      "finite": true,
+      "finite_pairs": 48,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_norm-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        4096,
+        1,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7186,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 7186,
+      "max_abs_error_finite_pairs": 0.004845917224884033,
+      "rmse_finite_pairs": 0.0010390041111925353,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_gate-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        2048,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 74933,
+      "bit_mismatch_count": 98304,
+      "numeric_mismatch_count": 98304,
+      "tolerance_mismatch_count": 74933,
+      "max_abs_error_finite_pairs": 0.023199260234832764,
+      "rmse_finite_pairs": 0.003809152871748909,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_up-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        2048,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 75478,
+      "bit_mismatch_count": 98303,
+      "numeric_mismatch_count": 98303,
+      "tolerance_mismatch_count": 75478,
+      "max_abs_error_finite_pairs": 0.01829451322555542,
+      "rmse_finite_pairs": 0.0038194609846859723,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_swiglu_limited-40",
+        0
+      ],
+      "op": "GLU",
+      "shape": [
+        2048,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 33627,
+      "bit_mismatch_count": 98304,
+      "numeric_mismatch_count": 98304,
+      "tolerance_mismatch_count": 33627,
+      "max_abs_error_finite_pairs": 0.04463779926300049,
+      "rmse_finite_pairs": 0.0018140311172140685,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_down-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        4096,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 196608,
+      "criterion": "allclose_f32",
+      "mismatch_count": 144029,
+      "bit_mismatch_count": 196607,
+      "numeric_mismatch_count": 196607,
+      "tolerance_mismatch_count": 144029,
+      "max_abs_error_finite_pairs": 0.023523345356807113,
+      "rmse_finite_pairs": 0.0034778620566913985,
+      "finite": true,
+      "finite_pairs": 196608,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        8,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 196608,
+      "criterion": "allclose_f32",
+      "mismatch_count": 56657,
+      "bit_mismatch_count": 196608,
+      "numeric_mismatch_count": 196608,
+      "tolerance_mismatch_count": 56657,
+      "max_abs_error_finite_pairs": 0.010305464267730713,
+      "rmse_finite_pairs": 0.001270123332382054,
+      "finite": true,
+      "finite_pairs": 196608,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 13215,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 13215,
+      "max_abs_error_finite_pairs": 0.010079901665449142,
+      "rmse_finite_pairs": 0.0019446931522341647,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        1
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 11220,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 11220,
+      "max_abs_error_finite_pairs": 0.008658625185489655,
+      "rmse_finite_pairs": 0.0015568140752476646,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        2
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 12008,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 12008,
+      "max_abs_error_finite_pairs": 0.010305464267730713,
+      "rmse_finite_pairs": 0.001897242464816936,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        3
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7638,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 7638,
+      "max_abs_error_finite_pairs": 0.004962638020515442,
+      "rmse_finite_pairs": 0.0010751781052383298,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        4
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 5872,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 5872,
+      "max_abs_error_finite_pairs": 0.004990799352526665,
+      "rmse_finite_pairs": 0.0009357545011648641,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        5
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2665,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 2665,
+      "max_abs_error_finite_pairs": 0.0031413696706295013,
+      "rmse_finite_pairs": 0.0006339077000275271,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        6
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2477,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 2477,
+      "max_abs_error_finite_pairs": 0.0034947171807289124,
+      "rmse_finite_pairs": 0.0006164899335762673,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_weighted-40 (view)",
+        7
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1562,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 1562,
+      "max_abs_error_finite_pairs": 0.0024114884436130524,
+      "rmse_finite_pairs": 0.0005358474497100524,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_moe_out-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 18282,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 18282,
+      "max_abs_error_finite_pairs": 0.017842411994934082,
+      "rmse_finite_pairs": 0.003604298435139,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_gate-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        2048,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 12288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 9021,
+      "bit_mismatch_count": 12288,
+      "numeric_mismatch_count": 12288,
+      "tolerance_mismatch_count": 9021,
+      "max_abs_error_finite_pairs": 0.016337871551513672,
+      "rmse_finite_pairs": 0.0035487851610168306,
+      "finite": true,
+      "finite_pairs": 12288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_up-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        2048,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 12288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 8510,
+      "bit_mismatch_count": 12288,
+      "numeric_mismatch_count": 12288,
+      "tolerance_mismatch_count": 8510,
+      "max_abs_error_finite_pairs": 0.015431404113769531,
+      "rmse_finite_pairs": 0.0027749128248960994,
+      "finite": true,
+      "finite_pairs": 12288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_swiglu_limited-40",
+        0
+      ],
+      "op": "GLU",
+      "shape": [
+        2048,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 12288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2514,
+      "bit_mismatch_count": 12288,
+      "numeric_mismatch_count": 12288,
+      "tolerance_mismatch_count": 2514,
+      "max_abs_error_finite_pairs": 0.016034424304962158,
+      "rmse_finite_pairs": 0.0011073721601816112,
+      "finite": true,
+      "finite_pairs": 12288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_shexp-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 10401,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 10401,
+      "max_abs_error_finite_pairs": 0.007212826982140541,
+      "rmse_finite_pairs": 0.001286151834489109,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "ffn_out-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        4096,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 18856,
+      "bit_mismatch_count": 24576,
+      "numeric_mismatch_count": 24576,
+      "tolerance_mismatch_count": 18856,
+      "max_abs_error_finite_pairs": 0.017113864421844482,
+      "rmse_finite_pairs": 0.0038219919893473994,
+      "finite": true,
+      "finite_pairs": 24576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_mixes-40 (view)",
+        3
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 21,
+      "bit_mismatch_count": 24,
+      "numeric_mismatch_count": 24,
+      "tolerance_mismatch_count": 21,
+      "max_abs_error_finite_pairs": 0.029727935791015625,
+      "rmse_finite_pairs": 0.00839460295511184,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_post-40",
+        1
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        6,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 24,
+      "numeric_mismatch_count": 24,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.000728607177734375,
+      "rmse_finite_pairs": 0.000264767581136399,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "hc_comb-40",
+        1
+      ],
+      "op": "DSV4_HC_COMB",
+      "shape": [
+        4,
+        4,
+        6,
+        1
+      ],
+      "passed": true,
+      "elements": 96,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 96,
+      "numeric_mismatch_count": 96,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 8.291006088256836e-05,
+      "rmse_finite_pairs": 2.804373384774484e-05,
+      "finite": true,
+      "finite_pairs": 96,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "l_out-40",
+        0
+      ],
+      "op": "DSV4_HC_POST",
+      "shape": [
+        4096,
+        4,
+        6,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 47218,
+      "bit_mismatch_count": 98303,
+      "numeric_mismatch_count": 98303,
+      "tolerance_mismatch_count": 47218,
+      "max_abs_error_finite_pairs": 0.019262224435806274,
+      "rmse_finite_pairs": 0.0025166361551722384,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "l_out-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        16384,
+        6,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 98304,
+      "criterion": "allclose_f32",
+      "mismatch_count": 47218,
+      "bit_mismatch_count": 98303,
+      "numeric_mismatch_count": 98303,
+      "tolerance_mismatch_count": 47218,
+      "max_abs_error_finite_pairs": 0.019262224435806274,
+      "rmse_finite_pairs": 0.002516636155172238,
+      "finite": true,
+      "finite_pairs": 98304,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        0,
+        "result_norm",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3853,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 3853,
+      "max_abs_error_finite_pairs": 0.061087049543857574,
+      "rmse_finite_pairs": 0.014950458555161535,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        24,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 20,
+      "numeric_mismatch_count": 20,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 4.76837158203125e-06,
+      "rmse_finite_pairs": 2.1326194287333847e-06,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40 (view)",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 4,
+      "numeric_mismatch_count": 4,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 3.814697265625e-06,
+      "rmse_finite_pairs": 2.8310637681574623e-06,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_pre-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 2,
+      "numeric_mismatch_count": 2,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.1175870895385742e-08,
+      "rmse_finite_pairs": 6.7158625935464895e-09,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_attn_pre-40",
+        0
+      ],
+      "op": "DSV4_HC_PRE",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 3636,
+      "numeric_mismatch_count": 3636,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.4901161193847656e-08,
+      "rmse_finite_pairs": 4.410225392638632e-09,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "norm-40",
+        0
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 3211,
+      "numeric_mismatch_count": 3211,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 4.76837158203125e-07,
+      "rmse_finite_pairs": 1.2144792464021564e-07,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "attn_norm-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 3074,
+      "numeric_mismatch_count": 3074,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.7881393432617188e-07,
+      "rmse_finite_pairs": 4.157065266520695e-08,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_q_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 4,
+      "max_abs_error_finite_pairs": 0.0021477937698364258,
+      "rmse_finite_pairs": 7.550882499965958e-05,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_k_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 4,
+      "max_abs_error_finite_pairs": 0.0024730563163757324,
+      "rmse_finite_pairs": 6.464242076918196e-05,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_v_conv-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 14,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 14,
+      "max_abs_error_finite_pairs": 0.002999506890773773,
+      "rmse_finite_pairs": 0.0001829383975430565,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_g1-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2584,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 2584,
+      "max_abs_error_finite_pairs": 0.01973748207092285,
+      "rmse_finite_pairs": 0.0019371019477806718,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_g1-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2584,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 2584,
+      "max_abs_error_finite_pairs": 0.01973748207092285,
+      "rmse_finite_pairs": 0.0019371019477806718,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_beta-40",
+        0
+      ],
+      "op": "UNARY",
+      "shape": [
+        1,
+        64,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 64,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 64,
+      "numeric_mismatch_count": 64,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0004233121871948242,
+      "rmse_finite_pairs": 8.777060963787631e-05,
+      "finite": true,
+      "finite_pairs": 64,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "new_state-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        128,
+        128,
+        64,
+        1
+      ],
+      "passed": false,
+      "elements": 1048576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4,
+      "bit_mismatch_count": 1048574,
+      "numeric_mismatch_count": 1048574,
+      "tolerance_mismatch_count": 4,
+      "max_abs_error_finite_pairs": 0.0013788416981697083,
+      "rmse_finite_pairs": 2.4466160974319458e-05,
+      "finite": true,
+      "finite_pairs": 1048576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "cache_s_l40 (view) (copy of new_state-40)",
+        0
+      ],
+      "op": "CPY",
+      "shape": [
+        1048576,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 1048576,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4,
+      "bit_mismatch_count": 1048574,
+      "numeric_mismatch_count": 1048574,
+      "tolerance_mismatch_count": 4,
+      "max_abs_error_finite_pairs": 0.0013788416981697083,
+      "rmse_finite_pairs": 2.4466160974319455e-05,
+      "finite": true,
+      "finite_pairs": 1048576,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "attn_output-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 3.9970153011381626e-05,
+      "rmse_finite_pairs": 2.328386535612485e-06,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_scan_out-40",
+        0
+      ],
+      "op": "CONT",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 3.9970153011381626e-05,
+      "rmse_finite_pairs": 2.328386535612485e-06,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_scan_out-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 3.9970153011381626e-05,
+      "rmse_finite_pairs": 2.328386535612485e-06,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "norm-40",
+        1
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 777,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 777,
+      "max_abs_error_finite_pairs": 0.012589871883392334,
+      "rmse_finite_pairs": 0.0007205334409197239,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_normed-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 226,
+      "bit_mismatch_count": 8192,
+      "numeric_mismatch_count": 8192,
+      "tolerance_mismatch_count": 226,
+      "max_abs_error_finite_pairs": 0.0062598735094070435,
+      "rmse_finite_pairs": 0.00040048870163478066,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_g2-40",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 8192,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4367,
+      "bit_mismatch_count": 8191,
+      "numeric_mismatch_count": 8191,
+      "tolerance_mismatch_count": 4367,
+      "max_abs_error_finite_pairs": 0.018851041793823242,
+      "rmse_finite_pairs": 0.0021240940382282096,
+      "finite": true,
+      "finite_pairs": 8192,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "kda_out-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 298,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 298,
+      "max_abs_error_finite_pairs": 0.0024157389998435974,
+      "rmse_finite_pairs": 0.0005638685233018253,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40 (view)",
+        1
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 3,
+      "numeric_mismatch_count": 3,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.9073486328125e-06,
+      "rmse_finite_pairs": 1.353957258653706e-06,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_post-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 2,
+      "numeric_mismatch_count": 2,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 1.1920928955078125e-07,
+      "rmse_finite_pairs": 6.664001874625056e-08,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_comb-40",
+        0
+      ],
+      "op": "DSV4_HC_COMB",
+      "shape": [
+        4,
+        4,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 16,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 14,
+      "numeric_mismatch_count": 14,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 5.960464477539063e-08,
+      "rmse_finite_pairs": 2.428244467028835e-08,
+      "finite": true,
+      "finite_pairs": 16,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_attn_post-40",
+        0
+      ],
+      "op": "DSV4_HC_POST",
+      "shape": [
+        4096,
+        4,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3840,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 3840,
+      "max_abs_error_finite_pairs": 0.004746675491333008,
+      "rmse_finite_pairs": 0.0009166218690105672,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_attn_post-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        16384,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3840,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 3840,
+      "max_abs_error_finite_pairs": 0.004746675491333008,
+      "rmse_finite_pairs": 0.0009166218690105672,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40",
+        1
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        24,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 24,
+      "criterion": "allclose_f32",
+      "mismatch_count": 20,
+      "bit_mismatch_count": 24,
+      "numeric_mismatch_count": 24,
+      "tolerance_mismatch_count": 20,
+      "max_abs_error_finite_pairs": 0.027967453002929688,
+      "rmse_finite_pairs": 0.014506716086661,
+      "finite": true,
+      "finite_pairs": 24,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40 (view)",
+        2
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3,
+      "bit_mismatch_count": 4,
+      "numeric_mismatch_count": 4,
+      "tolerance_mismatch_count": 3,
+      "max_abs_error_finite_pairs": 0.027967453002929688,
+      "rmse_finite_pairs": 0.015529933474830053,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_pre-40",
+        1
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1,
+      "bit_mismatch_count": 4,
+      "numeric_mismatch_count": 4,
+      "tolerance_mismatch_count": 1,
+      "max_abs_error_finite_pairs": 0.0017365515232086182,
+      "rmse_finite_pairs": 0.0008833162274489159,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_ffn_pre-40",
+        0
+      ],
+      "op": "DSV4_HC_PRE",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1745,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1745,
+      "max_abs_error_finite_pairs": 0.005436833947896957,
+      "rmse_finite_pairs": 0.0012828768869744746,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "norm-40",
+        2
+      ],
+      "op": "RMS_NORM",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2880,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 2880,
+      "max_abs_error_finite_pairs": 0.011832118034362793,
+      "rmse_finite_pairs": 0.002778311823746137,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_norm-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1975,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1975,
+      "max_abs_error_finite_pairs": 0.006100933998823166,
+      "rmse_finite_pairs": 0.0014436769516381048,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_logits-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        288,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 198,
+      "bit_mismatch_count": 288,
+      "numeric_mismatch_count": 288,
+      "tolerance_mismatch_count": 198,
+      "max_abs_error_finite_pairs": 0.008120059967041016,
+      "rmse_finite_pairs": 0.002727740190188453,
+      "finite": true,
+      "finite_pairs": 288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_probs-40",
+        0
+      ],
+      "op": "UNARY",
+      "shape": [
+        288,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 288,
+      "numeric_mismatch_count": 288,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0008207112550735474,
+      "rmse_finite_pairs": 0.00021699395286308448,
+      "finite": true,
+      "finite_pairs": 288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_probs-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        1,
+        288,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 288,
+      "numeric_mismatch_count": 288,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0008207112550735474,
+      "rmse_finite_pairs": 0.00021699395286308448,
+      "finite": true,
+      "finite_pairs": 288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_probs_biased-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        288,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 288,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 287,
+      "numeric_mismatch_count": 287,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.000820159912109375,
+      "rmse_finite_pairs": 0.0002169823461287162,
+      "finite": true,
+      "finite_pairs": 288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_argsort-40",
+        0
+      ],
+      "op": "ARGSORT",
+      "shape": [
+        288,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 288,
+      "criterion": "exact_i32",
+      "mismatch_count": 77,
+      "bit_mismatch_count": 77,
+      "numeric_mismatch_count": 77,
+      "tolerance_mismatch_count": 77,
+      "max_abs_error_finite_pairs": 276.0,
+      "rmse_finite_pairs": 73.34729980639293,
+      "finite": true,
+      "finite_pairs": 288,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_topk-40",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "exact_i32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "numeric_mismatch_count": 0,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights-40",
+        0
+      ],
+      "op": "GET_ROWS",
+      "shape": [
+        1,
+        8,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8,
+      "numeric_mismatch_count": 8,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0006287693977355957,
+      "rmse_finite_pairs": 0.0003479418440918316,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8,
+      "numeric_mismatch_count": 8,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0006287693977355957,
+      "rmse_finite_pairs": 0.0003479418440918316,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights_sum-40",
+        0
+      ],
+      "op": "SUM_ROWS",
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 1,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 1,
+      "numeric_mismatch_count": 1,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0008559226989746094,
+      "rmse_finite_pairs": 0.0008559226989746094,
+      "finite": true,
+      "finite_pairs": 1,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights_sum_clamped-40",
+        0
+      ],
+      "op": "CLAMP",
+      "shape": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 1,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 1,
+      "numeric_mismatch_count": 1,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.0008559226989746094,
+      "rmse_finite_pairs": 0.0008559226989746094,
+      "finite": true,
+      "finite_pairs": 1,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights_norm-40",
+        0
+      ],
+      "op": "DIV",
+      "shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8,
+      "numeric_mismatch_count": 8,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.00010772049427032471,
+      "rmse_finite_pairs": 6.873440481374558e-05,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights_norm-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        1,
+        8,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8,
+      "numeric_mismatch_count": 8,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.00010772049427032471,
+      "rmse_finite_pairs": 6.873440481374558e-05,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weights_scaled-40",
+        0
+      ],
+      "op": "SCALE",
+      "shape": [
+        1,
+        8,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 8,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 8,
+      "numeric_mismatch_count": 8,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 0.00026929378509521484,
+      "rmse_finite_pairs": 0.00017183684747795145,
+      "finite": true,
+      "finite_pairs": 8,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_norm-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1975,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1975,
+      "max_abs_error_finite_pairs": 0.006100933998823166,
+      "rmse_finite_pairs": 0.0014436769516381048,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_gate-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        2048,
+        8,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 13681,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 13681,
+      "max_abs_error_finite_pairs": 0.020922958850860596,
+      "rmse_finite_pairs": 0.004971092300875764,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_up-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        2048,
+        8,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 13654,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 13654,
+      "max_abs_error_finite_pairs": 0.021615073084831238,
+      "rmse_finite_pairs": 0.005005265094325513,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_swiglu_limited-40",
+        0
+      ],
+      "op": "GLU",
+      "shape": [
+        2048,
+        8,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 7390,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 7390,
+      "max_abs_error_finite_pairs": 0.034241676330566406,
+      "rmse_finite_pairs": 0.0022629417610263965,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_down-40",
+        0
+      ],
+      "op": "MUL_MAT_ID",
+      "shape": [
+        4096,
+        8,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 32768,
+      "criterion": "allclose_f32",
+      "mismatch_count": 26221,
+      "bit_mismatch_count": 32768,
+      "numeric_mismatch_count": 32768,
+      "tolerance_mismatch_count": 26221,
+      "max_abs_error_finite_pairs": 0.029478229582309723,
+      "rmse_finite_pairs": 0.0048017627598384936,
+      "finite": true,
+      "finite_pairs": 32768,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        8,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 32768,
+      "criterion": "allclose_f32",
+      "mismatch_count": 13763,
+      "bit_mismatch_count": 32768,
+      "numeric_mismatch_count": 32768,
+      "tolerance_mismatch_count": 13763,
+      "max_abs_error_finite_pairs": 0.008359473198652267,
+      "rmse_finite_pairs": 0.0014521532607386584,
+      "finite": true,
+      "finite_pairs": 32768,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        0
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2328,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 2328,
+      "max_abs_error_finite_pairs": 0.006562069058418274,
+      "rmse_finite_pairs": 0.0017939615698852349,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        1
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1968,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1968,
+      "max_abs_error_finite_pairs": 0.005257432931102812,
+      "rmse_finite_pairs": 0.0014270524142422703,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        2
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 815,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 815,
+      "max_abs_error_finite_pairs": 0.0032130777835845947,
+      "rmse_finite_pairs": 0.0007925416681974056,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        3
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2194,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 2194,
+      "max_abs_error_finite_pairs": 0.007071077823638916,
+      "rmse_finite_pairs": 0.0016404644416279613,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        4
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1395,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1395,
+      "max_abs_error_finite_pairs": 0.0039665959775447845,
+      "rmse_finite_pairs": 0.0010416181538858355,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        5
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 2675,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 2675,
+      "max_abs_error_finite_pairs": 0.008359473198652267,
+      "rmse_finite_pairs": 0.002239315997677955,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        6
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1844,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1844,
+      "max_abs_error_finite_pairs": 0.0051874518394470215,
+      "rmse_finite_pairs": 0.0013278825211048516,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_weighted-40 (view)",
+        7
+      ],
+      "op": "VIEW",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 544,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 544,
+      "max_abs_error_finite_pairs": 0.002525120973587036,
+      "rmse_finite_pairs": 0.0006581744816383896,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_moe_out-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3319,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 3319,
+      "max_abs_error_finite_pairs": 0.016372665762901306,
+      "rmse_finite_pairs": 0.004159598973731338,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_gate-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        2048,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 2048,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1550,
+      "bit_mismatch_count": 2048,
+      "numeric_mismatch_count": 2048,
+      "tolerance_mismatch_count": 1550,
+      "max_abs_error_finite_pairs": 0.02031564712524414,
+      "rmse_finite_pairs": 0.00403745493388107,
+      "finite": true,
+      "finite_pairs": 2048,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_up-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        2048,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 2048,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1449,
+      "bit_mismatch_count": 2048,
+      "numeric_mismatch_count": 2048,
+      "tolerance_mismatch_count": 1449,
+      "max_abs_error_finite_pairs": 0.017570018768310547,
+      "rmse_finite_pairs": 0.0030778571115807314,
+      "finite": true,
+      "finite_pairs": 2048,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_swiglu_limited-40",
+        0
+      ],
+      "op": "GLU",
+      "shape": [
+        2048,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 2048,
+      "criterion": "allclose_f32",
+      "mismatch_count": 525,
+      "bit_mismatch_count": 2048,
+      "numeric_mismatch_count": 2048,
+      "tolerance_mismatch_count": 525,
+      "max_abs_error_finite_pairs": 0.012309100478887558,
+      "rmse_finite_pairs": 0.0014036727461492376,
+      "finite": true,
+      "finite_pairs": 2048,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_shexp-40",
+        0
+      ],
+      "op": "MUL_MAT",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1851,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 1851,
+      "max_abs_error_finite_pairs": 0.0055619217455387115,
+      "rmse_finite_pairs": 0.001344135768244671,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "ffn_out-40",
+        0
+      ],
+      "op": "ADD",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3336,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 3336,
+      "max_abs_error_finite_pairs": 0.01776057481765747,
+      "rmse_finite_pairs": 0.004363483432033357,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_mixes-40 (view)",
+        3
+      ],
+      "op": "VIEW",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 4,
+      "bit_mismatch_count": 4,
+      "numeric_mismatch_count": 4,
+      "tolerance_mismatch_count": 4,
+      "max_abs_error_finite_pairs": 0.019854068756103516,
+      "rmse_finite_pairs": 0.013065977744384031,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_post-40",
+        1
+      ],
+      "op": "SCALE",
+      "shape": [
+        4,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4,
+      "criterion": "allclose_f32",
+      "mismatch_count": 1,
+      "bit_mismatch_count": 4,
+      "numeric_mismatch_count": 4,
+      "tolerance_mismatch_count": 1,
+      "max_abs_error_finite_pairs": 0.001269221305847168,
+      "rmse_finite_pairs": 0.0007606367501909814,
+      "finite": true,
+      "finite_pairs": 4,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "hc_comb-40",
+        1
+      ],
+      "op": "DSV4_HC_COMB",
+      "shape": [
+        4,
+        4,
+        1,
+        1
+      ],
+      "passed": true,
+      "elements": 16,
+      "criterion": "allclose_f32",
+      "mismatch_count": 0,
+      "bit_mismatch_count": 16,
+      "numeric_mismatch_count": 16,
+      "tolerance_mismatch_count": 0,
+      "max_abs_error_finite_pairs": 9.047985076904297e-05,
+      "rmse_finite_pairs": 4.17247892515588e-05,
+      "finite": true,
+      "finite_pairs": 16,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "l_out-40",
+        0
+      ],
+      "op": "DSV4_HC_POST",
+      "shape": [
+        4096,
+        4,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 10072,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 10072,
+      "max_abs_error_finite_pairs": 0.01914854347705841,
+      "rmse_finite_pairs": 0.0030138288169788076,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "l_out-40 (reshaped)",
+        0
+      ],
+      "op": "RESHAPE",
+      "shape": [
+        16384,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 16384,
+      "criterion": "allclose_f32",
+      "mismatch_count": 10072,
+      "bit_mismatch_count": 16384,
+      "numeric_mismatch_count": 16384,
+      "tolerance_mismatch_count": 10072,
+      "max_abs_error_finite_pairs": 0.01914854347705841,
+      "rmse_finite_pairs": 0.0030138288169788076,
+      "finite": true,
+      "finite_pairs": 16384,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    },
+    {
+      "key": [
+        1,
+        "result_norm",
+        0
+      ],
+      "op": "MUL",
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "passed": false,
+      "elements": 4096,
+      "criterion": "allclose_f32",
+      "mismatch_count": 3871,
+      "bit_mismatch_count": 4096,
+      "numeric_mismatch_count": 4096,
+      "tolerance_mismatch_count": 3871,
+      "max_abs_error_finite_pairs": 0.049358248710632324,
+      "rmse_finite_pairs": 0.015029646418358609,
+      "finite": true,
+      "finite_pairs": 4096,
+      "nonfinite_reference": 0,
+      "nonfinite_candidate": 0
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "source": "Independent read of principal campaign saved reports",
+  "reports": [
+    {
+      "name": "head-q8-cpuarith",
+      "variant": "inline CPU-compatible Q8 output head, SHARED flag absent",
+      "passed": true,
+      "criteria": {
+        "bitexact_f32": false,
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "ordered_routes_exact": true,
+        "tokens_exact": true,
+        "all_values_finite": true
+      },
+      "reference_run": {
+        "threads": 4,
+        "gpu_layers": 0,
+        "count": 4,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 0,
+        "forced": false
+      },
+      "candidate_run": {
+        "threads": 10,
+        "gpu_layers": 0,
+        "count": 4,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 0,
+        "policy": "head-only",
+        "op_offload": false,
+        "offload_kqv": false,
+        "forced": true
+      },
+      "full_logits_summary": {
+        "compared": 4,
+        "elements": 619520,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 619520,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 168,
+          "elements": 3024,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 3024,
+          "passed": true
+        },
+        "router": {
+          "compared": 168,
+          "elements": 108864,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 108864,
+          "passed": true
+        },
+        "kda": {
+          "compared": 272,
+          "elements": 5013504,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 5013504,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 4,
+          "elements": 619520,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 619520,
+          "passed": true
+        }
+      },
+      "forced_sequence_identical": true,
+      "ordered_tokens_exact": true,
+      "environment": {
+        "AIRLLM_MMAP_DEMAND": "1",
+        "AIRLLM_EXPERT_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+        "AIRLLM_GPU_CACHE_MIB": "0",
+        "AIRLLM_METAL_Q8_CPU_ARITH": "1"
+      },
+      "guard": {
+        "status": "completed",
+        "returncode": 0,
+        "guard_violation": null,
+        "peak_sampled_rss_bytes": 5881528320,
+        "peak_system_swap_growth_bytes": 985661
+      },
+      "source_sha256": {
+        "comparison.json": "dd497b6f6dd238f1063147b6c92aad5ae94da8f229767846ad22569d9c8ba51b",
+        "guard.json": "2a58c01bdabd33a704b004829df8db088e1155fdd877547ef628e3aff726ae5b",
+        "experiment.json": "bfb6b9858ecd74daeaf61a1cd9d5efcf7004bbdcfab1a3f41f3d3fb1293cc6ed"
+      },
+      "scope": "Full checkpoint execution; captured tensors/logits only; diagnostic elapsed is not decode throughput; no EOS claim"
+    },
+    {
+      "name": "head-q8-cpuarith16",
+      "variant": "inline CPU-compatible Q8 output head, SHARED flag absent",
+      "passed": true,
+      "criteria": {
+        "bitexact_f32": false,
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "ordered_routes_exact": true,
+        "tokens_exact": true,
+        "all_values_finite": true
+      },
+      "reference_run": {
+        "threads": 10,
+        "gpu_layers": 0,
+        "count": 16,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 0,
+        "policy": "cpu",
+        "op_offload": false,
+        "offload_kqv": false,
+        "forced": false
+      },
+      "candidate_run": {
+        "threads": 10,
+        "gpu_layers": 0,
+        "count": 16,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 0,
+        "policy": "head-only",
+        "op_offload": false,
+        "offload_kqv": false,
+        "forced": true
+      },
+      "full_logits_summary": {
+        "compared": 16,
+        "elements": 2478080,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2478080,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 672,
+          "elements": 7056,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 7056,
+          "passed": true
+        },
+        "router": {
+          "compared": 672,
+          "elements": 254016,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 254016,
+          "passed": true
+        },
+        "kda": {
+          "compared": 1088,
+          "elements": 11698176,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 11698176,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 16,
+          "elements": 2478080,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 2478080,
+          "passed": true
+        }
+      },
+      "forced_sequence_identical": true,
+      "ordered_tokens_exact": true,
+      "environment": {
+        "AIRLLM_MMAP_DEMAND": "1",
+        "AIRLLM_EXPERT_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+        "AIRLLM_GPU_CACHE_MIB": "0",
+        "AIRLLM_METAL_Q8_CPU_ARITH": "1"
+      },
+      "guard": {
+        "status": "completed",
+        "returncode": 0,
+        "guard_violation": null,
+        "peak_sampled_rss_bytes": 6141394944,
+        "peak_system_swap_growth_bytes": 0
+      },
+      "source_sha256": {
+        "comparison.json": "b8f1e8f2fe0f8a76fa87aedd082488e8ec6f1535c20d99e8f0dcf9505da73bf1",
+        "guard.json": "06a435bcd797c097554d633259f6b05eb11ff75dde79ef3881cb27dca787461a",
+        "experiment.json": "5c0e9463aefac562ae3a9ce5d16a265a223b1a9850b66863e9bf2881c34bdaef"
+      },
+      "scope": "Full checkpoint execution; captured tensors/logits only; diagnostic elapsed is not decode throughput; no EOS claim"
+    }
+  ]
+}

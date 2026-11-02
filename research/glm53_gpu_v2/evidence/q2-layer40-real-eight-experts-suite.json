@@ -1,0 +1,931 @@
+{
+  "schema": 1,
+  "scope": "one original Q2_K selected expert projection; no GLM decode gain claim",
+  "measured_at_utc": "2026-11-02T19:21:22.620557+00:00",
+  "mlx_version": "0.32.4",
+  "experts_in_supplied_order": [
+    141,
+    183,
+    116,
+    112,
+    154,
+    156,
+    21,
+    98
+  ],
+  "width": 4096,
+  "rows": 2048,
+  "metadata": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 141,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85557551296,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "b7ff9426e2e296bee50374f4d07f6d11016d78eec8fe311d08d6a652bfcce91a"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 183,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85673156800,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "ff3e63ff8f222270c11eb94b62bb4dd3f6154f7212e09a35b9ca86b478f200d7"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 116,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85488738496,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "d50d75abdba39bc45f22b849befcaed7b7fefc604f1a1f58bcce66eaf40fdbc7"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 112,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85477728448,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "5ff702c2c3536be1ef1363f1b8672e39715dd6684460d75c5dcd07998939ebfc"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 154,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85593333952,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "24ed2e94e15d964dc732f0369d09b75d7b8cbe62de7b1fcd7389ad128301e51a"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 156,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85598838976,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "d30439ab0543bbe15f4e6ef469bfec7363ca2afb39dfffc2b53ee4d98a61f21a"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 21,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85227249856,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "244af336906804842c6989f3fb54049654a8f6dadbd201f33fbefc7072c2a12b"
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "file_bytes": 110017922752,
+      "tensor": "blk.40.ffn_gate_exps.weight",
+      "dims": [
+        4096,
+        2048,
+        288
+      ],
+      "expert": 98,
+      "first_row": 0,
+      "rows": 2048,
+      "absolute_offset": 85439193280,
+      "selected_bytes": 2752512,
+      "sha256_selected_bytes": "07f833232609e0e65c9c37d8c7b220735891e48f915b5c24edc937bc3e8872a8"
+    }
+  ],
+  "activation": {
+    "kind": "provided capture",
+    "file": "activation-ffn-norm40-step1.npy",
+    "sha256_file": "4b5bc409f720b62a5915f887edbb16169eb62522b9d58cdebf421efc4349eb4d",
+    "capture_provenance": {
+      "kind": "actual native CPU model capture",
+      "tensor": "ffn_norm-40",
+      "step": 1,
+      "shape": [
+        4096,
+        1,
+        1,
+        1
+      ],
+      "file": "1-385.bin",
+      "sha256_binary": "e4bc46ed7f4feb1b83bcc3699b13e42dd37c7f37a419697c5a8aec6de4a12465",
+      "routes_tensor": "ffn_moe_topk-40",
+      "routes_file": "1-391.bin",
+      "ordered_expert_ids": [
+        141,
+        183,
+        116,
+        112,
+        154,
+        156,
+        21,
+        98
+      ],
+      "sha256_routes_binary": "40434487c88173d9fd862d390ec4d0bd861414fb425ef5589928cf7633eed845",
+      "sha256_index": "89b672c2f15679d80eff50620792cedeba88950dc6b7179c7f8bd7b9407dd33a"
+    }
+  },
+  "activation_sha256": "e4bc46ed7f4feb1b83bcc3699b13e42dd37c7f37a419697c5a8aec6de4a12465",
+  "q2_packed_sha256": "564ee769f8d424fbfc90157bcf6fdeb5824b459e4a177829b231a62dd49ca929",
+  "known_payload_bytes": 46563840,
+  "preparation": {
+    "metadata_and_selected_file_read_seconds": 0.04603366700030165,
+    "packed_import_sync_seconds": 0.0031138750000536675,
+    "activation_import_quantize_sync_seconds": 0.0033857919997899444
+  },
+  "q8_activation_values_exact": true,
+  "q8_activation_scales_vs_native": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 16
+  },
+  "native_adapter_vs_cpu1_cpu10": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 16384
+  },
+  "native_adapter_vs_independent_dot_sample": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 128
+  },
+  "correctness": {
+    "serial32": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "rowtile2": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "rowtile4": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "blocks4": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "blocks8": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "twopass": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "cachedbytes": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "cachedbytes_tile2": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    },
+    "cachedbytes_tile4": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 16384
+    }
+  },
+  "wall_clock": "perf_counter around execution followed by mx.synchronize",
+  "wall_timings": {
+    "serial32": {
+      "seconds": [
+        0.000729291999959969,
+        0.000722541999493842,
+        0.000713458000063838,
+        0.0007373329999609268,
+        0.00083520799944381,
+        0.0008338750003531459,
+        0.0011234580006203032
+      ],
+      "median_seconds": 0.0007373329999609268,
+      "min_seconds": 0.000713458000063838,
+      "max_seconds": 0.0011234580006203032
+    },
+    "rowtile2": {
+      "seconds": [
+        0.0006908329996804241,
+        0.0006756250004400499,
+        0.0006805829998484114,
+        0.0010865829999602283,
+        0.0008090829996945104,
+        0.0006653750006080372,
+        0.0007567499997094274
+      ],
+      "median_seconds": 0.0006908329996804241,
+      "min_seconds": 0.0006653750006080372,
+      "max_seconds": 0.0010865829999602283
+    },
+    "rowtile4": {
+      "seconds": [
+        0.0006718330005242024,
+        0.0006729999995513936,
+        0.0006841670001449529,
+        0.000781499999902735,
+        0.0007553330005976022,
+        0.0007675420001760358,
+        0.0006400840002243058
+      ],
+      "median_seconds": 0.0006841670001449529,
+      "min_seconds": 0.0006400840002243058,
+      "max_seconds": 0.000781499999902735
+    },
+    "blocks4": {
+      "seconds": [
+        0.0011817920003522886,
+        0.001173457999357197,
+        0.001186209000479721,
+        0.0011541659996510134,
+        0.0014664999998785788,
+        0.0011795830005212338,
+        0.0011939169999095611
+      ],
+      "median_seconds": 0.0011817920003522886,
+      "min_seconds": 0.0011541659996510134,
+      "max_seconds": 0.0014664999998785788
+    },
+    "blocks8": {
+      "seconds": [
+        0.0011276660006842576,
+        0.0011253749999013962,
+        0.0011251659998379182,
+        0.0011696250003296882,
+        0.0011754590004784404,
+        0.001170334000562434,
+        0.0012081659997420502
+      ],
+      "median_seconds": 0.0011696250003296882,
+      "min_seconds": 0.0011251659998379182,
+      "max_seconds": 0.0012081659997420502
+    },
+    "twopass": {
+      "seconds": [
+        0.0016653330003464362,
+        0.0016431670001111343,
+        0.0014777079995837994,
+        0.0015129169996725977,
+        0.0014605830001528375,
+        0.0014757500002815505,
+        0.001525374999800988
+      ],
+      "median_seconds": 0.0015129169996725977,
+      "min_seconds": 0.0014605830001528375,
+      "max_seconds": 0.0016653330003464362
+    },
+    "cachedbytes": {
+      "seconds": [
+        0.0008047080000324058,
+        0.0007717919997958234,
+        0.0007621670001753955,
+        0.0008381670004382613,
+        0.0007928750001156004,
+        0.0008082500007731142,
+        0.0008539170003132313
+      ],
+      "median_seconds": 0.0008047080000324058,
+      "min_seconds": 0.0007621670001753955,
+      "max_seconds": 0.0008539170003132313
+    },
+    "cachedbytes_tile2": {
+      "seconds": [
+        0.0009459169996262062,
+        0.0006823749999966822,
+        0.0009194999993269448,
+        0.0007800420007697539,
+        0.0006994589994064881,
+        0.000818874999822583,
+        0.0008153329999913694
+      ],
+      "median_seconds": 0.0008153329999913694,
+      "min_seconds": 0.0006823749999966822,
+      "max_seconds": 0.0009459169996262062
+    },
+    "cachedbytes_tile4": {
+      "seconds": [
+        0.0006483340002887417,
+        0.0006707500006086775,
+        0.0006559160001415876,
+        0.0007548749999841675,
+        0.0006573339996975847,
+        0.000752416999603156,
+        0.0010877499998969142
+      ],
+      "median_seconds": 0.0006707500006086775,
+      "min_seconds": 0.0006483340002887417,
+      "max_seconds": 0.0010877499998969142
+    },
+    "cpu1": {
+      "seconds": [
+        0.0019524999997884152,
+        0.0016953750000539003,
+        0.001690375000180211,
+        0.0014529580002999865,
+        0.0014380829998117406,
+        0.0015047500000946457,
+        0.0014435000002777088
+      ],
+      "median_seconds": 0.0015047500000946457,
+      "min_seconds": 0.0014380829998117406,
+      "max_seconds": 0.0019524999997884152
+    },
+    "cpu10": {
+      "seconds": [
+        0.0006644169998253346,
+        0.0006199999997988925,
+        0.0005763750004916801,
+        0.000602041999627545,
+        0.000767374999668391,
+        0.0008206250004150206,
+        0.000811957999758306
+      ],
+      "median_seconds": 0.0006644169998253346,
+      "min_seconds": 0.0005763750004916801,
+      "max_seconds": 0.0008206250004150206
+    }
+  },
+  "randomized_repetition_order": [
+    [
+      "twopass",
+      "cpu1",
+      "cachedbytes_tile2",
+      "rowtile4",
+      "cpu10",
+      "cachedbytes",
+      "cachedbytes_tile4",
+      "blocks8",
+      "blocks4",
+      "rowtile2",
+      "serial32"
+    ],
+    [
+      "rowtile4",
+      "blocks4",
+      "blocks8",
+      "cachedbytes",
+      "serial32",
+      "cachedbytes_tile2",
+      "cpu10",
+      "cpu1",
+      "twopass",
+      "cachedbytes_tile4",
+      "rowtile2"
+    ],
+    [
+      "cpu10",
+      "blocks4",
+      "cachedbytes",
+      "serial32",
+      "twopass",
+      "rowtile4",
+      "rowtile2",
+      "cachedbytes_tile4",
+      "cpu1",
+      "cachedbytes_tile2",
+      "blocks8"
+    ],
+    [
+      "blocks8",
+      "blocks4",
+      "cpu1",
+      "rowtile2",
+      "cachedbytes",
+      "cpu10",
+      "cachedbytes_tile2",
+      "twopass",
+      "rowtile4",
+      "serial32",
+      "cachedbytes_tile4"
+    ],
+    [
+      "serial32",
+      "cachedbytes_tile4",
+      "cachedbytes",
+      "blocks8",
+      "rowtile4",
+      "cpu1",
+      "blocks4",
+      "twopass",
+      "rowtile2",
+      "cpu10",
+      "cachedbytes_tile2"
+    ],
+    [
+      "blocks4",
+      "rowtile2",
+      "cachedbytes_tile4",
+      "rowtile4",
+      "twopass",
+      "cpu10",
+      "cachedbytes",
+      "cachedbytes_tile2",
+      "blocks8",
+      "serial32",
+      "cpu1"
+    ],
+    [
+      "cachedbytes_tile4",
+      "cachedbytes",
+      "blocks4",
+      "blocks8",
+      "cpu1",
+      "serial32",
+      "rowtile4",
+      "cpu10",
+      "twopass",
+      "rowtile2",
+      "cachedbytes_tile2"
+    ]
+  ],
+  "metal_device_timings": {
+    "cachedbytes": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.000778167,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0005708749995392282,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.000807291,
+        0.0007355,
+        0.000819,
+        0.000778167,
+        0.000794875,
+        0.000767041,
+        0.000735667
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0005708749995392282,
+        0.0005709583329007728,
+        0.0005707500004064059,
+        0.0005707499994969112,
+        0.0005711250005333568,
+        0.0005711249996238621,
+        0.0005707499994969112
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "rowtile2": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.00073325,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0005117500004416797,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.000762042,
+        0.000738375,
+        0.00073325,
+        0.000726833,
+        0.000736041,
+        0.00067125,
+        0.000713959
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0005178749997867271,
+        0.0005113750003147288,
+        0.0005117500004416797,
+        0.0005117500004416797,
+        0.0005112499993629172,
+        0.0005116249994898681,
+        0.0005119166662552743
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "serial32": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.000747833,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0005513749993042438,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.000723916,
+        0.000793625,
+        0.000741541,
+        0.000747833,
+        0.000743125,
+        0.000788292,
+        0.000762833
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0005516249993888778,
+        0.0005511250001291046,
+        0.0005513750002137385,
+        0.0005516250002983725,
+        0.0005510416658580652,
+        0.0005513749993042438,
+        0.0005512499992619269
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "blocks8": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.0011235,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0009456249999857391,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.001136292,
+        0.001123916,
+        0.001123042,
+        0.001107958,
+        0.0011235,
+        0.001183917,
+        0.001114625
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0009457083333472838,
+        0.0009454999999434222,
+        0.0009463333335588686,
+        0.0009456666666665114,
+        0.0009453749999011052,
+        0.0009453749999011052,
+        0.0009456249999857391
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "cachedbytes_tile2": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.000707542,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0005127500007802155,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.000735,
+        0.000736625,
+        0.000701833,
+        0.000683167,
+        0.0006945,
+        0.000716708,
+        0.000707542
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0005127499998707208,
+        0.0005128749999130378,
+        0.000513041666636127,
+        0.0005127499998707208,
+        0.0005127500007802155,
+        0.0005125416664668592,
+        0.0005128749999130378
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "blocks4": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.001157,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.000975750000179687,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.001152625,
+        0.001133875,
+        0.001168958,
+        0.001157,
+        0.001153125,
+        0.00117175,
+        0.001271667
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0009762500003489549,
+        0.0009752500000104192,
+        0.0009752500000104192,
+        0.000975750000179687,
+        0.0009761249993971433,
+        0.000975750000179687,
+        0.000987916666417732
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "cachedbytes_tile4": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.000685417,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0004882499997620471,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.000685417,
+        0.000714834,
+        0.000710791,
+        0.0007325,
+        0.000685,
+        0.000665625,
+        0.000652625
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0004889583333351766,
+        0.000488749999931315,
+        0.0004875416670984123,
+        0.000488374999804364,
+        0.0004881250006292248,
+        0.00048766666623123456,
+        0.0004882499997620471
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "rowtile4": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.000679542,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.00048816666730999714,
+      "stages_per_command": 1,
+      "command_wall_seconds": [
+        0.00072975,
+        0.000679542,
+        0.000657083,
+        0.000662208,
+        0.000634,
+        0.000708916,
+        0.000693417
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.00048800000058690784,
+        0.00048708333270042203,
+        0.00048816666730999714,
+        0.0004882499997620471,
+        0.0004888333332928596,
+        0.0004866250001214212,
+        0.000488624999888998
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    },
+    "twopass": {
+      "device": "Apple M5",
+      "payload_bytes": 24711232,
+      "median_command_wall_seconds": 0.001382542,
+      "warmup_commands": 4,
+      "median_gpu_seconds": 0.0011835833329314482,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.001382542,
+        0.001445167,
+        0.001403083,
+        0.001370458,
+        0.00138425,
+        0.00135375,
+        0.001365667
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0011835000004793983,
+        0.0011850000000777072,
+        0.001182041666652367,
+        0.0011835833329314482,
+        0.0011856249993797974,
+        0.001183166666123725,
+        0.0011843749998661224
+      ],
+      "vs_native_arm": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 16384
+      }
+    }
+  },
+  "metal_suite_order": [
+    [
+      "serial32",
+      "rowtile2",
+      "blocks8",
+      "cachedbytes",
+      "twopass",
+      "blocks4",
+      "cachedbytes_tile2",
+      "rowtile4",
+      "cachedbytes_tile4"
+    ],
+    [
+      "cachedbytes_tile4",
+      "blocks8",
+      "serial32",
+      "blocks4",
+      "twopass",
+      "rowtile4",
+      "cachedbytes_tile2",
+      "rowtile2",
+      "cachedbytes"
+    ],
+    [
+      "twopass",
+      "cachedbytes_tile4",
+      "rowtile2",
+      "rowtile4",
+      "serial32",
+      "cachedbytes",
+      "cachedbytes_tile2",
+      "blocks4",
+      "blocks8"
+    ],
+    [
+      "serial32",
+      "rowtile4",
+      "cachedbytes_tile4",
+      "twopass",
+      "cachedbytes",
+      "cachedbytes_tile2",
+      "blocks4",
+      "rowtile2",
+      "blocks8"
+    ],
+    [
+      "rowtile2",
+      "cachedbytes_tile2",
+      "blocks4",
+      "blocks8",
+      "twopass",
+      "cachedbytes",
+      "cachedbytes_tile4",
+      "rowtile4",
+      "serial32"
+    ],
+    [
+      "blocks8",
+      "blocks4",
+      "cachedbytes_tile2",
+      "cachedbytes_tile4",
+      "cachedbytes",
+      "rowtile2",
+      "serial32",
+      "twopass",
+      "rowtile4"
+    ],
+    [
+      "twopass",
+      "blocks4",
+      "cachedbytes_tile4",
+      "serial32",
+      "blocks8",
+      "rowtile4",
+      "cachedbytes_tile2",
+      "cachedbytes",
+      "rowtile2"
+    ]
+  ],
+  "metal_suite_source_sha256": "e900e52acfdf62f79f93e48d4e2b4d9abf2a97ed0a324c9694a5566d96157653",
+  "acceptance": {
+    "finite_bit_identical_all_variants": true
+  },
+  "mlx_peak_bytes": 24252480,
+  "process_peak_rss_bytes": 128188416,
+  "libraries_sha256": {
+    "libggml-base.dylib": "0be78cecf09f72c7fb284b75c6611eb0272f76a5a9f64e943d6c8233473bd6e4",
+    "libggml-cpu.dylib": "f2b8a10b4465f04d9234229d1d792779a568bdf5613fe539b78b5183d00b0be4"
+  },
+  "timer_sha256": "eb9b8d0377165f2e70e0ef95d0745db790f78cccab2038a8c4f89ef0e947a5ce",
+  "cpu_helper_sha256": "82d9c21b0e74a812041ebc285f34857588024811a3a833c652a48effc7c9f943",
+  "limits": [
+    "prepared warm payload and prequantized activations are reused across repetitions",
+    "CPU1/10 use persistent grouped native adapter, not production GGML scheduler",
+    "GPU timestamps include command stages only; imports/quantization reported separately",
+    "MLX wall timings include dispatch, allocation and synchronization; not isolated GPU time",
+    "no true cold-SSD benchmark; no external SSD attribution; no full-model routes/logits certification"
+  ]
+}

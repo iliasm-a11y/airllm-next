@@ -1,0 +1,62 @@
+usage: python -m research.glm53_gpu_v2.benchmark_native [-h] --binary BINARY
+                                                        [--model MODEL]
+                                                        --output OUTPUT
+                                                        [--prompt PROMPT]
+                                                        [--tokens TOKENS]
+                                                        [--context CONTEXT]
+                                                        [--batch BATCH]
+                                                        [--threads THREADS]
+                                                        [--gpu-layers GPU_LAYERS]
+                                                        [--cpu-moe]
+                                                        [--moe-cache-mib MOE_CACHE_MIB]
+                                                        [--repeats REPEATS]
+                                                        [--n-probs N_PROBS]
+                                                        [--timeout TIMEOUT]
+                                                        [--max-rss-gib MAX_RSS_GIB]
+                                                        [--interposer INTERPOSER]
+                                                        [--mmap-demand]
+                                                        [--expert-prefetch]
+                                                        [--dense-prefetch]
+                                                        [--head-only]
+                                                        [--q8-cpu-arith]
+                                                        [--metal-timing]
+                                                        [--max-swap-mib MAX_SWAP_MIB]
+                                                        [--weights-only]
+                                                        [--layer-local-hc]
+                                                        [--cache-lookup-split]
+                                                        [extra ...]
+
+Bounded GLM native benchmark; counters describe their actual measurement
+scope.
+
+positional arguments:
+  extra
+
+options:
+  -h, --help            show this help message and exit
+  --binary BINARY
+  --model MODEL
+  --output OUTPUT
+  --prompt PROMPT
+  --tokens TOKENS
+  --context CONTEXT
+  --batch BATCH
+  --threads THREADS
+  --gpu-layers GPU_LAYERS
+  --cpu-moe
+  --moe-cache-mib MOE_CACHE_MIB
+  --repeats REPEATS
+  --n-probs N_PROBS
+  --timeout TIMEOUT
+  --max-rss-gib MAX_RSS_GIB
+  --interposer INTERPOSER
+  --mmap-demand
+  --expert-prefetch
+  --dense-prefetch
+  --head-only
+  --q8-cpu-arith
+  --metal-timing
+  --max-swap-mib MAX_SWAP_MIB
+  --weights-only        Disable opportunistic GPU ops and KV offload
+  --layer-local-hc      Experimental patched GLM HC placement
+  --cache-lookup-split  Experimental patched MoE dependency split
