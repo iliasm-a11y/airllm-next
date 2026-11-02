@@ -67,6 +67,12 @@ class AutoModel:
 
     @classmethod
     def from_pretrained(cls, pretrained_model_name_or_path, *inputs, **kwargs):
+        if kwargs.get('backend') == 'next-glm-native':
+            kwargs.pop('backend')
+            if inputs:
+                raise TypeError('Native GLM accepts keyword options after the local checkpoint path')
+            from .nextgen.glm_native import NativeGlmModel
+            return NativeGlmModel(pretrained_model_name_or_path, **kwargs)
         if kwargs.get('backend') == 'next-qwen-experimental':
             kwargs.pop('backend')
             if inputs: raise TypeError('Experimental Next Qwen accepts keyword options after the local checkpoint path')

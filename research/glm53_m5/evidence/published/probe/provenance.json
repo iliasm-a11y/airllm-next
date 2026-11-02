@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "runtime_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "model_revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "initial_probe_source": {
+    "file": "native_fidelity_initial.cpp.gz",
+    "sha256": "584f40df1367ab164fb3334f78f01de3a7d99afdf412b076db755c9d31faea30",
+    "bytes": 9487,
+    "scope": "Archived initial source associated with stock-cpu4 diagnostic/profile; predates added failure checks."
+  },
+  "final_probe_source": {
+    "file": "native_fidelity_final.cpp.gz",
+    "sha256": "a488d3703c33ee2b36a3c30c5b31ec1cd392b5a62012515b926192ae58c3e030",
+    "bytes": 10316
+  },
+  "sources_byte_identical": false,
+  "source_difference_scope": "The final source adds failure propagation, stream-write exceptions, null/finite-logit checks and validation of the before-rusage call. These are diagnostic guards, not changes to the native model graph. Source identity, linked runtime identity and observed numerical parity are distinct claims.",
+  "guard_binary_identities_as_recorded": {
+    "fidelity-final-cpu10.guard.json": {
+      "binary_sha256": "870cf12a2c71a3a9e473d8f0ebc5e71d7f5c8645c6ab770ab530cddb2185248d",
+      "started_at": "2026-11-02T15:43:49.777767+00:00",
+      "status": "completed",
+      "environment_knobs_as_recorded": {
+        "AIRLLM_MMAP_DEMAND": "1"
+      }
+    },
+    "fidelity-hybrid6.guard.json": {
+      "binary_sha256": "aa3aaac323d6d07c75ec1cb786ccdb4d7f7eff9702815641200c8018a3526f88",
+      "started_at": "2026-11-02T15:31:41.077568+00:00",
+      "status": "completed",
+      "environment_knobs_as_recorded": {
+        "AIRLLM_MMAP_DEMAND": "1"
+      }
+    },
+    "fidelity-stock-cpu4.guard.json": {
+      "binary_sha256": "36ee3faee0ca074e00b0ef426b1099dcddd1e1767e1d6ddeee5abad02c712710",
+      "started_at": "2026-11-02T15:08:50.903042+00:00",
+      "status": "completed",
+      "environment_knobs_as_recorded": {}
+    },
+    "fidelity-tuned-cpu10.guard.json": {
+      "binary_sha256": "aa3aaac323d6d07c75ec1cb786ccdb4d7f7eff9702815641200c8018a3526f88",
+      "started_at": "2026-11-02T15:30:10.286392+00:00",
+      "status": "completed",
+      "environment_knobs_as_recorded": {
+        "AIRLLM_MMAP_DEMAND": "1"
+      }
+    }
+  },
+  "value_comparisons": [
+    {
+      "file": "fidelity-cpu10-comparison.json",
+      "passed": true,
+      "mode": "cpu",
+      "reference_steps": 4,
+      "candidate_steps": 4
+    },
+    {
+      "file": "fidelity-final-cpu10-comparison.json",
+      "passed": true,
+      "mode": "cpu",
+      "reference_steps": 4,
+      "candidate_steps": 4
+    },
+    {
+      "file": "fidelity-hybrid6-comparison.json",
+      "passed": false,
+      "mode": "metal",
+      "reference_steps": 4,
+      "candidate_steps": 4
+    }
+  ],
+  "runtime_linkage_limit": "A hash of a diagnostic executable alone does not establish the identity of its dynamically linked libraries. Retain build/runtime manifests and configuration with these sources.",
+  "running_snapshots_in_local_archive": []
+}

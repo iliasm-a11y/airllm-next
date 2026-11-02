@@ -1,0 +1,57 @@
+--- a/ggml/src/ggml-cpu/ggml-cpu.c
++++ b/ggml/src/ggml-cpu/ggml-cpu.c
+@@ -211,6 +211,7 @@
+ 
+ #if defined(__APPLE__)
+ #include <unistd.h>
++#include <sys/mman.h>
+ #include <mach/mach.h>
+ #include <TargetConditionals.h>
+ #endif
+@@ -1171,6 +1172,34 @@
+ 
+ // ggml_compute_forward_mul_mat
+ 
++#if defined(__APPLE__)
++static void ggml_cpu_prefetch_dense(const struct ggml_tensor * src0) {
++    const char * enabled = getenv("AIRLLM_DENSE_PREFETCH");
++    if (!enabled || strcmp(enabled, "1") != 0 || src0->type != GGML_TYPE_Q8_0 ||
++            !src0->buffer || ggml_backend_buffer_get_usage(src0->buffer) != GGML_BACKEND_BUFFER_USAGE_WEIGHTS ||
++            !src0->data || !ggml_is_contiguous(src0)) {
++        return;
++    }
++    const long page_size_long = sysconf(_SC_PAGESIZE);
++    if (page_size_long <= 0) {
++        return;
++    }
++    const uintptr_t page_size = (uintptr_t) page_size_long;
++    const uintptr_t start = (uintptr_t) src0->data;
++    const size_t length = ggml_nbytes(src0);
++    if (length == 0 || length > UINTPTR_MAX - start) {
++        return;
++    }
++    const uintptr_t aligned = start - start%page_size;
++    const uintptr_t end = start + length;
++    const uintptr_t padding = (page_size - end%page_size)%page_size;
++    if (padding > UINTPTR_MAX - end) {
++        return;
++    }
++    (void) posix_madvise((void *) aligned, (size_t) (end + padding - aligned), POSIX_MADV_WILLNEED);
++}
++#endif
++
+ static void ggml_compute_forward_mul_mat_one_chunk(
+     const struct ggml_compute_params * params,
+     struct ggml_tensor * dst,
+@@ -1386,6 +1415,11 @@
+     }
+ 
+     if (ith == 0) {
++#if defined(__APPLE__)
++        if (ne11 == 1) {
++            ggml_cpu_prefetch_dense(src0);
++        }
++#endif
+         // Every thread starts at ith, so the first unprocessed chunk is nth.  This save a bit of coordination right at the start.
+         atomic_store_explicit(&params->threadpool->current_chunk, nth, memory_order_relaxed);
+     }

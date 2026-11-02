@@ -1,0 +1,20 @@
+--- a/ggml/src/ggml-cpu/ggml-cpu.c
++++ b/ggml/src/ggml-cpu/ggml-cpu.c
+@@ -1416,7 +1416,16 @@
+ 
+     if (ith == 0) {
+ #if defined(__APPLE__)
+-        if (ne11 == 1) {
++        const char * columns = getenv("AIRLLM_DENSE_PREFETCH_MAX_COLS");
++        int64_t max_columns = 1;
++        if (columns && strcmp(columns, "2") == 0) {
++            max_columns = 2;
++        } else if (columns && strcmp(columns, "4") == 0) {
++            max_columns = 4;
++        } else if (columns && strcmp(columns, "8") == 0) {
++            max_columns = 8;
++        }
++        if (ne11 >= 1 && ne11 <= max_columns) {
+             ggml_cpu_prefetch_dense(src0);
+         }
+ #endif
