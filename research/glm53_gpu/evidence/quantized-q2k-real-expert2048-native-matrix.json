@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "scope": "selected Q2_K rows; seeded synthetic activation; not GLM decode",
+  "measured_at_utc": "2026-11-02T18:44:20.375830+00:00",
+  "metadata": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "file_bytes": 110017922752,
+    "tensor": "blk.3.ffn_gate_exps.weight",
+    "dims": [
+      4096,
+      2048,
+      288
+    ],
+    "expert": 0,
+    "first_row": 0,
+    "rows": 2048,
+    "absolute_offset": 54382008000,
+    "selected_bytes": 2752512,
+    "sha256_selected_bytes": "29272eb80f8263f492e3056beea89edd29d75b1c44715d7312ef65a381a2d9b9"
+  },
+  "mlx_version": "0.32.4",
+  "activation_seed": 5305,
+  "q8_values_exact": true,
+  "q8_scales": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 16
+  },
+  "decode_vs_native": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 131072
+  },
+  "cpu_compatible_vs_native_arm_dot": {
+    "finite": true,
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 2048
+  },
+  "float_vs_native_arm_dot": {
+    "finite": true,
+    "bit_identical": false,
+    "max_abs": 0.031681329011917114,
+    "rmse": 0.009196544910611415,
+    "elements": 2048
+  },
+  "float_vs_native_dequant_blas": {
+    "finite": true,
+    "bit_identical": false,
+    "max_abs": 7.152557373046875e-07,
+    "rmse": 2.853709753631774e-07,
+    "elements": 32
+  },
+  "native_dequant_validation_rows": 32,
+  "native_libraries_sha256": {
+    "libggml-base.dylib": "0be78cecf09f72c7fb284b75c6611eb0272f76a5a9f64e943d6c8233473bd6e4",
+    "libggml-cpu.dylib": "f2b8a10b4465f04d9234229d1d792779a568bdf5613fe539b78b5183d00b0be4"
+  },
+  "known_payload_bytes": 5558336,
+  "mlx_peak_bytes": 2805952,
+  "process_peak_rss_bytes": 69140480,
+  "timing_limits": [
+    "warm prepared matrix",
+    "MLX calls include activation import and synchronization",
+    "native CPU calls are one dot per row through ctypes, one caller thread",
+    "other application/compilation workload and macOS file cache are uncontrolled",
+    "not CPU10 whole-model latency; no end-to-end speedup inferred"
+  ],
+  "native_cpu_dot": {
+    "seconds": [
+      0.0064423339999848395,
+      0.005155458999979601,
+      0.005536291999760579,
+      0.012773999999808439,
+      0.009981874999994034
+    ],
+    "median_seconds": 0.0064423339999848395
+  },
+  "gpu_cpu_compatible": {
+    "seconds": [
+      0.0015400000002046,
+      0.0013089589997434814,
+      0.0012486659998103278,
+      0.0013218330000199785,
+      0.0011971670001003076
+    ],
+    "median_seconds": 0.0013089589997434814
+  },
+  "gpu_float": {
+    "seconds": [
+      0.001408292000178335,
+      0.0010385840000708413,
+      0.0009841249998316925,
+      0.0009769590001269535,
+      0.0012102089999643795
+    ],
+    "median_seconds": 0.0010385840000708413
+  },
+  "native_matrix_helper_sha256": "4ae7edd8d75b26ff764d19b05f4f9607135ac21d587280f17bac3e17eecabf2e",
+  "native_matrix_validation": {
+    "1": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 2048
+    },
+    "10": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 2048
+    }
+  },
+  "native_matrix_timing_limits": [
+    "one ctypes call dispatches whole matrix; no per-row Python overhead",
+    "Q8_K activation quantization included; native dot arithmetic unchanged",
+    "CPU10 uses persistent10-worker pool; creation excluded, dispatch included",
+    "component only; different scheduler and operation shape from whole-model decode"
+  ],
+  "native_matrix_cpu1": {
+    "seconds": [
+      0.0005474170002344181,
+      0.0004950830002599105,
+      0.00045387500040305895,
+      0.0004353330000412825,
+      0.00045079200026520994
+    ],
+    "median_seconds": 0.00045387500040305895
+  },
+  "native_matrix_cpu10": {
+    "seconds": [
+      0.0019994999997834384,
+      0.0008809579999251582,
+      0.000552791999780311,
+      0.0005442499996206607,
+      0.0005332089999683376
+    ],
+    "median_seconds": 0.000552791999780311
+  },
+  "acceptance": {
+    "criterion": "finite bit-identical Q8_K activations, original Q2_K decode and CPU-compatible ARM dot",
+    "passed": true
+  }
+}

@@ -1,0 +1,52 @@
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -17,6 +17,7 @@
+ #include <cinttypes>
+ #include <cmath>
+ #include <cstring>
++#include <cstdlib>
+ #include <limits>
+ #include <stdexcept>
+ #include <string>
+@@ -333,6 +334,18 @@
+     cparams.fused_dsv4_hc_comb = true;
+     cparams.fused_dsv4_hc_post = true;
+     cparams.auto_fhc           = true;
++
++    if (model.arch == LLM_ARCH_GLM5_NEXT) {
++        const char * hc_post = std::getenv("AIRLLM_GLM_HC_POST");
++        if (hc_post && std::strcmp(hc_post, "0") == 0) {
++            cparams.fused_dsv4_hc_post = false;
++            LLAMA_LOG_WARN("%s: experimental GLM HC post fusion disabled\n", __func__);
++        }
++        const char * local_hc = std::getenv("AIRLLM_GLM_LAYER_LOCAL_HC");
++        if (local_hc && std::strcmp(local_hc, "1") == 0) {
++            LLAMA_LOG_WARN("%s: experimental GLM layer-local HC placement enabled\n", __func__);
++        }
++    }
+
+     // only the indexer models build this mask, skip the probe for the others
+     cparams.fused_top_k_mask = true;
+@@ -2857,7 +2870,9 @@
+ }
+
+ llm_graph_cb llama_context::graph_get_cb() const {
+-    return [&](const llama_ubatch & ubatch, ggml_tensor * cur, const char * name, int il) {
++    const char * local_hc = std::getenv("AIRLLM_GLM_LAYER_LOCAL_HC");
++    const bool layer_local_hc = model.arch == LLM_ARCH_GLM5_NEXT && local_hc && std::strcmp(local_hc, "1") == 0;
++    return [&, layer_local_hc](const llama_ubatch & ubatch, ggml_tensor * cur, const char * name, int il) {
+         if (il >= 0) {
+             ggml_format_name(cur, "%s-%d", name, il);
+         } else {
+@@ -2868,8 +2883,9 @@
+         // - force the last op of the layer on the specified backend to avoid running it on the backend of the next layer due to scheduling
+         // FIXME: fix in ggml_backend_sched
+         const bool full_offload = model.n_gpu_layers() > model.hparams.n_layer_all;
+-        if (ubatch.n_tokens < 32 || full_offload) {
+-            if (il != -1 && (strcmp(name, "norm") == 0 || strcmp(name, "l_last") == 0)) {
++        const bool pin_hc = layer_local_hc && (strcmp(name, "hc_attn_post") == 0 || strcmp(name, "l_out") == 0);
++        if (ubatch.n_tokens < 32 || full_offload || pin_hc) {
++            if (il != -1 && (strcmp(name, "norm") == 0 || strcmp(name, "l_last") == 0 || pin_hc)) {
+                 const auto & dev_layer = model.dev_layer(il);
+                 for (const auto & backend : backends) {
+                     if (ggml_backend_get_device(backend.get()) == dev_layer) {
