@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "whole_model_acceleration_qualified": false,
+  "production_changed": false,
+  "logical_agents": 600,
+  "physical_slots": 1,
+  "hardware": "MacBook Air M5 16GiB GPU8",
+  "storage": "internal APFS; Fanxiang not mounted",
+  "tests": {
+    "passed": 137,
+    "subtests_passed": 43
+  },
+  "cpu10_decode_reference_pr17": [
+    0.1085,
+    0.1664
+  ],
+  "short_uninstrumented_pilot": {
+    "cpu10-8pilot": {
+      "decode_tps": 0.17336794343633022,
+      "ttft_seconds": 20.96481166600006,
+      "tokens": [
+        12089,
+        13,
+        4929,
+        9621,
+        1788,
+        650,
+        21193,
+        294
+      ],
+      "peak_sampled_rss_bytes": 6759956480,
+      "swap_growth_bytes": 0,
+      "repetitions": 1
+    },
+    "hybrid6-384-8pilot": {
+      "decode_tps": 0.1826708631120732,
+      "ttft_seconds": 20.98744437499954,
+      "tokens": [
+        12089,
+        13,
+        4929,
+        9621,
+        1788,
+        650,
+        21193,
+        294
+      ],
+      "peak_sampled_rss_bytes": 5269733376,
+      "swap_growth_bytes": 0,
+      "repetitions": 1
+    }
+  },
+  "cache_only_bitexact_comparison": true,
+  "pilot_relative_difference": 0.05365997595258731,
+  "limitations": [
+    "candidate rejected for logit/ordered-route fidelity",
+    "eight generated tokens per arm, one CPU-then-GPU pair",
+    "uncontrolled OS file cache, not external SSD",
+    "custom Q2_K kernel is component only and slower than native warm CPU oracle",
+    "no EOS, sustained or long context qualification"
+  ]
+}

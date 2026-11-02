@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "run_name": "hybrid6-local-hc384-split",
+  "scope": "Forced-input tensor diagnostic; serialized captures; elapsed time is not decode throughput",
+  "source_sha256": {
+    "comparison.json": "ab5451a589b528f33594091998e7f90e71de67002b0059a3854ff82663cdf2e4",
+    "experiment.json": "36b025026ba90e21ecb0f6a6db3f3b328e656d174ec8aa17dc91b6f1a108ff06",
+    "guard.json": "95167efc34eea91b850cae1233e91c43a82f70d95272ed6b6cf501e093c7c4e1",
+    "guard.stderr.log": "08abdd87100f7f67cd9691c91235df1d33343d495b06d38197e790e161f6b648"
+  },
+  "environment": {
+    "AIRLLM_MMAP_DEMAND": "1",
+    "AIRLLM_EXPERT_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+    "AIRLLM_GPU_CACHE_MIB": "384",
+    "AIRLLM_GLM_LAYER_LOCAL_HC": "1",
+    "AIRLLM_GLM_CACHE_SPLIT": "1"
+  },
+  "probe_source_sha256": "62bc4308a2e103d470c3d87bbdabb730c952149f623e7bf0f297b141a95e5991",
+  "binary_sha256": "d5673ccdc4894346493b54596b1fe04ae9fb5d7442733e7ebf5b8bf72f71d450",
+  "reference_run": {
+    "threads": 4,
+    "gpu_layers": 0,
+    "count": 4,
+    "context": 512,
+    "batch": 8,
+    "moe_cache_mib": 0,
+    "forced": false
+  },
+  "candidate_run": {
+    "threads": 10,
+    "gpu_layers": 6,
+    "count": 4,
+    "context": 512,
+    "batch": 8,
+    "moe_cache_mib": 384,
+    "policy": "weights-only",
+    "op_offload": false,
+    "offload_kqv": false,
+    "forced": true
+  },
+  "passed": false,
+  "criteria": {
+    "bitexact_f32": false,
+    "atol": 0.001,
+    "rtol": 0.0001,
+    "ordered_routes_exact": true,
+    "tokens_exact": true,
+    "all_values_finite": true
+  },
+  "full_logits_summary": {
+    "compared": 4,
+    "elements": 619520,
+    "mismatch_count": 589007,
+    "bit_mismatch_count": 619516,
+    "finite": true,
+    "max_abs_error_finite_pairs": 0.1210167407989502,
+    "rmse_finite_pairs": 0.02095468260868081,
+    "finite_pairs": 619520,
+    "passed": false
+  },
+  "coverage": {
+    "routes": {
+      "compared": 168,
+      "elements": 3024,
+      "mismatch_count": 8,
+      "bit_mismatch_count": 8,
+      "finite": true,
+      "max_abs_error_finite_pairs": 158.0,
+      "rmse_finite_pairs": 5.4530827163276285,
+      "finite_pairs": 3024,
+      "passed": false
+    },
+    "router": {
+      "compared": 168,
+      "elements": 108864,
+      "mismatch_count": 9464,
+      "bit_mismatch_count": 12960,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.05374002456665039,
+      "rmse_finite_pairs": 0.0018665977570321711,
+      "finite_pairs": 108864,
+      "passed": false
+    },
+    "kda": {
+      "compared": 272,
+      "elements": 5013504,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 589820,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0002052709460258484,
+      "rmse_finite_pairs": 1.7560272987197596e-06,
+      "finite_pairs": 5013504,
+      "passed": true
+    },
+    "result_output": {
+      "compared": 4,
+      "elements": 619520,
+      "mismatch_count": 589007,
+      "bit_mismatch_count": 619516,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.1210167407989502,
+      "rmse_finite_pairs": 0.02095468260868081,
+      "finite_pairs": 619520,
+      "passed": false
+    }
+  },
+  "first_observed": {
+    "kda": {
+      "bit_difference": {
+        "step": 0,
+        "name": "kda_scan_out-40",
+        "occurrence": 0,
+        "elements": 49152,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 49152,
+        "max_abs_error_finite_pairs": 5.388539284467697e-05
+      },
+      "criterion_failure": null
+    },
+    "router": {
+      "bit_difference": {
+        "step": 0,
+        "name": "ffn_moe_logits-40",
+        "occurrence": 0,
+        "elements": 1728,
+        "mismatch_count": 973,
+        "bit_mismatch_count": 1728,
+        "max_abs_error_finite_pairs": 0.010272026062011719
+      },
+      "criterion_failure": {
+        "step": 0,
+        "name": "ffn_moe_logits-40",
+        "occurrence": 0,
+        "elements": 1728,
+        "mismatch_count": 973,
+        "bit_mismatch_count": 1728,
+        "max_abs_error_finite_pairs": 0.010272026062011719
+      }
+    },
+    "routes": {
+      "bit_difference": {
+        "step": 0,
+        "name": "ffn_moe_topk-41",
+        "occurrence": 0,
+        "elements": 48,
+        "mismatch_count": 2,
+        "bit_mismatch_count": 2,
+        "max_abs_error_finite_pairs": 131.0
+      },
+      "criterion_failure": {
+        "step": 0,
+        "name": "ffn_moe_topk-41",
+        "occurrence": 0,
+        "elements": 48,
+        "mismatch_count": 2,
+        "bit_mismatch_count": 2,
+        "max_abs_error_finite_pairs": 131.0
+      }
+    }
+  },
+  "routes": {
+    "vectors": 378,
+    "ordered_different": 4,
+    "membership_different": 0,
+    "different_positions": 8,
+    "changes": [
+      {
+        "step": 0,
+        "layer": 41,
+        "token_column": 0,
+        "different_positions": 2,
+        "membership_changed": false,
+        "reference": [
+          201,
+          66,
+          272,
+          286,
+          157,
+          26,
+          266,
+          90
+        ],
+        "candidate": [
+          201,
+          66,
+          272,
+          286,
+          26,
+          157,
+          266,
+          90
+        ]
+      },
+      {
+        "step": 0,
+        "layer": 42,
+        "token_column": 3,
+        "different_positions": 2,
+        "membership_changed": false,
+        "reference": [
+          149,
+          194,
+          232,
+          230,
+          72,
+          81,
+          257,
+          85
+        ],
+        "candidate": [
+          149,
+          194,
+          232,
+          72,
+          230,
+          81,
+          257,
+          85
+        ]
+      },
+      {
+        "step": 0,
+        "layer": 44,
+        "token_column": 3,
+        "different_positions": 2,
+        "membership_changed": false,
+        "reference": [
+          265,
+          189,
+          3,
+          123,
+          93,
+          47,
+          73,
+          118
+        ],
+        "candidate": [
+          265,
+          189,
+          3,
+          93,
+          123,
+          47,
+          73,
+          118
+        ]
+      },
+      {
+        "step": 2,
+        "layer": 40,
+        "token_column": 0,
+        "different_positions": 2,
+        "membership_changed": false,
+        "reference": [
+          141,
+          183,
+          154,
+          116,
+          112,
+          156,
+          100,
+          235
+        ],
+        "candidate": [
+          141,
+          183,
+          154,
+          116,
+          156,
+          112,
+          100,
+          235
+        ]
+      }
+    ]
+  },
+  "cpu_prefix": {
+    "schema_version": 1,
+    "scope": "Saved CPU-prefix diagnostic tensors including captured aliases; no throughput claim",
+    "layers": [
+      0,
+      39
+    ],
+    "sources": [
+      {
+        "capture": "stock-cpu4",
+        "run": {
+          "threads": 4,
+          "gpu_layers": 0,
+          "count": 4,
+          "context": 512,
+          "batch": 8,
+          "moe_cache_mib": 0,
+          "forced": false
+        },
+        "manifest_sha256": "10c447678eb8ff4c18894a083e0e842d74900aefaadec8d2b658f50fe1bd7765",
+        "selected_payload_sequence_sha256": "1a1619e68c056af6a423206730dd568cea59315b56db00bb521a280a57476df3",
+        "environment": null
+      },
+      {
+        "capture": "capture",
+        "run": {
+          "threads": 10,
+          "gpu_layers": 6,
+          "count": 4,
+          "context": 512,
+          "batch": 8,
+          "moe_cache_mib": 384,
+          "policy": "weights-only",
+          "op_offload": false,
+          "offload_kqv": false,
+          "forced": true
+        },
+        "manifest_sha256": "17b3ec1de7dff1a2cfd4468e8ba1f0e216cb1fa45edff9d5a59326d520a819da",
+        "selected_payload_sequence_sha256": "1a1619e68c056af6a423206730dd568cea59315b56db00bb521a280a57476df3",
+        "environment": {
+          "AIRLLM_MMAP_DEMAND": "1",
+          "AIRLLM_EXPERT_PREFETCH": "1",
+          "AIRLLM_DENSE_PREFETCH": "1",
+          "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+          "AIRLLM_GPU_CACHE_MIB": "384",
+          "AIRLLM_GLM_LAYER_LOCAL_HC": "1",
+          "AIRLLM_GLM_CACHE_SPLIT": "1"
+        }
+      }
+    ],
+    "prompt_identical": true,
+    "forced_inputs_identical": true,
+    "coverage": {
+      "routes": {
+        "compared": 148,
+        "elements": 2664,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2664,
+        "passed": true
+      },
+      "router": {
+        "compared": 148,
+        "elements": 95904,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 95904,
+        "passed": true
+      },
+      "kda": {
+        "compared": 240,
+        "elements": 4423680,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 4423680,
+        "passed": true
+      }
+    },
+    "tensor_manifest_keys_equal_in_prefix": true,
+    "tensor_count": 536,
+    "total_elements": 4522248,
+    "first_differences": [],
+    "passed": true
+  },
+  "cache_stats": {
+    "hits": 42,
+    "misses": 78,
+    "reported_hit_rate_percent": 35.0,
+    "reported_uploaded_mib": 614.25,
+    "scope": "native cache counters, not SSD physical traffic"
+  },
+  "guard": {
+    "status": "completed",
+    "returncode": 0,
+    "guard_violation": null,
+    "elapsed_seconds": 31.76164395800015,
+    "peak_sampled_rss_bytes": 5087985664,
+    "peak_system_swap_growth_bytes": 0,
+    "last_sampled_os_storage_read_bytes": 50876227584,
+    "last_sampled_cpu_seconds": 134.19276795833332,
+    "measurement_scope": "Owned process libproc rusage_info_v2; sampled counters can miss the final interval. Swap and memory pressure are system-wide. OS storage bytes include paging and readahead, not physical NAND."
+  },
+  "manifest_errors": [
+    "(1, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+    "(1, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+    "(1, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+    "(1, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+    "(1, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side",
+    "(2, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+    "(2, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+    "(2, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+    "(2, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+    "(2, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side",
+    "(3, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+    "(3, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+    "(3, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+    "(3, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+    "(3, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side"
+  ],
+  "new_decode_gain_accepted": false
+}

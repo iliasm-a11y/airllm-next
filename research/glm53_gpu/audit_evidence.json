@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "scope": "Historical PR17 evidence reanalysis, no new model execution",
+  "source_sha256": {
+    "comparisons/fidelity-hybrid6-comparison.json.gz": "3f0f2a3fff4c132b71b8c5691e96abb334ccb34dec46dfe96ab0955b3f317f1f",
+    "summary-finished.json.gz": "b4a07ef2ed0f1eae7e529ce1ea7b0aa710d14d6eb8b32c2d8ae7b5fec1e0ad78"
+  },
+  "fidelity": {
+    "passed": false,
+    "criteria": {
+      "bitexact_f32": false,
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "ordered_routes_exact": true,
+      "tokens_exact": true,
+      "all_values_finite": true
+    },
+    "reference_run": {
+      "threads": 4,
+      "gpu_layers": 0,
+      "count": 4,
+      "context": 512,
+      "batch": 8,
+      "moe_cache_mib": 0,
+      "forced": false
+    },
+    "candidate_run": {
+      "threads": 4,
+      "gpu_layers": 6,
+      "count": 4,
+      "context": 512,
+      "batch": 8,
+      "moe_cache_mib": 256,
+      "forced": true
+    },
+    "prompt_tokens_identical": true,
+    "complete_same_input_sequence": true,
+    "tokens_exact_on_comparable_steps": true,
+    "full_logits_summary": {
+      "compared": 4,
+      "elements": 619520,
+      "mismatch_count": 612177,
+      "bit_mismatch_count": 619519,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.5348455905914307,
+      "rmse_finite_pairs": 0.08897702251287894,
+      "finite_pairs": 619520,
+      "passed": false
+    },
+    "first_observed": {
+      "kda": {
+        "bit_difference": {
+          "step": 0,
+          "name": "kda_scan_out-1",
+          "occurrence": 0,
+          "elements": 49152,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 32749,
+          "max_abs_error_finite_pairs": 4.570465534925461e-07
+        },
+        "criterion_failure": {
+          "step": 0,
+          "name": "kda_scan_out-24",
+          "occurrence": 0,
+          "elements": 49152,
+          "mismatch_count": 1,
+          "bit_mismatch_count": 49152,
+          "max_abs_error_finite_pairs": 0.001101059839129448
+        }
+      },
+      "router": {
+        "bit_difference": {
+          "step": 0,
+          "name": "ffn_moe_logits-3",
+          "occurrence": 0,
+          "elements": 1728,
+          "mismatch_count": 768,
+          "bit_mismatch_count": 1610,
+          "max_abs_error_finite_pairs": 0.012028694152832031
+        },
+        "criterion_failure": {
+          "step": 0,
+          "name": "ffn_moe_logits-3",
+          "occurrence": 0,
+          "elements": 1728,
+          "mismatch_count": 768,
+          "bit_mismatch_count": 1610,
+          "max_abs_error_finite_pairs": 0.012028694152832031
+        }
+      },
+      "routes": {
+        "bit_difference": {
+          "step": 0,
+          "name": "ffn_moe_topk-5",
+          "occurrence": 0,
+          "elements": 48,
+          "mismatch_count": 2,
+          "bit_mismatch_count": 2,
+          "max_abs_error_finite_pairs": 51.0
+        },
+        "criterion_failure": {
+          "step": 0,
+          "name": "ffn_moe_topk-5",
+          "occurrence": 0,
+          "elements": 48,
+          "mismatch_count": 2,
+          "bit_mismatch_count": 2,
+          "max_abs_error_finite_pairs": 51.0
+        }
+      }
+    },
+    "manifest_errors": [
+      "(1, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+      "(1, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+      "(1, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+      "(1, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+      "(1, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side",
+      "(2, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+      "(2, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+      "(2, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+      "(2, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+      "(2, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side",
+      "(3, 'ffn_moe_topk-40 (reshaped)', 0): Tensor missing on one side",
+      "(3, 'ffn_moe_topk-41 (reshaped)', 0): Tensor missing on one side",
+      "(3, 'ffn_moe_topk-42 (reshaped)', 0): Tensor missing on one side",
+      "(3, 'ffn_moe_topk-43 (reshaped)', 0): Tensor missing on one side",
+      "(3, 'ffn_moe_topk-44 (reshaped)', 0): Tensor missing on one side"
+    ]
+  },
+  "instrumented_cpu_profile": {
+    "scope": "Diagnostic cb_eval forces a backend synchronization per operation and can alter fusion/overlap. Operation wall time includes that instrumented dispatch, not isolated GPU kernel time. Capture writes, load and scheduler copies between operations are outside these buckets. Step 0 labels all prefill chunks; greater steps are decode. OS read bytes are process-accounted, not physical NAND.",
+    "groups": {
+      "all": {
+        "totals": {
+          "count": 29652,
+          "profiled_wall_seconds": 71.82169106400073,
+          "cpu_seconds": 39.768633040840506,
+          "cpu_counter_rows": 29652,
+          "os_read_bytes": 56432525312,
+          "os_read_counter_rows": 29652,
+          "pageins": 3498109,
+          "pagein_counter_rows": 29652
+        },
+        "top_operations": [
+          {
+            "op": "MUL_MAT",
+            "count": 2736,
+            "profiled_wall_seconds": 47.918089579000004,
+            "cpu_seconds": 25.72230112300004,
+            "cpu_counter_rows": 2736,
+            "os_read_bytes": 37601226752,
+            "os_read_counter_rows": 2736,
+            "pageins": 2327327,
+            "pagein_counter_rows": 2736,
+            "share_of_profiled_wall_percent": 66.71813051060009
+          },
+          {
+            "op": "MUL_MAT_ID",
+            "count": 504,
+            "profiled_wall_seconds": 22.65795621999999,
+            "cpu_seconds": 11.714938489999994,
+            "cpu_counter_rows": 504,
+            "os_read_bytes": 18758328320,
+            "os_read_counter_rows": 504,
+            "pageins": 1166023,
+            "pagein_counter_rows": 504,
+            "share_of_profiled_wall_percent": 31.547511461139713
+          },
+          {
+            "op": "MUL",
+            "count": 1836,
+            "profiled_wall_seconds": 0.2002405659999999,
+            "cpu_seconds": 0.38652597290000007,
+            "cpu_counter_rows": 1836,
+            "os_read_bytes": 21282816,
+            "os_read_counter_rows": 1836,
+            "pageins": 1233,
+            "pagein_counter_rows": 1836,
+            "share_of_profiled_wall_percent": 0.2788023548785065
+          },
+          {
+            "op": "ADD",
+            "count": 2468,
+            "profiled_wall_seconds": 0.16464511499999984,
+            "cpu_seconds": 0.33070833699999996,
+            "cpu_counter_rows": 2468,
+            "os_read_bytes": 3342336,
+            "os_read_counter_rows": 2468,
+            "pageins": 351,
+            "pagein_counter_rows": 2468,
+            "share_of_profiled_wall_percent": 0.22924149036435748
+          }
+        ]
+      },
+      "step0_prefill": {
+        "totals": {
+          "count": 7413,
+          "profiled_wall_seconds": 25.068008064999933,
+          "cpu_seconds": 13.788123845200042,
+          "cpu_counter_rows": 7413,
+          "os_read_bytes": 19584266240,
+          "os_read_counter_rows": 7413,
+          "pageins": 1235054,
+          "pagein_counter_rows": 7413
+        },
+        "top_operations": [
+          {
+            "op": "MUL_MAT_ID",
+            "count": 126,
+            "profiled_wall_seconds": 13.570994620000002,
+            "cpu_seconds": 6.584131000000003,
+            "cpu_counter_rows": 126,
+            "os_read_bytes": 10298658816,
+            "os_read_counter_rows": 126,
+            "pageins": 654009,
+            "pagein_counter_rows": 126,
+            "share_of_profiled_wall_percent": 54.136709166564714
+          },
+          {
+            "op": "MUL_MAT",
+            "count": 684,
+            "profiled_wall_seconds": 11.20532239599999,
+            "cpu_seconds": 6.629443565000004,
+            "cpu_counter_rows": 684,
+            "os_read_bytes": 9267113984,
+            "os_read_counter_rows": 684,
+            "pageins": 579692,
+            "pagein_counter_rows": 684,
+            "share_of_profiled_wall_percent": 44.69969200163499
+          },
+          {
+            "op": "SSM_CONV",
+            "count": 102,
+            "profiled_wall_seconds": 0.04674477599999999,
+            "cpu_seconds": 0.04139661400000002,
+            "cpu_counter_rows": 102,
+            "os_read_bytes": 11255808,
+            "os_read_counter_rows": 102,
+            "pageins": 773,
+            "pagein_counter_rows": 102,
+            "share_of_profiled_wall_percent": 0.18647184043819284
+          },
+          {
+            "op": "MUL",
+            "count": 459,
+            "profiled_wall_seconds": 0.04457708100000003,
+            "cpu_seconds": 0.08363845720000006,
+            "cpu_counter_rows": 459,
+            "os_read_bytes": 5193728,
+            "os_read_counter_rows": 459,
+            "pageins": 417,
+            "pagein_counter_rows": 459,
+            "share_of_profiled_wall_percent": 0.1778245837659465
+          }
+        ]
+      },
+      "steps_gt0_decode": {
+        "totals": {
+          "count": 22239,
+          "profiled_wall_seconds": 46.75368299900055,
+          "cpu_seconds": 25.980509195640135,
+          "cpu_counter_rows": 22239,
+          "os_read_bytes": 36848259072,
+          "os_read_counter_rows": 22239,
+          "pageins": 2263055,
+          "pagein_counter_rows": 22239
+        },
+        "top_operations": [
+          {
+            "op": "MUL_MAT",
+            "count": 2052,
+            "profiled_wall_seconds": 36.712767183000004,
+            "cpu_seconds": 19.092857558000016,
+            "cpu_counter_rows": 2052,
+            "os_read_bytes": 28334112768,
+            "os_read_counter_rows": 2052,
+            "pageins": 1747635,
+            "pagein_counter_rows": 2052,
+            "share_of_profiled_wall_percent": 78.52379711729836
+          },
+          {
+            "op": "MUL_MAT_ID",
+            "count": 378,
+            "profiled_wall_seconds": 9.086961600000006,
+            "cpu_seconds": 5.1308074900000005,
+            "cpu_counter_rows": 378,
+            "os_read_bytes": 8459669504,
+            "os_read_counter_rows": 378,
+            "pageins": 512014,
+            "pagein_counter_rows": 378,
+            "share_of_profiled_wall_percent": 19.435819848019793
+          },
+          {
+            "op": "MUL",
+            "count": 1377,
+            "profiled_wall_seconds": 0.15566348499999993,
+            "cpu_seconds": 0.30288751570000044,
+            "cpu_counter_rows": 1377,
+            "os_read_bytes": 16089088,
+            "os_read_counter_rows": 1377,
+            "pageins": 816,
+            "pagein_counter_rows": 1377,
+            "share_of_profiled_wall_percent": 0.33294379183630846
+          },
+          {
+            "op": "ADD",
+            "count": 1851,
+            "profiled_wall_seconds": 0.13222095199999997,
+            "cpu_seconds": 0.26714625599999986,
+            "cpu_counter_rows": 1851,
+            "os_read_bytes": 2424832,
+            "os_read_counter_rows": 1851,
+            "pageins": 216,
+            "pagein_counter_rows": 1851,
+            "share_of_profiled_wall_percent": 0.2828032863268257
+          }
+        ]
+      }
+    }
+  },
+  "timings": [
+    {
+      "file": "final-cpu10-16x2.json",
+      "threads": 10,
+      "gpu_layers": 0,
+      "prompt_tokens": 6,
+      "emitted_tokens": 16,
+      "request_wall_seconds": 110.45893733400044,
+      "ttft_seconds": 20.325224042000627,
+      "observed_decode_tok_s": 0.16642066771849956,
+      "request_cpu_seconds": 720.1704463333333,
+      "request_os_read_bytes": 214790045696,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    },
+    {
+      "file": "final-cpu10-16x2.json",
+      "threads": 10,
+      "gpu_layers": 0,
+      "prompt_tokens": 6,
+      "emitted_tokens": 16,
+      "request_wall_seconds": 121.05678658299985,
+      "ttft_seconds": 21.462192666000192,
+      "observed_decode_tok_s": 0.15061429943530116,
+      "request_cpu_seconds": 807.172684375,
+      "request_os_read_bytes": 214784532480,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    },
+    {
+      "file": "hybrid6-combined-pilot.json",
+      "threads": 4,
+      "gpu_layers": 6,
+      "prompt_tokens": 6,
+      "emitted_tokens": 8,
+      "request_wall_seconds": 83.26412316700043,
+      "ttft_seconds": 34.38447841700054,
+      "observed_decode_tok_s": 0.1432092566675757,
+      "request_cpu_seconds": 131.3144325833333,
+      "request_os_read_bytes": 103071887360,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    },
+    {
+      "file": "long-final-cpu10-32x2.json",
+      "threads": 10,
+      "gpu_layers": 0,
+      "prompt_tokens": 15,
+      "emitted_tokens": 32,
+      "request_wall_seconds": 338.77041095799905,
+      "ttft_seconds": 53.05713237499913,
+      "observed_decode_tok_s": 0.10850193872419657,
+      "request_cpu_seconds": 2256.4077348749997,
+      "request_os_read_bytes": 433426948096,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    },
+    {
+      "file": "long-final-cpu10-32x2.json",
+      "threads": 10,
+      "gpu_layers": 0,
+      "prompt_tokens": 15,
+      "emitted_tokens": 32,
+      "request_wall_seconds": 278.8903735840013,
+      "ttft_seconds": 56.12449058400125,
+      "observed_decode_tok_s": 0.13916051966090862,
+      "request_cpu_seconds": 1889.4951554583326,
+      "request_os_read_bytes": 433482366976,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    },
+    {
+      "file": "metal-head-cpu10-pilot.json",
+      "threads": 10,
+      "gpu_layers": 1,
+      "prompt_tokens": 6,
+      "emitted_tokens": 8,
+      "request_wall_seconds": 66.13807029199961,
+      "ttft_seconds": 20.87964508299956,
+      "observed_decode_tok_s": 0.1546677858061161,
+      "request_cpu_seconds": 386.48483024999996,
+      "request_os_read_bytes": 111392251904,
+      "physical_nand_bytes": null,
+      "cache_state": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled."
+    }
+  ],
+  "raw_route_reanalysis": {
+    "vectors": 378,
+    "ordered_different": 163,
+    "membership_different": 55,
+    "order_only": 108,
+    "different_slots": 364,
+    "first_order_difference": {
+      "step": 0,
+      "name": "ffn_moe_topk-5",
+      "token_column": 4,
+      "reference": [
+        170,
+        180,
+        57,
+        110,
+        125,
+        272,
+        155,
+        104
+      ],
+      "candidate": [
+        170,
+        180,
+        57,
+        110,
+        125,
+        272,
+        104,
+        155
+      ]
+    },
+    "first_membership_difference": {
+      "step": 0,
+      "name": "ffn_moe_topk-15",
+      "token_column": 4,
+      "reference": [
+        44,
+        110,
+        82,
+        126,
+        14,
+        12,
+        125,
+        89
+      ],
+      "candidate": [
+        44,
+        110,
+        82,
+        126,
+        14,
+        12,
+        125,
+        156
+      ]
+    },
+    "scope": "Canonical top8 tensors only, aliases omitted; step0 contains six prompt positions"
+  }
+}

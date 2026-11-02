@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "source_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "source_diff_sha256": "f32ef394e15e8d7f18ecd40587a2586af1eaf7fe886ce967b716ee76b40d52a9",
+  "source_checkout_isolated": true,
+  "recorded_at_utc": "2026-11-02T18:53:49.655942+00:00",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "patches": {
+    "llama-mmap-demand.patch": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0",
+    "llama-expert-prefetch.patch": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238",
+    "llama-dense-prefetch-columns.patch": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356",
+    "llama-dense-prefetch.patch": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c",
+    "llama-layer-local-hc.patch": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d",
+    "llama-moe-cache-split.patch": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1"
+  },
+  "libraries": {
+    "libggml-base.0.28.0.dylib": "70cff9ff43c089a47ab4931f7b3c2fd41c5977aac0fa1993f748d85248c66a2a",
+    "libllama-server-impl.dylib": "8179146faccdb991f3a2ecc81c02ad37718a7c83ea92f15faaa21ed49652937c",
+    "libllama-common.0.8.0.dylib": "5f53f9aaed9e2400ed2175635634347ba78748b121104de3d1654eba44805dd5",
+    "libllama.0.8.0.dylib": "822db15b0ff0871adc419eb16aac17b394a4cbf2e84d3bf756779295d445196a",
+    "libmtmd.0.8.0.dylib": "805aa444f8f814263f1b0c742f400dcb4c0787e71b07fd8252446bbba53ba858",
+    "libggml-blas.0.28.0.dylib": "1d4db771cdbd0519ac85f4bc659d3d7b0c78ec6f8dee06c7768482546c0788e1",
+    "libggml-metal.0.28.0.dylib": "a74a1d6ce374dfc4996e747c83eab6a2fbd6038e3e248a1571dd19cde0181142",
+    "libggml.0.28.0.dylib": "78bf069335fdae9d7b8be6ea393b0797647f83ea1d9ba03c84ac23c02a230c12",
+    "libggml-cpu.0.28.0.dylib": "accb0539118d54057b7b1b48371e52cd40296715f2cd1ee3ed41fa4acc5b241d"
+  },
+  "hardware": "MacBook Air Mac17,3 Apple M5 8 GPU cores 16 GiB",
+  "storage": "model local internal APFS; external Fanxiang not mounted",
+  "model_full_sha256_recomputed": false,
+  "build_flags": [
+    "CMAKE_BUILD_TYPE=Release",
+    "GGML_NATIVE=ON",
+    "GGML_METAL=ON",
+    "GGML_METAL_EMBED_LIBRARY=ON",
+    "BUILD_SHARED_LIBS=ON",
+    "LLAMA_BUILD_TESTS=OFF",
+    "LLAMA_BUILD_EXAMPLES=OFF",
+    "LLAMA_BUILD_SERVER=ON",
+    "LLAMA_OPENSSL=OFF"
+  ],
+  "native-probe-cachefix_sha256": "d5673ccdc4894346493b54596b1fe04ae9fb5d7442733e7ebf5b8bf72f71d450",
+  "llama-server_sha256": "e6aa643646a9f1522d5d496c8d3be7a5d03694cc8a039c8f152eac042f778e51",
+  "compiled_probe_source_sha256": "62bc4308a2e103d470c3d87bbdabb730c952149f623e7bf0f297b141a95e5991",
+  "model_file_stats": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "bytes": 9430112,
+      "mtime_ns": 1793220986088562812
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "bytes": 110017922752,
+      "mtime_ns": 1793630405545465080
+    }
+  ],
+  "patch_format_note": "Context blank lines normalized after compilation; git apply --reverse --check validates both distributed patches against the measured isolated source. Applied source diff unchanged."
+}

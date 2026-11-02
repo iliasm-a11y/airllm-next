@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "scope": "Saved CPU-prefix diagnostic tensors including captured aliases; no throughput claim",
+  "layers": [
+    0,
+    39
+  ],
+  "sources": [
+    {
+      "capture": "hybrid6",
+      "run": {
+        "threads": 4,
+        "gpu_layers": 6,
+        "count": 4,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 256,
+        "forced": true
+      },
+      "manifest_sha256": "17b3ec1de7dff1a2cfd4468e8ba1f0e216cb1fa45edff9d5a59326d520a819da",
+      "selected_payload_sequence_sha256": "528de7dcbdab1dbdaf9fd7114435c377705e6b20c1b090b432c12eeacf28dfe9",
+      "environment": null
+    },
+    {
+      "capture": "capture",
+      "run": {
+        "threads": 10,
+        "gpu_layers": 0,
+        "count": 4,
+        "context": 512,
+        "batch": 8,
+        "moe_cache_mib": 0,
+        "policy": "cpu",
+        "op_offload": false,
+        "offload_kqv": false,
+        "forced": true
+      },
+      "manifest_sha256": "10c447678eb8ff4c18894a083e0e842d74900aefaadec8d2b658f50fe1bd7765",
+      "selected_payload_sequence_sha256": "528de7dcbdab1dbdaf9fd7114435c377705e6b20c1b090b432c12eeacf28dfe9",
+      "environment": {
+        "AIRLLM_MMAP_DEMAND": "1",
+        "AIRLLM_EXPERT_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH": "1",
+        "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+        "AIRLLM_GPU_CACHE_MIB": "0",
+        "AIRLLM_GLM_HC_POST": "0"
+      }
+    }
+  ],
+  "prompt_identical": true,
+  "forced_inputs_identical": true,
+  "coverage": {
+    "routes": {
+      "compared": 148,
+      "elements": 2664,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 2664,
+      "passed": true
+    },
+    "router": {
+      "compared": 148,
+      "elements": 95904,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 95904,
+      "passed": true
+    },
+    "kda": {
+      "compared": 240,
+      "elements": 4423680,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 4423680,
+      "passed": true
+    }
+  },
+  "tensor_manifest_keys_equal_in_prefix": true,
+  "tensor_count": 536,
+  "total_elements": 4522248,
+  "first_differences": [],
+  "passed": true
+}

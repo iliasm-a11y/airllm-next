@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "scope": "selected Q2_K rows; seeded synthetic activation; not GLM decode",
+  "metadata": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "file_bytes": 110017922752,
+    "tensor": "blk.3.ffn_gate_exps.weight",
+    "dims": [
+      4096,
+      2048,
+      288
+    ],
+    "expert": 0,
+    "first_row": 0,
+    "rows": 32,
+    "absolute_offset": 54382008000,
+    "selected_bytes": 43008,
+    "sha256_selected_bytes": "5e8bef7043c92e8e75ca18a2f2dfb67789abd0bf620f3736c8b1cb80acb68d7a"
+  },
+  "mlx_version": "0.32.4",
+  "activation_seed": 5305,
+  "q8_values_exact": true,
+  "q8_scales": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 16
+  },
+  "decode_vs_native": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 131072
+  },
+  "cpu_compatible_vs_native_arm_dot": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 32
+  },
+  "float_vs_native_arm_dot": {
+    "bit_identical": false,
+    "max_abs": 0.031523942947387695,
+    "rmse": 0.011729007437146019,
+    "elements": 32
+  },
+  "float_vs_native_dequant_blas": {
+    "bit_identical": false,
+    "max_abs": 7.152557373046875e-07,
+    "rmse": 2.853709753631774e-07,
+    "elements": 32
+  },
+  "known_payload_bytes": 123200,
+  "mlx_peak_bytes": 74112,
+  "process_peak_rss_bytes": 61849600,
+  "timing_limits": [
+    "warm prepared matrix",
+    "MLX calls include activation import and synchronization",
+    "native CPU calls are one dot per row through ctypes, one caller thread",
+    "running RONIN is an uncontrolled concurrent workload",
+    "not CPU10 whole-model latency; no end-to-end speedup inferred"
+  ],
+  "native_cpu_dot": {
+    "seconds": [
+      0.00016087499989225762,
+      0.00012479099996198784,
+      0.00012262500013093813,
+      0.00012512500006778282,
+      0.00012250000008862116
+    ],
+    "median_seconds": 0.00012479099996198784
+  },
+  "gpu_cpu_compatible": {
+    "seconds": [
+      0.0007101250002961024,
+      0.0005473749997690902,
+      0.0005732499998885032,
+      0.0005740420001529856,
+      0.0005781669997304562
+    ],
+    "median_seconds": 0.0005740420001529856
+  },
+  "gpu_float": {
+    "seconds": [
+      0.0005611249998764833,
+      0.0005782919997727731,
+      0.0005797499998152489,
+      0.0005746250003539899,
+      0.0005798750003123132
+    ],
+    "median_seconds": 0.0005782919997727731
+  }
+}

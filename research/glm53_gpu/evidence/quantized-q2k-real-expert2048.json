@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "scope": "selected Q2_K rows; seeded synthetic activation; not GLM decode",
+  "measured_at_utc": "2026-11-02T18:39:43.419499+00:00",
+  "metadata": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "file_bytes": 110017922752,
+    "tensor": "blk.3.ffn_gate_exps.weight",
+    "dims": [
+      4096,
+      2048,
+      288
+    ],
+    "expert": 0,
+    "first_row": 0,
+    "rows": 2048,
+    "absolute_offset": 54382008000,
+    "selected_bytes": 2752512,
+    "sha256_selected_bytes": "29272eb80f8263f492e3056beea89edd29d75b1c44715d7312ef65a381a2d9b9"
+  },
+  "mlx_version": "0.32.4",
+  "activation_seed": 5305,
+  "q8_values_exact": true,
+  "q8_scales": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 16
+  },
+  "decode_vs_native": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 131072
+  },
+  "cpu_compatible_vs_native_arm_dot": {
+    "bit_identical": true,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "elements": 2048
+  },
+  "float_vs_native_arm_dot": {
+    "bit_identical": false,
+    "max_abs": 0.031681329011917114,
+    "rmse": 0.009196544910611415,
+    "elements": 2048
+  },
+  "float_vs_native_dequant_blas": {
+    "bit_identical": false,
+    "max_abs": 7.152557373046875e-07,
+    "rmse": 2.853709753631774e-07,
+    "elements": 32
+  },
+  "native_dequant_validation_rows": 32,
+  "native_libraries_sha256": {
+    "libggml-base.dylib": "0be78cecf09f72c7fb284b75c6611eb0272f76a5a9f64e943d6c8233473bd6e4",
+    "libggml-cpu.dylib": "f2b8a10b4465f04d9234229d1d792779a568bdf5613fe539b78b5183d00b0be4"
+  },
+  "known_payload_bytes": 5558336,
+  "mlx_peak_bytes": 2793600,
+  "process_peak_rss_bytes": 68747264,
+  "timing_limits": [
+    "warm prepared matrix",
+    "MLX calls include activation import and synchronization",
+    "native CPU calls are one dot per row through ctypes, one caller thread",
+    "other application/compilation workload and macOS file cache are uncontrolled",
+    "not CPU10 whole-model latency; no end-to-end speedup inferred"
+  ],
+  "native_cpu_dot": {
+    "seconds": [
+      0.004084582999894337,
+      0.00390987499986295,
+      0.004029959000035888,
+      0.004006084000138799,
+      0.004035666999698151
+    ],
+    "median_seconds": 0.004029959000035888
+  },
+  "gpu_cpu_compatible": {
+    "seconds": [
+      0.001391083999806142,
+      0.001314957999966282,
+      0.0013119169998390134,
+      0.0012786669999513833,
+      0.0014205420002326719
+    ],
+    "median_seconds": 0.001314957999966282
+  },
+  "gpu_float": {
+    "seconds": [
+      0.0013779580003756564,
+      0.0010228340001958713,
+      0.0014151669997772842,
+      0.001281166999888228,
+      0.0013345000002118468
+    ],
+    "median_seconds": 0.0013345000002118468
+  }
+}

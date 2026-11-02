@@ -89,6 +89,8 @@ def run(args):
         command += ['--device', 'none', '--no-op-offload']
     if args.cpu_moe:
         command += ['--cpu-moe', '--moe-cache-mib', str(args.moe_cache_mib)]
+    if getattr(args, 'weights_only', False):
+        command += ['--no-op-offload', '--no-kv-offload']
     command += args.extra
     report = dict(schema_version=1, started_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         status='running', command=command, model_revision='119034bc3d9d76eb41f91508e6f9fb19fde42672',
@@ -117,6 +119,12 @@ def run(args):
         env['AIRLLM_EXPERT_PREFETCH'] = '1'
     if args.dense_prefetch:
         env['AIRLLM_DENSE_PREFETCH'] = '1'
+    report['research_environment'] = {}
+    for option, variable in (('layer_local_hc', 'AIRLLM_GLM_LAYER_LOCAL_HC'),
+                             ('cache_lookup_split', 'AIRLLM_GLM_CACHE_SPLIT')):
+        if getattr(args, option, False):
+            env[variable] = '1'
+            report['research_environment'][variable] = '1'
     if args.interposer:
         env['DYLD_INSERT_LIBRARIES'] = str(args.interposer.resolve())
     with args.output.with_suffix('.log').open('w') as log:
@@ -251,6 +259,9 @@ def main():
     p.add_argument('--mmap-demand', action='store_true')
     p.add_argument('--expert-prefetch', action='store_true')
     p.add_argument('--dense-prefetch', action='store_true')
+    p.add_argument('--weights-only', action='store_true', help='Disable opportunistic GPU ops and KV offload')
+    p.add_argument('--layer-local-hc', action='store_true', help='Experimental patched GLM HC placement')
+    p.add_argument('--cache-lookup-split', action='store_true', help='Experimental patched MoE dependency split')
     p.add_argument('extra', nargs='*')
     args = p.parse_args()
     if args.context < 128 or args.tokens < 1 or args.batch < 1 or not 0 < args.max_rss_gib <= 10:

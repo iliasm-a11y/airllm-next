@@ -1,0 +1,31 @@
+--- a/ggml/src/ggml-backend.cpp
++++ b/ggml/src/ggml-backend.cpp
+@@ -1704,6 +1704,8 @@
+
+     // pass 5: split graph, find tensors that need to be copied
+     {
++        const char * cache_split_flag = getenv("AIRLLM_GLM_CACHE_SPLIT");
++        const bool cache_split = cache_split_flag && strcmp(cache_split_flag, "1") == 0;
+         int i_split = 0;
+         struct ggml_backend_sched_split * split = &sched->splits[0];
+         // find the backend of the first split, skipping view ops
+@@ -1746,5 +1748,19 @@
+                             break;
+                         }
+                     }
++                }
++            }
++
++            // The cache copy callback must read IDs computed by an earlier split.
++            if (!need_new_split && cache_split && sched->callback_copy != NULL &&
++                    node_backend_id == cur_backend_id && i > split->i_start && node->op == GGML_OP_GET_ROWS) {
++                struct ggml_tensor * slots = node->src[0];
++                if (slots != NULL && slots->type == GGML_TYPE_I32 && slots->ne[0] == 1 &&
++                        strncmp(slots->name, "moe_cache.slot_map-", sizeof("moe_cache.slot_map-") - 1) == 0 && slots->buffer != NULL &&
++                        slots->buffer->usage == GGML_BACKEND_BUFFER_USAGE_WEIGHTS &&
++                        ggml_backend_buffer_is_host(slots->buffer) &&
++                        tensor_backend_id(slots) != cur_backend_id &&
++                        !ggml_backend_sched_buffer_supported(sched, slots, cur_backend_id)) {
++                    need_new_split = true;
+                 }
+             }
