@@ -1,0 +1,120 @@
+--- a/ggml/src/ggml-backend.cpp
++++ b/ggml/src/ggml-backend.cpp
+@@ -26,6 +26,8 @@
+ #ifdef __APPLE__
+ #include <sys/types.h>
+ #include <sys/sysctl.h>
++#include <mach/mach.h>
++#include <mach/mach_vm.h>
+ #endif
+
+
+@@ -1442,6 +1444,99 @@
+     }
+ }
+
++// AIRLLM_METAL_CPU_MAPPED_GUARD_BEGIN
++// Opt-in CPU reads of immutable Q8 mmap weights. This does not advertise a
++// Metal buffer type as host memory or relax mutable tensor synchronization.
++static bool airllm_metal_cpu_mapped_readonly_range(const void * data, size_t bytes) {
++#if defined(__APPLE__)
++    const uintptr_t begin = reinterpret_cast<uintptr_t>(data);
++    if (begin == 0 || bytes == 0 || bytes > (size_t(1) << 30) || begin > UINTPTR_MAX - bytes) {
++        return false;
++    }
++    const mach_vm_address_t end = begin + bytes;
++    mach_vm_address_t cursor = begin;
++    for (int regions = 0; cursor < end && regions < 64; ++regions) {
++        mach_vm_address_t address = cursor;
++        mach_vm_size_t length = 0;
++        vm_region_basic_info_data_64_t info{};
++        mach_msg_type_number_t count = VM_REGION_BASIC_INFO_COUNT_64;
++        mach_port_t object = MACH_PORT_NULL;
++        const kern_return_t status = mach_vm_region(mach_task_self(), &address, &length,
++            VM_REGION_BASIC_INFO_64, reinterpret_cast<vm_region_info_t>(&info), &count, &object);
++        if (object != MACH_PORT_NULL) {
++            mach_port_deallocate(mach_task_self(), object);
++        }
++        if (status != KERN_SUCCESS || address > cursor || length == 0 ||
++                address > UINT64_MAX - length || address + length <= cursor ||
++                !(info.protection & VM_PROT_READ) || (info.protection & VM_PROT_WRITE)) {
++            return false;
++        }
++        cursor = std::min(end, address + length);
++    }
++    return cursor == end;
++#else
++    GGML_UNUSED(data); GGML_UNUSED(bytes);
++    return false;
++#endif
++}
++
++static bool airllm_metal_cpu_mapped_weight_supported(ggml_backend_t backend,
++        const struct ggml_tensor * tensor, ggml_backend_buffer_t buffer) {
++    const char * enabled = getenv("AIRLLM_METAL_CPU_MAPPED_WEIGHTS");
++    const char * q8_only = getenv("AIRLLM_GLM_Q8_ONLY");
++    if (enabled == NULL || strcmp(enabled, "1") != 0 || q8_only == NULL || strcmp(q8_only, "1") != 0 ||
++            backend == NULL || tensor == NULL || buffer == NULL || tensor->data == NULL ||
++            tensor->type != GGML_TYPE_Q8_0 ||
++            ggml_backend_buffer_get_usage(buffer) != GGML_BACKEND_BUFFER_USAGE_WEIGHTS) {
++        return false;
++    }
++    const ggml_backend_dev_t cpu = ggml_backend_get_device(backend);
++    if (cpu == NULL || ggml_backend_dev_type(cpu) != GGML_BACKEND_DEVICE_TYPE_CPU) {
++        return false;
++    }
++    const ggml_backend_buffer_type_t type = ggml_backend_buffer_get_type(buffer);
++    const char * name = ggml_backend_buft_name(type);
++    const ggml_backend_dev_t device = ggml_backend_buft_get_device(type);
++    if (name == NULL || strcmp(name, "MTL0_Mapped") != 0 || device == NULL ||
++            ggml_backend_dev_type(device) != GGML_BACKEND_DEVICE_TYPE_GPU ||
++            strcmp(ggml_backend_dev_name(device), "MTL0") != 0) {
++        return false;
++    }
++    // Only constants or aliases of constants can bypass a weight copy. A
++    // computed output, graph input or mutable cached tensor remains unchanged.
++    const struct ggml_tensor * leaf = tensor;
++    for (int depth = 0; depth < 16; ++depth) {
++        if (leaf->flags & (GGML_TENSOR_FLAG_INPUT | GGML_TENSOR_FLAG_OUTPUT | GGML_TENSOR_FLAG_COMPUTE)) {
++            return false;
++        }
++        if (leaf->op == GGML_OP_NONE) {
++            break;
++        }
++        if (leaf->view_src == NULL ||
++                (leaf->op != GGML_OP_VIEW && leaf->op != GGML_OP_RESHAPE &&
++                 leaf->op != GGML_OP_PERMUTE && leaf->op != GGML_OP_TRANSPOSE)) {
++            return false;
++        }
++        leaf = leaf->view_src;
++    }
++    // The last hop may land on a leaf outside the loop's checked depth.
++    if (leaf->op != GGML_OP_NONE ||
++            (leaf->flags & (GGML_TENSOR_FLAG_INPUT | GGML_TENSOR_FLAG_OUTPUT | GGML_TENSOR_FLAG_COMPUTE))) {
++        return false;
++    }
++    const uintptr_t base = reinterpret_cast<uintptr_t>(ggml_backend_buffer_get_base(buffer));
++    const uintptr_t data = reinterpret_cast<uintptr_t>(tensor->data);
++    const size_t size = ggml_backend_buffer_get_size(buffer);
++    const size_t bytes = ggml_nbytes(tensor);
++    if (base == 0 || data < base || data - base > size || bytes == 0 || bytes > size - (data - base)) {
++        return false;
++    }
++    // The _Mapped type can allocate writable owned shared buffers too. VM
++    // protection proves this particular tensor is backed by read-only pages.
++    return airllm_metal_cpu_mapped_readonly_range(tensor->data, bytes);
++}
++// AIRLLM_METAL_CPU_MAPPED_GUARD_END
++
+ static bool ggml_backend_sched_buffer_supported(ggml_backend_sched_t sched, struct ggml_tensor * t, int backend_id) {
+     ggml_backend_buffer_t buf = t->view_src ? t->view_src->buffer : t->buffer;
+     ggml_backend_buffer_type_t buft = NULL;
+@@ -1460,5 +1555,8 @@
+         }
+     }
+
++    if (buf != NULL && airllm_metal_cpu_mapped_weight_supported(sched->backends[backend_id], t, buf)) {
++        return true;
++    }
+     return buft != NULL && ggml_backend_supports_buft(sched->backends[backend_id], buft);
+ }

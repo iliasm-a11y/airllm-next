@@ -1,0 +1,514 @@
+{
+  "schema": 1,
+  "mode": "reuse",
+  "measured_at_utc": "2026-11-02T19:20:42.784939+00:00",
+  "source_file": {
+    "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "bytes": 110017922752,
+    "mtime_ns": 1793630405545465080,
+    "integrity_scope": "stat identity per read plus selected expert SHA256; not a new full model hash"
+  },
+  "source_code_sha256": {
+    "cache_adaptive.py": "4467b29c29642f46e97c52ed843829c7e4c33ec7ebb2e5f2ef6d83214a73cf30",
+    "cache_replay.py": "2686f7155b1da5e18f6a48119d42ed47a2f6b9810a30fd87e2c71e1500342da7"
+  },
+  "captures": [
+    {
+      "source": {
+        "capture_name": "stock-cpu4",
+        "manifest_sha256": "10c447678eb8ff4c18894a083e0e842d74900aefaadec8d2b658f50fe1bd7765",
+        "route_ids_sha256": "b07c9d14acce70218cb5f561c340dcc988d70029d5c5757223388791764f131b",
+        "steps": 4,
+        "layers": 42,
+        "selected_groups": 378,
+        "selected_expert_elements": 3024,
+        "execution_order": "step, layer, token column, original route rank"
+      },
+      "results": {
+        "scope": "actual two consecutive captured token routes, one gate projection, IO/hash consumer",
+        "layer": 40,
+        "tokens": [
+          {
+            "captured_step": 1,
+            "original_ordered_ids": [
+              141,
+              183,
+              116,
+              112,
+              154,
+              156,
+              21,
+              98
+            ],
+            "experts": [
+              {
+                "expert_id": 141,
+                "sha256_original_bytes": "b7ff9426e2e296bee50374f4d07f6d11016d78eec8fe311d08d6a652bfcce91a",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85557551296,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 183,
+                "sha256_original_bytes": "ff3e63ff8f222270c11eb94b62bb4dd3f6154f7212e09a35b9ca86b478f200d7",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85673156800,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 116,
+                "sha256_original_bytes": "d50d75abdba39bc45f22b849befcaed7b7fefc604f1a1f58bcce66eaf40fdbc7",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85488738496,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 112,
+                "sha256_original_bytes": "5ff702c2c3536be1ef1363f1b8672e39715dd6684460d75c5dcd07998939ebfc",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85477728448,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 154,
+                "sha256_original_bytes": "24ed2e94e15d964dc732f0369d09b75d7b8cbe62de7b1fcd7389ad128301e51a",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85593333952,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 156,
+                "sha256_original_bytes": "d30439ab0543bbe15f4e6ef469bfec7363ca2afb39dfffc2b53ee4d98a61f21a",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85598838976,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 21,
+                "sha256_original_bytes": "244af336906804842c6989f3fb54049654a8f6dadbd201f33fbefc7072c2a12b",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85227249856,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 98,
+                "sha256_original_bytes": "07f833232609e0e65c9c37d8c7b220735891e48f915b5c24edc937bc3e8872a8",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85439193280,
+                    "length": 2752512
+                  }
+                ]
+              }
+            ],
+            "cache_while_pinned": {
+              "fills_submitted": 8,
+              "selected_requests": 8,
+              "read_seconds": 0.0031005419996290584,
+              "logical_bytes_read": 22020096,
+              "capacity_bytes": 33554432,
+              "reserved_bytes": 22020096,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 22020096,
+              "resident_bytes": 22020096,
+              "pinned_leases": 8,
+              "entries": 8,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 1,
+              "selected_experts": 8,
+              "unique_selected_experts": 8,
+              "hits": 0,
+              "misses": 8,
+              "read_syscalls": 8,
+              "source_spans": 8,
+              "coalesced_spans": 8,
+              "consumer_wait_seconds": 0.000320999997711624,
+              "policy": "lru",
+              "target_capacity_bytes": 33554432,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 8,
+              "measured_load_cost_entries": 8,
+              "active_physical_requests": 1,
+              "coalescing_reads_no_gaps": true
+            },
+            "shrink_test": null,
+            "cache_after_request": {
+              "fills_submitted": 8,
+              "selected_requests": 8,
+              "read_seconds": 0.0031005419996290584,
+              "logical_bytes_read": 22020096,
+              "capacity_bytes": 33554432,
+              "reserved_bytes": 22020096,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 22020096,
+              "resident_bytes": 22020096,
+              "pinned_leases": 0,
+              "entries": 8,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 1,
+              "selected_experts": 8,
+              "unique_selected_experts": 8,
+              "hits": 0,
+              "misses": 8,
+              "read_syscalls": 8,
+              "source_spans": 8,
+              "coalesced_spans": 8,
+              "consumer_wait_seconds": 0.000320999997711624,
+              "policy": "lru",
+              "target_capacity_bytes": 33554432,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 8,
+              "measured_load_cost_entries": 8,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            }
+          },
+          {
+            "captured_step": 2,
+            "original_ordered_ids": [
+              141,
+              183,
+              154,
+              116,
+              112,
+              156,
+              100,
+              235
+            ],
+            "experts": [
+              {
+                "expert_id": 141,
+                "sha256_original_bytes": "b7ff9426e2e296bee50374f4d07f6d11016d78eec8fe311d08d6a652bfcce91a",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85557551296,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 183,
+                "sha256_original_bytes": "ff3e63ff8f222270c11eb94b62bb4dd3f6154f7212e09a35b9ca86b478f200d7",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85673156800,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 154,
+                "sha256_original_bytes": "24ed2e94e15d964dc732f0369d09b75d7b8cbe62de7b1fcd7389ad128301e51a",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85593333952,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 116,
+                "sha256_original_bytes": "d50d75abdba39bc45f22b849befcaed7b7fefc604f1a1f58bcce66eaf40fdbc7",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85488738496,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 112,
+                "sha256_original_bytes": "5ff702c2c3536be1ef1363f1b8672e39715dd6684460d75c5dcd07998939ebfc",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85477728448,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 156,
+                "sha256_original_bytes": "d30439ab0543bbe15f4e6ef469bfec7363ca2afb39dfffc2b53ee4d98a61f21a",
+                "reused_same_resident_buffer": true,
+                "spans": [
+                  {
+                    "offset": 85598838976,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 100,
+                "sha256_original_bytes": "935ef390193eb2d8b1d462ed0cef4c424be7fc080b5597b4451ddc9053cfc756",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85444698304,
+                    "length": 2752512
+                  }
+                ]
+              },
+              {
+                "expert_id": 235,
+                "sha256_original_bytes": "acb2dec01233cf3e6e0875dbdcb1f8af3bf947ed69cdfed29239761f1ac8fcc6",
+                "reused_same_resident_buffer": false,
+                "spans": [
+                  {
+                    "offset": 85816287424,
+                    "length": 2752512
+                  }
+                ]
+              }
+            ],
+            "cache_while_pinned": {
+              "fills_submitted": 10,
+              "selected_requests": 16,
+              "read_seconds": 0.004972957999598293,
+              "logical_bytes_read": 27525120,
+              "reused_requests": 6,
+              "capacity_bytes": 33554432,
+              "reserved_bytes": 27525120,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 27525120,
+              "resident_bytes": 27525120,
+              "pinned_leases": 8,
+              "entries": 10,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 2,
+              "selected_experts": 16,
+              "unique_selected_experts": 16,
+              "hits": 6,
+              "misses": 10,
+              "read_syscalls": 10,
+              "source_spans": 10,
+              "coalesced_spans": 10,
+              "consumer_wait_seconds": 0.00032475099669682095,
+              "policy": "lru",
+              "target_capacity_bytes": 33554432,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 10,
+              "measured_load_cost_entries": 10,
+              "active_physical_requests": 1,
+              "coalescing_reads_no_gaps": true
+            },
+            "shrink_test": {
+              "immediately_applied": false,
+              "while_selected_leases_pinned": {
+                "fills_submitted": 10,
+                "selected_requests": 16,
+                "read_seconds": 0.004972957999598293,
+                "logical_bytes_read": 27525120,
+                "reused_requests": 6,
+                "capacity_bytes": 33554432,
+                "reserved_bytes": 22020096,
+                "inflight_bytes": 0,
+                "peak_reserved_bytes": 27525120,
+                "resident_bytes": 22020096,
+                "pinned_leases": 8,
+                "entries": 8,
+                "enabled": true,
+                "closed": false,
+                "logical_bytes_are_not_physical_ssd_traffic": true,
+                "route_requests": 2,
+                "selected_experts": 16,
+                "unique_selected_experts": 16,
+                "hits": 6,
+                "misses": 10,
+                "read_syscalls": 10,
+                "source_spans": 10,
+                "coalesced_spans": 10,
+                "consumer_wait_seconds": 0.00032475099669682095,
+                "resize_requests": 1,
+                "adaptive_evictions": 2,
+                "policy": "lru",
+                "target_capacity_bytes": 0,
+                "max_capacity_bytes": 134217728,
+                "deferred_shrink_bytes": 22020096,
+                "history_entries": 10,
+                "measured_load_cost_entries": 10,
+                "active_physical_requests": 1,
+                "coalescing_reads_no_gaps": true
+              }
+            },
+            "cache_after_request": {
+              "fills_submitted": 10,
+              "selected_requests": 16,
+              "read_seconds": 0.004972957999598293,
+              "logical_bytes_read": 27525120,
+              "reused_requests": 6,
+              "capacity_bytes": 0,
+              "reserved_bytes": 0,
+              "inflight_bytes": 0,
+              "peak_reserved_bytes": 27525120,
+              "resident_bytes": 0,
+              "pinned_leases": 0,
+              "entries": 0,
+              "enabled": true,
+              "closed": false,
+              "logical_bytes_are_not_physical_ssd_traffic": true,
+              "route_requests": 2,
+              "selected_experts": 16,
+              "unique_selected_experts": 16,
+              "hits": 6,
+              "misses": 10,
+              "read_syscalls": 10,
+              "source_spans": 10,
+              "coalesced_spans": 10,
+              "consumer_wait_seconds": 0.00032475099669682095,
+              "resize_requests": 1,
+              "adaptive_evictions": 10,
+              "policy": "lru",
+              "target_capacity_bytes": 0,
+              "max_capacity_bytes": 134217728,
+              "deferred_shrink_bytes": 0,
+              "history_entries": 10,
+              "measured_load_cost_entries": 10,
+              "active_physical_requests": 0,
+              "coalescing_reads_no_gaps": true
+            }
+          }
+        ],
+        "same_resident_buffers_reused": 6,
+        "logical_bytes_read": 27525120,
+        "read_budget_bytes": 67108864,
+        "cache_before_close": {
+          "fills_submitted": 10,
+          "selected_requests": 16,
+          "read_seconds": 0.004972957999598293,
+          "logical_bytes_read": 27525120,
+          "reused_requests": 6,
+          "capacity_bytes": 0,
+          "reserved_bytes": 0,
+          "inflight_bytes": 0,
+          "peak_reserved_bytes": 27525120,
+          "resident_bytes": 0,
+          "pinned_leases": 0,
+          "entries": 0,
+          "enabled": true,
+          "closed": false,
+          "logical_bytes_are_not_physical_ssd_traffic": true,
+          "route_requests": 2,
+          "selected_experts": 16,
+          "unique_selected_experts": 16,
+          "hits": 6,
+          "misses": 10,
+          "read_syscalls": 10,
+          "source_spans": 10,
+          "coalesced_spans": 10,
+          "consumer_wait_seconds": 0.00032475099669682095,
+          "resize_requests": 1,
+          "adaptive_evictions": 10,
+          "policy": "lru",
+          "target_capacity_bytes": 0,
+          "max_capacity_bytes": 134217728,
+          "deferred_shrink_bytes": 0,
+          "history_entries": 10,
+          "measured_load_cost_entries": 10,
+          "active_physical_requests": 0,
+          "coalescing_reads_no_gaps": true
+        },
+        "cache_after_close": {
+          "fills_submitted": 10,
+          "selected_requests": 16,
+          "read_seconds": 0.004972957999598293,
+          "logical_bytes_read": 27525120,
+          "reused_requests": 6,
+          "capacity_bytes": 0,
+          "reserved_bytes": 0,
+          "inflight_bytes": 0,
+          "peak_reserved_bytes": 27525120,
+          "resident_bytes": 0,
+          "pinned_leases": 0,
+          "entries": 0,
+          "enabled": true,
+          "closed": true,
+          "logical_bytes_are_not_physical_ssd_traffic": true,
+          "route_requests": 2,
+          "selected_experts": 16,
+          "unique_selected_experts": 16,
+          "hits": 6,
+          "misses": 10,
+          "read_syscalls": 10,
+          "source_spans": 10,
+          "coalesced_spans": 10,
+          "consumer_wait_seconds": 0.00032475099669682095,
+          "resize_requests": 1,
+          "adaptive_evictions": 10,
+          "policy": "lru",
+          "target_capacity_bytes": 0,
+          "max_capacity_bytes": 134217728,
+          "deferred_shrink_bytes": 0,
+          "history_entries": 10,
+          "measured_load_cost_entries": 10,
+          "active_physical_requests": 0,
+          "coalescing_reads_no_gaps": true
+        },
+        "physical_ssd_traffic_measured": false,
+        "model_or_gpu_executed": false
+      }
+    }
+  ],
+  "validated_bank_metadata": {
+    "40": [
+      {
+        "tensor": "blk.40.ffn_gate_exps.weight",
+        "offset": 85169447104,
+        "width": 4096,
+        "rows": 2048,
+        "experts": 288,
+        "expert_bytes": 2752512
+      }
+    ]
+  },
+  "limits": [
+    "No tokens/s or whole-model fidelity is measured",
+    "File cache and background workload are uncontrolled",
+    "Logical read bytes are not NAND or physical SSD traffic",
+    "No Fanxiang volume was mounted during inspection; /Volumes/SSD was a root-filesystem directory",
+    "Weighted ranking is tested only during real reads with observed load costs; omitted from metadata replay",
+    "No reusable buffer pool: evicted payloads are freed; an uncharged spare pool would violate the payload budget"
+  ]
+}

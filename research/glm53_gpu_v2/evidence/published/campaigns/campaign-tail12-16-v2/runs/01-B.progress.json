@@ -1,0 +1,54 @@
+{
+  "t": 103.0456855829998,
+  "rss": 6105841664,
+  "available": 2992111616,
+  "swap_used": 110166016,
+  "process": {
+    "user_ticks": 12957736780,
+    "system_ticks": 1695676488,
+    "pageins": 11293860,
+    "resident": 6105956352,
+    "footprint": 640658216,
+    "storage_read_bytes": 183356899328,
+    "storage_write_bytes": 0
+  },
+  "cpu_seconds": 610.559115264,
+  "pressure": 2,
+  "gpu_system": {
+    "Alloc system memory": 3467788288,
+    "Allocated PB Size": 42991616,
+    "Device Utilization %": 10,
+    "In use system memory": 3047964672,
+    "In use system memory (driver)": 0,
+    "Renderer Utilization %": 2,
+    "SplitSceneCount": 0,
+    "TiledSceneBytes": 950272,
+    "Tiler Utilization %": 1,
+    "lastRecoveryTime": 0,
+    "recoveryCount": 0
+  },
+  "block_device": {
+    "available": true,
+    "devices": [
+      {
+        "registry_id": 4294969444,
+        "name": "IOBlockStorageDriver",
+        "statistics": {
+          "Bytes (Read)": 5309949325312,
+          "Bytes (Write)": 38012796928,
+          "Errors (Read)": 0,
+          "Errors (Write)": 0,
+          "Latency Time (Read)": 0,
+          "Latency Time (Write)": 0,
+          "Operations (Read)": 74042229,
+          "Operations (Write)": 681661,
+          "Retries (Read)": 0,
+          "Retries (Write)": 0,
+          "Total Time (Read)": 10197846948787,
+          "Total Time (Write)": 104580866206
+        }
+      }
+    ],
+    "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+  }
+}

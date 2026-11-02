@@ -1,0 +1,130 @@
+--- a/ggml/src/ggml-metal/ggml-metal-device.cpp
++++ b/ggml/src/ggml-metal/ggml-metal-device.cpp
+@@ -7,6 +7,8 @@
+ #include "ggml-impl.h"
+
+ #include <cassert>
++#include <cstdlib>
++#include <cstring>
+ #include <memory>
+ #include <string>
+ #include <unordered_map>
+@@ -1040,6 +1042,26 @@
+     const ggml_type tsrc0 = op->src[0]->type;
+     const ggml_type tsrc1 = op->src[1]->type;
+
++    const char * cpu_arith = std::getenv("AIRLLM_METAL_Q8_CPU_ARITH");
++    if (cpu_arith && std::strcmp(cpu_arith, "1") == 0 && op->op == GGML_OP_MUL_MAT &&
++            tsrc0 == GGML_TYPE_Q8_0 && tsrc1 == GGML_TYPE_F32 && op->type == GGML_TYPE_F32 &&
++            std::strcmp(op->src[0]->name, "output.weight") == 0 &&
++            ne00 == 4096 && ne01 == 154880 && ne02 == 1 && ne03 == 1 &&
++            ne11 == 1 && ne12 == 1 && ne13 == 1 &&
++            ggml_is_contiguous(op->src[0]) && ggml_is_contiguous(op->src[1])) {
++        const char * kernel = "kernel_mul_mv_q8_0_f32_cpuarith";
++        ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, kernel);
++        if (!res.pipeline) {
++            GGML_LOG_INFO("%s: experimental CPU-compatible Q8_0 output matvec\n", __func__);
++            res = ggml_metal_library_compile_pipeline(lib, kernel, kernel, nullptr);
++        }
++        res.nr0 = 8;
++        res.nr1 = 1;
++        res.nsg = 1;
++        res.smem = 0;
++        return res;
++    }
++
+     const char * suffix = "";
+
+     bool split = false;
+--- a/ggml/src/ggml-metal/ggml-metal-device.m
++++ b/ggml/src/ggml-metal/ggml-metal-device.m
+@@ -349,6 +349,11 @@
+                 MTLCompileOptions * options = [MTLCompileOptions new];
+                 options.preprocessorMacros = prep;
+                 ggml_metal_compile_options_set_lang(options, ggml_metal_device_get_props(res->dev)->has_tensor);
++                const char * cpu_arith = getenv("AIRLLM_METAL_Q8_CPU_ARITH");
++                if (kind == GGML_METAL_LIB_MUL_MV && cpu_arith && strcmp(cpu_arith, "1") == 0) {
++                    options.fastMathEnabled = NO;
++                    GGML_LOG_INFO("%s: experimental Q8_0 MUL_MV safe math enabled\n", __func__);
++                }
+
+                 lib = [device newLibraryWithSource:src options:options error:&error];
+
+--- a/ggml/src/ggml-metal/kernels/mul_mv.metal
++++ b/ggml/src/ggml-metal/kernels/mul_mv.metal
+@@ -595,6 +595,75 @@
+         ushort tiisg[[thread_index_in_simdgroup]],
+         ushort sgitg[[simdgroup_index_in_threadgroup]]) {
+     kernel_mul_mv_q8_0_f32_impl<N_R0_Q8_0, constant ggml_metal_kargs_mul_mv &>(args, src0, src1, dst, shmem, tgpig, tiisg, sgitg);
++}
++
++
++// Private output-head experiment: original Q8_0 bytes and ARM nrc=1 arithmetic.
++inline float2 airllm_q8_cpu_partial(device const uchar* p, device const float* x, uint part) {
++#pragma clang fp contract(off)
++    float maximum = 0.0f;
++    for (uint k = 0; k < 4; ++k) {
++        const uint j = part * 4 + k;
++        maximum = max(maximum, abs(x[j]));
++        maximum = max(maximum, abs(x[j+16]));
++    }
++    maximum = max(maximum, simd_shuffle_xor(maximum, 1));
++    maximum = max(maximum, simd_shuffle_xor(maximum, 2));
++    const float d = maximum / 127.0f;
++    const float inverse = d == 0.0f ? 0.0f : 1.0f / d;
++    int dot = 0;
++    for (uint k = 0; k < 4; ++k) {
++        const uint j = part * 4 + k;
++        const int q0 = int(rint(x[j] * inverse));
++        const int q1 = int(rint(x[j+16] * inverse));
++        dot += int(as_type<char>(p[2+j])) * q0;
++        dot += int(as_type<char>(p[18+j])) * q1;
++    }
++    const float weight_scale = float(as_type<half>(ushort(ushort(p[0]) | (ushort(p[1]) << 8))));
++    const float scale = weight_scale * float(half(d));
++    return float2(float(dot), scale);
++}
++
++[[host_name("kernel_mul_mv_q8_0_f32_cpuarith")]]
++kernel void kernel_mul_mv_q8_0_f32_cpuarith(
++        constant ggml_metal_kargs_mul_mv & args,
++        device const char * src0,
++        device const char * src1,
++        device char * dst,
++        uint3 tgpig [[threadgroup_position_in_grid]],
++        ushort tiisg [[thread_index_in_simdgroup]]) {
++#pragma clang fp contract(off)
++// Fused activation quantization + exact ARM nrc=1 dot, without scratch buffers.
++const uint row = tgpig.x * 8 + tiisg / 4;
++const uint part = tiisg % 4;
++const uint blocks = args.ne00 / 32;
++    device const uchar * packed = (device const uchar *) src0;
++    device const float * x = (device const float *) src1;
++    device float * out = (device float *) dst;
++if (row >= args.ne01) return;
++float even = 0.0f;
++float odd = 0.0f;
++uint block = 0;
++for (; block + 1 < blocks; block += 2) {
++    const device uchar* p0 = packed + uint64_t(row) * args.nb01 + block * 34;
++    const float2 v0 = airllm_q8_cpu_partial(p0, x + block*32, part);
++    const float2 v1 = airllm_q8_cpu_partial(p0 + 34, x + (block+1)*32, part);
++    even = fma(v0.x, v0.y, even);
++    odd = fma(v1.x, v1.y, odd);
++}
++const float even_pair = even + simd_shuffle_xor(even, 1);
++const float odd_pair = odd + simd_shuffle_xor(odd, 1);
++const float even_sum = even_pair + simd_shuffle_xor(even_pair, 2);
++const float odd_sum = odd_pair + simd_shuffle_xor(odd_pair, 2);
++float result = even_sum + odd_sum;
++if (block < blocks) {
++    const device uchar* p = packed + uint64_t(row) * args.nb01 + block * 34;
++    const float2 last = airllm_q8_cpu_partial(p, x + block*32, part);
++    const int pair = int(last.x) + simd_shuffle_xor(int(last.x), 1);
++    const int total = pair + simd_shuffle_xor(pair, 2);
++    result = fma(float(total), last.y, result);
++}
++if (part == 0) out[row] = result;
+ }
+
+ // mat-vec kernel processing in chunks of float4

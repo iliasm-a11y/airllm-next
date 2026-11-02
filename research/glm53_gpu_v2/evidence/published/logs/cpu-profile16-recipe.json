@@ -1,0 +1,31 @@
+{
+  "command": [
+    "<user>/Documents/Codex/2026-11-02/files-pasted-by-the-user-mission/work/testenv/bin/python",
+    "research/glm53_m5/run_guarded_probe.py",
+    "--output",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/cpu-profile16.guard.json",
+    "--max-rss-gib",
+    "8.5",
+    "--max-swap-mib",
+    "32",
+    "--timeout-seconds",
+    "700",
+    "--",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/native-profile-v2",
+    "<user>/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/cpu-profile16",
+    "10",
+    "0",
+    "16",
+    "La capitale de la France est",
+    "-",
+    "cpu"
+  ],
+  "environment": {
+    "AIRLLM_PROFILE_OPS": "1",
+    "AIRLLM_PROFILE_PAGES": "1",
+    "AIRLLM_MMAP_DEMAND": "1",
+    "AIRLLM_EXPERT_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH": "1"
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-02T20:36:34.672091+00:00",
+  "status": "failed",
+  "command": [
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v2-build/bin/llama-server",
+    "--offline",
+    "--fit",
+    "off",
+    "-m",
+    "<user>/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+    "--load-mode",
+    "mmap",
+    "--no-repack",
+    "--no-warmup",
+    "--ctx-size",
+    "512",
+    "-b",
+    "8",
+    "-ub",
+    "8",
+    "-t",
+    "10",
+    "-tb",
+    "10",
+    "-ngl",
+    "0",
+    "-np",
+    "1",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "53363",
+    "--no-webui",
+    "--no-mmproj",
+    "--no-context-shift",
+    "--perf",
+    "--log-colors",
+    "off",
+    "--device",
+    "none",
+    "--no-op-offload"
+  ],
+  "model_revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "binary_sha256": "68d23131e290eb1b36e814ab96cd6252eb33d6eee5f5a94c06262c4acc7cf89c",
+  "cache_scope": "Process cold at launch; OS file cache uncontrolled. Repeats share process, KV reuse disabled.",
+  "hardware": "hw.model: Mac17,3\nhw.memsize: 17179869184\nmachdep.cpu.brand_string: Apple M5",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B118",
+  "logical_weight_reads_bytes": null,
+  "physical_nand_reads_bytes": null,
+  "storage_scope": "libproc process OS-accounted I/O, includes paging and readahead; not NAND bytes",
+  "gpu_scope": "IORegistry system-wide utilization; includes desktop and other processes",
+  "cpu_counter_scope": "rusage user/system are mach absolute ticks; multiply by 125/3 for nanoseconds on this M5",
+  "component_timings": {
+    "dequantization": null,
+    "router": null,
+    "gpu_compute": null,
+    "synchronization": null,
+    "allocation": null
+  },
+  "thermal_before": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "samples": [
+    {
+      "t": 0.5033408340004826,
+      "rss": 268648448,
+      "available": 4616732672,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 7891673,
+        "system_ticks": 4896588,
+        "pageins": 15318,
+        "resident": 268910592,
+        "footprint": 388941144,
+        "storage_read_bytes": 263782400,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 0.53305424,
+      "pressure": 1,
+      "gpu_system": {
+        "Alloc system memory": 873529344,
+        "Allocated PB Size": 42991616,
+        "Device Utilization %": 24,
+        "In use system memory": 454639616,
+        "In use system memory (driver)": 0,
+        "Renderer Utilization %": 18,
+        "SplitSceneCount": 0,
+        "TiledSceneBytes": 950272,
+        "Tiler Utilization %": 2,
+        "lastRecoveryTime": 0,
+        "recoveryCount": 0
+      },
+      "block_device": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 5494944768000,
+              "Bytes (Write)": 38059466752,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 76797893,
+              "Operations (Write)": 683547,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 10574655911339,
+              "Total Time (Write)": 104781700005
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      }
+    },
+    {
+      "t": 1.065874125000846,
+      "rss": 1198702592,
+      "available": 4643274752,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 16854261,
+        "system_ticks": 17821110,
+        "pageins": 71806,
+        "resident": 1198751744,
+        "footprint": 389826744,
+        "storage_read_bytes": 1178484736,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 1.4448146560000001
+    },
+    {
+      "t": 1.566639667000345,
+      "rss": 1965719552,
+      "available": 4736221184,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 28217485,
+        "system_ticks": 28002582,
+        "pageins": 119122,
+        "resident": 1965768704,
+        "footprint": 368431592,
+        "storage_read_bytes": 1943420928,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 2.34256768
+    },
+    {
+      "t": 2.0678004170003987,
+      "rss": 2656567296,
+      "available": 4679778304,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 41595359,
+        "system_ticks": 37517069,
+        "pageins": 161900,
+        "resident": 2656600064,
+        "footprint": 370023072,
+        "storage_read_bytes": 2633699328,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 3.2963722239999997
+    },
+    {
+      "t": 2.56821037500049,
+      "rss": 3475537920,
+      "available": 4654907392,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 51550685,
+        "system_ticks": 49214973,
+        "pageins": 212487,
+        "resident": 3475636224,
+        "footprint": 372074072,
+        "storage_read_bytes": 3449790464,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 4.198682368,
+      "pressure": 1,
+      "gpu_system": {
+        "Alloc system memory": 830275584,
+        "Allocated PB Size": 42991616,
+        "Device Utilization %": 0,
+        "In use system memory": 153255936,
+        "In use system memory (driver)": 0,
+        "Renderer Utilization %": 0,
+        "SplitSceneCount": 0,
+        "TiledSceneBytes": 0,
+        "Tiler Utilization %": 0,
+        "lastRecoveryTime": 0,
+        "recoveryCount": 0
+      },
+      "block_device": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 5498152071168,
+              "Bytes (Write)": 38068576256,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 76932037,
+              "Operations (Write)": 683982,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 10591467624833,
+              "Total Time (Write)": 104805569565
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      }
+    },
+    {
+      "t": 3.1115779589999875,
+      "rss": 4419911680,
+      "available": 4604084224,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 58388416,
+        "system_ticks": 62522750,
+        "pageins": 270506,
+        "resident": 4419928064,
+        "footprint": 374010216,
+        "storage_read_bytes": 4387512320,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 5.03809152
+    },
+    {
+      "t": 3.617430416999923,
+      "rss": 5247533056,
+      "available": 4492115968,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 65918735,
+        "system_ticks": 74613189,
+        "pageins": 324504,
+        "resident": 5247614976,
+        "footprint": 375864344,
+        "storage_read_bytes": 5256847360,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 5.855541248
+    },
+    {
+      "t": 4.118204042000798,
+      "rss": 5854969856,
+      "available": 4485742592,
+      "swap_used": 110166016,
+      "process": {
+        "user_ticks": 72669847,
+        "system_ticks": 85414176,
+        "pageins": 374494,
+        "resident": 5855019008,
+        "footprint": 377669200,
+        "storage_read_bytes": 6064807936,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 6.586883072
+    },
+    {
+      "t": 4.622340625001016,
+      "rss": 6494486528,
+      "available": 4485709824,
+      "swap_used": 156565504,
+      "process": {
+        "user_ticks": 81068059,
+        "system_ticks": 95800880,
+        "pageins": 422284,
+        "resident": 6494535680,
+        "footprint": 379031568,
+        "storage_read_bytes": 6842294272,
+        "storage_write_bytes": 0
+      },
+      "cpu_seconds": 7.36962048,
+      "pressure": 1,
+      "gpu_system": {
+        "Alloc system memory": 860946432,
+        "Allocated PB Size": 42991616,
+        "Device Utilization %": 7,
+        "In use system memory": 425525248,
+        "In use system memory (driver)": 0,
+        "Renderer Utilization %": 7,
+        "SplitSceneCount": 0,
+        "TiledSceneBytes": 950272,
+        "Tiler Utilization %": 3,
+        "lastRecoveryTime": 0,
+        "recoveryCount": 0
+      },
+      "block_device": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 5501517717504,
+              "Bytes (Write)": 38119227392,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 77069058,
+              "Operations (Write)": 684744,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 10608882385547,
+              "Total Time (Write)": 104820834279
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      }
+    }
+  ],
+  "requests": [],
+  "guard_violation": {
+    "t": 4.622340625001016,
+    "rss": 6494486528,
+    "available": 4485709824,
+    "swap_used": 156565504,
+    "process": {
+      "user_ticks": 81068059,
+      "system_ticks": 95800880,
+      "pageins": 422284,
+      "resident": 6494535680,
+      "footprint": 379031568,
+      "storage_read_bytes": 6842294272,
+      "storage_write_bytes": 0
+    },
+    "cpu_seconds": 7.36962048,
+    "pressure": 1,
+    "gpu_system": {
+      "Alloc system memory": 860946432,
+      "Allocated PB Size": 42991616,
+      "Device Utilization %": 7,
+      "In use system memory": 425525248,
+      "In use system memory (driver)": 0,
+      "Renderer Utilization %": 7,
+      "SplitSceneCount": 0,
+      "TiledSceneBytes": 950272,
+      "Tiler Utilization %": 3,
+      "lastRecoveryTime": 0,
+      "recoveryCount": 0
+    },
+    "block_device": {
+      "available": true,
+      "devices": [
+        {
+          "registry_id": 4294969444,
+          "name": "IOBlockStorageDriver",
+          "statistics": {
+            "Bytes (Read)": 5501517717504,
+            "Bytes (Write)": 38119227392,
+            "Errors (Read)": 0,
+            "Errors (Write)": 0,
+            "Latency Time (Read)": 0,
+            "Latency Time (Write)": 0,
+            "Operations (Read)": 77069058,
+            "Operations (Write)": 684744,
+            "Retries (Read)": 0,
+            "Retries (Write)": 0,
+            "Total Time (Read)": 10608882385547,
+            "Total Time (Write)": 104820834279
+          }
+        }
+      ],
+      "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+    }
+  },
+  "peak_rss_bytes": 6494486528,
+  "peak_footprint_bytes": 389826744,
+  "swap_start_bytes": 110166016,
+  "peak_swap_growth_bytes": 46399488,
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "4de41674fb0abbe6e4000ed1b21a11bbc4de43a43596dafd0f489affdd167808",
+    "libllama-server-impl.dylib": "88e43377a2bc6a71ee03b62ea3f148eef730a6a774958a1c15e162965bb4db21",
+    "libllama-common.0.8.0.dylib": "b9559af00749c57591cb76e9bd18a44f13209c5bc97b94d7f119d3a875efac47",
+    "libllama.0.8.0.dylib": "d0db09f848f8f6e95fc551c9f04bc03702416c6941bd368bc44e1292f8e62586",
+    "libmtmd.0.8.0.dylib": "f01a150b51ae6c95fd69276858c737ce165be5334fd66ecdb56539fa4fdf8342",
+    "libggml-blas.0.28.0.dylib": "d17dd7ac6279ebb1377839e4ad94637fe3bfb315aaaff42131e79046ec1655dd",
+    "libggml-metal.0.28.0.dylib": "278385a40d4a5e222c6def48fbb896c682d213daf35750cf2cb82f6346bc36ea",
+    "libggml.0.28.0.dylib": "752c8cf6910a9500a949f1565dfd96c6692d85c00e896feb7d86495e6a5c7ca5",
+    "libggml-cpu.0.28.0.dylib": "b1db7d08a16763e2827b218260f81e823fd981106dc5b6bb848b5c7a63e4aeec"
+  },
+  "model_file_stats_before": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "size": 9430112,
+      "mtime_ns": 1793220986088562812
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "size": 110017922752,
+      "mtime_ns": 1793630405545465080
+    }
+  ],
+  "mmap_demand": true,
+  "expert_prefetch": true,
+  "dense_prefetch": true,
+  "research_environment": {
+    "AIRLLM_METAL_COMMAND_TIMING": "1"
+  },
+  "head_only": false,
+  "placement": null,
+  "owned_pid": 32033,
+  "error_type": "RuntimeError",
+  "error": "Server stopped before ready",
+  "usage_final": null,
+  "exit_code": -15,
+  "total_seconds": 4.926015959001234,
+  "swap_final_bytes": 156565504,
+  "thermal_after": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "model_file_stats_unchanged": true,
+  "gpu_command_times": {
+    "recorded_commands": 0,
+    "valid_commands": 0,
+    "sum_command_seconds": 0,
+    "union_command_seconds": 0.0,
+    "rows": [],
+    "scope": "owned completed Metal command buffers including copies/events; not per-kernel counters",
+    "complete_capture_guaranteed": false
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-02T20:45:27.220244+00:00",
+  "scope": "forced-input tensor diagnostic; not throughput",
+  "command": [
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/native-probe-v2-selective",
+    "<user>/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/cpu-fidelity64-hardened/capture",
+    "10",
+    "0",
+    "64",
+    "La capitale de la France est",
+    "-",
+    "cpu"
+  ],
+  "environment": {
+    "AIRLLM_MMAP_DEMAND": "1",
+    "AIRLLM_EXPERT_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+    "AIRLLM_GPU_CACHE_MIB": "0",
+    "AIRLLM_METAL_COMMAND_TIMING": "1"
+  },
+  "model_files": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "size": 9430112,
+      "mtime_ns": 1793220986088562812
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "size": 110017922752,
+      "mtime_ns": 1793630405545465080
+    }
+  ],
+  "production_changed": false,
+  "guard_limits": {
+    "max_rss_gib": 8.5,
+    "max_swap_mib": 32,
+    "timeout_seconds": 900
+  },
+  "weight_integrity_scope": "file sizes and modification times; no new full 110GB hash",
+  "probe_binary_sha256": "93b6e88519fd10018568333102018f805fe5051f1a8ab441df8363a18d53c7df",
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "72e447209ec4efb81f70b3ddf8b148c4e8a65ff5935c9b811b0ae520da3b7919",
+    "libllama-server-impl.dylib": "88e43377a2bc6a71ee03b62ea3f148eef730a6a774958a1c15e162965bb4db21",
+    "libllama-common.0.8.0.dylib": "b9559af00749c57591cb76e9bd18a44f13209c5bc97b94d7f119d3a875efac47",
+    "libllama.0.8.0.dylib": "d0db09f848f8f6e95fc551c9f04bc03702416c6941bd368bc44e1292f8e62586",
+    "libmtmd.0.8.0.dylib": "f01a150b51ae6c95fd69276858c737ce165be5334fd66ecdb56539fa4fdf8342",
+    "libggml-blas.0.28.0.dylib": "d17dd7ac6279ebb1377839e4ad94637fe3bfb315aaaff42131e79046ec1655dd",
+    "libggml-metal.0.28.0.dylib": "278385a40d4a5e222c6def48fbb896c682d213daf35750cf2cb82f6346bc36ea",
+    "libggml.0.28.0.dylib": "752c8cf6910a9500a949f1565dfd96c6692d85c00e896feb7d86495e6a5c7ca5",
+    "libggml-cpu.0.28.0.dylib": "b1db7d08a16763e2827b218260f81e823fd981106dc5b6bb848b5c7a63e4aeec"
+  },
+  "guard_status": "stopped_or_failed",
+  "model_file_stats_unchanged": true,
+  "finished_at": "2026-11-02T20:49:25.486536+00:00"
+}

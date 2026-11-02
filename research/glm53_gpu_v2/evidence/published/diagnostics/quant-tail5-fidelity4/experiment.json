@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-02T19:43:15.399342+00:00",
+  "scope": "forced-input tensor diagnostic; not throughput",
+  "command": [
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/native-probe-v2-selective",
+    "<user>/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/quant-tail5-fidelity4/capture",
+    "10",
+    "0",
+    "4",
+    "La capitale de la France est",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/quant-tail5-fidelity4/forced.jsonl",
+    "quant-tail"
+  ],
+  "environment": {
+    "AIRLLM_MMAP_DEMAND": "1",
+    "AIRLLM_EXPERT_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+    "AIRLLM_GPU_CACHE_MIB": "0",
+    "AIRLLM_METAL_Q8_CPU_ARITH": "2",
+    "AIRLLM_GLM_Q8_ONLY": "1",
+    "AIRLLM_Q8_TAIL_PATTERN": "^(output\\.weight|blk\\.40\\.ffn_down_shexp\\.weight|blk\\.40\\.ffn_gate_shexp\\.weight|blk\\.40\\.ffn_up_shexp\\.weight|blk\\.40\\.attn_k\\.weight|blk\\.40\\.attn_output\\.weight|blk\\.40\\.attn_q\\.weight|blk\\.40\\.attn_v\\.weight|blk\\.41\\.ffn_down_shexp\\.weight|blk\\.41\\.ffn_gate_shexp\\.weight|blk\\.41\\.ffn_up_shexp\\.weight|blk\\.41\\.attn_k\\.weight|blk\\.41\\.attn_output\\.weight|blk\\.41\\.attn_q\\.weight|blk\\.41\\.attn_v\\.weight|blk\\.42\\.ffn_down_shexp\\.weight|blk\\.42\\.ffn_gate_shexp\\.weight|blk\\.42\\.ffn_up_shexp\\.weight|blk\\.42\\.attn_k\\.weight|blk\\.42\\.attn_output\\.weight|blk\\.42\\.attn_q\\.weight|blk\\.42\\.attn_v\\.weight|blk\\.43\\.ffn_down_shexp\\.weight|blk\\.43\\.ffn_gate_shexp\\.weight|blk\\.43\\.ffn_up_shexp\\.weight|blk\\.43\\.attn_output\\.weight|blk\\.43\\.attn_q_a\\.weight|blk\\.43\\.attn_q_b\\.weight|blk\\.44\\.ffn_down_shexp\\.weight|blk\\.44\\.ffn_gate_shexp\\.weight|blk\\.44\\.ffn_up_shexp\\.weight|blk\\.44\\.attn_k\\.weight|blk\\.44\\.attn_output\\.weight|blk\\.44\\.attn_q\\.weight|blk\\.44\\.attn_v\\.weight)$"
+  },
+  "model_files": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "size": 9430112,
+      "mtime_ns": 1793220986088562812
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "size": 110017922752,
+      "mtime_ns": 1793630405545465080
+    }
+  ],
+  "production_changed": false,
+  "weight_integrity_scope": "file sizes and modification times; no new full 110GB hash",
+  "probe_binary_sha256": "0493597c4e39ffbe028a9d596985993326816c64d40d6e317dd54d06125179aa",
+  "guard_status": "stopped_or_failed",
+  "model_file_stats_unchanged": true,
+  "finished_at": "2026-11-02T19:43:22.144548+00:00"
+}

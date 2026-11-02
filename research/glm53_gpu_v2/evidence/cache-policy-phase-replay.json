@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "scope": "Metadata-only phase split of one captured trajectory; no model, GPU or weight reads",
+  "created_at_utc": "2026-11-02T20:49:37.396276+00:00",
+  "validated_bank_metadata_source": "research/glm53_gpu_v2/evidence/cache-policy-replay.json",
+  "validated_bank_metadata_source_sha256": "36dc55ed3526c7ca62f9ea86c0671214a702fac63d05b1fe6c5f0ee8f20dfa5b",
+  "route_source": {
+    "capture_name": "stock-cpu4",
+    "manifest_sha256": "10c447678eb8ff4c18894a083e0e842d74900aefaadec8d2b658f50fe1bd7765",
+    "route_ids_sha256": "b07c9d14acce70218cb5f561c340dcc988d70029d5c5757223388791764f131b",
+    "steps": 4,
+    "layers": 42,
+    "selected_groups": 378,
+    "selected_expert_elements": 3024,
+    "execution_order": "step, layer, token column, original route rank"
+  },
+  "phase_definitions": {
+    "prefill": "step0, six token columns per layer",
+    "decode": "steps1..3, one token column per layer"
+  },
+  "results": [
+    {
+      "policy": "lru",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 67108864,
+      "hits": 558,
+      "misses": 2466,
+      "evictions": 2458,
+      "logical_miss_bytes": 20363083776,
+      "peak_payload_bytes": 66060288,
+      "by_phase": {
+        "prefill": {
+          "hits": 558,
+          "misses": 1458,
+          "logical_miss_bytes": 12039487488,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 0,
+          "misses": 1008,
+          "logical_miss_bytes": 8323596288,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    },
+    {
+      "policy": "slru",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 67108864,
+      "hits": 558,
+      "misses": 2466,
+      "evictions": 2458,
+      "logical_miss_bytes": 20363083776,
+      "peak_payload_bytes": 66060288,
+      "by_phase": {
+        "prefill": {
+          "hits": 558,
+          "misses": 1458,
+          "logical_miss_bytes": 12039487488,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 0,
+          "misses": 1008,
+          "logical_miss_bytes": 8323596288,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    },
+    {
+      "policy": "lfu",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 67108864,
+      "hits": 558,
+      "misses": 2466,
+      "evictions": 2458,
+      "logical_miss_bytes": 20363083776,
+      "peak_payload_bytes": 66060288,
+      "by_phase": {
+        "prefill": {
+          "hits": 558,
+          "misses": 1458,
+          "logical_miss_bytes": 12039487488,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 0,
+          "misses": 1008,
+          "logical_miss_bytes": 8323596288,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    },
+    {
+      "policy": "lru",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 134217728,
+      "hits": 704,
+      "misses": 2320,
+      "evictions": 2304,
+      "logical_miss_bytes": 19157483520,
+      "peak_payload_bytes": 132120576,
+      "by_phase": {
+        "prefill": {
+          "hits": 704,
+          "misses": 1312,
+          "logical_miss_bytes": 10833887232,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 0,
+          "misses": 1008,
+          "logical_miss_bytes": 8323596288,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    },
+    {
+      "policy": "slru",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 134217728,
+      "hits": 657,
+      "misses": 2367,
+      "evictions": 2351,
+      "logical_miss_bytes": 19545587712,
+      "peak_payload_bytes": 132120576,
+      "by_phase": {
+        "prefill": {
+          "hits": 642,
+          "misses": 1374,
+          "logical_miss_bytes": 11345854464,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 15,
+          "misses": 993,
+          "logical_miss_bytes": 8199733248,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    },
+    {
+      "policy": "lfu",
+      "scope": "metadata-only cache policy replay",
+      "capacity_bytes": 134217728,
+      "hits": 562,
+      "misses": 2462,
+      "evictions": 2446,
+      "logical_miss_bytes": 20330053632,
+      "peak_payload_bytes": 132120576,
+      "by_phase": {
+        "prefill": {
+          "hits": 562,
+          "misses": 1454,
+          "logical_miss_bytes": 12006457344,
+          "selected_groups": 252
+        },
+        "decode": {
+          "hits": 0,
+          "misses": 1008,
+          "logical_miss_bytes": 8323596288,
+          "selected_groups": 126
+        }
+      },
+      "physical_io_measured": false,
+      "wait_time_measured": false
+    }
+  ],
+  "physical_io_measured": false,
+  "wait_time_measured": false,
+  "original_evidence_unchanged": true
+}

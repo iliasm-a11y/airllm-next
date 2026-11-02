@@ -1,0 +1,63 @@
+--- a/src/models/glm5-next.cpp
++++ b/src/models/glm5-next.cpp
+@@ -1,5 +1,8 @@
+ #include "models.h"
+ #include "llama-memory-hybrid-idx.h"
++
++#include <cstdlib>
++#include <cstring>
+
+ // GLM5-Next (GLM-5.3-Flash): hybrid KDA (linear) + nope MLA with a k-pool DSA indexer,
+ // mHC residual streams, DeepSeek-style MoE.
+@@ -196,7 +199,8 @@
+                                  int64_t qkv, ggml_tensor * x, ggml_tensor * proj_w, ggml_tensor * conv_w,
+                                  int64_t d_conv, int64_t head_dim, int64_t n_head,
+                                  int64_t n_seq_tokens, int64_t n_seqs, int64_t n_tokens, int64_t kv_head,
+-                                 int64_t mem_size, int64_t K_rs) {
++                                 int64_t mem_size, int64_t K_rs,
++                                 const llm_graph_cb & trace_cb, const llama_ubatch & trace_ubatch, int il) {
+     const int64_t d_inner         = head_dim * n_head;
+     const int64_t conv_state_size = (d_conv - 1) * d_inner;
+     const int64_t n_embd_r_total  = 3 * conv_state_size;
+@@ -207,6 +211,11 @@
+         qkv * conv_state_size * ggml_element_size(conv_state_all));
+
+     ggml_tensor * x_proj = ggml_mul_mat(ctx0, proj_w, x);
++    const char * trace = std::getenv("AIRLLM_TRACE_HC_KDA");
++    if (trace && std::strcmp(trace, "1") == 0 && trace_cb) {
++        const char * name = qkv == 0 ? "kda_q_proj" : qkv == 1 ? "kda_k_proj" : "kda_v_proj";
++        trace_cb(trace_ubatch, x_proj, name, il);
++    }
+     ggml_tensor * x_3d   = ggml_reshape_3d(ctx0, x_proj, d_inner, n_seq_tokens, n_seqs);
+     ggml_tensor * conv_x = ggml_concat(ctx0, conv_state_x, ggml_transpose(ctx0, x_3d), 0);
+
+@@ -457,8 +466,16 @@
+     GGML_ASSERT(hc == 4);
+     GGML_ASSERT(hc_fn->ne[1] == hc_mix_dim);
+
++    const char * trace = std::getenv("AIRLLM_TRACE_HC_KDA");
++    const bool trace_hc = trace && std::strcmp(trace, "1") == 0;
+     ggml_tensor * flat = ggml_reshape_2d(ctx0, x, hc_dim, nt);
++    if (trace_hc) {
++        cb(flat, "hc_flat", il);
++    }
+     ggml_tensor * flat_norm = ggml_rms_norm(ctx0, flat, norm_rms_eps);
++    if (trace_hc) {
++        cb(flat_norm, "hc_flat_norm", il);
++    }
+     ggml_tensor * mixes = ggml_mul_mat(ctx0, hc_fn, flat_norm);
+     cb(mixes, "hc_mixes", il);
+
+@@ -820,9 +837,9 @@
+     const int64_t mem_size = mctx_cur->get_size();
+     const int64_t K_rs     = (int64_t) cparams.n_rs_seq + 1;
+
+-    ggml_tensor * Qcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 0, cur, layer.wq, layer.ssm_q_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
+-    ggml_tensor * Kcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 1, cur, layer.wk, layer.ssm_k_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
+-    ggml_tensor * Vcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 2, cur, layer.wv, layer.ssm_v_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
++    ggml_tensor * Qcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 0, cur, layer.wq, layer.ssm_q_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs, cb_func, ubatch, il);
++    ggml_tensor * Kcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 1, cur, layer.wk, layer.ssm_k_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs, cb_func, ubatch, il);
++    ggml_tensor * Vcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 2, cur, layer.wv, layer.ssm_v_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs, cb_func, ubatch, il);
+     cb(Qcur, "kda_q_conv", il);
+     cb(Kcur, "kda_k_conv", il);
+     cb(Vcur, "kda_v_conv", il);

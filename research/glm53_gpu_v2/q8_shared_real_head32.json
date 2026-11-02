@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "scope": "Selected original Q8_0 bytes + one activation; ARM nrc=1 component only",
+  "measured_at_utc": "2026-11-02T19:47:35.275246+00:00",
+  "metadata": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "file_bytes": 110017922752,
+    "tensor": "output.weight",
+    "dims": [
+      4096,
+      154880
+    ],
+    "expert": 0,
+    "first_row": 0,
+    "rows": 32,
+    "absolute_offset": 86720,
+    "selected_bytes": 139264,
+    "selected_sha256": "610c60fb6a4cdf651eb8fadc93f065f4d063f77c0e45bcacc0646136898367c8"
+  },
+  "activation": {
+    "kind": "synthetic standard normal FP32",
+    "seed": 5305,
+    "sha256": "8da87567517d020268e6d1df8bf53a9c2f76db652441db7f6357b3ef4935f664"
+  },
+  "activation_bitexact": true,
+  "results": {
+    "prepared_activation": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 32,
+      "host_wall": {
+        "wall_seconds": [
+          0.0003333750000820146,
+          0.0006962500001463923,
+          0.0007769590001771576,
+          0.0003649580003184383,
+          0.000706832999640028
+        ],
+        "median_wall_seconds": 0.0006962500001463923
+      },
+      "device": {
+        "device": "Apple M5",
+        "payload_bytes": 160128,
+        "median_command_wall_seconds": 0.000637167,
+        "warmup_commands": 4,
+        "median_gpu_seconds": 9.237500034942059e-05,
+        "stages_per_command": 2,
+        "command_wall_seconds": [
+          0.000366375,
+          0.000733166,
+          0.000637167,
+          0.000597125,
+          0.000651791
+        ],
+        "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+        "gpu_seconds": [
+          9.237500034942059e-05,
+          9.299999965151073e-05,
+          9.162499918602407e-05,
+          9.133333333011251e-05,
+          9.270833288610447e-05
+        ],
+        "declared_static_threadgroup_bytes": 0,
+        "source_sha256": "cf76c95001ba7111f49a51fc9fda81ccbfcc87df1a42854d74d33bcde1f9431c",
+        "scope": "Command-buffer device timestamps on prepared small Q8 matrix; no SSD or GLM throughput claim"
+      },
+      "device_output_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 32
+      }
+    },
+    "fused": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 32,
+      "host_wall": {
+        "wall_seconds": [
+          0.0007179579997682595,
+          0.0003618749997258419,
+          0.0007026249995760736,
+          0.0007496669995816774,
+          0.0004534170002443716
+        ],
+        "median_wall_seconds": 0.0007026249995760736
+      },
+      "device": {
+        "device": "Apple M5",
+        "payload_bytes": 155776,
+        "median_command_wall_seconds": 0.000724916,
+        "warmup_commands": 4,
+        "median_gpu_seconds": 0.0001224999996338738,
+        "stages_per_command": 1,
+        "command_wall_seconds": [
+          0.000592959,
+          0.000651917,
+          0.000724916,
+          0.0007685,
+          0.000801709
+        ],
+        "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+        "gpu_seconds": [
+          0.00010925000060524326,
+          0.00012024999978166306,
+          0.00012574999982462032,
+          0.0001224999996338738,
+          0.00012774999959219713
+        ],
+        "declared_static_threadgroup_bytes": 0,
+        "source_sha256": "81333095ff4adc8f045c9b2f554c33ea03f040c294104034ffe7b4549caa4725",
+        "scope": "Command-buffer device timestamps on prepared small Q8 matrix; no SSD or GLM throughput claim"
+      },
+      "device_output_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 32
+      }
+    },
+    "shared_activation": {
+      "finite": true,
+      "bit_identical": true,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "elements": 32,
+      "host_wall": {
+        "wall_seconds": [
+          0.0008044999995036051,
+          0.000501959000757779,
+          0.0008549160002075951,
+          0.0004625829997166875,
+          0.0007779169991408708
+        ],
+        "median_wall_seconds": 0.0007779169991408708
+      },
+      "device": {
+        "device": "Apple M5",
+        "payload_bytes": 155776,
+        "median_command_wall_seconds": 0.000813208,
+        "warmup_commands": 4,
+        "median_gpu_seconds": 0.00021699999979318818,
+        "stages_per_command": 1,
+        "command_wall_seconds": [
+          0.00088525,
+          0.000512083,
+          0.00093275,
+          0.000460958,
+          0.000813208
+        ],
+        "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+        "gpu_seconds": [
+          0.0002271250004923786,
+          0.00021699999979318818,
+          0.00022708333381160628,
+          0.00020670833328040317,
+          0.00021637499958160333
+        ],
+        "declared_static_threadgroup_bytes": 4608,
+        "source_sha256": "0c2ae2913989b69d1ce52552c8894e741633b2beb5c8bab304e4a75f20721171",
+        "scope": "Command-buffer device timestamps on prepared small Q8 matrix; no SSD or GLM throughput claim"
+      },
+      "device_output_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "elements": 32
+      }
+    }
+  },
+  "known_payload_bytes": 315904,
+  "mlx_peak_bytes": 172800,
+  "process_peak_rss_bytes": 57835520,
+  "native_cpu_dylib_sha256": "accb0539118d54057b7b1b48371e52cd40296715f2cd1ee3ed41fa4acc5b241d",
+  "mlx_version": "0.32.4",
+  "native_cpu_ctypes_one_caller": {
+    "wall_seconds": [
+      0.00019016700025531463,
+      8.962500032794196e-05,
+      8.487500053888652e-05,
+      8.233300013671396e-05,
+      8.1416000284662e-05
+    ],
+    "median_wall_seconds": 8.487500053888652e-05
+  },
+  "timing_limits": [
+    "prepared warm matrix",
+    "native CPU dot called once per row via ctypes; not CPU10",
+    "host wall includes submission+synchronization",
+    "only device field uses actual GPU timestamps",
+    "no full GLM fidelity or decode gain inferred"
+  ],
+  "passed": true
+}

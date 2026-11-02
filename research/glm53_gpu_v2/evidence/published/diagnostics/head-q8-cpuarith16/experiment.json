@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-02T19:38:14.075981+00:00",
+  "scope": "forced-input tensor diagnostic; not throughput",
+  "command": [
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/native-probe-v2",
+    "<user>/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/head-q8-cpuarith16/capture",
+    "10",
+    "0",
+    "16",
+    "La capitale de la France est",
+    "<user>/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/head-q8-cpuarith16/forced.jsonl",
+    "head-only"
+  ],
+  "environment": {
+    "AIRLLM_MMAP_DEMAND": "1",
+    "AIRLLM_EXPERT_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH": "1",
+    "AIRLLM_DENSE_PREFETCH_MAX_COLS": "1",
+    "AIRLLM_GPU_CACHE_MIB": "0",
+    "AIRLLM_METAL_Q8_CPU_ARITH": "1"
+  },
+  "model_files": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "size": 9430112,
+      "mtime_ns": 1793220986088562812
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "size": 110017922752,
+      "mtime_ns": 1793630405545465080
+    }
+  ],
+  "production_changed": false,
+  "weight_integrity_scope": "file sizes and modification times; no new full 110GB hash",
+  "probe_binary_sha256": "141f315d647b462bf562180e71b6d777db1a2a770ab6b4b68d3447009d373d94",
+  "guard_status": "completed",
+  "model_file_stats_unchanged": true,
+  "fidelity_passed": true,
+  "full_logits": {
+    "compared": 16,
+    "elements": 2478080,
+    "mismatch_count": 0,
+    "bit_mismatch_count": 0,
+    "finite": true,
+    "max_abs_error_finite_pairs": 0.0,
+    "rmse_finite_pairs": 0.0,
+    "finite_pairs": 2478080,
+    "passed": true
+  },
+  "coverage": {
+    "routes": {
+      "compared": 672,
+      "elements": 7056,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 7056,
+      "passed": true
+    },
+    "router": {
+      "compared": 672,
+      "elements": 254016,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 254016,
+      "passed": true
+    },
+    "kda": {
+      "compared": 1088,
+      "elements": 11698176,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 11698176,
+      "passed": true
+    },
+    "result_output": {
+      "compared": 16,
+      "elements": 2478080,
+      "mismatch_count": 0,
+      "bit_mismatch_count": 0,
+      "finite": true,
+      "max_abs_error_finite_pairs": 0.0,
+      "rmse_finite_pairs": 0.0,
+      "finite_pairs": 2478080,
+      "passed": true
+    }
+  },
+  "finished_at": "2026-11-02T19:39:58.573118+00:00"
+}
