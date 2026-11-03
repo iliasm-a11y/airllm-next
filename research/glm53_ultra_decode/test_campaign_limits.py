@@ -104,3 +104,36 @@ def test_worker_disk_abort_retains_outer_guard_and_input_checks(tmp_path, monkey
     assert report['guard']['exit_code']==2 and report['guard']['violation'] is None
     assert report['weight_identities_unchanged'] and report['native_artifacts_unchanged']
     assert not report['performance_measured']
+    assert report['native_process_launched'] is None
+
+
+@pytest.mark.parametrize('durable_launch_record',[False,True])
+def test_outer_pressure_abort_does_not_claim_native_never_started(tmp_path,monkeypatch,durable_launch_record):
+    from . import model_profile as m
+    model=tmp_path/'model';model.mkdir()
+    weights=model/'fixture.gguf';weights.write_bytes(b'not model weights; never executed')
+    runtime=tmp_path/'runtime';runtime.mkdir()
+    probe=tmp_path/'probe';probe.write_bytes(b'never executed')
+    monkeypatch.setattr(m,'system_snapshot',lambda:{'pressure_level':1,'available_bytes':REQUIRED_MEMORY,'swap_used_bytes':0})
+    monkeypatch.setattr(m,'PowerGate',lambda **kw:SimpleNamespace(sample=lambda:{'passed':True}))
+    monkeypatch.setattr(m.shutil,'disk_usage',lambda p:SimpleNamespace(free=REQUIRED_DISK))
+    monkeypatch.setattr(m,'inspect_native_checkpoint',lambda *a:{'integrity_verified':True,
+        'architecture_matches':True,'files':[{'name':weights.name,'identity':m._identity(weights)}]})
+    def stopped(command,output,*,limits):
+        output.with_suffix('.guard.json').write_text(json.dumps({'violation':'macos_memory_pressure','exit_code':-15}))
+        if durable_launch_record:
+            m.write_worker_report(output.parent,{'status':'running','finalized':False,
+                'native_process_launched':True,'native_spawned_pid':12345})
+        raise MemoryError('outer guard stopped the owned process tree')
+    monkeypatch.setattr(m,'supervise',stopped)
+    args=SimpleNamespace(worker=False,output=tmp_path/'out',model=model,runtime=runtime,
+        probe=probe,receipt=tmp_path/'receipt',tokens=64,diagnostic=False,prompt='test')
+    assert m.run(args)==2
+    report=json.loads((args.output/'report.json').read_text())
+    assert report['native_process_launched'] is (True if durable_launch_record else None)
+    assert report['status']=='failed' and not report['performance_measured']
+    assert report['guard']['violation']=='macos_memory_pressure'
+    assert report['weight_identities_unchanged'] and report['native_artifacts_unchanged']
+    if durable_launch_record:
+        assert report['worker_report_finalized'] is False
+        assert report['worker']['native_spawned_pid']==12345

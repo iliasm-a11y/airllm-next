@@ -26,6 +26,23 @@ GIB=1<<30
 REQUIRED_MEMORY=int(5.5*GIB)
 REQUIRED_DISK=32*GIB
 
+def write_worker_report(output,report):
+    """Keep launch evidence readable if the outer guard terminates the worker."""
+    temporary=output/'worker.json.tmp'
+    temporary.write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
+    temporary.replace(output/'worker.json')
+
+def retain_worker_report(report,output):
+    path=output/'worker.json'
+    if not path.is_file():return
+    worker_report=json.loads(path.read_text())
+    report['worker']=worker_report
+    report['worker_report_finalized']=worker_report.get('finalized',False)
+    # Old reports may have an identity but no explicit launch flag. Missing
+    # closure after a guard kill proves neither launch nor absence of launch.
+    report['native_process_launched']=(True if 'native_identity' in worker_report
+        else worker_report.get('native_process_launched'))
+
 def resource_blockers(sample,disk_free,power,campaign_swap_used_bytes=None):
     reasons=[]
     if sample.get('pressure_level')!=1:reasons.append('memory_pressure_not_normal')
@@ -37,7 +54,9 @@ def resource_blockers(sample,disk_free,power,campaign_swap_used_bytes=None):
     return reasons
 
 def worker(args):
-    holder,lock=acquire_uid_lock();child=None;identity=None;report={'uid_lock':lock}
+    holder,lock=acquire_uid_lock();child=None;identity=None
+    report={'uid_lock':lock,'native_process_launched':False,'finalized':False,'status':'admitting'}
+    write_worker_report(args.output,report)
     gate=PowerGate(expected_source='ac')
     command=[str(args.probe.resolve()),str(args.model.resolve()/FILES[0][0]),
              str(args.output.resolve()/'capture'),'10','0',str(args.tokens),args.prompt,'-','cpu']
@@ -55,7 +74,11 @@ def worker(args):
             reasons.append('worker_checkpoint_integrity')
         if reasons:raise RuntimeError('worker re-admission refused: '+','.join(reasons))
         with (args.output/'native.stdout.log').open('wb') as out,(args.output/'native.stderr.log').open('wb') as err:
+            report.update(status='spawning',native_process_launched=None)
+            write_worker_report(args.output,report)
             child=subprocess.Popen(command,env=env,stdout=out,stderr=err,pass_fds=(holder.fileno(),))
+            report.update(status='identifying',native_process_launched=True,native_spawned_pid=child.pid)
+            write_worker_report(args.output,report)
             # Retain a Popen child, then pin its birth and executable before any
             # signal. The inherited UID FD survives a parent failure.
             for _ in range(100):
@@ -64,6 +87,8 @@ def worker(args):
                 except Exception:time.sleep(.01)
             if identity is None:raise RuntimeError('native child identity not established')
             report['native_identity']=identity
+            report['status']='running'
+            write_worker_report(args.output,report)
             with ScopedAwake(child) as awake:
                 while child.poll() is None:
                     time.sleep(.5)
@@ -86,7 +111,8 @@ def worker(args):
             elif child.poll() is not None:report['native_returncode']=child.wait(timeout=5)
         report['power']=gate.summary();holder.close();report['uid_parent_fd_closed']=True
         report['surviving_child_retains_uid_fd']=True
-        (args.output/'worker.json').write_text(json.dumps(report,indent=2)+'\n')
+        report['finalized']=True
+        write_worker_report(args.output,report)
     return 0 if report.get('status')=='completed' else 2
 
 def run(args):
@@ -135,16 +161,17 @@ def run(args):
     try:
         if not all(_identity(p)==identity for p,identity in identities.items()):
             raise RuntimeError('weight identities changed after integrity admission')
+        report['native_process_launched']=None
         guard=supervise(command,output/'supervision',limits=limits)
-        worker_report=json.loads((output/'worker.json').read_text())
-        report['native_process_launched']='native_identity' in worker_report
-        report['worker']=worker_report;report['guard']=guard
+        retain_worker_report(report,output)
+        worker_report=report['worker']
+        report['guard']=guard
         unchanged=all(_identity(p)==identity for p,identity in identities.items())
         report['weight_identities_unchanged']=unchanged
         report['native_artifacts_unchanged']=binaries=={args.probe.name:sha(args.probe)} and libraries=={p.name:sha(p) for p in args.runtime.glob('*.dylib') if not p.is_symlink()}
         remaining_swap_budget(system_snapshot(),baseline)
         complete=output/'capture/complete.json'
-        report['status']='completed' if worker_report['status']=='completed' and unchanged and report['native_artifacts_unchanged'] and complete.is_file() else 'failed'
+        report['status']='completed' if worker_report.get('finalized') and worker_report['status']=='completed' and unchanged and report['native_artifacts_unchanged'] and complete.is_file() else 'failed'
         if report['status']=='completed':
             from .profile_analysis import analyze_capture
             report['analysis']=analyze_capture(output/'capture',diagnostic=args.diagnostic)
@@ -152,9 +179,6 @@ def run(args):
             report['decode_tokens_per_second']=report['analysis']['decode_tokens_per_second'] if not args.diagnostic else None
     except BaseException as error:
         report.update(status='failed',error=type(error).__name__+': '+str(error))
-        if (output/'worker.json').is_file():
-            report['worker']=json.loads((output/'worker.json').read_text())
-            report['native_process_launched']='native_identity' in report['worker']
     finally:
         # A worker can stop for power/disk/ownership while the outer sampler
         # raises on its nonzero exit. Preserve that sampler and recheck pinned
@@ -162,6 +186,7 @@ def run(args):
         guard_file=output/'supervision.guard.json'
         if guard_file.is_file() and 'guard' not in report:
             report['guard']=json.loads(guard_file.read_text())
+        retain_worker_report(report,output)
         try:
             report['weight_identities_unchanged']=all(_identity(p)==identity for p,identity in identities.items())
             report['native_artifacts_unchanged']=binaries=={args.probe.name:sha(args.probe)} and libraries=={p.name:sha(p) for p in args.runtime.glob('*.dylib') if not p.is_symlink()}
