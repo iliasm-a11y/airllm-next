@@ -1,0 +1,311 @@
+{
+  "scope": "existing experiment manifests only; full tensor payload remains in prior local captures",
+  "rows": [
+    {
+      "name": "cpu-control16-isolated",
+      "source_sha256": "e1d55b64d09897cff209a1d1157b83142457e3854e7494cdef78e3914efdc880",
+      "published_file": "cpu-control16-isolated.json.gz",
+      "published_sha256": "ba2e8e5289076b09145a6359246e28d8ddfa805f03369f843ae6395ab35dc451",
+      "fidelity_passed": true,
+      "full_logits": {
+        "compared": 16,
+        "elements": 2478080,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2478080,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 672,
+          "elements": 7056,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 7056,
+          "passed": true
+        },
+        "router": {
+          "compared": 672,
+          "elements": 254016,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 254016,
+          "passed": true
+        },
+        "kda": {
+          "compared": 1088,
+          "elements": 11698176,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 11698176,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 16,
+          "elements": 2478080,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 2478080,
+          "passed": true
+        }
+      },
+      "state_comparison": null,
+      "native_libraries_sha256": {
+        "libggml-base.0.28.0.dylib": "456ccbdbbc81992f2df70c7ab91fb2c7c543937345bb6982d398933c65f2a9bf",
+        "libllama-server-impl.dylib": "e539925513e3aed22fa6f4fbc4f7f36f6b33e6c9e9c3c90dd94be6a7dd1fbbeb",
+        "libllama-common.0.8.0.dylib": "8dcc0828d3c1404595e698c67b1c49458a922e69b4075b77743e4ff7161826d0",
+        "libllama.0.8.0.dylib": "4050129cdd5746c64d738519724167ddd4f30f7614039c30364ca3d21be11347",
+        "libmtmd.0.8.0.dylib": "7b4272843ed61e0e52328212d406d2d3fecfc1ab08000374b4d5edc23d3ae015",
+        "libggml-blas.0.28.0.dylib": "8c65151c05b93f4325900e9f524482c0b1cfccebf147a76662216f5246b2e325",
+        "libggml-metal.0.28.0.dylib": "5af5fed4e3e98dff0fb85263b9638e97faf9019bc47f90354e66083425b2cc09",
+        "libggml.0.28.0.dylib": "12b8143ccb19ecabfb7954f32975b6ba90da9f805862a6cfcc2847538d4ab457",
+        "libggml-cpu.0.28.0.dylib": "95e775aa2de66443ac9f5b956f2cc07b7dba6c50d1cb2f29f9d5bd899047164d"
+      }
+    },
+    {
+      "name": "tail5-stream16-isolated",
+      "source_sha256": "ac785ffa7cd0c2abcbaba61adae430e6a2e7ae46e2108e3d619ba434ca1d8a4b",
+      "published_file": "tail5-stream16-isolated.json.gz",
+      "published_sha256": "c41221c93edf161e33a22f85fc14517b6f163e66cb98f739a56bd140f27d22ac",
+      "fidelity_passed": true,
+      "full_logits": {
+        "compared": 16,
+        "elements": 2478080,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2478080,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 672,
+          "elements": 7056,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 7056,
+          "passed": true
+        },
+        "router": {
+          "compared": 672,
+          "elements": 254016,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 254016,
+          "passed": true
+        },
+        "kda": {
+          "compared": 1088,
+          "elements": 11698176,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 11698176,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 16,
+          "elements": 2478080,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 2478080,
+          "passed": true
+        }
+      },
+      "state_comparison": null,
+      "native_libraries_sha256": {
+        "libggml-base.0.28.0.dylib": "456ccbdbbc81992f2df70c7ab91fb2c7c543937345bb6982d398933c65f2a9bf",
+        "libllama-server-impl.dylib": "e539925513e3aed22fa6f4fbc4f7f36f6b33e6c9e9c3c90dd94be6a7dd1fbbeb",
+        "libllama-common.0.8.0.dylib": "8dcc0828d3c1404595e698c67b1c49458a922e69b4075b77743e4ff7161826d0",
+        "libllama.0.8.0.dylib": "4050129cdd5746c64d738519724167ddd4f30f7614039c30364ca3d21be11347",
+        "libmtmd.0.8.0.dylib": "7b4272843ed61e0e52328212d406d2d3fecfc1ab08000374b4d5edc23d3ae015",
+        "libggml-blas.0.28.0.dylib": "8c65151c05b93f4325900e9f524482c0b1cfccebf147a76662216f5246b2e325",
+        "libggml-metal.0.28.0.dylib": "5af5fed4e3e98dff0fb85263b9638e97faf9019bc47f90354e66083425b2cc09",
+        "libggml.0.28.0.dylib": "12b8143ccb19ecabfb7954f32975b6ba90da9f805862a6cfcc2847538d4ab457",
+        "libggml-cpu.0.28.0.dylib": "95e775aa2de66443ac9f5b956f2cc07b7dba6c50d1cb2f29f9d5bd899047164d"
+      }
+    },
+    {
+      "name": "v4-cpu-control16",
+      "source_sha256": "0f30e48a06adcf6921052dba43c6d94bd7cdad063fda20ea002c3f0656cbd032",
+      "published_file": "v4-cpu-control16.json.gz",
+      "published_sha256": "c630b4495aaee96bcdd24b5b79a1708691362d70d68aa6f2e66238e7558f8d4e",
+      "fidelity_passed": true,
+      "full_logits": {
+        "compared": 16,
+        "elements": 2478080,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2478080,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 672,
+          "elements": 7056,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 7056,
+          "passed": true
+        },
+        "router": {
+          "compared": 672,
+          "elements": 254016,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 254016,
+          "passed": true
+        },
+        "kda": {
+          "compared": 1088,
+          "elements": 11698176,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 11698176,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 16,
+          "elements": 2478080,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 2478080,
+          "passed": true
+        }
+      },
+      "state_comparison": null,
+      "native_libraries_sha256": {
+        "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+        "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+        "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+        "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+        "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+        "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+        "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+        "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+        "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+        "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+      }
+    },
+    {
+      "name": "v4-tail5-lock256-fidelity16",
+      "source_sha256": "6771947d1c588f61ed2f126ca633358a56155baabd5cca912f4101ee6a1c555a",
+      "published_file": "v4-tail5-lock256-fidelity16.json.gz",
+      "published_sha256": "289e0213bf36f2c8c4c3bebfd89c9732510b900885d5eb5a4ab2bcb27c89f69f",
+      "fidelity_passed": true,
+      "full_logits": {
+        "compared": 16,
+        "elements": 2478080,
+        "mismatch_count": 0,
+        "bit_mismatch_count": 0,
+        "finite": true,
+        "max_abs_error_finite_pairs": 0.0,
+        "rmse_finite_pairs": 0.0,
+        "finite_pairs": 2478080,
+        "passed": true
+      },
+      "coverage": {
+        "routes": {
+          "compared": 672,
+          "elements": 7056,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 7056,
+          "passed": true
+        },
+        "router": {
+          "compared": 672,
+          "elements": 254016,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 254016,
+          "passed": true
+        },
+        "kda": {
+          "compared": 1088,
+          "elements": 11698176,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 11698176,
+          "passed": true
+        },
+        "result_output": {
+          "compared": 16,
+          "elements": 2478080,
+          "mismatch_count": 0,
+          "bit_mismatch_count": 0,
+          "finite": true,
+          "max_abs_error_finite_pairs": 0.0,
+          "rmse_finite_pairs": 0.0,
+          "finite_pairs": 2478080,
+          "passed": true
+        }
+      },
+      "state_comparison": null,
+      "native_libraries_sha256": {
+        "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+        "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+        "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+        "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+        "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+        "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+        "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+        "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+        "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+        "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+      }
+    }
+  ]
+}

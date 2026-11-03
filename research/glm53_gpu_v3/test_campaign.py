@@ -253,5 +253,33 @@ class V3CampaignTests(unittest.TestCase):
         self.assertFalse(validate_timed_report(plan['jobs'][1], raw, plan)['passed'])
 
 
+    def test_placement_and_inventory_drift_are_rejected_in_a_temporary_source_tree(self):
+        from research.glm53_gpu_v3 import campaign as module
+        dependencies = ('research/glm53_gpu_v2/placement.py',
+                        'research/glm53_m5/sources/gguf-headers.json')
+        fixture_repo = self.root / 'source-fixture'
+        # Never mutate a real repository file: all source contents are fixtures.
+        for relative in module.SOURCE_PATHS:
+            target = fixture_repo / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(('fixture source: ' + relative).encode())
+        with patch.object(module, 'REPO', fixture_repo):
+            plan = make_plan(self.args)
+            self.assertTrue(check_before_launch(self.args, plan)['passed'])
+            for relative in dependencies:
+                with self.subTest(dependency=relative):
+                    self.assertIn(relative, plan['source_fingerprints'])
+                    target = fixture_repo / relative
+                    original = target.read_bytes()
+                    try:
+                        target.write_bytes(original + b' dependency changed')
+                        with self.assertRaisesRegex(ValueError, 'runner changed'):
+                            check_before_launch(self.args, plan)
+                    finally:
+                        target.write_bytes(original)
+                    self.assertTrue(check_before_launch(self.args, plan)['passed'])
+
+
+
 if __name__ == '__main__':
     unittest.main()

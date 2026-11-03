@@ -30,6 +30,8 @@ SOURCE_PATHS = ('research/glm53_gpu_v3/campaign.py', 'research/glm53_gpu_v3/benc
                 'research/glm53_gpu_v3/dense_lock_plan.py',
                 'research/glm53_gpu_v3/completion_contract.py',
                 'research/glm53_gpu_v3/power_state.py',
+                'research/glm53_gpu_v2/placement.py',
+                'research/glm53_m5/sources/gguf-headers.json',
                 'research/glm53_gpu_v2/campaign.py', 'research/glm53_gpu_v2/benchmark_lifecycle.py',
                 'research/glm53_gpu_v2/storage_counters.py')
 

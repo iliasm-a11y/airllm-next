@@ -13,7 +13,7 @@ struct Record: Identifiable {
     var id:String {s(value["id"] ?? value["name"] ?? value["code"] ?? value["sha256"])}
 }
 func label(_ state: String) -> String {
-    ["ready":"Prête", "preparing":"Préparation", "analyzing":"Analyse locale", "waiting_model":"Génération GLM", "paused":"En pause", "resource_paused":"Pause ressources", "stopped":"Arrêtée", "completed":"Terminée", "error":"Erreur récupérable", "archived":"Archive migrée"][state] ?? state
+    ["ready":"Prête", "preparing":"Préparation", "analyzing":"Analyse locale", "waiting_model":"Génération GLM", "paused":"En pause", "resource_paused":"Pause ressources", "stopped":"Arrêtée", "completed":"Terminée", "partial":"Réponse partielle", "error":"Erreur récupérable", "archived":"Archive migrée"][state] ?? state
 }
 
 final class Bridge {

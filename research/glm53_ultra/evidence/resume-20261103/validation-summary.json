@@ -1,0 +1,50 @@
+{
+  "scope": "unique local portable tests, latest passing execution of each suite only; no model, GPU or throughput proof from fixtures",
+  "passed": 195,
+  "suites": [
+    {
+      "suite": "Native",
+      "passed": 53,
+      "log": "test-native-v2.log",
+      "log_sha256": "847a60f4145db4c4faeb53b52b7269ae9b27325827b3f915a347fc3c0114b7ae"
+    },
+    {
+      "suite": "Native process ownership",
+      "passed": 17,
+      "log": "test-native-exit-v2.log",
+      "log_sha256": "916df24e90eca9a3feb5260d80aafa2ae95fa7d625729684d80a96ee226d32b3"
+    },
+    {
+      "suite": "RONIN",
+      "passed": 56,
+      "log": "test-ronin-control-state.log",
+      "log_sha256": "a6f91e482dfd1c06e027ef17af3e673db0c178b96c5f6f0ba6e5e7380645f16e"
+    },
+    {
+      "suite": "Ultra probes",
+      "passed": 32,
+      "log": "test-ultra-v3.log",
+      "log_sha256": "24569acb6d70cd22ea6e9b66a2b35a5f44ec71691cf03d80868765b2debba76a"
+    },
+    {
+      "suite": "Prefetch component fixtures",
+      "passed": 23,
+      "log": "test-prefetch-component-v2.log",
+      "log_sha256": "92255cd92a064074a66b46e5ca14f00e91042146d69627ec984664821f3a5d81"
+    },
+    {
+      "suite": "Campaign gates",
+      "passed": 14,
+      "log": "test-campaign-source-freeze.log",
+      "log_sha256": "73b50afd78bfb3066a7c68a0726327760e7c0a6102bc2780c29b33cdeca33d27"
+    }
+  ],
+  "swift_typecheck": {
+    "sdk": "26.5",
+    "swift_language_mode": "5",
+    "returncode_observed": 0,
+    "log": "swift-typecheck-sdk265.log",
+    "log_sha256": "8070c89877c451094fe32a29b8ae2264d4982f3fd6f884c6fa9b73d72016dde2",
+    "scope": "source typecheck only; SDK27.2 attempt failed macros environment and remains preserved"
+  }
+}

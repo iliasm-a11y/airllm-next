@@ -314,7 +314,7 @@ class NativeGlmModel:
     """Share one object across logical agents. There is one native server/slot."""
     def __init__(self, model_path, *, runtime_binary, verification_file=None,
                  context_tokens=512, threads=4, batch_size=8, gpu_layers=0,
-                 cpu_moe=False, moe_cache_mib=0, mmap_demand=False, expert_prefetch=False, dense_prefetch=False, state_dir=None, limits=None,
+                 cpu_moe=False, moe_cache_mib=0, mmap_demand=False, expert_prefetch=False, dense_prefetch=False, mmap_nocache=False, state_dir=None, limits=None,
                  expected_runtime_sha256=None, runtime_manifest_file=None, allow_unqualified_gpu=False):
         if type(context_tokens) is not int or not 64 <= context_tokens <= 8192:
             raise ValueError("Validated integration context must be between 64 and 8192")
@@ -337,10 +337,13 @@ class NativeGlmModel:
         self.context_tokens, self.threads, self.batch_size = context_tokens, threads, batch_size
         if type(mmap_demand) is not bool:
             raise ValueError("mmap_demand must be explicit boolean")
+        if type(mmap_nocache) is not bool:
+            raise ValueError("mmap_nocache must be explicit boolean")
         self.gpu_layers, self.cpu_moe, self.moe_cache_mib = gpu_layers, cpu_moe, moe_cache_mib
         if type(expert_prefetch) is not bool:
             raise ValueError("expert_prefetch must be explicit boolean")
         self.mmap_demand = mmap_demand
+        self.mmap_nocache = mmap_nocache
         self.expert_prefetch = expert_prefetch
         if type(dense_prefetch) is not bool:
             raise ValueError("dense_prefetch must be explicit boolean")
@@ -355,6 +358,9 @@ class NativeGlmModel:
         self.scheduler = _SerialQueue(self.limits.max_pending)
         self._load_lock = threading.RLock()
         self._process = self._lock_file = self._log_file = None
+        self._exit_observation_lock = threading.Lock()
+        self._owned_process_generation = 0
+        self._last_owned_process_exit = None
         self._watch_stop = threading.Event()
         self._load_stop = threading.Event()
         self._api_key = None
@@ -389,10 +395,12 @@ class NativeGlmModel:
                                   "batch_size": self.batch_size, "gpu_layers": self.gpu_layers,
                                   "cpu_moe": self.cpu_moe, "moe_cache_mib": self.moe_cache_mib,
                                   "mmap_demand": self.mmap_demand,
+                                  "mmap_nocache": self.mmap_nocache,
                                   "expert_prefetch": self.expert_prefetch,
                                   "dense_prefetch": self.dense_prefetch,
                                   "allow_unqualified_gpu": self.allow_unqualified_gpu},
                 "failure": self._failure, "last_request": self.last_request,
+                "last_owned_process_exit": self.last_owned_process_exit,
                 "pressure_context": self._pressure_context,
                 "last_resource_sample": self._samples[-1] if self._samples else None,
                 "peak_sampled_rss_bytes": self._peak_rss_bytes}
@@ -473,6 +481,8 @@ class NativeGlmModel:
                if not k.startswith(("LLAMA_ARG_", "AIRLLM_", "DYLD_")) and k != "LLAMA_API_KEY"}
         if self.mmap_demand:
             env["AIRLLM_MMAP_DEMAND"] = "1"
+        if self.mmap_nocache:
+            env["AIRLLM_MMAP_NOCACHE"] = "1"
         if self.expert_prefetch:
             env["AIRLLM_EXPERT_PREFETCH"] = "1"
         if self.dense_prefetch:
@@ -642,12 +652,16 @@ class NativeGlmModel:
                 self._log_file = (self.state_dir / "native-server.log").open("ab")
                 env = self._runtime_environment()
                 self._check_runtime_identity()
-                self._process = subprocess.Popen(self._build_command(self._port), stdin=subprocess.DEVNULL,
+                process = subprocess.Popen(self._build_command(self._port), stdin=subprocess.DEVNULL,
                     stdout=self._log_file, stderr=self._log_file, env=env, start_new_session=True,
                     # A surviving native child retains model ownership even if Python is SIGKILLed.
                     pass_fds=(self._lock_file.fileno(),))
+                with self._exit_observation_lock:
+                    self._process = process
+                    self._owned_process_generation += 1
+                    self._last_owned_process_exit = None
                 self._watch_stop.clear()
-                self._watcher = threading.Thread(target=self._watch, args=(baseline,), daemon=True)
+                self._watcher = threading.Thread(target=self._watch, args=(baseline, self._owned_process_generation), daemon=True)
                 self._watcher.start()
                 while time.monotonic() - started < self.limits.load_timeout_seconds:
                     if cancel is not None and cancel.is_set():
@@ -727,27 +741,103 @@ class NativeGlmModel:
             "evidence_scope": "M5 16 GiB, same pinned GLM, CPU4/context512/batch8: stable mmap warning pressure observed; other workloads unqualified"}
         return code
 
-    def _watch(self, baseline):
+    def _watch_owns_process_locked(self, process, owned_generation):
+        """Caller holds _exit_observation_lock; PID equality is insufficient."""
+        return (process is not None and process is self._process
+                and owned_generation == self._owned_process_generation)
+
+    def _watch(self, baseline, owned_generation=None):
+        if owned_generation is None:
+            with self._exit_observation_lock:
+                owned_generation = self._owned_process_generation
         while not self._watch_stop.wait(self.limits.poll_seconds):
-            process = self._process
-            if process is None or process.poll() is not None:
+            with self._exit_observation_lock:
+                process = self._process
+                if not self._watch_owns_process_locked(process, owned_generation):
+                    return
+            if process.poll() is not None:
                 return
+            termination_source = None
             try:
+                with self._exit_observation_lock:
+                    if not self._watch_owns_process_locked(process, owned_generation):
+                        return
                 sample = resource_snapshot(process.pid)
-                self._samples.append(sample)
-                self._peak_rss_bytes = max(self._peak_rss_bytes, sample.get("rss_bytes", 0))
-                code = self._guard_resource_sample(sample, baseline, time.monotonic())
+                # Sampling can yield while close/reload changes the owner. Keep
+                # every guard-state mutation and its resulting termination in
+                # the same owner lock as process/generation publication.
+                with self._exit_observation_lock:
+                    if not self._watch_owns_process_locked(process, owned_generation):
+                        return
+                    self._samples.append(sample)
+                    self._peak_rss_bytes = max(self._peak_rss_bytes, sample.get("rss_bytes", 0))
+                    code = self._guard_resource_sample(sample, baseline, time.monotonic())
+                    if not self._watch_owns_process_locked(process, owned_generation):
+                        return
+                    if code:
+                        self._failure = {"code": code, "message": "Native inference stopped by resource guard",
+                                         "sample": sample, "pressure_context": self._pressure_context}
+                        termination_source = "resource_guard"
+                        if not self._watch_owns_process_locked(process, owned_generation):
+                            return
+                        self._terminate_process(process)
                 if code:
-                    self._failure = {"code": code, "message": "Native inference stopped by resource guard",
-                                     "sample": sample, "pressure_context": self._pressure_context}
-                    self._terminate_process(process)
                     return
             except Exception as exc:
                 if self._watch_stop.is_set():
                     return
-                self._failure = {"code": "WATCHDOG_ERROR", "message": str(exc)}
-                self._terminate_process(process)
+                with self._exit_observation_lock:
+                    if not self._watch_owns_process_locked(process, owned_generation):
+                        return
+                    self._failure = {"code": "WATCHDOG_ERROR", "message": str(exc)}
+                    termination_source = "watchdog_error"
+                    if not self._watch_owns_process_locked(process, owned_generation):
+                        return
+                    self._terminate_process(process)
                 return
+            finally:
+                # This observer takes the same lock internally; invoke it only
+                # after leaving the guard/termination critical section.
+                if termination_source is not None:
+                    self._observe_owned_process_exit(process, termination_source, owned_generation)
+
+    @property
+    def last_owned_process_exit(self):
+        """A detached observation, never proof based only on a cleared handle."""
+        with self._exit_observation_lock:
+            return dict(self._last_owned_process_exit) if self._last_owned_process_exit is not None else None
+
+    def _observe_owned_process_exit(self, process, source, owned_generation=None):
+        """Retain poll evidence before dropping an owned Popen handle.
+
+        This adds no signal, wait or retry. Observation failures remain explicit
+        and cannot turn an unknown/live process into a confirmed exit.
+        """
+        if process is None:
+            return
+        generation = self._owned_process_generation if owned_generation is None else owned_generation
+        if generation != self._owned_process_generation:
+            return  # A late old watcher must not overwrite a newer process record.
+        try:
+            pid = process.pid
+        except Exception:
+            pid = None
+        observation = {"pid": pid, "generation": generation, "returncode": None,
+                       "exit_observed": False, "observation": "popen_poll_of_owned_process",
+                       "source": source, "observed_monotonic": time.monotonic(),
+                       "observed_unix_seconds": time.time(),
+                       "guard_failure_code": self._failure.get("code") if isinstance(self._failure, dict) else None}
+        try:
+            returncode = process.poll()
+            if type(returncode) is int:
+                observation.update(returncode=returncode, exit_observed=True)
+            elif returncode is not None:
+                observation["poll_error"] = "INVALID_RETURN_CODE"
+        except Exception as error:
+            observation["poll_error"] = type(error).__name__
+        with self._exit_observation_lock:
+            if generation == self._owned_process_generation:
+                self._last_owned_process_exit = observation
 
     @staticmethod
     def _terminate_process(process):
@@ -772,8 +862,16 @@ class NativeGlmModel:
     def _close_locked(self):
         with self._load_lock:
             self._watch_stop.set()
-            self._terminate_process(self._process)
-            self._process = None
+            with self._exit_observation_lock:
+                process = self._process
+                owned_generation = self._owned_process_generation
+            try:
+                self._terminate_process(process)
+            finally:
+                self._observe_owned_process_exit(process, "close_after_termination_attempt", owned_generation)
+            with self._exit_observation_lock:
+                if self._process is process and self._owned_process_generation == owned_generation:
+                    self._process = None
             watcher = getattr(self, "_watcher", None)
             if watcher and watcher is not threading.current_thread():
                 watcher.join(timeout=6)

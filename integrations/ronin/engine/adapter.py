@@ -40,6 +40,10 @@ class _CombinedCancellation:
 class Engine:
     def __init__(self, *, config=None, model_factory=NativeGlmModel):
         self.config = dict(config or {})
+        self._cpu_fallback = self.config.pop("fallback_to_cpu_on_rejection", True)
+        if type(self._cpu_fallback) is not bool:
+            raise ValueError("fallback_to_cpu_on_rejection must be an explicit boolean")
+        self._backend_selection = None
         self._model_factory = model_factory
         self.model_path = None
         self._model = None
@@ -68,12 +72,40 @@ class Engine:
             options["cpu_moe"] = os.environ["RONIN_GLM_CPU_MOE"] == "1"
         if "mmap_demand" not in options and os.environ.get("RONIN_GLM_MMAP_DEMAND"):
             options["mmap_demand"] = os.environ["RONIN_GLM_MMAP_DEMAND"] == "1"
+        if "mmap_nocache" not in options and os.environ.get("RONIN_GLM_MMAP_NOCACHE"):
+            options["mmap_nocache"] = os.environ["RONIN_GLM_MMAP_NOCACHE"] == "1"
         if "expert_prefetch" not in options and os.environ.get("RONIN_GLM_EXPERT_PREFETCH"):
             options["expert_prefetch"] = os.environ["RONIN_GLM_EXPERT_PREFETCH"] == "1"
         if "dense_prefetch" not in options and os.environ.get("RONIN_GLM_DENSE_PREFETCH"):
             options["dense_prefetch"] = os.environ["RONIN_GLM_DENSE_PREFETCH"] == "1"
         if isinstance(options.get("limits"), dict):
             options["limits"] = NativeLimits(**options["limits"])
+        return options
+
+    def _backend_options(self):
+        """Reject an unqualified GPU request before constructing any backend.
+
+        An explicit research opt-in still reaches the experimental backend.
+        Resource/integrity errors and failures after activation are never retried:
+        replaying an already-started request could duplicate a logical decision.
+        """
+        options = self._options()
+        gpu = options.get("gpu_layers", 0)
+        allowed = options.get("allow_unqualified_gpu", False)
+        if type(allowed) is not bool:
+            raise ValueError("allow_unqualified_gpu must be an explicit boolean")
+        rejected = type(gpu) is int and gpu > 0 and not allowed
+        self._backend_selection = {
+            "requested_gpu_layers": gpu,
+            "fallback_before_activation": bool(rejected and self._cpu_fallback),
+            "rejection": "GPU_FIDELITY_UNQUALIFIED" if rejected else None,
+            "experimental_opt_in": allowed,
+        }
+        if rejected and self._cpu_fallback:
+            options.update(gpu_layers=0, cpu_moe=False, moe_cache_mib=0,
+                           allow_unqualified_gpu=False,
+                           threads=min(10, os.cpu_count() or 1))
+        self._backend_selection["selected_gpu_layers"] = options.get("gpu_layers", 0)
         return options
 
     def _select(self, model_path):
@@ -84,7 +116,7 @@ class Engine:
             self._model.close()
             self._model = None
         if self._model is None:
-            self._model = self._model_factory(path, **self._options())
+            self._model = self._model_factory(path, **self._backend_options())
             self.model_path = path
         return self._model
 
@@ -109,7 +141,8 @@ class Engine:
         return {"state": "loaded" if loaded else "selected" if selected and not blockers else "unavailable",
                 "ready": ready, "loaded": loaded,
                 "model": {"id": MODEL_ID, "revision": MODEL_REVISION, "quantization": "Q2_K_S"},
-                "engine": {"id": "AirLLM Next / llama.cpp native", "shared": True},
+                "engine": {"id": "AirLLM Next / llama.cpp native", "shared": True,
+                           "backend_selection": self._backend_selection},
                 "capabilities": {"load": not blockers, "generation": ready,
                                  "streaming": ready, "cancellation": True,
                                  "tool_calls": False, "multimodal": False,

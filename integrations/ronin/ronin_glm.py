@@ -54,7 +54,10 @@ def main():
             params = {"id": mission["id"], "max_new_tokens": args.max_tokens}
             if args.reasoning_effort is not None: params["reasoning_effort"] = args.reasoning_effort
             result = runtime.dispatch("generate", params)
-            runtime.state(mission["id"], "completed")
+            runtime.check(mission["id"])
+            mission_state = "completed" if result.get("decision_state") == "completed" else "partial"
+            runtime.state(mission["id"], mission_state)
+            result["mission_state"] = mission_state
             result["mission_id"] = mission["id"]
             result["transport"] = "RONIN Runtime.dispatch -> Engine.stream -> NativeGlmModel.stream_chat"
     except Exception as error:
