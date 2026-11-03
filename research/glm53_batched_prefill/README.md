@@ -63,6 +63,10 @@ le snapshot, les états actifs et les captures temporaires éventuelles.
 
 Les campagnes closes sont indexées dans `evidence/` ; le verdict final reste
 distinct des observations de diagnostic.
+Le CPU16 original est [rejeté numériquement](evidence/cpu16-rejected/README.md) :
+sa première requête termine, mais tous ses logits diffèrent malgré quatre
+tokens greedy identiques. Le contrôleur a arrêté le bras suivant ; aucun gain
+n’est retenu. La restauration CPU8 poursuit sa qualification indépendamment.
 Les champs non mesurés restent `null`. Les 937,169 secondes historiques et
 les essais GPU des PR #17 à #21 gardent leur périmètre d'origine.
 
