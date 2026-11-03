@@ -1,0 +1,129 @@
+{
+  "timestamp_unix": 1793704415.7032351,
+  "checkpoint": {
+    "path": "/Users/macbook/Models/GLM-5.3-Flash-Q2_K_S",
+    "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+    "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+    "quantization": "Q2_K_S",
+    "exists": true,
+    "architecture_matches": true,
+    "weights_present": true,
+    "integrity_verified": true,
+    "errors": [],
+    "files": [
+      {
+        "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+        "expected_bytes": 9430112,
+        "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+        "integrity_verified": true,
+        "identity": [
+          16777233,
+          34853271,
+          9430112,
+          1793220986088562812,
+          1793221180120865439
+        ],
+        "bytes": 9430112,
+        "verification": "unchanged SHA256 receipt"
+      },
+      {
+        "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "expected_bytes": 110017922752,
+        "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+        "integrity_verified": true,
+        "identity": [
+          16777233,
+          34874104,
+          110017922752,
+          1793630405545465080,
+          1793652319576112639
+        ],
+        "bytes": 110017922752,
+        "verification": "unchanged SHA256 receipt"
+      }
+    ],
+    "metadata": {
+      "general.architecture": "glm5-next",
+      "general.type": "model",
+      "general.sampling.top_p": 0.949999988079071,
+      "general.sampling.temp": 1.0,
+      "general.name": "GLM-5.3-Flash",
+      "general.size_label": "288x10B",
+      "general.license": "mit",
+      "general.tags": {
+        "element_type": 8,
+        "count": 1
+      },
+      "general.languages": {
+        "element_type": 8,
+        "count": 2
+      },
+      "glm5-next.block_count": 45,
+      "glm5-next.context_length": 1048576,
+      "glm5-next.embedding_length": 4096,
+      "glm5-next.feed_forward_length": 12288,
+      "glm5-next.attention.head_count": 64,
+      "glm5-next.attention.head_count_kv": {
+        "element_type": 5,
+        "count": 45
+      },
+      "glm5-next.attention.layer_norm_rms_epsilon": 9.999999747378752e-06,
+      "glm5-next.expert_count": 288,
+      "glm5-next.expert_used_count": 8,
+      "glm5-next.expert_group_count": 1,
+      "glm5-next.expert_group_used_count": 1,
+      "glm5-next.expert_gating_func": 2,
+      "glm5-next.vocab_size": 154880,
+      "glm5-next.attention.layer_norm_epsilon": 9.999999974752427e-07,
+      "glm5-next.ssm.conv_kernel": 4,
+      "glm5-next.kda.head_dim": 128,
+      "glm5-next.kda.gate_lower_bound": -5.0,
+      "glm5-next.attention.q_lora_rank": 1536,
+      "glm5-next.attention.kv_lora_rank": 512,
+      "glm5-next.rope.dimension_count": 0,
+      "glm5-next.attention.key_length": 512,
+      "glm5-next.attention.value_length": 512,
+      "glm5-next.attention.key_length_mla": 256,
+      "glm5-next.attention.value_length_mla": 256,
+      "glm5-next.attention.indexer.head_count": 32,
+      "glm5-next.attention.indexer.key_length": 128,
+      "glm5-next.attention.indexer.top_k": 2048,
+      "glm5-next.attention.indexer.kpool": 4,
+      "glm5-next.attention.indexer.kpool_select_tail": true,
+      "glm5-next.attention.indexer.types": {
+        "element_type": 7,
+        "count": 45
+      },
+      "glm5-next.hyper_connection.count": 4,
+      "glm5-next.hyper_connection.sinkhorn_iterations": 20,
+      "glm5-next.hyper_connection.epsilon": 9.999999974752427e-07,
+      "glm5-next.leading_dense_block_count": 3,
+      "glm5-next.expert_feed_forward_length": 2048,
+      "glm5-next.expert_shared_count": 1,
+      "glm5-next.expert_weights_scale": 2.5,
+      "glm5-next.expert_weights_norm": true,
+      "glm5-next.swiglu_clamp_exp": {
+        "element_type": 6,
+        "count": 45
+      },
+      "glm5-next.swiglu_clamp_shexp": {
+        "element_type": 6,
+        "count": 45
+      },
+      "general.quantization_version": 2,
+      "general.file_type": 10,
+      "quantize.imatrix.file": "./upload-GLM_5.3_Flash/imatrix.gguf",
+      "quantize.imatrix.dataset": "/mnt/srv/host/resources/KLD/calibration_datav5.txt",
+      "quantize.imatrix.entries_count": 126,
+      "quantize.imatrix.chunks_count": 50,
+      "split.no": 0,
+      "split.count": 2,
+      "split.tensors.count": 1383
+    }
+  },
+  "scope": "metadata/unchanged-receipt identity validation; no new110GB SHA scan",
+  "runtime_binary_sha256": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83",
+  "runtime_manifest_sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+  "all_memory_guards_identical": true,
+  "all_measured_source_postflights_passed": true
+}

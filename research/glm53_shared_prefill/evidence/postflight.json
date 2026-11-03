@@ -1,0 +1,105 @@
+{
+  "timestamp_utc": "2026-11-03T09:29:41.323837+00:00",
+  "sources": [
+    {
+      "path": "air_llm/airllm/nextgen/glm_native.py",
+      "sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+      "frozen_copy_valid": true,
+      "current_sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+      "current_equal": true
+    },
+    {
+      "path": "integrations/ronin/engine/adapter.py",
+      "sha256": "6a9e7b2aa61bd2d6d1b3d1aa0abf8e64d3164166cc7476cf49cc58eaaee3a218",
+      "frozen_copy_valid": true,
+      "current_sha256": "6a9e7b2aa61bd2d6d1b3d1aa0abf8e64d3164166cc7476cf49cc58eaaee3a218",
+      "current_equal": true
+    },
+    {
+      "path": "integrations/ronin/runtime/agent_context.py",
+      "sha256": "8babb6f477f154de547b99de073961c80be4f3e310083ec1d6dae5e0167385fa",
+      "frozen_copy_valid": true,
+      "current_sha256": "8babb6f477f154de547b99de073961c80be4f3e310083ec1d6dae5e0167385fa",
+      "current_equal": true
+    },
+    {
+      "path": "integrations/ronin/runtime/ronin_runtime.py",
+      "sha256": "a4bb3ee49aabccdb5500ca1adc5c95fc1d62dffa8d3a42e6e73740f614e17e51",
+      "frozen_copy_valid": true,
+      "current_sha256": "a4bb3ee49aabccdb5500ca1adc5c95fc1d62dffa8d3a42e6e73740f614e17e51",
+      "current_equal": true
+    },
+    {
+      "path": "research/glm53_shared_prefill/qualify_agents.py",
+      "sha256": "47b94abd560526967df210ca1404ae5f8f63b3a7e9f43ec10df2b31bd7899b08",
+      "frozen_copy_valid": true,
+      "current_sha256": "2bbb89a061c1dd246bac4b87e45b51bdadf3239dbc6ccefcb924c794adcc2112",
+      "current_equal": false
+    },
+    {
+      "path": "research/glm53_gpu_v3/power_state.py",
+      "sha256": "0ab1d19438fa70a3ac4bf57922114f266f77f59b5186ece071c279ae56b37820",
+      "frozen_copy_valid": true,
+      "current_sha256": "0ab1d19438fa70a3ac4bf57922114f266f77f59b5186ece071c279ae56b37820",
+      "current_equal": true
+    },
+    {
+      "path": "research/glm53_gpu_v3/process_io.py",
+      "sha256": "5c08242547ca87bb55deceff3392c8e940ed3ffe4402c3d8ae1d6aa7dd8c8409",
+      "frozen_copy_valid": true,
+      "current_sha256": "5c08242547ca87bb55deceff3392c8e940ed3ffe4402c3d8ae1d6aa7dd8c8409",
+      "current_equal": true
+    },
+    {
+      "path": "research/glm53_gpu_v3/completion_contract.py",
+      "sha256": "44ed490036c406a274ba4ad69c175a5333f229994835af85854d97fd8de5b90a",
+      "frozen_copy_valid": true,
+      "current_sha256": "44ed490036c406a274ba4ad69c175a5333f229994835af85854d97fd8de5b90a",
+      "current_equal": true
+    },
+    {
+      "path": "research/glm53_ultra/agent_probe.py",
+      "sha256": "16f239d8a0b07f8feabf27bd5a9722f3b41c67154e1506fde463a90d0262b164",
+      "frozen_copy_valid": true,
+      "current_sha256": "16f239d8a0b07f8feabf27bd5a9722f3b41c67154e1506fde463a90d0262b164",
+      "current_equal": true
+    },
+    {
+      "path": "research/glm53_ultra/chat_probe.py",
+      "sha256": "270e9f24d80b5127c0fbd93b071a27cf56cfa832768e661b8d35ff70131a37dd",
+      "frozen_copy_valid": true,
+      "current_sha256": "270e9f24d80b5127c0fbd93b071a27cf56cfa832768e661b8d35ff70131a37dd",
+      "current_equal": true
+    }
+  ],
+  "weights": [
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "identity": [
+        16777233,
+        34853271,
+        9430112,
+        1793220986088562812,
+        1793221180120865439
+      ],
+      "same_as_verified_receipt": true,
+      "sha256_from_receipt": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+      "new_full_hash_scan": false
+    },
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "identity": [
+        16777233,
+        34874104,
+        110017922752,
+        1793630405545465080,
+        1793652319576112639
+      ],
+      "same_as_verified_receipt": true,
+      "sha256_from_receipt": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+      "new_full_hash_scan": false
+    }
+  ],
+  "runtime_manifest_sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+  "note": "Qualifier instrumentation changed only after both attempts; frozen measured version retained. Core production sources unchanged. File identities support receipt reuse, not a new tensor shard hash scan."
+}

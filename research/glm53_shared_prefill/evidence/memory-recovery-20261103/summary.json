@@ -1,0 +1,255 @@
+{
+  "runs": [
+    {
+      "index": 1,
+      "status": "failed",
+      "error_code": "REQUEST_TIMEOUT",
+      "error": "Native generation exceeded time limit",
+      "elapsed_seconds": 1817.5525894159946,
+      "load_seconds": 12.285179790997063,
+      "owned_server_returncode": -9,
+      "requests": [
+        {
+          "agent_id": 1,
+          "mission_id": "f942df7d-0ce0-4b14-822c-be9a1b9674f6",
+          "prompt_tokens": 524,
+          "emitted_ids": 73,
+          "first_output_seconds": 1186.7459852919928,
+          "request_wall_seconds": 1805.2229359999983,
+          "terminal": null,
+          "error_code": "REQUEST_TIMEOUT",
+          "raw_text": "Simple arithmetic: 17×24=408, remaining 12, stock sufficient.</think>**Calcul**\n- Quantité utilisée : 17 lots × 24 pièces = **408 pièces**\n- Marge restante : 420 − 408 = **12 pièces**\n\n**Vérification du stock**\n- 408 ≤ 420 →"
+        }
+      ],
+      "native_failure": null,
+      "native_counters": {
+        "loads": 1,
+        "requests": 0,
+        "generated_tokens": 0
+      },
+      "sampled_peak_native_rss_bytes": 5141217280,
+      "external_swap_first_bytes": 1247281152,
+      "external_swap_last_bytes": 1230503936,
+      "external_swap_max_bytes": 1247281152,
+      "external_pressure_levels": [
+        1,
+        2
+      ],
+      "power_continuity_validated": true,
+      "power_violation": null,
+      "native_absent": [
+        {
+          "pid": 10654,
+          "original_identity_absent": true
+        }
+      ],
+      "sources_unchanged": true,
+      "memory_guards": {
+        "max_rss_bytes": 9126805504,
+        "max_swap_growth_bytes": 33554432,
+        "warning_swap_growth_bytes": 33554432,
+        "reserve_bytes": 805306368,
+        "base_workspace_bytes": 1073741824,
+        "warning_headroom_bytes": 536870912,
+        "headroom_grace_seconds": 3,
+        "load_timeout_seconds": 900,
+        "warning_grace_seconds": 20,
+        "poll_seconds": 1,
+        "max_pending": 1024
+      },
+      "request_timeout_seconds": 1800
+    },
+    {
+      "index": 2,
+      "status": "failed",
+      "error_code": "SWAP_LIMIT",
+      "error": "Native inference stopped by resource guard",
+      "elapsed_seconds": 1832.3131498340008,
+      "load_seconds": 11.678913542004011,
+      "owned_server_returncode": -9,
+      "requests": [
+        {
+          "agent_id": 1,
+          "mission_id": "a84924c0-cd2b-45df-a41e-a946da6e5a1b",
+          "prompt_tokens": 522,
+          "emitted_ids": 74,
+          "first_output_seconds": 1197.103603167001,
+          "request_wall_seconds": 1820.5613109580008,
+          "terminal": null,
+          "error_code": "SWAP_LIMIT",
+          "raw_text": "Simple arithmetic: 17×24=408, 420−408=12, stock suffices.</think>Calcul :\n- Quantité utilisée : 17 × 24 = 408 pièces\n- Marge restante : 420 − 408 = 12 pièces\n\nVérification du stock : 408 ≤ 420, donc"
+        }
+      ],
+      "native_failure": {
+        "code": "SWAP_LIMIT",
+        "message": "Native inference stopped by resource guard",
+        "sample": {
+          "monotonic": 37965.723574583,
+          "available_bytes": 2567307264,
+          "total_bytes": 17179869184,
+          "swap_used_bytes": 1275265024,
+          "rss_bytes": 3029549056,
+          "cpu_seconds": 7222.518874112,
+          "pressure_level": 2
+        },
+        "pressure_context": {
+          "pressure_level": 2,
+          "warning_seconds": 1822.1854828330033,
+          "available_bytes": 2567307264,
+          "reserve_bytes": 805306368,
+          "warning_headroom_floor_bytes": 1342177280,
+          "swap_growth_bytes": 44761088,
+          "warning_swap_growth_bytes": 33554432,
+          "warning_headroom_low": false,
+          "warning_swap_high": true,
+          "headroom_low_seconds": 0,
+          "action": "stop",
+          "stop_code": "SWAP_LIMIT",
+          "evidence_scope": "M5 16 GiB, same pinned GLM, CPU4/context512/batch8: stable mmap warning pressure observed; other workloads unqualified"
+        }
+      },
+      "native_counters": {
+        "loads": 1,
+        "requests": 0,
+        "generated_tokens": 0
+      },
+      "sampled_peak_native_rss_bytes": 5013946368,
+      "external_swap_first_bytes": 1230503936,
+      "external_swap_last_bytes": 1381564416,
+      "external_swap_max_bytes": 1381564416,
+      "external_pressure_levels": [
+        1,
+        2
+      ],
+      "power_continuity_validated": true,
+      "power_violation": null,
+      "native_absent": [
+        {
+          "pid": 22342,
+          "original_identity_absent": true
+        }
+      ],
+      "sources_unchanged": true,
+      "memory_guards": {
+        "max_rss_bytes": 9126805504,
+        "max_swap_growth_bytes": 33554432,
+        "warning_swap_growth_bytes": 33554432,
+        "reserve_bytes": 805306368,
+        "base_workspace_bytes": 1073741824,
+        "warning_headroom_bytes": 536870912,
+        "headroom_grace_seconds": 3,
+        "load_timeout_seconds": 900,
+        "warning_grace_seconds": 20,
+        "poll_seconds": 1,
+        "max_pending": 1024
+      },
+      "request_timeout_seconds": 2700
+    },
+    {
+      "index": 3,
+      "status": "failed",
+      "error_code": "CANCELLED",
+      "error": "Génération interrompue.",
+      "elapsed_seconds": 688.9060486669987,
+      "load_seconds": 12.060652124993794,
+      "owned_server_returncode": -9,
+      "requests": [
+        {
+          "agent_id": 600,
+          "mission_id": "7a540be6-dfa8-4e82-8929-96a15832dc4e",
+          "prompt_tokens": 542,
+          "emitted_ids": 0,
+          "first_output_seconds": null,
+          "request_wall_seconds": 676.7884535420017,
+          "terminal": null,
+          "error_code": "CANCELLED",
+          "raw_text": ""
+        }
+      ],
+      "native_failure": null,
+      "native_counters": {
+        "loads": 1,
+        "requests": 0,
+        "generated_tokens": 0
+      },
+      "sampled_peak_native_rss_bytes": 5784846336,
+      "external_swap_first_bytes": 1381564416,
+      "external_swap_last_bytes": 1381564416,
+      "external_swap_max_bytes": 1381564416,
+      "external_pressure_levels": [
+        1
+      ],
+      "power_continuity_validated": false,
+      "power_violation": {
+        "clock": {
+          "wall_time_seconds": 1793704045.963722,
+          "perf_counter_seconds": 38991.298737083,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.006173155845317524,
+          "timestamp_utc": "2026-11-03T11:07:25.963722+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": false,
+          "reasons": [
+            "power source changed from campaign admission"
+          ],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T11:07:25.963768+00:00",
+            "wall_time_seconds": 1793704045.963774,
+            "perf_counter_seconds": 38991.29878925,
+            "lid_closed": false,
+            "power_source": "battery",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 38991.330199208
+          }
+        },
+        "passed": false
+      },
+      "native_absent": [
+        {
+          "pid": 34307,
+          "original_identity_absent": true
+        }
+      ],
+      "sources_unchanged": true,
+      "memory_guards": {
+        "max_rss_bytes": 9126805504,
+        "max_swap_growth_bytes": 33554432,
+        "warning_swap_growth_bytes": 33554432,
+        "reserve_bytes": 805306368,
+        "base_workspace_bytes": 1073741824,
+        "warning_headroom_bytes": 536870912,
+        "headroom_grace_seconds": 3,
+        "load_timeout_seconds": 900,
+        "warning_grace_seconds": 20,
+        "poll_seconds": 1,
+        "max_pending": 1024
+      },
+      "request_timeout_seconds": 2700
+    }
+  ],
+  "reclaim": [
+    {
+      "phase": "phase1",
+      "workers_stopped": 18,
+      "launchers_stopped": 18,
+      "prior_observed_footprint_bytes": 2533720192,
+      "pid_count": 36
+    },
+    {
+      "phase": "-phase2",
+      "workers_stopped": 8,
+      "launchers_stopped": 8,
+      "prior_observed_footprint_bytes": 1146997464,
+      "pid_count": 16
+    }
+  ],
+  "total_prior_footprint_bytes": 3680717656,
+  "all_memory_guards_identical": true,
+  "EOS_qualified_agents": [],
+  "scope": "No successful EOS qualification; no performance optimization claimed. Per-process footprint and global swap are distinct counters.",
+  "portable_tests_passed": 23
+}
