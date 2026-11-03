@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "verified_at_utc": "2026-11-02T22:27:02.665613+00:00",
+  "scope": "posthoc timed-ID prefix up to16 and runtime/source identities; not new logits/state proof or optimization qualification",
+  "original_campaign_sha256": "53a63a5f5ea2d6992cafdfcb51d7dc70b7858590926a17ed6fc343e1375df002",
+  "original_campaign_json_unchanged": true,
+  "posthoc_valid_on_stated_scope": true,
+  "optimization_qualified": false,
+  "source_checks": {
+    "research/glm53_gpu_v3/campaign.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v3/campaign.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v3/benchmark_native.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v3/benchmark_native.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v3/system_memory.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v3/system_memory.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v3/process_io.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v3/process_io.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v2/campaign.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v2/campaign.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v2/benchmark_lifecycle.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v2/benchmark_lifecycle.py",
+      "hash_matches": true,
+      "stat_matches": true
+    },
+    "research/glm53_gpu_v2/storage_counters.py": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/airllm-next/research/glm53_gpu_v2/storage_counters.py",
+      "hash_matches": true,
+      "stat_matches": true
+    }
+  },
+  "runtime_hash_checks": {
+    "libggml-base.0.28.0.dylib": true,
+    "libllama-server-impl.dylib": true,
+    "libllama-common.0.8.0.dylib": true,
+    "libllama.0.8.0.dylib": true,
+    "libmtmd.0.8.0.dylib": true,
+    "libggml-blas.0.28.0.dylib": true,
+    "libggml-metal.0.28.0.dylib": true,
+    "libggml.0.28.0.dylib": true,
+    "libggml-cpu.0.28.0.dylib": true
+  },
+  "current_library_set_matches_plan": true,
+  "current_binary_hash_matches_plan": true,
+  "current_model_stats_match_plan": true,
+  "fidelity_prefixes": {
+    "A": {
+      "token_ids": [
+        12089,
+        13,
+        4929,
+        9621,
+        1788,
+        650,
+        21193,
+        294,
+        6,
+        30658,
+        2983,
+        1713,
+        1574,
+        11,
+        37706,
+        963
+      ],
+      "scope_steps": 16,
+      "tokens_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/cpu-control16-isolated/capture/tokens.jsonl",
+      "tokens_file_sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "complete_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/cpu-control16-isolated/capture/complete.json",
+      "complete_file_sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    },
+    "B": {
+      "token_ids": [
+        12089,
+        13,
+        4929,
+        9621,
+        1788,
+        650,
+        21193,
+        294,
+        6,
+        30658,
+        2983,
+        1713,
+        1574,
+        11,
+        37706,
+        963
+      ],
+      "scope_steps": 16,
+      "tokens_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/cpu-stream16-isolated/capture/tokens.jsonl",
+      "tokens_file_sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "complete_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/cpu-stream16-isolated/capture/complete.json",
+      "complete_file_sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    }
+  },
+  "stages": [
+    {
+      "index": 0,
+      "arm": "A",
+      "raw_report_sha256": "aec3941ab3437cae603fa6bb46324a92b0f2d33973db96a673e1a88e8095df99",
+      "raw_matches_saved_stage": true,
+      "stage_complete": true,
+      "binary_hash_matches_plan": true,
+      "dylib_hashes_match_plan": true,
+      "fidelity_prefix_matches": true,
+      "checked_prefix_steps": 8,
+      "request_gpu_requirement_met": true,
+      "generated_ids_logged": 8,
+      "passed": true
+    },
+    {
+      "index": 1,
+      "arm": "B",
+      "raw_report_sha256": "af1318768644e86db2f70050aaa346f354a2b674d8a7242d47878f9de9a1077b",
+      "raw_matches_saved_stage": true,
+      "stage_complete": true,
+      "binary_hash_matches_plan": true,
+      "dylib_hashes_match_plan": true,
+      "fidelity_prefix_matches": true,
+      "checked_prefix_steps": 8,
+      "request_gpu_requirement_met": true,
+      "generated_ids_logged": 8,
+      "passed": true
+    },
+    {
+      "index": 2,
+      "arm": "B",
+      "raw_report_sha256": "0e38734ef9886f65ed804f37d9e82a3f036299a6608a34536a20baf363100f52",
+      "raw_matches_saved_stage": true,
+      "stage_complete": true,
+      "binary_hash_matches_plan": true,
+      "dylib_hashes_match_plan": true,
+      "fidelity_prefix_matches": true,
+      "checked_prefix_steps": 8,
+      "request_gpu_requirement_met": true,
+      "generated_ids_logged": 8,
+      "passed": true
+    },
+    {
+      "index": 3,
+      "arm": "A",
+      "raw_report_sha256": "88927efda24cf676248fdc5943c531be93c3602b047daf353940fa621ee805bc",
+      "raw_matches_saved_stage": true,
+      "stage_complete": true,
+      "binary_hash_matches_plan": true,
+      "dylib_hashes_match_plan": true,
+      "fidelity_prefix_matches": true,
+      "checked_prefix_steps": 8,
+      "request_gpu_requirement_met": true,
+      "generated_ids_logged": 8,
+      "passed": true
+    }
+  ],
+  "frozen_sources": [
+    {
+      "relative_path": "research/glm53_gpu_v3/campaign.py",
+      "sha256": "3c27e30acb6bc2387c6acb26154babfd64427de589b16e72d59000bca6246408"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v3/benchmark_native.py",
+      "sha256": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v3/system_memory.py",
+      "sha256": "9d9480bbfc06a7fb10dfb4dde06f2a50d47cd3c7c87ae26c181aa82d9b0c79be"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v3/process_io.py",
+      "sha256": "5c08242547ca87bb55deceff3392c8e940ed3ffe4402c3d8ae1d6aa7dd8c8409"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v2/campaign.py",
+      "sha256": "aab8d8baa1fa0c8c9aacfc763b7afa2c8b90bac20aa0c640aabbb2606f1d7eb1"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v2/benchmark_lifecycle.py",
+      "sha256": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a"
+    },
+    {
+      "relative_path": "research/glm53_gpu_v2/storage_counters.py",
+      "sha256": "a041250514fe7555cde561879e9ab93305d4eb0202cbcc4f45a57ddb70f07fbc"
+    }
+  ],
+  "verifier_source_sha256": "5364f17dfb35d704f44c28a40ce97d211d9d05102e1695310ddfa82fe595bf10"
+}

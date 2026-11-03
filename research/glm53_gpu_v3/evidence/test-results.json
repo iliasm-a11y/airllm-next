@@ -1,0 +1,41 @@
+{
+  "scope": "local test selection; fixtures do not replace checkpoint generation proofs",
+  "passed": true,
+  "suites": [
+    {
+      "log": "work/v3/v3-final-tests-hardened.log",
+      "xml": "work/v3/v3-final-tests-hardened.xml",
+      "tests_passed": 143,
+      "subtests_passed": 34,
+      "skips": 0,
+      "log_sha256": "4691e204a07fdc647dc63361e287970dae46214d44981251ffe12a9d46b101e3",
+      "xml_sha256": "4e68b7b95392aa2b72d86bc7180c6c9077b6254064694f9bba19ff30d06dcd74"
+    },
+    {
+      "log": "work/v3/regression-controls-correct-path.log",
+      "xml": "work/v3/regression-controls-correct-path.xml",
+      "tests_passed": 97,
+      "subtests_passed": 23,
+      "skips": 0,
+      "log_sha256": "2e7ac8fe05ff036653d0ff9a361dee600e61dd1ea3a946beb176545866a01ad3",
+      "xml_sha256": "6b28347e9ac3b1146e985f575a4e6a6f816796ddb0da4da6247d90acefeda187"
+    }
+  ],
+  "total_tests_passed": 240,
+  "total_subtests_passed": 57,
+  "actual_native_component_checks": {
+    "dense_lock": 48,
+    "dense_lookahead": 26
+  },
+  "initial_setup_failure_preserved": "work/v3/regression-controls.log; ronin_glm import path fixed by documented PYTHONPATH, no source change",
+  "full_model_multi_request_reset_executed": false,
+  "new_long_or_eos_campaign_qualified": false,
+  "ci_claimed": false,
+  "awake_helper_actual_smoke": "work/v3/scoped-awake-real-smoke-hardened.json",
+  "awake_helper_failure_modes_rejected": [
+    "unexpected_positive_exit",
+    "unowned_signal",
+    "premature_zero",
+    "forced_cleanup_kill"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "source_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "scope": "actual isolated V4 checkout during compilation, tracked changes plus newly added headers; no implied binary parity",
+  "native_modified_and_new_files": {
+    "ggml/src/ggml-backend.cpp": {
+      "bytes": 118203,
+      "sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9"
+    },
+    "ggml/src/ggml-cpu/ggml-cpu-dense-lookahead.h": {
+      "bytes": 11720,
+      "sha256": "cc1bf5055a33f306c3dc684c7921c854b4eb61dbcd1f83d1a13d71cb2c171685"
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.c": {
+      "bytes": 141889,
+      "sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e"
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": {
+      "bytes": 25359,
+      "sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2"
+    },
+    "ggml/src/ggml-metal/ggml-metal-context.m": {
+      "bytes": 28907,
+      "sha256": "9ecb6454ce7278ea904101100091d362dbfe29cf9a15a0f0a942af71bef0c631"
+    },
+    "ggml/src/ggml-metal/ggml-metal-device.cpp": {
+      "bytes": 95531,
+      "sha256": "c841b02306f755962f9c5e8424c9eac6862c1eef533ee079f5f3be187570cce6"
+    },
+    "ggml/src/ggml-metal/ggml-metal-device.m": {
+      "bytes": 102181,
+      "sha256": "c3b7cbe2d64f3ab01698c6ba1a5da7a932a9146e42b7f00a469bcb4a85f7484e"
+    },
+    "ggml/src/ggml-metal/kernels/mul_mv.metal": {
+      "bytes": 139907,
+      "sha256": "b36763bdb3534ff78581a933a8e21ec3c7a81062643867ac621df8eb3c67a185"
+    },
+    "src/llama-context.cpp": {
+      "bytes": 175830,
+      "sha256": "33d8cf6d489cce950bf35bc19979f90f87b2e987e9fc095875ba8cf7debedcb4"
+    },
+    "src/llama-dense-lock.h": {
+      "bytes": 12609,
+      "sha256": "8daee7fc71a4bc49db5885c1af1f6570ffa091bfe03ca2c3137867897fe9e482"
+    },
+    "src/llama-mmap.cpp": {
+      "bytes": 30995,
+      "sha256": "3615c7c7dd351d58222f5f9bc0923221105c3f0f697c065a57f4af5675942606"
+    },
+    "src/llama-model.cpp": {
+      "bytes": 192341,
+      "sha256": "a2c2d032e8416d9745fe237afc85c403f88eee34fe356ca0517e76101dcb3029"
+    },
+    "src/models/glm5-next.cpp": {
+      "bytes": 53227,
+      "sha256": "ab8ddd13fa5c28de863392580f443584fefdeb020976675445496ce655f0f60b"
+    }
+  },
+  "dense_lock_header_matches_reviewed_source": true,
+  "frozen_patch_input_sha256": {
+    "llama-mmap-demand.patch": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0",
+    "llama-dense-lock.patch": "d0e4bcd383eee1e29acbfc493287bef8dc65c359abe1517722450dee72a4f40a",
+    "llama-layer-local-hc.patch": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d",
+    "llama-metal-command-timing.patch": "b1f948cc3ff1f6552e342ee0806f2a1c1e79c3c1db97b642d05e81bfa07f9a39",
+    "llama-q8-cpuarith.patch": "58046f9be9755dd8ea05fdd7dfca04551195083ec516e9d23180e581d46d0bb3",
+    "llama-expert-prefetch.patch": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238",
+    "llama-dense-prefetch-columns.patch": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356",
+    "llama-q8-shared-activation.patch": "fc093020415833703edbca51b36a9bd998a672998ea1a87b9df293937f096057",
+    "llama-dense-lookahead.patch": "d14e78d6e383084e7bcf84869a5927f8ceb6c15e3e443a6595a5917657d97e5c",
+    "llama-q8-selective.patch": "c681c0144a3a0e46e54ddd31fb4a0c2e3935f0f0a505d1eebf01a429c736b1ad",
+    "llama-metal-mapped-cpu-read.patch": "2757eb3c24bbb62371a1c4e8e3acf59a35caca0a16293d024304914fd85ff91a",
+    "llama-dense-prefetch.patch": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c",
+    "llama-moe-cache-split.patch": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1",
+    "llama-expert-drop.patch": "a93a61629fe98b234748094101613af39ec29ddb3cf806a5e71650c353c392a1",
+    "llama-mmap-nocache.patch": "f1cc9e2c60d72ce6bd5140564f1b37069f1c726e0fb01f86268a72827cb32e63",
+    "llama-hc-kda-trace.patch": "2fc7d5a5976bbf3b2ddc9f3ca0a1b6c4dc2bad8c18e2083f04f24e7852455870"
+  }
+}

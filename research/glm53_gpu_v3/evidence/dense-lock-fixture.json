@@ -1,0 +1,27 @@
+[
+  {
+    "report": {
+      "status": "passed",
+      "mode": "normal",
+      "checks": 38,
+      "real_mlock_mincore_release": true,
+      "page_union_budget_enforced": true,
+      "lifetime_order_verified": true,
+      "rlimit_unchanged": true,
+      "model_or_gpu": false
+    },
+    "stdout": "{\"status\":\"passed\",\"mode\":\"normal\",\"checks\":38,\"real_mlock_mincore_release\":true,\"page_union_budget_enforced\":true,\"lifetime_order_verified\":true,\"rlimit_unchanged\":true,\"model_or_gpu\":false}\n",
+    "stderr": ""
+  },
+  {
+    "report": {
+      "status": "passed",
+      "mode": "poison",
+      "checks": 10,
+      "new_budget_declined": true,
+      "rlimit_unchanged": true
+    },
+    "stdout": "{\"status\":\"passed\",\"mode\":\"poison\",\"checks\":10,\"new_budget_declined\":true,\"rlimit_unchanged\":true}\n",
+    "stderr": "AIRLLM_DENSE_LOCK status=admission_poisoned_after_unlock_failure retained=0 uncertain_locked_bytes=16384\n"
+  }
+]

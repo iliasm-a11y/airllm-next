@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "validated_at_utc": "2026-11-02T21:38:28.323875+00:00",
+  "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "patch_count": 15,
+  "patches": [
+    {
+      "order": 1,
+      "patch": "research/glm53_m5/patches/llama-mmap-demand.patch",
+      "sha256": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 2,
+      "patch": "research/glm53_m5/patches/llama-expert-prefetch.patch",
+      "sha256": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 3,
+      "patch": "research/glm53_m5/patches/llama-dense-prefetch.patch",
+      "sha256": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 4,
+      "patch": "research/glm53_m5/patches/llama-dense-prefetch-columns.patch",
+      "sha256": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 5,
+      "patch": "research/glm53_gpu/patches/llama-layer-local-hc.patch",
+      "sha256": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 6,
+      "patch": "research/glm53_gpu/patches/llama-moe-cache-split.patch",
+      "sha256": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 7,
+      "patch": "research/glm53_gpu_v2/patches/llama-q8-cpuarith.patch",
+      "sha256": "58046f9be9755dd8ea05fdd7dfca04551195083ec516e9d23180e581d46d0bb3",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 8,
+      "patch": "research/glm53_gpu_v2/patches/llama-metal-command-timing.patch",
+      "sha256": "b1f948cc3ff1f6552e342ee0806f2a1c1e79c3c1db97b642d05e81bfa07f9a39",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 9,
+      "patch": "research/glm53_gpu_v2/patches/llama-hc-kda-trace.patch",
+      "sha256": "2fc7d5a5976bbf3b2ddc9f3ca0a1b6c4dc2bad8c18e2083f04f24e7852455870",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 10,
+      "patch": "research/glm53_gpu_v2/patches/llama-q8-selective.patch",
+      "sha256": "c681c0144a3a0e46e54ddd31fb4a0c2e3935f0f0a505d1eebf01a429c736b1ad",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 11,
+      "patch": "research/glm53_gpu_v2/patches/llama-metal-mapped-cpu-read.patch",
+      "sha256": "2757eb3c24bbb62371a1c4e8e3acf59a35caca0a16293d024304914fd85ff91a",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 12,
+      "patch": "research/glm53_gpu_v2/patches/llama-q8-shared-activation.patch",
+      "sha256": "fc093020415833703edbca51b36a9bd998a672998ea1a87b9df293937f096057",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 13,
+      "patch": "research/glm53_gpu_v2/patches/llama-expert-drop.patch",
+      "sha256": "a93a61629fe98b234748094101613af39ec29ddb3cf806a5e71650c353c392a1",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 14,
+      "patch": "research/glm53_gpu_v3/patches/llama-dense-lookahead.patch",
+      "sha256": "d14e78d6e383084e7bcf84869a5927f8ceb6c15e3e443a6595a5917657d97e5c",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    },
+    {
+      "order": 15,
+      "patch": "research/glm53_gpu_v3/patches/llama-mmap-nocache.patch",
+      "sha256": "f1cc9e2c60d72ce6bd5140564f1b37069f1c726e0fb01f86268a72827cb32e63",
+      "check": true,
+      "apply": true,
+      "warnings": ""
+    }
+  ],
+  "all_patched_source_files": [
+    {
+      "path": "ggml/src/ggml-backend.cpp",
+      "bytes": 118203,
+      "sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9"
+    },
+    {
+      "path": "ggml/src/ggml-cpu/ggml-cpu-dense-lookahead.h",
+      "bytes": 11720,
+      "sha256": "cc1bf5055a33f306c3dc684c7921c854b4eb61dbcd1f83d1a13d71cb2c171685"
+    },
+    {
+      "path": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "bytes": 141889,
+      "sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e"
+    },
+    {
+      "path": "ggml/src/ggml-cpu/ggml-cpu.cpp",
+      "bytes": 25359,
+      "sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2"
+    },
+    {
+      "path": "ggml/src/ggml-metal/ggml-metal-context.m",
+      "bytes": 28907,
+      "sha256": "9ecb6454ce7278ea904101100091d362dbfe29cf9a15a0f0a942af71bef0c631"
+    },
+    {
+      "path": "ggml/src/ggml-metal/ggml-metal-device.cpp",
+      "bytes": 95531,
+      "sha256": "c841b02306f755962f9c5e8424c9eac6862c1eef533ee079f5f3be187570cce6"
+    },
+    {
+      "path": "ggml/src/ggml-metal/ggml-metal-device.m",
+      "bytes": 102181,
+      "sha256": "c3b7cbe2d64f3ab01698c6ba1a5da7a932a9146e42b7f00a469bcb4a85f7484e"
+    },
+    {
+      "path": "ggml/src/ggml-metal/kernels/mul_mv.metal",
+      "bytes": 139907,
+      "sha256": "b36763bdb3534ff78581a933a8e21ec3c7a81062643867ac621df8eb3c67a185"
+    },
+    {
+      "path": "src/llama-context.cpp",
+      "bytes": 175830,
+      "sha256": "33d8cf6d489cce950bf35bc19979f90f87b2e987e9fc095875ba8cf7debedcb4"
+    },
+    {
+      "path": "src/llama-mmap.cpp",
+      "bytes": 30995,
+      "sha256": "3615c7c7dd351d58222f5f9bc0923221105c3f0f697c065a57f4af5675942606"
+    },
+    {
+      "path": "src/models/glm5-next.cpp",
+      "bytes": 53227,
+      "sha256": "ab8ddd13fa5c28de863392580f443584fefdeb020976675445496ce655f0f60b"
+    }
+  ],
+  "all_patched_source_files_match_live": true,
+  "source_manifest_sha256": "e739de2737d4e68df0c75d3dcac18660ed2f32b1e8d788741fa0a6753afaf8cc",
+  "tracked_diff_sha256": "61049e33a066fc88c805a1695846fb82409a7bad70802b53ba34101e2548d0b9",
+  "tracked_diff_matches_live": true,
+  "git_diff_check_passed": true,
+  "native_compilation_or_model_or_gpu_run_by_validation": false,
+  "live_source_modified": false,
+  "caveat": "Tracked diff excludes new untracked header; all_patched_source_files includes and verifies that header explicitly. Source parity is not binary fidelity or performance qualification."
+}
