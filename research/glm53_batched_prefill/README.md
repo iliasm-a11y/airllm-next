@@ -47,12 +47,11 @@ complets comptent **521 / 542 tokens**. L'alignement ne prouve aucune
 restauration exacte. Le calcul du préfixe est encore nécessaire pour chaque
 agent tant que le diagnostic complet ne passe pas.
 
-Le composant Metal reproduit **13 888 valeurs** bit à bit contre la routine
-ARM `nrc=2`. Le dispatcher CPU10 change toutefois de chemin selon la forme,
-et les lots 64/128 présentent des différences sur les fixtures mesurées.
-Ce résultat ne qualifie ni la fidélité globale GLM ni un gain de préfill.
-Les petits lots 8/16/32 sont identiques sur ces seules fixtures, sans
-qualification sur les dimensions complètes du modèle.
+Les fixtures initiales reproduisent **13 888 valeurs** bit à bit contre la
+routine ARM `nrc=2`. Le dispatcher CPU10 change de chemin selon la forme ;
+certaines petites formes en lots 64/128 présentent des différences. Ces
+observations historiques restent distinctes de la campagne représentative
+mesurée ci-dessous. Aucun de ces composants ne qualifie le graphe GLM complet.
 
 La sérialisation de séquence couvre la mémoire hybride, mais **pas les
 logits ni le sampler**. Le snapshot est limité à la fin d'un préfixe avant
@@ -110,7 +109,10 @@ revendiquée. Il conserve les sources et la clé du wrapper gelé.
 Pour 8/16, comparer directement `full` puis `restore` : le comparateur exige
 les trois états à 208 identiques et la correspondance SHA256/taille du snapshot,
 ainsi que les suffixes et continuations. L’alignement seul ne suffit pas.
-Pour les autres découpages, `full/split` précède `split/restore`. Les reçus
+Pour les lots 32 et supérieurs, le protocole de découpage à 208 est encore
+structurellement incomplet : lire [l’audit des frontières](split32_protocol_audit.md)
+avant toute expérience. Le lanceur accepte `split`, mais cela ne qualifie ni les
+frontières ni les checkpoints du helper actuel. Les reçus
 `guard.json` doivent être complets et valides. Aucun second moteur physique
 ne doit être lancé en parallèle. Le diagnostic écrit les
 états et peut consommer de l'espace disque ; il ne fournit pas une mesure
@@ -176,8 +178,25 @@ lancement, sans héritage rétroactif de descripteur. Son reçu conserve cette
 limite. Le nouveau lanceur apporte une protection avant lancement pour les
 prochains essais, sans modifier cette chronologie historique.
 
-Les composants Q8 représentatifs et le [candidat Q2](metal_q2_audit.md) restent
-préparés, non mesurés : leur contrôle externe préalable a refusé le démarrage
-lorsque le Mac est repassé sur batterie après la clôture du témoin. Aucun appel
-GPU, oracle natif ou build Q2 n'a été exécuté pendant ce refus. Les objectifs
-GPU, snapshot réutilisé et deux réponses utiles jusqu'à EOS restent non qualifiés.
+## Composants Metal représentatifs clos
+
+Après le refus initial sur batterie, conservé dans les preuves, le retour
+sur secteur permet deux [mesures de composants](evidence/metal-representative-closed/README.md)
+closes, sans chargement de GLM. La projection Q8_0 synthétique **1536 × 4096**
+produit **380 928 sorties finies exactes** face à ARM `nrc=2` et au graphe
+CPU10, pour N=8/16/32/64/128. Le [composant Q2_K](metal_q2_audit.md), un expert
+synthétique **2048 × 4096**, produit **114 688 sorties finies exactes** face à
+ARM `nrc=1`, pour N=8/16/32. Les deux campagnes conservent les sources et le
+swap système observé ; leurs reçus et journaux sont sélectionnés avec SHA/tailles.
+
+Les temps GPU portent sur des données préparées avec trois répétitions.
+L'oracle Q2 n'est pas un témoin de vitesse CPU10 et sa quantification CPU est
+hors des horodatages GPU. Ces résultats ne démontrent aucun gain de préfill
+GLM, aucune lecture SSD amortie ni fidélité du graphe complet : l'objectif A
+reste non qualifié, ainsi que le snapshot réutilisé et les deux réponses
+utiles jusqu'à EOS.
+
+La [reconstruction V4](evidence/source-reconstruction/README.md) vérifie les
+empreintes de **13 sources natives** après application ordonnée de 16 patches
+dans un nouveau checkout. Elle ne reconstruit aucun binaire et ne transfère
+aucune qualification aux prochaines bibliothèques.

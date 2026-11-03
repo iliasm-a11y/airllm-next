@@ -1,0 +1,72 @@
+{
+  "source": "<publication-repository>/research/glm53_batched_prefill/metal_q8.metal",
+  "buffers": [
+    {
+      "bytes": 6684672,
+      "input": "<work>/metal-representative-q8-run1/w4096-n32/packed.bin"
+    },
+    {
+      "bytes": 524288,
+      "input": "<work>/metal-representative-q8-run1/w4096-n32/x.bin"
+    },
+    {
+      "bytes": 12,
+      "input": "<work>/metal-representative-q8-run1/w4096-n32/shape.bin"
+    },
+    {
+      "bytes": 131072,
+      "output": "<work>/metal-representative-q8-run1/w4096-n32/qs.bin"
+    },
+    {
+      "bytes": 8192,
+      "output": "<work>/metal-representative-q8-run1/w4096-n32/scales.bin"
+    },
+    {
+      "bytes": 196608,
+      "output": "<work>/metal-representative-q8-run1/w4096-n32/out.bin"
+    }
+  ],
+  "stages": [
+    {
+      "entry": "q8_batch_quantize",
+      "bindings": [
+        1,
+        3,
+        4,
+        2
+      ],
+      "grid": [
+        131072,
+        1,
+        1
+      ],
+      "threadgroup": [
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "entry": "q8_batch_dot",
+      "bindings": [
+        0,
+        3,
+        4,
+        5,
+        2
+      ],
+      "grid": [
+        1536,
+        32,
+        1
+      ],
+      "threadgroup": [
+        8,
+        8,
+        1
+      ]
+    }
+  ],
+  "repetitions": 3,
+  "warmups": 1
+}

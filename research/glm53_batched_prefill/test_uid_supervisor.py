@@ -37,21 +37,27 @@ class SupervisorTests(unittest.TestCase):
         return ['--binary',self.helper,'--output',str(self.root/'native-output'),'--mode',mode]
     def test_prelaunch_ownership_inherits_fd_to_exact_child_without_double_benchmark_lock(self):
         original=self.wrapper.read_bytes()
-        with mock.patch.object(s.tempfile,'gettempdir',return_value=str(self.root)):
-            report=s.supervise(self.wrapper,self.args(),self.root/'receipt.json',poll_seconds=.05)
-        self.assertEqual(report['status'],'completed')
-        self.assertTrue(report['uid_model_lock']['acquired_before_wrapper_spawn'])
-        self.assertEqual(len(report['native_children']),1)
-        child=report['native_children'][0]
-        self.assertTrue(child['identity_verified'])
-        self.assertTrue(child['pass_fds_requested'])
-        inherited=json.loads(self.fdreport.read_text())
-        self.assertIn({'fd':report['uid_model_lock']['fd'],'device':report['uid_model_lock']['device'],'inode':report['uid_model_lock']['inode']},inherited)
-        self.assertEqual(self.wrapper.read_bytes(),original)
-        self.assertTrue(report['wrapper_file_unchanged'])
-        self.assertTrue(report['cleanup']['parent_uid_fd_closed'])
-        self.assertEqual(report['native_signal_actions'],[])
-        self.assertTrue(self.benchmark.exists())
+        for mode in ('full','split'):
+            with self.subTest(mode=mode):
+                with mock.patch.object(s.tempfile,'gettempdir',return_value=str(self.root)):
+                    report=s.supervise(self.wrapper,self.args(mode),self.root/('receipt-'+mode+'.json'),poll_seconds=.05)
+                self.assertEqual(report['status'],'completed')
+                self.assertTrue(report['uid_model_lock']['acquired_before_wrapper_spawn'])
+                self.assertEqual(len(report['native_children']),1)
+                child=report['native_children'][0]
+                self.assertTrue(child['identity_verified'])
+                self.assertTrue(child['pass_fds_requested'])
+                launches=[event for event in s._events(Path(report['events_path'])) if event.get('event')=='native_launch_requested']
+                self.assertEqual(len(launches),1)
+                self.assertEqual(launches[0]['command'][-1],mode)
+                self.assertEqual(len(launches[0]['command']),6)
+                inherited=json.loads(self.fdreport.read_text())
+                self.assertIn({'fd':report['uid_model_lock']['fd'],'device':report['uid_model_lock']['device'],'inode':report['uid_model_lock']['inode']},inherited)
+                self.assertEqual(self.wrapper.read_bytes(),original)
+                self.assertTrue(report['wrapper_file_unchanged'])
+                self.assertTrue(report['cleanup']['parent_uid_fd_closed'])
+                self.assertEqual(report['native_signal_actions'],[])
+                self.assertTrue(self.benchmark.exists())
     def test_busy_uid_lock_refuses_before_wrapper_or_native_launch(self):
         with mock.patch.object(s.tempfile,'gettempdir',return_value=str(self.root)):
             holder,_=s.acquire_uid_lock()
@@ -64,8 +70,12 @@ class SupervisorTests(unittest.TestCase):
         self.assertFalse(self.benchmark.exists())
     def test_receipt_cannot_precreate_native_output_directory(self):
         with self.assertRaises(ValueError):s.supervise(self.wrapper,self.args(),self.root/'native-output'/'supervisor.json')
-    def test_only_full_restore_are_forwarded(self):
-        with self.assertRaises(SystemExit):s.supervise(self.wrapper,self.args('split'),self.root/'bad-mode.json')
+    def test_unknown_mode_is_refused_before_spawn(self):
+        with mock.patch.object(s.subprocess,'Popen') as spawned:
+            with self.assertRaises(SystemExit):s.supervise(self.wrapper,self.args('unknown'),self.root/'bad-mode.json')
+            spawned.assert_not_called()
+        self.assertFalse(self.fdreport.exists())
+        self.assertFalse(self.benchmark.exists())
     def test_native_descendant_retains_fd_after_bootstrap_owner_is_killed(self):
         # This deliberately kills only the synthetic bootstrap created below.
         # The retained descriptor, not the supervisor's descriptor, must block

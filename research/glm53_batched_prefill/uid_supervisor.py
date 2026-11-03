@@ -2,7 +2,7 @@
 
 Only this supervisor owns the UID lock; the unchanged wrapper owns its existing
 BENCHMARK_LOCK. A small runpy bootstrap passes the held UID lock descriptor to
-only the configured native full/restore helper's Popen call. No model is loaded
+only the configured native full/split/restore helper's Popen call. No model is loaded
 by the supervisor. The measured wrapper and native source files stay unchanged.
 """
 from __future__ import annotations
@@ -39,7 +39,7 @@ class InheritingPopen(OriginalPopen):
     def __init__(self,*args,**kwargs):
         command=args[0] if args else kwargs.get('args')
         same_helper=(isinstance(command,(list,tuple)) and bool(command) and os.path.realpath(os.fspath(command[0]))==helper)
-        selected=(same_helper and len(command)==6 and not kwargs.get('shell',False) and command[-1] in ('full','restore'))
+        selected=(same_helper and len(command)==6 and not kwargs.get('shell',False) and command[-1] in ('full','split','restore'))
         metadata_only=(same_helper and len(command)==3 and command[1]=='--state-parameters' and not kwargs.get('shell',False))
         if same_helper and not (selected or metadata_only):
             raise RuntimeError('configured native helper command has no admitted descriptor-inheritance contract; no spawn')
@@ -135,7 +135,7 @@ def supervise(wrapper,forward,receipt,*,poll_seconds=.25):
     if args and args[0]=='--':args=args[1:]
     p=argparse.ArgumentParser(add_help=False)
     p.add_argument('--binary',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    p.add_argument('--mode',choices=('full','restore'),required=True)
+    p.add_argument('--mode',choices=('full','split','restore'),required=True)
     target,_=p.parse_known_args(args)
     helper=target.binary.resolve();output=target.output.resolve()
     if receipt.is_relative_to(output):raise ValueError('supervisor receipt must be outside the wrapper output directory')

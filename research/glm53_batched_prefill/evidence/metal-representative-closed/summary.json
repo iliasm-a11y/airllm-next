@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "status": "closed_component_measurements",
+  "model_loaded": false,
+  "objective_A_achieved": false,
+  "full_model_qualified": false,
+  "glm_prefill_speedup_qualified": false,
+  "q8": {
+    "shape": {
+      "M": 1536,
+      "K": 4096
+    },
+    "N": [
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "finite_outputs_per_oracle": 380928,
+    "native_arm_nrc2_bit_identical": true,
+    "cpu10_graph_bit_identical": true,
+    "median_gpu_seconds_by_N": {
+      "8": 0.002086500004224945,
+      "16": 0.003964874995290302,
+      "32": 0.006291875004535541,
+      "64": 0.0033809166634455323,
+      "128": 0.0064009583365987055
+    },
+    "python_peak_rss_bytes": 76972032,
+    "timer_child_peak_rss_bytes": 25821184
+  },
+  "q2": {
+    "shape": {
+      "M": 2048,
+      "K": 4096
+    },
+    "N": [
+      8,
+      16,
+      32
+    ],
+    "finite_outputs": 114688,
+    "native_arm_nrc1_bit_identical": true,
+    "cpu10_timing_measured": false,
+    "cpu_activation_quantization_outside_gpu_timestamp": true,
+    "median_gpu_seconds_by_N": {
+      "8": 0.0032116250004037283,
+      "16": 0.0021683750019292347,
+      "32": 0.003741375003301073
+    },
+    "python_peak_rss_bytes": 47185920,
+    "timer_child_peak_rss_bytes": 18169856
+  },
+  "all_inputs_synthetic": true,
+  "warm_prepared_weights": true,
+  "repetitions": 3,
+  "warmup_commands_per_case": 1,
+  "system_swap_growth_observed_bytes": 0,
+  "scope": "multi-token Metal component arithmetic on representative full matrix shapes; no GLM graph/routes/KDA/state or sustained prefill/decode speed qualification",
+  "raw_output_scope": "selected JSON/logs only; binary activations, packed synthetic payloads, outputs, executables and model weights omitted",
+  "original_model_weights_read": false,
+  "guard_sampling_scope": "selected before/after component observations; no sustained model/power/allocator qualification"
+}

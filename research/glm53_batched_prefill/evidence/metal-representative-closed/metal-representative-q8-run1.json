@@ -1,0 +1,508 @@
+{
+  "schema_version": 1,
+  "scope": "bounded Q8 component, native ARM nrc=2 oracle; not GLM prefill",
+  "model_loaded": false,
+  "full_model_qualified": false,
+  "representative_projection": true,
+  "representative_token_max": 128,
+  "requested_token_counts": [
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "measured_at_utc": "2026-11-03T14:18:38.724879+00:00",
+  "passed": true,
+  "component_nrc2_passed": true,
+  "passed_scope": "component bit-exact contract only; not global GPU qualification",
+  "component_metal_tolerance_passed": true,
+  "reports": [
+    {
+      "device": "Apple M5",
+      "payload_bytes": 6899724,
+      "median_command_wall_seconds": 0.00234875,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.002086500004224945,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.00234875,
+        0.002379208,
+        0.002347292
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.002086500004224945,
+        0.0020858749994658865,
+        0.002087000000756234
+      ],
+      "declared_prepared_data_accounting_bytes": 13799424,
+      "timer_buffer_bytes": {
+        "packed": 6684672,
+        "x": 131072,
+        "shape": 12,
+        "qs": 32768,
+        "scales": 2048,
+        "output": 49152
+      },
+      "timer_buffer_total_bytes": 6899724,
+      "payload_scope": "declared prepared-data accounting; excludes CPU graph scratch, oracle copies and driver RSS",
+      "matmul_dimensions": {
+        "M_rows": 1536,
+        "N_tokens": 8,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 12288,
+      "max_abs_error": 0.0,
+      "native_nrc2_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 12288,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "weights": {
+        "kind": "synthetic FP32 rows quantized by the pinned native CPU",
+        "quantizer": "quantize_row_q8_0",
+        "seed": 5301536,
+        "numpy_version": "2.5.4",
+        "shape_matches_observed_tensor": "blk.3.attn_q_a.weight",
+        "M_rows": 1536,
+        "K_width": 4096,
+        "packed_bytes": 6684672,
+        "packed_weights_sha256": "b47b00deeddbb0884e789c1bcec35cba7b986bede8c0a8bd84fba64cc9cb6c9b",
+        "generation_float_row_bytes": 16384,
+        "model_weights_read": false,
+        "scope": "complete observed matrix shape with synthetic weights; not a captured GLM layer execution"
+      },
+      "activation_kind": "synthetic FP32; not GLM captured activation",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 12288,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        },
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 7114764,
+      "median_command_wall_seconds": 0.004530166,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.003964874995290302,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.004486417,
+        0.004530166,
+        0.004544292
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.003964874995290302,
+        0.00396662499406375,
+        0.003962541668443009
+      ],
+      "declared_prepared_data_accounting_bytes": 14229504,
+      "timer_buffer_bytes": {
+        "packed": 6684672,
+        "x": 262144,
+        "shape": 12,
+        "qs": 65536,
+        "scales": 4096,
+        "output": 98304
+      },
+      "timer_buffer_total_bytes": 7114764,
+      "payload_scope": "declared prepared-data accounting; excludes CPU graph scratch, oracle copies and driver RSS",
+      "matmul_dimensions": {
+        "M_rows": 1536,
+        "N_tokens": 16,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 24576,
+      "max_abs_error": 0.0,
+      "native_nrc2_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 24576,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "weights": {
+        "kind": "synthetic FP32 rows quantized by the pinned native CPU",
+        "quantizer": "quantize_row_q8_0",
+        "seed": 5301536,
+        "numpy_version": "2.5.4",
+        "shape_matches_observed_tensor": "blk.3.attn_q_a.weight",
+        "M_rows": 1536,
+        "K_width": 4096,
+        "packed_bytes": 6684672,
+        "packed_weights_sha256": "b47b00deeddbb0884e789c1bcec35cba7b986bede8c0a8bd84fba64cc9cb6c9b",
+        "generation_float_row_bytes": 16384,
+        "model_weights_read": false,
+        "scope": "complete observed matrix shape with synthetic weights; not a captured GLM layer execution"
+      },
+      "activation_kind": "synthetic FP32; not GLM captured activation",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 24576,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        },
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 7544844,
+      "median_command_wall_seconds": 0.00684375,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.006291875004535541,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.0081605,
+        0.00684375,
+        0.002101
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.00760512499982724,
+        0.006291875004535541,
+        0.001635249995160848
+      ],
+      "declared_prepared_data_accounting_bytes": 15089664,
+      "timer_buffer_bytes": {
+        "packed": 6684672,
+        "x": 524288,
+        "shape": 12,
+        "qs": 131072,
+        "scales": 8192,
+        "output": 196608
+      },
+      "timer_buffer_total_bytes": 7544844,
+      "payload_scope": "declared prepared-data accounting; excludes CPU graph scratch, oracle copies and driver RSS",
+      "matmul_dimensions": {
+        "M_rows": 1536,
+        "N_tokens": 32,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 49152,
+      "max_abs_error": 0.0,
+      "native_nrc2_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 49152,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "weights": {
+        "kind": "synthetic FP32 rows quantized by the pinned native CPU",
+        "quantizer": "quantize_row_q8_0",
+        "seed": 5301536,
+        "numpy_version": "2.5.4",
+        "shape_matches_observed_tensor": "blk.3.attn_q_a.weight",
+        "M_rows": 1536,
+        "K_width": 4096,
+        "packed_bytes": 6684672,
+        "packed_weights_sha256": "b47b00deeddbb0884e789c1bcec35cba7b986bede8c0a8bd84fba64cc9cb6c9b",
+        "generation_float_row_bytes": 16384,
+        "model_weights_read": false,
+        "scope": "complete observed matrix shape with synthetic weights; not a captured GLM layer execution"
+      },
+      "activation_kind": "synthetic FP32; not GLM captured activation",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 49152,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        },
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 8405004,
+      "median_command_wall_seconds": 0.00357275,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0033809166634455323,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.006759375,
+        0.00357275,
+        0.003391709
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.00649975000123959,
+        0.0033809166634455323,
+        0.0031864583361311816
+      ],
+      "declared_prepared_data_accounting_bytes": 16809984,
+      "timer_buffer_bytes": {
+        "packed": 6684672,
+        "x": 1048576,
+        "shape": 12,
+        "qs": 262144,
+        "scales": 16384,
+        "output": 393216
+      },
+      "timer_buffer_total_bytes": 8405004,
+      "payload_scope": "declared prepared-data accounting; excludes CPU graph scratch, oracle copies and driver RSS",
+      "matmul_dimensions": {
+        "M_rows": 1536,
+        "N_tokens": 64,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 98304,
+      "max_abs_error": 0.0,
+      "native_nrc2_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 98304,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "weights": {
+        "kind": "synthetic FP32 rows quantized by the pinned native CPU",
+        "quantizer": "quantize_row_q8_0",
+        "seed": 5301536,
+        "numpy_version": "2.5.4",
+        "shape_matches_observed_tensor": "blk.3.attn_q_a.weight",
+        "M_rows": 1536,
+        "K_width": 4096,
+        "packed_bytes": 6684672,
+        "packed_weights_sha256": "b47b00deeddbb0884e789c1bcec35cba7b986bede8c0a8bd84fba64cc9cb6c9b",
+        "generation_float_row_bytes": 16384,
+        "model_weights_read": false,
+        "scope": "complete observed matrix shape with synthetic weights; not a captured GLM layer execution"
+      },
+      "activation_kind": "synthetic FP32; not GLM captured activation",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 98304,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        },
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 10125324,
+      "median_command_wall_seconds": 0.006724209,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0064009583365987055,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.006577625,
+        0.006748333,
+        0.006724209
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0064009583365987055,
+        0.006310708333330695,
+        0.006543249997776002
+      ],
+      "declared_prepared_data_accounting_bytes": 20250624,
+      "timer_buffer_bytes": {
+        "packed": 6684672,
+        "x": 2097152,
+        "shape": 12,
+        "qs": 524288,
+        "scales": 32768,
+        "output": 786432
+      },
+      "timer_buffer_total_bytes": 10125324,
+      "payload_scope": "declared prepared-data accounting; excludes CPU graph scratch, oracle copies and driver RSS",
+      "matmul_dimensions": {
+        "M_rows": 1536,
+        "N_tokens": 128,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 196608,
+      "max_abs_error": 0.0,
+      "native_nrc2_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 196608,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "weights": {
+        "kind": "synthetic FP32 rows quantized by the pinned native CPU",
+        "quantizer": "quantize_row_q8_0",
+        "seed": 5301536,
+        "numpy_version": "2.5.4",
+        "shape_matches_observed_tensor": "blk.3.attn_q_a.weight",
+        "M_rows": 1536,
+        "K_width": 4096,
+        "packed_bytes": 6684672,
+        "packed_weights_sha256": "b47b00deeddbb0884e789c1bcec35cba7b986bede8c0a8bd84fba64cc9cb6c9b",
+        "generation_float_row_bytes": 16384,
+        "model_weights_read": false,
+        "scope": "complete observed matrix shape with synthetic weights; not a captured GLM layer execution"
+      },
+      "activation_kind": "synthetic FP32; not GLM captured activation",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 196608,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        },
+        "max_abs_error": 0.0
+      }
+    }
+  ],
+  "guards_before": {
+    "ac_power": true,
+    "pressure_level": 1,
+    "system_swap_used_bytes": 917569536,
+    "rss_bytes": 35209216
+  },
+  "guards_after": {
+    "ac_power": true,
+    "pressure_level": 1,
+    "system_swap_used_bytes": 917569536,
+    "rss_bytes": 67125248
+  },
+  "native_cpu_dylib_sha256": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf",
+  "graph_oracle_sha256": "31fa5dc21ce87e2a95099e73a2468d217f9340962af561f9794d956ccd2fe42a",
+  "timer_sha256": "6c990ddebd0fe73502c2182e5318d1147b4ea4ccbe88003a1a9e5781dafea035",
+  "probe_source_sha256": "564e0c7d7fb4d39beb97673bf2afb394b96737dedb070b22f254b4ed9c3c12d0",
+  "cpu10_graph_passed": true,
+  "process_peak_rss_bytes": 76972032,
+  "timer_peak_rss_bytes": 25821184,
+  "limits": [
+    "No complete model integration or speedup qualification",
+    "Warm prepared weights; no SSD claim",
+    "CPU oracle ctypes calls are not CPU10 timing",
+    "Only even-row nrc=2 arithmetic is implemented",
+    "Q2 experts, KDA, attention and mHC remain outside this component"
+  ]
+}

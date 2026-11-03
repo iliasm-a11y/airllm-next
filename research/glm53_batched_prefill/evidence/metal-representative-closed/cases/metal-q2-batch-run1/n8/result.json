@@ -1,0 +1,54 @@
+{
+  "device": "Apple M5",
+  "payload_bytes": 2855436,
+  "thread_execution_width": 32,
+  "median_command_wall_seconds": 0.003539541,
+  "warmup_commands": 1,
+  "median_gpu_seconds": 0.0032116250004037283,
+  "stages_per_command": 1,
+  "command_wall_seconds": [
+    0.003509834,
+    0.003539541,
+    0.003553916
+  ],
+  "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+  "gpu_seconds": [
+    0.0032116250004037283,
+    0.003217249999579508,
+    0.0032089999949675985
+  ],
+  "declared_prepared_data_accounting_bytes": 5972992,
+  "dimensions": {
+    "M": 2048,
+    "K": 4096,
+    "N": 8
+  },
+  "payload_scope": "declared prepared-data accounting; excludes native oracle copies and driver RSS",
+  "dot_dispatches_per_batch": 1,
+  "weight_reuse_tokens_per_threadgroup": 8,
+  "declared_static_threadgroup_bytes": 84,
+  "shader_sha256": "0952b4b97e27623d0586fe608b5dce479394469d564759c6a802575061f7dd15",
+  "comparison_to_native_arm": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 16384,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "activation_quantization_wall_seconds": 0.00047487499978160486,
+  "native_reference_wall_seconds": 0.03248908300156472,
+  "activation_quantizer": "libggml-cpu quantize_row_q8_K",
+  "activation_raw_sha256": "f825c946804f7659c10d48265a32a6ec026ccc141ccd42e0b56d4e507d7d99ba",
+  "activation_kind": "seeded synthetic FP32, CPU-quantized Q8_K; not captured GLM activation",
+  "native_oracle_calls": 16384,
+  "cpu_oracle_scope": "one native nrc=1 call per output; no CPU10 speed measurement"
+}
