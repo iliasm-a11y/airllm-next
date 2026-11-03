@@ -1,236 +1,223 @@
-# Décodage GLM-5.3 Flash sur M5 — bilan expérimental du 3 novembre 2026
+# Décodage GLM-5.3 Flash sur M5 — reprise du 3 novembre 2026
 
-**Aucune accélération complète nouvelle n'est qualifiée.** Du code natif et
-Metal a été développé, compilé et exécuté. Les composants sont fidèles sur les
-cas mesurés, mais leur coût total dépasse celui de CPU10 dans ce régime chaud.
-La campagne de modèle contemporain reste bloquée avant lancement par ses
-réserves. CPU10/GPU0 demeure la configuration conservée pour RONIN.
+**La campagne a repris ; aucune nouvelle accélération complète n'est qualifiée.**
+Deux captures contemporaines CPU10 de32 sorties passent la comparaison des
+logits, routes, KDA et écritures de cache observées. Le témoin sans captures
+termine32 sorties :31 appels en188,084548 s, soit **0,164819 intervalle/s**.
+Les deux essais suivants de64 sorties sont arrêtés par la pression mémoire,
+avant toute sortie puis après17 IDs malgré une admission au-dessus de6 Gio.
+128 reste non exécuté. Les protections restent actives.
 
-## État vérifié et isolement
+## Périmètre conservé
 
-Les PR #17 à #23 ont été consultées sur GitHub. Elles sont ouvertes, en brouillon
-et non fusionnées à l'inspection. PR #23 est au commit
-`6bdeec357154a7740833b4ad694d08e02aef2f96`. Sa capture CPU16 est rejetée ;
-la première différence capturée est au token 512, KDA couche 0. Sa restauration
-CPU8 a été arrêtée sur 39,125 Mio de croissance du swap global. Ses composants
-Metal et ses rejeux ciblés ne qualifient ni le décodage complet ni deux réponses
-utiles d'agents. Les résultats négatifs sont conservés.
+Machine M5 GPU8/CPU10,16 Gio, checkpoint original Q2_K_S d'environ110 GB,
+deux shards inchangés. La branche séparée part de PR23
+`6bdeec357154a7740833b4ad694d08e02aef2f96`. Seuls ce nouveau dossier de recherche
+et un workflow indépendant changent. Aucun fichier du préfill, de RONIN ou du
+runtime installé n'est modifié ; aucune fusion dans `main` n'est effectuée.
+CPU10/GPU0, effort Max,600 identités logiques et un seul slot physique restent
+conservés. Le travail préfill de l'autre chat a été attendu sans interruption.
 
-La branche `research/glm53-ultra-decode-engine` part de cette révision dans un
-arbre de travail séparé. Seul `research/glm53_ultra_decode` et un workflow
-indépendant changent. `main`, PR #23, RONIN et le runtime installé restent
-inchangés. L'effort Max des agents n'est pas réduit.
+Les profils utilisent le prompt brut déterministe « La capitale de la France
+est », contexte512, batch/ubatch8, une séquence, CPU10/GPU0. Ils ne remplacent
+pas les prompts complets Max ni les sessions RONIN1024.32 sorties désignent32
+IDs, dont le premier provient du préfill :31 transitions sont chronométrées.
+Aucun EOS naturel n'est atteint.
 
-## Profil quantitatif hérité, recalculé
+## Séquence réelle, échecs conservés
 
-Le résumé complet compressé de PR #19 a été décompressé et son SHA256 vérifié.
-Le préfill est exclu ;15 intervalles de décodage subsistent :
+| Essai | Résultat | Portée |
+|---|---|---|
+| Quatre composants B4, deux graines/forme | Fidélité et provenance conformes ; Metal plus lent | Poids synthétiques résidents |
+| Premier diagnostic CPU32 B3 | Réserve disque franchie après16 IDs | Arrêt, aucun débit accepté |
+| Référence CPU32 B3 |32 IDs,31 appels, gardes conformes | Diagnostic sérialisé |
+| Capture B4 suivante | Admission RAM refusée | Aucun modèle lancé |
+| Capture CPU32 B4 reprise |32 IDs, comparaison numérique conforme | CPU ciblé uniquement |
+| Témoin CPU32 B4 sans captures |31 appels terminés en188,084548 s | Temps du backend, pas réponse RONIN |
+| Témoin CPU64 B4 | Pression2 après4,076 s, zéro ID | Échec, aucune mesure de débit |
+| Reprise CPU64 après restitution du cache | Pression2 après133,074 s,17 IDs | Échec, préfixe17 identique uniquement |
+| CPU128 de cette séquence | Non exécuté | Arrêt au premier échec |
 
-| Famille | Somme des temps d'opération sérialisés | Fraction |
+Une régénération extérieure de cache d'outils avait réduit la réserve disque
+pendant le premier diagnostic. Cet arrêt n'est pas effacé par les reprises.
+Les poids et bibliothèques passent les contrôles après les arrêts et les
+essais terminés.
+
+<!-- RESOURCE_RETRY_START -->
+Une application a ensuite été fermée avec autorisation explicite et macOS a
+restitué du cache :6,64 Gio disponibles ont été observés. La reprise exigeait
+6 Gio disponibles et33 Gio libres en plus des gardes d'origine. Le CPU64 a
+été admis avec6 538 641 408 octets disponibles, mais la pression est repassée
+à2 après17 sorties. Les17 IDs concordent avec le préfixe CPU32 validé ;
+aucun débit de cet essai interrompu n'est accepté.128 n'est pas lancé.
+La restitution du cache change son état initial ; aucun résultat comparatif
+de performance n'est tiré de cette reprise.
+<!-- RESOURCE_RETRY_END -->
+
+## Fidélité CPU32 : seuils d'origine inchangés
+
+B3 et B4 partagent poids, bibliothèques, prompt et paramètres. Critères CPU :
+bit à bit, atol=rtol=0, routes ordonnées exactes et valeurs finies.
+
+| Donnée | Couverture | Différences |
 |---|---:|---:|
-| MUL_MAT dense |64,356480 s|70,63 %|
-| MUL_MAT_ID MoE |18,452227 s|20,25 %|
-| Autres opérations |8,305882 s|9,12 %|
-| Total |91,114589 s|100 %|
+| Logits complets |32 vecteurs,4 956 160 flottants |0, y compris les bits |
+| Routes |1 344 tenseurs,12 432 entiers |0 |
+| Routeur |1 344 tenseurs,447 552 flottants |0 |
+| KDA |2 176 tenseurs,20 611 072 flottants |0 |
+| result_output |32 tenseurs,4 956 160 flottants |0 |
+| Écritures CPY/SET_ROWS observées |7 584 événements ordonnés |0 hash différent |
 
-Les CPU core-seconds totalisent 677,177714 s. Ils cumulent plusieurs threads et
-ne permettent pas de calculer un temps d'attente I/O par soustraction.
-Le processus comptabilise183 799 644 160 octets lus sur ces15 intervalles,
-soit12,253 GB/intervalle. C'est un compteur OS historique, pas une mesure NAND.
-Les données détaillées par couche/opération sont dans
-`evidence/historical-analysis.json`. Les couches sans suffixe restent
-explicitement non attribuées.
+Les32 IDs sont identiques. Les écritures représentent5 253 365 760 octets
+logiques et5 345 460 224 octets de plages de stockage. Cette preuve concerne
+les écritures observées, pas tout état non capturé. Elle ne qualifie ni les
+continuations longues, ni les réinitialisations, ni les changements d'agent.
+Le témoin sans captures suit les mêmes32 IDs ; ses logits et états non capturés
+ne sont pas déclarés comparés. Une continuation longue ne reçoit pas
+automatiquement la qualification numérique de cette trajectoire courte.
 
-Une **autre** capture, PR #21, donne12 218 990 592 octets d'opérandes originaux
-distincts/token :9 444 458 496 denses (77,293 %) et2 774 532 096 MoE (22,707 %).
-Ces volumes ne sont pas des lectures physiques. Les versions et captures
-diffèrent : les deux tableaux ne constituent pas une comparaison A/B.
+## Temps du témoin : dénominateur et limites
 
-Le goulot le mieux étayé est la résidence et la circulation des poids,
-principalement denses. Le partage exact stockage/mémoire/calcul n'est toujours
-pas isolé. L'auxiliaire nouveau observe le chargement, l'initialisation,
-le préfill, chaque appel de décodage, les CPU core-seconds, lectures/écritures
-OS, défauts de pages, pageins et résidences `mincore`. Il laisse à `null` les
-lectures NAND, allocations et temps d'attente purs non mesurés. Aucun de ces
-nouveaux profils complets n'a été exécuté après le refus d'admission.
+Les31 intervalles incluent `llama_synchronize` avant la fin de chaque appel.
+Ils excluent chargement, préfill/première sortie, sélection gloutonne et gestion
+extérieure à l'appel. Les203,662 s du superviseur incluent d'autres phases et
+ne sont pas le dénominateur. Une fixture C++ lance un travail réellement
+asynchrone et vérifie sa terminaison avant l'arrêt du chronomètre.
 
-## Nouveaux kernels et mesures réelles de composants
+Les compteurs de ces31 appels donnent379 852 898 304 octets lus par le processus,
+zéro octet écrit,23 330 040 pageins et1 445,090 CPU core-seconds. Ce sont des
+compteurs OS, **pas des lectures physiques NAND**. L'attente I/O pure et les
+allocations non mesurées restent `null`.
 
-Les formats des poids restent Q8_0 et Q2_K. Le Q8 conserve les FMA et l'arbre
-pair/impair du dot ARM nrc1. Le Q2 effectue les réductions entières exactes puis
-les FMA dans l'ordre de la référence native. Les activations sont quantifiées
-par la bibliothèque CPU native ; aucun déquantificateur FP16 intermédiaire
-des poids n'est ajouté. Des tuiles 1/2/4 réutilisent les activations et leurs
-métadonnées ; deux banques peuvent partager un lancement sans concaténation
-des poids. Les buffers et pipelines sont persistants dans le banc.
+Le témoin est unique, sans A/B/B/A contemporain d'un moteur accéléré.
+0,164819 ne démontre aucun gain face à une ancienne campagne. Aucun débit
+de réponse utile RONIN ni stabilité multiagent n'est dérivé de ces appels.
 
-Les poids/activations sont synthétiques, dans les formats originaux, avec
-deux graines déterministes. Les formes sont celles déjà étudiées : projection
-Q8 M1536/K4096 et paire de projections Q2 M2048/K4096. Le CPU utilise le vrai
-graphe GGML et un pool 10 partagé ; l'oracle dot ARM indépendant vérifie aussi
-un sous-ensemble. Chaque variante comporte3 chauffes et21 répétitions, ordre
-randomisé. CPU et GPU sont mesurés dans des phases successives ; il ne s'agit
-pas d'un A/B/B/A complet du modèle.
+## Goulot contemporain instrumenté
 
-| Composant, un token | CPU10 médian | Meilleur Metal total médian | Temps GPU seul correspondant |
+La capture B4 sérialise les callbacks. Préfill exclu, les229 803 opérations
+de ses31 transitions donnent :
+
+| Famille | Temps d'opérations | Part |
+|---|---:|---:|
+| MUL_MAT dense |141,755186 s |66,394 % |
+| MUL_MAT_ID MoE |40,105353 s |18,784 % |
+| Autres |31,645074 s |14,822 % |
+| Total |213,505614 s |100 % |
+
+8,144678 s d'inspection sont mesurées séparément et exclues de ce tableau.
+Le B3 n'en mesurait pas la durée : ses champs à zéro signifient « non mesuré ».
+Le temps total des appels de diagnostic B4 est225,642736 s ; il ne constitue
+pas un débit sans instrumentation.
+
+Les instantanés `mincore` préalables couvrent23 170 986 pages cumulées, dont
+34 106 résidentes. Ce sont des observations répétées sur les opérandes
+inspectées, pas des pages uniques ni une mesure SSD. Le diagnostic étaye le
+poids des produits denses et des accès aux poids. Il ne sépare pas causalement
+stockage physique, cache OS et calcul. Les CPU core-seconds cumulent les
+threads : leur soustraction au temps mural ne donne pas l'attente I/O.
+
+## Kernels Metal : fidélité ciblée, coût total défavorable
+
+Les kernels un token Q8_0/Q2_K gardent les formats et l'ordre du dot ARM de
+référence. Les activations sont quantifiées par la bibliothèque CPU native ;
+aucun format FP16 intermédiaire de poids n'est ajouté. Tuiles1/2/4 et deux
+banques originales peuvent partager un lancement. Le graphe CPU GGML
+persistant utilise un seul pool10 partagé pour une paire.
+
+Mesures B4 :3 chauffes,21 répétitions/variante, deux graines par forme.
+Buffers, pipelines et petits poids synthétiques sont résidents.
+
+| Composant | CPU10 médian | Meilleur Metal total médian | GPU seul correspondant |
 |---|---:|---:|---:|
-| Q8 M1536/K4096, graine 1 |0,032833 ms|0,533584 ms (tuile 1)|0,085458 ms|
-| Q8 M1536/K4096, graine 2 |0,032291 ms|0,610417 ms (tuile 2)|0,267417 ms|
-| Paire Q2 M2048/K4096, graine 1 |0,089792 ms|0,459625 ms (tuile 4)|0,237625 ms|
-| Paire Q2 M2048/K4096, graine 2 |0,091417 ms|0,325625 ms (tuile 4)|0,137792 ms|
+| Paire Q2 M2048/K4096, graine5303101 |0,090125 ms |0,315000 ms, tuile4 |0,123875 ms |
+| Paire Q2, graine5303102 |0,088708 ms |0,306625 ms, tuile4 |0,120750 ms |
+| Q8 M1536/K4096, graine5303101 |0,032375 ms |0,500291 ms, tuile1 |0,239375 ms |
+| Q8, graine5303102 |0,034709 ms |0,545167 ms, tuile2 |0,269875 ms |
 
-Le temps Metal total inclut la quantification native CPU, l'encodage,
-la soumission et l'attente. Les imports initiaux, compilations et allocations
-de préparation sont exclus des deux régimes chauds. CPU10 inclut sa propre
-quantification dans le graphe ; sa copie de sortie hors graphe est exclue.
-Les poids tiennent dans un petit ensemble chaud : ces nombres ne peuvent pas
-être extrapolés à un checkpoint de110 GB.
+Le total Metal comprend quantification CPU, encodage, lancement et attente.
+Préparation et imports initiaux sont exclus des deux régimes chauds. Les
+50 176 composantes finales, activations quantifiées et contrôles CPU1/CPU10
+passent. Aucune sortie GLM n'est comparée par ce banc.
+Metal reste3,46–3,50 fois plus lent pour Q2 et15,45–15,71 fois pour Q8.
+Aucun gain complet n'est extrapolé. Le premier banc à deux pools CPU10
+concurrents et l'erreur initiale du shader restent rejetés et conservés ;
+les anciennes mesures B3 gardent leur propre version.
 
-**50 176 composantes finales de sortie sont comparées bit à bit**, sans NaN,
-sur les quatre essais retenus et leurs variantes. Les activations quantifiées
-et les contrôles CPU1/CPU10 passent. Cela ne compare ni logits GLM, ni routes,
-ni états récurrents du modèle. Les sorties finales des variantes sont
-contrôlées ; ce nombre n'est pas un nombre de tokens ni de trajectoires.
+## Gardes, provenance et correction du rapport d'arrêt
 
-Le regroupement Q2/tuile 4 économise0,240416 à 0,309542 ms face à deux
-commandes GPU synchronisées séparément sur la même paire synthétique.
-Il reste3,56 à 5,12 fois plus lent que CPU10. Aucun temps de génération GLM
-économisé n'est démontré. Pour Q8, aucune tuile nouvelle n'améliore de manière
-reproductible le coût total de la référence tuile 1.
+Admission fixe :5,5 Gio disponibles,32 Gio libres, pression normale, secteur,
+capot ouvert et horloges cohérentes. En cours d'essai : RSS échantillonnée de
+l'arbre possédé≤8,5 Gio, réserve système3 Gio, hausse du swap global≤32 Mio,
+durée≤2 400 s, propriété des processus et verrou UID transmis au modèle.
+Les gardes échantillonnées peuvent manquer une crête entre deux observations.
+Le swap global inclut les autres applications.
 
-Un premier banc à deux pools CPU10 distincts produisait une forte contention.
-Ses timings sont **rejetés**, conservés séparément, et exclus du tableau.
-Un premier shader a aussi échoué à la compilation sur une conversion
-`as_type<half>` ; le refus et sa correction sont conservés. Les essais refusés
-sur pression mémoire ne sont pas transformés en débits.
+Le point de départ commun du swap,2 711 814 144 octets, est conservé entre les
+reprises. Son contrôle peut seulement réduire le budget32 Mio par essai ;
+il n'est pas réinitialisé pour masquer une hausse cumulée.
 
-## Admission, mémoire et provenance
+| Essai | Pic RSS de l'arbre | RAM disponible minimale | Hausse maximale du swap | Pression maximale |
+|---|---:|---:|---:|---:|
+| CPU32 référence B3 |7 050 477 568 octets |4 254 334 976 |0 |1 |
+| CPU32 capture B4 |7 649 329 152 |4 181 147 648 |196 608 octets |1 |
+| CPU32 temps seul |6 670 516 224 |4 227 137 536 |1 048 576 octets |1 |
+| CPU64 arrêté |4 756 701 184 |3 425 501 184 |0 |2, arrêt |
+| CPU64 repris, arrêté |6 835 044 352 |3 423 731 712 |0 |2, arrêt |
 
-Le reçu SHA256 récent a été réutilisé uniquement après concordance des cinq
-éléments d'identité de chaque shard. Les deux shards et l'architecture sont
-vérifiés par ce reçu inchangé ; aucun nouveau hash complet de110 GB n'est
-revendiqué. L'ancien reçu embarqué avait une identité périmée et a correctement
-été refusé lors de la première tentative.
+Les trois essais CPU32 passent aussi les contrôles d'alimentation et d'intégrité.
+Le CPU64 n'a pas de rapport final du worker : ses marqueurs natifs prouvent
+pourtant son lancement et le début du préfill. Son ancien champ
+`native_process_launched:false` est donc erroné. Le brut est conservé avec une
+correction séparée. Le correctif écrit maintenant la preuve de lancement de
+façon atomique et rapporte `null` si l'état reste inconnu après un arrêt.
+Un worker non finalisé ne peut pas valider un essai.
+Le second arrêt CPU64 confirme ce correctif en situation réelle : lancement
+enregistré àtrue, worker non finalisé, échec conservé, aucun débit accepté.
 
-L'admission CPU32 corrigée observe4 155 604 992 octets de mémoire disponible
-(3,870 Gio) et17 140 989 952 octets libres sur le volume de sortie (15,964 Gio).
-Elle exige5,5 Gio et32 Gio. **Aucun processus natif de modèle n'est lancé.**
-Cette enveloppe conservatrice prolonge la politique de la campagne locale
-précédente ; elle n'est pas un pic mémoire mesuré. La pression oscille aussi
-entre1 et2 et plusieurs composants sont refusés avant lancement.
+Le reçu SHA256 courant est réutilisé après concordance des identités des deux
+shards ; aucun nouveau hash complet de110 GB n'est revendiqué. Les dix
+bibliothèques V4 et les binaires mesurés restent inchangés. Le manifeste B4 lie
+sources, includes, compilateur et bibliothèques. SHA256 du probe B4 :
+`fd4bea9c1bbbe226457f8d1fcdb36936a8b4824492d27a0bbc459e8287431e6b`.
 
-Les composants retenus ont une croissance de swap observée nulle. Leurs pics
-RSS sont échantillonnés : un essai très bref ne fournit pas nécessairement un
-échantillon au pic. Ces essais ne certifient pas la stabilité d'une génération
-longue. Les gardes RSS8,5 Gio, swap global32 Mio, pression/réserves, secteur,
-capot, horloges et propriété des processus sont conservés. Aucun processus
-personnel n'est fermé, aucun fichier utilisateur n'est supprimé. Fanxiang
-n'est pas monté ; aucune mesure ne lui est attribuée.
+48 tests locaux passent, dont budget cumulatif du swap, preuves après arrêt et
+terminaison asynchrone réelle. La [CI portable](https://github.com/iliasm-a11y/airllm-next/actions/runs/41721027098)
+passe sur le correctif de supervision ; elle ne mesure ni Metal ni le modèle M5.
 
-Le build3 compile réellement les trois binaires contre le runtime V4 existant :
+## Configuration et douze verdicts
 
-| Binaire | SHA256 |
-|---|---|
-| composant CPU |`b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3`|
-| timer Metal |`e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27`|
-| profil natif |`66a9b1c9d1138dd1deea39df334bb46292e2cad38cb249384889ec16eeb5d299`|
+L'ordonnanceur expérimental reste désactivé, sans branchement en production.
+Il exige fidélité selon les seuils existants, résidence/provenance valables et
+deux cycles A/B/B/A avec gain total≥10 % à chaque cycle. Aucun candidat n'y est
+admis. Aucun nouveau cache permanent, chemin TensorOps ou décodage spéculatif
+de modèle n'est qualifié.
 
-Les sources, headers, includes, compilateur et bibliothèques liés figurent dans
-le manifeste de build. Le nouveau profil n'a qu'un smoke de paramètres ;
-aucune qualification numérique de modèle ne lui est transférée. Après les
-mesures retenues, l'ajout de contrôles de provenance Python plus stricts n'a
-pas modifié les sources C++/Metal ni leurs binaires. Les reprises correspondantes
-sont refusées par la pression mémoire ; elles ne créent pas rétroactivement
-une observation de provenance supplémentaire pour les essais précédents.
+1. **Goulot réel :** produits denses et accès aux poids,66,4 % du temps
+   d'opérations sérialisées contemporain ; partage NAND/cache/calcul non isolé.
+2. **Gain complet nouveau :** aucun. Le témoin CPU32 donne0,164819 intervalle/s
+   sur un périmètre précis, sans accélération relative démontrée.
+3. **GPU complet :** non qualifié ; aucune trajectoire accélérée validée.
+4. **Q8/Q2 utiles :** fidèles dans les composants testés, mais coût total
+   supérieur à CPU10 ; aucun placement nouveau retenu.
+5. **Poids :** aucune économie de génération complète démontrée par un nouveau
+   cache ou ordonnanceur.
+6. **Spéculation exacte :** aucun gain net mesuré ni nouvelle implémentation
+   de modèle qualifiée.
+7. **Stabilité :** CPU32 ciblé passe ; les deux CPU64 s'arrêtent sur pression.128, EOS,
+   longues continuations et charge multiagent restent non qualifiés.
+8. **Configuration :** CPU10/GPU0, Max inchangé,600 identités logiques,
+   un modèle/slot physique ; aucun backend nouveau activé.
+9. **0,5 token/s :** non atteint ni démontré.
+10. **1 token/s :** non atteint. Une impossibilité générale n'est pas prouvée ;
+    les compteurs OS ne sont pas une borne NAND physique mesurée.
+11. **600 agents rapides :** préfill, décodage, file séquentielle et stabilité
+    demeurent les obstacles ; deux réponses utiles Max ne sont pas qualifiées.
+12. **Pilote :** le nouveau moteur accéléré n'est pas prêt. Le helper CPU a une
+    qualification capturée32 ciblée, pas une qualification de production RONIN.
 
-## Poids, ordonnanceur, TensorOps et spéculation
-
-Le cache dense/streaming et les caches MoE des PR #19–21 existent déjà.
-Leurs gains complets ne sont pas établis ; le LRU128 avait0 / 1 008 hits en
-décodage. Les nouveaux composants ne changent ni leur budget ni les experts.
-La priorité reste une mesure contemporaine des poids denses. Aucun nouveau
-cache de poids permanent n'est ajouté.
-
-La politique CPU/GPU expérimentale est désactivée, sans branchement à RONIN.
-Elle demande résidence prouvée, identité du runtime, seuils existants,
-logits/routes/états conformes sur au moins 32 étapes, gardes et deux cycles
-A/B/B/A dont les coûts complets passent. Aucune preuve actuelle ne l'admet.
-
-Metal4/TensorOps expose des opérations matricielles adaptées au M5 selon
-[Apple](https://developer.apple.com/videos/play/tech-talks/111432/).
-Cela ne prouve pas un avantage sur les GEMV quantifiés N=1 de cette mission.
-Leur conversion, remplissage et ordre de réduction exigeraient une preuve
-indépendante. Aucun nouveau bénéfice Neural Accelerator n'est revendiqué.
-
-La spéculation exacte reste conditionnelle. Son gain exige que le coût de
-proposition, sauvegarde/restauration et vérification divisé par les tokens
-réellement acceptés soit inférieur au décodage séquentiel. Vérifier
-séquentiellement tous les candidats n'élimine aucun passage de poids ;
-une vérification groupée fidèle est donc le point critique. Le changement
-de microbatch CPU16 déjà rejeté et les états KDA empêchent de présumer cette
-fidélité. Aucune nouvelle spéculation GLM n'est intégrée ou chronométrée.
-
-## Bornes conditionnelles
-
-Avec U=12,219 GB d'opérandes distincts, une couverture utile C et une interface
-servant B octets/s, le temps de service nécessaire est au moins
-`max(U−C,0)/B` **si ces octets doivent effectivement traverser cette interface**.
-Une superposition parfaite donne `max(t_IO,t_calcul)`, aucune superposition
-donne `t_IO+t_calcul`. U ne mesure pas les lectures NAND ; B et C ne sont pas
-mesurés ici. Le JSON expose des scénarios B=1/2/3 GB/s, C=0/4/8 GB et calcul 0/1 s.
-
-| Cible | Couverture utile minimale à 1 GB/s | À 3 GB/s |
-|---|---:|---:|
-|0,5 token/s|10,219 GB|6,219 GB|
-|1 token/s|11,219 GB|9,219 GB|
-
-Ces conditions sont nécessaires dans ce scénario, avant les coûts de calcul,
-de synchronisation et les réserves. Elles ne démontrent ni faisabilité
-universelle ni impossibilité physique. Une fraction de temps d'un ancien
-profil ne permet pas de promettre un débit pour une autre version.
-
-## Validation
-
-- 33 nouveaux tests portables passent.
-- La sélection de contrôles existants et nouveaux donne229 tests réussis,
-  40 sous-tests réussis et1 fixture native ignorée faute de chemin configuré.
-  Cette fixture est ensuite réellement compilée et exécutée avec les sources
-  et bibliothèques épinglées :1 test réussi. Total distinct :230 tests réussis.
-- Compilation native réelle, smoke paramètres CPU10/batch8/slot1, tests Metal
-  matériels et vérification de résidences sans lire les pages protégées.
-- Ces résultats locaux ne préjugent pas de la CI ni d'une stabilité prolongée.
-
-## Verdict obligatoire
-
-1. **Goulot principal :** poids denses/résidence/circulation ;70,6 % du temps
-   des opérations denses du diagnostic historique de décodage. L'attente I/O
-   pure reste inconnue.
-2. **Débit maximal reproduit avec fidélité :** aucun nouveau débit complet.
-   L'historique PR #21 reste0,151471 token/s médian sur huit sorties avec fidélité
-   capturée distincte ;0,129552 token/s concerne un EOS CPU de88 IDs. Ces cas ne
-   sont pas directement comparables et ne sont pas remesurés ici.
-3. **GPU M5 et décodage complet :** aucun nouveau gain complet démontré.
-   Le bénéfice court historique tail5 de9,14 % ne devient pas une qualification
-   soutenue32/64/128/EOS.
-4. **Avantage net Q2_K/Q8_0 :** les nouveaux kernels sont fidèles sur les
-   composants ; CPU10 reste plus rapide dans le régime résident testé.
-5. **Temps économisé sur les poids :** aucune économie GLM démontrée.
-   Le regroupement GPU économise0,240–0,310 ms par paire synthétique face à
-   deux commandes GPU ; il ne démontre pas de réduction des lectures SSD.
-6. **Spéculation exacte :** aucun bénéfice mesuré ; vérification groupée et
-   rollback KDA fidèles non qualifiés.
-7. **Stabilité longue :** non qualifiée ; la campagne complète est refusée.
-   Les petits essais retenus n'ont pas de croissance de swap observée.
-8. **Meilleure configuration RONIN :** conserver CPU10/GPU0, Max,600 identités
-   logiques et un slot physique. Aucun nouveau backend n'est activé.
-9. **0,5 token/s :** non atteint.
-10. **1 token/s :** non atteint ; plausibilité seulement conditionnelle aux
-    transferts/résidence/calcul, pas justifiée par les mesures actuelles.
-11. **Obstacles pour600 agents rapides :** débit physique faible, longs prompts
-    Max, attente du slot, mémoire/swap, absence de deux décisions utiles EOS
-    qualifiées et absence de charge prolongée.600 identités ne signifie pas
-    600 raisonnements simultanés.
-12. **Pilote contrôlé :** le nouveau moteur accéléré n'est pas prêt.
-    Le code constitue un banc et des candidats expérimentaux ; sa promotion
-    attend un CPU contemporain, la fidélité complète et des générations
-    longues admissibles. La configuration CPU existante reste disponible.
+Les [preuves contemporaines](evidence/resumed/selection.json), y compris les
+échecs, complètent les preuves antérieures. Les tableaux par opération,
+couche et étape sont conservés dans les rapports sélectionnés. Les tableaux
+volumineux et tenseurs bruts restent locaux. Aucun poids ni donnée personnelle
+d'application n'est publié.

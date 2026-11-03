@@ -1,0 +1,117 @@
+{
+  "source": "$WORK/airllm-next/research/glm53_ultra_decode/decode.metal",
+  "buffers": [
+    {
+      "bytes": 6684672,
+      "input": "$WORK/resumed-q8-seed5303102/w0.bin"
+    },
+    {
+      "bytes": 16384,
+      "input": "$WORK/resumed-q8-seed5303102/x.bin"
+    },
+    {
+      "bytes": 4352,
+      "output": "$WORK/resumed-q8-seed5303102/quantized.out"
+    },
+    {
+      "bytes": 12,
+      "input": "$WORK/resumed-q8-seed5303102/shape.bin"
+    },
+    {
+      "bytes": 6144,
+      "output": "$WORK/resumed-q8-seed5303102/tile1.out"
+    },
+    {
+      "bytes": 6144,
+      "output": "$WORK/resumed-q8-seed5303102/tile2.out"
+    },
+    {
+      "bytes": 6144,
+      "output": "$WORK/resumed-q8-seed5303102/tile4.out"
+    }
+  ],
+  "cpu_quantize": {
+    "format": 8,
+    "width": 4096,
+    "input": 1,
+    "output": 2
+  },
+  "experiments": [
+    {
+      "name": "tile1",
+      "stages": [
+        {
+          "entry": "q8_tile1",
+          "bindings": [
+            0,
+            0,
+            2,
+            4,
+            3
+          ],
+          "grid": [
+            6144,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tile2",
+      "stages": [
+        {
+          "entry": "q8_tile2",
+          "bindings": [
+            0,
+            0,
+            2,
+            5,
+            3
+          ],
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tile4",
+      "stages": [
+        {
+          "entry": "q8_tile4",
+          "bindings": [
+            0,
+            0,
+            2,
+            6,
+            3
+          ],
+          "grid": [
+            1536,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "repetitions": 21
+}

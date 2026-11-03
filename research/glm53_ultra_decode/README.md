@@ -3,12 +3,18 @@
 Cette branche ajoute des kernels et de vrais tests locaux, mais **ne livre pas
 un moteur GLM complet plus rapide et qualifié**. Les nouveaux composants
 résidents sont fidèles sur les cas testés ; CPU10 les exécute plus vite que
-Metal, coûts de lancement et synchronisation inclus. La génération complète
-contemporaine est refusée avant lancement par les réserves mémoire/disque.
+Metal, coûts de lancement et synchronisation inclus. Deux captures CPU
+contemporaines de32 sorties passent la comparaison numérique des tenseurs
+observés. Le témoin sans captures mesure0,164819 intervalle/s sur31 appels
+terminés, sans mesurer une réponse RONIN de bout en bout. Les tests de64 sorties
+sont arrêtés par la pression mémoire : le premier avant toute sortie, le second
+après17 IDs malgré une admission au-dessus de6 Gio.128 reste non exécuté.
 
 Voir [le rapport français](RAPPORT-FR.md), les
 [preuves sélectionnées](evidence/selection.json) et le
 [résumé des composants](evidence/component-summary.json).
+Les [preuves de la reprise](evidence/resumed/selection.json) contiennent les
+nouveaux composants B4, la comparaison CPU32 et l'arrêt CPU64.
 
 ## Périmètre et isolation
 
@@ -32,7 +38,7 @@ Voir [le rapport français](RAPPORT-FR.md), les
 | `decode_timer.mm` | Buffers/pipelines persistants, quantification CPU native, temps GPU et temps total synchronisé séparés |
 | `components.py`, `guard_components.py` | Génération synthétique bornée, comparaison au graphe et au dot ARM, surveillance des processus possédés |
 | `native_decode.cpp`, `timing.inc`, `residency.inc` | Auxiliaire compilé CPU10/slot1/batch8, temps par appel, compteurs OS, pages et captures optionnelles |
-| `model_profile.py` | Admission et supervision bornées du profil CPU contemporain ; aucun abaissement des seuils en CLI |
+| `model_profile.py` | Admission et supervision bornées ; preuve de lancement persistante après arrêt du superviseur |
 | `profile_analysis.py`, `historical_analysis.py` | IntervallesN−1, regroupements par opération/couche et bornes conditionnelles explicites |
 | `test_decode.py` | Contrats de refus, intégrité des intervalles et politique CPU/GPU |
 
@@ -97,10 +103,12 @@ historiques des PR17–23 ne qualifient pas automatiquement ce nouvel auxiliaire
 
 ## Suite de la campagne
 
-1. Rendre les réserves disponibles sans supprimer de données ni fermer
-   d'applications personnelles automatiquement.
-2. Établir un CPU contemporain complet, capturé puis non instrumenté.
-3. Comparer32/64/128 sorties et une sortie naturelle EOS, avec les mêmes
+1. Conserver les refus et l'arrêt mémoire CPU64. Une reprise exige une marge
+   mémoire supplémentaire et toutes les protections d'origine.
+2. Les deux captures CPU32 et le témoin sans captures sont terminés. Leur
+   couverture reste ciblée : contexte512, prompt brut court, aucune sortie EOS
+   ni réponse utile Max qualifiée.
+3. Compléter64/128 sorties et une sortie naturelle EOS, avec les mêmes
    poids/prompts/paramètres. Exécuter A/B/B/A et arrêter une campagne au premier
    refus plutôt que d'en exploiter les seuls passages réussis.
 4. N'intégrer un kernel ou cache que si son gain total et les seuils existants

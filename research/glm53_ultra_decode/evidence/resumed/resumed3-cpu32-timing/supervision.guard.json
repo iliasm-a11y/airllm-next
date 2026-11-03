@@ -1,0 +1,57 @@
+{
+  "command": [
+    "$TESTENV/bin/python",
+    "-m",
+    "research.glm53_ultra_decode.model_profile",
+    "--worker",
+    "--model",
+    "$MODEL",
+    "--receipt",
+    "$CHECKPOINT_RECEIPT",
+    "--runtime",
+    "$RUNTIME",
+    "--probe",
+    "$WORK/decode-build4/native-decode",
+    "--output",
+    "$WORK/resumed3-cpu32-timing",
+    "--tokens",
+    "32",
+    "--prompt",
+    "La capitale de la France est",
+    "--campaign-swap-used-bytes",
+    "2711814144"
+  ],
+  "limits": {
+    "rss_bytes": 9126805504,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 33554432,
+    "admitted_payload_bytes": 2684354560,
+    "timeout_seconds": 2400,
+    "interval_seconds": 0.5,
+    "max_processes": 8
+  },
+  "before": {
+    "available_bytes": 6533087232,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2061565952,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 399,
+  "sampled_peak_rss_bytes": 6670516224,
+  "minimum_available_bytes": 4227137536,
+  "maximum_swap_growth_bytes": 1048576,
+  "peak_pressure_level": 1,
+  "sampled_peak_processes": 4,
+  "observed_descendant_count": 17,
+  "after": {
+    "available_bytes": 4563599360,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2062614528,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 203.6623726250109
+}
