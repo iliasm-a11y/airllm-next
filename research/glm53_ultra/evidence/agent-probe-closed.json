@@ -1,0 +1,55 @@
+{
+  "scope": "two real agent/mission contexts, shared CPU server; no full-state or 600-agent qualification",
+  "config_sha256": "297bbabbf21297ba6b1ba834b45b598f074380627967f450f63cdcb86deefd9f",
+  "status": "failed",
+  "requests": [],
+  "guard_limits": {
+    "max_rss_bytes": 9126805504,
+    "max_swap_growth_bytes": 33554432,
+    "warning_swap_growth_bytes": 33554432
+  },
+  "native_fidelity_qualified": false,
+  "interrupt_handlers_installed": true,
+  "power_context_before_runtime": {
+    "platform": "darwin",
+    "guard_applicable": true,
+    "timestamp_utc": "2026-11-03T01:29:18.429839+00:00",
+    "monotonic_start": 20165.341825833,
+    "clamshell_closed": true,
+    "power_source": "Battery Power",
+    "battery_percent": 27,
+    "sources": [
+      {
+        "name": "ioreg_clamshell",
+        "command": [
+          "/usr/sbin/ioreg",
+          "-r",
+          "-k",
+          "AppleClamshellState",
+          "-d",
+          "1"
+        ],
+        "observed_values": [
+          "Yes"
+        ],
+        "matching_lines": [
+          "\"AppleClamshellState\" = Yes"
+        ]
+      },
+      {
+        "name": "pmset_battery",
+        "command": [
+          "/usr/bin/pmset",
+          "-g",
+          "batt"
+        ],
+        "output": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=23724131)\t27%; discharging; 4:46 remaining present: true"
+      }
+    ],
+    "scope": "read-only macOS lid admission; power source and battery are observations, not an AC requirement",
+    "monotonic_end": 20165.3585135
+  },
+  "error_code": "POWER_CONTEXT_CLOSED",
+  "error": "Open the Mac lid before inference",
+  "elapsed_seconds": 0.017147540998848854
+}

@@ -1,0 +1,82 @@
+{
+  "source": "airllm-next/research/glm53_m5/sources/gguf-headers.json",
+  "source_sha256": "6df42734bd114544a043794a157c6222ef05325f90c7d72100d69ff5449650b4",
+  "metadata": {
+    "glm5-next.block_count": 45,
+    "glm5-next.attention.head_count": 64,
+    "glm5-next.kda.head_dim": 128,
+    "glm5-next.ssm.conv_kernel": 4,
+    "glm5-next.attention.head_count_kv": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0
+    ]
+  },
+  "tensor_inventory_summary": {
+    "tensor_count": 1383,
+    "max_block_index": 44,
+    "mtp_nextn_or_blk45_tensor_count": 0,
+    "scope": "count over all tensor names of the saved GGUF header inventory; no new checkpoint payload read"
+  },
+  "native_log_excerpt": {
+    "source": "v3/v4-cpu-control16/guard.stderr.log",
+    "source_sha256": "163b97777c171a6c31b244a39686c7ba1392bc354e1c4ac6545eb94f2ce1d364",
+    "lines": [
+      {
+        "line": 2791,
+        "text": "llama_context: n_rs_seq              = 0"
+      },
+      {
+        "line": 2891,
+        "text": "llama_memory_recurrent:        CPU RS buffer size =   145.56 MiB"
+      },
+      {
+        "line": 2892,
+        "text": "llama_memory_recurrent: size =  145.56 MiB (     1 cells,  45 layers,  1 seqs  0 rs_seq), R (f32):    9.56 MiB, S (f32):  136.00 MiB, P (f32):    0.00 MiB"
+      }
+    ],
+    "scope": "exact selected native log lines; full log not bundled"
+  }
+}

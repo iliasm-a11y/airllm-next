@@ -1,0 +1,1809 @@
+{
+  "runtime_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "captures": [
+    {
+      "capture_directory": "native/v4-cpu-control16",
+      "metadata_sha256": {
+        "prompt_tokens.json": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+        "tokens.jsonl": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+        "complete.json": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+      },
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 6,
+          "generated_tokens": 16,
+          "configs": [
+            {
+              "size_n": 12,
+              "size_m": 48,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 4,
+              "size_m": 4,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 2,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089,
+                    13
+                  ],
+                  "observable_future_tokens": 2,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 1,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 1,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 3,
+                  "proposal": [
+                    1788
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 1,
+                  "first_token_agrees": true,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": true
+                },
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 2,
+              "first_token_agreement_count": 1,
+              "full_proposal_agreement_count": 1,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capture_directory": "native/v4-tail5-lock256-fidelity16",
+      "metadata_sha256": {
+        "prompt_tokens.json": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+        "tokens.jsonl": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+        "complete.json": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+      },
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 6,
+          "generated_tokens": 16,
+          "configs": [
+            {
+              "size_n": 12,
+              "size_m": 48,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 4,
+              "size_m": 4,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 2,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089,
+                    13
+                  ],
+                  "observable_future_tokens": 2,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 1,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 1,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 3,
+                  "proposal": [
+                    1788
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 1,
+                  "first_token_agrees": true,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": true
+                },
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 2,
+              "first_token_agreement_count": 1,
+              "full_proposal_agreement_count": 1,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capture_directory": "native/cpu-control16-isolated",
+      "metadata_sha256": {
+        "prompt_tokens.json": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+        "tokens.jsonl": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+        "complete.json": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+      },
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 6,
+          "generated_tokens": 16,
+          "configs": [
+            {
+              "size_n": 12,
+              "size_m": 48,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 4,
+              "size_m": 4,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 2,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089,
+                    13
+                  ],
+                  "observable_future_tokens": 2,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 1,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 1,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 3,
+                  "proposal": [
+                    1788
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 1,
+                  "first_token_agrees": true,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": true
+                },
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 2,
+              "first_token_agreement_count": 1,
+              "full_proposal_agreement_count": 1,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "capture_directory": "native/tail5-stream16-isolated",
+      "metadata_sha256": {
+        "prompt_tokens.json": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+        "tokens.jsonl": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+        "complete.json": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+      },
+      "requests": [
+        {
+          "request": 0,
+          "prompt_tokens": 6,
+          "generated_tokens": 16,
+          "configs": [
+            {
+              "size_n": 12,
+              "size_m": 48,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 4,
+              "size_m": 4,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 2,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089,
+                    13
+                  ],
+                  "observable_future_tokens": 2,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 1,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 1,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [
+                {
+                  "after_output_index": 3,
+                  "proposal": [
+                    1788
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 1,
+                  "first_token_agrees": true,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": true
+                },
+                {
+                  "after_output_index": 4,
+                  "proposal": [
+                    12089
+                  ],
+                  "observable_future_tokens": 1,
+                  "matching_prefix_tokens": 0,
+                  "first_token_agrees": false,
+                  "full_proposal_observable": true,
+                  "full_proposal_agrees": false
+                }
+              ],
+              "offer_count": 2,
+              "first_token_agreement_count": 1,
+              "full_proposal_agreement_count": 1,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            },
+            {
+              "size_n": 2,
+              "size_m": 1,
+              "generated_tokens": 16,
+              "inspected_positions": 15,
+              "offers": [],
+              "offer_count": 0,
+              "first_token_agreement_count": 0,
+              "full_proposal_agreement_count": 0,
+              "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+              "throughput_estimate": null,
+              "speculative_fidelity_validated": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "metadata replay only; duplicated trajectories are not independent evidence",
+  "throughput_estimate": null,
+  "speculative_fidelity_validated": false,
+  "inputs_manifest_sha256": "033768b614f69d9efd6a84d3d738195b9bbf58e4c3bcc604603177c497795ce3",
+  "input_path_scope": "all input paths are relative to the supplied structural-inputs bundle",
+  "timed_benchmark_continuations": [
+    {
+      "source": "v3/campaign-cpu-stream8/runs/00-A.json",
+      "source_sha256": "aec3941ab3437cae603fa6bb46324a92b0f2d33973db96a673e1a88e8095df99",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-cpu-stream8/runs/01-B.json",
+      "source_sha256": "af1318768644e86db2f70050aaa346f354a2b674d8a7242d47878f9de9a1077b",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-cpu-stream8/runs/02-B.json",
+      "source_sha256": "0e38734ef9886f65ed804f37d9e82a3f036299a6608a34536a20baf363100f52",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-cpu-stream8/runs/03-A.json",
+      "source_sha256": "88927efda24cf676248fdc5943c531be93c3602b047daf353940fa621ee805bc",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-head-stream8/runs/00-A.json",
+      "source_sha256": "d76f0bb287a64dd2e996b119f0130d576288077ec7626d20dbefd24f7b665d19",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-head-stream8/runs/01-B.json",
+      "source_sha256": "6e3b012fac8a9e01ceabac15b504bfb16756f548febbb7145de432f4ae7da9e6",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-head-stream8/runs/02-B.json",
+      "source_sha256": "de118ff4683c55ece0cd2ea21b33eeea49f6cc3a567c10f145c469b619ff5e06",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-head-stream8/runs/03-A.json",
+      "source_sha256": "9c88c0fff071b92ac4a0de3c5995ad0dde9c8c8b89b6c41bd317a0115724801a",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-tail5-stream8/runs/00-A.json",
+      "source_sha256": "99829907498c4e5c958b8f7732ffa1e90003fd6e2ecdf4a8e6f4902f9d4ae8b0",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-tail5-stream8/runs/01-B.json",
+      "source_sha256": "73f64167ac98cc71e5cdaac641fef9688ded580f7e79f569a2dfcd41e357494b",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-tail5-stream8/runs/02-B.json",
+      "source_sha256": "66f44fe6005bde64315da14e8d4653222f5724bb6470b4eefbfc35f5ed12b845",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    },
+    {
+      "source": "v3/campaign-tail5-stream8/runs/03-A.json",
+      "source_sha256": "31f35a2bc284bebe92f24452d5e8329f96472fa09fb408cf5b5e37d601fd4758",
+      "repetition": 0,
+      "token_extract_scope": "derived token subset of a completed non-speculative server request; prompt IDs from native capture of the identical public prompt and checkpoint, not re-tokenized",
+      "configs": [
+        {
+          "size_n": 12,
+          "size_m": 48,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 4,
+          "size_m": 4,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 2,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089,
+                13
+              ],
+              "observable_future_tokens": 2,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 1,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 1,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [
+            {
+              "after_output_index": 3,
+              "proposal": [
+                1788
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 1,
+              "first_token_agrees": true,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": true
+            },
+            {
+              "after_output_index": 4,
+              "proposal": [
+                12089
+              ],
+              "observable_future_tokens": 1,
+              "matching_prefix_tokens": 0,
+              "first_token_agrees": false,
+              "full_proposal_observable": true,
+              "full_proposal_agrees": false
+            }
+          ],
+          "offer_count": 2,
+          "first_token_agreement_count": 1,
+          "full_proposal_agreement_count": 1,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        },
+        {
+          "size_n": 2,
+          "size_m": 1,
+          "generated_tokens": 8,
+          "inspected_positions": 7,
+          "offers": [],
+          "offer_count": 0,
+          "first_token_agreement_count": 0,
+          "full_proposal_agreement_count": 0,
+          "scope": "overlapping sequential-history opportunities; no speculative runtime execution",
+          "throughput_estimate": null,
+          "speculative_fidelity_validated": false
+        }
+      ]
+    }
+  ],
+  "kda_snapshot_allocation": {
+    "recurrent_layers": 34,
+    "logical_r_bytes": 10027008,
+    "logical_s_bytes": 142606336,
+    "logical_r_plus_s_bytes": 152633344,
+    "assumptions": {
+      "element_bytes": 4,
+      "cells": 1
+    },
+    "scope": "logical KDA R+S allocation per snapshot; not measured serialized checkpoint size"
+  },
+  "checkpoint_weight_inventory": {
+    "tensor_count": 1383,
+    "max_block_index": 44,
+    "mtp_nextn_or_blk45_tensor_count": 0,
+    "scope": "count over all tensor names of the saved GGUF header inventory; no new checkpoint payload read"
+  }
+}

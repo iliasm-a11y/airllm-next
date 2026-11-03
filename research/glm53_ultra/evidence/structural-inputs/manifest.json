@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "runtime_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "scope": "small exact native token metadata plus explicit derived benchmark and dimensions extracts; no tensor payload or model weights",
+  "original_source_root_scope": "paths below source the prior research work directory; absolute workstation paths omitted",
+  "native_captures": [
+    "native/v4-cpu-control16",
+    "native/v4-tail5-lock256-fidelity16",
+    "native/cpu-control16-isolated",
+    "native/tail5-stream16-isolated"
+  ],
+  "source_files": [
+    {
+      "source": "v3/v4-cpu-control16/capture/prompt_tokens.json",
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+      "copy": "native/v4-cpu-control16/prompt_tokens.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/v4-cpu-control16/capture/tokens.jsonl",
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "copy": "native/v4-cpu-control16/tokens.jsonl",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/v4-cpu-control16/capture/complete.json",
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c",
+      "copy": "native/v4-cpu-control16/complete.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/v4-tail5-lock256-fidelity16/capture/prompt_tokens.json",
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+      "copy": "native/v4-tail5-lock256-fidelity16/prompt_tokens.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/v4-tail5-lock256-fidelity16/capture/tokens.jsonl",
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "copy": "native/v4-tail5-lock256-fidelity16/tokens.jsonl",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/v4-tail5-lock256-fidelity16/capture/complete.json",
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c",
+      "copy": "native/v4-tail5-lock256-fidelity16/complete.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/cpu-control16-isolated/capture/prompt_tokens.json",
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+      "copy": "native/cpu-control16-isolated/prompt_tokens.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/cpu-control16-isolated/capture/tokens.jsonl",
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "copy": "native/cpu-control16-isolated/tokens.jsonl",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/cpu-control16-isolated/capture/complete.json",
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c",
+      "copy": "native/cpu-control16-isolated/complete.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/tail5-stream16-isolated/capture/prompt_tokens.json",
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d",
+      "copy": "native/tail5-stream16-isolated/prompt_tokens.json",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/tail5-stream16-isolated/capture/tokens.jsonl",
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495",
+      "copy": "native/tail5-stream16-isolated/tokens.jsonl",
+      "scope": "byte-exact copy"
+    },
+    {
+      "source": "v3/tail5-stream16-isolated/capture/complete.json",
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c",
+      "copy": "native/tail5-stream16-isolated/complete.json",
+      "scope": "byte-exact copy"
+    }
+  ],
+  "files": [
+    {
+      "path": "benchmark-continuations.json",
+      "bytes": 7911,
+      "sha256": "75e7c97244fa43f8e65c3b5e54559ff46e742ee5b14a1e75ed43411627bfec83"
+    },
+    {
+      "path": "model-dimensions.json",
+      "bytes": 1719,
+      "sha256": "49a1aed6851311832179794afed34c0b7a3dbe425a20a332ab869fa637ac6d57"
+    },
+    {
+      "path": "native/cpu-control16-isolated/complete.json",
+      "bytes": 39,
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    },
+    {
+      "path": "native/cpu-control16-isolated/prompt_tokens.json",
+      "bytes": 33,
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d"
+    },
+    {
+      "path": "native/cpu-control16-isolated/tokens.jsonl",
+      "bytes": 1194,
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495"
+    },
+    {
+      "path": "native/tail5-stream16-isolated/complete.json",
+      "bytes": 39,
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    },
+    {
+      "path": "native/tail5-stream16-isolated/prompt_tokens.json",
+      "bytes": 33,
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d"
+    },
+    {
+      "path": "native/tail5-stream16-isolated/tokens.jsonl",
+      "bytes": 1194,
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495"
+    },
+    {
+      "path": "native/v4-cpu-control16/complete.json",
+      "bytes": 39,
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    },
+    {
+      "path": "native/v4-cpu-control16/prompt_tokens.json",
+      "bytes": 33,
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d"
+    },
+    {
+      "path": "native/v4-cpu-control16/tokens.jsonl",
+      "bytes": 1194,
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495"
+    },
+    {
+      "path": "native/v4-tail5-lock256-fidelity16/complete.json",
+      "bytes": 39,
+      "sha256": "ce21441be3ec76c36118a0cd1e0b97c77aede3155ebd2812170ad9facfa6186c"
+    },
+    {
+      "path": "native/v4-tail5-lock256-fidelity16/prompt_tokens.json",
+      "bytes": 33,
+      "sha256": "46cef0350f2be341cf62b01286439e1ab5f89be73690cac29b623a0a6d428c1d"
+    },
+    {
+      "path": "native/v4-tail5-lock256-fidelity16/tokens.jsonl",
+      "bytes": 1194,
+      "sha256": "e51cbebe9d2c060e216848e1b7465af45c59e6eb5fbd498f11f52f03bb4a2495"
+    }
+  ]
+}

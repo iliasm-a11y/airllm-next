@@ -4,6 +4,7 @@ import ast, contextlib, hashlib, ipaddress, json, os, pathlib, queue, re, shutil
 import signal, socket, sqlite3, ssl, stat, subprocess, sys, threading, time, urllib.parse, uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
+from agent_context import AgentContexts, AgentContextError
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 if getattr(sys, 'frozen', False):
@@ -99,7 +100,8 @@ class Scope:
 class Runtime:
     def __init__(self, home=None):
         self.store=Store(home or pathlib.Path.home()/'Library/Application Support/RONIN GLM')
-        self.cancels={}; self.workers={}; self.active_tools={}; self.guard=threading.RLock(); self.heavy=threading.Semaphore(1)
+        self.cancels={}; self.workers={}; self.active_tools={}; self.active_generations={}; self.guard=threading.RLock(); self.heavy=threading.Semaphore(1)
+        self.agent_contexts=AgentContexts(self.store,identity=IDENTITY,roles=ROLES,sanitize=redact)
         self.engine=None
         try:
             from adapter import Engine
@@ -139,7 +141,9 @@ class Runtime:
             except Exception as e: engine['message']=redact(e)
         disk=shutil.disk_usage(self.store.home)
         return {'engine':engine,'model_path':model,'data_path':str(self.store.home),'disk_free_bytes':disk.free,
-                'identities':600,'busy_agents':self.store.query("SELECT count(*) n FROM agents WHERE state='busy'")[0]['n'],
+                'identities':600,'agent_contexts':'persistent_identity_and_agent_mission_transcripts',
+                'agent_context_kv_persistence':False,
+                'busy_agents':self.store.query("SELECT count(*) n FROM agents WHERE state='busy'")[0]['n'],
                 'active_missions':sum(t.is_alive() for t in list(self.workers.values())),'inference_concurrency':1,
                 'transport':'private-stdio','cloud':False,'catalog':self.catalog_status()}
     def catalog_status(self):
@@ -501,7 +505,7 @@ class Runtime:
             self.state(mid,'error'); self.store.event(mid,'error',redact(e))
         finally:
             self.store.execute("UPDATE agents SET state='available',mission_id=NULL,task=NULL WHERE mission_id=?",(mid,))
-    def generate(self,mid,prompt=None,max_new_tokens=32,reasoning_effort=None):
+    def generate(self,mid,prompt=None,max_new_tokens=32,reasoning_effort=None,agent_id=1):
         """Run the selected GLM through RONIN; generated text cannot execute tools."""
         m=self.get(mid); self.check(mid)
         if self.engine is None: raise Fault('ENGINE_UNAVAILABLE','L’adaptateur natif GLM est absent.')
@@ -512,32 +516,68 @@ class Runtime:
         if prompt is not None and (not isinstance(prompt,str) or not prompt.strip()): raise Fault('INVALID_PROMPT','Une demande textuelle non vide est nécessaire.')
         cancel=self.cancels.setdefault(mid,threading.Event())
         started=time.monotonic(); text=[]; events=[]; tokens=[]
-        session=self.engine.create_session(mid)
+        provenance={'requested_model_path':selected,'producer':'GLM-5.3-Flash Q2_K_S via NativeGlmModel',
+                    'verification':'model_output_unverified','native_output_observed':False,
+                    'text_policy':'RONIN secret redaction; native token IDs preserved'}
         try:
+            decision=self.agent_contexts.begin(agent_id,mid,prompt if prompt is not None else m['prompt'],provenance)
+        except AgentContextError as error:
+            raise Fault(error.code,str(error)) from error
+        session=None; finalized=False
+        with self.guard: self.active_generations[mid]=self.active_generations.get(mid,0)+1
+        try:
+            session=self.engine.create_session(mid)
             self.engine.load(selected,cancel=cancel)
             self.check(mid)
+            initial_status=self.engine.status(); initial_native=initial_status.get('native',{})
+            provenance.update(model=initial_status.get('model'),
+                              runtime_sha256=initial_native.get('runtime_sha256'),
+                              runtime_artifacts_verified=initial_native.get('runtime_artifacts_verified',False),
+                              numerical_qualification=initial_native.get('numerical_qualification'),
+                              backend_selection=initial_status.get('engine',{}).get('backend_selection'))
             self.store.event(mid,'model_started','Génération GLM-5.3-Flash Q2_K_S par le moteur natif partagé. La sortie du modèle reste une proposition non vérifiée.')
-            for event in self.engine.stream([{'role':'user','content':prompt if prompt is not None else m['prompt']}],max_new_tokens=max_new_tokens,cancel=cancel,session_id=session['id'],reasoning_effort=reasoning_effort):
-                self.check(mid)
+            for event in self.engine.stream(decision['messages'],max_new_tokens=max_new_tokens,cancel=cancel,session_id=session['id'],reasoning_effort=reasoning_effort):
                 content=event.get('content','')
                 if isinstance(content,str): text.append(content)
                 ids=event.get('tokens',[])
                 if isinstance(ids,list): tokens.extend(ids)
+                self.agent_contexts.append(decision['id'],content if isinstance(content,str) else '',ids if isinstance(ids,list) else [])
                 if event.get('stop') or 'timings' in event: events.append(event)
+                self.check(mid)
             self.check(mid)
+            status=self.engine.status(); native=status.get('native',{})
+            provenance.update(model=status.get('model'),runtime_sha256=native.get('runtime_sha256'),
+                              runtime_artifacts_verified=native.get('runtime_artifacts_verified',False),
+                              numerical_qualification=native.get('numerical_qualification'),
+                              native_output_observed=bool(tokens or ''.join(text)))
+            terminal=next((event for event in reversed(events) if event.get('stop')),None)
+            eos=bool(terminal and (terminal.get('stop_type')=='eos' or terminal.get('stopped_eos') is True))
+            decision_state='completed' if eos else 'partial'
+            self.agent_contexts.finish(decision['id'],decision_state,provenance=provenance,terminal=terminal)
+            finalized=True
             result={'text':''.join(text),'tokens':tokens,'events':events,
-                    'seconds':time.monotonic()-started,'model':self.engine.status()['model'],
+                    'seconds':time.monotonic()-started,'model':status['model'],
                     'reasoning_effort':reasoning_effort,'reasoning_effort_scope':'chat_template_conditioning_only',
                     'session_id':session['id'],'verification':'model_output_unverified',
+                    'agent_id':agent_id,'decision_id':decision['id'],'decision_state':decision_state,
+                    'context_sha256':decision['context_sha256'],'memory_revision':decision['memory_revision'],
                     'tools_executed_from_output':False}
             result['evidence_id']=self.store.evidence(mid,'model_output','Réponse GLM locale',json.dumps(result,ensure_ascii=False),selected,'model_output_unverified')
             self.store.event(mid,'model_completed',json.dumps({'evidence_id':result['evidence_id'],'seconds':result['seconds'],'tokens':len(tokens)},ensure_ascii=False))
             return result
         except Exception as error:
+            if not finalized:
+                provenance['native_output_observed']=bool(tokens or ''.join(text))
+                self.agent_contexts.finish(decision['id'],'cancelled' if cancel.is_set() else 'failed',
+                    provenance=provenance,terminal=next((event for event in reversed(events) if event.get('stop')),None),
+                    error_code='CANCELLED' if cancel.is_set() else getattr(error,'code','MODEL_ERROR'))
             if cancel.is_set(): raise Fault('CANCELLED','Génération interrompue.') from error
             raise Fault(getattr(error,'code','MODEL_ERROR'),str(error)) from error
         finally:
-            self.engine.close_session(session['id'],mid)
+            with self.guard:
+                self.active_generations[mid]-=1
+                if not self.active_generations[mid]: del self.active_generations[mid]
+            if session is not None: self.engine.close_session(session['id'],mid)
     def stop(self,mid,pause=False):
         with self.guard:
             self.get(mid); self.cancels.setdefault(mid,threading.Event()).set()
@@ -545,8 +585,8 @@ class Runtime:
             self.store.event(mid,'pause' if pause else 'stop','Mise en pause demandée.' if pause else 'Arrêt demandé. Aucun redémarrage automatique.')
         deadline=time.monotonic()+6; t=self.workers.get(mid)
         if t: t.join(timeout=max(0,deadline-time.monotonic()))
-        while self.active_tools.get(mid) and time.monotonic()<deadline: time.sleep(.03)
-        return {'stopped':not(t and t.is_alive()) and not bool(self.active_tools.get(mid)),'status':self.get(mid)['status']}
+        while (self.active_tools.get(mid) or self.active_generations.get(mid)) and time.monotonic()<deadline: time.sleep(.03)
+        return {'stopped':not(t and t.is_alive()) and not bool(self.active_tools.get(mid)) and not bool(self.active_generations.get(mid)),'status':self.get(mid)['status']}
     def skills(self,query=''):
         from skills import Catalog
         catalog=Catalog(ROOT/'catalog')
@@ -596,10 +636,17 @@ class Runtime:
         if method=='skill_attach': return self.skill_attach(mid,p['skill_id'])
         if method=='memory': return self.store.query('SELECT * FROM memory WHERE mission_id=? ORDER BY created',(mid,))
         if method=='agents': return self.store.query('SELECT * FROM agents ORDER BY id')
+        if method in ('agent_identities','agent_context','agent_memory','agent_decision'):
+            try:
+                if method=='agent_identities': return self.agent_contexts.identities()
+                if method=='agent_context': return self.agent_contexts.snapshot(p.get('agent_id',1),mid)
+                if method=='agent_memory': return self.agent_contexts.memory(p.get('agent_id',1),mid,p.get('text'))
+                return self.agent_contexts.decision(p.get('agent_id',1),mid,p.get('decision_id'))
+            except AgentContextError as error: raise Fault(error.code,str(error)) from error
         if method=='identity': return {'prompt':IDENTITY,'provenance':'Z.ai · zai-org/GLM-5.3-Flash · AirLLM Next'}
         if method=='generate':
-            if set(p)-{'id','prompt','max_new_tokens','reasoning_effort'}: raise Fault('INVALID_ARGUMENT','Option de génération inconnue.')
-            return self.generate(mid,p.get('prompt'),p.get('max_new_tokens',32),p.get('reasoning_effort'))
+            if set(p)-{'id','prompt','max_new_tokens','reasoning_effort','agent_id'}: raise Fault('INVALID_ARGUMENT','Option de génération inconnue.')
+            return self.generate(mid,p.get('prompt'),p.get('max_new_tokens',32),p.get('reasoning_effort'),p.get('agent_id',1))
         if method=='engine_load':
             if not self.engine: raise Fault('ENGINE_UNAVAILABLE','Adaptateur GLM absent.')
             return self.engine.load(self.setting('model_path',os.environ.get('RONIN_GLM_MODEL','')))
