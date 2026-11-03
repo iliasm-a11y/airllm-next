@@ -84,6 +84,13 @@ et croissance du swap global32 Mio. Les gardes sont échantillonnées ; une crê
 entre deux échantillons peut rester invisible. Le swap global n'est pas
 attribué exclusivement au modèle.
 
+Pour une campagne séquentielle, relever le swap utilisé avant le premier essai
+et transmettre la même valeur en octets à chaque commande via
+`--campaign-swap-used-bytes`. Ce contrôle réduit le budget restant des essais
+suivants et refuse une croissance cumulée supérieure à32 Mio. Une baisse du
+swap ne relève jamais le plafond original de32 Mio par essai. Les réserves
+mémoire et disque restent identiques ; aucune option ne les abaisse.
+
 Les nouvelles options de capture et bibliothèques doivent repasser leur propre
 comparaison logits/routes/états avant toute utilisation pilote. Les mesures
 historiques des PR17–23 ne qualifient pas automatiquement ce nouvel auxiliaire.

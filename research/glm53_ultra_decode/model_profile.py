@@ -20,17 +20,20 @@ from research.glm53_gpu_v3.power_state import PowerGate,ScopedAwake
 from research.glm53_batched_prefill.uid_supervisor import acquire_uid_lock
 from research.glm53_batched_prefill.native_run import identify,stop_owned
 from .build import sha
+from .campaign_limits import remaining_swap_budget
 
 GIB=1<<30
 REQUIRED_MEMORY=int(5.5*GIB)
 REQUIRED_DISK=32*GIB
 
-def resource_blockers(sample,disk_free,power):
+def resource_blockers(sample,disk_free,power,campaign_swap_used_bytes=None):
     reasons=[]
     if sample.get('pressure_level')!=1:reasons.append('memory_pressure_not_normal')
     if sample.get('available_bytes',0)<REQUIRED_MEMORY:reasons.append('available_memory_below_5.5GiB')
     if disk_free<REQUIRED_DISK:reasons.append('disk_reserve_below_32GiB')
     if not power.get('passed'):reasons.append('power_lid_or_clock_admission')
+    try:remaining_swap_budget(sample,campaign_swap_used_bytes)
+    except MemoryError as error:reasons.append(str(error))
     return reasons
 
 def worker(args):
@@ -45,7 +48,8 @@ def worker(args):
         env.update(AIRLLM_PROFILE_OPS='1',AIRLLM_PROFILE_PAGES='1',AIRLLM_STATE_HASHES='1',AIRLLM_SOURCE_PLAN='1')
     else:env['AIRLLM_DECODE_TIMING_ONLY']='1'
     try:
-        reasons=resource_blockers(system_snapshot(),shutil.disk_usage(args.output).free,gate.sample())
+        reasons=resource_blockers(system_snapshot(),shutil.disk_usage(args.output).free,gate.sample(),
+                                 getattr(args,'campaign_swap_used_bytes',None))
         checkpoint=inspect_native_checkpoint(args.model,args.receipt)
         if not checkpoint['integrity_verified'] or not checkpoint['architecture_matches']:
             reasons.append('worker_checkpoint_integrity')
@@ -66,6 +70,7 @@ def worker(args):
                     if child.poll() is not None:break
                     identify(child,args.probe,identity)
                     awake.check()
+                    remaining_swap_budget(system_snapshot(),getattr(args,'campaign_swap_used_bytes',None))
                     if not gate.sample()['passed']:
                         raise RuntimeError('power/lid/clock/owned-awake continuity failed')
                     if shutil.disk_usage(args.output).free<REQUIRED_DISK:
@@ -95,7 +100,8 @@ def run(args):
     output.mkdir(parents=True)
     gate=PowerGate(expected_source='ac');power=gate.sample();sample=system_snapshot()
     disk=shutil.disk_usage(output).free
-    reasons=resource_blockers(sample,disk,power)
+    baseline=getattr(args,'campaign_swap_used_bytes',None)
+    reasons=resource_blockers(sample,disk,power,baseline)
     inspection=inspect_native_checkpoint(args.model,args.receipt)
     if not inspection['integrity_verified'] or not inspection['architecture_matches']:
         reasons.append('checkpoint_integrity_or_architecture_unverified')
@@ -106,7 +112,8 @@ def run(args):
         'tokens_requested':args.tokens,'threads':10,'gpu_layers':0,'physical_slots':1,
         'diagnostic':args.diagnostic,'prompt':args.prompt,'resource_sample':sample,'disk_free_bytes':disk,
         'policy':{'required_available_memory_bytes':REQUIRED_MEMORY,'disk_reserve_bytes':REQUIRED_DISK,
-            'max_rss_bytes':int(8.5*GIB),'max_system_swap_growth_bytes':32<<20},
+            'max_rss_bytes':int(8.5*GIB),'max_system_swap_growth_bytes':32<<20,
+            'campaign_swap_used_bytes':baseline},
         'power_preflight':power,'checkpoint':inspection,'binaries_sha256':binaries,
         'native_libraries_sha256':libraries,
         'scope':'contemporary raw deterministic CPU reference; diagnostics serialize callbacks and are not throughput',
@@ -119,8 +126,9 @@ def run(args):
         '--runtime',str(args.runtime.resolve()),'--probe',str(args.probe.resolve()),
         '--output',str(output),'--tokens',str(args.tokens),'--prompt',args.prompt]
     if args.diagnostic:command.append('--diagnostic')
+    if baseline is not None:command.extend(('--campaign-swap-used-bytes',str(baseline)))
     limits=ExperimentLimits(rss_bytes=int(8.5*GIB),reserve_bytes=3*GIB,
-        swap_growth_bytes=32<<20,admitted_payload_bytes=int(2.5*GIB),
+        swap_growth_bytes=remaining_swap_budget(sample,baseline),admitted_payload_bytes=int(2.5*GIB),
         timeout_seconds=2400,interval_seconds=.5,max_processes=8)
     report['owned_wrapper_started']=True
     identities={args.model.resolve()/row['name']:row['identity'] for row in inspection['files']}
@@ -134,6 +142,7 @@ def run(args):
         unchanged=all(_identity(p)==identity for p,identity in identities.items())
         report['weight_identities_unchanged']=unchanged
         report['native_artifacts_unchanged']=binaries=={args.probe.name:sha(args.probe)} and libraries=={p.name:sha(p) for p in args.runtime.glob('*.dylib') if not p.is_symlink()}
+        remaining_swap_budget(system_snapshot(),baseline)
         complete=output/'capture/complete.json'
         report['status']='completed' if worker_report['status']=='completed' and unchanged and report['native_artifacts_unchanged'] and complete.is_file() else 'failed'
         if report['status']=='completed':
@@ -158,4 +167,5 @@ if __name__=='__main__':
     p.add_argument('--tokens',type=int,choices=(32,64,128),default=32)
     p.add_argument('--prompt',default='La capitale de la France est')
     p.add_argument('--diagnostic',action='store_true');p.add_argument('--worker',action='store_true',help=argparse.SUPPRESS)
+    p.add_argument('--campaign-swap-used-bytes',type=int,help='Common initial swap usage in bytes; only tightens the unchanged32MiB per-experiment cap')
     raise SystemExit(run(p.parse_args()))

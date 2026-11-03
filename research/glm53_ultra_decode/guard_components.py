@@ -5,7 +5,8 @@ import json
 import os
 from pathlib import Path
 import sys
-from airllm.nextgen.experiment_guard import ExperimentLimits,supervise
+from airllm.nextgen.experiment_guard import ExperimentLimits,supervise,system_snapshot
+from .campaign_limits import remaining_swap_budget
 
 def run(args):
     output=args.output.resolve()
@@ -18,12 +19,14 @@ def run(args):
         '--width',str(args.width),'--banks',str(args.banks),'--seed',str(args.seed),
         '--repetitions',str(args.repetitions)]
     env={k:v for k,v in os.environ.items() if not k.startswith(('DYLD_','AIRLLM_','GGML_','LLAMA_ARG_'))}
-    limits=ExperimentLimits(rss_bytes=int(8.5*(1<<30)),reserve_bytes=3<<30,
-        swap_growth_bytes=32<<20,admitted_payload_bytes=256<<20,
-        timeout_seconds=180,interval_seconds=.25,max_processes=8)
+    baseline=getattr(args,'campaign_swap_used_bytes',None)
     failure=None
     try:
+        limits=ExperimentLimits(rss_bytes=int(8.5*(1<<30)),reserve_bytes=3<<30,
+            swap_growth_bytes=remaining_swap_budget(system_snapshot(),baseline),admitted_payload_bytes=256<<20,
+            timeout_seconds=180,interval_seconds=.25,max_processes=8)
         report=supervise(command,supervision,limits=limits,env=env)
+        remaining_swap_budget(system_snapshot(),baseline)
     except (RuntimeError,MemoryError) as error:
         failure=str(error)
         report=json.loads(guard_file.read_text()) if guard_file.exists() else {}
@@ -41,4 +44,5 @@ if __name__=='__main__':
     p.add_argument('--rows',type=int,default=1536);p.add_argument('--width',type=int,default=4096)
     p.add_argument('--banks',type=int,choices=(1,2),default=1)
     p.add_argument('--seed',type=int,default=5303101);p.add_argument('--repetitions',type=int,default=15)
+    p.add_argument('--campaign-swap-used-bytes',type=int,help='Common initial swap usage in bytes; never relaxes the original per-experiment cap')
     raise SystemExit(run(p.parse_args()))
