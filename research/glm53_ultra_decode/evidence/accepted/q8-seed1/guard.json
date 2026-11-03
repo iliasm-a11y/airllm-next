@@ -1,0 +1,58 @@
+{
+  "command": [
+    "[CODEX]/2026-11-02/files-pasted-by-the-user-mission/work/testenv/bin/python",
+    "-m",
+    "research.glm53_ultra_decode.components",
+    "--runtime",
+    "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+    "--build",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/decode-build3",
+    "--output",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2",
+    "--format",
+    "8",
+    "--rows",
+    "1536",
+    "--width",
+    "4096",
+    "--banks",
+    "1",
+    "--seed",
+    "5303101",
+    "--repetitions",
+    "21"
+  ],
+  "limits": {
+    "rss_bytes": 9126805504,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 33554432,
+    "admitted_payload_bytes": 268435456,
+    "timeout_seconds": 180,
+    "interval_seconds": 0.25,
+    "max_processes": 8
+  },
+  "before": {
+    "available_bytes": 4210343936,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 1093795840,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 3,
+  "sampled_peak_rss_bytes": 68943872,
+  "minimum_available_bytes": 4210343936,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "sampled_peak_processes": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 4211965952,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 1093795840,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 0.5317426250039716
+}

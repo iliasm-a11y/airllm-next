@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "utc": "2026-11-03T16:20:31.050156+00:00",
+  "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "inputs_sha256": {
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/native_component.cpp": "a4c20c7888172ce6786c1557a377a66d993a785e551772b4619fdc824e708549",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/decode_timer.mm": "0b7fb17fd8acfec16ff93dfab82d4fddc5b7ffceb6007fe6812204a5793f2406",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/decode.metal": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/build.py": "2e1e21073dd772d02c912f3968065c2ff293b59e2a226e0692b10bdd58221581",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/native_decode.cpp": "e1d44d58e4015c90f37660341d746bb2f36cb255874b2207278458242a815a43",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/timing.inc": "bdc972f9eb9d7680621c230536b55f3fe3569c94204c78b06f201f09a541dec1",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/residency.inc": "df2b105d045e4e82553542f91a2c6c068a1f8ab20edf2dbd91c3094f1d1fb9a8",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_gpu_v3/source_capture.inc": "e20ca02a6e0ebc04cb2b031b447d01251cdebcceababb7465b9451fb35b82ca9",
+    "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_gpu_v3/self_vm.inc": "f8e352dc6d32db0867e89ba7626717a374f5e3ed8de4847bb231d9a30097eaf9",
+    "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include/ggml-cpu.h": "316279e004cdeb8e6ef78599acb602bf79a8abdf897fed9fd1914808c1518c6e",
+    "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include/ggml-backend.h": "6926bee0487ed349cce290466bbd4b24e2f9af2758f6fac3cd77adef3a421799"
+  },
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "steps": [
+    {
+      "command": [
+        "clang++",
+        "-std=c++17",
+        "-O2",
+        "-I",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include",
+        "-L",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-Wl,-rpath,[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-lggml-cpu",
+        "-lggml-base",
+        "-dynamiclib",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/native_component.cpp",
+        "-o",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/decode-build3/component.dylib"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "clang++",
+        "-std=c++17",
+        "-O2",
+        "-I",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include",
+        "-L",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-Wl,-rpath,[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-lggml-cpu",
+        "-lggml-base",
+        "-fobjc-arc",
+        "-framework",
+        "Foundation",
+        "-framework",
+        "Metal",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/decode_timer.mm",
+        "-o",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/decode-build3/decode-timer"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "clang++",
+        "-std=c++17",
+        "-O2",
+        "-I",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/ggml/include",
+        "-L",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-Wl,-rpath,[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-lggml-cpu",
+        "-lggml-base",
+        "-Wno-deprecated-declarations",
+        "-I",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/include",
+        "-I",
+        "[CODEX]/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/vendor",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/native_decode.cpp",
+        "-lllama",
+        "-lggml",
+        "-o",
+        "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/decode-build3/native-decode"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.2.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "scope": "new component binaries; no native model library rebuilt or requalified",
+  "binaries_sha256": {
+    "component.dylib": "b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3",
+    "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27",
+    "native-decode": "66a9b1c9d1138dd1deea39df334bb46292e2cad38cb249384889ec16eeb5d299"
+  },
+  "parameter_smoke": {
+    "n_ctx": 512,
+    "n_batch": 8,
+    "n_ubatch": 8,
+    "n_seq_max": 1,
+    "threads": 10,
+    "gpu_layers": 0,
+    "model_loaded": false
+  },
+  "passed": true
+}

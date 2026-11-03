@@ -1,0 +1,96 @@
+{
+  "inspected_before_branch_creation": true,
+  "pull_requests": [
+    {
+      "number": 17,
+      "title": "Add guarded GLM GGUF integration and measured M5 decode gains",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/17",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/hyperstream-recovery-m5",
+      "base_sha": "0fb55ba32121c437fb1d80319e1fc40f26546310",
+      "head": "research/glm53-ronin-m5",
+      "head_sha": "0ab4ad0bd068ae8e4411d63b4c20e4c545c2a2a5",
+      "updated_at": "2026-11-02T17:35:53Z"
+    },
+    {
+      "number": 18,
+      "title": "GLM M5: isolate hybrid drift and test bounded CPU-compatible Q2_K Metal",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/18",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-ronin-m5",
+      "base_sha": "0ab4ad0bd068ae8e4411d63b4c20e4c545c2a2a5",
+      "head": "research/glm53-m5-fidelity-gpu",
+      "head_sha": "7898eecd93dfbde4a823b0df034a04a5b2c5c688",
+      "updated_at": "2026-11-02T19:00:10Z"
+    },
+    {
+      "number": 19,
+      "title": "GLM M5: CPU-compatible Q8 Metal and guarded performance evidence",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/19",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-m5-fidelity-gpu",
+      "base_sha": "7898eecd93dfbde4a823b0df034a04a5b2c5c688",
+      "head": "research/glm53-m5-faithful-kernels",
+      "head_sha": "fc59b4b80a526e98b56ec918dc51c9649c4c1181",
+      "updated_at": "2026-11-02T21:01:15Z"
+    },
+    {
+      "number": 20,
+      "title": "Qualify guarded CPU EOS and isolate persistent RONIN agent contexts",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/20",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-m5-dense-stream-final",
+      "base_sha": "8138298f927dd17f583b5c0caed884ea432c4c01",
+      "head": "research/glm53-m5-ultra-engine",
+      "head_sha": "a980f69c40e9170aef411fb4333613d2f7c6415a",
+      "updated_at": "2026-11-03T08:49:22Z"
+    },
+    {
+      "number": 21,
+      "title": "GLM M5: bounded dense streaming and guarded performance evidence",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/21",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-m5-faithful-kernels",
+      "base_sha": "fc59b4b80a526e98b56ec918dc51c9649c4c1181",
+      "head": "research/glm53-m5-dense-stream-final",
+      "head_sha": "8138298f927dd17f583b5c0caed884ea432c4c01",
+      "updated_at": "2026-11-03T08:41:07Z"
+    },
+    {
+      "number": 22,
+      "title": "GLM : audit du pr\u00e9fixe et reprise m\u00e9moire born\u00e9e de deux agents",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/22",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-m5-ultra-engine",
+      "base_sha": "a980f69c40e9170aef411fb4333613d2f7c6415a",
+      "head": "research/glm53-shared-prefill-qualification",
+      "head_sha": "64d01af445b620253209319d43a812d1ed07cd13",
+      "updated_at": "2026-11-03T11:17:17Z"
+    },
+    {
+      "number": 23,
+      "title": "research(glm53): M5 batched prefill, bounded full-state snapshots and agent qualification",
+      "url": "https://github.com/iliasm-a11y/airllm-next/pull/23",
+      "state": "open",
+      "merged": false,
+      "draft": true,
+      "base": "research/glm53-shared-prefill-qualification",
+      "base_sha": "64d01af445b620253209319d43a812d1ed07cd13",
+      "head": "research/glm53-m5-batched-prefill",
+      "head_sha": "6bdeec357154a7740833b4ad694d08e02aef2f96",
+      "updated_at": "2026-11-03T15:22:10Z"
+    }
+  ]
+}
