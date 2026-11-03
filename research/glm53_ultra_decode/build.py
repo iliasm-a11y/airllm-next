@@ -20,7 +20,7 @@ def build(source, runtime, output):
         raise ValueError('pinned llama.cpp revision required')
     root=Path(__file__).resolve().parent
     inputs=[root/n for n in ('native_component.cpp','decode_timer.mm','decode.metal','build.py',
-        'native_decode.cpp','timing.inc','residency.inc')]
+        'native_decode.cpp','timing.inc','residency.inc','completed_call.h')]
     inputs += [root.parent/'glm53_gpu_v3'/n for n in ('state_capture.inc','source_capture.inc','self_vm.inc')]
     inputs += [source/n for n in ('ggml/include/ggml.h','ggml/include/ggml-cpu.h','ggml/include/ggml-backend.h')]
     before={str(p):sha(p) for p in inputs}

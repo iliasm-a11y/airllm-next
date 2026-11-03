@@ -53,6 +53,7 @@ struct capture {
 
 #include "residency.inc"
 #include "timing.inc"
+#include "completed_call.h"
 
 static bool evaluate(ggml_tensor * tensor, bool ask, void * user) {
     auto & early = *static_cast<capture *>(user);
@@ -68,7 +69,13 @@ static bool evaluate(ggml_tensor * tensor, bool ask, void * user) {
     }
     if (out.profile) {
         if (ask) {
-            if(out.profile_pages) out.pages_before=snapshot_json(tensor_weight_pages(tensor));
+            if(out.profile_pages) {
+                const auto inspection_begin=std::chrono::steady_clock::now();
+                auto pages=tensor_weight_pages(tensor);
+                pages.inspection_seconds=std::chrono::duration<double>(
+                    std::chrono::steady_clock::now()-inspection_begin).count();
+                out.pages_before=snapshot_json(pages);
+            }
 #if defined(__APPLE__)
             out.before_valid = proc_pid_rusage(getpid(), RUSAGE_INFO_V2,
                 reinterpret_cast<rusage_info_t *>(&out.before)) == 0;
@@ -336,6 +343,7 @@ int main(int argc, char ** argv) {
         }
         offset += take;
     }
+    llama_synchronize(ctx);
     timing << timing_delta("prefill",request,prefill_before,timing_snapshot()) << "\n";timing.flush();
     phases << lifecycle_event("after_prefill_request_"+std::to_string(request)) << "\n";phases.flush();
     for (int step = 0; step < count; ++step) {
@@ -367,9 +375,9 @@ int main(int argc, char ** argv) {
         captured.step = request*count+step+1;
         auto batch = llama_batch_get_one(&next, 1);
         const auto before_decode=timing_snapshot();
-        const auto decode_begin=std::chrono::steady_clock::now();
-        const int status=llama_decode(ctx,batch);
-        const double call_seconds=std::chrono::duration<double>(std::chrono::steady_clock::now()-decode_begin).count();
+        int status=0;
+        const double call_seconds=completed_seconds(
+            [&]{status=llama_decode(ctx,batch);},[&]{llama_synchronize(ctx);});
         timing << timing_delta("decode",captured.step,before_decode,timing_snapshot(),call_seconds) << "\n";timing.flush();
         if(status!=0||captured.failed) return 6;
     }
