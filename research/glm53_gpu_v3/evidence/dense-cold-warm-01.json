@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "started_utc": "2026-11-02T22:00:16.481541+00:00",
+  "phases": [
+    {
+      "phase": 0,
+      "kernel_wall_seconds": 0.015783375,
+      "process_os_read_bytes": 35672064,
+      "process_pageins": 2177,
+      "output_file": "outputs-0.f32",
+      "outputs_equal_first": true,
+      "block_device_before": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932623339520,
+              "Bytes (Write)": 126695927808,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110576096,
+              "Operations (Write)": 2579482,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14531859470539,
+              "Total Time (Write)": 501350564096
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_after": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932659154944,
+              "Bytes (Write)": 126695960576,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577199,
+              "Operations (Write)": 2579483,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532081998546,
+              "Total Time (Write)": 501350580179
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_delta": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "delta": {
+              "Bytes (Read)": 35815424,
+              "Bytes (Write)": 32768,
+              "Operations (Read)": 1103,
+              "Operations (Write)": 1,
+              "Total Time (Read)": 222528007,
+              "Total Time (Write)": 16083
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells",
+        "limits": "Includes other processes. Summed service time can overlap and is not a wall-time IO fraction."
+      },
+      "output_sha256": "4d43f62056d934601a565fda2726017c92f573474cd8cccf9783e318d2dea30d",
+      "label": "first_use_observed_reads_not_proven_cold"
+    },
+    {
+      "phase": 1,
+      "kernel_wall_seconds": 0.000322208,
+      "process_os_read_bytes": 0,
+      "process_pageins": 0,
+      "output_file": "outputs-1.f32",
+      "outputs_equal_first": true,
+      "block_device_before": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932659183616,
+              "Bytes (Write)": 126695960576,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577206,
+              "Operations (Write)": 2579483,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532082855919,
+              "Total Time (Write)": 501350580179
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_after": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932659265536,
+              "Bytes (Write)": 126695993344,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577226,
+              "Operations (Write)": 2579484,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532084430953,
+              "Total Time (Write)": 501350595970
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_delta": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "delta": {
+              "Bytes (Read)": 81920,
+              "Bytes (Write)": 32768,
+              "Operations (Read)": 20,
+              "Operations (Write)": 1,
+              "Total Time (Read)": 1575034,
+              "Total Time (Write)": 15791
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells",
+        "limits": "Includes other processes. Summed service time can overlap and is not a wall-time IO fraction."
+      },
+      "output_sha256": "4d43f62056d934601a565fda2726017c92f573474cd8cccf9783e318d2dea30d",
+      "label": "same_process_repeat_not_assumed_storage_free"
+    },
+    {
+      "phase": 2,
+      "kernel_wall_seconds": 0.000349417,
+      "process_os_read_bytes": 0,
+      "process_pageins": 0,
+      "output_file": "outputs-2.f32",
+      "outputs_equal_first": true,
+      "block_device_before": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932659605504,
+              "Bytes (Write)": 126695993344,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577309,
+              "Operations (Write)": 2579484,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532090282009,
+              "Total Time (Write)": 501350595970
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_after": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932660068352,
+              "Bytes (Write)": 126696026112,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577422,
+              "Operations (Write)": 2579485,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532097515057,
+              "Total Time (Write)": 501350611136
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_delta": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "delta": {
+              "Bytes (Read)": 462848,
+              "Bytes (Write)": 32768,
+              "Operations (Read)": 113,
+              "Operations (Write)": 1,
+              "Total Time (Read)": 7233048,
+              "Total Time (Write)": 15166
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells",
+        "limits": "Includes other processes. Summed service time can overlap and is not a wall-time IO fraction."
+      },
+      "output_sha256": "4d43f62056d934601a565fda2726017c92f573474cd8cccf9783e318d2dea30d",
+      "label": "same_process_repeat_not_assumed_storage_free"
+    },
+    {
+      "phase": 3,
+      "kernel_wall_seconds": 0.000313583,
+      "process_os_read_bytes": 0,
+      "process_pageins": 0,
+      "output_file": "outputs-3.f32",
+      "outputs_equal_first": true,
+      "block_device_before": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932660654080,
+              "Bytes (Write)": 126696026112,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577565,
+              "Operations (Write)": 2579485,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532106416052,
+              "Total Time (Write)": 501350611136
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_after": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "name": "IOBlockStorageDriver",
+            "statistics": {
+              "Bytes (Read)": 6932661080064,
+              "Bytes (Write)": 126696058880,
+              "Errors (Read)": 0,
+              "Errors (Write)": 0,
+              "Latency Time (Read)": 0,
+              "Latency Time (Write)": 0,
+              "Operations (Read)": 110577669,
+              "Operations (Write)": 2579486,
+              "Retries (Read)": 0,
+              "Retries (Write)": 0,
+              "Total Time (Read)": 14532114082308,
+              "Total Time (Write)": 501350626052
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells"
+      },
+      "block_device_delta": {
+        "available": true,
+        "devices": [
+          {
+            "registry_id": 4294969444,
+            "delta": {
+              "Bytes (Read)": 425984,
+              "Bytes (Write)": 32768,
+              "Operations (Read)": 104,
+              "Operations (Write)": 1,
+              "Total Time (Read)": 7666256,
+              "Total Time (Write)": 14916
+            }
+          }
+        ],
+        "scope": "system-wide IOBlockStorageDriver counters; controller block reads, not per-process IO or NAND cells",
+        "limits": "Includes other processes. Summed service time can overlap and is not a wall-time IO fraction."
+      },
+      "output_sha256": "4d43f62056d934601a565fda2726017c92f573474cd8cccf9783e318d2dea30d",
+      "label": "same_process_repeat_not_assumed_storage_free"
+    }
+  ],
+  "model_decoder_executed": false,
+  "gpu_initialized": false,
+  "guard_violation": null,
+  "scope": "one original full Q8_0 matrix on native CPU10; first-use and repeated same-process phases, not model throughput",
+  "tensor": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "name": "blk.0.attn_q.weight",
+    "dims": [
+      4096,
+      8192
+    ],
+    "type": "Q8_0",
+    "offset": 1590100992,
+    "bytes_with_alignment": 35651584
+  },
+  "model_revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "absolute_offset": 1590187712,
+  "activation_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/dense-cold-warm-01/activation.f32",
+  "activation_source": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v2/trace2-cpu/1-372.bin",
+  "activation_scope": "real captured layer40 decode activation, width-matched to layer0 matrix; not an actual layer0 model execution",
+  "activation_sha256": "495aaba3baa5a0580b775c7cc5f899a27f60e0b149caead97a776974796b45fe",
+  "known_payload_bound_bytes": 36978688,
+  "weight_integrity_scope": "pinned descriptor plus unchanged file stats; no selected-weight read/hash before first phase",
+  "persistent_cpu_threads": 10,
+  "guard_limits": {
+    "rss_bytes": 268435456,
+    "system_swap_growth_bytes": 33554432,
+    "timeout_seconds": 60,
+    "critical_pressure": 4
+  },
+  "source_file_stats_before": {
+    "size": 110017922752,
+    "mtime_ns": 1793630405545465080
+  },
+  "component_source_sha256": "b9cc30809c37e54bdea912ad08ac44a4fd618addaf462b5cb1118a2677da15bc",
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "456ccbdbbc81992f2df70c7ab91fb2c7c543937345bb6982d398933c65f2a9bf",
+    "libllama-server-impl.dylib": "e539925513e3aed22fa6f4fbc4f7f36f6b33e6c9e9c3c90dd94be6a7dd1fbbeb",
+    "libllama-common.0.8.0.dylib": "8dcc0828d3c1404595e698c67b1c49458a922e69b4075b77743e4ff7161826d0",
+    "libllama.0.8.0.dylib": "4050129cdd5746c64d738519724167ddd4f30f7614039c30364ca3d21be11347",
+    "libmtmd.0.8.0.dylib": "7b4272843ed61e0e52328212d406d2d3fecfc1ab08000374b4d5edc23d3ae015",
+    "libggml-blas.0.28.0.dylib": "8c65151c05b93f4325900e9f524482c0b1cfccebf147a76662216f5246b2e325",
+    "libggml-metal.0.28.0.dylib": "5af5fed4e3e98dff0fb85263b9638e97faf9019bc47f90354e66083425b2cc09",
+    "libggml.0.28.0.dylib": "12b8143ccb19ecabfb7954f32975b6ba90da9f805862a6cfcc2847538d4ab457",
+    "libggml-cpu.0.28.0.dylib": "95e775aa2de66443ac9f5b956f2cc07b7dba6c50d1cb2f29f9d5bd899047164d"
+  },
+  "command": [
+    "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/dense-cold-warm-01/dense-cold-warm",
+    "/Users/macbook/Models/GLM-5.3-Flash-Q2_K_S/GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "1590187712",
+    "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/dense-cold-warm-01/activation.f32",
+    "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/v3/dense-cold-warm-01/native",
+    "4"
+  ],
+  "swap_start_bytes": 493879296,
+  "pressure_start": 1,
+  "peak_rss_bytes": 42680320,
+  "peak_swap_growth_bytes": 0,
+  "native_returncode": 0,
+  "swap_final_bytes": 493879296,
+  "source_file_stats_unchanged": true,
+  "all_outputs_bit_identical": true,
+  "finished_utc": "2026-11-02T22:00:17.485577+00:00"
+}

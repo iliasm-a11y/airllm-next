@@ -182,6 +182,78 @@ class AgentProbeTests(unittest.TestCase):
         self.assertEqual(report["status"], "failed")
         self.assertEqual(report["cleanup_errors"][0]["error_code"], "SERVER_STILL_RUNNING")
 
+    def test_prior_watchdog_exit_is_attested_after_native_handle_was_cleared(self):
+        observation = {"pid": 71004, "generation": 1, "returncode": -signal.SIGTERM,
+                       "exit_observed": True, "observation": "popen_poll_of_owned_process",
+                       "source": "resource_guard", "guard_failure_code": "SWAP_LIMIT"}
+        model = SimpleNamespace(_process=None, last_owned_process_exit=observation)
+        engine = SimpleNamespace(_model=model, status=lambda: {}, close=mock.Mock())
+        database = SimpleNamespace(close=mock.Mock())
+        runtime = SimpleNamespace(engine=engine, store=SimpleNamespace(db=database), dispatch=lambda *args: {})
+        report = {"status": "failed", "error_code": "SWAP_LIMIT"}
+        agent_probe._cleanup(runtime, report)
+        self.assertEqual(report["status"], "failed")  # An observed exit cannot make inference succeed.
+        self.assertEqual(report["error_code"], "SWAP_LIMIT")
+        self.assertTrue(report["owned_server_stopped"])
+        self.assertEqual(report["owned_pid_before_cleanup"], observation["pid"])
+        self.assertEqual(report["owned_server_returncode"], -signal.SIGTERM)
+        self.assertEqual(report["owned_server_observation"], "retained_native_owned_process_poll")
+        self.assertEqual(report["last_owned_process_exit"], observation)
+        self.assertNotIn("cleanup_errors", report)
+        database.close.assert_called_once()
+
+    def test_retained_live_or_incomplete_observation_cannot_attest_exit(self):
+        for observation in (
+            {"pid": 71004, "returncode": None, "exit_observed": False,
+             "observation": "popen_poll_of_owned_process"},
+            {"pid": 71004, "returncode": None, "exit_observed": True,
+             "observation": "popen_poll_of_owned_process"},
+            {"pid": 71004, "returncode": 0, "exit_observed": True,
+             "observation": "cleared_handle_only"},
+        ):
+            with self.subTest(observation=observation):
+                model = SimpleNamespace(_process=None, last_owned_process_exit=observation)
+                runtime = SimpleNamespace(
+                    engine=SimpleNamespace(_model=model, status=lambda: {}, close=lambda: None),
+                    store=SimpleNamespace(db=SimpleNamespace(close=mock.Mock())), dispatch=lambda *args: {})
+                report = {"status": "completed"}
+                agent_probe._cleanup(runtime, report)
+                self.assertFalse(report["owned_server_stopped"])
+                self.assertEqual(report["status"], "failed")
+                self.assertEqual(report["cleanup_errors"][0]["error_code"], "SERVER_EXIT_UNCONFIRMED")
+
+    def test_current_owned_handle_poll_takes_priority_over_old_exit_record(self):
+        process = FakeProcess()
+        model = SimpleNamespace(_process=process, last_owned_process_exit={
+            "pid": 71004, "returncode": 0, "exit_observed": True,
+            "observation": "popen_poll_of_owned_process"})
+        runtime = SimpleNamespace(
+            engine=SimpleNamespace(_model=model, status=lambda: {}, close=lambda: None),
+            store=SimpleNamespace(db=SimpleNamespace(close=mock.Mock())), dispatch=lambda *args: {})
+        report = {"status": "completed"}
+        agent_probe._cleanup(runtime, report)
+        self.assertFalse(report["owned_server_stopped"])
+        self.assertEqual(report["owned_pid_before_cleanup"], process.pid)
+        self.assertEqual(report["owned_server_observation"], "poll_of_process_captured_before_close")
+        self.assertEqual(report["status"], "failed")
+
+    def test_exit_observation_error_cannot_skip_database_cleanup(self):
+        class BrokenObservation:
+            _process = None
+            @property
+            def last_owned_process_exit(self):
+                raise RuntimeError("fixture observation unavailable")
+        database = SimpleNamespace(close=mock.Mock())
+        runtime = SimpleNamespace(
+            engine=SimpleNamespace(_model=BrokenObservation(), status=lambda: {}, close=lambda: None),
+            store=SimpleNamespace(db=database), dispatch=lambda *args: {})
+        report = {"status": "failed", "error_code": "SWAP_LIMIT"}
+        agent_probe._cleanup(runtime, report)
+        database.close.assert_called_once()
+        self.assertIsNone(report["owned_server_stopped"])
+        self.assertEqual(report["error_code"], "SWAP_LIMIT")
+        self.assertEqual(report["cleanup_errors"][0]["step"], "native_exit_observation")
+
     def test_isolation_requires_both_private_markers_to_be_present(self):
         with mock.patch.object(FakeRuntime, "omit_memory", True):
             report = self.run_probe()

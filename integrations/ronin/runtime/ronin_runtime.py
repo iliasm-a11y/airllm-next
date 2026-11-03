@@ -17,7 +17,7 @@ Je dispose d’une mémoire de recherche et conserve les preuves utiles à la re
 ROLES = ['Mission Director', 'Scope Guard', 'Code Mapper', 'Hypothesis Engine',
          'Traffic Intelligence', 'Verification Engine', 'Evidence Graph',
          'Experience Vault', 'Supervisor', 'Bounty Report Engine']
-TERMINAL = {'stopped', 'completed', 'error'}
+TERMINAL = {'stopped', 'completed', 'partial', 'error'}
 HTTP_DEADLINE_SECONDS = 8.0
 
 def now(): return datetime.now(timezone.utc).isoformat()
@@ -131,7 +131,7 @@ class Runtime:
         row=rows[0]; row['scope']=json.loads(row['scope']); return row
     def state(self,mid,state):
         with self.guard:
-            if state in ['preparing','analyzing','waiting_model'] and self.get(mid)['stop']: raise Fault('CANCELLED','La mission a été interrompue.')
+            if state in ['preparing','analyzing','waiting_model','completed','partial']: self.check(mid)
             self.store.execute('UPDATE missions SET status=?,updated=? WHERE id=?',(state,now(),mid))
     def status(self):
         model=self.setting('model_path',os.environ.get('RONIN_GLM_MODEL',''))
@@ -467,6 +467,7 @@ class Runtime:
         with self.guard:
             self.get(mid)
             if mid in self.workers and self.workers[mid].is_alive(): return {'already_running':True}
+            if self.active_generations.get(mid): raise Fault('BUSY','Attendre l’arrêt de la génération précédente avant de reprendre.')
             if self.active_tools.get(mid): raise Fault('BUSY','Attendre l’arrêt des outils précédents avant de reprendre.')
             # Only one mission consumes tools at a time in this initial measured runtime.
             if any(t.is_alive() for k,t in self.workers.items() if k!=mid): raise Fault('BUSY','Une mission est déjà en analyse. Mettre cette mission en pause avant de poursuivre.')
@@ -496,9 +497,9 @@ class Runtime:
             self.check(mid)
             self.store.execute('INSERT INTO memory VALUES(?,?,?,?,?,?)',(uid(),mid,'mission','Préparation locale enregistrée ; conclusions limitées aux empreintes de sources capturées.',str(m['scope']['version']),now()))
             self.state(mid,'waiting_model')
-            self.generate(mid,max_new_tokens=self.setting('max_new_tokens',32))
+            result=self.generate(mid,max_new_tokens=self.setting('max_new_tokens',32))
             self.check(mid)
-            self.state(mid,'completed')
+            self.state(mid,'completed' if result.get('decision_state')=='completed' else 'partial')
         except Fault as e:
             if e.code!='CANCELLED': self.state(mid,'error'); self.store.event(mid,'error',str(e))
         except Exception as e:
@@ -563,15 +564,22 @@ class Runtime:
                     'context_sha256':decision['context_sha256'],'memory_revision':decision['memory_revision'],
                     'tools_executed_from_output':False}
             result['evidence_id']=self.store.evidence(mid,'model_output','Réponse GLM locale',json.dumps(result,ensure_ascii=False),selected,'model_output_unverified')
-            self.store.event(mid,'model_completed',json.dumps({'evidence_id':result['evidence_id'],'seconds':result['seconds'],'tokens':len(tokens)},ensure_ascii=False))
+            self.store.event(mid,'model_completed' if decision_state=='completed' else 'model_partial',
+                json.dumps({'evidence_id':result['evidence_id'],'seconds':result['seconds'],'tokens':len(tokens),
+                            'decision_state':decision_state,'decision_id':decision['id'],'agent_id':agent_id,
+                            'stop_type':terminal.get('stop_type') if terminal else None},ensure_ascii=False))
             return result
         except Exception as error:
+            # The adapter also combines global engine shutdown with this
+            # mission's event. Preserve an effective native CANCELLED even
+            # when shutdown deliberately leaves a partial mission unchanged.
+            cancelled=cancel.is_set() or getattr(error,'code',None)=='CANCELLED'
             if not finalized:
                 provenance['native_output_observed']=bool(tokens or ''.join(text))
-                self.agent_contexts.finish(decision['id'],'cancelled' if cancel.is_set() else 'failed',
+                self.agent_contexts.finish(decision['id'],'cancelled' if cancelled else 'failed',
                     provenance=provenance,terminal=next((event for event in reversed(events) if event.get('stop')),None),
-                    error_code='CANCELLED' if cancel.is_set() else getattr(error,'code','MODEL_ERROR'))
-            if cancel.is_set(): raise Fault('CANCELLED','Génération interrompue.') from error
+                    error_code='CANCELLED' if cancelled else getattr(error,'code','MODEL_ERROR'))
+            if cancelled: raise Fault('CANCELLED','Génération interrompue.') from error
             raise Fault(getattr(error,'code','MODEL_ERROR'),str(error)) from error
         finally:
             with self.guard:
@@ -653,7 +661,7 @@ class Runtime:
         if method=='engine_unload': return self.engine.unload() if self.engine else {'loaded':False}
         if method=='shutdown':
             if self.engine: self.engine.request_shutdown()
-            for m in self.store.query("SELECT id FROM missions WHERE status NOT IN ('stopped','completed','error','archived')"): self.stop(m['id'],True)
+            for m in self.store.query("SELECT id FROM missions WHERE status NOT IN ('stopped','completed','partial','error','archived')"): self.stop(m['id'],True)
             if self.engine: self.engine.close()
             return {'closed':True}
         raise Fault('UNKNOWN_METHOD','Action inconnue.')

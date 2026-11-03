@@ -1,0 +1,813 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-02T23:01:11.399266+00:00",
+  "source_url": "https://github.com/ggml-org/llama.cpp.git",
+  "source_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "status": "built",
+  "source_checkout_modified": false,
+  "jobs": 3,
+  "dense_lock_experiment_built": true,
+  "removed_environment_names": [],
+  "platform": {
+    "system": "Darwin",
+    "release": "27.2.0",
+    "machine": "arm64"
+  },
+  "patches": [
+    {
+      "name": "llama-mmap-demand.patch",
+      "sha256": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0"
+    },
+    {
+      "name": "llama-expert-prefetch.patch",
+      "sha256": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238"
+    },
+    {
+      "name": "llama-dense-prefetch.patch",
+      "sha256": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c"
+    },
+    {
+      "name": "llama-dense-prefetch-columns.patch",
+      "sha256": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356"
+    },
+    {
+      "name": "llama-layer-local-hc.patch",
+      "sha256": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d"
+    },
+    {
+      "name": "llama-moe-cache-split.patch",
+      "sha256": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1"
+    },
+    {
+      "name": "llama-q8-cpuarith.patch",
+      "sha256": "58046f9be9755dd8ea05fdd7dfca04551195083ec516e9d23180e581d46d0bb3"
+    },
+    {
+      "name": "llama-metal-command-timing.patch",
+      "sha256": "b1f948cc3ff1f6552e342ee0806f2a1c1e79c3c1db97b642d05e81bfa07f9a39"
+    },
+    {
+      "name": "llama-hc-kda-trace.patch",
+      "sha256": "2fc7d5a5976bbf3b2ddc9f3ca0a1b6c4dc2bad8c18e2083f04f24e7852455870"
+    },
+    {
+      "name": "llama-q8-selective.patch",
+      "sha256": "c681c0144a3a0e46e54ddd31fb4a0c2e3935f0f0a505d1eebf01a429c736b1ad"
+    },
+    {
+      "name": "llama-metal-mapped-cpu-read.patch",
+      "sha256": "2757eb3c24bbb62371a1c4e8e3acf59a35caca0a16293d024304914fd85ff91a"
+    },
+    {
+      "name": "llama-q8-shared-activation.patch",
+      "sha256": "fc093020415833703edbca51b36a9bd998a672998ea1a87b9df293937f096057"
+    },
+    {
+      "name": "llama-expert-drop.patch",
+      "sha256": "a93a61629fe98b234748094101613af39ec29ddb3cf806a5e71650c353c392a1"
+    },
+    {
+      "name": "llama-mmap-nocache.patch",
+      "sha256": "f1cc9e2c60d72ce6bd5140564f1b37069f1c726e0fb01f86268a72827cb32e63"
+    },
+    {
+      "name": "llama-dense-lookahead.patch",
+      "sha256": "d14e78d6e383084e7bcf84869a5927f8ceb6c15e3e443a6595a5917657d97e5c"
+    },
+    {
+      "name": "llama-dense-lock.patch",
+      "sha256": "d0e4bcd383eee1e29acbfc493287bef8dc65c359abe1517722450dee72a4f40a"
+    }
+  ],
+  "probe_source_sha256": "589d10c505073d8bc5e4038b90a9db377d9db8b88533b65f9e299d701a2d9037",
+  "probe_auxiliaries": [
+    {
+      "name": "state_capture.inc",
+      "sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f"
+    },
+    {
+      "name": "source_capture.inc",
+      "sha256": "b7f5e0484def857c7d2e97dff6be874cb71d733648346ea7635236e640fe6f9b"
+    },
+    {
+      "name": "self_vm.inc",
+      "sha256": "f8e352dc6d32db0867e89ba7626717a374f5e3ed8de4847bb231d9a30097eaf9"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--no-checkout",
+        "--no-hardlinks",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "3f8af15a76ac8675812e856da45454bafc90f12c"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-mmap-demand.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-mmap-demand.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-expert-prefetch.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-expert-prefetch.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-prefetch.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-prefetch.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-prefetch-columns.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-prefetch-columns.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-layer-local-hc.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-layer-local-hc.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-moe-cache-split.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-moe-cache-split.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-cpuarith.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-cpuarith.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-metal-command-timing.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-metal-command-timing.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-hc-kda-trace.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-hc-kda-trace.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-selective.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-selective.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-metal-mapped-cpu-read.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-metal-mapped-cpu-read.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-shared-activation.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-q8-shared-activation.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-expert-drop.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-expert-drop.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-mmap-nocache.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-mmap-nocache.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-lookahead.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-lookahead.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-lock.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/llama-dense-lock.patch"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--binary",
+        "HEAD"
+      ],
+      "cwd": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--find",
+        "clang"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--find",
+        "clang++"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "--version"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--show-sdk-path"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "cmake",
+        "--version"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "cmake",
+        "-S",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source",
+        "-B",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/build",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_C_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang",
+        "-DCMAKE_CXX_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-DGGML_NATIVE=ON",
+        "-DGGML_METAL=ON",
+        "-DGGML_METAL_EMBED_LIBRARY=ON",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DLLAMA_BUILD_TESTS=OFF",
+        "-DLLAMA_BUILD_EXAMPLES=OFF",
+        "-DLLAMA_BUILD_SERVER=ON",
+        "-DLLAMA_OPENSSL=OFF",
+        "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON",
+        "-DCMAKE_INSTALL_RPATH=@loader_path"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "cmake",
+        "--build",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/build",
+        "--target",
+        "llama-server",
+        "llama-completion",
+        "-j",
+        "3"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "-isysroot",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-std=c++17",
+        "-O3",
+        "-I",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source/include",
+        "-I",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/source/ggml/include",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/.glm-native-build-dw7pl59e/inputs/native_probe.cpp",
+        "-L",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin",
+        "-lllama",
+        "-lggml",
+        "-lggml-base",
+        "-lggml-cpu",
+        "-Wl,-rpath,@loader_path",
+        "-o",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/glm-native-fidelity"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/glm-native-fidelity"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-base.0.28.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-blas.0.28.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-cpu.0.28.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-metal.0.28.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml.0.28.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-common.0.8.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-completion-impl.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-server-impl.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama.0.8.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libmtmd.0.8.0.dylib"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-completion"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/codesign",
+        "--force",
+        "--sign",
+        "-",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-server"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-server",
+        "--version"
+      ],
+      "cwd": null
+    },
+    {
+      "argv": [
+        "/usr/bin/otool",
+        "-L",
+        "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-server"
+      ],
+      "cwd": null
+    }
+  ],
+  "experiment_defaults": {
+    "mmap_demand": false,
+    "expert_prefetch": false,
+    "dense_prefetch": false,
+    "mmap_nocache": false,
+    "dense_lookahead": false,
+    "dense_lookahead_mib": 32,
+    "dense_lock": false,
+    "dense_prefetch_max_cols": 1,
+    "q8_cpu_arith": false,
+    "q8_only": false,
+    "mapped_cpu_weights": false,
+    "q8_shared": false,
+    "expert_drop": false
+  },
+  "applied_source_diff_sha256": "99b66feb027288d5ec6eaece5b91619a3757555fc9008c767b7df0047d7a908e",
+  "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.2.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin",
+  "macos_sdk_path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "cmake_version": "cmake version 4.4.3",
+  "licenses": [
+    "licenses/LICENSE",
+    "licenses/licenses/LICENSE-jsonhpp",
+    "licenses/vendor/cpp-httplib/LICENSE"
+  ],
+  "runtime_version": "version: 0.8.0-dev (build 0, commit 3f8af15)\nbuilt with AppleClang 21.0.0.21000401 for Darwin arm64",
+  "dynamic_dependencies": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-server:\n\t@rpath/libllama-server-impl.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libllama-common.0.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libmtmd.0.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libllama.0.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libggml.0.dylib (compatibility version 0.0.0, current version 0.28.0)\n\t@rpath/libggml-cpu.0.dylib (compatibility version 0.0.0, current version 0.28.0)\n\t@rpath/libggml-blas.0.dylib (compatibility version 0.0.0, current version 0.28.0)\n\t@rpath/libggml-metal.0.dylib (compatibility version 0.0.0, current version 0.28.0)\n\t@rpath/libggml-base.0.dylib (compatibility version 0.0.0, current version 0.28.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n",
+  "artifacts": [
+    {
+      "path": "bin/glm-native-fidelity",
+      "bytes": 155168,
+      "sha256": "5cabde2cec89f1ed1bb71e962d25509ccb466eed3d5395a10d34caed841504b2"
+    },
+    {
+      "path": "bin/libggml-base.0.28.0.dylib",
+      "bytes": 769200,
+      "sha256": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48"
+    },
+    {
+      "path": "bin/libggml-base.0.dylib",
+      "symlink": "libggml-base.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-base.dylib",
+      "symlink": "libggml-base.0.dylib"
+    },
+    {
+      "path": "bin/libggml-blas.0.28.0.dylib",
+      "bytes": 58528,
+      "sha256": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a"
+    },
+    {
+      "path": "bin/libggml-blas.0.dylib",
+      "symlink": "libggml-blas.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-blas.dylib",
+      "symlink": "libggml-blas.0.dylib"
+    },
+    {
+      "path": "bin/libggml-cpu.0.28.0.dylib",
+      "bytes": 1008672,
+      "sha256": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+    },
+    {
+      "path": "bin/libggml-cpu.0.dylib",
+      "symlink": "libggml-cpu.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-cpu.dylib",
+      "symlink": "libggml-cpu.0.dylib"
+    },
+    {
+      "path": "bin/libggml-metal.0.28.0.dylib",
+      "bytes": 5606128,
+      "sha256": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28"
+    },
+    {
+      "path": "bin/libggml-metal.0.dylib",
+      "symlink": "libggml-metal.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-metal.dylib",
+      "symlink": "libggml-metal.0.dylib"
+    },
+    {
+      "path": "bin/libggml.0.28.0.dylib",
+      "bytes": 59856,
+      "sha256": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8"
+    },
+    {
+      "path": "bin/libggml.0.dylib",
+      "symlink": "libggml.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml.dylib",
+      "symlink": "libggml.0.dylib"
+    },
+    {
+      "path": "bin/libllama-common.0.8.0.dylib",
+      "bytes": 5380816,
+      "sha256": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e"
+    },
+    {
+      "path": "bin/libllama-common.0.dylib",
+      "symlink": "libllama-common.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libllama-common.dylib",
+      "symlink": "libllama-common.0.dylib"
+    },
+    {
+      "path": "bin/libllama-completion-impl.dylib",
+      "bytes": 122032,
+      "sha256": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25"
+    },
+    {
+      "path": "bin/libllama-server-impl.dylib",
+      "bytes": 7019552,
+      "sha256": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5"
+    },
+    {
+      "path": "bin/libllama.0.8.0.dylib",
+      "bytes": 3804624,
+      "sha256": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06"
+    },
+    {
+      "path": "bin/libllama.0.dylib",
+      "symlink": "libllama.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libllama.dylib",
+      "symlink": "libllama.0.dylib"
+    },
+    {
+      "path": "bin/libmtmd.0.8.0.dylib",
+      "bytes": 1620384,
+      "sha256": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b"
+    },
+    {
+      "path": "bin/libmtmd.0.dylib",
+      "symlink": "libmtmd.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libmtmd.dylib",
+      "symlink": "libmtmd.0.dylib"
+    },
+    {
+      "path": "bin/llama-completion",
+      "bytes": 33440,
+      "sha256": "dcd1f76a7b3b64ba07d8a2ca58cfecc2fe7332bf5ea5720af90412282c73621c"
+    },
+    {
+      "path": "bin/llama-server",
+      "bytes": 33424,
+      "sha256": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83"
+    }
+  ],
+  "completed_at": "2026-11-02T23:02:26.953090+00:00",
+  "benchmark_performed": false,
+  "model_loaded": false
+}

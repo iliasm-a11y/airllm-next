@@ -229,9 +229,10 @@ class RuntimeTests(unittest.TestCase):
 
     def test_mission_run_reaches_native_generation(self):
         self.runtime.run(self.mission["id"])
-        self.assertEqual(self.runtime.get(self.mission["id"])["status"], "completed")
+        self.assertEqual(self.runtime.get(self.mission["id"])["status"], "partial")
         events = self.runtime.detail(self.mission["id"])["events"]
-        self.assertIn("model_completed", [e["type"] for e in events])
+        self.assertIn("model_partial", [e["type"] for e in events])
+        self.assertNotIn("model_completed", [e["type"] for e in events])
         self.assertNotIn("model_blocked", [e["type"] for e in events])
 
     def test_stopped_mission_does_not_generate(self):

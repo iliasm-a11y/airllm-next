@@ -72,6 +72,8 @@ class Engine:
             options["cpu_moe"] = os.environ["RONIN_GLM_CPU_MOE"] == "1"
         if "mmap_demand" not in options and os.environ.get("RONIN_GLM_MMAP_DEMAND"):
             options["mmap_demand"] = os.environ["RONIN_GLM_MMAP_DEMAND"] == "1"
+        if "mmap_nocache" not in options and os.environ.get("RONIN_GLM_MMAP_NOCACHE"):
+            options["mmap_nocache"] = os.environ["RONIN_GLM_MMAP_NOCACHE"] == "1"
         if "expert_prefetch" not in options and os.environ.get("RONIN_GLM_EXPERT_PREFETCH"):
             options["expert_prefetch"] = os.environ["RONIN_GLM_EXPERT_PREFETCH"] == "1"
         if "dense_prefetch" not in options and os.environ.get("RONIN_GLM_DENSE_PREFETCH"):

@@ -1,0 +1,2160 @@
+{
+  "schema_version": 1,
+  "feature": "bounded_dense_cpu_mlock_v1",
+  "model_revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+  "budget_mib": 256,
+  "page_size": 16384,
+  "names": [
+    "blk.0.ssm_beta.weight",
+    "blk.0.ssm_f_b.weight",
+    "blk.1.ssm_beta.weight",
+    "blk.1.ssm_f_b.weight",
+    "blk.1.ssm_g_b.weight",
+    "blk.10.ssm_beta.weight",
+    "blk.10.ssm_f_b.weight",
+    "blk.11.attn_k_b.weight",
+    "blk.11.attn_kv_a_mqa.weight",
+    "blk.11.hc_ffn_fn.weight",
+    "blk.11.indexer.proj.weight",
+    "blk.12.hc_attn_fn.weight",
+    "blk.13.ssm_beta.weight",
+    "blk.16.ssm_beta.weight",
+    "blk.17.ssm_beta.weight",
+    "blk.17.ssm_f_b.weight",
+    "blk.18.ssm_f_b.weight",
+    "blk.18.ssm_g_b.weight",
+    "blk.19.attn_k_b.weight",
+    "blk.19.indexer_compressor_gate.weight",
+    "blk.2.ssm_beta.weight",
+    "blk.2.ssm_f_a.weight",
+    "blk.2.ssm_g_a.weight",
+    "blk.2.ssm_g_b.weight",
+    "blk.20.hc_attn_fn.weight",
+    "blk.21.ssm_beta.weight",
+    "blk.21.ssm_f_a.weight",
+    "blk.21.ssm_f_b.weight",
+    "blk.21.ssm_g_a.weight",
+    "blk.21.ssm_g_b.weight",
+    "blk.22.ssm_f_b.weight",
+    "blk.22.ssm_g_b.weight",
+    "blk.23.attn_k_b.weight",
+    "blk.23.attn_kv_a_mqa.weight",
+    "blk.23.attn_v_b.weight",
+    "blk.24.ssm_beta.weight",
+    "blk.24.ssm_f_b.weight",
+    "blk.24.ssm_g_a.weight",
+    "blk.24.ssm_g_b.weight",
+    "blk.25.ssm_beta.weight",
+    "blk.25.ssm_f_a.weight",
+    "blk.25.ssm_f_b.weight",
+    "blk.26.ssm_beta.weight",
+    "blk.26.ssm_f_b.weight",
+    "blk.27.hc_attn_fn.weight",
+    "blk.28.ssm_beta.weight",
+    "blk.28.ssm_f_b.weight",
+    "blk.28.ssm_g_a.weight",
+    "blk.28.ssm_g_b.weight",
+    "blk.29.ffn_gate_inp.weight",
+    "blk.29.ssm_beta.weight",
+    "blk.29.ssm_f_b.weight",
+    "blk.3.attn_k_b.weight",
+    "blk.3.attn_kv_a_mqa.weight",
+    "blk.3.hc_attn_fn.weight",
+    "blk.3.indexer.attn_k.weight",
+    "blk.3.indexer.proj.weight",
+    "blk.3.indexer_compressor_gate.weight",
+    "blk.30.ffn_gate_inp.weight",
+    "blk.30.ssm_beta.weight",
+    "blk.30.ssm_f_b.weight",
+    "blk.30.ssm_g_b.weight",
+    "blk.31.attn_k_b.weight",
+    "blk.32.hc_attn_fn.weight",
+    "blk.32.ssm_beta.weight",
+    "blk.33.ssm_beta.weight",
+    "blk.33.ssm_g_b.weight",
+    "blk.35.indexer.proj.weight",
+    "blk.36.ssm_beta.weight",
+    "blk.36.ssm_f_b.weight",
+    "blk.36.ssm_g_b.weight",
+    "blk.37.ssm_beta.weight",
+    "blk.37.ssm_g_a.weight",
+    "blk.38.ssm_f_b.weight",
+    "blk.38.ssm_g_b.weight",
+    "blk.39.hc_ffn_fn.weight",
+    "blk.4.ssm_g_b.weight",
+    "blk.40.ssm_beta.weight",
+    "blk.40.ssm_f_b.weight",
+    "blk.41.ssm_beta.weight",
+    "blk.41.ssm_f_b.weight",
+    "blk.41.ssm_g_b.weight",
+    "blk.42.hc_attn_fn.weight",
+    "blk.42.ssm_beta.weight",
+    "blk.42.ssm_f_b.weight",
+    "blk.42.ssm_g_a.weight",
+    "blk.43.indexer.proj.weight",
+    "blk.44.ssm_f_a.weight",
+    "blk.44.ssm_g_b.weight",
+    "blk.5.hc_attn_fn.weight",
+    "blk.5.ssm_f_a.weight",
+    "blk.5.ssm_g_b.weight",
+    "blk.6.hc_attn_fn.weight",
+    "blk.6.ssm_beta.weight",
+    "blk.6.ssm_f_b.weight",
+    "blk.6.ssm_g_b.weight",
+    "blk.7.attn_k_b.weight",
+    "blk.8.ssm_beta.weight",
+    "blk.8.ssm_f_b.weight",
+    "blk.8.ssm_g_a.weight",
+    "blk.8.ssm_g_b.weight",
+    "blk.9.hc_attn_fn.weight",
+    "blk.9.ssm_beta.weight"
+  ],
+  "selected_raw_bytes": 266862592,
+  "selected_page_union_bytes": 268255232,
+  "selected_tensors": [
+    {
+      "name": "blk.0.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 1511686656,
+      "absolute_start": 1511773376,
+      "payload_bytes": 524288,
+      "page_start": 1511768064,
+      "page_end": 1512308736,
+      "old_profile_mean_op_wall_seconds": 0.0006033890000000001
+    },
+    {
+      "name": "blk.0.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 1513292288,
+      "absolute_start": 1513379008,
+      "payload_bytes": 2097152,
+      "page_start": 1513373696,
+      "page_end": 1515487232,
+      "old_profile_mean_op_wall_seconds": 0.00220175
+    },
+    {
+      "name": "blk.1.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 1825146368,
+      "absolute_start": 1825233088,
+      "payload_bytes": 524288,
+      "page_start": 1825226752,
+      "page_end": 1825767424,
+      "old_profile_mean_op_wall_seconds": 0.000590944
+    },
+    {
+      "name": "blk.1.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 1826752000,
+      "absolute_start": 1826838720,
+      "payload_bytes": 2097152,
+      "page_start": 1826832384,
+      "page_end": 1828945920,
+      "old_profile_mean_op_wall_seconds": 0.0027405866666666665
+    },
+    {
+      "name": "blk.1.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 1829897728,
+      "absolute_start": 1829984448,
+      "payload_bytes": 2097152,
+      "page_start": 1829978112,
+      "page_end": 1832091648,
+      "old_profile_mean_op_wall_seconds": 0.00221443
+    },
+    {
+      "name": "blk.10.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 4387802752,
+      "absolute_start": 4387889472,
+      "payload_bytes": 524288,
+      "page_start": 4387880960,
+      "page_end": 4388421632,
+      "old_profile_mean_op_wall_seconds": 0.000627514
+    },
+    {
+      "name": "blk.10.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 4389408384,
+      "absolute_start": 4389495104,
+      "payload_bytes": 2097152,
+      "page_start": 4389486592,
+      "page_end": 4391600128,
+      "old_profile_mean_op_wall_seconds": 0.0029880433333333337
+    },
+    {
+      "name": "blk.11.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 6970911232,
+      "absolute_start": 6970997952,
+      "payload_bytes": 16777216,
+      "page_start": 6970982400,
+      "page_end": 6987776000,
+      "old_profile_mean_op_wall_seconds": 0.021248433333333334
+    },
+    {
+      "name": "blk.11.attn_kv_a_mqa.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "tensor_offset": 6966716928,
+      "absolute_start": 6966803648,
+      "payload_bytes": 4194304,
+      "page_start": 6966788096,
+      "page_end": 6970998784,
+      "old_profile_mean_op_wall_seconds": 0.006449413333333333
+    },
+    {
+      "name": "blk.11.hc_ffn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 4539224416,
+      "absolute_start": 4539311136,
+      "payload_bytes": 1572864,
+      "page_start": 4539301888,
+      "page_end": 4540891136,
+      "old_profile_mean_op_wall_seconds": 0.00317943
+    },
+    {
+      "name": "blk.11.indexer.proj.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "tensor_offset": 6952559104,
+      "absolute_start": 6952645824,
+      "payload_bytes": 524288,
+      "page_start": 6952632320,
+      "page_end": 6953172992,
+      "old_profile_mean_op_wall_seconds": 0.0014801266666666665
+    },
+    {
+      "name": "blk.12.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 7109198432,
+      "absolute_start": 7109285152,
+      "payload_bytes": 1572864,
+      "page_start": 7109279744,
+      "page_end": 7110868992,
+      "old_profile_mean_op_wall_seconds": 0.0022567633333333333
+    },
+    {
+      "name": "blk.13.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 12084662528,
+      "absolute_start": 12084749248,
+      "payload_bytes": 524288,
+      "page_start": 12084740096,
+      "page_end": 12085280768,
+      "old_profile_mean_op_wall_seconds": 0.000600611
+    },
+    {
+      "name": "blk.16.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 19781522304,
+      "absolute_start": 19781609024,
+      "payload_bytes": 524288,
+      "page_start": 19781599232,
+      "page_end": 19782139904,
+      "old_profile_mean_op_wall_seconds": 0.0007827206666666666
+    },
+    {
+      "name": "blk.17.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 22344178688,
+      "absolute_start": 22344265408,
+      "payload_bytes": 524288,
+      "page_start": 22344253440,
+      "page_end": 22344794112,
+      "old_profile_mean_op_wall_seconds": 0.000553792
+    },
+    {
+      "name": "blk.17.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 22345784320,
+      "absolute_start": 22345871040,
+      "payload_bytes": 2097152,
+      "page_start": 22345859072,
+      "page_end": 22347972608,
+      "old_profile_mean_op_wall_seconds": 0.002439486666666667
+    },
+    {
+      "name": "blk.18.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 24908440704,
+      "absolute_start": 24908527424,
+      "payload_bytes": 2097152,
+      "page_start": 24908513280,
+      "page_end": 24910626816,
+      "old_profile_mean_op_wall_seconds": 0.00250153
+    },
+    {
+      "name": "blk.18.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 24911586432,
+      "absolute_start": 24911673152,
+      "payload_bytes": 2097152,
+      "page_start": 24911659008,
+      "page_end": 24913772544,
+      "old_profile_mean_op_wall_seconds": 0.002224666666666667
+    },
+    {
+      "name": "blk.19.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 27489943552,
+      "absolute_start": 27490030272,
+      "payload_bytes": 16777216,
+      "page_start": 27490025472,
+      "page_end": 27506819072,
+      "old_profile_mean_op_wall_seconds": 0.02051436666666667
+    },
+    {
+      "name": "blk.19.indexer_compressor_gate.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 27469493248,
+      "absolute_start": 27469579968,
+      "payload_bytes": 2097152,
+      "page_start": 27469578240,
+      "page_end": 27471691776,
+      "old_profile_mean_op_wall_seconds": 0.0032790033333333335
+    },
+    {
+      "name": "blk.2.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 27791841792,
+      "absolute_start": 27791928512,
+      "payload_bytes": 524288,
+      "page_start": 27791917056,
+      "page_end": 27792457728,
+      "old_profile_mean_op_wall_seconds": 0.00057425
+    },
+    {
+      "name": "blk.2.ssm_f_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 27792398848,
+      "absolute_start": 27792485568,
+      "payload_bytes": 1048576,
+      "page_start": 27792474112,
+      "page_end": 27793539072,
+      "old_profile_mean_op_wall_seconds": 0.0038272226666666667
+    },
+    {
+      "name": "blk.2.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 27795544576,
+      "absolute_start": 27795631296,
+      "payload_bytes": 1048576,
+      "page_start": 27795619840,
+      "page_end": 27796684800,
+      "old_profile_mean_op_wall_seconds": 0.001957528666666667
+    },
+    {
+      "name": "blk.2.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 27796593152,
+      "absolute_start": 27796679872,
+      "payload_bytes": 2097152,
+      "page_start": 27796668416,
+      "page_end": 27798781952,
+      "old_profile_mean_op_wall_seconds": 0.0027544699999999997
+    },
+    {
+      "name": "blk.20.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 27941690464,
+      "absolute_start": 27941777184,
+      "payload_bytes": 1572864,
+      "page_start": 27941765120,
+      "page_end": 27943354368,
+      "old_profile_mean_op_wall_seconds": 0.0016623999999999999
+    },
+    {
+      "name": "blk.21.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 32917154560,
+      "absolute_start": 32917241280,
+      "payload_bytes": 524288,
+      "page_start": 32917225472,
+      "page_end": 32917766144,
+      "old_profile_mean_op_wall_seconds": 0.0006454996666666666
+    },
+    {
+      "name": "blk.21.ssm_f_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 32917711616,
+      "absolute_start": 32917798336,
+      "payload_bytes": 1048576,
+      "page_start": 32917782528,
+      "page_end": 32918847488,
+      "old_profile_mean_op_wall_seconds": 0.0010931673333333333
+    },
+    {
+      "name": "blk.21.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 32918760192,
+      "absolute_start": 32918846912,
+      "payload_bytes": 2097152,
+      "page_start": 32918831104,
+      "page_end": 32920944640,
+      "old_profile_mean_op_wall_seconds": 0.002399263333333333
+    },
+    {
+      "name": "blk.21.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 32920857344,
+      "absolute_start": 32920944064,
+      "payload_bytes": 1048576,
+      "page_start": 32920928256,
+      "page_end": 32921993216,
+      "old_profile_mean_op_wall_seconds": 0.0014109596666666668
+    },
+    {
+      "name": "blk.21.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 32921905920,
+      "absolute_start": 32921992640,
+      "payload_bytes": 2097152,
+      "page_start": 32921976832,
+      "page_end": 32924090368,
+      "old_profile_mean_op_wall_seconds": 0.0024966100000000002
+    },
+    {
+      "name": "blk.22.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 35481416576,
+      "absolute_start": 35481503296,
+      "payload_bytes": 2097152,
+      "page_start": 35481501696,
+      "page_end": 35483615232,
+      "old_profile_mean_op_wall_seconds": 0.0025733633333333335
+    },
+    {
+      "name": "blk.22.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 35484562304,
+      "absolute_start": 35484649024,
+      "payload_bytes": 2097152,
+      "page_start": 35484647424,
+      "page_end": 35486760960,
+      "old_profile_mean_op_wall_seconds": 0.00254282
+    },
+    {
+      "name": "blk.23.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 38062919424,
+      "absolute_start": 38063006144,
+      "payload_bytes": 16777216,
+      "page_start": 38062997504,
+      "page_end": 38079791104,
+      "old_profile_mean_op_wall_seconds": 0.019005466666666665
+    },
+    {
+      "name": "blk.23.attn_kv_a_mqa.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "tensor_offset": 38058725120,
+      "absolute_start": 38058811840,
+      "payload_bytes": 4194304,
+      "page_start": 38058803200,
+      "page_end": 38063013888,
+      "old_profile_mean_op_wall_seconds": 0.004581543333333333
+    },
+    {
+      "name": "blk.23.attn_v_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        512,
+        256,
+        64
+      ],
+      "tensor_offset": 38079696640,
+      "absolute_start": 38079783360,
+      "payload_bytes": 16777216,
+      "page_start": 38079774720,
+      "page_end": 38096568320,
+      "old_profile_mean_op_wall_seconds": 0.0205857
+    },
+    {
+      "name": "blk.24.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 40614014336,
+      "absolute_start": 40614101056,
+      "payload_bytes": 524288,
+      "page_start": 40614100992,
+      "page_end": 40614641664,
+      "old_profile_mean_op_wall_seconds": 0.000577486
+    },
+    {
+      "name": "blk.24.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 40615619968,
+      "absolute_start": 40615706688,
+      "payload_bytes": 2097152,
+      "page_start": 40615706624,
+      "page_end": 40617820160,
+      "old_profile_mean_op_wall_seconds": 0.0024723466666666666
+    },
+    {
+      "name": "blk.24.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 40617717120,
+      "absolute_start": 40617803840,
+      "payload_bytes": 1048576,
+      "page_start": 40617803776,
+      "page_end": 40618868736,
+      "old_profile_mean_op_wall_seconds": 0.0012684703333333332
+    },
+    {
+      "name": "blk.24.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 40618765696,
+      "absolute_start": 40618852416,
+      "payload_bytes": 2097152,
+      "page_start": 40618852352,
+      "page_end": 40620965888,
+      "old_profile_mean_op_wall_seconds": 0.00242189
+    },
+    {
+      "name": "blk.25.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 43176670720,
+      "absolute_start": 43176757440,
+      "payload_bytes": 524288,
+      "page_start": 43176755200,
+      "page_end": 43177295872,
+      "old_profile_mean_op_wall_seconds": 0.0006141253333333334
+    },
+    {
+      "name": "blk.25.ssm_f_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 43177227776,
+      "absolute_start": 43177314496,
+      "payload_bytes": 1048576,
+      "page_start": 43177312256,
+      "page_end": 43178377216,
+      "old_profile_mean_op_wall_seconds": 0.0012133733333333334
+    },
+    {
+      "name": "blk.25.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 43178276352,
+      "absolute_start": 43178363072,
+      "payload_bytes": 2097152,
+      "page_start": 43178360832,
+      "page_end": 43180474368,
+      "old_profile_mean_op_wall_seconds": 0.0023047233333333334
+    },
+    {
+      "name": "blk.26.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 45739327104,
+      "absolute_start": 45739413824,
+      "payload_bytes": 524288,
+      "page_start": 45739409408,
+      "page_end": 45739950080,
+      "old_profile_mean_op_wall_seconds": 0.0006526393333333333
+    },
+    {
+      "name": "blk.26.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 45740932736,
+      "absolute_start": 45741019456,
+      "payload_bytes": 2097152,
+      "page_start": 45741015040,
+      "page_end": 45743128576,
+      "old_profile_mean_op_wall_seconds": 0.0027653733333333334
+    },
+    {
+      "name": "blk.27.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 45889175776,
+      "absolute_start": 45889262496,
+      "payload_bytes": 1572864,
+      "page_start": 45889257472,
+      "page_end": 45890846720,
+      "old_profile_mean_op_wall_seconds": 0.002069206666666667
+    },
+    {
+      "name": "blk.28.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 50873530496,
+      "absolute_start": 50873617216,
+      "payload_bytes": 524288,
+      "page_start": 50873614336,
+      "page_end": 50874155008,
+      "old_profile_mean_op_wall_seconds": 0.000876652
+    },
+    {
+      "name": "blk.28.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 50875136128,
+      "absolute_start": 50875222848,
+      "payload_bytes": 2097152,
+      "page_start": 50875219968,
+      "page_end": 50877333504,
+      "old_profile_mean_op_wall_seconds": 0.00249218
+    },
+    {
+      "name": "blk.28.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 50877233280,
+      "absolute_start": 50877320000,
+      "payload_bytes": 1048576,
+      "page_start": 50877317120,
+      "page_end": 50878382080,
+      "old_profile_mean_op_wall_seconds": 0.0017888749999999999
+    },
+    {
+      "name": "blk.28.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 50878281856,
+      "absolute_start": 50878368576,
+      "payload_bytes": 2097152,
+      "page_start": 50878365696,
+      "page_end": 50880479232,
+      "old_profile_mean_op_wall_seconds": 0.00251949
+    },
+    {
+      "name": "blk.29.ffn_gate_inp.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "tensor_offset": 53404712960,
+      "absolute_start": 53404799680,
+      "payload_bytes": 4718592,
+      "page_start": 53404794880,
+      "page_end": 53409529856,
+      "old_profile_mean_op_wall_seconds": 0.005929940000000001
+    },
+    {
+      "name": "blk.29.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 53436186880,
+      "absolute_start": 53436273600,
+      "payload_bytes": 524288,
+      "page_start": 53436268544,
+      "page_end": 53436809216,
+      "old_profile_mean_op_wall_seconds": 0.0013881809999999998
+    },
+    {
+      "name": "blk.29.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 53437792512,
+      "absolute_start": 53437879232,
+      "payload_bytes": 2097152,
+      "page_start": 53437874176,
+      "page_end": 53439987712,
+      "old_profile_mean_op_wall_seconds": 0.0022273166666666668
+    },
+    {
+      "name": "blk.3.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 56019295360,
+      "absolute_start": 56019382080,
+      "payload_bytes": 16777216,
+      "page_start": 56019369984,
+      "page_end": 56036163584,
+      "old_profile_mean_op_wall_seconds": 0.021920099999999998
+    },
+    {
+      "name": "blk.3.attn_kv_a_mqa.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        512
+      ],
+      "tensor_offset": 56015101056,
+      "absolute_start": 56015187776,
+      "payload_bytes": 4194304,
+      "page_start": 56015175680,
+      "page_end": 56019386368,
+      "old_profile_mean_op_wall_seconds": 0.005451053333333333
+    },
+    {
+      "name": "blk.3.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 53586035552,
+      "absolute_start": 53586122272,
+      "payload_bytes": 1572864,
+      "page_start": 53586116608,
+      "page_end": 53587705856,
+      "old_profile_mean_op_wall_seconds": 0.0023945966666666665
+    },
+    {
+      "name": "blk.3.indexer.attn_k.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 56001467520,
+      "absolute_start": 56001554240,
+      "payload_bytes": 1048576,
+      "page_start": 56001544192,
+      "page_end": 56002609152,
+      "old_profile_mean_op_wall_seconds": 0.0012623333333333334
+    },
+    {
+      "name": "blk.3.indexer.proj.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "tensor_offset": 56000943232,
+      "absolute_start": 56001029952,
+      "payload_bytes": 524288,
+      "page_start": 56001019904,
+      "page_end": 56001560576,
+      "old_profile_mean_op_wall_seconds": 0.000537514
+    },
+    {
+      "name": "blk.3.indexer_compressor_gate.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 55998845056,
+      "absolute_start": 55998931776,
+      "payload_bytes": 2097152,
+      "page_start": 55998922752,
+      "page_end": 56001036288,
+      "old_profile_mean_op_wall_seconds": 0.00267418
+    },
+    {
+      "name": "blk.30.ffn_gate_inp.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        288
+      ],
+      "tensor_offset": 58538916352,
+      "absolute_start": 58539003072,
+      "payload_bytes": 4718592,
+      "page_start": 58538999808,
+      "page_end": 58543734784,
+      "old_profile_mean_op_wall_seconds": 0.007195280000000001
+    },
+    {
+      "name": "blk.30.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 58570390272,
+      "absolute_start": 58570476992,
+      "payload_bytes": 524288,
+      "page_start": 58570473472,
+      "page_end": 58571014144,
+      "old_profile_mean_op_wall_seconds": 0.000594889
+    },
+    {
+      "name": "blk.30.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 58571995904,
+      "absolute_start": 58572082624,
+      "payload_bytes": 2097152,
+      "page_start": 58572079104,
+      "page_end": 58574192640,
+      "old_profile_mean_op_wall_seconds": 0.00236835
+    },
+    {
+      "name": "blk.30.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 58575141632,
+      "absolute_start": 58575228352,
+      "payload_bytes": 2097152,
+      "page_start": 58575224832,
+      "page_end": 58577338368,
+      "old_profile_mean_op_wall_seconds": 0.0027100533333333336
+    },
+    {
+      "name": "blk.31.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 61153498752,
+      "absolute_start": 61153585472,
+      "payload_bytes": 16777216,
+      "page_start": 61153574912,
+      "page_end": 61170368512,
+      "old_profile_mean_op_wall_seconds": 0.0186961
+    },
+    {
+      "name": "blk.32.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 61291785952,
+      "absolute_start": 61291872672,
+      "payload_bytes": 1572864,
+      "page_start": 61291872256,
+      "page_end": 61293461504,
+      "old_profile_mean_op_wall_seconds": 0.0018319056666666665
+    },
+    {
+      "name": "blk.32.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 63704593664,
+      "absolute_start": 63704680384,
+      "payload_bytes": 524288,
+      "page_start": 63704678400,
+      "page_end": 63705219072,
+      "old_profile_mean_op_wall_seconds": 0.0005884443333333333
+    },
+    {
+      "name": "blk.33.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 66267250048,
+      "absolute_start": 66267336768,
+      "payload_bytes": 524288,
+      "page_start": 66267332608,
+      "page_end": 66267873280,
+      "old_profile_mean_op_wall_seconds": 0.0012945413333333333
+    },
+    {
+      "name": "blk.33.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 66272001408,
+      "absolute_start": 66272088128,
+      "payload_bytes": 2097152,
+      "page_start": 66272083968,
+      "page_end": 66274197504,
+      "old_profile_mean_op_wall_seconds": 0.00370261
+    },
+    {
+      "name": "blk.35.indexer.proj.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "tensor_offset": 71394662784,
+      "absolute_start": 71394749504,
+      "payload_bytes": 524288,
+      "page_start": 71394738176,
+      "page_end": 71395278848,
+      "old_profile_mean_op_wall_seconds": 0.0010360573333333333
+    },
+    {
+      "name": "blk.36.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 73964109824,
+      "absolute_start": 73964196544,
+      "payload_bytes": 524288,
+      "page_start": 73964191744,
+      "page_end": 73964732416,
+      "old_profile_mean_op_wall_seconds": 0.000607361
+    },
+    {
+      "name": "blk.36.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 73965715456,
+      "absolute_start": 73965802176,
+      "payload_bytes": 2097152,
+      "page_start": 73965797376,
+      "page_end": 73967910912,
+      "old_profile_mean_op_wall_seconds": 0.002229486666666667
+    },
+    {
+      "name": "blk.36.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 73968861184,
+      "absolute_start": 73968947904,
+      "payload_bytes": 2097152,
+      "page_start": 73968943104,
+      "page_end": 73971056640,
+      "old_profile_mean_op_wall_seconds": 0.0031010166666666666
+    },
+    {
+      "name": "blk.37.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 76526766208,
+      "absolute_start": 76526852928,
+      "payload_bytes": 524288,
+      "page_start": 76526845952,
+      "page_end": 76527386624,
+      "old_profile_mean_op_wall_seconds": 0.0005944033333333333
+    },
+    {
+      "name": "blk.37.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 76530468992,
+      "absolute_start": 76530555712,
+      "payload_bytes": 1048576,
+      "page_start": 76530548736,
+      "page_end": 76531613696,
+      "old_profile_mean_op_wall_seconds": 0.0013826813333333333
+    },
+    {
+      "name": "blk.38.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 79091028224,
+      "absolute_start": 79091114944,
+      "payload_bytes": 2097152,
+      "page_start": 79091105792,
+      "page_end": 79093219328,
+      "old_profile_mean_op_wall_seconds": 0.00228864
+    },
+    {
+      "name": "blk.38.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 79094173952,
+      "absolute_start": 79094260672,
+      "payload_bytes": 2097152,
+      "page_start": 79094251520,
+      "page_end": 79096365056,
+      "old_profile_mean_op_wall_seconds": 0.004235526666666667
+    },
+    {
+      "name": "blk.39.hc_ffn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 79240844256,
+      "absolute_start": 79240930976,
+      "payload_bytes": 1572864,
+      "page_start": 79240921088,
+      "page_end": 79242510336,
+      "old_profile_mean_op_wall_seconds": 0.0035662910000000005
+    },
+    {
+      "name": "blk.4.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 84228377344,
+      "absolute_start": 84228464064,
+      "payload_bytes": 2097152,
+      "page_start": 84228456448,
+      "page_end": 84230569984,
+      "old_profile_mean_op_wall_seconds": 0.0024792100000000004
+    },
+    {
+      "name": "blk.40.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 86786282368,
+      "absolute_start": 86786369088,
+      "payload_bytes": 524288,
+      "page_start": 86786359296,
+      "page_end": 86786899968,
+      "old_profile_mean_op_wall_seconds": 0.0006720693333333334
+    },
+    {
+      "name": "blk.40.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 86787888000,
+      "absolute_start": 86787974720,
+      "payload_bytes": 2097152,
+      "page_start": 86787964928,
+      "page_end": 86790078464,
+      "old_profile_mean_op_wall_seconds": 0.0023913466666666667
+    },
+    {
+      "name": "blk.41.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 89348938752,
+      "absolute_start": 89349025472,
+      "payload_bytes": 524288,
+      "page_start": 89349013504,
+      "page_end": 89349554176,
+      "old_profile_mean_op_wall_seconds": 0.000798583
+    },
+    {
+      "name": "blk.41.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 89350544384,
+      "absolute_start": 89350631104,
+      "payload_bytes": 2097152,
+      "page_start": 89350619136,
+      "page_end": 89352732672,
+      "old_profile_mean_op_wall_seconds": 0.0023970866666666664
+    },
+    {
+      "name": "blk.41.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 89353690112,
+      "absolute_start": 89353776832,
+      "payload_bytes": 2097152,
+      "page_start": 89353764864,
+      "page_end": 89355878400,
+      "old_profile_mean_op_wall_seconds": 0.0024231966666666666
+    },
+    {
+      "name": "blk.42.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 89498787424,
+      "absolute_start": 89498874144,
+      "payload_bytes": 1572864,
+      "page_start": 89498861568,
+      "page_end": 89500450816,
+      "old_profile_mean_op_wall_seconds": 0.00177804
+    },
+    {
+      "name": "blk.42.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 91911595136,
+      "absolute_start": 91911681856,
+      "payload_bytes": 524288,
+      "page_start": 91911667712,
+      "page_end": 91912208384,
+      "old_profile_mean_op_wall_seconds": 0.0006050690000000001
+    },
+    {
+      "name": "blk.42.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 91913200768,
+      "absolute_start": 91913287488,
+      "payload_bytes": 2097152,
+      "page_start": 91913273344,
+      "page_end": 91915386880,
+      "old_profile_mean_op_wall_seconds": 0.0029391966666666666
+    },
+    {
+      "name": "blk.42.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 91915297920,
+      "absolute_start": 91915384640,
+      "payload_bytes": 1048576,
+      "page_start": 91915370496,
+      "page_end": 91916435456,
+      "old_profile_mean_op_wall_seconds": 0.0013465976666666667
+    },
+    {
+      "name": "blk.43.indexer.proj.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        4096,
+        32
+      ],
+      "tensor_offset": 94476351488,
+      "absolute_start": 94476438208,
+      "payload_bytes": 524288,
+      "page_start": 94476435456,
+      "page_end": 94476976128,
+      "old_profile_mean_op_wall_seconds": 0.0012745839999999998
+    },
+    {
+      "name": "blk.44.ssm_f_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 97046355584,
+      "absolute_start": 97046442304,
+      "payload_bytes": 1048576,
+      "page_start": 97046429696,
+      "page_end": 97047494656,
+      "old_profile_mean_op_wall_seconds": 0.0011187216666666666
+    },
+    {
+      "name": "blk.44.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 97050549888,
+      "absolute_start": 97050636608,
+      "payload_bytes": 2097152,
+      "page_start": 97050624000,
+      "page_end": 97052737536,
+      "old_profile_mean_op_wall_seconds": 0.0022544433333333332
+    },
+    {
+      "name": "blk.5.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 97195647200,
+      "absolute_start": 97195733920,
+      "payload_bytes": 1572864,
+      "page_start": 97195720704,
+      "page_end": 97197309952,
+      "old_profile_mean_op_wall_seconds": 0.00175596
+    },
+    {
+      "name": "blk.5.ssm_f_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 99609011968,
+      "absolute_start": 99609098688,
+      "payload_bytes": 1048576,
+      "page_start": 99609083904,
+      "page_end": 99610148864,
+      "old_profile_mean_op_wall_seconds": 0.0013425269999999998
+    },
+    {
+      "name": "blk.5.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 99613206272,
+      "absolute_start": 99613292992,
+      "payload_bytes": 2097152,
+      "page_start": 99613278208,
+      "page_end": 99615391744,
+      "old_profile_mean_op_wall_seconds": 0.00353911
+    },
+    {
+      "name": "blk.6.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 99758303584,
+      "absolute_start": 99758390304,
+      "payload_bytes": 1572864,
+      "page_start": 99758374912,
+      "page_end": 99759964160,
+      "old_profile_mean_op_wall_seconds": 0.0018664166666666666
+    },
+    {
+      "name": "blk.6.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 102171111296,
+      "absolute_start": 102171198016,
+      "payload_bytes": 524288,
+      "page_start": 102171197440,
+      "page_end": 102171738112,
+      "old_profile_mean_op_wall_seconds": 0.000615639
+    },
+    {
+      "name": "blk.6.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 102172716928,
+      "absolute_start": 102172803648,
+      "payload_bytes": 2097152,
+      "page_start": 102172803072,
+      "page_end": 102174916608,
+      "old_profile_mean_op_wall_seconds": 0.00235429
+    },
+    {
+      "name": "blk.6.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 102175862656,
+      "absolute_start": 102175949376,
+      "payload_bytes": 2097152,
+      "page_start": 102175948800,
+      "page_end": 102178062336,
+      "old_profile_mean_op_wall_seconds": 0.0025533066666666667
+    },
+    {
+      "name": "blk.7.attn_k_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        256,
+        512,
+        64
+      ],
+      "tensor_offset": 104754219776,
+      "absolute_start": 104754306496,
+      "payload_bytes": 16777216,
+      "page_start": 104754298880,
+      "page_end": 104771092480,
+      "old_profile_mean_op_wall_seconds": 0.018830233333333335
+    },
+    {
+      "name": "blk.8.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 107305314688,
+      "absolute_start": 107305401408,
+      "payload_bytes": 524288,
+      "page_start": 107305385984,
+      "page_end": 107305926656,
+      "old_profile_mean_op_wall_seconds": 0.0009440550000000001
+    },
+    {
+      "name": "blk.8.ssm_f_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 107306920320,
+      "absolute_start": 107307007040,
+      "payload_bytes": 2097152,
+      "page_start": 107306991616,
+      "page_end": 107309105152,
+      "old_profile_mean_op_wall_seconds": 0.0022608633333333333
+    },
+    {
+      "name": "blk.8.ssm_g_a.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        128
+      ],
+      "tensor_offset": 107309017472,
+      "absolute_start": 107309104192,
+      "payload_bytes": 1048576,
+      "page_start": 107309088768,
+      "page_end": 107310153728,
+      "old_profile_mean_op_wall_seconds": 0.0011109423333333333
+    },
+    {
+      "name": "blk.8.ssm_g_b.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        128,
+        8192
+      ],
+      "tensor_offset": 107310066048,
+      "absolute_start": 107310152768,
+      "payload_bytes": 2097152,
+      "page_start": 107310137344,
+      "page_end": 107312250880,
+      "old_profile_mean_op_wall_seconds": 0.0031935966666666667
+    },
+    {
+      "name": "blk.9.hc_attn_fn.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "F32",
+      "dimensions": [
+        16384,
+        24
+      ],
+      "tensor_offset": 107455163360,
+      "absolute_start": 107455250080,
+      "payload_bytes": 1572864,
+      "page_start": 107455234048,
+      "page_end": 107456823296,
+      "old_profile_mean_op_wall_seconds": 0.0017224466666666668
+    },
+    {
+      "name": "blk.9.ssm_beta.weight",
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "type": "BF16",
+      "dimensions": [
+        4096,
+        64
+      ],
+      "tensor_offset": 109867971072,
+      "absolute_start": 109868057792,
+      "payload_bytes": 524288,
+      "page_start": 109868056576,
+      "page_end": 109868597248,
+      "old_profile_mean_op_wall_seconds": 0.0012061116666666667
+    }
+  ],
+  "page_unions": [
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 1511768064,
+      "end": 1512308736
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 1513373696,
+      "end": 1515487232
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 1825226752,
+      "end": 1825767424
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 1826832384,
+      "end": 1828945920
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 1829978112,
+      "end": 1832091648
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 4387880960,
+      "end": 4388421632
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 4389486592,
+      "end": 4391600128
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 4539301888,
+      "end": 4540891136
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 6952632320,
+      "end": 6953172992
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 6966788096,
+      "end": 6987776000
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 7109279744,
+      "end": 7110868992
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 12084740096,
+      "end": 12085280768
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 19781599232,
+      "end": 19782139904
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 22344253440,
+      "end": 22344794112
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 22345859072,
+      "end": 22347972608
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 24908513280,
+      "end": 24910626816
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 24911659008,
+      "end": 24913772544
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27469578240,
+      "end": 27471691776
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27490025472,
+      "end": 27506819072
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27791917056,
+      "end": 27792457728
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27792474112,
+      "end": 27793539072
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27795619840,
+      "end": 27798781952
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 27941765120,
+      "end": 27943354368
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 32917225472,
+      "end": 32917766144
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 32917782528,
+      "end": 32924090368
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 35481501696,
+      "end": 35483615232
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 35484647424,
+      "end": 35486760960
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 38058803200,
+      "end": 38096568320
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 40614100992,
+      "end": 40614641664
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 40615706624,
+      "end": 40620965888
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 43176755200,
+      "end": 43177295872
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 43177312256,
+      "end": 43180474368
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 45739409408,
+      "end": 45739950080
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 45741015040,
+      "end": 45743128576
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 45889257472,
+      "end": 45890846720
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 50873614336,
+      "end": 50874155008
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 50875219968,
+      "end": 50880479232
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 53404794880,
+      "end": 53409529856
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 53436268544,
+      "end": 53436809216
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 53437874176,
+      "end": 53439987712
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 53586116608,
+      "end": 53587705856
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 55998922752,
+      "end": 56002609152
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 56015175680,
+      "end": 56036163584
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 58538999808,
+      "end": 58543734784
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 58570473472,
+      "end": 58571014144
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 58572079104,
+      "end": 58574192640
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 58575224832,
+      "end": 58577338368
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 61153574912,
+      "end": 61170368512
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 61291872256,
+      "end": 61293461504
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 63704678400,
+      "end": 63705219072
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 66267332608,
+      "end": 66267873280
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 66272083968,
+      "end": 66274197504
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 71394738176,
+      "end": 71395278848
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 73964191744,
+      "end": 73964732416
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 73965797376,
+      "end": 73967910912
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 73968943104,
+      "end": 73971056640
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 76526845952,
+      "end": 76527386624
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 76530548736,
+      "end": 76531613696
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 79091105792,
+      "end": 79093219328
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 79094251520,
+      "end": 79096365056
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 79240921088,
+      "end": 79242510336
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 84228456448,
+      "end": 84230569984
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 86786359296,
+      "end": 86786899968
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 86787964928,
+      "end": 86790078464
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 89349013504,
+      "end": 89349554176
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 89350619136,
+      "end": 89352732672
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 89353764864,
+      "end": 89355878400
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 89498861568,
+      "end": 89500450816
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 91911667712,
+      "end": 91912208384
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 91913273344,
+      "end": 91916435456
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 94476435456,
+      "end": 94476976128
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 97046429696,
+      "end": 97047494656
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 97050624000,
+      "end": 97052737536
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 97195720704,
+      "end": 97197309952
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 99609083904,
+      "end": 99610148864
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 99613278208,
+      "end": 99615391744
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 99758374912,
+      "end": 99759964160
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 102171197440,
+      "end": 102171738112
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 102172803072,
+      "end": 102174916608
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 102175948800,
+      "end": 102178062336
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 104754298880,
+      "end": 104771092480
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 107305385984,
+      "end": 107305926656
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 107306991616,
+      "end": 107312250880
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 107455234048,
+      "end": 107456823296
+    },
+    {
+      "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "start": 109868056576,
+      "end": 109868597248
+    }
+  ],
+  "model_file_stats": {
+    "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf": {
+      "device": 16777233,
+      "inode": 34853271,
+      "size": 9430112,
+      "mtime_ns": 1793220986088562812,
+      "ctime_ns": 1793221180120865439
+    },
+    "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf": {
+      "device": 16777233,
+      "inode": 34874104,
+      "size": 110017922752,
+      "mtime_ns": 1793630405545465080,
+      "ctime_ns": 1793652319576112639
+    }
+  },
+  "model_sha256": {
+    "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+    "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4"
+  },
+  "identity_manifest_path": "/Users/macbook/Documents/Codex/2026-11-02/files-pasted-by-the-user-mission/outputs/RONIN-GLM/RONIN GLM.app/Contents/Resources/model-verification.json",
+  "identity_manifest_sha256": "94101b4809adc99a88cd6f73f24df07e99d35d4db513727b62f9565625ed2837",
+  "prior_integrity_checked_at": "2026-11-02T14:42:05.965569+00:00",
+  "model_sha256_scope": "prior manifest verified SHA; selector never rehashes current checkpoint payload; historical/current identity comparison is separate",
+  "historical_identity_changes": {
+    "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf": {
+      "device": {
+        "prior": 16777230,
+        "current": 16777233
+      }
+    },
+    "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf": {
+      "device": {
+        "prior": 16777230,
+        "current": 16777233
+      },
+      "ctime_ns": {
+        "prior": 1793630449953094057,
+        "current": 1793652319576112639
+      }
+    }
+  },
+  "historical_full_identity_equal": false,
+  "current_full_hash_reverified": false,
+  "inventory_sha256": "6df42734bd114544a043794a157c6222ef05325f90c7d72100d69ff5449650b4",
+  "source_alignment": {
+    "source_plan_sha256": "939c021397dbf6dcd19192039cd7c9d4f64712618618d0ffd921b89cf77a4c5e",
+    "operations_sha256": "b344c90af60615683b7d5bd51fa075bf3aeeccf2fea26a93acaf8cd0aaf9b18f",
+    "source_step": 1,
+    "names_count": 684,
+    "old_decode_steps": [
+      1,
+      2,
+      3
+    ],
+    "ordered_matrix_sizes_verified": true,
+    "scope": "oldsite timing attached to newsource identity by unchanged graphorder+exactsizecheck; not simultaneous pointer/name timing proof"
+  },
+  "cost_model": {
+    "method": "deterministic greedy observed opwall per marginal full page, <=128names; not global knapsack optimum",
+    "profile_mean_total_op_wall_seconds": 6.280404786666668,
+    "selected_mean_op_wall_seconds_upper_bound": 0.33920659233333333,
+    "zero_selected_op_wall_throughput_gain_percent_upper_bound": 5.709397014509056,
+    "scope": "old serialized diagnostic, including compute and wait. Cache cannot eliminate all selected opwall; no measured gain or current residency claim."
+  }
+}

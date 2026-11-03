@@ -10,6 +10,29 @@ par le backend GLM et prévoit le repli CPU avant activation d'un chemin GPU
 refusé. Elle évalue aussi l'opportunité des accélérations structurelles à partir
 des trajectoires existantes.
 
+## Reprise du 3 novembre : preuves longues distinctes
+
+La reprise sur secteur apporte une génération CPU avec `mmap_nocache=true`
+jusqu'à EOS naturel : 88 IDs, réponse finale « OK », serveur sorti normalement,
+gardes inchangés. Ce cas de chat court ne qualifie pas les contextes complets
+des600 agents. Son débit serveur vaut0,129552 token/s ; aucun gain causal
+contre la tentative de contrôle interrompue n'est annoncé.
+
+La comparaison CPU32 avec cette seule option est bit exacte sur4 956 160
+logits, les routes/routeurs/KDA capturés et7 584 écritures d'état observées.
+Une sonde distincte répète deux demandes de quatre sorties dans le même contexte,
+avec `llama_memory_clear` entre elles : quatre paires de logits et948 écritures
+par requête sont identiques, sans croissance du swap observée.
+
+Le candidat tail12/streaming passe aussi sa fidélité32, mais son cycle
+chronométré est arrêté sur swap pendant B1 après13 sorties. Le nouveau tail5
+est arrêté pendant sa capture après cinq sorties. Aucun des deux ne reçoit
+une qualification de vitesse soutenue. Les résultats historiques courts
+ci-dessous restent attachés à leurs versions et à leurs périmètres.
+
+Voir le [rapport de reprise et les sept réponses de la mission](REPRISE_2026-11-03.md)
+pour les ressources, empreintes, essais interrompus et limites de l'orchestration.
+
 ## État des preuves de vitesse
 
 Les PR [17](https://github.com/iliasm-a11y/airllm-next/pull/17),

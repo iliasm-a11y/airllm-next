@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "file": "published/campaign-cpu-stream8.json.gz",
+      "gzip_sha256": "c0a41dc0238794c0f40f0c91b4385a2f418d5080b2eb0ed4c05bbf163e9ec6f8",
+      "uncompressed_sha256": "f12d5e3ebfd5775e6a350b7016b007f2305477da88f70cf83e9b14defafa4147",
+      "source_original_sha256": {
+        "work/v3/campaign-cpu-stream8/campaign.json": "53a63a5f5ea2d6992cafdfcb51d7dc70b7858590926a17ed6fc343e1375df002"
+      },
+      "scope": "continuous short V3 ABBA; exact captured16 trajectory, no long/EOS qualification",
+      "path_redactions": true
+    },
+    {
+      "file": "published/campaign-head-stream8.json.gz",
+      "gzip_sha256": "dc74d445d219d1ee75b9ca24e0b0c42268d00e825a269a3889538fca0ccd9e99",
+      "uncompressed_sha256": "513bf3e0b8751c398691c72b6f420b460bcf95121151f29183c24d12ae00ae31",
+      "source_original_sha256": {
+        "work/v3/campaign-head-stream8/campaign.json": "a4131a636d793cac74c50bb7a03b2e9cdc9147586ea24678350d2d603a769c6b"
+      },
+      "scope": "continuous short V3 ABBA; exact captured16 trajectory, no long/EOS qualification",
+      "path_redactions": true
+    },
+    {
+      "file": "published/campaign-tail5-stream8.json.gz",
+      "gzip_sha256": "6de0b57a83787e3ff2b793fd7b45f7086e59494160c5fcb48c8fa14b894b8691",
+      "uncompressed_sha256": "a044deb6ad64b773dceb95d51bd44d48e1fc499e82aa0ed28beb873f815bec50",
+      "source_original_sha256": {
+        "work/v3/campaign-tail5-stream8/campaign.json": "c36c8dc921f3bb8522648af441f61d1bfa1753ba7729cf461a8967fd65abc6b8"
+      },
+      "scope": "continuous short V3 ABBA; exact captured16 trajectory, no long/EOS qualification",
+      "path_redactions": true
+    },
+    {
+      "file": "published/campaign-v4-tail5-lock256-8.json.gz",
+      "gzip_sha256": "b3043ffb9c07af221177d31b5e7ab52d41a622548f3a6c25cee4efec517df06e",
+      "uncompressed_sha256": "1c1cb08e9a48e7bd2efbdbe26fa911addb1bda71818dd3dab595f719376dc8eb",
+      "source_original_sha256": {
+        "work/v3/campaign-v4-tail5-lock256-8/campaign.json": "946e069aff60e9cb3be9ad5f4038e1dd8faa77e69192e1e98c244fbe62fe76f6"
+      },
+      "scope": "12 continuous V3 runs accepted on short recorded scope; V4 cache cycle timing INVALID due sleep",
+      "path_redactions": true
+    },
+    {
+      "file": "published/fidelity-manifests.json.gz",
+      "gzip_sha256": "f46a2b01b1bd980bab4422d711975f2517d6c1866731872f166c82720021ca6f",
+      "uncompressed_sha256": "3b6c54f66163737666ab9e07b9ce0cef8e77ffacb4f65c37a5c36fa9ffec6b35",
+      "source_original_sha256": {
+        "work/v3/cpu-control16-isolated/experiment.json": "e1d55b64d09897cff209a1d1157b83142457e3854e7494cdef78e3914efdc880",
+        "work/v3/cpu-control16-isolated/guard.json": "d60b5dcd31d4567ec27746c8cf0f9531554d72880dc3ec56dcf77b03516f13fa",
+        "work/v3/cpu-stream16-isolated/experiment.json": "7d2723b55086fb2e168477f502a17a3516b46cefee77eb94afcf7e271eda48b6",
+        "work/v3/cpu-stream16-isolated/guard.json": "5b3ccb8d14918366598270ee42578310aabd957c10b38959ec5cb1edf520ad3b",
+        "work/v3/head-stream16-isolated/experiment.json": "e447d8c7a074cd37656c582bef9a9a2ef84cf09e8692c1cdff646d00f80472af",
+        "work/v3/head-stream16-isolated/guard.json": "360810c3fe25050118dedd51003bcd7ec07d72b844f7714229b5687414345b4d",
+        "work/v3/tail5-stream16-isolated/experiment.json": "ac785ffa7cd0c2abcbaba61adae430e6a2e7ae46e2108e3d619ba434ca1d8a4b",
+        "work/v3/tail5-stream16-isolated/guard.json": "d12f0b9e438548c5d5376c79aee1f5bf17afffec8e6c28b44915e0860a958a39",
+        "work/v3/v4-cpu-control16/experiment.json": "0f30e48a06adcf6921052dba43c6d94bd7cdad063fda20ea002c3f0656cbd032",
+        "work/v3/v4-cpu-control16/guard.json": "8043d1a5feac136efb0ad6366a784d2c731d804aa4123cddabdc9819b8cfd4d3",
+        "work/v3/v4-tail5-lock256-fidelity16/experiment.json": "6771947d1c588f61ed2f126ca633358a56155baabd5cca912f4101ee6a1c555a",
+        "work/v3/v4-tail5-lock256-fidelity16/guard.json": "8b09a97b853a09a8a14d7456df7d03b07383ed90208e01682965a3b8a4558249"
+      },
+      "scope": "full captured16 logits/routes/router/KDA and observed cache writes; raw tensors in local archive",
+      "path_redactions": true
+    },
+    {
+      "file": "published/storage-and-codec.json.gz",
+      "gzip_sha256": "bda4a6a0a6c03f651fa088a28f4ff8bdc0d652af5bdb97aec31068ccdcca5324",
+      "uncompressed_sha256": "9c029716de9ffb672ef5f0407175ebd4ced2ad73253b4aa930edb601aa431025",
+      "source_original_sha256": {
+        "work/v3/storage-dense-nocache-v2.json": "b4048fa64c90c3145ca8434c266558b349adfef1ecb0bd1d3a7f3614bed323dc",
+        "work/v3/storage-dense-normal.json": "aced43743acc555b73f294354c212941e44ff3b3faa21b51146c5efe10442fa9",
+        "work/v3/storage-dense-repeat.json": "d0028066a5773466e5f1f510030d3500117ab90088259f1ec8d3e95b85e2a3ba",
+        "work/v3/lossless-samples.json": "dc5d6c7e8e7dce2ebaa62824088365a72a10423c09f96382cfefadde8e8676ed"
+      },
+      "scope": "bounded component readings and lossless pilot; not full-model speed",
+      "path_redactions": true
+    }
+  ],
+  "note": "Published compressed JSON redacts path prefixes only. Original hashes target raw files retained in the local research archive. Timing of the V4 cache cycle is explicitly invalid despite original driver flags."
+}

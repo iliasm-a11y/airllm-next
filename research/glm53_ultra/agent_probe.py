@@ -114,9 +114,25 @@ def _cleanup(runtime, report):
                 errors.append({"step": "owned_server_exit", "error_code": "SERVER_STILL_RUNNING",
                                "error": "The observed owned native process has no exit code after cleanup"})
         else:
-            report["owned_server_stopped"] = None
-            report["owned_server_observation"] = "no_owned_native_process_observed_before_cleanup"
-            if report["status"] == "completed":
+            # A resource guard or cancelled SSE may have already closed the
+            # model. Use its retained poll evidence, never handle=None alone.
+            observation = attempt("native_exit_observation", lambda: getattr(model, "last_owned_process_exit", None))
+            report["last_owned_process_exit"] = observation
+            valid_pid = isinstance(observation, dict) and type(observation.get("pid")) is int and observation["pid"] > 0
+            valid_exit = (valid_pid and observation.get("observation") == "popen_poll_of_owned_process"
+                          and observation.get("exit_observed") is True
+                          and type(observation.get("returncode")) is int)
+            report["owned_server_stopped"] = True if valid_exit else False if valid_pid else None
+            report["owned_server_observation"] = ("retained_native_owned_process_poll" if valid_exit
+                else "retained_native_process_exit_unconfirmed" if valid_pid
+                else "no_owned_native_process_observed_before_cleanup")
+            if valid_pid:
+                report["owned_pid_before_cleanup"] = observation["pid"]
+                report["owned_server_returncode"] = observation.get("returncode")
+            if valid_pid and not valid_exit:
+                errors.append({"step": "owned_server_exit", "error_code": "SERVER_EXIT_UNCONFIRMED",
+                               "error": "The retained owned process observation does not confirm an exit"})
+            elif not valid_exit and report["status"] == "completed":
                 errors.append({"step": "owned_server_exit", "error_code": "SERVER_NOT_OBSERVED",
                                "error": "No owned native process was available to attest cleanup"})
         database = getattr(getattr(runtime, "store", None), "db", None)

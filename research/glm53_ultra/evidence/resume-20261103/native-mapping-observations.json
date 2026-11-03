@@ -1,0 +1,69 @@
+{
+  "server_runs": [
+    {
+      "run": "chat-eos128-1",
+      "native_log_sha256": "b75351897d387da0bc1bd9de5bc9b181be8dc517da17a180ec36fb66c308a538",
+      "observed_low_locality_lines": [],
+      "scope": "exact matching log lines only; private state/key files excluded"
+    },
+    {
+      "run": "chat-eos128-nocache-1",
+      "native_log_sha256": "6770d46c31076dc54ef876fd8fcf0817ab64d9e365de071589b5eaa389a9493b",
+      "observed_low_locality_lines": [],
+      "scope": "exact matching log lines only; private state/key files excluded"
+    },
+    {
+      "run": "chat-eos128-nocache-2",
+      "native_log_sha256": "5123f72d6a6f45f7f8813e20328dbc41e3094d5bd2e6b58e34076aa58628ee63",
+      "observed_low_locality_lines": [],
+      "scope": "exact matching log lines only; private state/key files excluded"
+    },
+    {
+      "run": "agent-nocache-awake-v4-1",
+      "native_log_sha256": "9b4da5aede472bf93ba91ab518d20269d365afab82fc557ca25982ad1750280f",
+      "observed_low_locality_lines": [],
+      "scope": "exact matching log lines only; private state/key files excluded"
+    }
+  ],
+  "diagnostic_runs": [
+    {
+      "run": "cpu32-nocache-fidelity",
+      "log_sha256": "365c9c65e92431532f91247d5c31a2d6bde9ed485df1ae82b3fc69566fb773bb",
+      "low_locality_lines": [
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled",
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled"
+      ]
+    },
+    {
+      "run": "tail12-stream-fidelity32",
+      "log_sha256": "287ad732cda96371727b84ca48911af85701fa2fc6f5e063ab207dbd936f8bfe",
+      "low_locality_lines": [
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled",
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled"
+      ]
+    },
+    {
+      "run": "tail5-stream-fidelity32",
+      "log_sha256": "89801d4c0b432eee87852dcf0729b52ea21b797ad77303055ed611dd09ec91e6",
+      "low_locality_lines": [
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled",
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled"
+      ]
+    },
+    {
+      "run": "cpu-nocache-reset2x4",
+      "log_sha256": "479bda24ccb043dd083bc7352acf73ec83e80a852d4b42161bab1c117bfe05b0",
+      "low_locality_lines": [
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled",
+        "impl: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled"
+      ]
+    }
+  ],
+  "logging_scope": {
+    "recorded_server_verbosity": 3,
+    "common_log_GGML_INFO_mapped_to_TRACE": 4,
+    "pinned_common_log_cpp_sha256": "f345a4af8c06177313437693657f7493ff197ad99e70a45f18f12aa7d261e671",
+    "pinned_common_log_h_sha256": "e99f07f5b64288aaece28955ed9f97c2ed8dc9c0375af3e253fc5c682637a014",
+    "scope": "No direct low-locality INFO lines in server logs at verbosity3; diagnostic helper logs record activation on both shards. Python source sets the flag in the server environment and V4 artifacts are verified. This is not a direct kernel-cache or NAND observation."
+  }
+}
