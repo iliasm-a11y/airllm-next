@@ -1,0 +1,257 @@
+diff --git a/tools/server/airllm-glm53-cpu-no-blas.h b/tools/server/airllm-glm53-cpu-no-blas.h
+new file mode 100644
+--- /dev/null
++++ b/tools/server/airllm-glm53-cpu-no-blas.h
+@@ -0,0 +1,159 @@
++#pragma once
++// Experimental standalone-server policy. No native math library is modified.
++#include "common.h"
++#include "ggml-backend.h"
++#include "gguf.h"
++#include "log.h"
++#include <nlohmann/json.hpp>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++#include <filesystem>
++#include <memory>
++#include <stdexcept>
++#include <string>
++
++namespace airllm_glm53_cpu_no_blas {
++using json = nlohmann::json;
++static constexpr const char * policy = "glm53-cpu-no-blas-server-v1";
++
++inline bool requested() {
++    // Immutable for this process; never enable a global registry mutation later
++    // while an existing context might retain a BLAS device/backend pointer.
++    static const std::string flag = [] {
++        const char * raw = std::getenv("AIRLLM_GLM53_CPU_NO_BLAS");
++        return raw ? std::string(raw) : std::string("0");
++    }();
++    if (flag != "0" && flag != "1") throw std::runtime_error("AIRLLM_GLM53_CPU_NO_BLAS must be exactly0 or1");
++    return flag == "1";
++}
++
++struct state {
++    bool applied = false;
++    std::string model_path;
++    uintmax_t model_bytes = 0;
++    std::filesystem::file_time_type model_mtime;
++    json proof;
++};
++inline state & instance() { static state value; return value; }
++
++inline void check_configuration(const common_params & params) {
++    if (params.n_gpu_layers != 0 || params.devices.size() != 1 || params.devices.front() != nullptr ||
++        !params.no_op_offload || !params.no_extra_bufts || params.moe_cache_size != 0 || params.fit_params ||
++        !params.tensor_buft_overrides.empty()) {
++        throw std::runtime_error("noBLAS experimental server requires explicit gpu0/device none/no-op-offload/no-repack/fit off and unmodified host weights");
++    }
++    for (float fraction : params.tensor_split) if (fraction != 0) throw std::runtime_error("noBLAS refuses tensor splitting");
++    if (params.model.path.empty() || !params.model.url.empty() || !params.model.hf_repo.empty() ||
++        !params.model.hf_file.empty() || !params.model.docker_repo.empty() ||
++        !params.models_dir.empty() || !params.models_preset.empty() || params.fit_params_print ||
++        !params.mmproj.empty() || params.speculative.has_dft() || !params.lora_adapters.empty() || !params.control_vectors.empty()) {
++        throw std::runtime_error("noBLAS experimental server accepts one local original GLM GGUF only; router/download/draft/vision/adapters are outside this policy");
++    }
++    for (auto type : params.speculative.types) if (type != COMMON_SPECULATIVE_TYPE_NONE)
++        throw std::runtime_error("noBLAS experimental server refuses speculative decoding");
++    if (params.speculative.has_synth()) throw std::runtime_error("noBLAS experimental server refuses synthetic speculative decoding");
++    const char * bridge = std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++    if (bridge && std::strcmp(bridge,"0") != 0) throw std::runtime_error("noBLAS CPU policy refuses a GPU bridge runtime flag");
++}
++
++struct metadata_reader {
++    FILE * file;
++    size_t bytes_read = 0;
++    static constexpr size_t cap = 64u << 20;
++};
++inline size_t read_metadata(void * opaque, void * output, uint64_t offset, size_t length) {
++    auto & reader = *static_cast<metadata_reader *>(opaque);
++    // Bounds reads, not total parser heap. Original-shard checksum/identity and
++    // the unchanged native RSS/watchdog remain the external owner's contract.
++    if (offset > metadata_reader::cap || length > metadata_reader::cap-offset ||
++        length > metadata_reader::cap-reader.bytes_read || std::fseek(reader.file,long(offset),SEEK_SET) != 0) return 0;
++    const size_t count = std::fread(output,1,length,reader.file);reader.bytes_read += count;return count;
++}
++inline uint64_t unsigned_value(const gguf_context * metadata, const char * key) {
++    const int64_t index = gguf_find_key(metadata,key);
++    if (index < 0) throw std::runtime_error(std::string("missing GLM metadata: ")+key);
++    switch (gguf_get_kv_type(metadata,index)) {
++        case GGUF_TYPE_UINT8: return gguf_get_val_u8(metadata,index);
++        case GGUF_TYPE_UINT16: return gguf_get_val_u16(metadata,index);
++        case GGUF_TYPE_UINT32: return gguf_get_val_u32(metadata,index);
++        case GGUF_TYPE_UINT64: return gguf_get_val_u64(metadata,index);
++        default: throw std::runtime_error(std::string("unexpected unsigned GLM metadata type: ")+key);
++    }
++}
++inline json validate_model_metadata(const common_params & params) {
++    std::unique_ptr<FILE,decltype(&std::fclose)> file(std::fopen(params.model.path.c_str(),"rb"),std::fclose);
++    if (!file) throw std::runtime_error("local GLM metadata file unavailable");
++    const auto bytes = std::filesystem::file_size(params.model.path);
++    metadata_reader reader{file.get(),0};
++    // Public GGUF reader: ctx=nullptr and no_alloc=true prevent tensor/model
++    // allocation. No tensor payload is read by this policy.
++    std::unique_ptr<gguf_context,decltype(&gguf_free)> metadata(
++        gguf_init_from_callback(read_metadata,&reader,64u<<10,bytes,{true,nullptr}),gguf_free);
++    if (!metadata) throw std::runtime_error("GGUF metadata unavailable within the64MiB read bound");
++    const int64_t arch = gguf_find_key(metadata.get(),"general.architecture");
++    if (arch < 0 || gguf_get_kv_type(metadata.get(),arch) != GGUF_TYPE_STRING ||
++        std::strcmp(gguf_get_val_str(metadata.get(),arch),"glm5-next") != 0) {
++        throw std::runtime_error("noBLAS experimental policy requires actual glm5-next GGUF architecture metadata");
++    }
++    struct expected { const char * name; uint64_t value; };
++    const expected fields[] = {{"glm5-next.block_count",45},{"glm5-next.expert_count",288},
++        {"glm5-next.expert_used_count",8},{"glm5-next.hyper_connection.count",4},{"split.count",2},{"split.no",0}};
++    for (const auto & field : fields) if (unsigned_value(metadata.get(),field.name) != field.value)
++        throw std::runtime_error(std::string("original GLM geometry differs: ")+field.name);
++    return {{"architecture","glm5-next"},{"metadata_bytes_read",reader.bytes_read},
++        {"metadata_read_cap_bytes",metadata_reader::cap},{"metadata_only",true},
++        {"model_identity_scope","architecture/counts only; original full-shard SHA receipts remain required externally"}};
++}
++
++inline json registry() {
++    json names = json::array();
++    for (size_t i=0;i<ggml_backend_reg_count();++i) names.push_back(ggml_backend_reg_name(ggml_backend_reg_get(i)));
++    return names;
++}
++inline void require_cpu_without_accel() {
++    bool cpu = false;
++    if (ggml_backend_reg_by_name("BLAS")) throw std::runtime_error("BLAS registry unexpectedly present under CPU noBLAS policy");
++    for (size_t i=0;i<ggml_backend_dev_count();++i) {
++        const auto type = ggml_backend_dev_type(ggml_backend_dev_get(i));
++        if (type == GGML_BACKEND_DEVICE_TYPE_CPU) cpu = true;
++        if (type == GGML_BACKEND_DEVICE_TYPE_ACCEL) throw std::runtime_error("ACCEL device remains under CPU noBLAS policy");
++    }
++    if (!cpu || !ggml_backend_reg_by_name("CPU")) throw std::runtime_error("CPU backend/device required under noBLAS policy");
++}
++inline void apply(common_params & params) {
++    if (!requested()) return; // default: no metadata I/O, registration, unload or parameter mutation
++    auto & saved = instance();
++    if (saved.applied) throw std::runtime_error("noBLAS policy cannot be reapplied to a live server process");
++    check_configuration(params);
++    const json model = validate_model_metadata(params);
++    // The parser has completed all device/RPC/override load_all callbacks. This
++    // explicit final load ensures BLAS cannot simply be reloaded after removal.
++    ggml_backend_load_all();
++    const json before = registry();
++    const auto blas = ggml_backend_reg_by_name("BLAS");
++    if (blas) ggml_backend_unload(blas); // public API, before any model/context/backend instance
++    require_cpu_without_accel();
++    saved.model_path = std::filesystem::weakly_canonical(params.model.path).string();
++    saved.model_bytes = std::filesystem::file_size(params.model.path);
++    saved.model_mtime = std::filesystem::last_write_time(params.model.path);
++    saved.proof = {{"schema",1},{"policy",policy},{"enabled",true},{"backend","native_cpu_no_blas"},
++        {"registry_before",before},{"registry_after",registry()},{"blas_unload_performed",blas!=nullptr},
++        {"cpu_present",true},{"accel_devices",0},{"gpu_layers",0},{"model_metadata",model},
++        {"geometry_qualified",false},{"model_fidelity_qualified",false},{"cache_qualified",false},
++        {"performance_qualified",false},{"proof_scope","registry/configuration at activation; not a per-operation runtime trace"}};
++    saved.applied = true;
++    LOG_INF("AIRLLM_GLM53_CPU_NO_BLAS %s\n",saved.proof.dump().c_str());
++}
++inline void verify_before_or_after_model(const common_params & params, const char * phase) {
++    if (!requested()) return;
++    const auto & saved = instance();
++    if (!saved.applied) throw std::runtime_error("noBLAS policy missing before server model load");
++    check_configuration(params);require_cpu_without_accel();
++    if (std::filesystem::weakly_canonical(params.model.path).string()!=saved.model_path ||
++        std::filesystem::file_size(params.model.path)!=saved.model_bytes ||
++        std::filesystem::last_write_time(params.model.path)!=saved.model_mtime) throw std::runtime_error("validated local GLM metadata file identity changed");
++    LOG_INF("AIRLLM_GLM53_CPU_NO_BLAS phase=%s policy=%s registry=%s cpu_present=1 accel_devices=0\n",phase,policy,registry().dump().c_str());
++}
++inline const json & proof() { return instance().proof; }
++} // namespace
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -14,6 +14,7 @@
+ 
+ #include "build-info.h"
+ #include "common.h"
++#include "airllm-glm53-cpu-no-blas.h"
+ #include "fit.h"
+ #include "llama.h"
+ #include "log.h"
+@@ -1201,6 +1202,12 @@
+     // load the model and initialize llama_context
+     // this may also be called to resume from sleeping state
+     bool load_model(common_params & params) {
++        try {
++            airllm_glm53_cpu_no_blas::verify_before_or_after_model(params,"before_model");
++        } catch (const std::exception & error) {
++            SRV_ERR("experimental noBLAS policy refused before load/reload: %s\n",error.what());
++            return false;
++        }
+         load_progress_data load_progress_text  (this, "text_model");
+         load_progress_data load_progress_mmproj(this, "mmproj_model");
+         load_progress_data load_progress_spec  (this, "spec_model");
+@@ -1303,6 +1310,12 @@
+         }
+ 
+         llama_init = common_init_from_params(params_base);
++        try {
++            airllm_glm53_cpu_no_blas::verify_before_or_after_model(params_base,"after_model_and_context");
++        } catch (const std::exception & error) {
++            SRV_ERR("experimental noBLAS registry/configuration changed during load: %s\n",error.what());
++            return false;
++        }
+ 
+         model_tgt = llama_init->model();
+         ctx_tgt   = llama_init->context();
+@@ -5694,6 +5707,9 @@
+         { "cors_proxy_enabled",          params.ui_mcp_proxy },
+     };
+ 
++    if (airllm_glm53_cpu_no_blas::requested()) {
++        props["experimental_native_backend_policy"] = airllm_glm53_cpu_no_blas::proof();
++    }
+     if (!params.server_connect_code.empty()) {
+         props["connect_code"] = params.server_connect_code;
+     }
+diff --git a/tools/server/server.cpp b/tools/server/server.cpp
+--- a/tools/server/server.cpp
++++ b/tools/server/server.cpp
+@@ -12,6 +12,7 @@
+ #include "fit.h"
+ #include "llama.h"
+ #include "log.h"
++#include "airllm-glm53-cpu-no-blas.h"
+ 
+ #include <atomic>
+ #include <clocale>
+@@ -792,6 +793,16 @@
+         return 1;
+     }
+ 
++    try {
++        if (airllm_glm53_cpu_no_blas::requested() && role.is_managed_by_router()) {
++            throw std::runtime_error("experimental noBLAS refuses router-managed worker roles");
++        }
++        airllm_glm53_cpu_no_blas::apply(params);
++    } catch (const std::exception & error) {
++        SRV_ERR("experimental noBLAS policy refused before model: %s\n",error.what());
++        return 1;
++    }
++
+     SRV_INF("%s", "initializing ...\n");
+ 
+     llama_backend_init();
+@@ -803,6 +814,17 @@
+ }
+ 
+ int llama_server(common_params & params, int argc, char ** argv) {
++    // The embedding caller may already own a live model/backend. Never unload
++    // a process-global registry from that entry point.
++    try {
++        if (airllm_glm53_cpu_no_blas::requested()) {
++            SRV_ERR("%s", "experimental noBLAS is restricted to standalone llama-server\n");
++            return 1;
++        }
++    } catch (const std::exception & error) {
++        SRV_ERR("experimental noBLAS policy refused: %s\n",error.what());
++        return 1;
++    }
+     // embedded in llama-cli: it handles the signals, and the model is resolved already
+     server_run_opts opts;
+     opts.install_signal_handlers = false;

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "status": "distinct v3 shader compiled only, provider not built or executed",
+  "build_default": "OFF",
+  "runtime_default": "OFF",
+  "files": {
+    "ggml/include/ggml-backend.h": {
+      "base_sha256": "6926bee0487ed349cce290466bbd4b24e2f9af2758f6fac3cd77adef3a421799",
+      "candidate_sha256": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+      "bytes": 28296
+    },
+    "ggml/src/ggml-backend.cpp": {
+      "base_sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9",
+      "candidate_sha256": "ffe6a5f6323227beb90760825d3f03fca816df227730daa787645afb4ea1c02b",
+      "bytes": 118458
+    },
+    "ggml/src/ggml-cpu/CMakeLists.txt": {
+      "base_sha256": "b69ed1a14063642c47c70b7b4c67177388e02ee3c27d2e7adfde9ed5ba5859bf",
+      "candidate_sha256": "7965f36d4e2e8c114a143b1922f1c985db31ce28ea716fdd146192b23c67efed",
+      "bytes": 34500
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": {
+      "base_sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2",
+      "candidate_sha256": "9bb61c71039202e426e5704281f3c497cd01df7df3c7bb59f2b6afcb839ad31d",
+      "bytes": 25695
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge-kernel.h": {
+      "base_sha256": null,
+      "candidate_sha256": "911d0de87d9e329a101e084d113c3c3354b0127cb5fc5d2674213f66aeb22400",
+      "bytes": 3076
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge.h": {
+      "base_sha256": null,
+      "candidate_sha256": "f56ae2c97ee17abd48c9c7eeaff121240763b2e6dc591fe34af141d1d83d12ee",
+      "bytes": 194
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge.mm": {
+      "base_sha256": null,
+      "candidate_sha256": "90f78d3b3251e413729b1304c786b6a051dd78a956c4eb990250df44970b44ed",
+      "bytes": 24874
+    }
+  },
+  "patch_sha256": "594d0f192dbd9641c243a24014f560297badbf5957137683b772048147d4fa86",
+  "shader_compile_only_receipt_sha256": "d6a9093544d884c05003da11f897ead4d4bd63bbfdc27fa9a8672798980d3152",
+  "derivation": {
+    "original_provider_patch_sha256": "e4aedfb321d703de08b1ae065264f179fe56c0dc204fe98ab822492aa0d41279",
+    "first_tensorops_patch_sha256": "e9da6d3fd41ffd62118691d8464022943cd437a54475afd9336767ec389d70e7",
+    "kernel_api_corrections": [
+      "slice arguments must be lvalues",
+      "explicit int8_t operand type instead of distinct char"
+    ]
+  },
+  "auxiliary_sha256": {
+    "build_package.py": "6b9b594edab0eeb7ab6916bb9978645175bacc833172d947618bff19bde9d88c",
+    "profile.py": "81a3f5f0cbbcff1b089adda6936a1babe5213b2c5207b3cd0e8635849d3bae15",
+    "gpu_contract.py": "80eeb558b956f25c77d1b48fc7fa88a1e31028b9787ac3f0c052b91fc6b16ec5",
+    "native_gpu_run.py": "78f246f3dac492f367aa8722f46ac4ef6022fe26dc507c876b98794bc9add5fd",
+    "enable_bridge_objcxx.cmake": "9865ad1b6f48eb55d3d21eff3f74dc4577d16351046aa1609768a4f61b01b3e1",
+    "q8_tensorops.metal": "b69930d559ef2601e4f384e343bcf6a2b24f30a6b28840f631154335714b82b9"
+  },
+  "full_model_qualified": false,
+  "numerical_qualified": false,
+  "performance_qualified": false,
+  "scope": "same guards4buffers and quotas; new actual shader/patch/package identities required"
+}

@@ -1,0 +1,325 @@
+{
+  "schema_version": 1,
+  "status": "actual_two_build_probe128_binding",
+  "preparation_sha256": "bc0c8fd08b472444bc84f204dc32cef8bf094cdd17b10903354916592646737b",
+  "reference": {
+    "build_receipt": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-prefill-final-controls.build.json",
+      "sha256": "4cf35cfba893c14a04f8ff8eb05876faced75fede08c8f24a6af0b069b4ceb93",
+      "bytes": 8106
+    },
+    "binary": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-prefill-final-controls",
+      "sha256": "62a7d2578c58e96839be2d4c79d8c414c8d535e5a1adac54820043f9e695f4b0",
+      "bytes": 391200
+    },
+    "helper_source": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_batched_prefill/native_prefill.cpp",
+      "sha256": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+      "bytes": 22720
+    },
+    "runtime_manifest": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/manifest.json",
+      "sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+      "bytes": 30431
+    },
+    "libraries": {
+      "libggml-base.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-base.0.28.0.dylib",
+        "sha256": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+        "bytes": 769200
+      },
+      "libggml-blas.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-blas.0.28.0.dylib",
+        "sha256": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+        "bytes": 58528
+      },
+      "libggml-cpu.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-cpu.0.28.0.dylib",
+        "sha256": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf",
+        "bytes": 1008672
+      },
+      "libggml-metal.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml-metal.0.28.0.dylib",
+        "sha256": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+        "bytes": 5606128
+      },
+      "libggml.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libggml.0.28.0.dylib",
+        "sha256": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+        "bytes": 59856
+      },
+      "libllama-common.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-common.0.8.0.dylib",
+        "sha256": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+        "bytes": 5380816
+      },
+      "libllama-completion-impl.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-completion-impl.dylib",
+        "sha256": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+        "bytes": 122032
+      },
+      "libllama-server-impl.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama-server-impl.dylib",
+        "sha256": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+        "bytes": 7019552
+      },
+      "libllama.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libllama.0.8.0.dylib",
+        "sha256": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+        "bytes": 3804624
+      },
+      "libmtmd.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/libmtmd.0.8.0.dylib",
+        "sha256": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+        "bytes": 1620384
+      }
+    },
+    "runtime_binaries": {
+      "helper": "62a7d2578c58e96839be2d4c79d8c414c8d535e5a1adac54820043f9e695f4b0",
+      "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+      "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+      "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf",
+      "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+      "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+      "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+      "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+      "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+      "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+      "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b"
+    },
+    "source_sha256": {
+      "helper_source": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+      "snapshot_source": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+      "state_capture_source": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+      "native_manifest": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+      "wrapper_source": "c2f1078a88dd30ff53389f44795636df9fe7348d1ee77c3f1fab537cae3e337d"
+    },
+    "source_files": {
+      "helper_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_batched_prefill/native_prefill.cpp",
+        "sha256": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+        "bytes": 22720
+      },
+      "snapshot_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_batched_prefill/snapshot.h",
+        "sha256": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+        "bytes": 6841
+      },
+      "state_capture_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_gpu_v3/state_capture.inc",
+        "sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+        "bytes": 3793
+      },
+      "native_manifest": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/manifest.json",
+        "sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+        "bytes": 30431
+      },
+      "wrapper_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/publication/research/glm53_batched_prefill/native_run.py",
+        "sha256": "c2f1078a88dd30ff53389f44795636df9fe7348d1ee77c3f1fab537cae3e337d",
+        "bytes": 20445
+      }
+    },
+    "libraries_directory": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin"
+  },
+  "candidate": {
+    "build_receipt": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/driver-build.json",
+      "sha256": "8906902ecfab8ab4c1f11a4dcc40ef50eecc0733c2d59a95108f61b97b75e541",
+      "bytes": 95339
+    },
+    "binary": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/native-prefill-noblas-nocopy",
+      "sha256": "273b4eb4706847486e650ddf5dc9badc3e66f2046bdc721e64d4ef71a1767fa7",
+      "bytes": 450256
+    },
+    "helper_source": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp",
+      "sha256": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+      "bytes": 25039
+    },
+    "runtime_manifest": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/manifest.json",
+      "sha256": "c922667512aa028729c5e13b251ee027d9099a726d7624c838ae73a3a724d183",
+      "bytes": 3723
+    },
+    "libraries": {
+      "libggml-base.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-base.0.28.0.dylib",
+        "sha256": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+        "bytes": 769136
+      },
+      "libggml-blas.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-blas.0.28.0.dylib",
+        "sha256": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+        "bytes": 58528
+      },
+      "libggml-cpu.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-cpu.0.28.0.dylib",
+        "sha256": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+        "bytes": 1047152
+      },
+      "libggml-metal.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-metal.0.28.0.dylib",
+        "sha256": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+        "bytes": 5606128
+      },
+      "libggml.0.28.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml.0.28.0.dylib",
+        "sha256": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+        "bytes": 59856
+      },
+      "libllama-common.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libllama-common.0.8.0.dylib",
+        "sha256": "c3d063e1ce795bf79d5bbd96e397141b8f34d0391ab11df05b2677e640925fe9",
+        "bytes": 5380816
+      },
+      "libllama-completion-impl.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libllama-completion-impl.dylib",
+        "sha256": "11cb2713e598b52a46ed4908456be30305154b59f60c3e852ce213d863150cb3",
+        "bytes": 122032
+      },
+      "libllama-server-impl.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libllama-server-impl.dylib",
+        "sha256": "2eaca4f855509a9fc9cfb5acaf0c11d4eb2aa58630567008141d4b0a0319951a",
+        "bytes": 7019552
+      },
+      "libllama.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libllama.0.8.0.dylib",
+        "sha256": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557",
+        "bytes": 3804624
+      },
+      "libmtmd.0.8.0.dylib": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libmtmd.0.8.0.dylib",
+        "sha256": "dc63320401d9362836101b8165981b5978426a68d746dafe8b806e188ebd33bf",
+        "bytes": 1620384
+      }
+    },
+    "runtime_binaries": {
+      "helper": "273b4eb4706847486e650ddf5dc9badc3e66f2046bdc721e64d4ef71a1767fa7",
+      "libggml-base.0.28.0.dylib": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+      "libggml-blas.0.28.0.dylib": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+      "libggml-cpu.0.28.0.dylib": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+      "libggml-metal.0.28.0.dylib": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+      "libggml.0.28.0.dylib": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+      "libllama-common.0.8.0.dylib": "c3d063e1ce795bf79d5bbd96e397141b8f34d0391ab11df05b2677e640925fe9",
+      "libllama-completion-impl.dylib": "11cb2713e598b52a46ed4908456be30305154b59f60c3e852ce213d863150cb3",
+      "libllama-server-impl.dylib": "2eaca4f855509a9fc9cfb5acaf0c11d4eb2aa58630567008141d4b0a0319951a",
+      "libllama.0.8.0.dylib": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557",
+      "libmtmd.0.8.0.dylib": "dc63320401d9362836101b8165981b5978426a68d746dafe8b806e188ebd33bf"
+    },
+    "source_sha256": {
+      "helper_source": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+      "snapshot_source": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+      "state_capture_source": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+      "native_manifest": "c922667512aa028729c5e13b251ee027d9099a726d7624c838ae73a3a724d183",
+      "wrapper_source": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+      "gpu_contract_source": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9",
+      "gpu_profile_source": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+      "gpu_profile_document": "f1cf1507ec64926e345eaf1cff2580dd85a6b80680bdcf996bb89157db09f079",
+      "provider_build_receipt": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+      "gpu_driver_build_receipt": "8906902ecfab8ab4c1f11a4dcc40ef50eecc0733c2d59a95108f61b97b75e541",
+      "native_guard_source": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0"
+    },
+    "source_files": {
+      "helper_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp",
+        "sha256": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+        "bytes": 25039
+      },
+      "snapshot_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/snapshot.h",
+        "sha256": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+        "bytes": 6841
+      },
+      "state_capture_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_gpu_v3/state_capture.inc",
+        "sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+        "bytes": 3793
+      },
+      "native_manifest": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/manifest.json",
+        "sha256": "c922667512aa028729c5e13b251ee027d9099a726d7624c838ae73a3a724d183",
+        "bytes": 3723
+      },
+      "wrapper_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/native_gpu_run.py",
+        "sha256": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+        "bytes": 34811
+      },
+      "gpu_contract_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/gpu_contract.py",
+        "sha256": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9",
+        "bytes": 31187
+      },
+      "gpu_profile_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/profile.py",
+        "sha256": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+        "bytes": 5530
+      },
+      "gpu_profile_document": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/gpu-profile.json",
+        "sha256": "f1cf1507ec64926e345eaf1cff2580dd85a6b80680bdcf996bb89157db09f079",
+        "bytes": 10682
+      },
+      "provider_build_receipt": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json",
+        "sha256": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+        "bytes": 111903
+      },
+      "gpu_driver_build_receipt": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/driver-build.json",
+        "sha256": "8906902ecfab8ab4c1f11a4dcc40ef50eecc0733c2d59a95108f61b97b75e541",
+        "bytes": 95339
+      },
+      "native_guard_source": {
+        "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/air_llm/airllm/nextgen/glm_native.py",
+        "sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+        "bytes": 55213
+      }
+    },
+    "libraries_directory": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin"
+  },
+  "provider_build_receipt": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json",
+    "sha256": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+    "bytes": 111903
+  },
+  "gpu_profile": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/gpu-profile.json",
+    "sha256": "f1cf1507ec64926e345eaf1cff2580dd85a6b80680bdcf996bb89157db09f079",
+    "bytes": 10682
+  },
+  "driver_build_supervision": {
+    "kind": "validated_dedicated_owner_build_v2",
+    "guard_receipt": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/build-guard.json",
+      "sha256": "f32836229dacfc6e9e2c5903f89cbc3bca81597030d8008ce72a7f1a82f0beb7",
+      "bytes": 61598
+    },
+    "supervisor_source_sha256": "40f3e12b73f102bdae208542f69bfcfb8e300fa86961419a7fe1cbebbf612f7f",
+    "source_manifest_sha256": "5b305c66bf6c480c71f7b1f729b24ab99bd5a3fb3d98d2521f75864c632952ac",
+    "original_resource_policy_replayed": true,
+    "two_actual_inherited_FDs_before_GO_each_phase": true,
+    "all_eight_phases_closed": true,
+    "global_postflight_before_favorable_publication": true,
+    "model_loaded": false,
+    "qualification": false
+  },
+  "reference_guard": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-full8/guard.json",
+    "sha256": "b991594498b14afc2a8b273da87843fb78e5534a023a053df393e2b6be0ecd08",
+    "bytes": 26277130
+  },
+  "frozen_prompts": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-prompts-max/native-prompts.json",
+    "sha256": "f2b40d0c9f94a507ccaaff5e131fb57e698585ba640c0614fe2e69c12bd11fef",
+    "bytes": 5431595
+  },
+  "frozen_prompts_expected_sha256": "f2b40d0c9f94a507ccaaff5e131fb57e698585ba640c0614fe2e69c12bd11fef",
+  "full_qualification": false,
+  "model_numeric_qualified": false,
+  "scope": "actual builds only; no model execution or numerical qualification"
+}

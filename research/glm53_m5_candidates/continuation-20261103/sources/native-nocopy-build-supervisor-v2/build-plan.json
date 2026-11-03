@@ -1,0 +1,347 @@
+{
+  "schema_version": 2,
+  "status": "planned_not_built",
+  "created_at_utc": "2026-11-03T19:34:16.084491+00:00",
+  "destination": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1",
+  "binary": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/native-prefill-noblas-nocopy",
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/clang++",
+    "-isysroot",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "-std=c++17",
+    "-O3",
+    "-Wno-deprecated-declarations",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/ggml/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/vendor",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp",
+    "-L",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin",
+    "-lllama",
+    "-lggml",
+    "-lggml-base",
+    "-lggml-cpu",
+    "-Wl,-rpath,/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin",
+    "-o",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/build-run1/native-prefill-noblas-nocopy"
+  ],
+  "input_roles": {
+    "helper_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp",
+    "snapshot_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/snapshot.h",
+    "state_capture_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_gpu_v3/state_capture.inc",
+    "build_script": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/supervised_build.py",
+    "profile_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/profile.py",
+    "contract_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/gpu_contract.py",
+    "runner_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/native_gpu_run.py",
+    "provider_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json",
+    "cpu_v4_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/research/glm53_batched_prefill/native_prefill.cpp",
+    "cpu_v4_prepare_manifest": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/prepare-manifest.json",
+    "guard_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/air_llm/airllm/nextgen/glm_native.py",
+    "supervisor_source_manifest": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/source-manifest.json",
+    "original_planner_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/build_driver.py",
+    "base_candidate_manifest": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/prepare-manifest.json",
+    "runtime_manifest": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/manifest.json",
+    "header:include/llama.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/include/llama.h",
+    "header:ggml/include/ggml.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/ggml/include/ggml.h",
+    "header:ggml/include/ggml-backend.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/ggml/include/ggml-backend.h",
+    "header:vendor/nlohmann/json.hpp": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/vendor/nlohmann/json.hpp"
+  },
+  "inputs_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/supervised_build.py": "40f3e12b73f102bdae208542f69bfcfb8e300fa86961419a7fe1cbebbf612f7f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/profile.py": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/gpu_contract.py": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/native_gpu_run.py": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/research/glm53_batched_prefill/native_prefill.cpp": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/prepare-manifest.json": "5cac9a47d5b2a8fea3792e0fde037a56bbdbbcaa081b5094ca702fccc03ba151",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/air_llm/airllm/nextgen/glm_native.py": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/source-manifest.json": "5b305c66bf6c480c71f7b1f729b24ab99bd5a3fb3d98d2521f75864c632952ac",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/build_driver.py": "b27b37ecc24e349f10f066a61896e6cb9c6b20364d664bbe3e4cd08e0d50c8cd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/prepare-manifest.json": "25a34ef2a0ce6b23df0f46052f5c493e055a5ae69bd8f134008984f1145a53f5",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/manifest.json": "c922667512aa028729c5e13b251ee027d9099a726d7624c838ae73a3a724d183",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/include/llama.h": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/ggml/include/ggml-backend.h": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/source/vendor/nlohmann/json.hpp": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml.0.28.0.dylib": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-base.0.28.0.dylib": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-cpu.0.28.0.dylib": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-blas.0.28.0.dylib": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libggml-metal.0.28.0.dylib": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/runtime/bin/libllama.0.8.0.dylib": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557"
+  },
+  "closed_package_inputs_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/driver-build.json": "a861e92a8e14a94e674c3cc9a4cb02401d6c0f73887c02066c3b068e135014ab",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/gpu-profile.json": "2e81b30ba410288442cbf837ba9c2355ba6deaa76e3e2eedbff7c5c4bb715ce6",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/source-manifest.json": "dc0de0bd2dd0e2228daa0ff52b03a89a54e0da2e6390da9cb3cb560ee12c3469",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/native_gpu_run.py": "78f246f3dac492f367aa8722f46ac4ef6022fe26dc507c876b98794bc9add5fd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/gpu_contract.py": "969f7178f76e2cbe6cfeed91536cbb18df0a44bd2d7ec5462764aa5c08adf1d7",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/profile.py": "e0176fb46bafbdeb527664a0a33bb08f7fe4a6f748004147b38f2e100843c5fd"
+  },
+  "native_libraries_sha256": {
+    "ggml": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+    "ggml-base": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+    "ggml-cpu": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+    "ggml-blas": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+    "ggml-metal": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+    "llama": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557"
+  },
+  "provider_build_receipt_sha256": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+  "provider_rebuild": false,
+  "prefill_chunk_policy": "cpu8-tail-global-fences208-no-blas-v4-nocopy-probe128-v1",
+  "cpu_accelerator_policy": "unregister-BLAS-before-model-v1",
+  "prefill_fences": [
+    128,
+    208,
+    256,
+    384,
+    512
+  ],
+  "diagnostic_scope": "one_prompt_128_native_tokens_no_generation",
+  "profile_document": {
+    "canonical_identity": {
+      "schema_version": 2,
+      "identity_domain": "glm53-noblas-nocopy-fenced-probe128-v1",
+      "prefill_chunk_policy": "cpu8-tail-global-fences208-no-blas-v4-nocopy-probe128-v1",
+      "prefill_chunk_policy_version": 1,
+      "prefill_fences": [
+        128,
+        208,
+        256,
+        384,
+        512
+      ],
+      "fallback_column_chunk": 16,
+      "fallback_remainder_policy": "floor16-then-cpu8-odd-tail",
+      "tail_reference_microbatch": 8,
+      "cpu_accelerator_policy": "unregister-BLAS-before-model-v1",
+      "diagnostic_scope": "one_prompt_128_native_tokens_no_generation",
+      "full_campaign_qualified": false,
+      "model_numeric_qualified": false,
+      "complete_frozen_prompts_sha256": "f2b40d0c9f94a507ccaaff5e131fb57e698585ba640c0614fe2e69c12bd11fef",
+      "required_original_agent_ids": {
+        "first": 1,
+        "last": 600,
+        "unique_count": 600
+      },
+      "backend": "native_cpu_with_metal_q8_bridge",
+      "gpu_execution_possible": true,
+      "n_gpu_layers": 0,
+      "weights": "original CPU mmap; one bounded original read-only NoCopy view; same pointer; no permanent Metal weight placement",
+      "activation_quantizer": "native CPU Q8_0 from_float",
+      "kernel": "experimental Metal4 MPP int8xint8 int32 dots32 ordered FP32 FMA",
+      "admitted_dimensions": {
+        "K": [
+          2048,
+          4096
+        ],
+        "M_multiple": 8,
+        "M_max": 8192,
+        "N": [
+          8,
+          16,
+          32,
+          64,
+          128
+        ]
+      },
+      "unsupported_shapes": "CPU; includes N6/14 and single-token decode",
+      "native_compute_reference_mode": "CPU; bridge disabled when use_ref is true",
+      "allocation": {
+        "total_limit_bytes": 67108864,
+        "weight_tile_rows": 8192,
+        "gpu_fixed_buffer_bytes": 4751360,
+        "fixed_buffer_count": 3,
+        "temporary_weight_view_count_max": 1,
+        "borrowed_view_max_bytes": 35782656,
+        "metal_device_current_allocated_limit_bytes": 67108864,
+        "cpu_staging": "shared graph workspace; view charged separately to64MiB workspace admission"
+      },
+      "resource_policy": {
+        "kind": "conservative_sufficient_native_contextual_subset_v1",
+        "native_limits": {
+          "reserve_bytes": 805306368,
+          "warning_headroom_bytes": 536870912,
+          "warning_swap_growth_bytes": 33554432,
+          "max_swap_growth_bytes": 33554432,
+          "max_rss_bytes": 9126805504,
+          "headroom_grace_seconds": 3,
+          "warning_grace_seconds": 20
+        },
+        "additional_reservation_bytes": 134217728,
+        "admitted_pressure_levels": [
+          1,
+          2
+        ],
+        "available_formula": "psutil7.2.2_macos_free_plus_inactive",
+        "swap_baseline": "same initial global sample as authoritative native watchdog"
+      },
+      "fatal_after_any_gpu_submit": true,
+      "publish_only_after_all_tiles_terminal_success": true,
+      "requires_existing_native_watchdog": true,
+      "whole_model_qualified": false,
+      "requires_runtime_trace_nonzero_gpu_commands": true,
+      "fingerprints": {
+        "CPU_METAL_Q8_BRIDGE_COMPILED": true,
+        "native_libraries_sha256": {
+          "ggml": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+          "ggml-base": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+          "ggml-cpu": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+          "ggml-blas": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+          "ggml-metal": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+          "llama": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557"
+        },
+        "provider_patch_sha256": "0909c6af6b04691fcca52b972d4e02cd41372069314dff127ff152b4d08befec",
+        "kernel_sha256": "b69930d559ef2601e4f384e343bcf6a2b24f30a6b28840f631154335714b82b9",
+        "native_guard_policy_sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+        "provider_build_receipt_sha256": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+        "cpu_geometry_source_sha256": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+        "cpu_geometry_manifest_sha256": "5cac9a47d5b2a8fea3792e0fde037a56bbdbbcaa081b5094ca702fccc03ba151",
+        "helper_source_sha256": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+        "snapshot_source_sha256": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+        "state_capture_source_sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+        "runner_source_sha256": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+        "profile_source_sha256": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+        "contract_source_sha256": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9"
+      }
+    },
+    "canonical_sha256": "6a7c43b8815480b5262fb028c28724a6002a31caf4aff506c26ed0b5dd401e5f",
+    "render_options_extension": {
+      "gpu_execution_profile": {
+        "schema": 1,
+        "actual_backend": "native_cpu_with_metal_q8_bridge",
+        "gpu_policy_sha256": "6a7c43b8815480b5262fb028c28724a6002a31caf4aff506c26ed0b5dd401e5f",
+        "identity": {
+          "schema_version": 2,
+          "identity_domain": "glm53-noblas-nocopy-fenced-probe128-v1",
+          "prefill_chunk_policy": "cpu8-tail-global-fences208-no-blas-v4-nocopy-probe128-v1",
+          "prefill_chunk_policy_version": 1,
+          "prefill_fences": [
+            128,
+            208,
+            256,
+            384,
+            512
+          ],
+          "fallback_column_chunk": 16,
+          "fallback_remainder_policy": "floor16-then-cpu8-odd-tail",
+          "tail_reference_microbatch": 8,
+          "cpu_accelerator_policy": "unregister-BLAS-before-model-v1",
+          "diagnostic_scope": "one_prompt_128_native_tokens_no_generation",
+          "full_campaign_qualified": false,
+          "model_numeric_qualified": false,
+          "complete_frozen_prompts_sha256": "f2b40d0c9f94a507ccaaff5e131fb57e698585ba640c0614fe2e69c12bd11fef",
+          "required_original_agent_ids": {
+            "first": 1,
+            "last": 600,
+            "unique_count": 600
+          },
+          "backend": "native_cpu_with_metal_q8_bridge",
+          "gpu_execution_possible": true,
+          "n_gpu_layers": 0,
+          "weights": "original CPU mmap; one bounded original read-only NoCopy view; same pointer; no permanent Metal weight placement",
+          "activation_quantizer": "native CPU Q8_0 from_float",
+          "kernel": "experimental Metal4 MPP int8xint8 int32 dots32 ordered FP32 FMA",
+          "admitted_dimensions": {
+            "K": [
+              2048,
+              4096
+            ],
+            "M_multiple": 8,
+            "M_max": 8192,
+            "N": [
+              8,
+              16,
+              32,
+              64,
+              128
+            ]
+          },
+          "unsupported_shapes": "CPU; includes N6/14 and single-token decode",
+          "native_compute_reference_mode": "CPU; bridge disabled when use_ref is true",
+          "allocation": {
+            "total_limit_bytes": 67108864,
+            "weight_tile_rows": 8192,
+            "gpu_fixed_buffer_bytes": 4751360,
+            "fixed_buffer_count": 3,
+            "temporary_weight_view_count_max": 1,
+            "borrowed_view_max_bytes": 35782656,
+            "metal_device_current_allocated_limit_bytes": 67108864,
+            "cpu_staging": "shared graph workspace; view charged separately to64MiB workspace admission"
+          },
+          "resource_policy": {
+            "kind": "conservative_sufficient_native_contextual_subset_v1",
+            "native_limits": {
+              "reserve_bytes": 805306368,
+              "warning_headroom_bytes": 536870912,
+              "warning_swap_growth_bytes": 33554432,
+              "max_swap_growth_bytes": 33554432,
+              "max_rss_bytes": 9126805504,
+              "headroom_grace_seconds": 3,
+              "warning_grace_seconds": 20
+            },
+            "additional_reservation_bytes": 134217728,
+            "admitted_pressure_levels": [
+              1,
+              2
+            ],
+            "available_formula": "psutil7.2.2_macos_free_plus_inactive",
+            "swap_baseline": "same initial global sample as authoritative native watchdog"
+          },
+          "fatal_after_any_gpu_submit": true,
+          "publish_only_after_all_tiles_terminal_success": true,
+          "requires_existing_native_watchdog": true,
+          "whole_model_qualified": false,
+          "requires_runtime_trace_nonzero_gpu_commands": true,
+          "fingerprints": {
+            "CPU_METAL_Q8_BRIDGE_COMPILED": true,
+            "native_libraries_sha256": {
+              "ggml": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+              "ggml-base": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+              "ggml-cpu": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+              "ggml-blas": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+              "ggml-metal": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+              "llama": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557"
+            },
+            "provider_patch_sha256": "0909c6af6b04691fcca52b972d4e02cd41372069314dff127ff152b4d08befec",
+            "kernel_sha256": "b69930d559ef2601e4f384e343bcf6a2b24f30a6b28840f631154335714b82b9",
+            "native_guard_policy_sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+            "provider_build_receipt_sha256": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+            "cpu_geometry_source_sha256": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+            "cpu_geometry_manifest_sha256": "5cac9a47d5b2a8fea3792e0fde037a56bbdbbcaa081b5094ca702fccc03ba151",
+            "helper_source_sha256": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+            "snapshot_source_sha256": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+            "state_capture_source_sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+            "runner_source_sha256": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+            "profile_source_sha256": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+            "contract_source_sha256": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9"
+          }
+        }
+      }
+    },
+    "environment": {
+      "AIRLLM_CPU_METAL_Q8_BRIDGE": "1",
+      "AIRLLM_CPU_METAL_Q8_CANONICAL_SHA256": "6a7c43b8815480b5262fb028c28724a6002a31caf4aff506c26ed0b5dd401e5f",
+      "AIRLLM_GLM53_CPU_NO_BLAS": "1"
+    },
+    "status": "identity only; no inherited model or performance qualification"
+  },
+  "compile_timeout_seconds": 120,
+  "metadata_timeout_seconds_each": 15,
+  "metadata_smoke_count": 6,
+  "build_attempted": false,
+  "binary_sha256": null,
+  "parameter_smoke": {},
+  "model_loaded": false,
+  "actual_gpu_matrix_commands": null,
+  "full_campaign_qualified": false,
+  "numerical_fidelity_qualified": false,
+  "scope": "fresh driver, dedicated supervisor owns benchmark+UID; no inherited qualification"
+}

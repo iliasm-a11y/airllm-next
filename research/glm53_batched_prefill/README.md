@@ -1,3 +1,5 @@
+Current closure: [final French report](RAPPORT-FINAL-FR.md), [integration limits](INTEGRATION-FINALE-FR.md) and [exact continuation snapshot](../glm53_m5_candidates/continuation-20261103/). A/B/C remain unqualified despite the bounded nativeGPU128 exact window. No automatic model/research launch or production change is introduced.
+
 # Préfill par lots et snapshot GLM sur M5
 
 Cette branche de recherche part de PR #22 au commit

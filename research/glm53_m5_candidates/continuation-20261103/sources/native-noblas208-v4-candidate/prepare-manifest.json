@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "status": "v4_source_prepared_not_built",
+  "prepared_at_utc": "2026-11-03T18:09:20.873122+00:00",
+  "policy": "cpu8-tail-global-fences208-no-blas-v4",
+  "full_model_qualified": false,
+  "compiled": false,
+  "model_loaded": false,
+  "gpu_commands": 0,
+  "original_helper_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_batched_prefill/native_prefill.cpp",
+  "original_helper_source_sha256": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+  "original_helper_binary": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-prefill-final-controls",
+  "original_helper_binary_sha256": "62a7d2578c58e96839be2d4c79d8c414c8d535e5a1adac54820043f9e695f4b0",
+  "original_build_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-prefill-final-controls.build.json",
+  "original_build_receipt_sha256": "4cf35cfba893c14a04f8ff8eb05876faced75fede08c8f24a6af0b069b4ceb93",
+  "variant_helper_source": "research/glm53_batched_prefill/native_prefill.cpp",
+  "variant_helper_source_sha256": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+  "unchanged_copied_dependencies": {
+    "research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f"
+  },
+  "patch_sha256": "eef8893bc715d552ccce1d41d7a2ac5ce8df4bb4070dac432e8647bb06e73235",
+  "native_source_reconstruction_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/receipt.json",
+  "native_source_reconstruction_receipt_sha256": "32504e7f96705ecf3f2a61e4ef0cf3ad1f067c1815d8fb0c5c61453cdf01f34e",
+  "native_base_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "runtime_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "existing_comparator_hashes": {
+    "native_compare.py": "0019976ae27a7296e2bdafea2d67ff4a77dd77c77a6586b838d7da0ea629d6de",
+    "batch_compare.py": "22c8a252dbb8cedbe2de1b82d3c11768e2a2bf1b0ad6abe8eeea3ebc57644f84"
+  },
+  "source_observation": "Original CPU fallback partitions columns by ceil(N/ceil(N/16)); N30 produces dr1=15 and scalar nrc1. V4 reduces nonmultiple16 windows before CPU8 odd tails. Actual per-shape eligibility and model fidelity remain unproved.",
+  "scope": "source-only v4; original v3 and all measured proofs unchanged",
+  "proposed_microbatches": [
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "primary_hardware_target_microbatch": 32,
+  "revision_note": "New isolated scheduling policy: floor16 for windows>16 then CPU8 odd-tail remainder; same absolute fences and pre-model BLAS removal. No inherited fidelity.",
+  "reference_source_identity": {
+    "helper_source": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+    "snapshot_source": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "state_capture_source": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+    "native_manifest": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+    "wrapper_source": "c2f1078a88dd30ff53389f44795636df9fe7348d1ee77c3f1fab537cae3e337d"
+  },
+  "reference_runtime_binaries": {
+    "helper": "62a7d2578c58e96839be2d4c79d8c414c8d535e5a1adac54820043f9e695f4b0",
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "reference_snapshot_manifest_sha256": "ad8d2c9fba79a2753a6e66d64a2a28524be31c4d8d9e00321b736a0d34ebf899",
+  "build_script_sha256": "75029ad0efa5527f1ea678df0315df3dde69aa768b11b3d7126900d9953cc334",
+  "variant_comparator_sha256": "a4524f78f20091ea320fcdb4bd560b6befc0f4ebd184b411d5878a97c898cf3d",
+  "delegated_module_hashes": {
+    "research.glm53_batched_prefill.native_compare": "0019976ae27a7296e2bdafea2d67ff4a77dd77c77a6586b838d7da0ea629d6de",
+    "research.glm53_batched_prefill.batch_compare": "22c8a252dbb8cedbe2de1b82d3c11768e2a2bf1b0ad6abe8eeea3ebc57644f84",
+    "research.glm53_m5.compare_fidelity": "75166d9590e26afbe51529e8ec9a141db5d57491ae7fd0c4b7810c1b695309a8",
+    "research.glm53_batched_prefill.snapshot_key": "64260e4000da92653f8446e51abcaddff867e209d5cc1e720cdc983c7553af46",
+    "air_llm.airllm.nextgen.glm_native": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0"
+  },
+  "delegated_module_pin_scope": "unchanged strict source snapshots pinned before candidate build; existing native/batch pins rechecked; no measured receipt altered",
+  "reference_vendor_json_header": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/llama-v3/vendor/nlohmann/json.hpp",
+    "sha256": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b",
+    "scope": "current header from the pinned V4 baseline source checkout; not a retroactive addition to the original build receipt"
+  },
+  "geometry_sha256": "a53c05a5428499a05910b1cb7e7ba9bb0422f74f524be19f699325454d6a874b",
+  "restore_comparator_sha256": "5363096ebacc2cbfaa04327a2c6189fa03403567e4ae86915d4403a8afbcc66b",
+  "prefill_fences": [
+    128,
+    208,
+    256,
+    384,
+    512
+  ],
+  "frozen_candidate_sources": {
+    "variant_compare.py": "a4524f78f20091ea320fcdb4bd560b6befc0f4ebd184b411d5878a97c898cf3d",
+    "geometry.py": "a53c05a5428499a05910b1cb7e7ba9bb0422f74f524be19f699325454d6a874b",
+    "build_helper.py": "75029ad0efa5527f1ea678df0315df3dde69aa768b11b3d7126900d9953cc334",
+    "fallback_eligibility.py": "9a256d70ede513f91cc4ee5a9379e37c1ccb82735bcbad07a109bd8ecba87866",
+    "research/glm53_batched_prefill/native_prefill.cpp": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+    "research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f"
+  },
+  "v3_derivation": {
+    "source_root": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v3-candidate",
+    "source_sha256": {
+      "geometry.py": "50c6cee02c22de66d08320c4e49856be7e114d5f25e5f02ac904d0cc39a754fc",
+      "test_geometry.py": "8c57f550f9214699ea8ea428106906679828cf1d654cdc9396bf9cb2aa1fb6b1",
+      "build_helper.py": "15b99e0c2be9268ed17bc064379df3428c71e343bfc47b560435112a36ec4490",
+      "variant_compare.py": "5cc2c9bae77ee76f5b6c456b1dd3c8d5970956277211b7625950455549e6eb89",
+      "test_variant_compare.py": "d6adea9799e977c4709ef52477292540d6dbf7ad2f3977ad3e2d6167828307ee",
+      "test_provenance.py": "ac94c6b82cf4ff0f4c8978c9435824efe3b72528b1b65fc53ca2b31fd4446b16",
+      "test_backend_policy.py": "721e95c41fcd2e7113ba404301b8f954039d2d7c955ab3f336ef4de2b501c9b5",
+      "research/glm53_batched_prefill/native_prefill.cpp": "87e89fbb40c6472602f4946a040832527d90d4b85cc4a66791a21f900725f371",
+      "research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+      "research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f"
+    },
+    "restore_review_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v3-restore-review/restore_compare.py",
+    "restore_review_source_sha256": "976f78a15da150fdb8c667134a3369b3caa4dff01cb4a79e984b5ccce1f1be55",
+    "copies_of_measured_receipts": false
+  },
+  "q8_shape_inventory": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-full32-q8-shapes.json",
+    "sha256": "2c087fe7fd2cfec4779e4d81514bbd8dd6fea297c48bda8e5c6796c3327376f6",
+    "scope": "closed v3 ordinary Q8 shape metadata only; not a fidelity qualification"
+  },
+  "fallback_cpu_source": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/ggml/src/ggml-cpu/ggml-cpu.c",
+    "sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e",
+    "line_start": 1479,
+    "line_end": 1529,
+    "scope": "source eligibility model; no runtime trace"
+  }
+}

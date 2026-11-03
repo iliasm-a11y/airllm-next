@@ -1,3 +1,15 @@
+# Latest closed M5 continuation
+
+The [final French report](../glm53_batched_prefill/RAPPORT-FINAL-FR.md) answers all12 requested verdicts. The [new exact source and closed metadata snapshot](continuation-20261103/) retains separate source/build/run/comparison identities.
+
+A real out-of-core NoCopy Metal Q8 bridge executed590 terminal, published N32 matrix operations. Its closed128-position window matches CPU8 bit-for-bit in118 canonical series (37,242,880 logical elements),136 raw KDA view aliases and the opaque checkpoint128. This is **not** complete-prompt, EOS, shared-cache,600-agent or performance qualification. All those full qualification flags remain false.
+
+The original native-Max CPU16 functional pilot timed out after245 partial IDs from523 input tokens, with no useful final or EOS; agent600 and return1 were not started. Native exit0 means clean shutdown. No new production profile is selected. CPU10/GPU0 and one slot remain unchanged.
+
+The sections below preserve the earlier f0acff6 snapshot context. Historical metadata is not relabelled by later results. Large native tensors remain local and are not reconstructed by public hashes; the CPU8 raw archive is a separate local deliverable.
+
+---
+
 # M5 candidate sources and closed resumed evidence
 
 These are exact frozen copies of the isolated working sources, plus lossless

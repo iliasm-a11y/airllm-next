@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "unmeasured_source_review_copy_tests_not_executed",
+  "files": {
+    "restore_compare.py": {
+      "sha256": "976f78a15da150fdb8c667134a3369b3caa4dff01cb4a79e984b5ccce1f1be55",
+      "bytes": 16819
+    },
+    "test_restore_review.py": {
+      "sha256": "1f30236af6e44e8aee32c1c20eb0c7ebf1759cb039406331ff4ac30a444f4f58",
+      "bytes": 5087
+    },
+    "AUDIT.md": {
+      "sha256": "aeeb1c56b10ed59279e1d12cb6dc4816d46b3d1627b2556df0d8cca5cb3a1cd0",
+      "bytes": 4266
+    }
+  },
+  "frozen_original_restore_comparer_sha256": "a70d49a96df5688cbd77c51758510492e301a49e6523ff08c4394ed80ec6c2cc",
+  "frozen_original_restore_comparer_expected_sha256": "a70d49a96df5688cbd77c51758510492e301a49e6523ff08c4394ed80ec6c2cc",
+  "original_unchanged": true,
+  "scope": "future noBLAS32 full/restore only, after actual complete CPU8/full32 strict fidelity",
+  "fixed_prefix_bytes": 156739588,
+  "fixed_prefix_sha256": "4c4d6f24b2cf3c4f30a7894b8609035960a3ec5687521c942aa6a578e2e5a3cd",
+  "resolved_gap": "original restore arm intermediate checkpoint file was not read; new copy validates actual exact coverage and all comparable full/restore hashes",
+  "additional_source_guards": [
+    "same actual full/restore/build registry observation",
+    "callback/write metadata bound to own physical batch",
+    "original frozen v3 source pins and new comparator self-identity through verdict"
+  ],
+  "independent_review": {
+    "reviewer": "campaign_harness",
+    "mode": "read-only source",
+    "new_material_P1_P2_found": false,
+    "tests_executed_by_reviewer": false
+  },
+  "tests": {
+    "prepared_functions": 5,
+    "executed": false,
+    "reason": "active CPU32 model; no test or native work permitted"
+  },
+  "compiler_calls": 0,
+  "native_cli_calls": 0,
+  "raw_payload_comparisons_performed": 0,
+  "models_loaded": 0,
+  "GPU_commands": 0,
+  "snapshot_exact_qualified": false,
+  "functional_C_qualified": false,
+  "performance_qualified": false,
+  "remaining": [
+    "Run small prepared metadata/refusal fixtures only after active model closure and coordinator permission",
+    "Use actual complete positive full32 proof; early128 cannot satisfy the full gate",
+    "Perform actual restore32 under unchanged guards before any snapshot verdict"
+  ]
+}

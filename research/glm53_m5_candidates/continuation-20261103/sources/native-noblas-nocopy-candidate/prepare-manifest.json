@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "status": "source_review_fixes_and_probe_comparator_prepared_not_tested_not_built",
+  "files": {
+    "AUDIT.md": {
+      "sha256": "cda0e0b7f2c26502eddc61f0408d26fbf1b3f5d899f3ebc0b27f193b3da8c88b",
+      "bytes": 10552
+    },
+    "PROBE-COMPARATOR.md": {
+      "sha256": "d2c3004755d4a2d770cf9f4558b5caf7868a734cbb1c5b32da7b9967fbab616f",
+      "bytes": 6194
+    },
+    "build_driver.py": {
+      "sha256": "b27b37ecc24e349f10f066a61896e6cb9c6b20364d664bbe3e4cd08e0d50c8cd",
+      "bytes": 13871
+    },
+    "driver/research/glm53_batched_prefill/native_prefill.cpp": {
+      "sha256": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+      "bytes": 25039
+    },
+    "driver/research/glm53_batched_prefill/snapshot.h": {
+      "sha256": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+      "bytes": 6841
+    },
+    "driver/research/glm53_gpu_v3/state_capture.inc": {
+      "sha256": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+      "bytes": 3793
+    },
+    "driver-build-planned.json": {
+      "sha256": "e971b69959d3f6adf7b71eddd70a0ecdad37317ee07e4902b5b57f632d338343",
+      "bytes": 23252
+    },
+    "driver-source.patch": {
+      "sha256": "ef7930b6c60e8a8349de1587ce7dac62fd2abfd8e5c16b2fb563add123592561",
+      "bytes": 25118
+    },
+    "gpu_contract.py": {
+      "sha256": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9",
+      "bytes": 31187
+    },
+    "native_gpu_run.py": {
+      "sha256": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+      "bytes": 34811
+    },
+    "prepared-build-recipe.json": {
+      "sha256": "77077ce501995ff51589808754624c13cd920ab8f0804eef9f4470b109814d49",
+      "bytes": 6100
+    },
+    "probe-compare-prepare.json": {
+      "sha256": "08077e93ff0700efd0e6f9d7640cbb8329c8b788f4c2e7028df3c34ebec9556d",
+      "bytes": 5389
+    },
+    "probe_compare.py": {
+      "sha256": "0f86e1d6da863eea66e23fbea98aa10bcca35f9327ed55a72c15877b26f6a7df",
+      "bytes": 31773
+    },
+    "probe_guard.py": {
+      "sha256": "10b5e364e5ce6d6d32d7a05abecec2992dca1dccaeefb24265a97b52f970f5fd",
+      "bytes": 9077
+    },
+    "profile.py": {
+      "sha256": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+      "bytes": 5530
+    },
+    "run-config.planned.json": {
+      "sha256": "7311deb1af2fd17eec5352b2cc8c3dce0c600ee537fafc6413e36640616b3962",
+      "bytes": 1363
+    },
+    "test_probe_contract.py": {
+      "sha256": "15ad7b10f49cb5f2f25b5344694f8c47bca4400f6d1432eec1ce72c71647efe6",
+      "bytes": 5941
+    },
+    "test_source_fixes.py": {
+      "sha256": "bd99eece15e0cae886df4e78bbb18f2ead0f2f04f7f20e4ad3773925871b10b6",
+      "bytes": 2519
+    }
+  },
+  "closed_nocopy_inputs_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/profile.py": "e0176fb46bafbdeb527664a0a33bb08f7fe4a6f748004147b38f2e100843c5fd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/gpu_contract.py": "969f7178f76e2cbe6cfeed91536cbb18df0a44bd2d7ec5462764aa5c08adf1d7",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/native_gpu_run.py": "78f246f3dac492f367aa8722f46ac4ef6022fe26dc507c876b98794bc9add5fd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/source-manifest.json": "dc0de0bd2dd0e2228daa0ff52b03a89a54e0da2e6390da9cb3cb560ee12c3469",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/driver-build.json": "a861e92a8e14a94e674c3cc9a4cb02401d6c0f73887c02066c3b068e135014ab",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/gpu-profile.json": "2e81b30ba410288442cbf837ba9c2355ba6deaa76e3e2eedbff7c5c4bb715ce6"
+  },
+  "existing_native_libraries_sha256": {
+    "ggml": "7a5efa075a707ccc58ce260ca91f3bad55830d676cbac7d5e013e29334b70c5a",
+    "ggml-base": "553676367e00e24a68f5703e2799997b9ca0f68aa6116ddc076e7dc176d5cb50",
+    "ggml-cpu": "68ed702ca253a02636a0bb1dc7d4a54849e03d7259a1aaf68021b1ac3f89604a",
+    "ggml-blas": "87b305e4e80f08afba14d4045422a143a331970a805f18461fe86cee70feff18",
+    "ggml-metal": "0ce81de4aed23bc73dbbcf6e4198ed6c00d5f99ca5e51cdab3430045008f131c",
+    "llama": "6f9cdcac5efef5836edc5d3f9a0cf85409d29af46f9e38e973fd3dd3549b6557"
+  },
+  "existing_native_libraries_match_provider_receipt": true,
+  "cpu_geometry_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/research/glm53_batched_prefill/native_prefill.cpp",
+  "cpu_geometry_source_sha256": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+  "cpu_geometry_source_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas208-v4-candidate/prepare-manifest.json",
+  "cpu_geometry_source_receipt_sha256": "5cac9a47d5b2a8fea3792e0fde037a56bbdbbcaa081b5094ca702fccc03ba151",
+  "native_build_performed": false,
+  "new_binary_sha256": null,
+  "native_runtime_smokes": null,
+  "model_loaded": false,
+  "gpu_execution_performed": false,
+  "measured_runtime_rss_bytes": null,
+  "measured_device_peak_bytes": null,
+  "python_ast": null,
+  "portable_tests": null,
+  "provider_or_original_sources_modified": false,
+  "scope": "128-token reject-only probe; complete=false; no GLM fidelity/performance/EOS qualification",
+  "previous_revision_verification": {
+    "python_ast": "passed before review fixes",
+    "portable_tests": {
+      "count": 13,
+      "passed": 13,
+      "seconds": 0.002
+    },
+    "not_current_revision_evidence": true
+  },
+  "current_revision_verification": {
+    "source_review": "requested",
+    "AST_checked": false,
+    "tests_executed": false,
+    "build_executed": false,
+    "native_executed": false,
+    "GPU_executed": false,
+    "comparison_executed": false
+  },
+  "source_fixes": [
+    "complete frozen600-agent byte identity and exact unique integer IDs",
+    "exact sibling module load / foreign-cache refusal"
+  ],
+  "checkpoint_source_review_fix": "exact candidate {(0,128)} coverage, exact integer metadata and lowercase hex64; pending reread; not tested"
+}

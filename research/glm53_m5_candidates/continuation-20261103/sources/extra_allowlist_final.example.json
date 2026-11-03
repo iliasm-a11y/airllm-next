@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "approved_for_delivery": false,
+  "all_base_entries_frozen": false,
+  "accept_deferred_base_hashes": false,
+  "selection_sha256": null,
+  "uid_lock_path": "/private/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+  "entries": [],
+  "closure_checks": [],
+  "entry_schema_examples_only_not_selected": [
+    {
+      "root": "work",
+      "relative_path": "VERSIONED_FINAL_COMPARER/variant_compare.py",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_REAL_64_HEX",
+      "delivery": "source",
+      "role": "final_frozen_source",
+      "group": "final_root_selection",
+      "closed_artifact": true
+    },
+    {
+      "root": "work",
+      "relative_path": "CLOSED_RUN/capture/report.json",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_REAL_64_HEX",
+      "delivery": "evidence",
+      "role": "closed_final_capture_metadata",
+      "closed_artifact": true
+    },
+    {
+      "root": "outputs",
+      "relative_path": "Rapport-final-RONIN-M5.md",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_REAL_64_HEX",
+      "delivery": "output_only",
+      "role": "final_user_report",
+      "closed_artifact": true
+    }
+  ],
+  "closure_schema_example_only_not_selected": {
+    "root": "work",
+    "relative_path": "CLOSED_RUN/guard.json",
+    "bytes": 0,
+    "sha256": "REPLACE_WITH_REAL_64_HEX",
+    "expected_fields": {
+      "status": "completed",
+      "cleanup.owned_server_stopped": true
+    }
+  },
+  "instructions": "Root fills and reviews real pins/closures, then saves as work/extra_allowlist_final.json. Empty/unapproved template refuses execution. No file discovery or override of base entries."
+}
