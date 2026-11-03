@@ -1,5 +1,13 @@
 # GLM-5.3 Flash sur M5 : streaming dense, fidélité et capacité réelle
 
+**Reprise du 3 novembre :** fidélité étendue à 32 étapes pour CPU +
+`MAP_NOCACHE` et tail12 ; conversation CPU + nocache terminée à EOS sur
+88 IDs ; remise à zéro native 2×4 vérifiée. Les nouveaux essais GPU longs
+s'arrêtent sur le swap et ne démontrent aucun gain soutenu. Le probe réel
+agents 1/600 est interrompu par un passage secteur→batterie après une seule
+sortie partielle. Le meilleur gain répété reste **+9,14 % sur huit sorties**.
+Voir le [rapport autonome de reprise et ses limites](REPRISE.md).
+
 Rapport de la campagne finale, 2–3 novembre 2026. Branche
 `research/glm53-m5-dense-stream-final`, basée sur la PR #19, commit
 `fc59b4b80a526e98b56ec918dc51c9649c4c1181`. Runtime llama.cpp épinglé à
@@ -412,11 +420,31 @@ Il exige aussi une sortie native normale et un transcript complet : arrêt
 sur limite avec le nombre demandé, ou EOS cohérent avec tous les IDs prédits.
 Un flux UTF-8 qui omet des IDs est refusé, sans inventer un EOS manquant.
 
-Le Mac étant ensuite toujours signalé fermé, aucun nouveau modèle n'est
-lancé sous ces conditions. Le cycle corrigé du cache, les comparaisons
-longues/EOS et la remise à zéro réelle entre deux requêtes restent à exécuter
-sur une machine ouverte. Les tests portables de remise à zéro passent ; ils
-ne sont pas présentés comme une preuve multi-requête du checkpoint complet.
+Ces conditions fermées appartiennent à la phase initiale. Après ouverture
+du Mac, les deux reprises du cache restent rejetées : transition
+batterie→secteur avant sortie, puis admission des pages refusée avec annulation
+de tous les verrous. Aucun gain du cache n'est établi.
+
+Les nouvelles captures CPU + nocache et tail12 + streaming reproduisent
+chacune **4 956 160 logits finis, routes/routeurs/KDA et 7 584 écritures
+observées** sur 32 étapes de référence. Tail12 sélectionne 82 matrices Q8
+originales, 2 592 538 624 octets ; ce n'est pas tout Q8 ni douze couches
+entières. Son ABBA32 s'arrête au premier B sur le swap après 13 sorties.
+La répétition CPU32 indépendante échoue avant sortie ; le dernier pilote
+tail5/V4 est également arrêté sur le swap après cinq sorties. Aucun ABBA
+tail5 long n'est lancé, aucune divergence arithmétique n'est déduite d'une
+capture incomplète. Le plan ABBA32 initial reste explicitement A16/B32 ;
+aucune qualification CPU32 répétée n'est ajoutée rétroactivement.
+
+CPU + nocache atteint un EOS réel sur une conversation courte de 88 IDs,
+réponse finale `OK`, puis passe une remise à zéro native 2×4 : quatre paires
+de logits et 948 écritures observées par requête identiques. Ces preuves
+restent distinctes de la fidélité des 88 étapes, de sessions RONIN et d'un
+gain de vitesse. Le probe agents 1/600 enregistre 600 identités et réutilise
+le même serveur ; seul l'agent 1 émet un token `</think>` sur limite, après
+447 entrées natives et 937,169 s de préparation. La deuxième requête est
+annulée par le garde secteur→batterie, sans terminal ni qualification globale.
+Tous ses processus possédés sont arrêtés. [Données de reprise](REPRISE.md).
 
 ## Capacité physique : ce que les chiffres permettent de conclure
 
@@ -583,12 +611,16 @@ sur cette branche expérimentale, sans fusion ni remplacement de production.
    vitesse durable ni celle du runtime livré ici.
 3. **Le GPU donne un bénéfice court répété, pas une preuve de génération
    complète.** Deux passages tail5 donnent +9,14 % médian face à leur CPU
-   contemporain ; tête seule +4,81 %. Aucun cycle long ou jusqu'à EOS n'est
-   qualifié. Le cache dense V4 est fidèle sur seize étapes mais son seul cycle
-   de vitesse est invalidé par la veille. Aucun gain du cache n'est établi.
+   contemporain ; tête seule +4,81 %. Aucun cycle long ou jusqu'à EOS sur
+   GPU n'est qualifié. Tail12 est fidèle sur 32 étapes, mais le premier passage
+   chronométré long s'arrête sur le swap ; tail5/V4 ne termine pas sa nouvelle
+   capture32. L'EOS de 88 IDs réussi concerne le CPU + nocache. Aucun gain
+   du cache dense ni de génération complète sur GPU n'est établi.
 4. **La stabilité durable de RONIN n'est pas qualifiée.** Les douze passages
    continus courts restent dans les gardes sans croissance du swap ; les
-   essais en charge normale et l'historique long conservent des arrêts mémoire.
+   essais en charge normale et la reprise longue conservent des arrêts mémoire.
+   Un EOS CPU court et le reset natif 2×4 passent ; le probe réel des deux
+   agents reste incomplet sur changement d'alimentation, sans réponse utile.
    CPU10/GPU0, 600 agents logiques et le slot physique partagé/adaptatif sont
    conservés. Aucun nouveau GPU/cache n'est activé dans la production RONIN.
 5. **Les paliers +20 %, 0,5, 1, 3 ou 5 tok/s ne sont pas démontrés ici.**
@@ -601,8 +633,11 @@ sur cette branche expérimentale, sans fusion ni remplacement de production.
    pas une impossibilité universelle à 0,5 tok/s, mais les mesures ne permettent
    aucune promesse à ce niveau.
 
-**Configuration retenue : backend CPU10/GPU0 existant.** Tail5 reste un candidat
-expérimental au bénéfice court mesuré. La validation longue, EOS, multi-requête
-réelle et la reprise du cycle cache corrigé demandent un Mac ouvert ; la garde
-refuse actuellement le matériel fermé. Cette limite ne justifie ni suppression
-des protections, ni remplacement du modèle ou de sa quantification.
+**Configuration de production conservée : backend CPU10/GPU0 existant.**
+CPU10/GPU0 + `MAP_NOCACHE` constitue un profil expérimental dont les cas
+numériques32, EOS88 et reset2×4 sont documentés. Il n'est pas une preuve de
+stabilité durable des 600 agents. Tail5 conserve seulement son bénéfice court
+mesuré ; les nouvelles voies GPU/cache restent expérimentales et désactivées
+en production. Les poids, quantification, limites mémoire et slot physique
+partagé/adaptatif sont conservés. Aucun objectif de vitesse ne justifie de
+supprimer les protections.
