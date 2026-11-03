@@ -1,0 +1,326 @@
+--- cpu-v4/native_prefill.cpp
++++ noblas-nocopy-probe128/native_prefill.cpp
+@@ -1,4 +1,6 @@
+-// ISOLATED UNQUALIFIED v4: 16-column windows, CPU8 odd tails, absolute fences, noBLAS.
++// SOURCE-ONLY UNQUALIFIED: CPU v4 fences/tails + noBLAS + exact existing NoCopy provider.
++// probe128 evaluates only request0 positions0..127; full prompt IDs remain unchanged.
++// No artificial logits at128, no continuation, and no completed full arm.
+ // Research diagnostic: real multi-token prefill and full sequence snapshots.
+ // No production routing or arithmetic changes. The Python owner enforces guards.
+ #include "llama.h"
+@@ -18,6 +20,8 @@
+ #include <libproc.h>
+ #include <map>
+ #include <mach/mach_time.h>
++#include <mach-o/dyld.h>
++#include <sys/stat.h>
+ #include <sstream>
+ #include <stdexcept>
+ #include <sys/resource.h>
+@@ -26,7 +30,7 @@
+ 
+ using json = nlohmann::json;
+ using steady = std::chrono::steady_clock;
+-static const char * const prefill_chunk_policy = "cpu8-tail-global-fences208-no-blas-v4";
++static const char * const prefill_chunk_policy = "cpu8-tail-global-fences208-no-blas-v4-nocopy-probe128-v1";
+ static const std::vector<int> prefill_fences = {128,208,256,384,512};
+ static const char * const cpu_accelerator_policy = "unregister-BLAS-before-model-v1";
+ static int prefill_fence_end(int offset, int end) {
+@@ -126,9 +130,47 @@
+     cp.n_threads=cp.n_threads_batch=10;cp.op_offload=false;cp.offload_kqv=false;cp.moe_cache_size=0;
+     return cp;
+ }
++static json bridge_description() {
++    auto * reg=ggml_backend_reg_by_name("CPU");
++    auto features=reg ? (ggml_backend_get_features_t)ggml_backend_reg_get_proc_address(reg,"ggml_backend_get_features") : nullptr;
++    bool compiled=false;
++    if(features) for(auto * item=features(reg);item && item->name;++item) {
++        if(std::string(item->name)=="CPU_METAL_Q8_BRIDGE_COMPILED" && item->value && std::string(item->value)=="1")compiled=true;
++    }
++    const char * flag=std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++    const bool requested=flag && std::string(flag)=="1";
++    const char * key=std::getenv("AIRLLM_CPU_METAL_Q8_CANONICAL_SHA256");
++    return {{"execution_backend",requested ? "native_cpu_with_metal_q8_bridge" : "native_cpu"},
++        {"cpu_metal_q8_bridge_compiled",compiled},{"gpu_execution_possible",requested && compiled},
++        {"gpu_bridge_requested",requested},{"gpu_policy_sha256",key ? key : ""},
++        {"weight_storage_policy","cpu_originals_nocopy_view"},{"permanent_gpu_weight_bytes",0}};
++}
++static json native_linkage_description() {
++    json images=json::array();
++    for(uint32_t index=0;index<_dyld_image_count();++index) {
++        const char * name=_dyld_get_image_name(index);if(!name)continue;
++        const std::filesystem::path image=name;const auto base=image.filename().string();
++        if(base.rfind("libggml",0)!=0 && base.rfind("libllama",0)!=0)continue;
++        const auto canonical=std::filesystem::weakly_canonical(image).string();
++        if(std::find(images.begin(),images.end(),canonical)==images.end())images.push_back(canonical);
++    }
++    return {{"loaded_native_images",images}};
++}
++static json native_resource_context() {
++    const char * flag=std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++    const bool requested=flag && std::string(flag)=="1";
++    json baseline=nullptr;
++    if(requested) {
++        const char * raw=std::getenv("AIRLLM_CPU_METAL_Q8_SWAP_BASELINE_BYTES");
++        if(!raw || !*raw || std::strlen(raw)>20 || std::strspn(raw,"0123456789")!=std::strlen(raw))
++            throw std::runtime_error("explicit initial watchdog swap baseline required");
++        baseline=uint64_t(std::stoull(raw));
++    }
++    return {{"schema",1},{"gpu_bridge_requested",requested},{"native_guard_swap_baseline_bytes",baseline}};
++}
+ static json parameter_description(int ub) {
+     const auto cp=context_parameters(ub);
+-    return {{"n_ctx",cp.n_ctx},{"n_batch",cp.n_batch},{"n_ubatch",cp.n_ubatch},{"n_seq_max",cp.n_seq_max},
++    json described={{"n_ctx",cp.n_ctx},{"n_batch",cp.n_batch},{"n_ubatch",cp.n_ubatch},{"n_seq_max",cp.n_seq_max},
+         {"n_rs_seq",cp.n_rs_seq},{"n_outputs_max",cp.n_outputs_max},{"n_outputs_max_per_seq",cp.n_outputs_max_per_seq},
+         {"n_threads",cp.n_threads},{"n_threads_batch",cp.n_threads_batch},{"type_k",int(cp.type_k)},{"type_v",int(cp.type_v)},
+         {"flash_attn",int(cp.flash_attn_type)},{"offload_kqv",cp.offload_kqv},{"op_offload",cp.op_offload},{"n_gpu_layers",0},
+@@ -137,8 +179,10 @@
+         {"yarn_beta_slow",cp.yarn_beta_slow},{"yarn_orig_ctx",cp.yarn_orig_ctx},{"swa_full",cp.swa_full},{"kv_unified",cp.kv_unified},
+         {"ctx_type",int(cp.ctx_type)},{"pooling_type",int(cp.pooling_type)},{"attention_type",int(cp.attention_type)},
+         {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers},
+-        {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",4},{"tail_reference_microbatch",8},
+-        {"prefill_fences",prefill_fences},{"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},{"cpu_accelerator_policy",cpu_accelerator_policy}};
++        {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",1},{"tail_reference_microbatch",8},
++        {"prefill_fences",prefill_fences},{"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},{"cpu_accelerator_policy",cpu_accelerator_policy},
++        {"diagnostic_scope","one_prompt_128_native_tokens_no_generation"}};
++    described.update(bridge_description());return described;
+ }
+ 
+ static json enforce_backend_policy() {
+@@ -159,20 +203,55 @@
+         {"scope","registration only; legacy backend initialization may use the device"}};
+ }
+ 
++static void require_backend_policy() {
++    if(ggml_backend_reg_by_name("BLAS") || !ggml_backend_reg_by_name("CPU") ||
++       !ggml_backend_dev_by_type(GGML_BACKEND_DEVICE_TYPE_CPU))
++        throw std::runtime_error("CPU required and BLAS forbidden for NoCopy candidate");
++    for(size_t i=0;i<ggml_backend_dev_count();++i)
++        if(ggml_backend_dev_type(ggml_backend_dev_get(i))==GGML_BACKEND_DEVICE_TYPE_ACCEL)
++            throw std::runtime_error("unexpected ACCEL after noBLAS policy");
++}
++static void await_owned_start_gate() {
++    const char * raw=std::getenv("AIRLLM_NOCOPY_START_FD");
++    if(!raw || !*raw || std::strlen(raw)>6 || std::strspn(raw,"0123456789")!=std::strlen(raw))
++        throw std::runtime_error("explicit owned start pipe required before backend/model initialization");
++    const int fd=std::stoi(raw);struct stat st{};
++    if(fstat(fd,&st) || !S_ISFIFO(st.st_mode))throw std::runtime_error("start descriptor is not a pipe");
++    char value=0;
++    if(read(fd,&value,1)!=1 || value!='G')throw std::runtime_error("owned GO gate was not released");
++    close(fd);
++}
++
+ int main(int argc,char ** argv) {
+     llama_model * model=nullptr; llama_context * ctx=nullptr;
+     try {
++        const char * no_blas=std::getenv("AIRLLM_GLM53_CPU_NO_BLAS");
++        if(!no_blas || std::string(no_blas)!="1")throw std::runtime_error("candidate OFF unless explicit noBLAS policy1");
++        const bool metadata=(argc==2 && std::string(argv[1])=="--backend-policy-selftest") ||
++            (argc==3 && std::string(argv[1])=="--state-parameters");
++        if(!metadata)await_owned_start_gate();
++        ggml_backend_load_all();
++        const json backend_observation=enforce_backend_policy();require_backend_policy();
++        const json bridge=bridge_description();
++        const std::string profile=bridge.at("gpu_policy_sha256");
++        if(!bridge.at("gpu_bridge_requested").get<bool>() || !bridge.at("cpu_metal_q8_bridge_compiled").get<bool>() ||
++           profile.size()!=64 || profile.find_first_not_of("0123456789abcdef")!=std::string::npos)
++            throw std::runtime_error("explicit compiled NoCopy bridge and complete GPU profile required");
+         if(argc==2 && std::string(argv[1])=="--backend-policy-selftest") {
+-            ggml_backend_load_all();std::cout<<enforce_backend_policy().dump()<<'\n';return 0;
++            std::cout<<backend_observation.dump()<<'\n';return 0;
+         }
+         if(argc==3 && std::string(argv[1])=="--state-parameters") {
+             const int ub=std::stoi(argv[2]);
+             if(ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128)throw std::runtime_error("invalid microbatch");
+-            std::cout<<parameter_description(ub).dump()<<'\n';return 0;
++            auto descriptor=parameter_description(ub);
++            descriptor["native_linkage"]=native_linkage_description();
++            descriptor["native_resource_context"]=native_resource_context();
++            descriptor["native_backend_policy"]=backend_observation;
++            std::cout<<descriptor.dump()<<'\n';return 0;
+         }
+-        if(argc!=6) throw std::runtime_error("usage: native-prefill FIRST_GGUF PROMPTS_JSON OUTPUT_DIR MICROBATCH full|split|restore");
++        if(argc!=6) throw std::runtime_error("usage: native-prefill FIRST_GGUF PROMPTS_JSON OUTPUT_DIR MICROBATCH probe128");
+         const int ub=std::stoi(argv[4]); const std::string mode=argv[5];
+-        if((ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128) || (mode!="full" && mode!="split" && mode!="restore")) throw std::runtime_error("invalid bounded profile");
++        if((ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128) || mode!="probe128") throw std::runtime_error("invalid bounded profile");
+         const std::filesystem::path root=argv[3];if(std::filesystem::exists(root))throw std::runtime_error("output exists");
+         std::ifstream input(argv[2]);if(!input || std::filesystem::file_size(argv[2])>16*1024*1024)throw std::runtime_error("invalid prompt file");
+         const auto prompts=json::parse(input);
+@@ -190,49 +269,36 @@
+         o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
+         for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
+         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
+-            {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",4},{"prefill_fences",prefill_fences},{"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},
++            {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",1},{"prefill_fences",prefill_fences},
+             {"prefill_chunk_policy_qualified",false},{"tail_reference_microbatch",8},
+             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
+-            {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
+-            {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
++            {"generation_requested",false},{"generation_performed",false},{"functional_agents_qualified",false},
++            {"continuation_policy","disabled; exactly128 prefill tokens"},
+             {"requests",json::array()},{"state_parameters",parameter_description(ub)},
+-            {"output_policy","logits only for the final token of each complete private prompt; no unused vocabulary products per microbatch"},
+-            {"scope","prefill/snapshot and bounded greedy continuity diagnostic; no functional agent EOS qualification"}};
++            {"output_policy","no logits requested at probe boundary128; original full prompts remain unchanged"},
++            {"scope","request0 initial128 only; original prompts unchanged; no completed prompt/EOS/performance qualification"}};
++        report["backend_policy_observation"]=backend_observation;
++        report["native_linkage"]=native_linkage_description();report["native_resource_context"]=native_resource_context();
++        report["native_backend_policy"]=backend_observation;
++        report["diagnostic_scope"]="one_prompt_128_native_tokens_no_generation";
++        report["full_campaign_complete"]=false;report["whole_model_qualified"]=false;
+         save(root/"report.json",report);
+-        ggml_backend_load_all();
+-        report["backend_policy_observation"]=enforce_backend_policy();save(root/"report.json",report);
+-        llama_backend_init(); auto mp=llama_model_default_params();
++        llama_backend_init();require_backend_policy(); auto mp=llama_model_default_params();
+         mp.n_gpu_layers=0;mp.load_mode=LLAMA_LOAD_MODE_MMAP;mp.use_extra_bufts=false;
+         ggml_backend_dev_t devices[]={nullptr};mp.devices=devices;
+         const auto load_start=steady::now();model=llama_model_load_from_file(argv[1],mp);if(!model)throw std::runtime_error("model load failed");
+-        report["model_loads"]=1;report["model_load_seconds"]=seconds(load_start);
++        require_backend_policy();report["model_loads"]=1;report["model_load_seconds"]=seconds(load_start);
+         auto cp=context_parameters(ub);
+         cp.cb_eval=evaluate;cp.cb_eval_user_data=&o;ctx=llama_init_from_model(model,cp);if(!ctx)throw std::runtime_error("context load failed");
+-        const auto * vocab=llama_model_get_vocab(model);const int nv=llama_vocab_n_tokens(vocab);
++        require_backend_policy();const auto * vocab=llama_model_get_vocab(model);const int nv=llama_vocab_n_tokens(vocab);
+         report["vocab_size"]=nv;
+         for(const auto & tokens:ids)for(auto token:tokens)if(token<0 || token>=nv)throw std::runtime_error("invalid prompt token");
+         const std::string key=prompts.at("snapshot_key_sha256");
+         report["snapshot_key_sha256"]=key;
+-        glm53_prefill::prefix_snapshot snapshot;
+-        auto snapshot_metrics=[&]() {
+-            const auto t=snapshot.metrics();
+-            return json({{"bytes",t.bytes},{"reserved_bytes",t.reserved_bytes},{"size_seconds",t.size_seconds},
+-                {"save_seconds",t.save_seconds},{"restore_seconds_total",t.restore_seconds},{"successful_restores",t.successful_restores},
+-                {"sha256",snapshot.ready()?json(snapshot.checksum_sha256()):json(nullptr)}});
+-        };
+-        // Caller supplied conservative native read/write scratch bound, audited
+-        // separately; zero or unavailable means restore mode cannot be admitted.
++        // No common-prefix capture or restore occurs in this diagnostic.
++        // This bound is used only for the already-existing checkpoint128 hash.
+         const size_t scratch=prompts.value("native_snapshot_scratch_bound_bytes",size_t(0));
+-        bool snapshot_resident=false;
+-        const auto budget=[&](size_t bytes,const char * phase) {
+-            const auto u=usage();const size_t rss=u.at("rss_bytes");
+-            // Snapshot payload is not counted twice once resident. The owner
+-            // also watches available reserve, pressure, swap and PID identity.
+-            if(std::string(phase)=="after_snapshot_write")snapshot_resident=true;
+-            const size_t additional=snapshot_resident?scratch:bytes;
+-            if(rss>size_t(8.5*1024*1024*1024) || additional>size_t(8.5*1024*1024*1024)-rss)throw std::runtime_error("snapshot RSS admission refused");
+-            o.batches<<json({{"event",phase},{"reserved_bytes",bytes},{"self",u}}).dump()<<'\n';o.batches.flush();
+-        };
++        if(!scratch || scratch>16*1024*1024)throw std::runtime_error("bounded state-hash scratch required");
+         auto decode=[&](int request,int first,int end,const char * phase) {
+             o.request=request;o.phase=phase;
+             for(int offset=first;offset<end;) {
+@@ -266,90 +332,25 @@
+                 }
+             }
+         };
+-        if(mode=="restore") {
+-            auto start=steady::now();decode(0,0,208,"common_prefix");report["common_prefix_seconds"]=seconds(start);
+-            save(root/"report.json",report);
+-            start=steady::now();
+-            snapshot.capture(ctx,key,208,scratch,budget);
+-            report["snapshot_capture_total_seconds"]=seconds(start);
+-            report["snapshot"]=snapshot_metrics();save(root/"report.json",report);
+-        }
+-        for(int r=0;r<3;++r) {
+-            const auto start=steady::now();const auto before=usage();size_t restored=0;
+-            const auto restore_start=steady::now();
+-            if(mode=="restore") restored=snapshot.restore(ctx,key,ids[r].size()-208,budget);
+-            else llama_memory_clear(llama_get_memory(ctx),true);
+-            const double reset_restore_seconds=seconds(restore_start);
+-            if(mode=="restore") {report["snapshot"]=snapshot_metrics();save(root/"report.json",report);}
+-            if(mode=="split") {decode(r,0,208,"prefix");decode(r,208,ids[r].size(),"suffix");}
+-            else decode(r,restored,ids[r].size(),mode=="restore"?"suffix":"full");
+-            const float * logits=llama_get_logits_ith(ctx,-1);if(!logits)throw std::runtime_error("missing continuation logits");
+-            if(!std::all_of(logits,logits+nv,[](float x){return std::isfinite(x);}))throw std::runtime_error("nonfinite logits");
+-            std::ofstream binary(root/("logits-"+std::to_string(r)+".f32"),std::ios::binary);
+-            binary.exceptions(std::ios::badbit|std::ios::failbit);binary.write(reinterpret_cast<const char *>(logits),nv*sizeof(float));binary.close();
+-            const size_t state_bytes=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
+-            json row={{"request",r},{"agent_id",r==1?600:1},{"prompt_tokens",ids[r].size()},{"computed_tokens",ids[r].size()-restored},
+-                {"prefill_with_reset_restore_seconds",seconds(start)},{"before",before},{"after",usage()},{"restored_prefix_tokens",restored},
+-                {"reset_restore_total_seconds",reset_restore_seconds},
+-                {"logits_sha256",hash_bytes(logits,nv*sizeof(float))},{"sequence_bytes",state_bytes},{"next_position",llama_memory_seq_pos_max(llama_get_memory(ctx),0)+1}};
+-            row["prompt_ids_sha256"]=hash_bytes(ids[r].data(),ids[r].size()*sizeof(llama_token));
+-            row["n_vocab"]=nv;
+-            if(o.diagnostic) {
+-                // A second full-state buffer is explicitly charged. Diagnostic
+-                // payload is freed before the next request, never per identity.
+-                if(state_bytes>256*1024*1024)throw std::runtime_error("final-state diagnostic exceeds256MiB");
+-                const size_t rss=usage().at("rss_bytes");
+-                const size_t cap=size_t(8.5*1024*1024*1024);
+-                if(rss>cap || scratch>cap || state_bytes>cap-scratch || state_bytes+scratch>cap-rss)throw std::runtime_error("final-state diagnostic RSS admission refused");
+-                std::vector<uint8_t> state(state_bytes);
+-                if(llama_state_seq_get_data_ext(ctx,state.data(),state.size(),0,LLAMA_STATE_SEQ_FLAGS_NONE)!=state_bytes)throw std::runtime_error("short final state");
+-                row["sequence_sha256"]=hash_bytes(state.data(),state.size());
+-                std::ofstream state_file(root/("final-state-"+std::to_string(r)+".bin"),std::ios::binary);
+-                state_file.exceptions(std::ios::badbit|std::ios::failbit);
+-                state_file.write(reinterpret_cast<const char *>(state.data()),state.size());
+-            }
+-            row["continuation_complete"]=false;row["continuation"]=json::array();
+-            report["requests"].push_back(row);save(root/"report.json",report);
+-            if(o.diagnostic) {
+-                const auto continuation_start=steady::now();
+-                std::unique_ptr<llama_sampler,decltype(&llama_sampler_free)> sampler(llama_sampler_chain_init(llama_sampler_chain_default_params()),llama_sampler_free);
+-                if(!sampler)throw std::runtime_error("fresh native sampler unavailable");
+-                llama_sampler_chain_add(sampler.get(),llama_sampler_init_greedy());
+-                for(int step=0;step<4;++step) {
+-                    const float * next_logits=llama_get_logits_ith(ctx,-1);
+-                    if(!next_logits || !std::all_of(next_logits,next_logits+nv,[](float x){return std::isfinite(x);}))throw std::runtime_error("continuation logits unavailable or nonfinite");
+-                    const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
+-                    if(rss>cap || size_t(nv)*sizeof(llama_token_data)>cap-rss)throw std::runtime_error("sampler scratch RSS admission refused");
+-                    const auto token=llama_sampler_sample(sampler.get(),ctx,-1);
+-                    if(token<0 || token>=nv)throw std::runtime_error("invalid native greedy token");
+-                    const bool eog=llama_vocab_is_eog(vocab,token);
+-                    std::ofstream vector_file(root/("continuation-logits-"+std::to_string(r)+"-"+std::to_string(step)+".f32"),std::ios::binary);
+-                    vector_file.exceptions(std::ios::badbit|std::ios::failbit);vector_file.write(reinterpret_cast<const char *>(next_logits),nv*sizeof(float));vector_file.close();
+-                    row["continuation"].push_back({{"step",step},{"token",token},{"native_eog",eog},{"logits_sha256",hash_bytes(next_logits,nv*sizeof(float))}});
+-                    report["generation_performed"]=true;
+-                    row["continuation_stop"]=eog?"eos":"diagnostic_budget";
+-                    report["requests"][r]=row;save(root/"report.json",report);
+-                    if(eog || step==3)break;
+-                    auto input_token=token;auto one=llama_batch_get_one(&input_token,1);
+-                    o.request=r;o.offset=step+1;o.batch_index=step+1;o.input_tokens=1;o.phase="continuation";
+-                    if(llama_decode(ctx,one))throw std::runtime_error("continuation decode failed");llama_synchronize(ctx);
+-                }
+-                row["continuation_seconds"]=seconds(continuation_start);
+-                row["continuation_complete"]=true;
+-                const size_t n=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
+-                const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
+-                if(!n || n>256*1024*1024 || rss>cap || scratch>cap || n>cap-scratch || n+scratch>cap-rss)throw std::runtime_error("continuation-state admission refused");
+-                std::vector<uint8_t> state(n);
+-                if(llama_state_seq_get_data_ext(ctx,state.data(),n,0,LLAMA_STATE_SEQ_FLAGS_NONE)!=n)throw std::runtime_error("short continuation state");
+-                row["continuation_state_bytes"]=n;row["continuation_state_sha256"]=hash_bytes(state.data(),n);
+-                row["continuation_next_position"]=llama_memory_seq_pos_max(llama_get_memory(ctx),0)+1;
+-                std::ofstream state_file(root/("continuation-state-"+std::to_string(r)+".bin"),std::ios::binary);
+-                state_file.exceptions(std::ios::badbit|std::ios::failbit);state_file.write(reinterpret_cast<const char *>(state.data()),n);
+-                report["requests"][r]=row;save(root/"report.json",report);
+-            }
+-        }
+-        report["snapshot"]=snapshot_metrics();
+-        report["complete"]=true;save(root/"report.json",report);
++        const auto start=steady::now();const auto before=usage();
++        const auto reset_start=steady::now();llama_memory_clear(llama_get_memory(ctx),true);
++        const double reset_seconds=seconds(reset_start);
++        decode(0,0,128,"probe128");
++        const size_t state_bytes=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
++        json row={{"request",0},{"agent_id",1},{"prompt_tokens",ids[0].size()},
++            {"computed_tokens",128},{"probe_token_first",0},{"probe_token_end",128},
++            {"full_prompt_computed",false},{"status","probe_only"},{"complete",false},
++            {"prefill_with_reset_restore_seconds",seconds(start)},{"before",before},{"after",usage()},
++            {"restored_prefix_tokens",0},{"reset_restore_total_seconds",reset_seconds},
++            {"sequence_bytes",state_bytes},{"next_position",llama_memory_seq_pos_max(llama_get_memory(ctx),0)+1},
++            {"prompt_ids_sha256",hash_bytes(ids[0].data(),ids[0].size()*sizeof(llama_token))},
++            {"continuation",json::array()},{"continuation_complete",false},{"logits_requested_at_probe_end",false}};
++        report["requests"].push_back(row);
++        report["snapshot"]={{"captured",false},{"restored",false}};
++        require_backend_policy();report["native_linkage"]=native_linkage_description();
++        report["native_resource_context"]=native_resource_context();
++        report["diagnostic_window_complete"]=true;
++        report["status"]="probe_only";report["complete"]=false;save(root/"report.json",report);
+         llama_free(ctx);ctx=nullptr;llama_model_free(model);model=nullptr;llama_backend_free();return 0;
+     } catch(const std::exception & e) {
+         std::cerr<<e.what()<<'\n';if(ctx)llama_free(ctx);if(model)llama_model_free(model);return 2;

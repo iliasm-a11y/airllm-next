@@ -1,0 +1,116 @@
+--- a/research/glm53_batched_prefill/native_prefill.cpp
++++ b/research/glm53_batched_prefill/native_prefill.cpp
+@@ -1,3 +1,4 @@
++// ISOLATED UNQUALIFIED v4: 16-column windows, CPU8 odd tails, absolute fences, noBLAS.
+ // Research diagnostic: real multi-token prefill and full sequence snapshots.
+ // No production routing or arithmetic changes. The Python owner enforces guards.
+ #include "llama.h"
+@@ -25,6 +26,28 @@
+ 
+ using json = nlohmann::json;
+ using steady = std::chrono::steady_clock;
++static const char * const prefill_chunk_policy = "cpu8-tail-global-fences208-no-blas-v4";
++static const std::vector<int> prefill_fences = {128,208,256,384,512};
++static const char * const cpu_accelerator_policy = "unregister-BLAS-before-model-v1";
++static int prefill_fence_end(int offset, int end) {
++    int stop=end;
++    for(const int fence:prefill_fences)if(fence>offset && fence<stop)stop=fence;
++    return stop;
++}
++// Absolute fences are shared by full/split/restore. N>16 is reduced to
++// the preceding multiple16; odd9/11/13/15 then retains CPU8's8+1/3/5/7.
++// This controls column chunk geometry only; row/thread shapes still need
++// actual eligibility and numerical evidence, and no fidelity is inferred.
++static int prefill_aligned_take(int raw) {
++    return raw > 16 && raw % 16 != 0 ? raw - raw % 16 : raw;
++}
++static int prefill_take(int ub, int offset, int end) {
++    if ((ub != 8 && ub != 16 && ub != 32 && ub != 64 && ub != 128) || offset<0 || end<=offset)
++        throw std::runtime_error("candidate requires an admitted positive microbatch");
++    const int raw = std::min(ub, prefill_fence_end(offset,end)-offset);
++    const int aligned = prefill_aligned_take(raw);
++    return aligned > 8 && aligned % 2 != 0 ? aligned - aligned % 8 : aligned;
++}
+ #include "../glm53_gpu_v3/state_capture.inc"
+ static double seconds(steady::time_point a) { return std::chrono::duration<double>(steady::now()-a).count(); }
+ static std::string hash_bytes(const void * data, size_t bytes) {
+@@ -113,12 +136,35 @@
+         {"yarn_ext_factor",cp.yarn_ext_factor},{"yarn_attn_factor",cp.yarn_attn_factor},{"yarn_beta_fast",cp.yarn_beta_fast},
+         {"yarn_beta_slow",cp.yarn_beta_slow},{"yarn_orig_ctx",cp.yarn_orig_ctx},{"swa_full",cp.swa_full},{"kv_unified",cp.kv_unified},
+         {"ctx_type",int(cp.ctx_type)},{"pooling_type",int(cp.pooling_type)},{"attention_type",int(cp.attention_type)},
+-        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers}};
++        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers},
++        {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",4},{"tail_reference_microbatch",8},
++        {"prefill_fences",prefill_fences},{"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},{"cpu_accelerator_policy",cpu_accelerator_policy}};
++}
++
++static json enforce_backend_policy() {
++    json before=json::array(),after=json::array();
++    for(size_t i=0;i<ggml_backend_reg_count();++i)before.push_back(ggml_backend_reg_name(ggml_backend_reg_get(i)));
++    auto blas=ggml_backend_reg_by_name("BLAS");
++    if(!blas)throw std::runtime_error("expected original BLAS registry is absent before explicit candidate policy");
++    ggml_backend_unload(blas);
++    if(ggml_backend_reg_by_name("BLAS"))throw std::runtime_error("BLAS removal failed before model creation");
++    for(size_t i=0;i<ggml_backend_dev_count();++i)
++        if(ggml_backend_dev_type(ggml_backend_dev_get(i))==GGML_BACKEND_DEVICE_TYPE_ACCEL)
++            throw std::runtime_error("unexpected accelerator remains after BLAS removal");
++    for(size_t i=0;i<ggml_backend_reg_count();++i)after.push_back(ggml_backend_reg_name(ggml_backend_reg_get(i)));
++    if(!ggml_backend_reg_by_name("CPU"))throw std::runtime_error("ordinary CPU registry is absent");
++    return {{"policy",cpu_accelerator_policy},{"registry_before",before},{"registry_after",after},
++        {"BLAS_registered_after",false},{"accelerator_devices_after",0},{"CPU_registered_after",true},
++        {"model_loaded",false},{"bridge_matrix_dispatches",0},
++        {"scope","registration only; legacy backend initialization may use the device"}};
+ }
+ 
+ int main(int argc,char ** argv) {
+     llama_model * model=nullptr; llama_context * ctx=nullptr;
+     try {
++        if(argc==2 && std::string(argv[1])=="--backend-policy-selftest") {
++            ggml_backend_load_all();std::cout<<enforce_backend_policy().dump()<<'\n';return 0;
++        }
+         if(argc==3 && std::string(argv[1])=="--state-parameters") {
+             const int ub=std::stoi(argv[2]);
+             if(ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128)throw std::runtime_error("invalid microbatch");
+@@ -144,6 +190,8 @@
+         o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
+         for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
+         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
++            {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",4},{"prefill_fences",prefill_fences},{"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},
++            {"prefill_chunk_policy_qualified",false},{"tail_reference_microbatch",8},
+             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
+             {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
+             {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
+@@ -151,7 +199,9 @@
+             {"output_policy","logits only for the final token of each complete private prompt; no unused vocabulary products per microbatch"},
+             {"scope","prefill/snapshot and bounded greedy continuity diagnostic; no functional agent EOS qualification"}};
+         save(root/"report.json",report);
+-        ggml_backend_load_all();llama_backend_init(); auto mp=llama_model_default_params();
++        ggml_backend_load_all();
++        report["backend_policy_observation"]=enforce_backend_policy();save(root/"report.json",report);
++        llama_backend_init(); auto mp=llama_model_default_params();
+         mp.n_gpu_layers=0;mp.load_mode=LLAMA_LOAD_MODE_MMAP;mp.use_extra_bufts=false;
+         ggml_backend_dev_t devices[]={nullptr};mp.devices=devices;
+         const auto load_start=steady::now();model=llama_model_load_from_file(argv[1],mp);if(!model)throw std::runtime_error("model load failed");
+@@ -186,7 +236,11 @@
+         auto decode=[&](int request,int first,int end,const char * phase) {
+             o.request=request;o.phase=phase;
+             for(int offset=first;offset<end;) {
+-                o.offset=offset;const int take=std::min(ub,end-offset);auto start=steady::now();const auto before=usage();
++                o.offset=offset;const int unfenced_take=std::min(ub,end-offset);
++                const int fence_end=prefill_fence_end(offset,end);
++                const int unadjusted_take=std::min(ub,fence_end-offset);
++                const int aligned_take=prefill_aligned_take(unadjusted_take);
++                const int take=prefill_take(ub,offset,end);auto start=steady::now();const auto before=usage();
+                 o.input_tokens=take;o.batch_index=o.next_batch[request]++;
+                 auto batch=llama_batch_get_one(ids[request].data()+offset,take);
+                 std::vector<int8_t> output_flags(take,0);
+@@ -194,6 +248,9 @@
+                 batch.logits=output_flags.data();
+                 const int rc=llama_decode(ctx,batch);llama_synchronize(ctx);
+                 o.batches<<json({{"request",request},{"phase",phase},{"offset",offset},{"tokens",take},
++                    {"unfenced_take",unfenced_take},{"fence_end",fence_end},{"decode_end",end},
++                    {"fence_limited",unadjusted_take!=unfenced_take},{"unadjusted_take",unadjusted_take},
++                    {"aligned_take",aligned_take},{"chunk16_split",aligned_take!=unadjusted_take},{"odd_tail_split",take!=aligned_take},{"prefill_chunk_policy",prefill_chunk_policy},
+                     {"seconds",seconds(start)},{"returncode",rc},{"before",before},{"after",usage()}}).dump()<<'\n';o.batches.flush();
+                 if(rc)throw std::runtime_error("native decode failed");offset+=take;
+                 if(o.diagnostic && (offset%128==0 || offset==208 || offset==int(ids[request].size()))) {

@@ -1,0 +1,21 @@
+{
+  "scope": "shader/pipeline compilation only; existing original guarded build supervisor owns UID/power/resources",
+  "input_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/compile_shader_variant.py": "3a02558d3143dbb973c2db9e99bade4bd7fac1d01fe368205f247a5976006f63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-variants/v2-lvalues.metal": "3b43c87efd531d4fd405a917b8cc637c3d79636684e66d5f1bc021e54c09a6bd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile-shader-only-run2": "9e2b087df7df9d3495339c6d00dba0e44cb5948bfb41cfe4306d0ac5cb9d638a",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile_shader_only.mm": "52082d9eb420d90bfed81b21a85c810d67107959b98f15440f2c4524984a4f33"
+  },
+  "returncode": 67,
+  "stdout": "",
+  "stderr": "SHADER_COMPILE_FAILED In file included from program_source:4:\nIn file included from /System/Library/Frameworks/MetalPerformancePrimitives.framework/Headers/MetalPerformancePrimitives.h:10:\nIn file included from /System/Library/Frameworks/MetalPerformancePrimitives.framework/Headers/MPPTensorOpsMatMul2d.h:411:\n/System/Library/Frameworks/MetalPerformancePrimitives.framework/Headers/__impl/MPPTensorOpsMatMul2dImpl.h:8629:13: error: static_assert failed due to requirement '__tensor_ops_detail::__assert_false_v<int>' \"Unsupported type\"\n            static_assert(__tensor_ops_detail::__assert_false_v<destinationValueType>, \"Unsupported type\");\n            ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/System/Library/Frameworks/MetalPerformancePrimitives.framework/Headers/MPPTensorOpsMatMul2d.h:437:24: note: in instantiation of function template specialization 'mpp::tensor_ops::__mutmul2d_detail::__run<{32, 8, 32, false, true, false, 0}, metal::execution_simdgroups<4>, metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, metal::tensor<threadgroup int, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>>' requested here\n    __mutmul2d_detail::__run<Descriptor, Scope, LeftOperandType,\n                       ^\nprogram_source:33:19: note: in instantiation of function template specialization 'mpp::tensor_ops::matmul2d<{32, 8, 32, false, true, false, 0}, metal::execution_simdgroups<4>>::run<metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, metal::tensor<threadgroup int, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, void>' requested here\n        operation.run(weight_slice,activation_slice,integer_result);\n                  ^\n\n",
+  "status": "shader_compile_failed",
+  "matrix_dispatches": 0,
+  "model_loaded": false,
+  "input_sha256_after": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/compile_shader_variant.py": "3a02558d3143dbb973c2db9e99bade4bd7fac1d01fe368205f247a5976006f63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-variants/v2-lvalues.metal": "3b43c87efd531d4fd405a917b8cc637c3d79636684e66d5f1bc021e54c09a6bd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile-shader-only-run2": "9e2b087df7df9d3495339c6d00dba0e44cb5948bfb41cfe4306d0ac5cb9d638a",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile_shader_only.mm": "52082d9eb420d90bfed81b21a85c810d67107959b98f15440f2c4524984a4f33"
+  }
+}

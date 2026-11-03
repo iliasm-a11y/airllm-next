@@ -1,0 +1,22 @@
+--- a/q2_metal_timer.mm
++++ b/q2_metal_timer.mm
+@@ -69,6 +69,8 @@
+             if (!function) fail(@"kernel entry absent");
+             id<MTLComputePipelineState> pipeline=[device newComputePipelineStateWithFunction:function error:&error];
+             if (!pipeline || error) fail(error.localizedDescription ?: @"pipeline compile failed");
++            if (pipeline.threadExecutionWidth != 32)
++                fail(@"Q2 batch fixture requires SIMD width 32 before dispatch");
+             [pipelines addObject:pipeline];
+         }
+         [all_pipelines addObject:pipelines];
+@@ -138,7 +140,9 @@
+     }
+     NSDictionary* report=suite ? @{@"experiments":results,@"randomized_order":recorded_orders,
+                                     @"device":device.name,@"payload_bytes":@(total)} : results[@"single"];
+-    NSData* json=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted error:&error];
++    NSMutableDictionary* qualified=[report mutableCopy];
++    qualified[@"thread_execution_width"]=@32;
++    NSData* json=[NSJSONSerialization dataWithJSONObject:qualified options:NSJSONWritingPrettyPrinted error:&error];
+     fwrite(json.bytes,1,json.length,stdout); fputc('\n',stdout);
+     return 0;
+ }}

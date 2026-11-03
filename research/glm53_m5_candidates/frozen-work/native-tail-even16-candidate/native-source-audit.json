@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "policy": "cpu8-tail-compatible-v1",
+  "status": "source_only_conditional_hypothesis",
+  "ggml_cpu_source_sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e",
+  "arm_quant_source_sha256": "7b6d89b7172770442c5fe580c5f75c792d3f51ebdd81c56a065765dd6edede8a",
+  "source_base_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "source_locations": {
+    "q8_trait": {
+      "file": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "line": 286
+    },
+    "tiled_precedes_fallback": {
+      "file": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "line": 1317
+    },
+    "odd_columns_force_fallback_nrc1": {
+      "file": "ggml/src/ggml-cpu/ggml-cpu.c",
+      "line": 1523
+    },
+    "arm_q8_nrc_branches": {
+      "file": "ggml/src/ggml-cpu/arch/arm/quants.c",
+      "line": 1153
+    }
+  },
+  "qualification": {
+    "actual_glm_dispatch_proved": false,
+    "compiler_invoked": false,
+    "candidate_binary_available": false,
+    "full_logits_or_states_compared": false,
+    "full_model_qualified": false
+  },
+  "structural_geometry_domain": {
+    "microbatches": [
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "lengths": [
+      1,
+      8192
+    ],
+    "property": "per-token column-parity eligibility matches CPU8; does not prove nrc selected when other conditions/implementations apply"
+  },
+  "counterexample_to_even_plus_one": {
+    "length": 523,
+    "bad_tail": [
+      10,
+      1
+    ],
+    "required_tail": [
+      8,
+      3
+    ]
+  },
+  "scope": "library arithmetic unchanged; scheduling-only candidate, source observation does not establish the first actual GLM divergence"
+}

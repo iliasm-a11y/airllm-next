@@ -1,0 +1,32 @@
+{
+  "model_path": "/Users/macbook/Models/GLM-5.3-Flash-Q2_K_S",
+  "runtime_binary": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/bin/llama-server",
+  "runtime_manifest_file": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4/manifest.json",
+  "expected_runtime_sha256": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83",
+  "verification_file": "/Users/macbook/Documents/Codex/2026-11-03/referenced-chatgpt-conversation-this-is-an/work/memory-recovery-20261103/campaign-3/model-verification.json",
+  "context_tokens": 2048,
+  "threads": 10,
+  "batch_size": 8,
+  "gpu_layers": 0,
+  "cpu_moe": false,
+  "moe_cache_mib": 0,
+  "mmap_demand": true,
+  "expert_prefetch": true,
+  "dense_prefetch": true,
+  "mmap_nocache": true,
+  "allow_unqualified_gpu": false,
+  "limits": {
+    "max_rss_bytes": 9126805504,
+    "max_swap_growth_bytes": 33554432,
+    "warning_swap_growth_bytes": 33554432,
+    "reserve_bytes": 805306368,
+    "base_workspace_bytes": 1073741824,
+    "warning_headroom_bytes": 536870912,
+    "headroom_grace_seconds": 3,
+    "load_timeout_seconds": 900,
+    "request_timeout_seconds": 2700,
+    "warning_grace_seconds": 20,
+    "poll_seconds": 1,
+    "max_pending": 1024
+  }
+}

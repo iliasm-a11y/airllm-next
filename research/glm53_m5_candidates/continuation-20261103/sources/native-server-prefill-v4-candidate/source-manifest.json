@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "source_prepared_not_compiled_not_tested",
+  "prepared_at_utc": "2026-11-03T18:57:46.773406+00:00",
+  "base_noblas_source_manifest": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/source-manifest.json",
+  "base_noblas_source_manifest_sha256": "cc7d0ff0b72ccc5d2f110b72480f5ff003bc561d9506c92ca173bd795e769707",
+  "base_noblas_patch_sha256": "c4c2ab976a94174d6908935cd0b36d39ff948d41a26d2425ec666bfe585a646c",
+  "geometry_helper_source_sha256": "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78",
+  "policy": "glm53-server-monoslot-cpu-noblas-prefill-v4-v1",
+  "runtime_default": "OFF",
+  "files": {
+    "tools/server/airllm-glm53-cpu-no-blas.h": {
+      "sha256": "2131366fbe29f9c27878f9cb178d67947f9d74e4c41a26c54cad4a1fda0b2cb6",
+      "bytes": 9580,
+      "base_noblas_sha256": "2131366fbe29f9c27878f9cb178d67947f9d74e4c41a26c54cad4a1fda0b2cb6"
+    },
+    "tools/server/airllm-glm53-prefill-v4.h": {
+      "sha256": "a9d8e21ff1ade43af52d527dcd1772ef14f25fc4a076bee769ee0b0be7b880f9",
+      "bytes": 8850,
+      "base_noblas_sha256": null
+    },
+    "tools/server/server-context.cpp": {
+      "sha256": "dbec9e0fa7e9c30f352726df370e43e351d010f94cbf6fea37c20768fca48a81",
+      "bytes": 312922,
+      "base_noblas_sha256": "4f66291910748f90cc8a89b0c4402d43baeb45c02e1cedc034747824d08addb5"
+    },
+    "tools/server/server.cpp": {
+      "sha256": "2ccf44497cb373e2e61447912759b279d7ed57c0b39ad4c63957d6f347de07aa",
+      "bytes": 33390,
+      "base_noblas_sha256": "65f6d601d93d49c6034ca39c47dbfac873c10fae25df960a78a41c6119142e4b"
+    }
+  },
+  "patch_sha256": "d1d86206ac41c76ecff1b1cffafd7a1a0b1f959adbd46a9996179b47b8dd3f42",
+  "tests_executed": 0,
+  "ast_checks_executed": 0,
+  "build_calls": 0,
+  "native_calls": 0,
+  "model_loads": 0,
+  "gpu_commands": 0,
+  "new_binary_sha256": null,
+  "raw_numeric_instrumentation": false,
+  "full_model_fidelity_qualified": false,
+  "cache_qualified": false,
+  "functional_agents_qualified": false,
+  "performance_qualified": false,
+  "original_sources_or_libraries_modified": false,
+  "readme_sha256": "13b36bc6df5ba3337726ca7bcc60d7ae7041326424412fc920d335a41157f28a",
+  "build_recipe_sha256": "4d4b7d4bdc1752ff22f16e5f7d0e321f21a2daf3e0b99972e9a87afc95a80464",
+  "apply_check": null,
+  "independent_review": "revision2_recheck_pending",
+  "source_revision": 2,
+  "supersedes_source_manifest_sha256": "34dd7c68a8dbf13d577f911a30633a287104bff7dd41d92f9b8438076662a365",
+  "source_review_corrections": [
+    "native descriptor cp.type_k/type_v fields",
+    "swa_fulltrue exactly as helper + required --swa-full",
+    "actual parsed default sampler chain and all modifier defaults pinned; no request rewrite"
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "status": "prepared_not_compiled_not_executed",
+  "cases": [
+    {
+      "id": "m8192-k2048-n8-normal",
+      "M": 8192,
+      "K": 2048,
+      "N": 8,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k2048-n16-normal",
+      "M": 8192,
+      "K": 2048,
+      "N": 16,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k2048-n32-normal",
+      "M": 8192,
+      "K": 2048,
+      "N": 32,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k2048-n64-normal",
+      "M": 8192,
+      "K": 2048,
+      "N": 64,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k2048-n128-normal",
+      "M": 8192,
+      "K": 2048,
+      "N": 128,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k4096-n8-normal",
+      "M": 8192,
+      "K": 4096,
+      "N": 8,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k4096-n16-normal",
+      "M": 8192,
+      "K": 4096,
+      "N": 16,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k4096-n32-normal",
+      "M": 8192,
+      "K": 4096,
+      "N": 32,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k4096-n64-normal",
+      "M": 8192,
+      "K": 4096,
+      "N": 64,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m8192-k4096-n128-normal",
+      "M": 8192,
+      "K": 4096,
+      "N": 128,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m1536-k4096-n8-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 8,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m1536-k4096-n32-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 32,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m1536-k4096-n128-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 128,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m2048-k2048-n32-normal",
+      "M": 2048,
+      "K": 2048,
+      "N": 32,
+      "mode": "normal",
+      "expectation": "gpu"
+    },
+    {
+      "id": "m1536-k2048-n1-normal",
+      "M": 1536,
+      "K": 2048,
+      "N": 1,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k2048-n6-normal",
+      "M": 1536,
+      "K": 2048,
+      "N": 6,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k2048-n14-normal",
+      "M": 1536,
+      "K": 2048,
+      "N": 14,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k4096-n1-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 1,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k4096-n6-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 6,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k4096-n14-normal",
+      "M": 1536,
+      "K": 4096,
+      "N": 14,
+      "mode": "normal",
+      "expectation": "cpu_fallback"
+    },
+    {
+      "id": "m1536-k4096-n8-subnormal-x",
+      "M": 1536,
+      "K": 4096,
+      "N": 8,
+      "mode": "subnormal-x",
+      "expectation": "cpu_decline"
+    },
+    {
+      "id": "m1536-k2048-n8-subnormal-w",
+      "M": 1536,
+      "K": 2048,
+      "N": 8,
+      "mode": "subnormal-w",
+      "expectation": "cpu_decline"
+    },
+    {
+      "id": "m2048-k4096-n8-late-subnormal-w",
+      "M": 2048,
+      "K": 4096,
+      "N": 8,
+      "mode": "late-subnormal-w",
+      "expectation": "fatal_after_terminal_tile"
+    }
+  ],
+  "oracle": "ordinary CPU10 graph dispatcher, bridgeOFF, separate process, same new native package",
+  "candidate": "bridgeON; CPU_Mapped + WEIGHTS; original native CPU Q8_0 row quantization",
+  "processes_max": 46,
+  "threads_per_process": 10,
+  "max_weight_bytes": 35651584,
+  "max_output_bytes_per_process": 4194304,
+  "max_logical_fixture_payload_bytes": 55788224,
+  "logical_fixture_limit_bytes": 67108864,
+  "fixed_gpu_payload_bytes": 8028160,
+  "metal_device_allocation_ceiling_bytes": 67108864,
+  "child_rss_ceiling_bytes": 134217728,
+  "controller_rss_ceiling_bytes": 134217728,
+  "controller_additional_reservation_bytes": 67108864,
+  "global_deadline_seconds": 240,
+  "child_deadline_seconds": 20,
+  "sampling_interval_seconds": 0.1,
+  "planned_raw_output_bytes": 35872768,
+  "bitexact_cpu_contract": "all float32 bits compared separately, including signed zero",
+  "metal_tolerance": {
+    "atol": 0.001,
+    "rtol": 0.0001,
+    "formula": "abs(candidate-reference)<=atol+rtol*abs(reference)"
+  },
+  "use_ref": false,
+  "full_model_qualified": false,
+  "model_loaded": false,
+  "measured_elapsed_seconds": null,
+  "observed_peak_child_rss_bytes": null,
+  "observed_peak_controller_rss_bytes": null,
+  "device_allocated_observed_peak_bytes": null,
+  "unmeasured_driver_residency_bytes": null,
+  "physical_ssd_reads": null,
+  "pending_timeout_injection_tested": false,
+  "terminal_command_error_injection_tested": false,
+  "scope": "finite synthetic dense projections and bounded deliberate late-scale failure; no routing/logits/KDA/EOS/GLM performance"
+}

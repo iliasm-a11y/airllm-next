@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "scope": "bounded Q8 component, native ARM nrc=2 oracle; not GLM prefill",
+  "passed": false,
+  "reports": [
+    {
+      "device": "Apple M5",
+      "payload_bytes": 1968,
+      "median_command_wall_seconds": 0.000478792,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 1.8125007045455277e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000478792
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        1.8125007045455277e-05
+      ],
+      "known_host_device_payload_bound_bytes": 3912,
+      "matmul_dimensions": {
+        "M_rows": 10,
+        "N_tokens": 8,
+        "K_width": 32
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 80,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 3584,
+      "median_command_wall_seconds": 0.000556291,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 2.083332947222516e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000556291
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        2.083332947222516e-05
+      ],
+      "known_host_device_payload_bound_bytes": 7144,
+      "matmul_dimensions": {
+        "M_rows": 10,
+        "N_tokens": 16,
+        "K_width": 32
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 160,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 6816,
+      "median_command_wall_seconds": 0.000571416,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 2.0874998881481588e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000571416
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        2.0874998881481588e-05
+      ],
+      "known_host_device_payload_bound_bytes": 13608,
+      "matmul_dimensions": {
+        "M_rows": 10,
+        "N_tokens": 32,
+        "K_width": 32
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 320,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 13280,
+      "median_command_wall_seconds": 0.00050875,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 1.8333332263864577e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.00050875
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        1.8333332263864577e-05
+      ],
+      "known_host_device_payload_bound_bytes": 26536,
+      "matmul_dimensions": {
+        "M_rows": 10,
+        "N_tokens": 64,
+        "K_width": 32
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 640,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 26208,
+      "median_command_wall_seconds": 0.000519958,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 2.0125000446569175e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000519958
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        2.0125000446569175e-05
+      ],
+      "known_host_device_payload_bound_bytes": 52392,
+      "matmul_dimensions": {
+        "M_rows": 10,
+        "N_tokens": 128,
+        "K_width": 32
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 1280,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 5776,
+      "median_command_wall_seconds": 0.000549583,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 3.037499845959246e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000549583
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        3.037499845959246e-05
+      ],
+      "known_host_device_payload_bound_bytes": 11528,
+      "matmul_dimensions": {
+        "M_rows": 14,
+        "N_tokens": 8,
+        "K_width": 96
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 112,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 10112,
+      "median_command_wall_seconds": 0.000724625,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 3.6749996070284396e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000724625
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        3.6749996070284396e-05
+      ],
+      "known_host_device_payload_bound_bytes": 20200,
+      "matmul_dimensions": {
+        "M_rows": 14,
+        "N_tokens": 16,
+        "K_width": 96
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 224,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 18784,
+      "median_command_wall_seconds": 0.000499084,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 2.849999873433262e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000499084
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        2.849999873433262e-05
+      ],
+      "known_host_device_payload_bound_bytes": 37544,
+      "matmul_dimensions": {
+        "M_rows": 14,
+        "N_tokens": 32,
+        "K_width": 96
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 448,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 36128,
+      "median_command_wall_seconds": 0.000528292,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 2.9416667530313134e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000528292
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        2.9416667530313134e-05
+      ],
+      "known_host_device_payload_bound_bytes": 72232,
+      "matmul_dimensions": {
+        "M_rows": 14,
+        "N_tokens": 64,
+        "K_width": 96
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 896,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": false,
+        "bit_mismatches": 317,
+        "max_abs_error": 1.9073486328125e-06
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 70816,
+      "median_command_wall_seconds": 0.000519291,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 3.2500000088475645e-05,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.000519291
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        3.2500000088475645e-05
+      ],
+      "known_host_device_payload_bound_bytes": 141608,
+      "matmul_dimensions": {
+        "M_rows": 14,
+        "N_tokens": 128,
+        "K_width": 96
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 1792,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": false,
+        "bit_mismatches": 656,
+        "max_abs_error": 3.814697265625e-06
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 306188,
+      "median_command_wall_seconds": 0.00121525,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0007442083297064528,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.00121525
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0007442083297064528
+      ],
+      "known_host_device_payload_bound_bytes": 612352,
+      "matmul_dimensions": {
+        "M_rows": 32,
+        "N_tokens": 8,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 256,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 473100,
+      "median_command_wall_seconds": 0.001244459,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0007611249966430478,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.001244459
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0007611249966430478
+      ],
+      "known_host_device_payload_bound_bytes": 946176,
+      "matmul_dimensions": {
+        "M_rows": 32,
+        "N_tokens": 16,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 512,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 806924,
+      "median_command_wall_seconds": 0.001187875,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0007593749978695996,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.001187875
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0007593749978695996
+      ],
+      "known_host_device_payload_bound_bytes": 1613824,
+      "matmul_dimensions": {
+        "M_rows": 32,
+        "N_tokens": 32,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 1024,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "max_abs_error": 0.0
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 1474572,
+      "median_command_wall_seconds": 0.001324917,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0008078750033746473,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.001324917
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0008078750033746473
+      ],
+      "known_host_device_payload_bound_bytes": 2949120,
+      "matmul_dimensions": {
+        "M_rows": 32,
+        "N_tokens": 64,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 2048,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": false,
+        "bit_mismatches": 1791,
+        "max_abs_error": 9.1552734375e-05
+      }
+    },
+    {
+      "device": "Apple M5",
+      "payload_bytes": 2809868,
+      "median_command_wall_seconds": 0.001450792,
+      "warmup_commands": 1,
+      "median_gpu_seconds": 0.0009629583364585415,
+      "stages_per_command": 2,
+      "command_wall_seconds": [
+        0.001450792
+      ],
+      "clock": "MTLCommandBuffer.GPUEndTime-GPUStartTime",
+      "gpu_seconds": [
+        0.0009629583364585415
+      ],
+      "known_host_device_payload_bound_bytes": 5619712,
+      "matmul_dimensions": {
+        "M_rows": 32,
+        "N_tokens": 128,
+        "K_width": 4096
+      },
+      "dot_dispatches_per_batch": 1,
+      "weight_reuse_tokens_per_threadgroup": 8,
+      "static_threadgroup_bytes": 576,
+      "shader_sha256": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+      "bit_identical": true,
+      "activation_bit_identical": true,
+      "compared_outputs": 4096,
+      "max_abs_error": 0.0,
+      "input_kind": "synthetic original-format Q8 weights and synthetic activation; not GLM captured input",
+      "passed": true,
+      "cpu10_graph_comparison": {
+        "bit_identical": false,
+        "bit_mismatches": 3638,
+        "max_abs_error": 0.0001373291015625
+      }
+    }
+  ],
+  "native_cpu_dylib_sha256": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf",
+  "cpu10_graph_passed": false,
+  "process_peak_rss_bytes": 50544640,
+  "limits": [
+    "No complete model integration or speedup qualification",
+    "Warm prepared weights; no SSD claim",
+    "CPU oracle ctypes calls are not CPU10 timing",
+    "Only even-row nrc=2 arithmetic is implemented",
+    "Q2 experts, KDA, attention and mHC remain outside this component"
+  ],
+  "original_report_sha256": "690a11691e5b149168a3398463960d2882baffccdf8cea2db67bc782da921bdc",
+  "component_nrc2_passed": true,
+  "consolidation_note": "Aggregate passed now includes CPU10 graph comparison; original raw report retained separately. No new measurement. Internal guard sampling was added after these component runs; no missing telemetry is inferred.",
+  "artifacts_sha256": {
+    "metal_q8.metal": "9dfb78a4901a1a876a394671640fddef07313203dcf19e68cd1b014ceb75cb83",
+    "metal_cpu_graph.cpp": "2bab56cf7dcacdea2dd79c420d9037922bdf2f0a3c209295f36380fedefcde8e",
+    "metal-cpu-graph.dylib": "31fa5dc21ce87e2a95099e73a2468d217f9340962af561f9794d956ccd2fe42a",
+    "metal-timer": "6c990ddebd0fe73502c2182e5318d1147b4ea4ccbe88003a1a9e5781dafea035"
+  }
+}

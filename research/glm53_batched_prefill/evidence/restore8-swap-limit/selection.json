@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "scope": "Closed failed restore8: firstrequest raw logits/state/4continuations/poststate exact; secondrequest interrupted after536of542; no thirdrequest. No full cache/numeric/netgain qualification.",
+  "classification": {
+    "status": "failed",
+    "error_code": "SWAP_LIMIT",
+    "observed_global_swap_growth_bytes": 41025536,
+    "allowed_global_swap_growth_bytes": 33554432,
+    "native_returncode": -15,
+    "owned_cleanup_verified": true,
+    "power_integrity": true
+  },
+  "rows": [
+    {
+      "file": "summary.json.gz",
+      "raw_bytes": 9476,
+      "raw_sha256": "d5d0a81e8b164d8b81ee2b595119a9c0f887619e45938d360d17fedd9dae04d3",
+      "gzip_bytes": 3706,
+      "gzip_sha256": "dfcae6847c5f20a91189481a8b54b51f02d1266cc82fd8aae04bb52a401fc9a4"
+    },
+    {
+      "file": "first-request-raw-check.json.gz",
+      "raw_bytes": 2589,
+      "raw_sha256": "6f1d84b58846a1a7c90f6a5298bf65ef5ed4a8f098af3b480be154df45aff6b4",
+      "gzip_bytes": 630,
+      "gzip_sha256": "75772a76aeb6fde5b7934589cfbf13fe6c737606a0c28cb8b9e2e08aad75b14d"
+    },
+    {
+      "file": "strict-guard-refusal.json.gz",
+      "raw_bytes": 600,
+      "raw_sha256": "2c0be7fe8295fb75980ebb0cef80aaf9b398da09ac15d09c7984fc90643adef6",
+      "gzip_bytes": 385,
+      "gzip_sha256": "d808317a3e1e8be92b89b484df94990c88b49fe4113e2ea2c39b8f15e037aa4f"
+    },
+    {
+      "file": "cleanup-check.json.gz",
+      "raw_bytes": 1128,
+      "raw_sha256": "52204bd9690fc198b14829d8f17d55d09f2388e2d97e0ec907c477e0ac5b5d0d",
+      "gzip_bytes": 499,
+      "gzip_sha256": "52b6ad6cd62a991ce00ba90e5aeaea53fe2af1da07d214d591fa81dffc7afd5e"
+    },
+    {
+      "file": "guard.json.gz",
+      "raw_bytes": 13174214,
+      "raw_sha256": "c571ad8f47ac95f4e2930f8a1e5a567bfeade347ee9f01aa5af19261cd3fcdcb",
+      "gzip_bytes": 979599,
+      "gzip_sha256": "99f562cc7129af4af07229df268519e340730ab78d76813dbdb6a0b713ac5d41"
+    },
+    {
+      "file": "uid-supervisor.json.gz",
+      "raw_bytes": 5190,
+      "raw_sha256": "472b5fa382866ebb9d8c3333ebf4ed97e57db2c9de73abaa871a386e83c5a599",
+      "gzip_bytes": 1733,
+      "gzip_sha256": "48d513cdcc7691c3c9a1d007ddfe01bc510ecdad686201074c2845524689d122"
+    },
+    {
+      "file": "report.json.gz",
+      "raw_bytes": 4224,
+      "raw_sha256": "2763a6c1593400316ec89bbbb83fd03d169741e18fac6e9d4d3ee829b77aabd9",
+      "gzip_bytes": 1609,
+      "gzip_sha256": "bfb05474a9c63f958b07ccdb77dc5261466f0e955bf37265940dc107cd20d152"
+    },
+    {
+      "file": "batches.jsonl.gz",
+      "raw_bytes": 51665,
+      "raw_sha256": "69f7ec239ede397cabf05dc7a50e14a8553629641b31292ddd0e29abe5f0776a",
+      "gzip_bytes": 7593,
+      "gzip_sha256": "460bc2254356e3582ebb10da940724b5b24cad8be719ab8e4d0ff71b255ff0bf"
+    },
+    {
+      "file": "checkpoints.jsonl.gz",
+      "raw_bytes": 3489,
+      "raw_sha256": "c14a88e7af00d8abb23bf67f0f72aad48d7df58b7b53b188a8d336a51b1a6718",
+      "gzip_bytes": 1084,
+      "gzip_sha256": "8f36957f52d12300e577775ed00cc7b1450363c77df76949b1e186885927c011"
+    },
+    {
+      "file": "snapshot-key-manifest.json.gz",
+      "raw_bytes": 6853,
+      "raw_sha256": "ad8d2c9fba79a2753a6e66d64a2a28524be31c4d8d9e00321b736a0d34ebf899",
+      "gzip_bytes": 2517,
+      "gzip_sha256": "7738915db4733ebad06231d2080b17e6c604799b18b71fc762a451dd8b528ff6"
+    },
+    {
+      "file": "state-writes.jsonl.gz",
+      "raw_bytes": 8818982,
+      "raw_sha256": "d13c9c7c55d70306fdc67aed6d75e8083a5305d5fb1c4872e0cdf4e6bd00a6b9",
+      "gzip_bytes": 945479,
+      "gzip_sha256": "f5ff884136b98f7b09d04488ff49982da42d915e07f65bdca411e595c23aaccc"
+    },
+    {
+      "file": "tensors.jsonl.gz",
+      "raw_bytes": 4592721,
+      "raw_sha256": "16120d26a5dfec5747f9c2ae77d7f60f9b58e19b94c8d4bdb7f0394f2d752bf9",
+      "gzip_bytes": 666144,
+      "gzip_sha256": "d30fec7136b5b8d2120821199228bb609b5a4da207032cc6c5084ae75d8e943e"
+    },
+    {
+      "file": "continuation-tensors.jsonl.gz",
+      "raw_bytes": 129606,
+      "raw_sha256": "0f477315bd953c82e94ba9528c05a5ad2664e928ac8d8d38d016e43245e9ce49",
+      "gzip_bytes": 19212,
+      "gzip_sha256": "b97a0452a58b590157d2fd98d857fedd7a6740fd4abe4cb53394ee365e358a90"
+    },
+    {
+      "file": "continuation-state-writes.jsonl.gz",
+      "raw_bytes": 246225,
+      "raw_sha256": "860372439c774b38b4cc3967a4ed2272d2261b6e7c4c2614e60ccf1ee78b0132",
+      "gzip_bytes": 26761,
+      "gzip_sha256": "7b5ee35d170db8322dd0e195776a74f28ef9113bbeb3ba9f4f4cb6e862d695cf"
+    },
+    {
+      "file": "native-stderr.log.gz",
+      "raw_bytes": 378917,
+      "raw_sha256": "ab7e41820211999eb6208a55fdf674d049ae7241ce8dd58126bd41917a140a68",
+      "gzip_bytes": 17746,
+      "gzip_sha256": "f820dabad29c310674ba38fa8dc422e894fa4d9d7d100aa4d1cd35e6e622d16c"
+    }
+  ],
+  "excluded": [
+    "numeric binary payloads remainlocal",
+    "modelweights",
+    "APIkeys",
+    "personal applicationdata"
+  ],
+  "transformation": "lossless gzip only; every decompressed byte verified equal"
+}

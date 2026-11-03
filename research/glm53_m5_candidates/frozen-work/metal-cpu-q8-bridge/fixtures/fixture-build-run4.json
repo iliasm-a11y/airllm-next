@@ -1,0 +1,128 @@
+{
+  "schema_version": 2,
+  "status": "built_metadata_only_smoked",
+  "created_at_utc": "2026-11-03T16:16:33.183072+00:00",
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/clang++",
+    "-isysroot",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "-std=c++17",
+    "-O3",
+    "-Wno-deprecated-declarations",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/vendor",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp",
+    "-L",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin",
+    "-Wl,-rpath,/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin",
+    "-lllama",
+    "-lggml",
+    "-lggml-base",
+    "-lggml-cpu",
+    "-o",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-fixture"
+  ],
+  "binary": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-fixture",
+  "package_build": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4",
+  "input_roles": {
+    "fixture_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp",
+    "build_script": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py",
+    "controller_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py",
+    "header:include/llama.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/include/llama.h",
+    "header:ggml/include/ggml.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml.h",
+    "header:ggml/include/ggml-backend.h": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml-backend.h",
+    "header:vendor/nlohmann/json.hpp": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/vendor/nlohmann/json.hpp",
+    "provider_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-build.json",
+    "driver_receipt": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/driver-build.json",
+    "profile": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/gpu-profile.json"
+  },
+  "inputs_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp": "afbee548048a14408437729ca555feea82d4c34352473385d608e5d5c88ddb5d",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py": "81818bf60ba5117920c5f6f5b5891783876b3d18414a66af1107600b456839b3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py": "f66dc8de5471c6b669ca9d9ac26563817dd540e999a0221f4004aa9960c89751",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/include/llama.h": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml-backend.h": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/vendor/nlohmann/json.hpp": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-build.json": "a9f8e5a6ed313a91a36b44791004a70e42b18b0ac04437bc7f8eb2ce7031de56",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/driver-build.json": "d7b98102bbdb85369f91eade629eaa22fc5516795789e8d1b731774d9814684f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/gpu-profile.json": "460bfee4bb8e4ee30cd0e67c19190e3e5824d74bc91cf79b47bdb036441ee22b"
+  },
+  "planned_headers": {
+    "include/llama.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/include/llama.h",
+      "sha256": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91"
+    },
+    "ggml/include/ggml.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/ggml/include/ggml.h",
+      "sha256": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91"
+    },
+    "ggml/include/ggml-backend.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/source/ggml/include/ggml-backend.h",
+      "sha256": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3"
+    },
+    "vendor/nlohmann/json.hpp": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/vendor/nlohmann/json.hpp",
+      "sha256": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b"
+    }
+  },
+  "native_libraries_sha256": {
+    "ggml": "661a4379b9f3e714dd103394692342cf79bbf06a195eea4754608cec2d473e74",
+    "ggml-base": "510ffbb8c07beb1a990252065f94bb85762c746379651cf0626f7eb163fd016d",
+    "ggml-cpu": "c5e676c79a844d231fe1ee9ead565a89a72d5df7b99ad437e9b241bd9b8b166d",
+    "ggml-blas": "e3d8725fa62a18e0a39768992acaa2f7d1f50d7ba58039a909b707d11487c69d",
+    "ggml-metal": "81c11057966a5645fcff6ba188ed7fd1973927f27ced00a0b77467e4e6af0c26",
+    "llama": "3fced7ec25741c64905aee7316b7d41c7ef4a2fe18e320a1299ad00165370755"
+  },
+  "compile_timeout_seconds": 120,
+  "metadata_smoke_timeout_seconds": 15,
+  "model_loaded": false,
+  "gpu_commands": 0,
+  "build_performed": true,
+  "measured_compile_seconds": 1.0474561669980176,
+  "inputs_before": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp": "afbee548048a14408437729ca555feea82d4c34352473385d608e5d5c88ddb5d",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py": "81818bf60ba5117920c5f6f5b5891783876b3d18414a66af1107600b456839b3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py": "f66dc8de5471c6b669ca9d9ac26563817dd540e999a0221f4004aa9960c89751",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/include/llama.h": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml-backend.h": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/vendor/nlohmann/json.hpp": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-build.json": "a9f8e5a6ed313a91a36b44791004a70e42b18b0ac04437bc7f8eb2ce7031de56",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/driver-build.json": "d7b98102bbdb85369f91eade629eaa22fc5516795789e8d1b731774d9814684f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/gpu-profile.json": "460bfee4bb8e4ee30cd0e67c19190e3e5824d74bc91cf79b47bdb036441ee22b"
+  },
+  "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.2.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin",
+  "compiler_binary_sha256": "fc5e3cbba6ad54059295cad716aacb05ace8235f5f7a6031f1d8c15d24bd6d66",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "codesign": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-fixture: replacing existing signature\n"
+  },
+  "binary_sha256": "129e517d95b1f36f936fa453894d5d9efac1de967b12ea34de1a7a0c1826f308",
+  "metadata_smoke": {
+    "returncode": 0,
+    "stdout": "{\"cpu_metal_q8_bridge_compiled\":true,\"fixture\":\"cpu-mapped-q8-graph-v1\",\"native_linkage\":{\"loaded_native_images\":[\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libllama.0.8.0.dylib\",\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libggml.0.28.0.dylib\",\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libggml-base.0.28.0.dylib\",\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libggml-cpu.0.28.0.dylib\",\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libggml-blas.0.28.0.dylib\",\"/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/runtime/bin/libggml-metal.0.28.0.dylib\"]},\"quantizer\":\"native_cpu_Q8_0_from_float\",\"schema\":1,\"threads\":10,\"uses_reference_mode\":false}\n",
+    "stderr": "ggml_metal_device_init: testing tensor API for f16 support\nggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'\nggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x105ddb8c0 | th_max = 1024 | th_width =   32\nggml_metal_device_init: testing tensor API for bfloat support\nggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'\nggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x105ddbcc0 | th_max = 1024 | th_width =   32\nggml_metal_library_init: using embedded metal library\nggml_metal_library_compile_all: compiled 'fa_aux' library in 0.000 sec\nggml_metal_library_compile_all: compiled 'fa_f16' library in 0.010 sec\nggml_metal_library_compile_all: compiled 'fa_f32' library in 0.001 sec\nggml_metal_library_compile_all: compiled 'fa_q4_0' library in 0.001 sec\nggml_metal_library_compile_all: compiled 'fa_q4_1' library in 0.006 sec\nggml_metal_library_compile_all: compiled 'fa_q5_0' library in 0.011 sec\nggml_metal_library_compile_all: compiled 'fa_q5_1' library in 0.002 sec\nggml_metal_library_compile_all: compiled 'fa_q8_0' library in 0.001 sec\nggml_metal_library_compile_all: compiled 'fa_tensor' library in 0.006 sec\nggml_metal_library_compile_all: compiled 'fa_vec_f16' library in 0.005 sec\nggml_metal_library_compile_all: compiled 'fa_vec_f32' library in 0.005 sec\nggml_metal_library_compile_all: compiled 'fa_vec_q4_0' library in 0.007 sec\nggml_metal_library_compile_all: compiled 'fa_vec_q4_1' library in 0.003 sec\nggml_metal_library_compile_all: compiled 'fa_vec_q5_0' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'fa_vec_q5_1' library in 0.002 sec\nggml_metal_library_compile_all: compiled 'fa_vec_q8_0' library in 0.010 sec\nggml_metal_library_compile_all: compiled 'mul_mv' library in 0.006 sec\nggml_metal_library_compile_all: compiled 'mul_mv_mma' library in 0.013 sec\nggml_metal_library_compile_all: compiled 'mul_mm' library in 0.012 sec\nggml_metal_library_compile_all: compiled 'quantize' library in 0.009 sec\nggml_metal_library_compile_all: compiled 'softmax' library in 0.009 sec\nggml_metal_library_compile_all: compiled 'norm' library in 0.010 sec\nggml_metal_library_compile_all: compiled 'unary' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'binbcast' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'reduce' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'tri' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'ssm' library in 0.000 sec\nggml_metal_library_compile_all: compiled 'wkv' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'gated_delta_net' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'solve_tri' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'rope' library in 0.000 sec\nggml_metal_library_compile_all: compiled 'conv' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'upscale' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'argsort' library in 0.000 sec\nggml_metal_library_compile_all: compiled 'pool' library in 0.008 sec\nggml_metal_library_compile_all: compiled 'misc' library in 0.006 sec\nggml_metal_library_compile_all: loaded 36 libraries from embedded data in 0.014 sec (max single = 0.013 sec)\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0 (Apple M5)\nggml_metal_device_init: GPU family: MTLGPUFamilyApple10  (1010)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = true\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB\n"
+  },
+  "inputs_after": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp": "afbee548048a14408437729ca555feea82d4c34352473385d608e5d5c88ddb5d",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py": "81818bf60ba5117920c5f6f5b5891783876b3d18414a66af1107600b456839b3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py": "f66dc8de5471c6b669ca9d9ac26563817dd540e999a0221f4004aa9960c89751",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/include/llama.h": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/ggml/include/ggml-backend.h": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/source/vendor/nlohmann/json.hpp": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/provider-build.json": "a9f8e5a6ed313a91a36b44791004a70e42b18b0ac04437bc7f8eb2ce7031de56",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/driver-build.json": "d7b98102bbdb85369f91eade629eaa22fc5516795789e8d1b731774d9814684f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run4/gpu-profile.json": "460bfee4bb8e4ee30cd0e67c19190e3e5824d74bc91cf79b47bdb036441ee22b"
+  },
+  "provider_build_receipt_sha256": "a9f8e5a6ed313a91a36b44791004a70e42b18b0ac04437bc7f8eb2ce7031de56"
+}

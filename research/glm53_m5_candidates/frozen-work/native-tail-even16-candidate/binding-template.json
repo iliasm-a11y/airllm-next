@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "candidate_not_built",
+  "policy": "cpu8-tail-compatible-v1",
+  "reference": {
+    "binary_sha256": "62a7d2578c58e96839be2d4c79d8c414c8d535e5a1adac54820043f9e695f4b0",
+    "helper_source_sha256": "558aa441ed74aca6b295613ccb414c4b1f2bf2134a6bdc0ae32a09b35c32c395",
+    "build_receipt_sha256": "4cf35cfba893c14a04f8ff8eb05876faced75fede08c8f24a6af0b069b4ceb93"
+  },
+  "candidate": {
+    "binary_sha256": null,
+    "helper_source_sha256": "dac2113041898470e2ea4eaf43af51da1132d798430117e0b1ff67862c926433",
+    "build_receipt_sha256": null
+  },
+  "patch_sha256": "3592845c89071183205516e83aa1e9c6ebabce48384bdf9b065e2776ec0fde49",
+  "shared_source_sha256": {
+    "snapshot_source": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "state_capture_source": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+    "native_manifest": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+    "wrapper_source": "c2f1078a88dd30ff53389f44795636df9fe7348d1ee77c3f1fab537cae3e337d"
+  },
+  "shared_native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "full_model_qualified": false,
+  "scope": "filled only after a real successful helper build and metadata-only smoke; comparison itself must validate full raw captures and guards"
+}

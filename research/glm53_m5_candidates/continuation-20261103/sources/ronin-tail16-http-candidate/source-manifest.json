@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "status": "separate_HTTP16_source_and_small_mocks_only_not_executed",
+  "source_files": {
+    "prefix_adapter.py": {
+      "sha256": "caf27a57300e7de4a5bff2b52e9bd7d4d64754a352e1137d6ac9eb1b7bb0a72a",
+      "bytes": 53013
+    },
+    "campaign.py": {
+      "sha256": "a2c973119cd8603e66393965b06573100b1e5da4c50f2e8d97a86d70fc67b4a9",
+      "bytes": 29813
+    },
+    "guards.py": {
+      "sha256": "56c408eb1e9fc31f9dd7cc63ab8e7aac6edd382964aaf9b95fa56c07c1312eac",
+      "bytes": 9361
+    },
+    "test_tail16.py": {
+      "sha256": "2420233466ee8feb6b0b2274190b6ce4478618912fb7fc3ff7b328cb423c2703",
+      "bytes": 18731
+    },
+    "README.md": {
+      "sha256": "b39644deeb3fe4be64fa158cf8e6d3df04e342ab6f5b5b0d27d600cc906a3297",
+      "bytes": 7951
+    },
+    "http-verification-protocol.md": {
+      "sha256": "2afa3a9ef110fe03986fa3a5aa4119099fa479d97c255d5ce6cefd363f26d5a6",
+      "bytes": 9604
+    },
+    "frozen-http8-source-manifest.json": {
+      "sha256": "26273b724cd3b5bc2fdc56be4cbc31e4b66dbf3913c437dc946c5862a5633a3a",
+      "bytes": 4208
+    }
+  },
+  "frozen_HTTP8_origin_sha256": "26273b724cd3b5bc2fdc56be4cbc31e4b66dbf3913c437dc946c5862a5633a3a",
+  "frozen_HTTP8_all_files_unchanged": true,
+  "reviewed_guard_copy_byte_identical": true,
+  "HTTP_microbatch": 16,
+  "default_common_cache_mode": false,
+  "opt_in_required": true,
+  "native_admission_evaluated_for_real_evidence": false,
+  "no_common_cache_gate": "actual complete CPU8/full16 v1 bridge07939855 tied to real builds/source/patch and raw strict evidence; no native restore required",
+  "common_cache_gate": "same real bridge plus actual complete strict full16/restore16, canonical208 state, fresh HTTP quarantine and dirty restore validation",
+  "HTTP_profile_policy": "new own HTTP16 schema/key with distinct common-cache mode, actual server binary, sources, admitted native manifest, target parameters, guards and tail algorithm; no native/HTTP8 key substitution",
+  "native_v2_or_v3_accepted": false,
+  "tail_policy": "odd final private microbatch>8: precompute to last8 boundary with one produced/counted/discarded n_predict0 sample, then send complete prompt; otherwise direct",
+  "physical_sample_scope": "at most512 useful generation IDs plus the one counted discarded private preparation sample when required; common sample counted globally if common cache selected",
+  "budgets": {
+    "logical_seconds": 2700,
+    "global_seconds": 7200,
+    "useful_output_tokens": 512,
+    "threads": 10,
+    "GPU_layers": 0,
+    "physical_slots": 1,
+    "logical_identities": 600,
+    "order": [
+      1,
+      600,
+      1
+    ]
+  },
+  "guards": "reviewed phase-aware actual PowerGate/NativeLimits/retained UID FD/PID guard copied unchanged; private presets isolated and system presets refused",
+  "tests": {
+    "framework": "unittest",
+    "run": 19,
+    "passed": 19,
+    "last_reported_seconds": 0.053,
+    "scope": "all native proof/package/server positives explicitly mocked; synthetic state50 bytes; pure native-v1/HTTP chunk contract over total209..1536 from0/208; no inference or large memory tests",
+    "no_tests_reexecuted_during_active_model": true
+  },
+  "builds": 0,
+  "native_cli_calls": 0,
+  "model_loads": 0,
+  "GPU_commands": 0,
+  "HTTP_native_requests": 0,
+  "HTTP_numerically_qualified": false,
+  "functional_C_qualified": false,
+  "exact_state_qualified": false,
+  "full_qualification": false,
+  "performance_measurements": null,
+  "EOS_measurements": null,
+  "verification_protocol": "source-only protocol with token/serialized-state diagnostics where observable; full logits/routes/KDA absent from existing HTTP API, so full numerical verdict remains false",
+  "remaining": [
+    "Actual admitted complete native v1 bridge, and restore proof separately for common cache",
+    "Actual source-derived HTTP parameters/slot behavior and private sample/cache boundaries unexecuted",
+    "Generalized N/N+3 slot parser and diagnostic pre-erase harness not implemented",
+    "Full HTTP numerical capture requires separate instrumented server/build/profile and new evidence"
+  ],
+  "independent_source_review": {
+    "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/ronin-tail16-http-independent-review.json",
+    "sha256": "aeb3c4930001d79dc3d9b741739f246829f2675b9770c33479a8e1ba4250281b",
+    "scope": "source-only; no new material P1/P2 found in reviewed nominal admission/tail/count/slot/deadline/ownership/cleanup path; no execution or qualification"
+  }
+}

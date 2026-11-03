@@ -1,0 +1,3627 @@
+{
+  "schema_version": 1,
+  "timestamp_utc": "2026-11-03T16:43:14.321334+00:00",
+  "scope": "closed resumed work plus explicit pending TensorOps component; no A/B/C qualification",
+  "cpu32": {
+    "summary": {
+      "schema_version": 1,
+      "source_run": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-fenced-full32",
+      "guard_status": "cancelled",
+      "native_returncode": -15,
+      "guard_violation": {
+        "code": "CANCELLED",
+        "signal": 15
+      },
+      "power_context_passed": true,
+      "integrity_passed": true,
+      "elapsed_seconds": 278.8413581250061,
+      "microbatch": 32,
+      "mode": "full",
+      "capture_complete": false,
+      "diagnostic": true,
+      "functional_eos_qualified": false,
+      "full_snapshot_parity_qualified": false,
+      "qualification_scope": "descriptive evidence only; separate strict comparisons and useful natural EOS are required",
+      "sampled_peak_rss_bytes": 4710842368,
+      "observed_peak_swap_growth_bytes": 0,
+      "sampled_minimum_available_bytes": 2833350656,
+      "pressure_level_counts": {
+        "1": 10,
+        "2": 512
+      },
+      "samples": 522,
+      "model_loads": 0,
+      "model_mapping_setup_seconds": null,
+      "physical_slots": 1,
+      "snapshot": null,
+      "requests": [],
+      "snapshot_key_sha256": null,
+      "source_sha256": {
+        "helper_source": "6a40eb3964dd5d45ada72d55088503b9a842e67fd8ef4e5c6e9ed305c0518123",
+        "snapshot_source": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+        "state_capture_source": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+        "native_manifest": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+        "wrapper_source": "c2f1078a88dd30ff53389f44795636df9fe7348d1ee77c3f1fab537cae3e337d"
+      },
+      "runtime_binaries": {
+        "helper": "e64fff08f25585829a5f9687525a5a78e1ea7f533bf3b4e431c3cb75bb18e34f",
+        "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+        "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+        "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+        "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+        "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+        "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+        "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+        "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+        "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+        "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+      },
+      "unobserved": {
+        "pure_weight_wait_seconds": null,
+        "pure_cpu_math_seconds": null,
+        "gpu_compute_seconds": null,
+        "synchronization_seconds": null,
+        "physical_ssd_read_bytes": null,
+        "two_useful_natural_eos_seconds": null
+      }
+    },
+    "early128": {
+      "schema_version": 1,
+      "timestamp_utc": "2026-11-03T16:29:10.000182+00:00",
+      "scope": "early rejection diagnostic on request0 only; no complete arm, checkpoint, guard, EOS or speed qualification",
+      "full_qualification": false,
+      "criteria": {
+        "bitexact_f32": true,
+        "atol": 0.0,
+        "rtol": 0.0
+      },
+      "tokens": 128,
+      "expected_tensor_names": 118,
+      "complete_window": true,
+      "window_identical": false,
+      "early_rejection": true,
+      "status": "diverged",
+      "checks": [
+        {
+          "name": "ffn_moe_logits-10",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-11",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-12",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-13",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-14",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-15",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-16",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-17",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-18",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-19",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-20",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-21",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-22",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-23",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-24",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-25",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-26",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-27",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-28",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-29",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-3",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-30",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-31",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-32",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-33",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-34",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-35",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-36",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-37",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-38",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-39",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-4",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-40",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-41",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-42",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-43",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-44",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-5",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-6",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-7",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36863,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-8",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_logits-9",
+          "passed": false,
+          "elements": 36864,
+          "bit_mismatches": 36864,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_topk-10",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 124,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-11",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 145,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-12",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 154,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-13",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 148,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-14",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 190,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 7
+        },
+        {
+          "name": "ffn_moe_topk-15",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 192,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-16",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 243,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 5
+        },
+        {
+          "name": "ffn_moe_topk-17",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 281,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-18",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 348,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-19",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 383,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 1
+        },
+        {
+          "name": "ffn_moe_topk-20",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 432,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 5
+        },
+        {
+          "name": "ffn_moe_topk-21",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 421,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-22",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 447,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-23",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 482,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-24",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 468,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 7
+        },
+        {
+          "name": "ffn_moe_topk-25",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 447,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 7
+        },
+        {
+          "name": "ffn_moe_topk-26",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 473,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-27",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 492,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-28",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 503,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-29",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 465,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-3",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 69,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_topk-30",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 489,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-31",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 466,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-32",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 483,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-33",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 454,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-34",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 487,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 4
+        },
+        {
+          "name": "ffn_moe_topk-35",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 494,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-36",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 510,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-37",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 476,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-38",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 522,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 9
+        },
+        {
+          "name": "ffn_moe_topk-39",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 475,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-4",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 78,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 4
+        },
+        {
+          "name": "ffn_moe_topk-40",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 438,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-41",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 405,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-42",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 348,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-43",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 313,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-44",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 280,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-5",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 80,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "ffn_moe_topk-6",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 95,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 3
+        },
+        {
+          "name": "ffn_moe_topk-7",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 114,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-8",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 120,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "ffn_moe_topk-9",
+          "passed": false,
+          "elements": 1024,
+          "bit_mismatches": 114,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 2
+        },
+        {
+          "name": "kda_scan_out-0",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048571,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-1",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-10",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-12",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-13",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-14",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-16",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048574,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-17",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-18",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-2",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048574,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-20",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-21",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-22",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-24",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-25",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-26",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-28",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-29",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-30",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-32",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-33",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-34",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-36",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-37",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-38",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-4",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048573,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-40",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048573,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-41",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-42",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-44",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-5",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048575,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-6",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-8",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048574,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        },
+        {
+          "name": "kda_scan_out-9",
+          "passed": false,
+          "elements": 1048576,
+          "bit_mismatches": 1048576,
+          "nonfinite_reference": 0,
+          "nonfinite_candidate": 0,
+          "tokens": 128,
+          "first_token_divergence": 0
+        }
+      ],
+      "errors": [],
+      "two_build_binding_validated": true,
+      "native_key_observations": {
+        "reference": {
+          "observed": true,
+          "value": "9779e4b21b4131ec5f4ada9687466e617c2f13243b3a7b2cee4f2f7b23c7258b",
+          "preflight_and_transmitted_key_verified": true
+        },
+        "candidate": {
+          "observed": false,
+          "value": null,
+          "preflight_and_transmitted_key_verified": true
+        }
+      },
+      "binding_sha256": "1267229b2f1e7102d8048d54a6b24eb91b80b60d7668c6e6a81a7f9c05d996c4",
+      "original_early_reader_sha256": "ee3ceb944befbafee091dcf9e9971765289534be017e5d9f6cf782bcf3be9667",
+      "variant_comparator_sha256": "f95d9048280b8002a7ce902897e8131e5473800420a600a6e37dddb53ce8a386",
+      "early_variant_wrapper_sha256": "6625154c4892cf1eff8cfdcc98c081577692d51bbc407e351a9efdb546ff3491"
+    },
+    "first_captured_divergence": {
+      "scope": "first captured operation only; no upstream op-level causal proof or full profile qualification",
+      "reference": "CPU8",
+      "candidate": "fenced-v2CPU32",
+      "earliest_captured_kda_layer": 0,
+      "position_zero_based": 0,
+      "detail": {
+        "position_zero_based": 0,
+        "logical_index_with_token_axis_local_zero": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "reference_value": 1.244417973111922e-07,
+        "candidate_value": 1.1650099907001277e-07,
+        "reference_bits_hex": "34059e4d",
+        "candidate_bits_hex": "33fa2f1a",
+        "passed": false,
+        "elements": 8192,
+        "criterion": "bitexact_f32",
+        "mismatch_count": 8192,
+        "bit_mismatch_count": 8192,
+        "numeric_mismatch_count": 8192,
+        "tolerance_mismatch_count": 8192,
+        "max_abs_error_finite_pairs": 6.379559636116028e-06,
+        "rmse_finite_pairs": 3.014234258244152e-07,
+        "finite": true,
+        "finite_pairs": 8192,
+        "nonfinite_reference": 0,
+        "nonfinite_candidate": 0
+      },
+      "possible_cause": "upstream dense projection dispatcher or numeric reduction changes; requires separate operation capture, not established by KDA alone",
+      "early_window_receipt_sha256": "ed6c7cac78256cbb07cb6533386d1baff86304030140b1ca80ea0effcb65f10e"
+    },
+    "owned_stop": {
+      "timestamp_utc": "2026-11-03T16:29:59.355074+00:00",
+      "all_owned_lifetimes_absent": true,
+      "owners": [
+        {
+          "pid": 46648,
+          "create_time": 1793723114.453731,
+          "executable": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+          "same_owned_lifetime_absent": true
+        },
+        {
+          "pid": 46656,
+          "create_time": 1793723114.55903,
+          "executable": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+          "same_owned_lifetime_absent": true
+        },
+        {
+          "pid": 46667,
+          "create_time": 1793723115.177614,
+          "executable": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-fenced208-v2-candidate/build/native-prefill-cpu8-tail-fences208-v2",
+          "same_owned_lifetime_absent": true
+        }
+      ],
+      "uid_parent_fd_closed": true,
+      "native_returncode": -15,
+      "wrapper_status": "cancelled",
+      "guard_violation": {
+        "code": "CANCELLED",
+        "signal": 15
+      }
+    }
+  },
+  "scalar_gpu": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-11-03T16:28:07.221509+00:00",
+    "receipt_sha256": "e7550f955dd87d0f6b38edd84aa6ba47280cfdf4e86dc77526d7f6da2fc8e27f",
+    "status": "passed_component_contract_only",
+    "profile_sha256": "18ab5911e1184d0e0140a412c67fd501597d63ce5e02978b49f6ace3c2b38196",
+    "binary_sha256": "7e91df0c1bf2bd4e8fa3b8b79034bc0d555b7dbaef129e1ba2117512d65062a8",
+    "case_count": 21,
+    "normal_gpu_pairs": 12,
+    "per_graph_completed_iterations": 5,
+    "matched_final_float32_outputs": 2903040,
+    "completed_gpu_commands": 266,
+    "published_gpu_operations": 60,
+    "completed_normal_gpu_commands": 265,
+    "normal_gpu_trace_total": {
+      "gpu_seconds": 0.9824045049999995,
+      "copy_weight_us": 39350.0,
+      "command_and_readback_us": 1190904.0
+    },
+    "expected_late_fatal": {
+      "controlled_fixture_exit": 86,
+      "cpu_fallback_performed": false,
+      "destination_bytes_checked": 65536,
+      "destination_unpublished": true,
+      "expected_error": "unsupported weight scale after completed tile"
+    },
+    "rss_cap_bytes": 134217728,
+    "peak_sampled_child_rss_bytes": 133070848,
+    "peak_sampled_controller_rss_bytes": 42909696,
+    "metal_device_current_allocated_peak_bytes": 8486912,
+    "global_swap_growth_sampled_peak_bytes": 0,
+    "power_passed": true,
+    "source_identity_unchanged": true,
+    "all_owned_lifetimes_absent": true,
+    "closed_owned_processes": [
+      {
+        "pid": 45862,
+        "create_time": 1793723072.008349,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45878,
+        "create_time": 1793723072.21957,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45897,
+        "create_time": 1793723072.58046,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45913,
+        "create_time": 1793723072.792912,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45932,
+        "create_time": 1793723073.201215,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45948,
+        "create_time": 1793723073.407918,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45967,
+        "create_time": 1793723073.800033,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 45983,
+        "create_time": 1793723074.010968,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46005,
+        "create_time": 1793723074.608421,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46021,
+        "create_time": 1793723074.818018,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46050,
+        "create_time": 1793723075.643801,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46066,
+        "create_time": 1793723075.855571,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46091,
+        "create_time": 1793723076.354092,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46107,
+        "create_time": 1793723076.565241,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46129,
+        "create_time": 1793723077.100194,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46145,
+        "create_time": 1793723077.309967,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46168,
+        "create_time": 1793723077.870455,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46184,
+        "create_time": 1793723078.080401,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46200,
+        "create_time": 1793723078.292094,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46217,
+        "create_time": 1793723078.503408,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46233,
+        "create_time": 1793723078.718004,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46249,
+        "create_time": 1793723078.928125,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46265,
+        "create_time": 1793723079.174932,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46281,
+        "create_time": 1793723079.378446,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46297,
+        "create_time": 1793723079.600479,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46313,
+        "create_time": 1793723079.812443,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46329,
+        "create_time": 1793723080.027778,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46345,
+        "create_time": 1793723080.240324,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46363,
+        "create_time": 1793723080.452174,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46379,
+        "create_time": 1793723080.663374,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46395,
+        "create_time": 1793723080.880173,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46411,
+        "create_time": 1793723081.09518,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46427,
+        "create_time": 1793723081.297308,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46443,
+        "create_time": 1793723081.510879,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46459,
+        "create_time": 1793723081.722214,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46475,
+        "create_time": 1793723081.935333,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46491,
+        "create_time": 1793723082.152187,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46507,
+        "create_time": 1793723082.364164,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46523,
+        "create_time": 1793723082.578446,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46539,
+        "create_time": 1793723082.785305,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46555,
+        "create_time": 1793723083.000297,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 46571,
+        "create_time": 1793723083.199814,
+        "same_owned_lifetime_absent": true
+      }
+    ],
+    "elapsed_seconds": 11.51910620900162,
+    "gpu_over_cpu_warm_ratio_range": [
+      3.767496547411739,
+      38.92481680016398
+    ],
+    "excluded_resource_shapes": [
+      "m8192-k4096-n64",
+      "m8192-k4096-n128"
+    ],
+    "cpu_bitexact_contract_met": true,
+    "full_model_qualified": false,
+    "functional_agents_qualified": false,
+    "performance_qualified": false,
+    "decision": "do not launch expensive full GLM with this slower provider; retained experimental OFF by default",
+    "scope": "same resident synthetic weights, four warm graph repetitions after a separately reported first operation; no SSD/GLM/cache/EOS claim",
+    "normal_gpu_results": [
+      {
+        "case": {
+          "id": "m8192-k2048-n8-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000532334,
+        "gpu_first_s": 0.01822775,
+        "cpu_warm_s": [
+          0.000507292,
+          0.00053475,
+          0.000516084,
+          0.000503541
+        ],
+        "gpu_warm_s": [
+          0.016915209,
+          0.016951625,
+          0.016920333,
+          0.030332792
+        ],
+        "cpu_warm_median_s": 0.0005116879999999999,
+        "gpu_warm_median_s": 0.016935979,
+        "gpu_over_cpu_warm_ratio": 33.09825323243852,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb",
+          "candidate_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n16-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000961167,
+        "gpu_first_s": 0.033486875,
+        "cpu_warm_s": [
+          0.004042167,
+          0.000898959,
+          0.000904,
+          0.000899041
+        ],
+        "gpu_warm_s": [
+          0.020119,
+          0.034286125,
+          0.046514709,
+          0.028594125
+        ],
+        "cpu_warm_median_s": 0.0009015205,
+        "gpu_warm_median_s": 0.031440125,
+        "gpu_over_cpu_warm_ratio": 34.87455360138787,
+        "raw_comparison": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5",
+          "candidate_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n32-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.001803542,
+        "gpu_first_s": 0.033428625,
+        "cpu_warm_s": [
+          0.001688833,
+          0.001603875,
+          0.004237708,
+          0.001540125
+        ],
+        "gpu_warm_s": [
+          0.031809666,
+          0.049364334,
+          0.022269459,
+          0.022675167
+        ],
+        "cpu_warm_median_s": 0.001646354,
+        "gpu_warm_median_s": 0.027242416499999998,
+        "gpu_over_cpu_warm_ratio": 16.547119574526498,
+        "raw_comparison": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d",
+          "candidate_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n64-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 64,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.005477209,
+        "gpu_first_s": 0.05335525,
+        "cpu_warm_s": [
+          0.003068042,
+          0.002790916,
+          0.002801,
+          0.002638166
+        ],
+        "gpu_warm_s": [
+          0.062478,
+          0.05159375,
+          0.076244125,
+          0.051997833
+        ],
+        "cpu_warm_median_s": 0.0027959580000000003,
+        "gpu_warm_median_s": 0.0572379165,
+        "gpu_over_cpu_warm_ratio": 20.47166534690435,
+        "raw_comparison": {
+          "outputs": 524288,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df",
+          "candidate_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n128-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 128,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.0147095,
+        "gpu_first_s": 0.074968,
+        "cpu_warm_s": [
+          0.005217166,
+          0.005184542,
+          0.005304958,
+          0.005252666
+        ],
+        "gpu_warm_s": [
+          0.062658292,
+          0.066216042,
+          0.082278875,
+          0.102751875
+        ],
+        "cpu_warm_median_s": 0.005234915999999999,
+        "gpu_warm_median_s": 0.0742474585,
+        "gpu_over_cpu_warm_ratio": 14.18312318669488,
+        "raw_comparison": {
+          "outputs": 1048576,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698",
+          "candidate_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n8-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.001057709,
+        "gpu_first_s": 0.039859958,
+        "cpu_warm_s": [
+          0.000959583,
+          0.000943541,
+          0.00095425,
+          0.000905084
+        ],
+        "gpu_warm_s": [
+          0.049992333,
+          0.032114708,
+          0.031924583,
+          0.041756459
+        ],
+        "cpu_warm_median_s": 0.0009488955,
+        "gpu_warm_median_s": 0.0369355835,
+        "gpu_over_cpu_warm_ratio": 38.92481680016398,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94",
+          "candidate_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n16-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.008675,
+        "gpu_first_s": 0.039883792,
+        "cpu_warm_s": [
+          0.002749584,
+          0.001780833,
+          0.002028291,
+          0.001431083
+        ],
+        "gpu_warm_s": [
+          0.053553042,
+          0.037934291,
+          0.038557833,
+          0.041853625
+        ],
+        "cpu_warm_median_s": 0.001904562,
+        "gpu_warm_median_s": 0.040205728999999996,
+        "gpu_over_cpu_warm_ratio": 21.110223242929344,
+        "raw_comparison": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230",
+          "candidate_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n32-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.003424833,
+        "gpu_first_s": 0.051570583,
+        "cpu_warm_s": [
+          0.003452167,
+          0.002939584,
+          0.005369291,
+          0.002857917
+        ],
+        "gpu_warm_s": [
+          0.05490925,
+          0.045644667,
+          0.06414125,
+          0.077025625
+        ],
+        "cpu_warm_median_s": 0.0031958754999999997,
+        "gpu_warm_median_s": 0.05952525,
+        "gpu_over_cpu_warm_ratio": 18.62564733826459,
+        "raw_comparison": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75",
+          "candidate_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m1536-k4096-n8-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000273666,
+        "gpu_first_s": 0.0052,
+        "cpu_warm_s": [
+          0.000267417,
+          0.00029775,
+          0.00026575,
+          0.000264791
+        ],
+        "gpu_warm_s": [
+          0.003949416,
+          0.003849416,
+          0.003965833,
+          0.003810459
+        ],
+        "cpu_warm_median_s": 0.0002665835,
+        "gpu_warm_median_s": 0.003899416,
+        "gpu_over_cpu_warm_ratio": 14.627371911614937,
+        "raw_comparison": {
+          "outputs": 12288,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "52acd34919e9ae5b529bb11cebf0e921a0310818c20af58744fd8673bf5577c1",
+          "candidate_sha256": "52acd34919e9ae5b529bb11cebf0e921a0310818c20af58744fd8673bf5577c1"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m1536-k4096-n32-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000772875,
+        "gpu_first_s": 0.011033917,
+        "cpu_warm_s": [
+          0.000745958,
+          0.0007125,
+          0.00073875,
+          0.000730209
+        ],
+        "gpu_warm_s": [
+          0.009554667,
+          0.00952325,
+          0.009390291,
+          0.009396584
+        ],
+        "cpu_warm_median_s": 0.0007344795000000001,
+        "gpu_warm_median_s": 0.009459917,
+        "gpu_over_cpu_warm_ratio": 12.879756344458897,
+        "raw_comparison": {
+          "outputs": 49152,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "b80f287609ab395cab6fea5480f900be91707bc33ac9add6ab358758e9bde5da",
+          "candidate_sha256": "b80f287609ab395cab6fea5480f900be91707bc33ac9add6ab358758e9bde5da"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m1536-k4096-n128-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 128,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.002581166,
+        "gpu_first_s": 0.020260708,
+        "cpu_warm_s": [
+          0.002340542,
+          0.002343625,
+          0.002286334,
+          0.002628584
+        ],
+        "gpu_warm_s": [
+          0.009306083,
+          0.008864083,
+          0.008662792,
+          0.0087835
+        ],
+        "cpu_warm_median_s": 0.0023420834999999997,
+        "gpu_warm_median_s": 0.0088237915,
+        "gpu_over_cpu_warm_ratio": 3.767496547411739,
+        "raw_comparison": {
+          "outputs": 196608,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "6c18114254974fcd89fccf914a877a6c396214e59757043afe3542a2a5be7e0b",
+          "candidate_sha256": "6c18114254974fcd89fccf914a877a6c396214e59757043afe3542a2a5be7e0b"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m2048-k2048-n32-normal",
+          "M": 2048,
+          "K": 2048,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000490417,
+        "gpu_first_s": 0.008509958,
+        "cpu_warm_s": [
+          0.000484333,
+          0.00051125,
+          0.000460584,
+          0.000500833
+        ],
+        "gpu_warm_s": [
+          0.007176042,
+          0.007101708,
+          0.007299333,
+          0.007051417
+        ],
+        "cpu_warm_median_s": 0.000492583,
+        "gpu_warm_median_s": 0.007138874999999999,
+        "gpu_over_cpu_warm_ratio": 14.492735234468098,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "7ba7762a58fe88c007b15094ee487ca1927efed4dc696f11c04e820956376447",
+          "candidate_sha256": "7ba7762a58fe88c007b15094ee487ca1927efed4dc696f11c04e820956376447"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 10,
+          "completed_commands": 10,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      }
+    ]
+  },
+  "scalar_gpu_original_suite": {
+    "receipt_sha256": "4bb1be50483d2967f1c06332a071e7307c103e3a12c87d58e91e08959c5c0b48",
+    "status": "failed_or_refused",
+    "error_code": "FIXTURE_RSS_LIMIT",
+    "closed_pairs": 8,
+    "matched_finite_outputs": 2490368,
+    "gpu_commands_completed_in_closed_pairs": 48,
+    "observed_peak_child_rss_bytes": 138133504,
+    "power_passed": true,
+    "source_identity_unchanged": true,
+    "scope": "partial failed suite; initialization included in first graph; no GLM qualification",
+    "closed_pair_results": [
+      {
+        "shape": {
+          "id": "m8192-k2048-n8-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb",
+          "candidate_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb"
+        },
+        "cpu_s": 0.000540083,
+        "gpu_s": 0.131661417,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k2048-n16-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5",
+          "candidate_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5"
+        },
+        "cpu_s": 0.002090875,
+        "gpu_s": 0.030196292,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k2048-n32-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d",
+          "candidate_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d"
+        },
+        "cpu_s": 0.001722708,
+        "gpu_s": 0.032543708,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k2048-n64-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 64,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 524288,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df",
+          "candidate_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df"
+        },
+        "cpu_s": 0.006748333,
+        "gpu_s": 0.053789875,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k2048-n128-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 128,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 1048576,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698",
+          "candidate_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698"
+        },
+        "cpu_s": 0.006793333,
+        "gpu_s": 0.059684292,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k4096-n8-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94",
+          "candidate_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94"
+        },
+        "cpu_s": 0.001044625,
+        "gpu_s": 0.033022875,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k4096-n16-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230",
+          "candidate_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230"
+        },
+        "cpu_s": 0.001842209,
+        "gpu_s": 0.041133792,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "shape": {
+          "id": "m8192-k4096-n32-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "numerical": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75",
+          "candidate_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75"
+        },
+        "cpu_s": 0.013604834,
+        "gpu_s": 0.086806459,
+        "trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 6,
+          "completed_commands": 6,
+          "published_operations": 1,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      }
+    ]
+  },
+  "tensorops_build": {
+    "status": "built",
+    "elapsed_seconds": 76.5171722909945,
+    "provider_receipt_sha256": "2aa6913f3500399bc05b945d06dfa3de3365be5cb3411ce23f643c2ecc07ee5f",
+    "driver_receipt_sha256": "47dfb4e0fc817498e0c7e33c691c59c072975db52bca8ea6680ae8135d7e1795",
+    "kernel_sha256": "b69930d559ef2601e4f384e343bcf6a2b24f30a6b28840f631154335714b82b9",
+    "patch_sha256": "594d0f192dbd9641c243a24014f560297badbf5957137683b772048147d4fa86",
+    "bridge_matrix_dispatches_in_metadata": 0,
+    "legacy_initialization_device_commands_not_counted": true,
+    "peak_sampled_build_tree_rss_bytes": 1125171200,
+    "power_passed": true,
+    "uid_fd_observed": true,
+    "model_loaded": false,
+    "whole_model_qualified": false
+  },
+  "A_qualified": false,
+  "B_qualified": false,
+  "C_qualified": false,
+  "tensorops_component": {
+    "status": "passed_component_contract_only",
+    "error_code": null,
+    "error": null,
+    "binary_sha256": "46911f4c6db3fe1835f6d58b5ed95f6bd17547dec23aa01ff6d5034598a57e71",
+    "profile_sha256": "fed71a140c4ab8d366b84e82fdc8ab404d6bec96a19682ecf5bca4795abf8b87",
+    "measured_elapsed_seconds": 10.632500917003199,
+    "observed_peak_child_rss_bytes": 133103616,
+    "device_allocated_observed_peak_bytes": 8486912,
+    "gpu_commands": 266,
+    "cpu_bitexact_contract_met": true,
+    "original_metal_tolerance_passed": true,
+    "source_identity_unchanged": true,
+    "power_gate": {
+      "passed": true,
+      "finalized": true,
+      "expected_power_source": "ac",
+      "clock_samples": 178,
+      "power_samples": 178,
+      "first": {
+        "clock": {
+          "wall_time_seconds": 1793723927.582179,
+          "perf_counter_seconds": 58872.768610083,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.0,
+          "timestamp_utc": "2026-11-03T16:38:47.582179+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": true,
+          "reasons": [],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T16:38:47.582191+00:00",
+            "wall_time_seconds": 1793723927.582193,
+            "perf_counter_seconds": 58872.768624,
+            "lid_closed": false,
+            "power_source": "ac",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 58872.78499425
+          }
+        },
+        "passed": true
+      },
+      "last": {
+        "clock": {
+          "wall_time_seconds": 1793723938.14391,
+          "perf_counter_seconds": 58883.330265541,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 7.540366641478613e-05,
+          "timestamp_utc": "2026-11-03T16:38:58.143910+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": true,
+          "reasons": [],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T16:38:58.143923+00:00",
+            "wall_time_seconds": 1793723938.143924,
+            "perf_counter_seconds": 58883.33028,
+            "lid_closed": false,
+            "power_source": "ac",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 58883.346914791
+          }
+        },
+        "passed": true
+      },
+      "violation": null,
+      "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+    }
+  },
+  "tensorops_component_summary": {
+    "schema_version": 1,
+    "timestamp_utc": "2026-11-03T16:41:20.932603+00:00",
+    "receipt_sha256": "1319a5c89218825e51312fb52fe8f61b4f757717a101ec08dff2697fa02db87e",
+    "status": "passed_component_contract_only",
+    "profile_sha256": "fed71a140c4ab8d366b84e82fdc8ab404d6bec96a19682ecf5bca4795abf8b87",
+    "binary_sha256": "46911f4c6db3fe1835f6d58b5ed95f6bd17547dec23aa01ff6d5034598a57e71",
+    "case_count": 21,
+    "normal_gpu_pairs": 12,
+    "per_graph_completed_iterations": 5,
+    "matched_final_float32_outputs": 2903040,
+    "completed_gpu_commands": 266,
+    "published_gpu_operations": 60,
+    "completed_normal_gpu_commands": 265,
+    "normal_gpu_trace_total": {
+      "gpu_seconds": 0.13917324799999997,
+      "copy_weight_us": 35129.0,
+      "command_and_readback_us": 294606.0
+    },
+    "expected_late_fatal": {
+      "controlled_fixture_exit": 86,
+      "cpu_fallback_performed": false,
+      "destination_bytes_checked": 65536,
+      "destination_unpublished": true,
+      "expected_error": "unsupported weight scale after completed tile"
+    },
+    "rss_cap_bytes": 134217728,
+    "peak_sampled_child_rss_bytes": 133103616,
+    "peak_sampled_controller_rss_bytes": 42680320,
+    "metal_device_current_allocated_peak_bytes": 8486912,
+    "global_swap_growth_sampled_peak_bytes": 0,
+    "power_passed": true,
+    "source_identity_unchanged": true,
+    "all_owned_lifetimes_absent": true,
+    "closed_owned_processes": [
+      {
+        "pid": 54561,
+        "create_time": 1793723927.636848,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54577,
+        "create_time": 1793723927.850414,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54593,
+        "create_time": 1793723928.064742,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54609,
+        "create_time": 1793723928.277205,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54625,
+        "create_time": 1793723928.492166,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54641,
+        "create_time": 1793723928.70231,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54657,
+        "create_time": 1793723928.915911,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54673,
+        "create_time": 1793723929.129315,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54689,
+        "create_time": 1793723929.344022,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54705,
+        "create_time": 1793723929.557871,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54721,
+        "create_time": 1793723929.777078,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54737,
+        "create_time": 1793723929.991519,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54757,
+        "create_time": 1793723930.384721,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54773,
+        "create_time": 1793723930.594608,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54789,
+        "create_time": 1793723930.817598,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54805,
+        "create_time": 1793723931.030182,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54821,
+        "create_time": 1793723931.253386,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54837,
+        "create_time": 1793723931.459538,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54853,
+        "create_time": 1793723931.707581,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54869,
+        "create_time": 1793723931.919646,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54885,
+        "create_time": 1793723932.148619,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54901,
+        "create_time": 1793723932.361255,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54917,
+        "create_time": 1793723932.580172,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54933,
+        "create_time": 1793723932.791445,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54949,
+        "create_time": 1793723933.022777,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54965,
+        "create_time": 1793723933.233966,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 54984,
+        "create_time": 1793723933.634469,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55000,
+        "create_time": 1793723933.844957,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55021,
+        "create_time": 1793723934.288382,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55037,
+        "create_time": 1793723934.500626,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55057,
+        "create_time": 1793723935.044955,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55073,
+        "create_time": 1793723935.25503,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55092,
+        "create_time": 1793723935.641969,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55108,
+        "create_time": 1793723935.85457,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55129,
+        "create_time": 1793723936.235101,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55145,
+        "create_time": 1793723936.445792,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55164,
+        "create_time": 1793723936.865685,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55180,
+        "create_time": 1793723937.078448,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55196,
+        "create_time": 1793723937.295863,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55212,
+        "create_time": 1793723937.509379,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55228,
+        "create_time": 1793723937.727984,
+        "same_owned_lifetime_absent": true
+      },
+      {
+        "pid": 55244,
+        "create_time": 1793723937.945006,
+        "same_owned_lifetime_absent": true
+      }
+    ],
+    "elapsed_seconds": 10.632500917003199,
+    "gpu_over_cpu_warm_ratio_range": [
+      2.3523909449274796,
+      25.369399227171037
+    ],
+    "excluded_resource_shapes": [
+      "m8192-k4096-n64",
+      "m8192-k4096-n128"
+    ],
+    "cpu_bitexact_contract_met": true,
+    "full_model_qualified": false,
+    "functional_agents_qualified": false,
+    "performance_qualified": false,
+    "decision": "do not launch expensive full GLM with this slower provider; retained experimental OFF by default",
+    "scope": "Metal4 TensorOps int8xint8-int32; same resident synthetic weights, four warm graph repetitions after a separately reported first operation; no SSD/GLM/cache/EOS claim",
+    "normal_gpu_results": [
+      {
+        "case": {
+          "id": "m1536-k4096-n8-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000387125,
+        "gpu_first_s": 0.139670541,
+        "cpu_warm_s": [
+          0.000256125,
+          0.00033525,
+          0.000262834,
+          0.001923125
+        ],
+        "gpu_warm_s": [
+          0.002682416,
+          0.002120916,
+          0.002032458,
+          0.001982333
+        ],
+        "cpu_warm_median_s": 0.000299042,
+        "gpu_warm_median_s": 0.002076687,
+        "gpu_over_cpu_warm_ratio": 6.944465994743212,
+        "raw_comparison": {
+          "outputs": 12288,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "52acd34919e9ae5b529bb11cebf0e921a0310818c20af58744fd8673bf5577c1",
+          "candidate_sha256": "52acd34919e9ae5b529bb11cebf0e921a0310818c20af58744fd8673bf5577c1"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m1536-k4096-n32-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000742208,
+        "gpu_first_s": 0.003912167,
+        "cpu_warm_s": [
+          0.000706584,
+          0.000717125,
+          0.000715,
+          0.000708042
+        ],
+        "gpu_warm_s": [
+          0.002657792,
+          0.002558625,
+          0.002594291,
+          0.002537375
+        ],
+        "cpu_warm_median_s": 0.000711521,
+        "gpu_warm_median_s": 0.0025764580000000002,
+        "gpu_over_cpu_warm_ratio": 3.621056862692739,
+        "raw_comparison": {
+          "outputs": 49152,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "b80f287609ab395cab6fea5480f900be91707bc33ac9add6ab358758e9bde5da",
+          "candidate_sha256": "b80f287609ab395cab6fea5480f900be91707bc33ac9add6ab358758e9bde5da"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m1536-k4096-n128-normal",
+          "M": 1536,
+          "K": 4096,
+          "N": 128,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.002462,
+        "gpu_first_s": 0.006658042,
+        "cpu_warm_s": [
+          0.002350459,
+          0.002185584,
+          0.002071875,
+          0.002016375
+        ],
+        "gpu_warm_s": [
+          0.008280166,
+          0.005,
+          0.005014333,
+          0.005000875
+        ],
+        "cpu_warm_median_s": 0.0021287295,
+        "gpu_warm_median_s": 0.005007604000000001,
+        "gpu_over_cpu_warm_ratio": 2.3523909449274796,
+        "raw_comparison": {
+          "outputs": 196608,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "6c18114254974fcd89fccf914a877a6c396214e59757043afe3542a2a5be7e0b",
+          "candidate_sha256": "6c18114254974fcd89fccf914a877a6c396214e59757043afe3542a2a5be7e0b"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 5,
+          "completed_commands": 5,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m2048-k2048-n32-normal",
+          "M": 2048,
+          "K": 2048,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000511875,
+        "gpu_first_s": 0.003539416,
+        "cpu_warm_s": [
+          0.000550125,
+          0.000482042,
+          0.000478542,
+          0.000474416
+        ],
+        "gpu_warm_s": [
+          0.002576542,
+          0.00252825,
+          0.002669209,
+          0.002504666
+        ],
+        "cpu_warm_median_s": 0.000480292,
+        "gpu_warm_median_s": 0.002552396,
+        "gpu_over_cpu_warm_ratio": 5.3142588258809225,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "7ba7762a58fe88c007b15094ee487ca1927efed4dc696f11c04e820956376447",
+          "candidate_sha256": "7ba7762a58fe88c007b15094ee487ca1927efed4dc696f11c04e820956376447"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 10,
+          "completed_commands": 10,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n8-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.000524208,
+        "gpu_first_s": 0.012723916,
+        "cpu_warm_s": [
+          0.000511792,
+          0.000506333,
+          0.000502417,
+          0.000496958
+        ],
+        "gpu_warm_s": [
+          0.012428333,
+          0.011512292,
+          0.012240875,
+          0.011952958
+        ],
+        "cpu_warm_median_s": 0.000504375,
+        "gpu_warm_median_s": 0.012096916499999999,
+        "gpu_over_cpu_warm_ratio": 23.98397323420074,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb",
+          "candidate_sha256": "bc71c8739fb2b8155db0a44940985b5a880733e6a06600ab7525ba419332c3fb"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n16-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.0008995,
+        "gpu_first_s": 0.013986,
+        "cpu_warm_s": [
+          0.000874583,
+          0.000877042,
+          0.000857708,
+          0.000849417
+        ],
+        "gpu_warm_s": [
+          0.012230875,
+          0.012152292,
+          0.012227875,
+          0.012435875
+        ],
+        "cpu_warm_median_s": 0.0008661455,
+        "gpu_warm_median_s": 0.012229375,
+        "gpu_over_cpu_warm_ratio": 14.119307899192458,
+        "raw_comparison": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5",
+          "candidate_sha256": "d605d0f68be0bb59445de700623c316e7e5461c9a7956385b36a3d122a74fbe5"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n32-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.00167625,
+        "gpu_first_s": 0.0148005,
+        "cpu_warm_s": [
+          0.00160725,
+          0.001487041,
+          0.001454458,
+          0.001442791
+        ],
+        "gpu_warm_s": [
+          0.013673667,
+          0.013396,
+          0.013035958,
+          0.031186208
+        ],
+        "cpu_warm_median_s": 0.0014707495,
+        "gpu_warm_median_s": 0.0135348335,
+        "gpu_over_cpu_warm_ratio": 9.202677614372806,
+        "raw_comparison": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d",
+          "candidate_sha256": "a76d5c5bf7ec4f1724d5ccd74865b575b0e55585e883577682faa49cdd02893d"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n64-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 64,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.003153916,
+        "gpu_first_s": 0.017975208,
+        "cpu_warm_s": [
+          0.004149375,
+          0.002622583,
+          0.002634709,
+          0.002588583
+        ],
+        "gpu_warm_s": [
+          0.019029042,
+          0.031441084,
+          0.027639958,
+          0.016241709
+        ],
+        "cpu_warm_median_s": 0.002628646,
+        "gpu_warm_median_s": 0.0233345,
+        "gpu_over_cpu_warm_ratio": 8.877003598050099,
+        "raw_comparison": {
+          "outputs": 524288,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df",
+          "candidate_sha256": "01dcfd85e8926cfb022334976be5a26f0d2c6210e37f0c6de91714073f1dd3df"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k2048-n128-normal",
+          "M": 8192,
+          "K": 2048,
+          "N": 128,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.006106375,
+        "gpu_first_s": 0.026055833,
+        "cpu_warm_s": [
+          0.005057,
+          0.005057875,
+          0.005126083,
+          0.005168792
+        ],
+        "gpu_warm_s": [
+          0.019685125,
+          0.045758542,
+          0.020511958,
+          0.020061166
+        ],
+        "cpu_warm_median_s": 0.005091979,
+        "gpu_warm_median_s": 0.020286562,
+        "gpu_over_cpu_warm_ratio": 3.9840231077150947,
+        "raw_comparison": {
+          "outputs": 1048576,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698",
+          "candidate_sha256": "d84751e1a4665d37ce63628d51c25d6d6d01c7e4f8310d6e1923b2d262662698"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n8-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 8,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.001027375,
+        "gpu_first_s": 0.022210417,
+        "cpu_warm_s": [
+          0.000929583,
+          0.000918709,
+          0.000925166,
+          0.000828666
+        ],
+        "gpu_warm_s": [
+          0.021841584,
+          0.042314166,
+          0.024936417,
+          0.021694292
+        ],
+        "cpu_warm_median_s": 0.0009219375,
+        "gpu_warm_median_s": 0.0233890005,
+        "gpu_over_cpu_warm_ratio": 25.369399227171037,
+        "raw_comparison": {
+          "outputs": 65536,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94",
+          "candidate_sha256": "a3d65069f9ce0444308289988e158d42dc678db0d2fcad840ef921e823a16c94"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n16-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 16,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.001751833,
+        "gpu_first_s": 0.024109541,
+        "cpu_warm_s": [
+          0.001701209,
+          0.001745792,
+          0.001521125,
+          0.001559125
+        ],
+        "gpu_warm_s": [
+          0.021856083,
+          0.046101583,
+          0.022401292,
+          0.02162075
+        ],
+        "cpu_warm_median_s": 0.001630167,
+        "gpu_warm_median_s": 0.0221286875,
+        "gpu_over_cpu_warm_ratio": 13.574491141091679,
+        "raw_comparison": {
+          "outputs": 131072,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230",
+          "candidate_sha256": "d892ca833a4ebad8e4d330fa30f9b90729c885ea9d408003b49bb065f8329230"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      },
+      {
+        "case": {
+          "id": "m8192-k4096-n32-normal",
+          "M": 8192,
+          "K": 4096,
+          "N": 32,
+          "mode": "normal",
+          "expectation": "gpu"
+        },
+        "cpu_first_s": 0.003243417,
+        "gpu_first_s": 0.026443125,
+        "cpu_warm_s": [
+          0.002921625,
+          0.002798958,
+          0.002647166,
+          0.002685125
+        ],
+        "gpu_warm_s": [
+          0.024161084,
+          0.047559375,
+          0.025096667,
+          0.025134458
+        ],
+        "cpu_warm_median_s": 0.0027420415,
+        "gpu_warm_median_s": 0.0251155625,
+        "gpu_over_cpu_warm_ratio": 9.159439235328861,
+        "raw_comparison": {
+          "outputs": 262144,
+          "all_finite": true,
+          "cpu_bitexact": true,
+          "different_float32_bits_count": 0,
+          "metal_tolerance_passed": true,
+          "metal_tolerance_failures": 0,
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "max_abs_error": 0.0,
+          "max_relative_error_nonzero_reference": 0.0,
+          "reference_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75",
+          "candidate_sha256": "d60d0ccf90072d6e05582ea9fe0695695ad8876f7112b61e65d407d0105e3e75"
+        },
+        "native_trace": {
+          "passed": true,
+          "actual_backend": "native_cpu_with_metal_q8_bridge",
+          "actual_gpu": true,
+          "submitted_commands": 30,
+          "completed_commands": 30,
+          "published_operations": 5,
+          "fixed_gpu_bytes": 8028160,
+          "device_allocated_observed_peak_bytes": 8486912,
+          "device_allocation_limit_bytes": 67108864,
+          "unmeasured_driver_residency_bytes": null,
+          "all_gpu_operations_terminal": true,
+          "scope": "native bridge trace only; no model fidelity/EOS/global performance qualification"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "scope": "actual Metal4 shader/pipeline compilation only; no matrix/device command queue, numerical or performance qualification",
+  "inputs_sha256": {
+    "work/metal-tensorops-q8-candidate/build_compile_only.py": "7c862063af66ec4f9ed7bae36560825d1433376b5f100cd77c11028e1ca467a6",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile_shader_only.mm": "52082d9eb420d90bfed81b21a85c810d67107959b98f15440f2c4524984a4f33",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/q8_tensorops.metal": "20e50d627af27d048e22a4e56fc104077f8a1d49222da7cef2493d7457884bdf"
+  },
+  "matrix_dispatches": 0,
+  "model_loaded": false,
+  "status": "failed",
+  "host_compile": {
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "-isysroot",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-std=c++17",
+      "-O2",
+      "-fobjc-arc",
+      "-framework",
+      "Foundation",
+      "-framework",
+      "Metal",
+      "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile_shader_only.mm",
+      "-o",
+      "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile-shader-only-run2"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "binary_sha256": "9e2b087df7df9d3495339c6d00dba0e44cb5948bfb41cfe4306d0ac5cb9d638a",
+  "shader_compile": {
+    "returncode": 67,
+    "stdout": "",
+    "stderr": "SHADER_COMPILE_FAILED program_source:31:19: error: no matching member function for call to 'run'\n        operation.run(weights.slice(0,int(group.x*32)),\n        ~~~~~~~~~~^~~\n/System/Library/Frameworks/MetalPerformancePrimitives.framework/Headers/MPPTensorOpsMatMul2d.h:434:15: note: candidate function [with LeftOperandType = metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, RightOperandType = metal::tensor<device char, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, DestinationOperandType = metal::tensor<threadgroup int, metal::extents<int, 18446744073709551615, 18446744073709551615>, metal::tensor_inline>, V = void, RunArgs = <>] not viable: expects an lvalue for 1st argument\n  INLINE void run(thread LeftOperandType &left, thread RightOperandType &right,\n              ^\n\n"
+  },
+  "error": "Metal shader/pipeline compiler refused",
+  "inputs_after": {
+    "work/metal-tensorops-q8-candidate/build_compile_only.py": "7c862063af66ec4f9ed7bae36560825d1433376b5f100cd77c11028e1ca467a6",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/compile_shader_only.mm": "52082d9eb420d90bfed81b21a85c810d67107959b98f15440f2c4524984a4f33",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-candidate/q8_tensorops.metal": "20e50d627af27d048e22a4e56fc104077f8a1d49222da7cef2493d7457884bdf"
+  }
+}

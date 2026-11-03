@@ -1,0 +1,36 @@
+{
+  "status": "source_prepared_review_pending",
+  "source_files": [
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/probe_compare.py",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/build_guard.py",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/probe-compare-prepare.json",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/README.md",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/alias-producer-audit.json",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/light-header-verification.json"
+  ],
+  "future_make_binding": [
+    "/Users/macbook/Documents/Codex/2026-11-02/files-pasted-by-the-user-mission/work/venv/bin/python",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/probe_compare.py",
+    "--make-binding",
+    "--output",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/actual-build-binding.json"
+  ],
+  "future_compare": [
+    "/Users/macbook/Documents/Codex/2026-11-02/files-pasted-by-the-user-mission/work/venv/bin/python",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/probe_compare.py",
+    "--reference",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-full8/capture",
+    "--reference-guard",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-full8/guard.json",
+    "--candidate",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-probe128-run3/capture",
+    "--candidate-guard",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-probe128-run3/guard.json",
+    "--binding",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/actual-build-binding.json",
+    "--output",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-probe-compare-v5/probe3-strict-window.json"
+  ],
+  "model_or_GPU_execution_required": false,
+  "numeric_comparison_performed": false
+}

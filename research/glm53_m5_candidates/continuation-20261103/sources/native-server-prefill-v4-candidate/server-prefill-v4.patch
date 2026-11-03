@@ -1,0 +1,348 @@
+--- /dev/null
++++ b/tools/server/airllm-glm53-prefill-v4.h
+@@ -0,0 +1,123 @@
++#pragma once
++// Source-only, opt-in server assembly policy. No llama/ggml ABI is changed.
++#include "airllm-glm53-cpu-no-blas.h"
++#include <atomic>
++#include <mutex>
++
++namespace airllm_glm53_prefill_v4 {
++using json = nlohmann::json;
++static constexpr const char * policy = "glm53-server-monoslot-cpu-noblas-prefill-v4-v1";
++static constexpr const char * geometry = "cpu8-tail-global-fences208-no-blas-v4";
++static constexpr const char * helper_source_sha256 = "c37423f3444ec5f986515e3e2c31abba32a2d43967eb0e49bde4290335bc3a78";
++static constexpr int ub = 32;
++inline bool requested() {
++    static const std::string flag = [] { const char * raw=std::getenv("AIRLLM_GLM53_PREFILL_V4"); return raw ? std::string(raw) : std::string("0"); }();
++    if (flag!="0" && flag!="1") throw std::runtime_error("AIRLLM_GLM53_PREFILL_V4 must be exactly0 or1");
++    return flag=="1";
++}
++inline int fence_end(int offset,int end) {
++    int stop=end;
++    for (const int fence : {128,208,256,384,512}) if (fence>offset && fence<stop) stop=fence;
++    return stop;
++}
++inline int aligned_take(int raw) { return raw>16 && raw%16 ? raw-raw%16 : raw; }
++inline int take(int offset,int end) {
++    if (offset<0 || end<=offset || end>1800) throw std::runtime_error("prefill-v4 requires bounded absolute native positions");
++    const int raw=std::min(ub,fence_end(offset,end)-offset);
++    const int aligned=aligned_take(raw);
++    return aligned>8 && aligned%2 ? aligned-aligned%8 : aligned;
++}
++inline void require_no_blas() {
++    if (!airllm_glm53_cpu_no_blas::requested() || !airllm_glm53_cpu_no_blas::instance().applied)
++        throw std::runtime_error("prefill-v4 requires applied standalone noBLAS policy before model");
++    airllm_glm53_cpu_no_blas::require_cpu_without_accel();
++}
++inline void configuration(const common_params & p) {
++    if (!requested()) return;
++    require_no_blas();airllm_glm53_cpu_no_blas::check_configuration(p);
++    for (const char * name : {"AIRLLM_MMAP_DEMAND","AIRLLM_EXPERT_PREFETCH","AIRLLM_DENSE_PREFETCH","AIRLLM_MMAP_NOCACHE","AIRLLM_DENSE_PREFETCH_MAX_COLS"}) {
++        const char * value=std::getenv(name);
++        if (!value || std::strcmp(value,"1")!=0) throw std::runtime_error("prefill-v4 requires the five pinned native environment knobs at1");
++    }
++    if (p.n_ctx!=2048 || p.n_batch!=ub || p.n_ubatch!=ub || p.n_parallel!=1 || p.n_sequences!=1 ||
++        p.cpuparams.n_threads!=10 || (p.cpuparams_batch.n_threads!=-1 && p.cpuparams_batch.n_threads!=10) ||
++        p.embedding || p.ctx_shift || !p.swa_full || p.kv_unified || p.numa!=GGML_NUMA_STRATEGY_DISABLED ||
++        p.load_mode!=LLAMA_LOAD_MODE_MMAP || !p.no_kv_offload || p.warmup || p.cache_prompt || p.cache_idle_slots || p.cache_ram_mib!=0 ||
++        p.n_cache_reuse!=0 || p.n_ctx_checkpoints!=0 || p.sampling.backend_sampling ||
++        p.speculative.need_n_rs_seq()!=0 || p.load_mtp ||
++        (p.n_outputs_max!=0 && p.n_outputs_max!=1) || p.n_outputs_max_per_seq!=1 ||
++        p.attention_type!=LLAMA_ATTENTION_TYPE_UNSPECIFIED || p.pooling_type!=LLAMA_POOLING_TYPE_UNSPECIFIED ||
++        p.rope_scaling_type!=LLAMA_ROPE_SCALING_TYPE_UNSPECIFIED || p.rope_freq_base!=0 || p.rope_freq_scale!=0 ||
++        p.yarn_ext_factor!=-1 || p.yarn_attn_factor!=-1 || p.yarn_beta_fast!=-1 || p.yarn_beta_slow!=-1 || p.yarn_orig_ctx!=0 ||
++        p.flash_attn_type!=LLAMA_FLASH_ATTN_TYPE_AUTO || p.cache_type_k!=GGML_TYPE_F16 || p.cache_type_v!=GGML_TYPE_F16)
++        throw std::runtime_error("prefill-v4 admits only pinned CPU10/GPU0/context2048/batch32/ubatch32/slot1 text/no-cache/no-spec/no-warmup/default-RoPE/F16-cache profile");
++}
++// Pin the EFFECTIVE parsed chain; temp0 alone does not imply greedy if a
++// request removes the temperature stage (samplers:[]) or enables modifiers.
++// logit_bias_eog is a model-derived inactive table when ignore_eos=false;
++// common_init populates it even for the unchanged original RONIN request.
++inline void sampling(const common_params_sampling & s) {
++    const common_params_sampling defaults;
++    if (s.samplers!=defaults.samplers || s.temp!=0 || s.seed!=42 || s.backend_sampling || s.ignore_eos ||
++        s.n_probs!=0 || s.min_keep!=defaults.min_keep || s.top_k!=defaults.top_k || s.top_p!=defaults.top_p ||
++        s.min_p!=defaults.min_p || s.typ_p!=defaults.typ_p || s.xtc_probability!=defaults.xtc_probability ||
++        s.xtc_threshold!=defaults.xtc_threshold || s.dynatemp_range!=defaults.dynatemp_range ||
++        s.dynatemp_exponent!=defaults.dynatemp_exponent || s.penalty_last_n!=defaults.penalty_last_n ||
++        s.penalty_repeat!=defaults.penalty_repeat || s.penalty_freq!=defaults.penalty_freq ||
++        s.penalty_present!=defaults.penalty_present || s.dry_multiplier!=defaults.dry_multiplier ||
++        s.dry_base!=defaults.dry_base || s.dry_allowed_length!=defaults.dry_allowed_length ||
++        s.dry_penalty_last_n!=defaults.dry_penalty_last_n || s.dry_sequence_breakers!=defaults.dry_sequence_breakers ||
++        s.adaptive_target!=defaults.adaptive_target || s.adaptive_decay!=defaults.adaptive_decay ||
++        s.mirostat!=defaults.mirostat || s.top_n_sigma!=defaults.top_n_sigma ||
++        s.mirostat_tau!=defaults.mirostat_tau || s.mirostat_eta!=defaults.mirostat_eta ||
++        !s.grammar.empty() || s.grammar_lazy || !s.grammar_triggers.empty() || !s.preserved_tokens.empty() ||
++        !s.logit_bias.empty() || s.reasoning_budget_tokens!=defaults.reasoning_budget_tokens || s.reasoning_control)
++        throw std::runtime_error("prefill-v4 requires the unmodified default sampler chain with temp0/seed42 and neutral modifiers");
++}
++inline json sampling_description(const common_params_sampling & s) {
++    json stages=json::array();for (auto stage:s.samplers) stages.push_back(int(stage));
++    return {{"chain_enum_ids",stages},{"temperature",s.temp},{"seed",s.seed},{"top_k",s.top_k},
++        {"top_p",s.top_p},{"min_p",s.min_p},{"typical_p",s.typ_p},
++        {"backend_sampling",s.backend_sampling},{"ignore_eos",s.ignore_eos},
++        {"all_other_modifiers_checked_against_pinned_defaults",true},
++        {"scope","actual parsed request sampler before launch; no payload rewritten"}};
++}
++struct evidence {
++    std::mutex mutex;
++    json actual_context = nullptr;
++};
++inline evidence & saved() { static evidence value; return value; }
++inline void context_ready(const common_params & p,llama_context * ctx) {
++    if (!requested()) return;
++    configuration(p);
++    if (!ctx || llama_n_ctx(ctx)!=2048 || llama_n_batch(ctx)!=ub || llama_n_ubatch(ctx)!=ub ||
++        llama_n_seq_max(ctx)!=1 || llama_n_rs_seq(ctx)!=0)
++        throw std::runtime_error("prefill-v4 actual context differs from pinned profile");
++    const auto cp=common_context_params_to_llama(p);
++    json observed={{"n_ctx",llama_n_ctx(ctx)},{"n_batch",llama_n_batch(ctx)},{"n_ubatch",llama_n_ubatch(ctx)},
++        {"n_seq_max",llama_n_seq_max(ctx)},{"n_rs_seq",llama_n_rs_seq(ctx)},
++        {"configured_n_outputs_max",cp.n_outputs_max},{"configured_n_outputs_max_per_seq",cp.n_outputs_max_per_seq},
++        {"configured_offload_kqv",cp.offload_kqv},{"configured_op_offload",cp.op_offload},
++        {"configured_type_k",int(cp.type_k)},{"configured_type_v",int(cp.type_v)},{"configured_swa_full",cp.swa_full},{"configured_kv_unified",cp.kv_unified},
++        {"configured_flash_attn",int(cp.flash_attn_type)},
++        {"scope","public context getters plus explicit configured fields; not all resolved native defaults"}};
++    { std::lock_guard<std::mutex> lock(saved().mutex); saved().actual_context=observed; }
++    LOG_INF("AIRLLM_GLM53_PREFILL_V4 %s\n",json({{"event","context_ready"},{"policy",policy},{"context",observed}}).dump().c_str());
++}
++inline json proof() {
++    std::lock_guard<std::mutex> lock(saved().mutex);
++    return {{"schema",1},{"enabled",true},{"policy",policy},{"assembly_geometry",geometry},
++        {"helper_source_sha256",helper_source_sha256},{"context",saved().actual_context},
++        {"logical_batch",ub},{"physical_ubatch",ub},{"absolute_fences",{128,208,256,384,512}},
++        {"fallback_column_chunk",16},{"fallback_remainder_policy","floor16-then-cpu8-odd-tail"},
++        {"sampler_contract","actual default chain + temp0/seed42 + pinned neutral modifiers; no request rewrite"},{"shared_cache_admitted",false},{"extra_prefill_http_requests",0},{"discarded_samples",0},
++        {"raw_numeric_instrumentation_available",false},{"full_model_fidelity_qualified",false},
++        {"cache_qualified",false},{"functional_agents_qualified",false},{"performance_qualified",false}};
++}
++inline uint64_t next_call() { static std::atomic<uint64_t> count{0}; return ++count; }
++inline void trace(json value,const char * event,int returncode) {
++    value["event"]=event;
++    value["returncode"]=std::strcmp(event,"after_call")==0 ? json(returncode) : json(nullptr);
++    LOG_INF("AIRLLM_GLM53_PREFILL_V4 %s\n",value.dump().c_str());
++}
++} // namespace
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -15,6 +15,7 @@
+ #include "build-info.h"
+ #include "common.h"
+ #include "airllm-glm53-cpu-no-blas.h"
++#include "airllm-glm53-prefill-v4.h"
+ #include "fit.h"
+ #include "llama.h"
+ #include "log.h"
+@@ -1330,6 +1331,12 @@
+             return false;
+         }
+ 
++        try {
++            airllm_glm53_prefill_v4::context_ready(params_base,ctx_tgt);
++        } catch (const std::exception & error) {
++            SRV_ERR("prefill-v4 context profile refused: %s\n",error.what());
++            return false;
++        }
+         vocab = llama_model_get_vocab(model_tgt);
+ 
+         try {
+@@ -1962,6 +1969,32 @@
+     }
+ 
+     bool launch_slot_with_task(server_slot & slot, server_task && task) {
++        if (airllm_glm53_prefill_v4::requested()) {
++            try {
++                airllm_glm53_prefill_v4::configuration(params_base);
++                const auto & s=task.params.sampling;
++                airllm_glm53_prefill_v4::sampling(s);
++                if (slots.size()!=1 || slot.id!=0 || task.type!=SERVER_TASK_TYPE_COMPLETION || task.cli ||
++                    task.index!=0 || task.is_parent() || task.is_child() || task.n_tokens_shared!=0 ||
++                    (task.id_slot!=-1 && task.id_slot!=0) || task.tokens.has_mtmd ||
++                    task.n_tokens()<1 || task.n_tokens()>1800 || task.params.n_predict<1 || task.params.n_predict>512 ||
++                    task.n_tokens()+task.params.n_predict>2048 || task.params.n_cmpl!=1 ||
++                    task.params.cache_prompt || task.params.n_cache_reuse!=0 || task.params.n_keep!=0 ||
++                    !task.params.antiprompt.empty() || !task.params.lora.empty() ||
++                    task.params.speculative.has_dft() || task.params.speculative.has_synth() ||
++                    task.params.speculative.need_n_rs_seq()!=0 || s.backend_sampling || s.temp!=0 || s.seed!=42 ||
++                    s.ignore_eos || s.n_probs!=0 || !s.grammar.empty() || !s.logit_bias.empty() ||
++                    s.penalty_repeat!=1 || s.penalty_freq!=0 || s.penalty_present!=0)
++                    throw std::runtime_error("prefill-v4 admits one native text completion/no-cache/greedy-seed42/Max<=512 only");
++                for (auto type:task.params.speculative.types) if (type!=COMMON_SPECULATIVE_TYPE_NONE)
++                    throw std::runtime_error("prefill-v4 refuses request speculative decoding");
++                LOG_INF("AIRLLM_GLM53_PREFILL_V4 %s\n",json({{"event","request_admitted"},
++                    {"request",task.id},{"slot",0},{"sampler",airllm_glm53_prefill_v4::sampling_description(s)}}).dump().c_str());
++            } catch (const std::exception & error) {
++                send_error(task,error.what(),ERROR_TYPE_INVALID_REQUEST);
++                return false;
++            }
++        }
+         // process per-request lora adapters
+         if (!task.params.lora.empty()) {
+             auto task_loras = construct_lora_list(task.params.lora);
+@@ -3018,6 +3051,19 @@
+             return false;
+         }
+ 
++        if (airllm_glm53_prefill_v4::requested() && task.type==SERVER_TASK_TYPE_SLOT_ERASE) {
++            for (const auto & slot:slots) if (slot.is_processing()) {
++                send_error(task,"prefill-v4 refuses erasure of an active request",ERROR_TYPE_NOT_SUPPORTED);
++                return true;
++            }
++        }
++        if (airllm_glm53_prefill_v4::requested() &&
++            task.type!=SERVER_TASK_TYPE_COMPLETION && task.type!=SERVER_TASK_TYPE_CANCEL &&
++            task.type!=SERVER_TASK_TYPE_METRICS && task.type!=SERVER_TASK_TYPE_SLOT_GET &&
++            task.type!=SERVER_TASK_TYPE_GET_LORA && task.type!=SERVER_TASK_TYPE_SLOT_ERASE) {
++            send_error(task,"prefill-v4 refuses unsupported task/state mutation",ERROR_TYPE_NOT_SUPPORTED);
++            return true;
++        }
+         switch (task.type) {
+             case SERVER_TASK_TYPE_COMPLETION:
+             case SERVER_TASK_TYPE_INFILL:
+@@ -3454,6 +3500,7 @@
+             if (slot.is_processing()) {
+                 send_error(slot, reason, ERROR_TYPE_SERVER);
+                 slot.release();
++                if (airllm_glm53_prefill_v4::requested()) slot.prompt_clear();
+             }
+         }
+     }
+@@ -4473,8 +4520,18 @@
+ 
+                     const int32_t n_decision_first = slot.task->type == SERVER_TASK_TYPE_DECISION ? slot.task->decision.pos_first() : -1;
+ 
++                    int32_t v4_prompt_take=-1;
++                    if (airllm_glm53_prefill_v4::requested()) {
++                        airllm_glm53_prefill_v4::configuration(params_base);
++                        if (slots.size()!=1 || slot.id!=0 || batch.size()!=0 || n_batch!=32 || n_ubatch!=32 ||
++                            do_checkpoint || wait_shared || has_mtmd || input_tokens.has_mtmd ||
++                            slot.need_embd() || slot.prompt.tokens.pos_next()!=slot.prompt.n_tokens())
++                            throw std::runtime_error("prefill-v4 assembly cannot preserve its admitted absolute geometry");
++                        v4_prompt_take=airllm_glm53_prefill_v4::take(slot.prompt.tokens.pos_next(),slot.task->n_tokens());
++                    }
+                     // add prompt tokens for processing in the current batch
+-                    while (slot.prompt.n_tokens() < slot.task->n_tokens() && batch.size() < n_batch) {
++                    while (slot.prompt.n_tokens() < slot.task->n_tokens() && batch.size() < n_batch &&
++                           (v4_prompt_take<0 || batch.size()-n_tokens_prev<v4_prompt_take)) {
+                         // get next token to process
+                         llama_token cur_tok = input_tokens[slot.prompt.n_tokens()];
+                         if (cur_tok == LLAMA_TOKEN_NULL) {
+@@ -4544,6 +4601,9 @@
+                         }
+                     }
+ 
++                    // The profile must refuse every other cause of an early break.
++                    if (v4_prompt_take>=0 && batch.size()-n_tokens_prev!=v4_prompt_take)
++                        throw std::runtime_error("prefill-v4 prompt assembly ended before its exact cap");
+                     // the number of tokens added to the batch for the current slot
+                     const auto n_tokens_cur = batch.size() - n_tokens_prev;
+ 
+@@ -4699,16 +4759,55 @@
+             has_output |= batch.tokens[i].output;
+         }
+ 
++        json v4_call=nullptr;
++        if (airllm_glm53_prefill_v4::requested()) {
++            airllm_glm53_prefill_v4::configuration(params_base);
++            if (slots.size()!=1 || !slots[0].task || off!=0 || batch.view.size()!=batch.size() || batch.view.n_pos!=1)
++                throw std::runtime_error("prefill-v4 requires one complete pure-token rendered view");
++            const auto & slot=slots[0];const auto & first=batch.tokens[0];
++            const int count=batch.view.size(),offset=first.pos[0],end=slot.task->n_tokens();
++            const bool prompt=first.is_prompt;
++            const int expected=prompt ? airllm_glm53_prefill_v4::take(offset,end) : 1;
++            if (count!=expected || first.id_slot!=0 || offset<0 || (prompt && offset+count>end))
++                throw std::runtime_error("prefill-v4 effective view differs from its exact scheduling policy");
++            json flags=json::array();
++            for (int i=0;i<count;++i) {
++                const auto & t=batch.tokens[i];const auto & rendered=batch.view.tokens[i];
++                const bool expected_output=prompt ? offset+i+1==end : true;
++                if (t.id_slot!=0 || t.is_prompt!=prompt || t.pos[0]!=offset+i || t.i_embd!=-1 ||
++                    t.decision_order!=0 || t.output!=expected_output || rendered.id!=t.token ||
++                    rendered.seq_id!=0 || !rendered.seq_ids_extra.empty() || rendered.pos[0]!=t.pos[0] ||
++                    rendered.output!=t.output || rendered.embd.data || rendered.state.data)
++                    throw std::runtime_error("prefill-v4 rendered position/token/output mapping is outside contract");
++                flags.push_back(t.output ? 1 : 0);
++            }
++            v4_call={{"policy",airllm_glm53_prefill_v4::policy},{"call",airllm_glm53_prefill_v4::next_call()},
++                {"request",slot.task->id},{"slot",0},{"offset",offset},{"tokens",count},{"prompt_end",end},
++                {"phase",prompt ? "prefill" : "decode1"},{"logits_flags",flags},
++                {"logits_final_prompt",prompt && offset+count==end},{"logical_batch",32},{"physical_ubatch",32},
++                {"trace_scope","logical call; ubatch/raw numeric instrumentation still required"}};
++            airllm_glm53_prefill_v4::trace(v4_call,"before_call",0);
++        }
+         // yield to the queue, so we can still handle metrics tasks while decoding
+         // note: the sync is done here too, so that the wait is also covered by the yield
+         int ret = 0;
+         queue_tasks.yield_to_queue([&]() {
+             ret = llama_process(ctx_tgt, LLAMA_PROCESS_TYPE_DECODE, batch.view.get());
+-            if (ret == 0 && has_output) {
++            if (ret == 0 && (has_output || airllm_glm53_prefill_v4::requested())) {
+                 llama_synchronize(ctx_tgt);
+             }
+         });
+ 
++        if (!v4_call.is_null()) {
++            airllm_glm53_prefill_v4::trace(v4_call,"after_call",ret);
++            if (ret!=0) {
++                for (auto & slot:slots) if (slot.is_processing()) {
++                    send_error(slot,"prefill-v4 native decode failed; no changed-geometry retry admitted");
++                    slot.release();slot.prompt_clear();
++                }
++                throw std::runtime_error("prefill-v4 decode failed; context invalidated, no retry");
++            }
++        }
+         if (ret != 0) {
+             {
+                 std::string err;
+@@ -5325,6 +5424,14 @@
+     auto & params = this->params;
+ 
+     res->set_req(&req); // will also set spipe if needed
++    if (airllm_glm53_prefill_v4::requested() &&
++        (type!=SERVER_TASK_TYPE_COMPLETION || res_type!=TASK_RESPONSE_TYPE_NONE || !files.empty() ||
++         !data.contains("prompt") || !data.at("prompt").is_string() ||
++         (data.contains("n") && (!data.at("n").is_number_integer() || data.at("n").get<int>()!=1)))) {
++        res->error(format_error_response("prefill-v4 admits one native /completion string prompt only",ERROR_TYPE_NOT_SUPPORTED));
++        return res;
++    }
++
+ 
+     if (!ctx_server.has_cap_chat()) {
+         res->error(format_error_response("this server does not support chat/completions", ERROR_TYPE_NOT_SUPPORTED));
+@@ -5710,6 +5817,8 @@
+     if (airllm_glm53_cpu_no_blas::requested()) {
+         props["experimental_native_backend_policy"] = airllm_glm53_cpu_no_blas::proof();
+     }
++    if (airllm_glm53_prefill_v4::requested())
++        props["experimental_prefill_assembly_policy"]=airllm_glm53_prefill_v4::proof();
+     if (!params.server_connect_code.empty()) {
+         props["connect_code"] = params.server_connect_code;
+     }
+--- a/tools/server/server.cpp
++++ b/tools/server/server.cpp
+@@ -13,6 +13,7 @@
+ #include "llama.h"
+ #include "log.h"
+ #include "airllm-glm53-cpu-no-blas.h"
++#include "airllm-glm53-prefill-v4.h"
+ 
+ #include <atomic>
+ #include <clocale>
+@@ -798,6 +799,7 @@
+             throw std::runtime_error("experimental noBLAS refuses router-managed worker roles");
+         }
+         airllm_glm53_cpu_no_blas::apply(params);
++        airllm_glm53_prefill_v4::configuration(params);
+     } catch (const std::exception & error) {
+         SRV_ERR("experimental noBLAS policy refused before model: %s\n",error.what());
+         return 1;
+@@ -817,7 +819,7 @@
+     // The embedding caller may already own a live model/backend. Never unload
+     // a process-global registry from that entry point.
+     try {
+-        if (airllm_glm53_cpu_no_blas::requested()) {
++        if (airllm_glm53_cpu_no_blas::requested() || airllm_glm53_prefill_v4::requested()) {
+             SRV_ERR("%s", "experimental noBLAS is restricted to standalone llama-server\n");
+             return 1;
+         }

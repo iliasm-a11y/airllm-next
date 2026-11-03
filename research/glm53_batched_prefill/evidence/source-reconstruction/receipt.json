@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "status": "source_exact",
+  "started_at_utc": "2026-11-03T14:17:58.014955+00:00",
+  "finished_at_utc": "2026-11-03T14:17:58.785836+00:00",
+  "elapsed_seconds": 0.7707926670045708,
+  "source_base_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "source": "<work>/metal-integration-v4-source/source",
+  "build_manifest_sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+  "ordered_patch_inputs": [
+    {
+      "owner_path": "research/glm53_m5/patches/llama-mmap-demand.patch",
+      "name": "llama-mmap-demand.patch",
+      "sha256": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0"
+    },
+    {
+      "owner_path": "research/glm53_m5/patches/llama-expert-prefetch.patch",
+      "name": "llama-expert-prefetch.patch",
+      "sha256": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238"
+    },
+    {
+      "owner_path": "research/glm53_m5/patches/llama-dense-prefetch.patch",
+      "name": "llama-dense-prefetch.patch",
+      "sha256": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c"
+    },
+    {
+      "owner_path": "research/glm53_m5/patches/llama-dense-prefetch-columns.patch",
+      "name": "llama-dense-prefetch-columns.patch",
+      "sha256": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356"
+    },
+    {
+      "owner_path": "research/glm53_gpu/patches/llama-layer-local-hc.patch",
+      "name": "llama-layer-local-hc.patch",
+      "sha256": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d"
+    },
+    {
+      "owner_path": "research/glm53_gpu/patches/llama-moe-cache-split.patch",
+      "name": "llama-moe-cache-split.patch",
+      "sha256": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-q8-cpuarith.patch",
+      "name": "llama-q8-cpuarith.patch",
+      "sha256": "58046f9be9755dd8ea05fdd7dfca04551195083ec516e9d23180e581d46d0bb3"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-metal-command-timing.patch",
+      "name": "llama-metal-command-timing.patch",
+      "sha256": "b1f948cc3ff1f6552e342ee0806f2a1c1e79c3c1db97b642d05e81bfa07f9a39"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-hc-kda-trace.patch",
+      "name": "llama-hc-kda-trace.patch",
+      "sha256": "2fc7d5a5976bbf3b2ddc9f3ca0a1b6c4dc2bad8c18e2083f04f24e7852455870"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-q8-selective.patch",
+      "name": "llama-q8-selective.patch",
+      "sha256": "c681c0144a3a0e46e54ddd31fb4a0c2e3935f0f0a505d1eebf01a429c736b1ad"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-metal-mapped-cpu-read.patch",
+      "name": "llama-metal-mapped-cpu-read.patch",
+      "sha256": "2757eb3c24bbb62371a1c4e8e3acf59a35caca0a16293d024304914fd85ff91a"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-q8-shared-activation.patch",
+      "name": "llama-q8-shared-activation.patch",
+      "sha256": "fc093020415833703edbca51b36a9bd998a672998ea1a87b9df293937f096057"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v2/patches/llama-expert-drop.patch",
+      "name": "llama-expert-drop.patch",
+      "sha256": "a93a61629fe98b234748094101613af39ec29ddb3cf806a5e71650c353c392a1"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v3/patches/llama-mmap-nocache.patch",
+      "name": "llama-mmap-nocache.patch",
+      "sha256": "f1cc9e2c60d72ce6bd5140564f1b37069f1c726e0fb01f86268a72827cb32e63"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v3/patches/llama-dense-lookahead.patch",
+      "name": "llama-dense-lookahead.patch",
+      "sha256": "d14e78d6e383084e7bcf84869a5927f8ceb6c15e3e443a6595a5917657d97e5c"
+    },
+    {
+      "owner_path": "research/glm53_gpu_v3/patches/llama-dense-lock.patch",
+      "name": "llama-dense-lock.patch",
+      "sha256": "d0e4bcd383eee1e29acbfc493287bef8dc65c359abe1517722450dee72a4f40a"
+    }
+  ],
+  "source_checks": {
+    "ggml/src/ggml-backend.cpp": {
+      "actual_sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9",
+      "expected_sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9",
+      "matches": true
+    },
+    "ggml/src/ggml-cpu/ggml-cpu-dense-lookahead.h": {
+      "actual_sha256": "cc1bf5055a33f306c3dc684c7921c854b4eb61dbcd1f83d1a13d71cb2c171685",
+      "expected_sha256": "cc1bf5055a33f306c3dc684c7921c854b4eb61dbcd1f83d1a13d71cb2c171685",
+      "matches": true
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.c": {
+      "actual_sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e",
+      "expected_sha256": "4e2c75dedbf4e074e3d763d94dff956b97508c7c86bfba31e1cf5ddc0060b93e",
+      "matches": true
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": {
+      "actual_sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2",
+      "expected_sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2",
+      "matches": true
+    },
+    "ggml/src/ggml-metal/ggml-metal-context.m": {
+      "actual_sha256": "9ecb6454ce7278ea904101100091d362dbfe29cf9a15a0f0a942af71bef0c631",
+      "expected_sha256": "9ecb6454ce7278ea904101100091d362dbfe29cf9a15a0f0a942af71bef0c631",
+      "matches": true
+    },
+    "ggml/src/ggml-metal/ggml-metal-device.cpp": {
+      "actual_sha256": "c841b02306f755962f9c5e8424c9eac6862c1eef533ee079f5f3be187570cce6",
+      "expected_sha256": "c841b02306f755962f9c5e8424c9eac6862c1eef533ee079f5f3be187570cce6",
+      "matches": true
+    },
+    "ggml/src/ggml-metal/ggml-metal-device.m": {
+      "actual_sha256": "c3b7cbe2d64f3ab01698c6ba1a5da7a932a9146e42b7f00a469bcb4a85f7484e",
+      "expected_sha256": "c3b7cbe2d64f3ab01698c6ba1a5da7a932a9146e42b7f00a469bcb4a85f7484e",
+      "matches": true
+    },
+    "ggml/src/ggml-metal/kernels/mul_mv.metal": {
+      "actual_sha256": "b36763bdb3534ff78581a933a8e21ec3c7a81062643867ac621df8eb3c67a185",
+      "expected_sha256": "b36763bdb3534ff78581a933a8e21ec3c7a81062643867ac621df8eb3c67a185",
+      "matches": true
+    },
+    "src/llama-context.cpp": {
+      "actual_sha256": "33d8cf6d489cce950bf35bc19979f90f87b2e987e9fc095875ba8cf7debedcb4",
+      "expected_sha256": "33d8cf6d489cce950bf35bc19979f90f87b2e987e9fc095875ba8cf7debedcb4",
+      "matches": true
+    },
+    "src/llama-dense-lock.h": {
+      "actual_sha256": "8daee7fc71a4bc49db5885c1af1f6570ffa091bfe03ca2c3137867897fe9e482",
+      "expected_sha256": "8daee7fc71a4bc49db5885c1af1f6570ffa091bfe03ca2c3137867897fe9e482",
+      "matches": true
+    },
+    "src/llama-mmap.cpp": {
+      "actual_sha256": "3615c7c7dd351d58222f5f9bc0923221105c3f0f697c065a57f4af5675942606",
+      "expected_sha256": "3615c7c7dd351d58222f5f9bc0923221105c3f0f697c065a57f4af5675942606",
+      "matches": true
+    },
+    "src/llama-model.cpp": {
+      "actual_sha256": "a2c2d032e8416d9745fe237afc85c403f88eee34fe356ca0517e76101dcb3029",
+      "expected_sha256": "a2c2d032e8416d9745fe237afc85c403f88eee34fe356ca0517e76101dcb3029",
+      "matches": true
+    },
+    "src/models/glm5-next.cpp": {
+      "actual_sha256": "ab8ddd13fa5c28de863392580f443584fefdeb020976675445496ce655f0f60b",
+      "expected_sha256": "ab8ddd13fa5c28de863392580f443584fefdeb020976675445496ce655f0f60b",
+      "matches": true
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "<runtime-v4-work>/llama-v3",
+        "<work>/metal-integration-v4-source/source"
+      ],
+      "cwd": "<task-workspace>",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Cloning into '<work>/metal-integration-v4-source/source'...\ndone.\n"
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "3f8af15a76ac8675812e856da45454bafc90f12c"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "HEAD is now at 3f8af15 imatrix : fix --nextn crash (#31522)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-mmap-demand.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-mmap-demand.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-expert-prefetch.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-expert-prefetch.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-prefetch.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-prefetch.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-prefetch-columns.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-prefetch-columns.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-layer-local-hc.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-layer-local-hc.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-moe-cache-split.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-moe-cache-split.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-cpuarith.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-cpuarith.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-metal-command-timing.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-metal-command-timing.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-hc-kda-trace.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-hc-kda-trace.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-selective.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-selective.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-metal-mapped-cpu-read.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-metal-mapped-cpu-read.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-shared-activation.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-q8-shared-activation.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-expert-drop.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-expert-drop.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-mmap-nocache.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-mmap-nocache.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-lookahead.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-lookahead.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-lock.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "<work>/metal-integration-v4-source/inputs/llama-dense-lock.patch"
+      ],
+      "cwd": "<work>/metal-integration-v4-source/source",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "error": null,
+  "existing_native_source_identity_unchanged": true,
+  "build_performed": false,
+  "model_loaded": false,
+  "gpu_commands": 0,
+  "binary_rebuilt": false,
+  "new_fidelity_claim": false,
+  "scope": "exact source reconstruction only; CPU8 numerical evidence and existing runtime libraries unchanged"
+}

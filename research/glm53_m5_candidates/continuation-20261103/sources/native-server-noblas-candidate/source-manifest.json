@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "source_candidate_not_compiled_not_executed",
+  "files": {
+    "tools/server/airllm-glm53-cpu-no-blas.h": {
+      "base_sha256": null,
+      "candidate_sha256": "2131366fbe29f9c27878f9cb178d67947f9d74e4c41a26c54cad4a1fda0b2cb6",
+      "bytes": 9580
+    },
+    "tools/server/server-context.cpp": {
+      "base_sha256": "5fae51fa9164f0e5c3e185a4d8834bc805d58ae6de1a4269929cdcbe840c9551",
+      "candidate_sha256": "4f66291910748f90cc8a89b0c4402d43baeb45c02e1cedc034747824d08addb5",
+      "bytes": 305091
+    },
+    "tools/server/server.cpp": {
+      "base_sha256": "d4d343db7c1b648eb5358ae2b87966a5f78ce5c9b245c7fbfe9827ba6971f08b",
+      "candidate_sha256": "65f6d601d93d49c6034ca39c47dbfac873c10fae25df960a78a41c6119142e4b",
+      "bytes": 33257
+    }
+  },
+  "patch_sha256": "c4c2ab976a94174d6908935cd0b36d39ff948d41a26d2425ec666bfe585a646c",
+  "apply_check": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "build_plan_sha256": "1048bf8fc1c5107b953199035b54a86a7f0fbcee3aa6bd5721a6ca9192601597",
+  "audit_sha256": "15474b51b7ad1b9c61c9d5495b0322ee6fd4903edbd3e414bb7cf48ae7c87178",
+  "runtime_default": "OFF",
+  "native_or_test_executions": 0,
+  "build_calls": 0,
+  "model_loads": 0,
+  "gpu_commands": 0,
+  "production_sources_modified": false,
+  "original_v4_math_libraries_modified": false,
+  "qualification": "none; source review pending"
+}

@@ -1,0 +1,57 @@
+{
+  "status": "source_only_not_built_not_run",
+  "files": {
+    "component.cpp": {
+      "sha256": "66ae95a60f9d1f061a8d3700ce7cbe7f676a5220fbabf133b61bfda650ee9527",
+      "bytes": 9700
+    },
+    "build_only.py": {
+      "sha256": "5c92ec5d3e42f6eac1252a7a96eeef549ccbc2e2edb564d2745a682a17eb61b9",
+      "bytes": 2802
+    },
+    "run_only.py": {
+      "sha256": "fb18e6f2e48252b4958947749ff3fa721ea955a7b856086af1b993b6a0d2c551",
+      "bytes": 12133
+    }
+  },
+  "case_count": 42,
+  "K": 4096,
+  "M": 8192,
+  "N": [
+    14,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    38,
+    44,
+    48,
+    64,
+    72,
+    80,
+    88,
+    96,
+    104,
+    112,
+    120,
+    128
+  ],
+  "seeds": [
+    5305,
+    713962
+  ],
+  "native_peak_rss_bytes": null,
+  "max_seconds": 120,
+  "rss_cap_bytes": 134217728,
+  "logical_payload_cap_bytes": 67108864,
+  "raw_float32_exported": false,
+  "no_raw_export_limitation": "Native in-memory comparison counts/maxabs/SHA; no external F32 re-comparison possible",
+  "python_ast_check": "passed",
+  "native_build": false,
+  "native_run": false,
+  "scope": "Q8 CPU tail dispatch source, no model or GPU"
+}

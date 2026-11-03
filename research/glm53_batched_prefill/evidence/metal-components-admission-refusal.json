@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-11-03T13:53:23.110706+00:00",
+  "finished_at_utc": "2026-11-03T13:53:23.120446+00:00",
+  "elapsed_seconds": 0.00936254100088263,
+  "admitted": false,
+  "progression_started": false,
+  "model_loaded": false,
+  "gpu_commands": 0,
+  "native_oracle_calls": 0,
+  "q2_compilation_started": false,
+  "no_guard_bypass": true,
+  "full_model_qualified": false,
+  "objective_A_achieved": false,
+  "scope": "external preflight only; Q8 CLI not started",
+  "reason": "AC power required; battery discharging",
+  "observed_power_source": "Battery Power",
+  "observed_battery_charge_percent": 100,
+  "observed_discharging": true,
+  "observed_pressure_level": 1,
+  "power_returncode": 0,
+  "pressure_returncode": 0,
+  "requested_component": {
+    "kind": "synthetic representative Q8 projection",
+    "M": 1536,
+    "K": 4096,
+    "token_max": 128,
+    "N": [
+      8,
+      16,
+      32,
+      64,
+      128
+    ]
+  },
+  "q2_status": "prepared, not compiled, not executed",
+  "probe_sha256_at_preflight": "564e0c7d7fb4d39beb97673bf2afb394b96737dedb070b22f254b4ed9c3c12d0",
+  "original_private_receipt_sha256": "617ec2ca6964cde4f87180e1324a9139bea104b0d91da1c0596ba04937aa84df"
+}

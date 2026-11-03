@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "source_exact",
+  "matching_sources": 13,
+  "ordered_patches": 16,
+  "selection_scope": "source reconstruction receipts and manifest only; no native source checkout or binaries copied",
+  "transformation": "UTF-8 path prefix alias replacement only; original and selected size/SHA recorded",
+  "files": [
+    {
+      "source_label": "metal-integration-v4-source/receipt.json",
+      "source_bytes": 22493,
+      "source_sha256": "32504e7f96705ecf3f2a61e4ef0cf3ad1f067c1815d8fb0c5c61453cdf01f34e",
+      "selected_path": "receipt.json",
+      "selected_bytes": 17259,
+      "selected_sha256": "b3a3c79af126a495f485fd08426b63a45cdc18762e5a049eb8379dba8e8ea29b",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-integration-v4-source/inputs/v4-source-manifest.json",
+      "source_bytes": 3954,
+      "source_sha256": "339b07abe8a9d76d664413d293dd35e2e77d6cac1f36f494be366013fd72e5b8",
+      "selected_path": "v4-source-manifest.json",
+      "selected_bytes": 3954,
+      "selected_sha256": "339b07abe8a9d76d664413d293dd35e2e77d6cac1f36f494be366013fd72e5b8",
+      "local_paths_redacted": false
+    }
+  ],
+  "build_performed": false,
+  "binary_rebuilt": false,
+  "model_loaded": false,
+  "new_fidelity_claim": false,
+  "generated_artifacts": [
+    {
+      "selected_path": "README.md",
+      "bytes": 960,
+      "sha256": "6a16fda1126e5c5504a88dea5dacbf8a131947142fb3e2c2d1dca32cdf1d5893"
+    }
+  ]
+}

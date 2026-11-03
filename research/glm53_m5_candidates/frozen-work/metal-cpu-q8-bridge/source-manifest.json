@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "status": "source candidate; not compiled or executed",
+  "build_default": "OFF",
+  "runtime_default": "OFF",
+  "patch_sha256": "e4aedfb321d703de08b1ae065264f179fe56c0dc204fe98ab822492aa0d41279",
+  "files": {
+    "ggml/include/ggml-backend.h": {
+      "base_sha256": "6926bee0487ed349cce290466bbd4b24e2f9af2758f6fac3cd77adef3a421799",
+      "candidate_sha256": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3",
+      "bytes": 28296
+    },
+    "ggml/src/ggml-backend.cpp": {
+      "base_sha256": "dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9",
+      "candidate_sha256": "ffe6a5f6323227beb90760825d3f03fca816df227730daa787645afb4ea1c02b",
+      "bytes": 118458
+    },
+    "ggml/src/ggml-cpu/CMakeLists.txt": {
+      "base_sha256": "b69ed1a14063642c47c70b7b4c67177388e02ee3c27d2e7adfde9ed5ba5859bf",
+      "candidate_sha256": "7965f36d4e2e8c114a143b1922f1c985db31ce28ea716fdd146192b23c67efed",
+      "bytes": 34500
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": {
+      "base_sha256": "39e90d506a6aecf425a14d02054fb7d0a9920d997cd5d2be79c3498c9160efe2",
+      "candidate_sha256": "9bb61c71039202e426e5704281f3c497cd01df7df3c7bb59f2b6afcb839ad31d",
+      "bytes": 25695
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge-kernel.h": {
+      "base_sha256": null,
+      "candidate_sha256": "bd67eb5bcb7a91b2826a41a4e1e504fa46cf03b8bb6d1b07787c422e4e6a1826",
+      "bytes": 3236
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge.h": {
+      "base_sha256": null,
+      "candidate_sha256": "f56ae2c97ee17abd48c9c7eeaff121240763b2e6dc591fe34af141d1d83d12ee",
+      "bytes": 194
+    },
+    "ggml/src/ggml-cpu/metal-q8-bridge.mm": {
+      "base_sha256": null,
+      "candidate_sha256": "28e470ede3266f962cef53dda415316a203e6d581d866da7422b4afc4e564a6a",
+      "bytes": 24749
+    }
+  },
+  "base_reconstruction_receipt_sha256": "32504e7f96705ecf3f2a61e4ef0cf3ad1f067c1815d8fb0c5c61453cdf01f34e",
+  "exact_v4_base_13_sources_unchanged": {
+    "ggml/src/ggml-backend.cpp": true,
+    "ggml/src/ggml-cpu/ggml-cpu-dense-lookahead.h": true,
+    "ggml/src/ggml-cpu/ggml-cpu.c": true,
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": true,
+    "ggml/src/ggml-metal/ggml-metal-context.m": true,
+    "ggml/src/ggml-metal/ggml-metal-device.cpp": true,
+    "ggml/src/ggml-metal/ggml-metal-device.m": true,
+    "ggml/src/ggml-metal/kernels/mul_mv.metal": true,
+    "src/llama-context.cpp": true,
+    "src/llama-dense-lock.h": true,
+    "src/llama-mmap.cpp": true,
+    "src/llama-model.cpp": true,
+    "src/models/glm5-next.cpp": true
+  },
+  "apply_check": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "validation": {
+    "checks": {
+      "build_default_off": true,
+      "registration_compiled_guard": true,
+      "runtime_default_off": true,
+      "canonical_gpu_identity_required": true,
+      "embedded_kernel_exact_sha": true,
+      "native_cpu_quantizer": true,
+      "cpu_mmap_pointer_identity_helper": true,
+      "fixed_allocations_only": true,
+      "no_mapped_weight_placement": true,
+      "all_workers_snapshot_admission": true,
+      "all_workers_snapshot_completion": true,
+      "single_final_dst_publication": true,
+      "fatal_pending_timeout": true,
+      "fatal_late_scale_refusal": true,
+      "actual_shared_cpu_workspace_counted": true,
+      "same_native_swap_baseline": true,
+      "pressure_two_sufficient_subset": true,
+      "separate_device_allocation_measurement": true,
+      "tails_6_14_not_whitelisted": true
+    },
+    "maximum_provider_cpu_bytes": 4751424,
+    "fixed_gpu_bytes": 8028160,
+    "maximum_provider_logical_total_bytes": 12779584,
+    "limitations": [
+      "no C++/Objective-C++ compilation",
+      "no native threading, allocator or GPU execution",
+      "not a semantic or fidelity proof"
+    ],
+    "metadata_unit_tests": {
+      "run": 6,
+      "passed": true
+    }
+  },
+  "auxiliary_sha256": {
+    "build_package.py": "72f0d5e11bb068f9e02bad0fc243278125c563d2825be2fe582162752c7aa65b",
+    "test_gpu_contract.py": "6919ec534f757ec32fed1eb738e4b6021e8f00e3d458bb2f0a5dbea1f161342f",
+    "profile.py": "7d5dd9c70b921808f001d320ebf60c05f472a2ceeb842ef6aa9d65ba2b144f44",
+    "verify_static.py": "b7d47e93809c2339f54e75d905486b8e78811ac0cb0416a6fc44f3e0a4d7231a",
+    "README.md": "4da1c7d974ef122db4b4e39f057896f6b2fbdf5f843a714de7a4d6f6ffd35080",
+    "gpu_contract.py": "80eeb558b956f25c77d1b48fc7fa88a1e31028b9787ac3f0c052b91fc6b16ec5",
+    "native_gpu_run.py": "78f246f3dac492f367aa8722f46ac4ef6022fe26dc507c876b98794bc9add5fd"
+  },
+  "driver_sha256": {
+    "driver/research/glm53_batched_prefill/native_prefill.cpp": "a130ceb727a1fc66596f2cc1da9e92003fb524fd4e2cb9fbdce7786861cbef51",
+    "driver/research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "driver/research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f"
+  },
+  "original_tail_compatible_driver_sha256": "dac2113041898470e2ea4eaf43af51da1132d798430117e0b1ff67862c926433",
+  "independent_review": "older patch reviewed; corrected7-file patch and runner await review",
+  "limitations": [
+    "provider/driver not compiled or executed",
+    "large shapes, transfer and terminal-error fixtures unmeasured",
+    "no full-model fidelity, EOS or performance qualification"
+  ],
+  "gpu_commands": 0,
+  "models_loaded": 0,
+  "global_qualification": false,
+  "build_recipe_revision": {
+    "reason": "First real configure failed CMAKE_OBJCXX_COMPILE_OBJECT: enable language at root via tracked CMAKE_PROJECT_INCLUDE hook",
+    "provider_arithmetic_unchanged": true,
+    "hook_sha256": "9865ad1b6f48eb55d3d21eff3f74dc4577d16351046aa1609768a4f61b01b3e1",
+    "original_failed_build": "build-run1/provider-failure.json",
+    "source": "https://cmake.org/cmake/help/v4.1/command/enable_language.html",
+    "second_failed_build": "build-run2/provider-failure.json",
+    "objective_c_explicit": "Enable OBJCXX then OBJC atroot; pin original C/CXX compilers, preservelegacy.m interpretation"
+  }
+}

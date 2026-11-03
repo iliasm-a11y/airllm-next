@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "passed": false,
+  "errors": [
+    "fullV2 has not passed complete raw original CPU8 fidelity"
+  ],
+  "full_model_qualified": false,
+  "functional_agents_qualified": false,
+  "performance_qualified": false,
+  "snapshot_exact_evidence_passed": false,
+  "logits": [],
+  "sequence_states": [],
+  "scope": "bounded v2 explicit-fence CPU diagnostics; no EOS or private-history qualification",
+  "cpu8_fullv2_fidelity": {
+    "schema_version": 1,
+    "passed": false,
+    "full_model_qualified": false,
+    "performance_qualified": false,
+    "errors": [
+      "candidate must be actually built and explicitly bound before comparison"
+    ],
+    "criteria": {
+      "bitexact_f32": true,
+      "atol": 0.0,
+      "rtol": 0.0
+    },
+    "scope": "Exact two-build CPU8-tail/global-fences208-v2 experiment; CPU10/GPU0 full prefill across batch sizes; per-token ordered routes/router/KDA, finite full final logits, raw final sequence states and complete-state hashes at common boundaries; no EOS or private-history qualification",
+    "cross_batch_write_event_parity": "not asserted: physical chunks differ; require per-batch target coverage and complete states at common token boundaries",
+    "logits": [],
+    "final_states": [],
+    "checkpoints": [],
+    "tensors": [],
+    "coverage": {
+      "routes": 0,
+      "router": 0,
+      "kda": 0
+    }
+  }
+}

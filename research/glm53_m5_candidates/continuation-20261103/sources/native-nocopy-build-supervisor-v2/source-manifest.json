@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "source_prepared_not_executed",
+  "source_pins": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-nocopy-build-supervisor-v2/supervised_build.py": "40f3e12b73f102bdae208542f69bfcfb8e300fa86961419a7fe1cbebbf612f7f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/build_driver.py": "b27b37ecc24e349f10f066a61896e6cb9c6b20364d664bbe3e4cd08e0d50c8cd",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/gpu_contract.py": "ea2ffcedcf5a2d3fb68799685f2766be52e96bb8b436bbaeb814d5b1f0e845c9",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/profile.py": "d2b1416e8e20dc79c488b04681801fe0a7e4fe6566c78a7d36745b8416173f55",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/native_gpu_run.py": "32eed375a0eb9939f190bc93192e8aa73d48bd9eae73ffce73aa2f0d8e8ac0d8",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/prepare-manifest.json": "25a34ef2a0ce6b23df0f46052f5c493e055a5ae69bd8f134008984f1145a53f5",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/native_prefill.cpp": "7488f72137dd574e49f823ddee4123ff9f08e215b4fab6eb9a4dbf941d1af2ee",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_batched_prefill/snapshot.h": "e48c3c3eb6bca5f611cdc7c8efedb87f679a954cbf3b1619a66cd03cf0e02d52",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-candidate/driver/research/glm53_gpu_v3/state_capture.inc": "0b21a7ec4f1b58892a14fbe3d73417371afebdd71a07f43d3088a1b14cc5ca4f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-noblas-nocopy-independent-review-v2.json": "aee67c9697325ff6b193b671fed3141a75793a18de425a9fbb77ab1fa788f536",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/cpu10-reference.json": "6eda548190c8fa112280a14cfe16b59dde7c01adb829f90655137f27ab28960c",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/air_llm/airllm/nextgen/glm_native.py": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_shared_prefill/qualify_agents.py": "7e22296df201904f2b45e3779b5e7f5f5c41acd1ccd5a9ec5d284364f4192b1f",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/airllm-next/research/glm53_gpu_v3/power_state.py": "0ab1d19438fa70a3ac4bf57922114f266f77f59b5186ece071c279ae56b37820",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/guarded_build_once.py": "516124ba377e382333879fd4e0a3394c1dff2bdc499ece2dcaddad9b3c2544d1",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/provider-build.json": "4fe68689c17b1c335f7b2fab2087aa99cf179d1dbe760d2a810d9cec1b01cb63",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-tensorops-q8-nocopy/build-run1/driver-build.json": "a861e92a8e14a94e674c3cc9a4cb02401d6c0f73887c02066c3b068e135014ab"
+  },
+  "files": {
+    "supervised_build.py": {
+      "sha256": "40f3e12b73f102bdae208542f69bfcfb8e300fa86961419a7fe1cbebbf612f7f",
+      "bytes": 30385
+    },
+    "README.md": {
+      "sha256": "c084fc87522a4a96fab6f74cd6ba172663666ea64fc3f9ec35988ee111c80242",
+      "bytes": 5815
+    },
+    "selection.json": {
+      "sha256": "764e78e533962e0283df3db9eafe81acfb8b4cf019a292a25bfd84e68b6d6b57",
+      "bytes": 2995
+    }
+  },
+  "scope": "new dedicated supervisor v2 only; old code and NoCopy artifacts read-only",
+  "decision": "one coordinator owns both locks and governs all phases; do not nest under old supervisor",
+  "postflight_rule": "driver-build remains guard_pending on disk until all phases and global guard/identity/power/cleanup pass; failed postflight never publishes built metadata status",
+  "native_build_performed": false,
+  "tests_executed": false,
+  "AST_executed": false,
+  "module_imported": false,
+  "native_metadata_executed": false,
+  "GPU_executed": false,
+  "model_loaded": false,
+  "old_sources_modified": false,
+  "observed_build_seconds": null,
+  "observed_peak_RSS_bytes": null,
+  "budgets": {
+    "compile_seconds": 120,
+    "codesign_seconds": 30,
+    "metadata_seconds_each": 15,
+    "metadata_cases": 6,
+    "global_seconds": 300,
+    "sample_interval_seconds": 0.1,
+    "build_RSS_sum_bytes": 2147483648,
+    "native_RSS_hardcap_bytes": 9126805504,
+    "global_swap_growth_hardcap_bytes": 33554432,
+    "initial_available_floor_bytes": 3221225472,
+    "initial_pressure": 1,
+    "runtime_policy": "original NativeGlmModel contextual pressure/reserve/graces unchanged"
+  },
+  "review_fixes": [
+    "cleanup all observed descendants even after main Popen exit; forced cleanup refuses favorable build",
+    "record exact native guard call timestamps and final source/resource postflight",
+    "separate comparator v3 uses exact helper_source role and validates final real build guard"
+  ]
+}

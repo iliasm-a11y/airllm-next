@@ -1,0 +1,44 @@
+{
+  "source": "<measured-repository>/research/glm53_batched_prefill/metal_q2_batch.metal",
+  "buffers": [
+    {
+      "bytes": 2752512,
+      "input": "<work>/metal-q2-batch-run1/n32/packed.bin"
+    },
+    {
+      "bytes": 149504,
+      "input": "<work>/metal-q2-batch-run1/n32/activation.bin"
+    },
+    {
+      "bytes": 262144,
+      "output": "<work>/metal-q2-batch-run1/n32/output.f32"
+    },
+    {
+      "bytes": 12,
+      "input": "<work>/metal-q2-batch-run1/n32/shape.bin"
+    }
+  ],
+  "warmups": 1,
+  "repetitions": 3,
+  "stages": [
+    {
+      "entry": "q2_batch_dot",
+      "bindings": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "grid": [
+        524288,
+        4,
+        1
+      ],
+      "threadgroup": [
+        256,
+        1,
+        1
+      ]
+    }
+  ]
+}

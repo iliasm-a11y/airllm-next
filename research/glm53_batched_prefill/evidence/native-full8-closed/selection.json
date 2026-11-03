@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-11-03T13:56:01.712307+00:00",
+  "scope": "Selected closed native CPU10/GPU0 batch8 prefill and four-token greedy diagnostic metadata. This selection is lossless for the listed files. No model weights, binary tensors or complete private agent prompts are included.",
+  "closed_run": {
+    "native_returncode": 0,
+    "elapsed_seconds": 4011.8447722499986,
+    "power_context_passed": true,
+    "integrity_passed": true,
+    "cleanup_signals": [],
+    "observed_swap_growth_bytes": 0,
+    "model_loads": 1,
+    "physical_slots": 1,
+    "microbatch": 8
+  },
+  "qualification_limits": [
+    "Self-comparison uses the same capture as both operands; its useful additional scope is the independent physical request0/request2 replay with equal frozen input, not a new CPU/GPU or full/restore witness.",
+    "Three identical complete-state checkpoints at208 do not demonstrate restoration, cache amortization or a shared-prefix speedup. No snapshot was captured for reuse or restored in this full-mode run.",
+    "Four greedy samples per request stop on diagnostic_budget without EOG; no useful final agent decision or functional two-agent EOS is qualified.",
+    "Observed write/tensor coverage is finite and includes aliases; it does not prove uncaptured state or all future prompts.",
+    "The UID model lock was acquired externally after launch, at2026-11-03T12:52:42.348973Z, around517.479s after wrapper start. It gives no prelaunch lock coverage, retroactive FD inheritance or complete early-run exclusivity proof.",
+    "OS-accounted reads and process CPU times are not physical SSD/NAND reads or pure arithmetic attribution.",
+    "The follow-up Metal attempt was refused on battery before execution; it supplies no new GPU measurement."
+  ],
+  "excluded": [
+    "All .bin/.f32 tensor and serialized-state payloads",
+    "Original GGUF model weights",
+    "run-prompts.json containing complete agent-private prompt suffixes",
+    "Unrelated personal/application files"
+  ],
+  "raw_files_modified": false,
+  "entries": [
+    {
+      "file": "summary.json.gz",
+      "raw_source_work_relative": "native-full8-summary.json",
+      "raw_bytes": 9224,
+      "raw_sha256": "1aa0123f9555f44dee03314d71c53bd60f47bab4f9fdca40846ab73c7e8842c9",
+      "compressed_bytes": 2833,
+      "compressed_sha256": "8ac7445da8b229e4bf7afe746b05786e9dccb68f82adf64b5291639f0324ddb0",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "closed descriptive summary"
+    },
+    {
+      "file": "self-compare.json.gz",
+      "raw_source_work_relative": "native-full8-self-compare.json",
+      "raw_bytes": 18497,
+      "raw_sha256": "8f0eb2522407d9a828d7599cfe085dd8f54ec569c4b4ff20fc2b10a558410cca",
+      "compressed_bytes": 1316,
+      "compressed_sha256": "5a6c3d9e07010cc4be78443a5af2f2139b5d6679cd12d188eb22546f3ce95a9c",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "same-run capture validity and intra-run replay; not independent cross-variant fidelity"
+    },
+    {
+      "file": "report.json.gz",
+      "raw_source_work_relative": "native-full8/capture/report.json",
+      "raw_bytes": 8549,
+      "raw_sha256": "500a08d577c0bd146a13ebca5f6cd80625ed4828411a0012430bd0547e216ddd",
+      "compressed_bytes": 2187,
+      "compressed_sha256": "691b4c99f708181b4114392aec25199e2fe36406c6a3dda2a44b522ae1381a36",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "native requests, complete diagnostic continuation and timings"
+    },
+    {
+      "file": "state-checkpoints.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/state_checkpoints.jsonl",
+      "raw_bytes": 6997,
+      "raw_sha256": "f6e8418a166f034ad2cd7a810a83d442232cf92b1a962dad0fbae910340bd24d",
+      "compressed_bytes": 1650,
+      "compressed_sha256": "be08c443d77e3debfa9e8675dd60432fda21c3f9c8dc174a33e141b271d62712",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "complete sequence-state hashes at recorded token boundaries"
+    },
+    {
+      "file": "batches.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/batches.jsonl",
+      "raw_bytes": 92747,
+      "raw_sha256": "15bbc37dd65a38fc9495079983d06a6a1575d80c3dee1a3e1c4c8c6e1f430e8f",
+      "compressed_bytes": 13589,
+      "compressed_sha256": "3af30a27cb4775b773fd9265a1efafa425f0aff06313076e91dd58c4e4670a4e",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "physical microbatch receipts and process usage counters"
+    },
+    {
+      "file": "state-hashes.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/state_hashes.jsonl",
+      "raw_bytes": 16244360,
+      "raw_sha256": "a15d18a69ffe4cf3c307861724c05ae4129392122c182e42deb7b5d1998bcda0",
+      "compressed_bytes": 1762354,
+      "compressed_sha256": "4d94b2a60a90c3ecc56043925f5d104b9557293182dec98be09efbde9059a8f8",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "ordered observed prefill cache-write hashes"
+    },
+    {
+      "file": "continuation-states.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/continuation_states.jsonl",
+      "raw_bytes": 738675,
+      "raw_sha256": "6333529e43e2c24cd261e45a5087e3860a0f8b8f3df67943fa14889cc80ba8e3",
+      "compressed_bytes": 79507,
+      "compressed_sha256": "3afa2bdae90039e2afd5ff165230a924e403bfbf8f9e04a9610eefd9a17607ef",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "ordered observed diagnostic continuation cache-write hashes"
+    },
+    {
+      "file": "tensors.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/tensors.jsonl",
+      "raw_bytes": 8451850,
+      "raw_sha256": "9ef2d1e8189754df1c2f35040b84f2a15b30875a3f5ca370a02a2e16da9b11ec",
+      "compressed_bytes": 1241152,
+      "compressed_sha256": "adcc7b7d7c87e4a8904723e52ca14a6c877903c908237e11eac050ba75978f6c",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "prefill tensor descriptors, strides, hashes and raw-file references; raw payloads omitted"
+    },
+    {
+      "file": "continuation-tensors.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/continuation_tensors.jsonl",
+      "raw_bytes": 388818,
+      "raw_sha256": "866d396e9429cce232ee6981bd8c9331fa8252670c9ed7cc050fb6fda54672db",
+      "compressed_bytes": 57251,
+      "compressed_sha256": "a125a017071c889ba249447fb3753ab9d97830240e9034efa09c0e16195fd8c4",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "continuation tensor descriptors, strides, hashes and raw-file references; raw payloads omitted"
+    },
+    {
+      "file": "operations.jsonl.gz",
+      "raw_source_work_relative": "native-full8/capture/operations.jsonl",
+      "raw_bytes": 32594570,
+      "raw_sha256": "5a3b59340fc9d5ed7153cfd81263e17a12ab6551e97e600394caf8010f508982",
+      "compressed_bytes": 1255104,
+      "compressed_sha256": "34f384643e1589531be6b8018bc6869e73f1d5910d89ae0368553741eed5a19a",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "captured matrix operation shapes and types; no pure-kernel timing attribution"
+    },
+    {
+      "file": "guard.json.gz",
+      "raw_source_work_relative": "native-full8/guard.json",
+      "raw_bytes": 26277130,
+      "raw_sha256": "b991594498b14afc2a8b273da87843fb78e5534a023a053df393e2b6be0ecd08",
+      "compressed_bytes": 1936100,
+      "compressed_sha256": "5213bdf9e5cba08cb76ce5ec8b5e522f1f80df15809cf1a222c6807284b8d7a0",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "full closed power/resource/integrity guard receipt including samples"
+    },
+    {
+      "file": "guard-samples.jsonl.gz",
+      "raw_source_work_relative": "native-full8/guard-samples.jsonl",
+      "raw_bytes": 19469350,
+      "raw_sha256": "eb15dc7a8481de9ff6ccdab2dd509173c65dc2d0c6f7ab8f30d76e6b46b52598",
+      "compressed_bytes": 1812471,
+      "compressed_sha256": "690c988425a670b4dd4a0e782436c65981aeef76ec688423ef87476d800ecff6",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "original append-only resource and process-I/O samples"
+    },
+    {
+      "file": "snapshot-key-manifest.json.gz",
+      "raw_source_work_relative": "native-full8/snapshot-key-manifest.json",
+      "raw_bytes": 6853,
+      "raw_sha256": "ad8d2c9fba79a2753a6e66d64a2a28524be31c4d8d9e00321b736a0d34ebf899",
+      "compressed_bytes": 2517,
+      "compressed_sha256": "7738915db4733ebad06231d2080b17e6c604799b18b71fc762a451dd8b528ff6",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "complete canonical dependency key manifest, common prefix only"
+    },
+    {
+      "file": "source-manifest.json.gz",
+      "raw_source_work_relative": "native-full8-source-manifest.json",
+      "raw_bytes": 2879,
+      "raw_sha256": "7d716194706e65f3e1382f7eaa9c25074c74078f28443cc154a171bcaf1db13d",
+      "compressed_bytes": 1482,
+      "compressed_sha256": "77ff0f8bd1b761b4fc41ee042b158432bbff5f7cc9876bcdd4bb03a4eaf81091",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "derived source/runtime identities, anchored to the original guard hash"
+    },
+    {
+      "file": "native-build.json.gz",
+      "raw_source_work_relative": "native-prefill-final-controls.build.json",
+      "raw_bytes": 8106,
+      "raw_sha256": "4cf35cfba893c14a04f8ff8eb05876faced75fede08c8f24a6af0b069b4ceb93",
+      "compressed_bytes": 1896,
+      "compressed_sha256": "c2beff81873a64dc17b9ee4217e89d12bfea919bc81406618aae28f4ad32a404",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "compiler command and measured helper/library fingerprints"
+    },
+    {
+      "file": "external-uid-lock.json.gz",
+      "raw_source_work_relative": "native-full8/external-uid-lock.json",
+      "raw_bytes": 1333,
+      "raw_sha256": "87341c352cabf1e0eaecd5e2fa59db168ae4fc594a3c675d739ebd080ac026df",
+      "compressed_bytes": 711,
+      "compressed_sha256": "0336747f22ae25067b8ea56be1e81945fa06cd9c5e779a9dabaab3b459b5fa73",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "late external UID lock receipt and explicit coverage limitation"
+    },
+    {
+      "file": "followup-metal-admission-refusal.json.gz",
+      "raw_source_work_relative": "metal-components-admission-refusal.json",
+      "raw_bytes": 1837,
+      "raw_sha256": "617ec2ca6964cde4f87180e1324a9139bea104b0d91da1c0596ba04937aa84df",
+      "compressed_bytes": 769,
+      "compressed_sha256": "339e8bfb4d67cf145d8487255a57d9406f231baf542169d621975bc643c1e359",
+      "compression": "gzip level6, deterministic mtime0",
+      "decompression_verified": true,
+      "scope": "battery refusal before any follow-up GPU/native command"
+    }
+  ],
+  "total_raw_bytes": 104321775,
+  "total_compressed_bytes": 8172889
+}

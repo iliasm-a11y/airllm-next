@@ -9,6 +9,7 @@ on:
       - 'research/glm53_m5/**'
       - 'research/glm53_ultra/**'
       - 'research/glm53_shared_prefill/**'
+      - 'research/glm53_batched_prefill/**'
       - 'research/glm53_gpu_v3/**'
       - 'research/glm53_gpu_v2/placement.py'
       - '.github/workflows/glm-native.yml'
@@ -21,6 +22,7 @@ on:
       - 'research/glm53_m5/**'
       - 'research/glm53_ultra/**'
       - 'research/glm53_shared_prefill/**'
+      - 'research/glm53_batched_prefill/**'
       - 'research/glm53_gpu_v3/**'
       - 'research/glm53_gpu_v2/placement.py'
       - '.github/workflows/glm-native.yml'
@@ -40,6 +42,7 @@ jobs:
       - run: python tests_next/test_glm_native_exit.py
       - run: python -m unittest discover -s integrations/ronin/tests -v
       - run: python -m unittest discover -s research/glm53_shared_prefill -p 'test_*.py' -v
+      - run: python -m pytest --noconftest --capture=sys -q research/glm53_batched_prefill
       - run: python -m unittest discover -s research/glm53_ultra -p 'test_*.py' -v
       - run: python -m pytest --noconftest --capture=sys -q research/glm53_ultra/test_prefetch_compare.py
       - run: python -m unittest research.glm53_gpu_v3.test_campaign -v

@@ -1,0 +1,585 @@
+--- a/ggml/include/ggml-backend.h
++++ b/ggml/include/ggml-backend.h
+@@ -460,6 +460,8 @@
+     // CPU buffer types are always available
+     GGML_API ggml_backend_buffer_t      ggml_backend_cpu_buffer_from_ptr(void * ptr, size_t size);
+     GGML_API ggml_backend_buffer_type_t ggml_backend_cpu_buffer_type(void);
++    // Standard CPU or CPU_Mapped storage by native type identity; excludes repack/Metal.
++    GGML_API bool ggml_backend_cpu_buffer_has_plain_layout(ggml_backend_buffer_t buffer);
+ 
+ #ifdef  __cplusplus
+ }
+--- a/ggml/src/ggml-backend.cpp
++++ b/ggml/src/ggml-backend.cpp
+@@ -3005,6 +3005,11 @@
+     return &ggml_backend_cpu_buffer_type;
+ }
+ 
++bool ggml_backend_cpu_buffer_has_plain_layout(ggml_backend_buffer_t buffer) {
++    return buffer != nullptr && (buffer->buft == ggml_backend_cpu_buffer_type() ||
++                                 buffer->buft == ggml_backend_cpu_buffer_from_ptr_type());
++}
++
+ ggml_backend_buffer_t ggml_backend_cpu_buffer_from_ptr(void * ptr, size_t size) {
+     GGML_ASSERT((uintptr_t)ptr % TENSOR_ALIGNMENT == 0 && "buffer pointer must be aligned");
+     return ggml_backend_buffer_init(ggml_backend_cpu_buffer_from_ptr_type(), ggml_backend_cpu_buffer_from_ptr_i, ptr, size);
+--- a/ggml/src/ggml-cpu/CMakeLists.txt
++++ b/ggml/src/ggml-cpu/CMakeLists.txt
+@@ -1,3 +1,15 @@
++# Experimental provider: separate opt-in build; original CPU backend is unchanged by default.
++option(GGML_CPU_METAL_Q8_BRIDGE "Build experimental bounded CPU-to-Metal Q8 provider" OFF)
++if (GGML_CPU_METAL_Q8_BRIDGE)
++    if (NOT APPLE OR NOT CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
++        message(FATAL_ERROR "CPU Metal Q8 bridge requires Apple arm64")
++    endif()
++    enable_language(OBJCXX)
++    find_library(AIRLLM_BRIDGE_FOUNDATION Foundation REQUIRED)
++    find_library(AIRLLM_BRIDGE_METAL Metal REQUIRED)
++    find_library(AIRLLM_BRIDGE_IOKIT IOKit REQUIRED)
++endif()
++
+ function(ggml_add_cpu_backend_features cpu_name arch)
+     # The feature detection code is compiled as a separate target so that
+     # it can be built without the architecture flags
+@@ -61,6 +73,19 @@
+     target_compile_features(${GGML_CPU_NAME} PRIVATE c_std_11 cxx_std_17)
+     target_include_directories(${GGML_CPU_NAME} PRIVATE . ggml-cpu)
+ 
++    if (GGML_CPU_METAL_Q8_BRIDGE)
++        if (tag_name)
++            message(FATAL_ERROR "CPU Metal Q8 bridge supports one non-variant CPU backend only")
++        endif()
++        list(APPEND GGML_CPU_SOURCES ggml-cpu/metal-q8-bridge.mm
++             ggml-cpu/metal-q8-bridge.h ggml-cpu/metal-q8-bridge-kernel.h)
++        target_compile_definitions(${GGML_CPU_NAME} PRIVATE GGML_CPU_METAL_Q8_BRIDGE)
++        set_target_properties(${GGML_CPU_NAME} PROPERTIES OBJCXX_STANDARD 17 OBJCXX_STANDARD_REQUIRED YES)
++        set_source_files_properties(ggml-cpu/metal-q8-bridge.mm PROPERTIES COMPILE_OPTIONS "-fobjc-arc")
++        target_link_libraries(${GGML_CPU_NAME} PRIVATE ${AIRLLM_BRIDGE_FOUNDATION}
++             ${AIRLLM_BRIDGE_METAL} ${AIRLLM_BRIDGE_IOKIT})
++    endif()
++
+     if (APPLE AND GGML_ACCELERATE)
+         find_library(ACCELERATE_FRAMEWORK Accelerate)
+         if (ACCELERATE_FRAMEWORK)
+--- a/ggml/src/ggml-cpu/ggml-cpu.cpp
++++ b/ggml/src/ggml-cpu/ggml-cpu.cpp
+@@ -3,6 +3,9 @@
+ #include "ggml-cpu.h"
+ #include "repack.h"
+ #include "traits.h"
++#ifdef GGML_CPU_METAL_Q8_BRIDGE
++#include "metal-q8-bridge.h"
++#endif
+ #include "ggml-impl.h"
+ #include "amx/amx.h"
+ 
+@@ -74,6 +77,11 @@
+         }
+ #endif
+ 
++#ifdef GGML_CPU_METAL_Q8_BRIDGE
++        if (auto * hook = ggml_backend_cpu_metal_q8_bridge_buffer_type()) {
++            bufts.push_back(hook);
++        }
++#endif
+         return bufts;
+     }();
+ 
+@@ -658,6 +666,9 @@
+         features.push_back({ "REPACK", "1" });
+     #endif
+ 
++#ifdef GGML_CPU_METAL_Q8_BRIDGE
++        features.push_back({ "CPU_METAL_Q8_BRIDGE_COMPILED", "1" });
++#endif
+         features.push_back({ nullptr, nullptr });
+ 
+         return features;
+--- /dev/null
++++ b/ggml/src/ggml-cpu/metal-q8-bridge-kernel.h
+@@ -0,0 +1,56 @@
++#pragma once
++// Pipeline-compiled source; numerical/speed qualification remains separate.
++#define AIRLLM_CPU_METAL_Q8_KERNEL_SHA256 "b69930d559ef2601e4f384e343bcf6a2b24f30a6b28840f631154335714b82b9"
++static const char * const airllm_cpu_metal_q8_source = R"Q8BRIDGE(// Experimental source only. Exactness, compilation and speed are unmeasured.
++// Each32-term integer dot is followed by one explicitly ordered FP32 FMA.
++#include <metal_stdlib>
++#include <MetalPerformancePrimitives/MetalPerformancePrimitives.h>
++using namespace metal;
++using namespace mpp::tensor_ops;
++#pragma clang fp contract(off)
++
++kernel void q8_batch_dot(
++    device const uchar * packed [[buffer(0)]],
++    device const char * qs [[buffer(1)]],
++    device const ushort * scales [[buffer(2)]],
++    device float * output [[buffer(3)]],
++    constant uint * shape [[buffer(4)]],
++    uint3 group [[threadgroup_position_in_grid]],
++    uint tid [[thread_index_in_threadgroup]]) {
++    const uint width=shape[0], rows=shape[1], tokens=shape[2], blocks=width/32;
++    // All128 participants enter every operation, including partial edge tiles.
++    // Tensor views retain the real matrix bounds; the final stores are guarded.
++    constexpr auto descriptor=matmul2d_descriptor(32,8,32,false,true,false,
++        matmul2d_descriptor::mode::multiply);
++    matmul2d<descriptor,execution_simdgroups<4>> operation;
++    threadgroup int dot_values[32*8];
++    float sums[2]={0.0f,0.0f};
++    for(uint block=0;block<blocks;++block) {
++        auto weights=tensor((device int8_t *)(packed+block*34+2),
++            dextents<int,2>{32,int(rows)},array<int,2>{1,int(blocks*34)});
++        auto activations=tensor((device int8_t *)(qs+block*32),
++            dextents<int,2>{32,int(tokens)},array<int,2>{1,int(width)});
++        auto integer_result=tensor(dot_values,dextents<int,2>{8,32},array<int,2>{1,8});
++        auto weight_slice=weights.slice(0,int(group.x*32));
++        auto activation_slice=activations.slice(0,int(group.y*8));
++        operation.run(weight_slice,activation_slice,integer_result);
++        threadgroup_barrier(mem_flags::mem_threadgroup);
++        for(uint part=0;part<2;++part) {
++            const uint local=tid+part*128, row=group.x*32+local/8, token=group.y*8+local%8;
++            if(row<rows && token<tokens) {
++                const uint location=(row*blocks+block)*34;
++                const ushort bits=ushort(packed[location])|(ushort(packed[location+1])<<8);
++                const float scale=float(as_type<half>(bits))*float(as_type<half>(scales[token*blocks+block]));
++                // Integer magnitude is at most32*128*128=524288, within int32.
++                // Do not merge adjacent blocks: their scales and FMA order differ.
++                sums[part]=fma(float(dot_values[local]),scale,sums[part]);
++            }
++        }
++        threadgroup_barrier(mem_flags::mem_threadgroup);
++    }
++    for(uint part=0;part<2;++part) {
++        const uint local=tid+part*128, row=group.x*32+local/8, token=group.y*8+local%8;
++        if(row<rows && token<tokens)output[token*rows+row]=sums[part];
++    }
++}
++)Q8BRIDGE";
+--- /dev/null
++++ b/ggml/src/ggml-cpu/metal-q8-bridge.h
+@@ -0,0 +1,5 @@
++#pragma once
++#include "ggml-backend.h"
++
++// Internal pinned-CPU extra-provider registration, not a public callback ABI.
++ggml_backend_buffer_type_t ggml_backend_cpu_metal_q8_bridge_buffer_type();
+--- /dev/null
++++ b/ggml/src/ggml-cpu/metal-q8-bridge.mm
+@@ -0,0 +1,418 @@
++// Experimental CPU mul_mat provider. Build OFF and runtime OFF by default.
++// Source candidate only: this provider has not been compiled or executed.
++#import <Foundation/Foundation.h>
++#import <Metal/Metal.h>
++#import <IOKit/ps/IOPowerSources.h>
++#import <IOKit/ps/IOPSKeys.h>
++#include <mach/mach.h>
++#include <sys/sysctl.h>
++#include <unistd.h>
++#include <algorithm>
++#include <atomic>
++#include <cstdlib>
++#include <cmath>
++#include <cstring>
++#include <memory>
++#include <mutex>
++#include <condition_variable>
++#include <string>
++#include "traits.h"
++#include "ggml-cpu.h"
++#include "metal-q8-bridge.h"
++#include "metal-q8-bridge-kernel.h"
++
++namespace {
++constexpr size_t DATA_LIMIT = 64u << 20;
++constexpr uint64_t DEVICE_ALLOCATION_LIMIT = 64u << 20; // separate measured Metal resource ceiling
++constexpr int MAX_M = 8192, MAX_K = 4096, MAX_N = 128, TILE_M = 1536;
++constexpr size_t WEIGHT_CAP = size_t(TILE_M) * (MAX_K / 32) * 34;
++constexpr size_t QS_CAP = size_t(MAX_N) * MAX_K;
++constexpr size_t SCALE_CAP = size_t(MAX_N) * (MAX_K / 32) * 2;
++constexpr size_t OUTPUT_CAP = size_t(MAX_N) * TILE_M * sizeof(float);
++constexpr size_t GPU_CAP = WEIGHT_CAP + QS_CAP + SCALE_CAP + OUTPUT_CAP;
++constexpr size_t RSS_LIMIT = size_t(17) * (size_t(1) << 29);
++constexpr uint64_t SWAP_LIMIT = 32u << 20;
++constexpr uint64_t RESERVE_BYTES = 768u << 20;
++constexpr uint64_t WARNING_HEADROOM_BYTES = 512u << 20;
++constexpr uint64_t GPU_RESERVATION_BYTES = 128u << 20;
++constexpr size_t CONTROL_SIZE = 64;
++
++struct layout { size_t quant, staged, total; };
++struct control { int decision; int64_t quant_phase_start; uint64_t completion_epoch; }; // only ith0 writes; barriers publish it
++static_assert(sizeof(control) <= CONTROL_SIZE, "control must not overlap native activation bytes");
++static_assert(GPU_CAP < DATA_LIMIT, "fixed Metal buffers must fit the data budget");
++enum { DECLINED = 0, ADMITTED = 1, COMPLETED = 2 };
++
++bool token_count(int64_t n) { return n == 8 || n == 16 || n == 32 || n == 64 || n == 128; }
++
++bool shape_supported(const ggml_tensor * op) {
++    if (!op || op->op != GGML_OP_MUL_MAT || !op->src[0] || !op->src[1]) return false;
++    const ggml_tensor * w = op->src[0], * x = op->src[1];
++    return w->type == GGML_TYPE_Q8_0 && x->type == GGML_TYPE_F32 && op->type == GGML_TYPE_F32 &&
++        (w->ne[0] == 2048 || w->ne[0] == 4096) && w->ne[1] >= 8 && w->ne[1] <= MAX_M && w->ne[1] % 8 == 0 &&
++        token_count(x->ne[1]) && w->ne[2] == 1 && w->ne[3] == 1 && x->ne[2] == 1 && x->ne[3] == 1 &&
++        x->ne[0] == w->ne[0] && op->ne[0] == w->ne[1] && op->ne[1] == x->ne[1] && op->ne[2] == 1 && op->ne[3] == 1 &&
++        !op->view_src && ggml_is_contiguous(w) && ggml_is_contiguous(x) && ggml_is_contiguous(op);
++}
++
++layout work_layout(const ggml_tensor * op) {
++    const size_t quant = ggml_row_size(GGML_TYPE_Q8_0, op->src[1]->ne[0]) * op->src[1]->ne[1];
++    const size_t staged = (CONTROL_SIZE + quant + 63) & ~size_t(63);
++    const size_t total = staged + ggml_nbytes(op);
++    GGML_ASSERT(total <= DATA_LIMIT && GPU_CAP <= DATA_LIMIT - total);
++    return { quant, staged, total };
++}
++
++bool host_tensor(const ggml_tensor * tensor, bool plain_weight = false) {
++    if (!tensor || !tensor->data || tensor->extra) return false;
++    ggml_backend_buffer_t buffer = tensor->buffer;
++    if (!buffer && tensor->view_src) buffer = tensor->view_src->buffer;
++    if (!buffer || !ggml_backend_buffer_is_host(buffer) || !ggml_backend_cpu_buffer_has_plain_layout(buffer)) return false;
++    if (plain_weight && (ggml_backend_buffer_get_usage(buffer) != GGML_BACKEND_BUFFER_USAGE_WEIGHTS || tensor->view_src)) return false;
++    const uintptr_t base = (uintptr_t) ggml_backend_buffer_get_base(buffer), data = (uintptr_t) tensor->data;
++    const size_t size = ggml_backend_buffer_get_size(buffer), bytes = ggml_nbytes(tensor);
++    return base && data >= base && data - base <= size && bytes <= size - (data - base);
++}
++
++bool input_supported(const ggml_tensor * x) {
++    const float * values = (const float *) x->data;
++    for (int64_t i = 0; i < ggml_nelements(x); i += 32) {
++        float maximum = 0;
++        for (int j = 0; j < 32; ++j) {
++            if (!std::isfinite(values[i+j])) return false;
++            maximum = std::max(maximum, std::abs(values[i+j]));
++        }
++        const float d = maximum / 127.0f;
++        if ((maximum != 0 && d < 0x1p-126f) || d > 65504.0f) return false;
++    }
++    return true;
++}
++
++bool normal_half(const void * bytes) {
++    ggml_fp16_t value;
++    std::memcpy(&value, bytes, sizeof(value));
++    // Exhaustively identical for all65536 encodings in the pinned native audit.
++    const unsigned exponent = value & 0x7c00u;
++    return exponent != 0x7c00u && (exponent != 0 || (value & 0x03ffu) == 0);
++}
++
++struct sample { bool ac; int pressure; uint64_t rss, swap, available; };
++sample resources() {
++    CFTypeRef info = IOPSCopyPowerSourcesInfo();
++    CFStringRef source = info ? IOPSGetProvidingPowerSourceType(info) : nullptr;
++    const bool ac = source && CFEqual(source, CFSTR(kIOPSACPowerValue));
++    if (info) CFRelease(info);
++    int pressure = 0; size_t bytes = sizeof(pressure);
++    if (sysctlbyname("kern.memorystatus_vm_pressure_level", &pressure, &bytes, nullptr, 0) != 0 || bytes != sizeof(pressure))
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 resource pressure query failed");
++    struct xsw_usage swap = {}; bytes = sizeof(swap);
++    if (sysctlbyname("vm.swapusage", &swap, &bytes, nullptr, 0) != 0 || bytes != sizeof(swap))
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 resource swap query failed");
++    mach_task_basic_info_data_t task = {}; mach_msg_type_number_t count = MACH_TASK_BASIC_INFO_COUNT;
++    if (task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t) &task, &count) != KERN_SUCCESS)
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 resource RSS query failed");
++    vm_statistics64_data_t vm = {}; count = HOST_VM_INFO64_COUNT;
++    const mach_port_t host = mach_host_self();
++    const kern_return_t result = host_statistics64(host, HOST_VM_INFO64, (host_info64_t) &vm, &count);
++    mach_port_deallocate(mach_task_self(), host);
++    const long page = sysconf(_SC_PAGESIZE);
++    if (result != KERN_SUCCESS || page <= 0)
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 available-memory query failed");
++    // Matches the installed psutil7.2.2 resource_snapshot branch: available is
++    // inactive + free (before psutil adjusts its separate display of free).
++    const uint64_t pages = uint64_t(vm.free_count) + uint64_t(vm.inactive_count);
++    if (pages > UINT64_MAX / uint64_t(page))
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 available-memory counter overflow");
++    return { ac, pressure, (uint64_t) task.resident_size, swap.xsu_used, pages * uint64_t(page) };
++}
++
++sample require_resources(uint64_t baseline_swap) {
++    const sample s = resources();
++    const uint64_t growth = s.swap > baseline_swap ? s.swap - baseline_swap : 0;
++    const uint64_t floor = RESERVE_BYTES + GPU_RESERVATION_BYTES + (s.pressure == 2 ? WARNING_HEADROOM_BYTES : 0);
++    // Conservative sufficient subset of the unchanged contextual watchdog:
++    // no stop condition can become true after either native grace expires.
++    // Pressure2 alone is not a violation. Other levels remain unadmitted here.
++    if (!s.ac || (s.pressure != 1 && s.pressure != 2) || s.rss > RSS_LIMIT || growth > SWAP_LIMIT || s.available < floor) {
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 guard refused ac=%d pressure=%d rss=%llu swap_growth=%llu available=%llu floor=%llu",
++                   int(s.ac), s.pressure, (unsigned long long) s.rss, (unsigned long long) growth,
++                   (unsigned long long) s.available, (unsigned long long) floor);
++    }
++    return s;
++}
++
++uint64_t initial_swap_baseline() {
++    const char * raw = std::getenv("AIRLLM_CPU_METAL_Q8_SWAP_BASELINE_BYTES");
++    if (!raw || !*raw || std::strlen(raw) > 20)
++        GGML_ABORT("AIRLLM_CPU_METAL_Q8 initial native watchdog swap baseline required");
++    uint64_t result = 0;
++    for (const char * p = raw; *p; ++p) {
++        if (*p < '0' || *p > '9' || result > (UINT64_MAX-uint64_t(*p-'0'))/10)
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 invalid initial swap baseline");
++        result = result*10 + uint64_t(*p-'0');
++    }
++    return result;
++}
++
++struct metal_workspace {
++    id<MTLDevice> device = nil;
++    id<MTLCommandQueue> queue = nil;
++    id<MTLComputePipelineState> pipeline = nil;
++    id<MTLBuffer> weights = nil, qs = nil, scales = nil, output = nil;
++    uint64_t device_observed_peak = 0;
++    uint64_t allocation_sample() {
++        const uint64_t value = (uint64_t) device.currentAllocatedSize;
++        device_observed_peak = std::max(device_observed_peak, value);
++        if (value > DEVICE_ALLOCATION_LIMIT)
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 device currentAllocatedSize exceeds 64 MiB: %llu", (unsigned long long) value);
++        return value; // sampled resource allocation, not full driver residency/pinning
++    }
++    uint64_t baseline_swap = 0, operations = 0, attempts = 0, submissions = 0, completed_commands = 0, copied_weight_bytes = 0;
++
++    metal_workspace() {
++        baseline_swap = initial_swap_baseline();
++        require_resources(baseline_swap);
++        device = MTLCreateSystemDefaultDevice();
++        if (!device || ![device supportsFamily:MTLGPUFamilyApple10]) GGML_ABORT("AIRLLM_CPU_METAL_Q8 TensorOps requires Apple10 GPU");
++        queue = [device newCommandQueue];
++        NSError * error = nil;
++        MTLCompileOptions * options = [MTLCompileOptions new];
++        options.mathMode = MTLMathModeSafe;
++        options.languageVersion = MTLLanguageVersion4_0;
++        id<MTLLibrary> library = [device newLibraryWithSource:@(airllm_cpu_metal_q8_source) options:options error:&error];
++        id<MTLFunction> function = library ? [library newFunctionWithName:@"q8_batch_dot"] : nil;
++        pipeline = function ? [device newComputePipelineStateWithFunction:function error:&error] : nil;
++        if (!queue || !pipeline || error || pipeline.threadExecutionWidth != 32 || pipeline.maxTotalThreadsPerThreadgroup < 128)
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 pipeline initialization failed: %s", error.localizedDescription.UTF8String ?: "pipeline/SIMD width");
++        weights = [device newBufferWithLength:WEIGHT_CAP options:MTLResourceStorageModeShared];
++        qs = [device newBufferWithLength:QS_CAP options:MTLResourceStorageModeShared];
++        scales = [device newBufferWithLength:SCALE_CAP options:MTLResourceStorageModeShared];
++        output = [device newBufferWithLength:OUTPUT_CAP options:MTLResourceStorageModeShared];
++        if (!weights || !qs || !scales || !output) GGML_ABORT("AIRLLM_CPU_METAL_Q8 bounded allocation failed");
++        const uint64_t device_allocated = allocation_sample();
++        GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 allocation_count=4 gpu_payload_current=%zu gpu_payload_peak=%zu weight_tile_bytes=%zu native_swap_baseline_bytes=%llu device_allocated_current=%llu device_allocated_observed_peak=%llu device_allocated_limit=%llu kernel_sha256=%s\n",
++                      GPU_CAP, GPU_CAP, WEIGHT_CAP, (unsigned long long) baseline_swap,
++                      (unsigned long long) device_allocated, (unsigned long long) device_observed_peak,
++                      (unsigned long long) DEVICE_ALLOCATION_LIMIT, AIRLLM_CPU_METAL_Q8_KERNEL_SHA256);
++        require_resources(baseline_swap);
++    }
++
++    // Called only by ith0 under the provider mutex. All GPU writes target owned
++    // temporary buffers. Caller publishes staged CPU output only after success.
++    bool run(const ggml_tensor * op, const uint8_t * quant, float * staged) {
++        ++attempts;
++        const int width = (int) op->src[0]->ne[0], rows = (int) op->src[0]->ne[1], tokens = (int) op->src[1]->ne[1];
++        const int blocks = width / 32;
++        for (int token = 0; token < tokens; ++token) {
++            for (int block = 0; block < blocks; ++block) {
++                const uint8_t * value = quant + (size_t(token) * blocks + block) * 34;
++                if (!normal_half(value)) return false; // no submit yet
++                std::memcpy((uint8_t *) scales.contents + (size_t(token) * blocks + block) * 2, value, 2);
++                std::memcpy((uint8_t *) qs.contents + (size_t(token) * blocks + block) * 32, value + 2, 32);
++            }
++        }
++        const uint8_t * original = (const uint8_t *) op->src[0]->data;
++        const size_t row_bytes = size_t(blocks) * 34;
++        bool submitted_this_op = false;
++        for (int first = 0; first < rows; first += TILE_M) {
++            const int count = std::min(TILE_M, rows - first);
++            const size_t weight_bytes = size_t(count) * row_bytes;
++            GGML_ASSERT(weight_bytes <= WEIGHT_CAP && size_t(tokens) * count * sizeof(float) <= OUTPUT_CAP);
++            const int64_t copy_begin = ggml_time_us();
++            std::memcpy(weights.contents, original + size_t(first) * row_bytes, weight_bytes);
++            const int64_t copy_us = ggml_time_us() - copy_begin;
++            copied_weight_bytes += weight_bytes;
++            for (size_t block = 0; block < size_t(count) * blocks; ++block) {
++                if (!normal_half((uint8_t *) weights.contents + block * 34)) {
++                    if (submitted_this_op) GGML_ABORT("AIRLLM_CPU_METAL_Q8 unsupported weight scale after completed tile; output unpublished");
++                    return false;
++                }
++            }
++            const sample admission = require_resources(baseline_swap);
++            allocation_sample();
++            const uint32_t shape[] = { uint32_t(width), uint32_t(count), uint32_t(tokens) };
++            @autoreleasepool {
++                const int64_t command_begin = ggml_time_us();
++                id<MTLCommandBuffer> command = [queue commandBuffer];
++                id<MTLComputeCommandEncoder> encoder = [command computeCommandEncoder];
++                if (!command || !encoder) GGML_ABORT("AIRLLM_CPU_METAL_Q8 command creation failed");
++                [encoder setComputePipelineState:pipeline];
++                [encoder setBuffer:weights offset:0 atIndex:0];
++                [encoder setBuffer:qs offset:0 atIndex:1];
++                [encoder setBuffer:scales offset:0 atIndex:2];
++                [encoder setBuffer:output offset:0 atIndex:3];
++                [encoder setBytes:shape length:sizeof(shape) atIndex:4];
++                [encoder dispatchThreadgroups:MTLSizeMake((count+31)/32, (tokens+7)/8, 1) threadsPerThreadgroup:MTLSizeMake(128,1,1)];
++                [encoder endEncoding];
++                dispatch_semaphore_t done = dispatch_semaphore_create(0);
++                [command addCompletedHandler:^(id<MTLCommandBuffer> unused) { (void) unused; dispatch_semaphore_signal(done); }];
++                ++submissions; submitted_this_op = true;
++                [command commit];
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 event=submitted actual_gpu=1 submission=%llu weight=%s tile_first=%d tile_rows=%d M=%d K=%d N=%d pressure=%d available_bytes=%llu rss_bytes=%llu swap_growth_bytes=%llu\n",
++                    (unsigned long long) submissions, op->src[0]->name, first, count, rows, width, tokens,
++                    admission.pressure, (unsigned long long) admission.available, (unsigned long long) admission.rss,
++                    (unsigned long long) (admission.swap > baseline_swap ? admission.swap-baseline_swap : 0));
++                if (dispatch_semaphore_wait(done, dispatch_time(DISPATCH_TIME_NOW, 60ll * NSEC_PER_SEC)) != 0)
++                    GGML_ABORT("AIRLLM_CPU_METAL_Q8 timeout pending_gpu=1 output_unpublished=1; no CPU fallback");
++                // A handler signals terminal status; no buffer can be recycled,
++                // read, released or used for CPU fallback before this point.
++                const double start = command.GPUStartTime, end = command.GPUEndTime;
++                if (command.status != MTLCommandBufferStatusCompleted || command.error ||
++                        !std::isfinite(start) || !std::isfinite(end) || start <= 0 || end < start)
++                    GGML_ABORT("AIRLLM_CPU_METAL_Q8 terminal command failure output_unpublished=1; no CPU fallback");
++                ++completed_commands;
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 event=completed actual_gpu=1 submission=%llu completed_commands=%llu gpu_seconds=%.9f terminal_success=1\n",
++                    (unsigned long long) submissions, (unsigned long long) completed_commands, end-start);
++                const float * result = (const float *) output.contents;
++                for (int token = 0; token < tokens; ++token) {
++                    const float * row = result + size_t(token) * count;
++                    for (int j = 0; j < count; ++j) if (!std::isfinite(row[j]))
++                        GGML_ABORT("AIRLLM_CPU_METAL_Q8 nonfinite terminal output; no CPU fallback");
++                    std::memcpy(staged + size_t(token) * rows + first, row, size_t(count) * sizeof(float));
++                }
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 event=tile_done actual_gpu=1 attempt=%llu weight=%s dst=%s tile_first=%d tile_rows=%d M=%d K=%d N=%d copy_weight_bytes=%zu copy_weight_us=%lld copied_weight_bytes_total=%llu gpu_seconds=%.9f command_and_readback_us=%lld submissions=%llu completed_commands=%llu allocation_count=4 operation_buffer_reuses=%llu tile_buffer_reuses=%llu gpu_payload_current=%zu\n",
++                    (unsigned long long) attempts, op->src[0]->name, op->name, first, count, rows, width, tokens, weight_bytes,
++                    (long long) copy_us, (unsigned long long) copied_weight_bytes, end-start, (long long) (ggml_time_us()-command_begin),
++                    (unsigned long long) submissions, (unsigned long long) completed_commands,
++                    (unsigned long long) (attempts-1), (unsigned long long) (completed_commands-1), GPU_CAP);
++            }
++        }
++        require_resources(baseline_swap);
++        ++operations;
++        return true;
++    }
++};
++
++struct bridge_traits final : ggml::cpu::tensor_traits {
++    // ith0 retains this serial lock through the final reader barrier. Thus a
++    // second graph cannot reuse/complete an epoch while the first is pending.
++    std::mutex mutex;
++    std::mutex completion_mutex;
++    std::condition_variable completion_cv;
++    uint64_t next_epoch = 0, completed_epoch = 0;
++    std::unique_ptr<metal_workspace> workspace;
++    std::atomic<uint64_t> declined{0};
++
++    bool work_size(int n_threads, const ggml_tensor * op, size_t & size) override {
++        (void) n_threads;
++        if (!shape_supported(op)) return false;
++        size = work_layout(op).total;
++        return true;
++    }
++
++    bool compute_forward(ggml_compute_params * params, ggml_tensor * op) override {
++        if (!shape_supported(op) || params->use_ref) return false;
++        const layout l = work_layout(op);
++        GGML_ASSERT(params->wdata && params->wsize >= l.total);
++        // Count the actual shared CPU graph workspace, not merely this op's
++        // logical slice, alongside the fixed retained Metal buffers.
++        if (params->wsize > DATA_LIMIT - GPU_CAP) {
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 total workspace exceeds 64 MiB before submit");
++        }
++        control * shared = (control *) params->wdata;
++        std::unique_lock<std::mutex> serial(mutex, std::defer_lock);
++        if (params->ith == 0) {
++            serial.lock();
++            if (next_epoch == UINT64_MAX) GGML_ABORT("GPU completion epoch overflow");
++            shared->completion_epoch = ++next_epoch;
++            shared->decision = host_tensor(op->src[0], true) && host_tensor(op->src[1]) && host_tensor(op) &&
++                op->buffer && ggml_backend_buffer_get_type(op->buffer) == ggml_backend_cpu_buffer_type() &&
++                ggml_cpu_has_matmul_int8() && ggml_get_type_traits_cpu(GGML_TYPE_Q8_0)->nrows == 2 && input_supported(op->src[1]) ? ADMITTED : DECLINED;
++            if (shared->decision == DECLINED) {
++                const uint64_t count = ++declined;
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 declined_before_submit=1 reason=host_or_input_or_cpu_traits count=%llu\n", (unsigned long long) count);
++            }
++            shared->quant_phase_start = ggml_time_us();
++        }
++        ggml_barrier(params->threadpool);
++        const bool admitted = shared->decision == ADMITTED;
++        // Every worker snapshots the decision before any CPU fallback can
++        // reuse wdata and overwrite this shared control header.
++        ggml_barrier(params->threadpool);
++        if (!admitted) return false;
++        const int64_t width = op->src[1]->ne[0], blocks = width / 32;
++        uint8_t * quant = (uint8_t *) params->wdata + CONTROL_SIZE;
++        const size_t row_bytes = ggml_row_size(GGML_TYPE_Q8_0, width);
++        GGML_ASSERT(row_bytes == size_t(blocks) * 34);
++        const int64_t first = (params->ith * blocks) / params->nth;
++        const int64_t last = ((params->ith + 1) * blocks) / params->nth;
++        auto native_quantize = ggml_get_type_traits_cpu(GGML_TYPE_Q8_0)->from_float;
++        for (int64_t token = 0; token < op->src[1]->ne[1]; ++token) {
++            native_quantize((const float *) op->src[1]->data + token * width + first * 32,
++                quant + token * row_bytes + first * 34, (last-first) * 32);
++        }
++        ggml_barrier(params->threadpool);
++        if (params->ith == 0) {
++            const int64_t quant_and_barriers_us = ggml_time_us() - shared->quant_phase_start;
++            if (!workspace) workspace = std::make_unique<metal_workspace>();
++            float * staged = (float *) ((uint8_t *) params->wdata + l.staged);
++            if (workspace->run(op, quant, staged)) {
++                // Final publication is deliberately outside every GPU command.
++                // No partial tile reaches dst before the complete op succeeds.
++                const uint64_t device_allocated = workspace->allocation_sample();
++                std::memcpy(op->data, staged, ggml_nbytes(op));
++                shared->decision = COMPLETED;
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 event=published publish=1 attempt=%llu operations=%llu submissions=%llu completed_commands=%llu weight=%s dst=%s M=%lld K=%lld N=%lld native_quant_and_barriers_us=%lld provider_workspace=%zu cpu_graph_workspace=%zu gpu_workspace=%zu total_workspace=%zu device_allocated_current=%llu device_allocated_observed_peak=%llu device_allocated_limit=%llu unmeasured_driver_residency=null actual_gpu=1\n",
++                    (unsigned long long) workspace->attempts, (unsigned long long) workspace->operations,
++                    (unsigned long long) workspace->submissions, (unsigned long long) workspace->completed_commands,
++                    op->src[0]->name, op->name, (long long) op->ne[0], (long long) width, (long long) op->ne[1], (long long) quant_and_barriers_us,
++                    l.total, params->wsize, GPU_CAP, params->wsize+GPU_CAP,
++                    (unsigned long long) device_allocated, (unsigned long long) workspace->device_observed_peak,
++                    (unsigned long long) DEVICE_ALLOCATION_LIMIT);
++            } else {
++                shared->decision = DECLINED;
++                const uint64_t count = ++declined;
++                GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 declined_before_submit=1 count=%llu\n", (unsigned long long) count);
++            }
++            {
++                std::lock_guard<std::mutex> completed(completion_mutex);
++                completed_epoch = shared->completion_epoch;
++            }
++            completion_cv.notify_all();
++        } else {
++            const uint64_t target = shared->completion_epoch;
++            std::unique_lock<std::mutex> completed(completion_mutex);
++            completion_cv.wait(completed, [&] { return completed_epoch >= target; });
++        }
++        ggml_barrier(params->threadpool);
++        const bool handled = shared->decision == COMPLETED;
++        ggml_barrier(params->threadpool); // protect all decision readers from fallback wdata reuse
++        return handled;
++    }
++};
++
++struct hook_provider final : ggml::cpu::extra_buffer_type {
++    bridge_traits traits;
++    const bool enabled;
++    hook_provider() : enabled([] {
++        const char * flag = std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++        if (flag && std::strcmp(flag,"0") != 0 && std::strcmp(flag,"1") != 0)
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 runtime flag must be 0 or 1");
++        if (!flag || std::strcmp(flag,"1") != 0) return false;
++        const char * canonical = std::getenv("AIRLLM_CPU_METAL_Q8_CANONICAL_SHA256");
++        if (!canonical || std::strlen(canonical) != 64 || std::strspn(canonical,"0123456789abcdef") != 64)
++            GGML_ABORT("AIRLLM_CPU_METAL_Q8 requires a GPU-explicit canonical profile SHA256");
++        GGML_LOG_INFO("AIRLLM_CPU_METAL_Q8 enabled=1 backend=native_cpu_with_metal_q8_bridge n_gpu_layers_is_not_gpu_usage canonical_sha256=%s payload_limit=%zu kernel_sha256=%s\n",
++            canonical, DATA_LIMIT, AIRLLM_CPU_METAL_Q8_KERNEL_SHA256);
++        return true;
++    }()) {}
++    // Hook-only marker: never select this as a new weight-storage format.
++    bool supports_op(ggml_backend_dev_t dev, const ggml_tensor * op) override { (void) dev; (void) op; return false; }
++    ggml::cpu::tensor_traits * get_tensor_traits(const ggml_tensor * op) override {
++        return enabled && shape_supported(op) ? &traits : nullptr;
++    }
++};
++const char * hook_name(ggml_backend_buffer_type_t unused) { (void) unused; return "CPU_METAL_Q8_BRIDGE_HOOK"; }
++} // namespace
++
++ggml_backend_buffer_type_t ggml_backend_cpu_metal_q8_bridge_buffer_type() {
++    static hook_provider provider; // immutable configuration before graph planning
++    if (!provider.enabled) return nullptr;
++    static ggml_backend_buffer_type marker = [] {
++        ggml_backend_buffer_type result = *ggml_backend_cpu_buffer_type();
++        result.iface.get_name = hook_name;
++        result.context = &provider;
++        return result;
++    }();
++    return &marker;
++}

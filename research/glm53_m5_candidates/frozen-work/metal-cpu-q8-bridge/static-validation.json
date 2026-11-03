@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "build_default_off": true,
+    "registration_compiled_guard": true,
+    "runtime_default_off": true,
+    "canonical_gpu_identity_required": true,
+    "embedded_kernel_exact_sha": true,
+    "native_cpu_quantizer": true,
+    "cpu_mmap_pointer_identity_helper": true,
+    "fixed_allocations_only": true,
+    "no_mapped_weight_placement": true,
+    "all_workers_snapshot_admission": true,
+    "all_workers_snapshot_completion": true,
+    "single_final_dst_publication": true,
+    "fatal_pending_timeout": true,
+    "fatal_late_scale_refusal": true,
+    "actual_shared_cpu_workspace_counted": true,
+    "same_native_swap_baseline": true,
+    "pressure_two_sufficient_subset": true,
+    "separate_device_allocation_measurement": true,
+    "tails_6_14_not_whitelisted": true
+  },
+  "maximum_provider_cpu_bytes": 4751424,
+  "fixed_gpu_bytes": 8028160,
+  "maximum_provider_logical_total_bytes": 12779584,
+  "limitations": [
+    "no C++/Objective-C++ compilation",
+    "no native threading, allocator or GPU execution",
+    "not a semantic or fidelity proof"
+  ],
+  "metadata_unit_tests": {
+    "run": 6,
+    "passed": true
+  }
+}

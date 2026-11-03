@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "status": "planned_not_built_not_executed",
+  "source_base_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "original_v4_build_manifest_sha256": "7b0ac6dddabf542aae42d7fb8bb8762d6b98e1705dc423b09ad071112d0c8750",
+  "base_reconstruction_receipt_sha256": "32504e7f96705ecf3f2a61e4ef0cf3ad1f067c1815d8fb0c5c61453cdf01f34e",
+  "fresh_destination": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/build-run1",
+  "new_branch_name_if_checkout_created": "research/glm53-native-server-no-blas",
+  "ordered_v4_patch_inputs": [
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-mmap-demand.patch",
+      "sha256": "bb47cb7e9f22467303d1e9bfca20b96d731abdfd10e2bc830b08ceffffc71ad0"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-expert-prefetch.patch",
+      "sha256": "853abee989ebb0776c06a71cbf5ad4060853baac185f501e1a4e2cf2a7be2238"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-dense-prefetch.patch",
+      "sha256": "a97866c78d7ba0828cfbfc48fccfc0d0c5eecce52fa464b18cf03d346ccb5c8c"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-dense-prefetch-columns.patch",
+      "sha256": "2c960572c5cde1caca8f6bfdcc3aca81ee2170095e9ac13b8d845aba22dce356"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-layer-local-hc.patch",
+      "sha256": "78484db822fbe4cec6997cb63549cca7b791b8b3db62f1ff058fe8303ffdb03d"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-moe-cache-split.patch",
+      "sha256": "40388d4605a2cbe32ce9ef7c437986a930041548de7891e0862a3067e83524f1"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-q8-cpuarith.patch",
+      "sha256": "58046f9be9755dd8ea05fdd7dfca04551195083ec516e9d23180e581d46d0bb3"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-metal-command-timing.patch",
+      "sha256": "b1f948cc3ff1f6552e342ee0806f2a1c1e79c3c1db97b642d05e81bfa07f9a39"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-hc-kda-trace.patch",
+      "sha256": "2fc7d5a5976bbf3b2ddc9f3ca0a1b6c4dc2bad8c18e2083f04f24e7852455870"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-q8-selective.patch",
+      "sha256": "c681c0144a3a0e46e54ddd31fb4a0c2e3935f0f0a505d1eebf01a429c736b1ad"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-metal-mapped-cpu-read.patch",
+      "sha256": "2757eb3c24bbb62371a1c4e8e3acf59a35caca0a16293d024304914fd85ff91a"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-q8-shared-activation.patch",
+      "sha256": "fc093020415833703edbca51b36a9bd998a672998ea1a87b9df293937f096057"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-expert-drop.patch",
+      "sha256": "a93a61629fe98b234748094101613af39ec29ddb3cf806a5e71650c353c392a1"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-mmap-nocache.patch",
+      "sha256": "f1cc9e2c60d72ce6bd5140564f1b37069f1c726e0fb01f86268a72827cb32e63"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-dense-lookahead.patch",
+      "sha256": "d14e78d6e383084e7bcf84869a5927f8ceb6c15e3e443a6595a5917657d97e5c"
+    },
+    {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/inputs/llama-dense-lock.patch",
+      "sha256": "d0e4bcd383eee1e29acbfc493287bef8dc65c359abe1517722450dee72a4f40a"
+    }
+  ],
+  "server_patch": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/server-cpu-no-blas.patch",
+  "server_patch_sha256": "c4c2ab976a94174d6908935cd0b36d39ff948d41a26d2425ec666bfe585a646c",
+  "configure_command": [
+    "cmake",
+    "-S",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/build-run1/source",
+    "-B",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/build-run1/build",
+    "-G",
+    "Ninja",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCMAKE_C_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang",
+    "-DCMAKE_CXX_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang++",
+    "-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "-DGGML_NATIVE=ON",
+    "-DGGML_METAL=ON",
+    "-DGGML_METAL_EMBED_LIBRARY=ON",
+    "-DBUILD_SHARED_LIBS=ON",
+    "-DLLAMA_BUILD_TESTS=OFF",
+    "-DLLAMA_BUILD_EXAMPLES=OFF",
+    "-DLLAMA_BUILD_SERVER=ON",
+    "-DLLAMA_OPENSSL=OFF",
+    "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON",
+    "-DCMAKE_INSTALL_RPATH=@loader_path"
+  ],
+  "build_command": [
+    "cmake",
+    "--build",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/build-run1/build",
+    "--target",
+    "llama-server",
+    "-j",
+    "2"
+  ],
+  "fresh_package": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/native-server-noblas-candidate/build-run1/runtime",
+  "original_runtime": "/Users/macbook/Documents/Codex/2026-11-02/referenced-chatgpt-conversation-this-is-an-2/work/runtime-v4",
+  "new_glue_artifacts": [
+    "bin/llama-server",
+    "bin/libllama-server-impl.dylib"
+  ],
+  "preserve_original_artifacts": [
+    {
+      "path": "bin/glm-native-fidelity",
+      "bytes": 155168,
+      "sha256": "5cabde2cec89f1ed1bb71e962d25509ccb466eed3d5395a10d34caed841504b2"
+    },
+    {
+      "path": "bin/libggml-base.0.28.0.dylib",
+      "bytes": 769200,
+      "sha256": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48"
+    },
+    {
+      "path": "bin/libggml-base.0.dylib",
+      "symlink": "libggml-base.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-base.dylib",
+      "symlink": "libggml-base.0.dylib"
+    },
+    {
+      "path": "bin/libggml-blas.0.28.0.dylib",
+      "bytes": 58528,
+      "sha256": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a"
+    },
+    {
+      "path": "bin/libggml-blas.0.dylib",
+      "symlink": "libggml-blas.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-blas.dylib",
+      "symlink": "libggml-blas.0.dylib"
+    },
+    {
+      "path": "bin/libggml-cpu.0.28.0.dylib",
+      "bytes": 1008672,
+      "sha256": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+    },
+    {
+      "path": "bin/libggml-cpu.0.dylib",
+      "symlink": "libggml-cpu.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-cpu.dylib",
+      "symlink": "libggml-cpu.0.dylib"
+    },
+    {
+      "path": "bin/libggml-metal.0.28.0.dylib",
+      "bytes": 5606128,
+      "sha256": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28"
+    },
+    {
+      "path": "bin/libggml-metal.0.dylib",
+      "symlink": "libggml-metal.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml-metal.dylib",
+      "symlink": "libggml-metal.0.dylib"
+    },
+    {
+      "path": "bin/libggml.0.28.0.dylib",
+      "bytes": 59856,
+      "sha256": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8"
+    },
+    {
+      "path": "bin/libggml.0.dylib",
+      "symlink": "libggml.0.28.0.dylib"
+    },
+    {
+      "path": "bin/libggml.dylib",
+      "symlink": "libggml.0.dylib"
+    },
+    {
+      "path": "bin/libllama-common.0.8.0.dylib",
+      "bytes": 5380816,
+      "sha256": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e"
+    },
+    {
+      "path": "bin/libllama-common.0.dylib",
+      "symlink": "libllama-common.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libllama-common.dylib",
+      "symlink": "libllama-common.0.dylib"
+    },
+    {
+      "path": "bin/libllama-completion-impl.dylib",
+      "bytes": 122032,
+      "sha256": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25"
+    },
+    {
+      "path": "bin/libllama.0.8.0.dylib",
+      "bytes": 3804624,
+      "sha256": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06"
+    },
+    {
+      "path": "bin/libllama.0.dylib",
+      "symlink": "libllama.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libllama.dylib",
+      "symlink": "libllama.0.dylib"
+    },
+    {
+      "path": "bin/libmtmd.0.8.0.dylib",
+      "bytes": 1620384,
+      "sha256": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b"
+    },
+    {
+      "path": "bin/libmtmd.0.dylib",
+      "symlink": "libmtmd.0.8.0.dylib"
+    },
+    {
+      "path": "bin/libmtmd.dylib",
+      "symlink": "libmtmd.0.dylib"
+    },
+    {
+      "path": "bin/llama-completion",
+      "bytes": 33440,
+      "sha256": "dcd1f76a7b3b64ba07d8a2ca58cfecc2fe7332bf5ea5720af90412282c73621c"
+    }
+  ],
+  "before_native_smoke_requirements": [
+    "All unchanged V4 dependency/header/source SHA pins checked before/after",
+    "New server/glue linked symbols/rpaths verified against actual original V4 dylibs",
+    "New server/glue binaries hashed and new manifest recorded",
+    "External original UID/power/memory watchdog admission; no active model",
+    "Only then metadata/refusal smokes; no production RONIN activation"
+  ],
+  "runtime_default": "OFF",
+  "runtime_environment_flag": "AIRLLM_GLM53_CPU_NO_BLAS=1",
+  "policy": "glm53-cpu-no-blas-server-v1",
+  "models_loaded": 0,
+  "gpu_commands": 0,
+  "build_calls": 0,
+  "measured_build_seconds": null,
+  "actual_new_binary_sha256": null,
+  "whole_model_qualified": false,
+  "http_geometry_qualified": false,
+  "numeric_qualified": false,
+  "performance_qualified": false
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-11-03T14:19:01.148580+00:00",
+  "finished_at_utc": "2026-11-03T14:19:03.299146+00:00",
+  "elapsed_seconds": 2.150460707998718,
+  "cwd": "<measured-repository>",
+  "stages": [
+    {
+      "name": "admission",
+      "argv": [
+        "<component-python-env>/bin/python",
+        "-c",
+        "import json; from research.glm53_batched_prefill.metal_probe import guard_sample; print(json.dumps(guard_sample()))"
+      ],
+      "started_at_utc": "2026-11-03T14:19:01.149300+00:00",
+      "elapsed_seconds": 0.06704112500301562,
+      "returncode": 0,
+      "stdout": "{\"ac_power\": true, \"pressure_level\": 1, \"system_swap_used_bytes\": 917569536, \"rss_bytes\": 35094528}\n",
+      "stderr": ""
+    },
+    {
+      "name": "build",
+      "argv": [
+        "xcrun",
+        "clang++",
+        "-std=c++17",
+        "-O2",
+        "-fobjc-arc",
+        "-framework",
+        "Foundation",
+        "-framework",
+        "Metal",
+        "<work>/metal-q2-prepare/q2_metal_timer.mm",
+        "-o",
+        "<work>/metal-q2-prepare/metal-q2-timer"
+      ],
+      "started_at_utc": "2026-11-03T14:19:01.216349+00:00",
+      "elapsed_seconds": 0.9354202499962412,
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "postbuild-admission",
+      "argv": [
+        "<component-python-env>/bin/python",
+        "-c",
+        "import json; from research.glm53_batched_prefill.metal_probe import guard_sample; print(json.dumps(guard_sample()))"
+      ],
+      "started_at_utc": "2026-11-03T14:19:02.151782+00:00",
+      "elapsed_seconds": 0.06470812499901513,
+      "returncode": 0,
+      "stdout": "{\"ac_power\": true, \"pressure_level\": 1, \"system_swap_used_bytes\": 917569536, \"rss_bytes\": 33652736}\n",
+      "stderr": ""
+    },
+    {
+      "name": "run",
+      "argv": [
+        "<component-python-env>/bin/python",
+        "-m",
+        "research.glm53_batched_prefill.metal_q2_probe",
+        "--libraries",
+        "<runtime-v4-work>/runtime-v4/bin",
+        "--timer",
+        "<work>/metal-q2-prepare/metal-q2-timer",
+        "--work",
+        "<work>/metal-q2-batch-run1",
+        "--output",
+        "<work>/metal-q2-batch-run1.json",
+        "--repetitions",
+        "3"
+      ],
+      "started_at_utc": "2026-11-03T14:19:02.216499+00:00",
+      "elapsed_seconds": 1.082544875003805,
+      "returncode": 0,
+      "stdout": "{\"passed\": true, \"cases\": 3, \"elements\": 114688}\n",
+      "stderr": ""
+    }
+  ],
+  "error": null,
+  "source_identity_before": {
+    "<measured-repository>/research/glm53_batched_prefill/metal_q2_probe.py": "f21652d706ea2b5bf2b59851bf6f99b4caab8f0b3984a530840815eeed3bba9a",
+    "<measured-repository>/research/glm53_batched_prefill/metal_q2_batch.metal": "0952b4b97e27623d0586fe608b5dce479394469d564759c6a802575061f7dd15",
+    "<measured-repository>/research/glm53_batched_prefill/metal_probe.py": "564e0c7d7fb4d39beb97673bf2afb394b96737dedb070b22f254b4ed9c3c12d0",
+    "<work>/metal-q2-prepare/q2_metal_timer.mm": "2cdc6c5928a07822beb7470bf2f117252eadb6be4ff3e62cb23eb1730fce3b14"
+  },
+  "source_identity_after": {
+    "<measured-repository>/research/glm53_batched_prefill/metal_q2_probe.py": "f21652d706ea2b5bf2b59851bf6f99b4caab8f0b3984a530840815eeed3bba9a",
+    "<measured-repository>/research/glm53_batched_prefill/metal_q2_batch.metal": "0952b4b97e27623d0586fe608b5dce479394469d564759c6a802575061f7dd15",
+    "<measured-repository>/research/glm53_batched_prefill/metal_probe.py": "564e0c7d7fb4d39beb97673bf2afb394b96737dedb070b22f254b4ed9c3c12d0",
+    "<work>/metal-q2-prepare/q2_metal_timer.mm": "2cdc6c5928a07822beb7470bf2f117252eadb6be4ff3e62cb23eb1730fce3b14"
+  },
+  "source_identity_unchanged": true,
+  "timer_sha256": "96e18bab2c31f91468fd5dff503309755860faf8156712df56c8da487507dfe9",
+  "model_loaded": false,
+  "scope": "one synthetic representative Q2 progression; no full-model qualification"
+}

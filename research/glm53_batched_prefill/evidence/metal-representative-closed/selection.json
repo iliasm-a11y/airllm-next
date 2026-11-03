@@ -1,0 +1,522 @@
+{
+  "schema_version": 1,
+  "selection_scope": "closed measured Q8/Q2 component metadata and logs only",
+  "transformation": "UTF-8 path prefix alias replacement only; other numeric/text bytes preserved; original and selected size/SHA both recorded",
+  "path_alias_labels": [
+    "<publication-repository>",
+    "<measured-repository>",
+    "<runtime-v4-work>",
+    "<component-python-env>",
+    "<work>",
+    "<task-workspace>",
+    "<home>"
+  ],
+  "files": [
+    {
+      "source_label": "metal-representative-q8-run1.json",
+      "source_bytes": 17127,
+      "source_sha256": "76ee9388b9cfe6cd587c944f63d315a560d92ca49bda4e5494ec102199efe59d",
+      "selected_path": "metal-representative-q8-run1.json",
+      "selected_bytes": 17127,
+      "selected_sha256": "76ee9388b9cfe6cd587c944f63d315a560d92ca49bda4e5494ec102199efe59d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1-execution.json",
+      "source_bytes": 3137,
+      "source_sha256": "6fa10bc8cfd1875672f33f121f0ed5339e902fdf68194cf4ca69a26dea2886df",
+      "selected_path": "metal-representative-q8-run1-execution.json",
+      "selected_bytes": 2053,
+      "selected_sha256": "2051abb1880fdddfdfad1cf49e71a4d8b38804f8938071f0821b05fc4ef59733",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1.stdout.log",
+      "source_bytes": 84,
+      "source_sha256": "80c3b5939681243ae88d81ca9ee3111124774766f017d9c603ce515ab170b955",
+      "selected_path": "metal-representative-q8-run1.stdout.log",
+      "selected_bytes": 84,
+      "selected_sha256": "80c3b5939681243ae88d81ca9ee3111124774766f017d9c603ce515ab170b955",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-representative-q8-run1.stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.json",
+      "source_bytes": 7875,
+      "source_sha256": "12a9f221a006a8e9f46eb1a82adc8f90cc2324554e9b134a91e0c686a90b4306",
+      "selected_path": "metal-q2-batch-run1.json",
+      "selected_bytes": 7875,
+      "selected_sha256": "12a9f221a006a8e9f46eb1a82adc8f90cc2324554e9b134a91e0c686a90b4306",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1-execution.json",
+      "source_bytes": 5233,
+      "source_sha256": "84cf3892b0c39f9c6ac33587b99f40e0476450754aa481804e632ff200e64b91",
+      "selected_path": "metal-q2-batch-run1-execution.json",
+      "selected_bytes": 3935,
+      "selected_sha256": "09d3acf6507f265f814eeae94e7eb5b64af55e2cc2f9d38ec6c5d074cd51d3a8",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-q2-batch-run1.admission.stdout.log",
+      "source_bytes": 100,
+      "source_sha256": "2fcda4e40f1f4c09c1652a9c73d12a8ee90e1b6dce0a605a1e243bee6221da8c",
+      "selected_path": "metal-q2-batch-run1.admission.stdout.log",
+      "selected_bytes": 100,
+      "selected_sha256": "2fcda4e40f1f4c09c1652a9c73d12a8ee90e1b6dce0a605a1e243bee6221da8c",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.admission.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-q2-batch-run1.admission.stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.build.stdout.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-q2-batch-run1.build.stdout.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.build.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-q2-batch-run1.build.stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.postbuild-admission.stdout.log",
+      "source_bytes": 100,
+      "source_sha256": "45f3c525588994060393dd814384f323d8a70adf5e78adeeeab3066e62dfc56f",
+      "selected_path": "metal-q2-batch-run1.postbuild-admission.stdout.log",
+      "selected_bytes": 100,
+      "selected_sha256": "45f3c525588994060393dd814384f323d8a70adf5e78adeeeab3066e62dfc56f",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.postbuild-admission.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-q2-batch-run1.postbuild-admission.stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.run.stdout.log",
+      "source_bytes": 49,
+      "source_sha256": "c04c0f46f44cefbf60177d23c70b983f5b98c6cfc574517e008b451dcbe49851",
+      "selected_path": "metal-q2-batch-run1.run.stdout.log",
+      "selected_bytes": 49,
+      "selected_sha256": "c04c0f46f44cefbf60177d23c70b983f5b98c6cfc574517e008b451dcbe49851",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1.run.stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "metal-q2-batch-run1.run.stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n8/job.json",
+      "source_bytes": 1814,
+      "source_sha256": "58df4143004a98d03595813d28ce2584bdfd59a62c1360d5dff514f6f225d797",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n8/job.json",
+      "selected_bytes": 1295,
+      "selected_sha256": "94496f961e8e389f2656f5cb0a4c1df5ad327e495f516589192f5e004fa177ff",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n8/result.json",
+      "source_bytes": 2730,
+      "source_sha256": "ce9e7c528b70bfc143cda940b202cac771eb23c732a873a098175f2465694575",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n8/result.json",
+      "selected_bytes": 2730,
+      "selected_sha256": "ce9e7c528b70bfc143cda940b202cac771eb23c732a873a098175f2465694575",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n8/timer-stdout.json",
+      "source_bytes": 480,
+      "source_sha256": "54b2f024cec96601f44241f953778f75e383b91cd659531c04cecb02be98d88f",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n8/timer-stdout.json",
+      "selected_bytes": 480,
+      "selected_sha256": "54b2f024cec96601f44241f953778f75e383b91cd659531c04cecb02be98d88f",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n8/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n8/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n8/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n8/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n16/job.json",
+      "source_bytes": 1821,
+      "source_sha256": "42eef6c7fd64f99562fe7a9c719f4527f384a9c8cf114ae19c8f68fdd098935d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n16/job.json",
+      "selected_bytes": 1302,
+      "selected_sha256": "38d88e9fe9113c87b0ab2ad32531bb65acd6924f377d128133623747c79aa050",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n16/result.json",
+      "source_bytes": 2731,
+      "source_sha256": "71492dcf423a413ca6356242ef096c5f09141947774cbe1e74393b2853743a9d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n16/result.json",
+      "selected_bytes": 2731,
+      "selected_sha256": "71492dcf423a413ca6356242ef096c5f09141947774cbe1e74393b2853743a9d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n16/timer-stdout.json",
+      "source_bytes": 490,
+      "source_sha256": "b233d2988b5bc85a406561d9a1f77037f9675d0eed65d0a2923ea3d5a791433a",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n16/timer-stdout.json",
+      "selected_bytes": 490,
+      "selected_sha256": "b233d2988b5bc85a406561d9a1f77037f9675d0eed65d0a2923ea3d5a791433a",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n16/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n16/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n16/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n16/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n32/job.json",
+      "source_bytes": 1824,
+      "source_sha256": "9d2db5500bd9307702911f346ce1f8eac2392073ec97b05e237827eb9c7e6988",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n32/job.json",
+      "selected_bytes": 1305,
+      "selected_sha256": "1bc6d952849ac85d57ad67cafe320c5d38cc10e0bd857ae9103a5692a06a80f9",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n32/result.json",
+      "source_bytes": 2726,
+      "source_sha256": "740473bd668f8a146bc1d4a2c4a2d135a52ac4c2ff7467620895e7c66100e406",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n32/result.json",
+      "selected_bytes": 2726,
+      "selected_sha256": "740473bd668f8a146bc1d4a2c4a2d135a52ac4c2ff7467620895e7c66100e406",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n32/timer-stdout.json",
+      "source_bytes": 455,
+      "source_sha256": "535961bc76912d372b04609b9598dac3c8b127cc32ad1149aa47638e206317c0",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n32/timer-stdout.json",
+      "selected_bytes": 455,
+      "selected_sha256": "535961bc76912d372b04609b9598dac3c8b127cc32ad1149aa47638e206317c0",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n32/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n32/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n32/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n32/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n64/job.json",
+      "source_bytes": 1826,
+      "source_sha256": "5ac08b7bc2a8c3fa1b254bce05ea9fed955b7981b769f761866a01c6e5d7d2c8",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n64/job.json",
+      "selected_bytes": 1307,
+      "selected_sha256": "909ba6c9c7ab9f2a003779350c21654ad53c02782980af35386f7b1a1c25ae73",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n64/result.json",
+      "source_bytes": 2736,
+      "source_sha256": "e10fa6d060418ff991e3ee4b1b53b056d7bfe53474110918b1f34301e31438b0",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n64/result.json",
+      "selected_bytes": 2736,
+      "selected_sha256": "e10fa6d060418ff991e3ee4b1b53b056d7bfe53474110918b1f34301e31438b0",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n64/timer-stdout.json",
+      "source_bytes": 468,
+      "source_sha256": "0a267bbc8296ba74477224d1ae324f3da6d487cedc1b6002add4e04fb5d91814",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n64/timer-stdout.json",
+      "selected_bytes": 468,
+      "selected_sha256": "0a267bbc8296ba74477224d1ae324f3da6d487cedc1b6002add4e04fb5d91814",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n64/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n64/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n64/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n64/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n128/job.json",
+      "source_bytes": 1833,
+      "source_sha256": "f25b6da8a966262289341c140b2db008e747e544d8ef09daf4ef63bc1399318e",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n128/job.json",
+      "selected_bytes": 1314,
+      "selected_sha256": "103bc7dc730a35c5a6b2ff9f34593147fcf57411fe52b990c75f8da2a4a82811",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n128/result.json",
+      "source_bytes": 2744,
+      "source_sha256": "47329077d0e3b8459d6b10b80ade0b91e9088c5016b5ae92998e905ce956de31",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n128/result.json",
+      "selected_bytes": 2744,
+      "selected_sha256": "47329077d0e3b8459d6b10b80ade0b91e9088c5016b5ae92998e905ce956de31",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n128/timer-stdout.json",
+      "source_bytes": 491,
+      "source_sha256": "529adc7fbf7206fd107355fb81e47f4b2ee547a6e6bb03f5e38b97f52b25756a",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n128/timer-stdout.json",
+      "selected_bytes": 491,
+      "selected_sha256": "529adc7fbf7206fd107355fb81e47f4b2ee547a6e6bb03f5e38b97f52b25756a",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n128/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n128/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-representative-q8-run1/w4096-n128/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-representative-q8-run1/w4096-n128/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n8/job.json",
+      "source_bytes": 1155,
+      "source_sha256": "1979e85893d2e1601abf6fd8902346bdde67dafae34d564ee12428cc4dcc19db",
+      "selected_path": "cases/metal-q2-batch-run1/n8/job.json",
+      "selected_bytes": 783,
+      "selected_sha256": "61896144104818ca56accbde036d46cdd98e3bb5e4fb1762689f3ae2d3ddbb65",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n8/result.json",
+      "source_bytes": 1810,
+      "source_sha256": "83c815eeb11103be790101711003ad5bf7f047f0c5be0d2b6a1fe431d52a32ee",
+      "selected_path": "cases/metal-q2-batch-run1/n8/result.json",
+      "selected_bytes": 1810,
+      "selected_sha256": "83c815eeb11103be790101711003ad5bf7f047f0c5be0d2b6a1fe431d52a32ee",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n8/timer-stdout.json",
+      "source_bytes": 523,
+      "source_sha256": "5edd78658fb6ab5e0b5f70c19cf6a6cfb1354a061d70f364e8eda25b0d147fe5",
+      "selected_path": "cases/metal-q2-batch-run1/n8/timer-stdout.json",
+      "selected_bytes": 523,
+      "selected_sha256": "5edd78658fb6ab5e0b5f70c19cf6a6cfb1354a061d70f364e8eda25b0d147fe5",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n8/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-q2-batch-run1/n8/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n8/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-q2-batch-run1/n8/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n16/job.json",
+      "source_bytes": 1160,
+      "source_sha256": "1fc6d47747d5766c67e27c1f3062aec49d67aaef7f647bbfaf19bf2bff46033f",
+      "selected_path": "cases/metal-q2-batch-run1/n16/job.json",
+      "selected_bytes": 788,
+      "selected_sha256": "3b394a73a2294435f059fb623091b27928e8b0c925a57311a8b6392caabb7ad7",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n16/result.json",
+      "source_bytes": 1808,
+      "source_sha256": "baa653197df14cdc9717c571c9e00f2fd0f4e21f5d743c054b4c9f1fa29e783a",
+      "selected_path": "cases/metal-q2-batch-run1/n16/result.json",
+      "selected_bytes": 1808,
+      "selected_sha256": "baa653197df14cdc9717c571c9e00f2fd0f4e21f5d743c054b4c9f1fa29e783a",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n16/timer-stdout.json",
+      "source_bytes": 499,
+      "source_sha256": "94c0a861fa04c74d0c6964201283d5fb79377da26be3431b33d5fb1f0e008dd4",
+      "selected_path": "cases/metal-q2-batch-run1/n16/timer-stdout.json",
+      "selected_bytes": 499,
+      "selected_sha256": "94c0a861fa04c74d0c6964201283d5fb79377da26be3431b33d5fb1f0e008dd4",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n16/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-q2-batch-run1/n16/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n16/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-q2-batch-run1/n16/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n32/job.json",
+      "source_bytes": 1161,
+      "source_sha256": "1ec679c15ac67b3e2dd21ac34f85d6882d85df32e0cfd230d3769c810c7366c2",
+      "selected_path": "cases/metal-q2-batch-run1/n32/job.json",
+      "selected_bytes": 789,
+      "selected_sha256": "67b48b81ac846a94962e454b37687536dc7ff7ebf4757a259865d8d5f33e3f70",
+      "local_paths_redacted": true
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n32/result.json",
+      "source_bytes": 1806,
+      "source_sha256": "e283c8782c3f8bc452234d8156e66d3ced5720668b1ff08d8890d76ed8f875fe",
+      "selected_path": "cases/metal-q2-batch-run1/n32/result.json",
+      "selected_bytes": 1806,
+      "selected_sha256": "e283c8782c3f8bc452234d8156e66d3ced5720668b1ff08d8890d76ed8f875fe",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n32/timer-stdout.json",
+      "source_bytes": 522,
+      "source_sha256": "811d5ac38e5039e47d7584bf43191880167e24e16433b2e47ef819cae6467a8e",
+      "selected_path": "cases/metal-q2-batch-run1/n32/timer-stdout.json",
+      "selected_bytes": 522,
+      "selected_sha256": "811d5ac38e5039e47d7584bf43191880167e24e16433b2e47ef819cae6467a8e",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n32/timer-exit.json",
+      "source_bytes": 18,
+      "source_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "selected_path": "cases/metal-q2-batch-run1/n32/timer-exit.json",
+      "selected_bytes": 18,
+      "selected_sha256": "df4d721d233a2334088d2d2e0110346ae9e509ff46bf0b379fbcfa85c715af4d",
+      "local_paths_redacted": false
+    },
+    {
+      "source_label": "metal-q2-batch-run1/n32/timer-stderr.log",
+      "source_bytes": 0,
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_path": "cases/metal-q2-batch-run1/n32/timer-stderr.log",
+      "selected_bytes": 0,
+      "selected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "local_paths_redacted": false
+    }
+  ],
+  "omitted": [
+    "*.bin",
+    "*.f32",
+    "*.dylib",
+    "timer executables",
+    "model weights"
+  ],
+  "full_model_qualified": false,
+  "generated_artifacts": [
+    {
+      "selected_path": "README.md",
+      "bytes": 2635,
+      "sha256": "fc6d8f1ece2c420873ce67d1476d13689e0b28ab4051a01935a1c5735a95bcb3"
+    },
+    {
+      "selected_path": "summary.json",
+      "bytes": 1906,
+      "sha256": "798bde3880fe071d1168fb461a5e3aad3f00aa8b9b07d82d1eb3f5e131458905"
+    }
+  ]
+}
