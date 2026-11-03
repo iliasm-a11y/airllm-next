@@ -1,0 +1,1093 @@
+{
+  "schema": 1,
+  "scope": "reanalysis of PR19 operation diagnostics and separate PR21 logical-weight captures; no contemporary model run",
+  "sources": {
+    "research/glm53_gpu_v2/evidence/cpu-profile16-summary.json": "c4e4ff8603f218a880a8d94e3d83ca92c4b5fbf614d0c3c30f6d1f5abdc499a9",
+    "research/glm53_gpu_v3/evidence/cpu-stream16-source-union.json": "450615beb1989fe821c1e5a31a5a56f8edec93497e7f1203f99a92ff4a208133",
+    "decompressed_operation_summary_sha256": "ee2006719a44bd8cce821eabb00777b1c4b60a607c0c3c9682d5b6d7e60a1075"
+  },
+  "historical_decode_intervals": 15,
+  "serialized_decode_operation_wall_seconds": 91.11458904601326,
+  "historical_process_os_read_bytes": 183799644160,
+  "historical_process_os_read_bytes_per_interval": 12253309610.666666,
+  "historical_cpu_core_seconds": 677.1777138842988,
+  "by_operation": {
+    "GET_ROWS": {
+      "wall_seconds": 0.3588823699999998,
+      "cpu_core_seconds": 0.35340425155,
+      "os_read_bytes": 802816,
+      "operations": 2025,
+      "fraction_of_serialized_operation_wall": 0.0039388024876978005
+    },
+    "DUP": {
+      "wall_seconds": 0.002827208,
+      "cpu_core_seconds": 0.015993945,
+      "os_read_bytes": 0,
+      "operations": 15,
+      "fraction_of_serialized_operation_wall": 3.1029147248551464e-05
+    },
+    "SET_ROWS": {
+      "wall_seconds": 0.08252752899999999,
+      "cpu_core_seconds": 0.426272275,
+      "os_read_bytes": 0,
+      "operations": 510,
+      "fraction_of_serialized_operation_wall": 0.0009057553775315084
+    },
+    "RESHAPE": {
+      "wall_seconds": 0.08175086299999994,
+      "cpu_core_seconds": 0.0938322511800001,
+      "os_read_bytes": 32768,
+      "operations": 16440,
+      "fraction_of_serialized_operation_wall": 0.0008972313199888922
+    },
+    "REPEAT": {
+      "wall_seconds": 9.770800000000001e-05,
+      "cpu_core_seconds": 0.000108,
+      "os_read_bytes": 0,
+      "operations": 15,
+      "fraction_of_serialized_operation_wall": 1.072363943283079e-06
+    },
+    "RMS_NORM": {
+      "wall_seconds": 0.7471238830000001,
+      "cpu_core_seconds": 4.190577043999999,
+      "os_read_bytes": 4096,
+      "operations": 4575,
+      "fraction_of_serialized_operation_wall": 0.00819982717172438
+    },
+    "MUL_MAT": {
+      "wall_seconds": 64.35647993400002,
+      "cpu_core_seconds": 469.54113331999963,
+      "os_read_bytes": 141637337088,
+      "operations": 10260,
+      "fraction_of_serialized_operation_wall": 0.7063246468850308
+    },
+    "VIEW": {
+      "wall_seconds": 0.12396850600000002,
+      "cpu_core_seconds": 0.14239229151000002,
+      "os_read_bytes": 16384,
+      "operations": 25515,
+      "fraction_of_serialized_operation_wall": 0.0013605780072979902
+    },
+    "MUL": {
+      "wall_seconds": 1.4972249030000007,
+      "cpu_core_seconds": 8.845550379999993,
+      "os_read_bytes": 82341888,
+      "operations": 6885,
+      "fraction_of_serialized_operation_wall": 0.016432328990079684
+    },
+    "ADD": {
+      "wall_seconds": 1.6055502599999998,
+      "cpu_core_seconds": 9.249230703000002,
+      "os_read_bytes": 13336576,
+      "operations": 9255,
+      "fraction_of_serialized_operation_wall": 0.017621220452294306
+    },
+    "UNARY": {
+      "wall_seconds": 0.3174871980000005,
+      "cpu_core_seconds": 1.7415122803100005,
+      "os_read_bytes": 32768,
+      "operations": 6390,
+      "fraction_of_serialized_operation_wall": 0.0034844825765462007
+    },
+    "SCALE": {
+      "wall_seconds": 0.03361667300000001,
+      "cpu_core_seconds": 0.038168207490000015,
+      "os_read_bytes": 16384,
+      "operations": 6570,
+      "fraction_of_serialized_operation_wall": 0.00036894940044149727
+    },
+    "DSV4_HC_PRE": {
+      "wall_seconds": 0.22515054999999992,
+      "cpu_core_seconds": 1.2163246670000005,
+      "os_read_bytes": 0,
+      "operations": 1350,
+      "fraction_of_serialized_operation_wall": 0.002471070246349878
+    },
+    "CPY": {
+      "wall_seconds": 0.48923355900000004,
+      "cpu_core_seconds": 3.36334981926,
+      "os_read_bytes": 16384,
+      "operations": 3060,
+      "fraction_of_serialized_operation_wall": 0.005369431658775687
+    },
+    "TRANSPOSE": {
+      "wall_seconds": 0.007421721999999999,
+      "cpu_core_seconds": 0.00848049988,
+      "os_read_bytes": 0,
+      "operations": 1530,
+      "fraction_of_serialized_operation_wall": 8.145481505988022e-05
+    },
+    "CONCAT": {
+      "wall_seconds": 0.3915512409999999,
+      "cpu_core_seconds": 2.5733135720000004,
+      "os_read_bytes": 0,
+      "operations": 1860,
+      "fraction_of_serialized_operation_wall": 0.004297349580342889
+    },
+    "SSM_CONV": {
+      "wall_seconds": 0.6222107290000001,
+      "cpu_core_seconds": 1.988031154,
+      "os_read_bytes": 208044032,
+      "operations": 1530,
+      "fraction_of_serialized_operation_wall": 0.006828881472381782
+    },
+    "GATED_DELTA_NET": {
+      "wall_seconds": 0.174243371,
+      "cpu_core_seconds": 1.2634581599999999,
+      "os_read_bytes": 0,
+      "operations": 510,
+      "fraction_of_serialized_operation_wall": 0.0019123542434242484
+    },
+    "CONT": {
+      "wall_seconds": 0.2834214969999999,
+      "cpu_core_seconds": 1.5977678100000021,
+      "os_read_bytes": 0,
+      "operations": 1515,
+      "fraction_of_serialized_operation_wall": 0.003110605008127412
+    },
+    "DSV4_HC_COMB": {
+      "wall_seconds": 0.2306226539999997,
+      "cpu_core_seconds": 1.3504384139999996,
+      "os_read_bytes": 0,
+      "operations": 1350,
+      "fraction_of_serialized_operation_wall": 0.002531127631860736
+    },
+    "DSV4_HC_POST": {
+      "wall_seconds": 0.22659380199999996,
+      "cpu_core_seconds": 1.3607097200000011,
+      "os_read_bytes": 0,
+      "operations": 1350,
+      "fraction_of_serialized_operation_wall": 0.002486910212431174
+    },
+    "GLU": {
+      "wall_seconds": 0.302787081,
+      "cpu_core_seconds": 1.8450806020000028,
+      "os_read_bytes": 0,
+      "operations": 1305,
+      "fraction_of_serialized_operation_wall": 0.0033231459875991015
+    },
+    "NORM": {
+      "wall_seconds": 0.029724123,
+      "cpu_core_seconds": 0.16517029000000003,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.00032622792146918633
+    },
+    "FILL": {
+      "wall_seconds": 0.05997421999999999,
+      "cpu_core_seconds": 0.329699569,
+      "os_read_bytes": 0,
+      "operations": 330,
+      "fraction_of_serialized_operation_wall": 0.0006582285079474237
+    },
+    "PERMUTE": {
+      "wall_seconds": 0.006964836999999999,
+      "cpu_core_seconds": 0.008090374950000005,
+      "os_read_bytes": 0,
+      "operations": 1485,
+      "fraction_of_serialized_operation_wall": 7.644041500843214e-05
+    },
+    "SOFT_MAX": {
+      "wall_seconds": 0.025035915999999995,
+      "cpu_core_seconds": 0.129357168,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.0002747739551056609
+    },
+    "SUM_ROWS": {
+      "wall_seconds": 0.004323383000000005,
+      "cpu_core_seconds": 0.004644249970000002,
+      "os_read_bytes": 0,
+      "operations": 795,
+      "fraction_of_serialized_operation_wall": 4.7449953352878296e-05
+    },
+    "LIGHTNING_INDEXER": {
+      "wall_seconds": 0.039163209000000004,
+      "cpu_core_seconds": 0.23841482400000014,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.00042982369135443737
+    },
+    "TOP_K": {
+      "wall_seconds": 0.032069463,
+      "cpu_core_seconds": 0.177041204,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.00035196847547438076
+    },
+    "TOP_K_MASK": {
+      "wall_seconds": 0.027103294999999996,
+      "cpu_core_seconds": 0.1433423560000001,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.00029746383409919914
+    },
+    "FLASH_ATTN_EXT": {
+      "wall_seconds": 0.028804465000000005,
+      "cpu_core_seconds": 0.160132728,
+      "os_read_bytes": 0,
+      "operations": 165,
+      "fraction_of_serialized_operation_wall": 0.00031613449944282383
+    },
+    "ARGSORT": {
+      "wall_seconds": 0.12112136399999994,
+      "cpu_core_seconds": 0.7065970539999986,
+      "os_read_bytes": 0,
+      "operations": 630,
+      "fraction_of_serialized_operation_wall": 0.001329330080595909
+    },
+    "CLAMP": {
+      "wall_seconds": 0.0030717819999999956,
+      "cpu_core_seconds": 0.0035483332300000033,
+      "os_read_bytes": 0,
+      "operations": 630,
+      "fraction_of_serialized_operation_wall": 3.3713393564764173e-05
+    },
+    "DIV": {
+      "wall_seconds": 0.12423274800000005,
+      "cpu_core_seconds": 0.7047845659999998,
+      "os_read_bytes": 16384,
+      "operations": 630,
+      "fraction_of_serialized_operation_wall": 0.0013634781136669777
+    },
+    "MUL_MAT_ID": {
+      "wall_seconds": 18.45222699999998,
+      "cpu_core_seconds": 163.20176179999984,
+      "os_read_bytes": 41857646592,
+      "operations": 1890,
+      "fraction_of_serialized_operation_wall": 0.2025167121225946
+    }
+  },
+  "by_layer": {
+    "layer=unlayered": {
+      "wall_seconds": 41.538103266000014,
+      "cpu_core_seconds": 288.6668044807797,
+      "os_read_bytes": 79697166336,
+      "operations": 64605
+    },
+    "layer=0": {
+      "wall_seconds": 1.1427000940000003,
+      "cpu_core_seconds": 9.911040215899998,
+      "os_read_bytes": 2988441600,
+      "operations": 600
+    },
+    "layer=1": {
+      "wall_seconds": 1.2409936780000006,
+      "cpu_core_seconds": 10.518702674050001,
+      "os_read_bytes": 2987950080,
+      "operations": 600
+    },
+    "layer=2": {
+      "wall_seconds": 1.2832111290000001,
+      "cpu_core_seconds": 11.164871974410001,
+      "os_read_bytes": 2988441600,
+      "operations": 600
+    },
+    "layer=3": {
+      "wall_seconds": 1.4921371809999997,
+      "cpu_core_seconds": 10.60538555898999,
+      "os_read_bytes": 2870165504,
+      "operations": 1155
+    },
+    "layer=4": {
+      "wall_seconds": 1.007328602,
+      "cpu_core_seconds": 8.17581575023,
+      "os_read_bytes": 2050674688,
+      "operations": 1035
+    },
+    "layer=5": {
+      "wall_seconds": 1.0052685700000004,
+      "cpu_core_seconds": 8.031263541320003,
+      "os_read_bytes": 2050822144,
+      "operations": 1035
+    },
+    "layer=6": {
+      "wall_seconds": 0.9918948329999996,
+      "cpu_core_seconds": 7.91953427003,
+      "os_read_bytes": 2050625536,
+      "operations": 1035
+    },
+    "layer=7": {
+      "wall_seconds": 1.4915191900000004,
+      "cpu_core_seconds": 10.550785851650003,
+      "os_read_bytes": 2868842496,
+      "operations": 1155
+    },
+    "layer=8": {
+      "wall_seconds": 0.9484689710000004,
+      "cpu_core_seconds": 7.726866784659999,
+      "os_read_bytes": 2050625536,
+      "operations": 1035
+    },
+    "layer=9": {
+      "wall_seconds": 0.9562554840000003,
+      "cpu_core_seconds": 7.808464954989998,
+      "os_read_bytes": 2050768896,
+      "operations": 1035
+    },
+    "layer=10": {
+      "wall_seconds": 0.8937252049999992,
+      "cpu_core_seconds": 7.212460580820001,
+      "os_read_bytes": 2050965504,
+      "operations": 1035
+    },
+    "layer=11": {
+      "wall_seconds": 1.3182824699999995,
+      "cpu_core_seconds": 9.265553014850001,
+      "os_read_bytes": 2869706752,
+      "operations": 1155
+    },
+    "layer=12": {
+      "wall_seconds": 0.9516082299999999,
+      "cpu_core_seconds": 7.613682305059999,
+      "os_read_bytes": 2050670592,
+      "operations": 1035
+    },
+    "layer=13": {
+      "wall_seconds": 0.9116792640000002,
+      "cpu_core_seconds": 7.355685338009998,
+      "os_read_bytes": 2050981888,
+      "operations": 1035
+    },
+    "layer=14": {
+      "wall_seconds": 0.8825625030000002,
+      "cpu_core_seconds": 7.198700582890003,
+      "os_read_bytes": 2050506752,
+      "operations": 1035
+    },
+    "layer=15": {
+      "wall_seconds": 1.3370744480000003,
+      "cpu_core_seconds": 9.652448693929989,
+      "os_read_bytes": 2869559296,
+      "operations": 1155
+    },
+    "layer=16": {
+      "wall_seconds": 0.9224677950000004,
+      "cpu_core_seconds": 7.5077586260899976,
+      "os_read_bytes": 2050785280,
+      "operations": 1035
+    },
+    "layer=17": {
+      "wall_seconds": 0.9830655670000003,
+      "cpu_core_seconds": 7.858083174349999,
+      "os_read_bytes": 2050539520,
+      "operations": 1035
+    },
+    "layer=18": {
+      "wall_seconds": 0.9519977920000001,
+      "cpu_core_seconds": 7.796343693069999,
+      "os_read_bytes": 2050916352,
+      "operations": 1035
+    },
+    "layer=19": {
+      "wall_seconds": 1.4784308849999988,
+      "cpu_core_seconds": 10.58768130919,
+      "os_read_bytes": 2869706752,
+      "operations": 1155
+    },
+    "layer=20": {
+      "wall_seconds": 1.0097984370000002,
+      "cpu_core_seconds": 8.183505909060004,
+      "os_read_bytes": 2050834432,
+      "operations": 1035
+    },
+    "layer=21": {
+      "wall_seconds": 1.0054839800000004,
+      "cpu_core_seconds": 8.166537437190001,
+      "os_read_bytes": 2050654208,
+      "operations": 1035
+    },
+    "layer=22": {
+      "wall_seconds": 0.9934543000000001,
+      "cpu_core_seconds": 8.122338682629998,
+      "os_read_bytes": 2050949120,
+      "operations": 1035
+    },
+    "layer=23": {
+      "wall_seconds": 1.449046304999999,
+      "cpu_core_seconds": 10.330274378990003,
+      "os_read_bytes": 2869329920,
+      "operations": 1155
+    },
+    "layer=24": {
+      "wall_seconds": 0.9777382259999995,
+      "cpu_core_seconds": 7.896714360309998,
+      "os_read_bytes": 2050834432,
+      "operations": 1035
+    },
+    "layer=25": {
+      "wall_seconds": 0.9758776049999998,
+      "cpu_core_seconds": 7.913705290959999,
+      "os_read_bytes": 2050408448,
+      "operations": 1035
+    },
+    "layer=26": {
+      "wall_seconds": 0.973288919,
+      "cpu_core_seconds": 7.868699372199996,
+      "os_read_bytes": 2049261568,
+      "operations": 1035
+    },
+    "layer=27": {
+      "wall_seconds": 1.408168446,
+      "cpu_core_seconds": 10.159320703509996,
+      "os_read_bytes": 2869673984,
+      "operations": 1155
+    },
+    "layer=28": {
+      "wall_seconds": 0.9567358459999997,
+      "cpu_core_seconds": 7.790752206349998,
+      "os_read_bytes": 2050719744,
+      "operations": 1035
+    },
+    "layer=29": {
+      "wall_seconds": 0.9748441310000003,
+      "cpu_core_seconds": 7.890721930300004,
+      "os_read_bytes": 2050768896,
+      "operations": 1035
+    },
+    "layer=30": {
+      "wall_seconds": 0.9853525919999998,
+      "cpu_core_seconds": 8.071812671650003,
+      "os_read_bytes": 2051227648,
+      "operations": 1035
+    },
+    "layer=31": {
+      "wall_seconds": 1.5122687580000014,
+      "cpu_core_seconds": 10.754227570469993,
+      "os_read_bytes": 2869395456,
+      "operations": 1155
+    },
+    "layer=32": {
+      "wall_seconds": 0.9689170869999998,
+      "cpu_core_seconds": 7.90004120478,
+      "os_read_bytes": 2050457600,
+      "operations": 1035
+    },
+    "layer=33": {
+      "wall_seconds": 0.9453427440000002,
+      "cpu_core_seconds": 7.715020889329998,
+      "os_read_bytes": 2050916352,
+      "operations": 1035
+    },
+    "layer=34": {
+      "wall_seconds": 1.0070117740000006,
+      "cpu_core_seconds": 8.164000118329994,
+      "os_read_bytes": 2050539520,
+      "operations": 1035
+    },
+    "layer=35": {
+      "wall_seconds": 1.3797236810000002,
+      "cpu_core_seconds": 10.147039246730003,
+      "os_read_bytes": 2869694464,
+      "operations": 1155
+    },
+    "layer=36": {
+      "wall_seconds": 0.9982168999999991,
+      "cpu_core_seconds": 7.971361960470001,
+      "os_read_bytes": 2050412544,
+      "operations": 1035
+    },
+    "layer=37": {
+      "wall_seconds": 0.9770349749999997,
+      "cpu_core_seconds": 7.982462358590005,
+      "os_read_bytes": 2050727936,
+      "operations": 1035
+    },
+    "layer=38": {
+      "wall_seconds": 0.9786352039999999,
+      "cpu_core_seconds": 7.90035029086,
+      "os_read_bytes": 2050637824,
+      "operations": 1035
+    },
+    "layer=39": {
+      "wall_seconds": 1.5579743600000002,
+      "cpu_core_seconds": 10.910042991260003,
+      "os_read_bytes": 2869854208,
+      "operations": 1155
+    },
+    "layer=40": {
+      "wall_seconds": 0.965680961,
+      "cpu_core_seconds": 7.893830622419999,
+      "os_read_bytes": 2051403776,
+      "operations": 1035
+    },
+    "layer=41": {
+      "wall_seconds": 1.0181367259999996,
+      "cpu_core_seconds": 8.192178706960004,
+      "os_read_bytes": 2050560000,
+      "operations": 1035
+    },
+    "layer=42": {
+      "wall_seconds": 0.990649132,
+      "cpu_core_seconds": 7.951586966110001,
+      "os_read_bytes": 2050883584,
+      "operations": 1035
+    },
+    "layer=43": {
+      "wall_seconds": 1.4008242820000005,
+      "cpu_core_seconds": 10.227770360829998,
+      "os_read_bytes": 2869760000,
+      "operations": 1155
+    },
+    "layer=44": {
+      "wall_seconds": 0.9756085180000001,
+      "cpu_core_seconds": 7.94548427877,
+      "os_read_bytes": 2050875392,
+      "operations": 1035
+    }
+  },
+  "logical_operands_separate_capture": {
+    "median_bytes_per_token": 12218990592,
+    "dense_bytes": 9444458496,
+    "selected_moe_bytes": 2774532096,
+    "dense_fraction": 0.7729327905517386,
+    "moe_fraction": 0.22706720944826145,
+    "scope": "distinct original operands; not measured SSD/NAND traffic"
+  },
+  "conditional_bounds": [
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 12.218990592,
+      "minimum_token_seconds": 12.218990592,
+      "conditional_upper_tokens_per_second": 0.08183982076675946,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 12.218990592,
+      "minimum_token_seconds": 12.218990592,
+      "conditional_upper_tokens_per_second": 0.08183982076675946,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 12.218990592,
+      "minimum_token_seconds": 12.218990592,
+      "conditional_upper_tokens_per_second": 0.08183982076675946,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 12.218990592,
+      "minimum_token_seconds": 13.218990592,
+      "conditional_upper_tokens_per_second": 0.0756487413346969,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 6.109495296,
+      "minimum_token_seconds": 6.109495296,
+      "conditional_upper_tokens_per_second": 0.1636796415335189,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 6.109495296,
+      "minimum_token_seconds": 6.109495296,
+      "conditional_upper_tokens_per_second": 0.1636796415335189,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 6.109495296,
+      "minimum_token_seconds": 6.109495296,
+      "conditional_upper_tokens_per_second": 0.1636796415335189,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 6.109495296,
+      "minimum_token_seconds": 7.109495296,
+      "conditional_upper_tokens_per_second": 0.14065696063722383,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 4.072996864,
+      "minimum_token_seconds": 4.072996864,
+      "conditional_upper_tokens_per_second": 0.24551946230027835,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 4.072996864,
+      "minimum_token_seconds": 4.072996864,
+      "conditional_upper_tokens_per_second": 0.24551946230027835,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 4.072996864,
+      "minimum_token_seconds": 4.072996864,
+      "conditional_upper_tokens_per_second": 0.24551946230027835,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 12218990592,
+      "minimum_io_seconds": 4.072996864,
+      "minimum_token_seconds": 5.072996864,
+      "conditional_upper_tokens_per_second": 0.1971221403853799,
+      "assumptions": {
+        "coverage_bytes": 0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 8.218990592,
+      "minimum_token_seconds": 8.218990592,
+      "conditional_upper_tokens_per_second": 0.12166944210562249,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 8.218990592,
+      "minimum_token_seconds": 8.218990592,
+      "conditional_upper_tokens_per_second": 0.12166944210562249,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 8.218990592,
+      "minimum_token_seconds": 8.218990592,
+      "conditional_upper_tokens_per_second": 0.12166944210562249,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 8.218990592,
+      "minimum_token_seconds": 9.218990592,
+      "conditional_upper_tokens_per_second": 0.10847174536307412,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 4.109495296,
+      "minimum_token_seconds": 4.109495296,
+      "conditional_upper_tokens_per_second": 0.24333888421124497,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 4.109495296,
+      "minimum_token_seconds": 4.109495296,
+      "conditional_upper_tokens_per_second": 0.24333888421124497,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 4.109495296,
+      "minimum_token_seconds": 4.109495296,
+      "conditional_upper_tokens_per_second": 0.24333888421124497,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 4.109495296,
+      "minimum_token_seconds": 5.109495296,
+      "conditional_upper_tokens_per_second": 0.19571404650922294,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 2.739663530666667,
+      "minimum_token_seconds": 2.739663530666667,
+      "conditional_upper_tokens_per_second": 0.36500832631686747,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 2.739663530666667,
+      "minimum_token_seconds": 2.739663530666667,
+      "conditional_upper_tokens_per_second": 0.36500832631686747,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 2.739663530666667,
+      "minimum_token_seconds": 2.739663530666667,
+      "conditional_upper_tokens_per_second": 0.36500832631686747,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 8218990592.0,
+      "minimum_io_seconds": 2.739663530666667,
+      "minimum_token_seconds": 3.739663530666667,
+      "conditional_upper_tokens_per_second": 0.26740373613818963,
+      "assumptions": {
+        "coverage_bytes": 4000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 4.218990592,
+      "minimum_token_seconds": 4.218990592,
+      "conditional_upper_tokens_per_second": 0.23702351977181182,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 4.218990592,
+      "minimum_token_seconds": 4.218990592,
+      "conditional_upper_tokens_per_second": 0.23702351977181182,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 4.218990592,
+      "minimum_token_seconds": 4.218990592,
+      "conditional_upper_tokens_per_second": 0.23702351977181182,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 4.218990592,
+      "minimum_token_seconds": 5.218990592,
+      "conditional_upper_tokens_per_second": 0.19160793306139765,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 1000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 2.109495296,
+      "minimum_token_seconds": 2.109495296,
+      "conditional_upper_tokens_per_second": 0.47404703954362365,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 2.109495296,
+      "minimum_token_seconds": 2.109495296,
+      "conditional_upper_tokens_per_second": 0.47404703954362365,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 2.109495296,
+      "minimum_token_seconds": 2.109495296,
+      "conditional_upper_tokens_per_second": 0.47404703954362365,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 2.109495296,
+      "minimum_token_seconds": 3.109495296,
+      "conditional_upper_tokens_per_second": 0.32159559825878575,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 2000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 1.4063301973333333,
+      "minimum_token_seconds": 1.4063301973333333,
+      "conditional_upper_tokens_per_second": 0.7110705593154354,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 1.4063301973333333,
+      "minimum_token_seconds": 1.4063301973333333,
+      "conditional_upper_tokens_per_second": 0.7110705593154354,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 0,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 1.4063301973333333,
+      "minimum_token_seconds": 1.4063301973333333,
+      "conditional_upper_tokens_per_second": 0.7110705593154354,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": true
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    },
+    {
+      "assumed_service_bytes_per_token": 4218990592.0,
+      "minimum_io_seconds": 1.4063301973333333,
+      "minimum_token_seconds": 2.4063301973333333,
+      "conditional_upper_tokens_per_second": 0.4155705651319957,
+      "assumptions": {
+        "coverage_bytes": 8000000000.0,
+        "interface_bytes_per_second": 3000000000.0,
+        "compute_seconds": 1,
+        "perfect_overlap": false
+      },
+      "scope": "conditional model; coverage/service bandwidth are supplied assumptions, not measured NAND"
+    }
+  ],
+  "target_required_coverage_before_compute": [
+    {
+      "tokens_per_second": 0.5,
+      "assumed_interface_bytes_per_second": 1000000000.0,
+      "minimum_coverage_bytes": 10218990592.0
+    },
+    {
+      "tokens_per_second": 0.5,
+      "assumed_interface_bytes_per_second": 2000000000.0,
+      "minimum_coverage_bytes": 8218990592.0
+    },
+    {
+      "tokens_per_second": 0.5,
+      "assumed_interface_bytes_per_second": 3000000000.0,
+      "minimum_coverage_bytes": 6218990592.0
+    },
+    {
+      "tokens_per_second": 1,
+      "assumed_interface_bytes_per_second": 1000000000.0,
+      "minimum_coverage_bytes": 11218990592.0
+    },
+    {
+      "tokens_per_second": 1,
+      "assumed_interface_bytes_per_second": 2000000000.0,
+      "minimum_coverage_bytes": 10218990592.0
+    },
+    {
+      "tokens_per_second": 1,
+      "assumed_interface_bytes_per_second": 3000000000.0,
+      "minimum_coverage_bytes": 9218990592.0
+    },
+    {
+      "tokens_per_second": 3,
+      "assumed_interface_bytes_per_second": 1000000000.0,
+      "minimum_coverage_bytes": 11885657258.666666
+    },
+    {
+      "tokens_per_second": 3,
+      "assumed_interface_bytes_per_second": 2000000000.0,
+      "minimum_coverage_bytes": 11552323925.333334
+    },
+    {
+      "tokens_per_second": 3,
+      "assumed_interface_bytes_per_second": 3000000000.0,
+      "minimum_coverage_bytes": 11218990592.0
+    },
+    {
+      "tokens_per_second": 5,
+      "assumed_interface_bytes_per_second": 1000000000.0,
+      "minimum_coverage_bytes": 12018990592.0
+    },
+    {
+      "tokens_per_second": 5,
+      "assumed_interface_bytes_per_second": 2000000000.0,
+      "minimum_coverage_bytes": 11818990592.0
+    },
+    {
+      "tokens_per_second": 5,
+      "assumed_interface_bytes_per_second": 3000000000.0,
+      "minimum_coverage_bytes": 11618990592.0
+    }
+  ],
+  "unknowns": {
+    "physical_nand_bytes": null,
+    "pure_io_wait_seconds": null,
+    "unavoidable_compute_seconds": null,
+    "allocation_bytes": null,
+    "contemporary_model_decode_rate": null
+  },
+  "interpretation": [
+    "CPU seconds sum active threads and cannot be subtracted from wall time to obtain IO wait",
+    "operation callbacks serialize execution; these operation sums are not production token throughput",
+    "separate historical versions/captures are not an ABBA comparison",
+    "conditional coverage includes every cache capable of supplying original bytes; it is not the RSS",
+    "bandwidth1/2/3GB/s, coverage0/4/8GB and compute0/1s are explicit hypotheses only"
+  ]
+}

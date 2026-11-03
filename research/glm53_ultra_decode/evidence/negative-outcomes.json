@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "outcomes": [
+    {
+      "case": "initial_shader",
+      "verdict": "compile_failure",
+      "reason": "half conversion promoted to int; no timing accepted"
+    },
+    {
+      "case": "two_CPU10_pools",
+      "verdict": "timings_rejected",
+      "reason": "spinning independent pools contend; corrected graph uses one shared pool"
+    },
+    {
+      "case": "old_receipt",
+      "verdict": "admission_refused",
+      "reason": "old packaged receipt identity stale; later valid recent receipt found"
+    },
+    {
+      "case": "memory_pressure",
+      "verdict": "admission_refused",
+      "reason": "pressure2; no component child launched"
+    },
+    {
+      "case": "CPU32_full_model",
+      "verdict": "admission_refused",
+      "reason": "available memory below5.5GiB and disk free below32GiB; checkpoint integrity passes"
+    },
+    {
+      "case": "strict_python_provenance_replay",
+      "verdict": "admission_refused",
+      "reason": "pressure2; no promotion or retroactive provenance claim"
+    },
+    {
+      "case": "32_64_128_EOS_ABBA_and_RONIN_agents",
+      "verdict": "not_started",
+      "reason": "upstream full model admission not satisfied"
+    }
+  ]
+}

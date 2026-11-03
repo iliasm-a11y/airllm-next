@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.050" timestamp="2026-11-03T17:23:24.645734+01:00" hostname="macbook-air-de-macbook-3.home"><testcase classname="" name="research.glm53_ultra_decode.test_decode" time="0.000"><error message="collection failure">ImportError while importing test module '[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/test_decode.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+research/glm53_ultra_decode/test_decode.py:6: in &lt;module&gt;
+    from .components import validate_shape
+E   ImportError: attempted relative import with no known parent package</error></testcase></testsuite></testsuites>

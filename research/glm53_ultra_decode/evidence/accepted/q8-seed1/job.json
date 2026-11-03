@@ -1,0 +1,117 @@
+{
+  "source": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/airllm-next/research/glm53_ultra_decode/decode.metal",
+  "buffers": [
+    {
+      "bytes": 6684672,
+      "input": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/w0.bin"
+    },
+    {
+      "bytes": 16384,
+      "input": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/x.bin"
+    },
+    {
+      "bytes": 4352,
+      "output": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/quantized.out"
+    },
+    {
+      "bytes": 12,
+      "input": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/shape.bin"
+    },
+    {
+      "bytes": 6144,
+      "output": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/tile1.out"
+    },
+    {
+      "bytes": 6144,
+      "output": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/tile2.out"
+    },
+    {
+      "bytes": 6144,
+      "output": "[CODEX]/2026-11-03/files-pasted-by-the-user-mission-3/work/components-q8-m1536-k4096-r2/tile4.out"
+    }
+  ],
+  "cpu_quantize": {
+    "format": 8,
+    "width": 4096,
+    "input": 1,
+    "output": 2
+  },
+  "experiments": [
+    {
+      "name": "tile1",
+      "stages": [
+        {
+          "entry": "q8_tile1",
+          "bindings": [
+            0,
+            0,
+            2,
+            4,
+            3
+          ],
+          "grid": [
+            6144,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tile2",
+      "stages": [
+        {
+          "entry": "q8_tile2",
+          "bindings": [
+            0,
+            0,
+            2,
+            5,
+            3
+          ],
+          "grid": [
+            3072,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tile4",
+      "stages": [
+        {
+          "entry": "q8_tile4",
+          "bindings": [
+            0,
+            0,
+            2,
+            6,
+            3
+          ],
+          "grid": [
+            1536,
+            1,
+            1
+          ],
+          "threadgroup": [
+            32,
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "repetitions": 21
+}

@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "utc": "2026-11-03T16:16:45.649339+00:00",
+  "status": "failed",
+  "scope": "warm synthetic original-format single-token component; no model weights read",
+  "format": "Q8_0",
+  "rows": 33,
+  "width": 256,
+  "banks": 1,
+  "weight_bytes": 8976,
+  "model_decode_gain_qualified": false,
+  "uid_lock": {
+    "path": "/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+    "uid": 501,
+    "model_key": "f7ed7077cbc8482dac0d3711",
+    "fd": 3,
+    "device": 16777233,
+    "inode": 35170542,
+    "acquired_at_utc": "2026-11-03T16:16:45.649237+00:00",
+    "acquired_before_wrapper_spawn": true
+  },
+  "seed": 5303101,
+  "numpy_version": "2.5.4",
+  "model_weights_read": false,
+  "packed_sha256": "701f6b078f93e684c6f8a4c4d96f3027dadd662c30b26a62ea9cc32567b57547",
+  "activation_f32_sha256": "518e178c9fe2c73dedd52a6c7390d28ea5af15f987001acea86ef6329bddb904",
+  "cpu10_vs_cpu1": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 33,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "graph_vs_independent_nrc1_dot": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 16,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "cpu": {
+    "1": {
+      "seconds": [
+        2.583e-06,
+        2.875e-06,
+        2.458e-06
+      ],
+      "median_seconds": 2.583e-06,
+      "min_seconds": 2.458e-06,
+      "max_seconds": 2.875e-06
+    },
+    "10": {
+      "seconds": [
+        4.458e-06,
+        4.333e-06,
+        4.791e-06
+      ],
+      "median_seconds": 4.458e-06,
+      "min_seconds": 4.333e-06,
+      "max_seconds": 4.791e-06
+    }
+  },
+  "cpu_order": [
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      1,
+      10
+    ]
+  ],
+  "timer_returncode": 2,
+  "error": "RuntimeError: program_source:8:18: error: as_type cast from 'int' to 'half' is not allowed\n    return float(as_type<half>(ushort(p[0]) | (ushort(p[1]) << 8)));\n                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n",
+  "component_fidelity_passed": false,
+  "power_gate": {
+    "passed": false,
+    "finalized": false,
+    "expected_power_source": "ac",
+    "clock_samples": 2,
+    "power_samples": 2,
+    "first": {
+      "clock": {
+        "wall_time_seconds": 1793722605.630904,
+        "perf_counter_seconds": 57550.825405833,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-03T16:16:45.630904+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-03T16:16:45.631029+00:00",
+          "wall_time_seconds": 1793722605.63103,
+          "perf_counter_seconds": 57550.825532375,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 57550.843321958
+        }
+      },
+      "passed": true
+    },
+    "last": {
+      "clock": {
+        "wall_time_seconds": 1793722606.15076,
+        "perf_counter_seconds": 57551.345258791,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 3.018103598151356e-06,
+        "timestamp_utc": "2026-11-03T16:16:46.150760+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-03T16:16:46.150807+00:00",
+          "wall_time_seconds": 1793722606.15081,
+          "perf_counter_seconds": 57551.345308291,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 57551.370139916
+        }
+      },
+      "passed": true
+    },
+    "violation": null,
+    "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+  },
+  "power_monitor_errors": [],
+  "uid_fd_closed": true,
+  "finished_at_utc": "2026-11-03T16:16:46.539544+00:00"
+}

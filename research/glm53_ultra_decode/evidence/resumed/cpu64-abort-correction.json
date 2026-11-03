@@ -1,0 +1,17 @@
+{
+  "native_process_launched": true,
+  "generation_outputs": 0,
+  "performance_measured": false,
+  "evidence": [
+    "before_model_load",
+    "after_model_load",
+    "after_context_init",
+    "before_prefill_request_0"
+  ],
+  "reason": "Native helper wrote model-load/context/prefill-start markers before the outer memory-pressure guard terminated its owned process tree. The old report falsely said false because worker finalization was interrupted.",
+  "raw_report_preserved": true,
+  "worker_final_report_missing": true,
+  "guard_violation": "macos_memory_pressure",
+  "peak_pressure_level": 2,
+  "reporting_fix_commit": "6a954616e6489cfcdd52a3e15243c96ddae4a8e6"
+}

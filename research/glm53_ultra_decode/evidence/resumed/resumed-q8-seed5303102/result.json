@@ -1,0 +1,697 @@
+{
+  "schema": 1,
+  "utc": "2026-11-03T19:34:43.270095+00:00",
+  "status": "completed",
+  "scope": "warm synthetic original-format single-token component; no model weights read",
+  "format": "Q8_0",
+  "rows": 1536,
+  "width": 4096,
+  "banks": 1,
+  "weight_bytes": 6684672,
+  "model_decode_gain_qualified": false,
+  "uid_lock": {
+    "path": "/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+    "uid": 501,
+    "model_key": "f7ed7077cbc8482dac0d3711",
+    "fd": 3,
+    "device": 16777233,
+    "inode": 35170542,
+    "acquired_at_utc": "2026-11-03T19:34:43.270014+00:00",
+    "acquired_before_wrapper_spawn": true
+  },
+  "seed": 5303102,
+  "numpy_version": "2.5.4",
+  "model_weights_read": false,
+  "measured_sources_sha256": {
+    "components.py": "fc8c61c9ae5fe71c48fab6e150cbbc0d5071343d84013f5a56595baf396395d9",
+    "decode.metal": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+    "guard_components.py": "cea786ae3d8047e187eb60f5bd2cec7cf1e45a4f6b084ba0cad23e25fdd9fe84"
+  },
+  "build_manifest_sha256": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed",
+  "source_binary_binding_passed": true,
+  "packed_sha256": "a44b0142c81f3167ce9a3795720d965d346904504e08776c33b7ee5a216447c3",
+  "activation_f32_sha256": "ef5598fd38b2f70fef31cebd6211100f743b3182b9782d60e2a4a0e1e9235a20",
+  "cpu10_vs_cpu1": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 1536,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "graph_vs_independent_nrc1_dot": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 16,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "cpu": {
+    "1": {
+      "seconds": [
+        0.000240208,
+        0.000240417,
+        0.000240833,
+        0.000240958,
+        0.000246125,
+        0.00024,
+        0.000240709,
+        0.000240709,
+        0.000241125,
+        0.000241667,
+        0.000241417,
+        0.000242041,
+        0.000242959,
+        0.000242292,
+        0.000244041,
+        0.000241792,
+        0.000241375,
+        0.000243958,
+        0.000310666,
+        0.000294708,
+        0.000295125
+      ],
+      "median_seconds": 0.000241667,
+      "min_seconds": 0.00024,
+      "max_seconds": 0.000310666
+    },
+    "10": {
+      "seconds": [
+        3.2375e-05,
+        3.2583e-05,
+        5.2166e-05,
+        3.275e-05,
+        0.001916875,
+        0.000196833,
+        0.001716708,
+        3.2292e-05,
+        3.2291e-05,
+        3.2417e-05,
+        3.2209e-05,
+        3.2042e-05,
+        6.6791e-05,
+        0.00011425,
+        3.2e-05,
+        3.2209e-05,
+        4.1208e-05,
+        0.000184875,
+        4.4292e-05,
+        3.4709e-05,
+        3.5833e-05
+      ],
+      "median_seconds": 3.4709e-05,
+      "min_seconds": 3.2e-05,
+      "max_seconds": 0.001916875
+    }
+  },
+  "cpu_order": [
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      1
+    ]
+  ],
+  "timer_returncode": 0,
+  "metal": {
+    "device": "Apple M5",
+    "randomized_order": [
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile4",
+        "tile2"
+      ],
+      [
+        "tile4",
+        "tile1",
+        "tile2"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile4",
+        "tile1",
+        "tile2"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile4",
+        "tile2"
+      ],
+      [
+        "tile2",
+        "tile4",
+        "tile1"
+      ],
+      [
+        "tile4",
+        "tile1",
+        "tile2"
+      ],
+      [
+        "tile4",
+        "tile1",
+        "tile2"
+      ],
+      [
+        "tile2",
+        "tile1",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile4",
+        "tile2",
+        "tile1"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile2",
+        "tile1",
+        "tile4"
+      ],
+      [
+        "tile2",
+        "tile4",
+        "tile1"
+      ],
+      [
+        "tile1",
+        "tile2",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile4",
+        "tile2"
+      ],
+      [
+        "tile2",
+        "tile1",
+        "tile4"
+      ],
+      [
+        "tile1",
+        "tile4",
+        "tile2"
+      ]
+    ],
+    "payload_bytes": 6723852,
+    "scope": "resident original-format synthetic component; total wall includes native CPU quantization, submission and wait; setup/uploads excluded",
+    "math_mode": "safe",
+    "experiments": {
+      "tile1": {
+        "cpu_quantize_seconds": [
+          6.67e-07,
+          2e-06,
+          8.75e-07,
+          7.92e-07,
+          2.125e-06,
+          2e-06,
+          1.833e-06,
+          6.67e-07,
+          2.041e-06,
+          2.042e-06,
+          7.5e-07,
+          7.91e-07,
+          7.09e-07,
+          6.67e-07,
+          7.08e-07,
+          7.09e-07,
+          1.958e-06,
+          7.08e-07,
+          7.08e-07,
+          7.09e-07,
+          7.91e-07
+        ],
+        "total_wall_seconds": [
+          0.00082375,
+          0.000946125,
+          0.000720666,
+          0.00101525,
+          0.000840166,
+          0.00083375,
+          0.00093925,
+          0.000648541,
+          0.000517125,
+          0.002638416,
+          0.000489375,
+          0.000550208,
+          0.00063175,
+          0.000444416,
+          0.0005405,
+          0.00055725,
+          0.000398625,
+          0.000444166,
+          0.000400583,
+          0.000387875,
+          0.000402792
+        ],
+        "command_buffers_per_invocation": 1,
+        "median_gpu_seconds": 0.00017912499606609344,
+        "dispatches_per_invocation": 1,
+        "median_cpu_quantize_seconds": 7.91e-07,
+        "median_total_wall_seconds": 0.00055725,
+        "gpu_seconds": [
+          0.00024912500521168113,
+          0.00026012500165961683,
+          0.00024541666789446026,
+          0.00025762499717529863,
+          0.0002532083308324218,
+          0.00025295834348071367,
+          0.0002543333393987268,
+          0.0002572499943198636,
+          0.00024524999025743455,
+          0.002444874990032986,
+          0.00017825000395532697,
+          0.00017912499606609344,
+          0.00017266666691284627,
+          0.00017899999511428177,
+          0.00017470834427513182,
+          0.00017212500097230077,
+          0.0001712500088615343,
+          0.0001761250023264438,
+          0.00013945833779871464,
+          0.0001386666699545458,
+          0.00013854166900273412
+        ]
+      },
+      "tile2": {
+        "cpu_quantize_seconds": [
+          2e-06,
+          2.125e-06,
+          7.08e-07,
+          2.5e-06,
+          2.542e-06,
+          2e-06,
+          6.25e-07,
+          1.834e-06,
+          6.67e-07,
+          2.083e-06,
+          6.25e-07,
+          2.083e-06,
+          2.5e-06,
+          6.66e-07,
+          7.5e-07,
+          2.042e-06,
+          7.08e-07,
+          7.08e-07,
+          7.08e-07,
+          7.08e-07,
+          7.09e-07
+        ],
+        "total_wall_seconds": [
+          0.001057583,
+          0.001000166,
+          0.000454458,
+          0.00095925,
+          0.000943958,
+          0.000965208,
+          0.000671292,
+          0.000587208,
+          0.000875292,
+          0.000677459,
+          0.001280333,
+          0.00038375,
+          0.00038325,
+          0.000406917,
+          0.000545167,
+          0.000447041,
+          0.000475458,
+          0.000497125,
+          0.000423042,
+          0.000425084,
+          0.000392959
+        ],
+        "command_buffers_per_invocation": 1,
+        "median_gpu_seconds": 0.00026987500314135104,
+        "dispatches_per_invocation": 1,
+        "median_cpu_quantize_seconds": 7.5e-07,
+        "median_total_wall_seconds": 0.000545167,
+        "gpu_seconds": [
+          0.00027029166813008487,
+          0.00028049999673385173,
+          0.00026987500314135104,
+          0.0002777083282126114,
+          0.00028574999305419624,
+          0.0002795833279378712,
+          0.00028520832711365074,
+          0.00028425001073628664,
+          0.00027299999783281237,
+          0.0005190833326196298,
+          0.000942708327784203,
+          0.00018650000856723636,
+          0.00018462500884197652,
+          0.00018724999972619116,
+          0.00019295833772048354,
+          0.00019600000814534724,
+          0.00019275001250207424,
+          0.00018345833814237267,
+          0.00015812501078471541,
+          0.0001588750019436702,
+          0.000152749998960644
+        ]
+      },
+      "tile4": {
+        "cpu_quantize_seconds": [
+          2.042e-06,
+          2e-06,
+          1.917e-06,
+          2.083e-06,
+          2.667e-06,
+          2e-06,
+          2e-06,
+          6.66e-07,
+          1.958e-06,
+          6.67e-07,
+          7.92e-07,
+          7.5e-07,
+          7.5e-07,
+          7.09e-07,
+          7.92e-07,
+          7.08e-07,
+          7.08e-07,
+          7.09e-07,
+          7.08e-07,
+          7.08e-07,
+          7.5e-07
+        ],
+        "total_wall_seconds": [
+          0.000933209,
+          0.000965666,
+          0.000885542,
+          0.000942625,
+          0.001036292,
+          0.000953708,
+          0.000881083,
+          0.000705125,
+          0.000703334,
+          0.00184475,
+          0.0003915,
+          0.000552709,
+          0.000483459,
+          0.000466333,
+          0.000533834,
+          0.000531625,
+          0.00063375,
+          0.000501084,
+          0.000456709,
+          0.000439625,
+          0.000426542
+        ],
+        "command_buffers_per_invocation": 1,
+        "median_gpu_seconds": 0.00027025000599678606,
+        "dispatches_per_invocation": 1,
+        "median_cpu_quantize_seconds": 7.5e-07,
+        "median_total_wall_seconds": 0.00063375,
+        "gpu_seconds": [
+          0.00037658332439605147,
+          0.000367375003406778,
+          0.00037362499278970063,
+          0.00037387499469332397,
+          0.00037400001019705087,
+          0.0003772083291551098,
+          0.00036033333162777126,
+          0.0003694166662171483,
+          0.00035650000791065395,
+          0.0016139999934239313,
+          0.00025654166529420763,
+          0.0002622083411552012,
+          0.00024587500956840813,
+          0.00024379167007282376,
+          0.0002447500010021031,
+          0.00024212499556597322,
+          0.00027025000599678606,
+          0.00020399999630171806,
+          0.0001952083403011784,
+          0.00019320833962410688,
+          0.0001878749899333343
+        ]
+      }
+    },
+    "warmups": 3
+  },
+  "metal_vs_native": {
+    "tile1": {
+      "finite": true,
+      "bit_identical": true,
+      "bit_mismatches": 0,
+      "elements": 1536,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "metal_tolerance": {
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "reference": "native CPU",
+        "passed": true,
+        "elements_outside_tolerance": 0,
+        "scope": "component outputs only; no routes, model logits or recurrent states"
+      }
+    },
+    "tile2": {
+      "finite": true,
+      "bit_identical": true,
+      "bit_mismatches": 0,
+      "elements": 1536,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "metal_tolerance": {
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "reference": "native CPU",
+        "passed": true,
+        "elements_outside_tolerance": 0,
+        "scope": "component outputs only; no routes, model logits or recurrent states"
+      }
+    },
+    "tile4": {
+      "finite": true,
+      "bit_identical": true,
+      "bit_mismatches": 0,
+      "elements": 1536,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "metal_tolerance": {
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "reference": "native CPU",
+        "passed": true,
+        "elements_outside_tolerance": 0,
+        "scope": "component outputs only; no routes, model logits or recurrent states"
+      }
+    }
+  },
+  "activation_quantization_bit_identical": true,
+  "binaries_sha256": {
+    "component.dylib": "042a3b154312e05de8c151c2136d15259518dfffdc9baaad5a675d3c3fde5b1e",
+    "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27"
+  },
+  "shader_sha256": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "runtime_unchanged": true,
+  "measured_sources_unchanged": true,
+  "component_fidelity_passed": true,
+  "limits": [
+    "weights/activation synthetic; no GLM routes/logits/recurrent-state comparison",
+    "all weights resident and warm; no SSD or model token-rate conclusion",
+    "CPU timings use persistent native GGML graph, include native activation quantization; output copy excluded",
+    "Metal total wall includes CPU quantization, command creation, dispatch, synchronization; setup and weight import excluded",
+    "CPU and GPU phases sequential; kernel orders randomized, not a whole-model ABBA campaign"
+  ],
+  "power_gate": {
+    "passed": true,
+    "finalized": true,
+    "expected_power_source": "ac",
+    "clock_samples": 2,
+    "power_samples": 2,
+    "first": {
+      "clock": {
+        "wall_time_seconds": 1793734483.2511501,
+        "perf_counter_seconds": 69428.36701675,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-03T19:34:43.251150+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-03T19:34:43.251283+00:00",
+          "wall_time_seconds": 1793734483.251284,
+          "perf_counter_seconds": 69428.367150625,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 69428.383433833
+        }
+      },
+      "passed": true
+    },
+    "last": {
+      "clock": {
+        "wall_time_seconds": 1793734483.427915,
+        "perf_counter_seconds": 69428.543780166,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 1.5490513760596514e-06,
+        "timestamp_utc": "2026-11-03T19:34:43.427915+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-03T19:34:43.427941+00:00",
+          "wall_time_seconds": 1793734483.427943,
+          "perf_counter_seconds": 69428.54380825,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 69428.560653916
+        }
+      },
+      "passed": true
+    },
+    "violation": null,
+    "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+  },
+  "power_monitor_errors": [],
+  "uid_fd_closed": true,
+  "finished_at_utc": "2026-11-03T19:34:43.444893+00:00"
+}

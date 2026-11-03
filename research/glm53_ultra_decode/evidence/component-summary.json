@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "accepted": [
+    {
+      "name": "q2-seed1",
+      "format": "Q2_K",
+      "rows": 2048,
+      "width": 4096,
+      "banks": 2,
+      "seed": 5303101,
+      "cpu10_median_seconds": 8.9792e-05,
+      "best_metal_variant": "tile4",
+      "metal_total_median_seconds": 0.000459625,
+      "metal_gpu_median_seconds": 0.00023762499768054113,
+      "total_compared_final_output_elements": 20480,
+      "all_bit_identical": true,
+      "observed_global_swap_growth_bytes": 0,
+      "sampled_peak_owned_tree_rss_bytes": 66748416,
+      "native_binary_sha256": {
+        "component.dylib": "b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3",
+        "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27"
+      },
+      "shader_sha256": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+      "scope": "resident synthetic components; no model/logit/route/recurrent-state or NAND qualification"
+    },
+    {
+      "name": "q2-seed2",
+      "format": "Q2_K",
+      "rows": 2048,
+      "width": 4096,
+      "banks": 2,
+      "seed": 5303102,
+      "cpu10_median_seconds": 9.1417e-05,
+      "best_metal_variant": "tile4",
+      "metal_total_median_seconds": 0.000325625,
+      "metal_gpu_median_seconds": 0.0001377916705678217,
+      "total_compared_final_output_elements": 20480,
+      "all_bit_identical": true,
+      "observed_global_swap_growth_bytes": 0,
+      "sampled_peak_owned_tree_rss_bytes": 63258624,
+      "native_binary_sha256": {
+        "component.dylib": "b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3",
+        "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27"
+      },
+      "shader_sha256": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+      "scope": "resident synthetic components; no model/logit/route/recurrent-state or NAND qualification"
+    },
+    {
+      "name": "q8-seed1",
+      "format": "Q8_0",
+      "rows": 1536,
+      "width": 4096,
+      "banks": 1,
+      "seed": 5303101,
+      "cpu10_median_seconds": 3.2833e-05,
+      "best_metal_variant": "tile1",
+      "metal_total_median_seconds": 0.000533584,
+      "metal_gpu_median_seconds": 8.545833406969905e-05,
+      "total_compared_final_output_elements": 4608,
+      "all_bit_identical": true,
+      "observed_global_swap_growth_bytes": 0,
+      "sampled_peak_owned_tree_rss_bytes": 68943872,
+      "native_binary_sha256": {
+        "component.dylib": "b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3",
+        "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27"
+      },
+      "shader_sha256": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+      "scope": "resident synthetic components; no model/logit/route/recurrent-state or NAND qualification"
+    },
+    {
+      "name": "q8-seed2",
+      "format": "Q8_0",
+      "rows": 1536,
+      "width": 4096,
+      "banks": 1,
+      "seed": 5303102,
+      "cpu10_median_seconds": 3.2291e-05,
+      "best_metal_variant": "tile2",
+      "metal_total_median_seconds": 0.000610417,
+      "metal_gpu_median_seconds": 0.0002674166680662893,
+      "total_compared_final_output_elements": 4608,
+      "all_bit_identical": true,
+      "observed_global_swap_growth_bytes": 0,
+      "sampled_peak_owned_tree_rss_bytes": 229376,
+      "native_binary_sha256": {
+        "component.dylib": "b83907a7ca20c4ad46d9b8654c2d7490b2a0f4f5f066514fe1501ad9e0330ae3",
+        "decode-timer": "e0b502a8b8e2795561ce1538d0ca505b1cba697a04b31c962e928b5085580c27"
+      },
+      "shader_sha256": "9832ee439dc7d5a1cac61df26da407de8626086d206dad79ab108efce3037152",
+      "scope": "resident synthetic components; no model/logit/route/recurrent-state or NAND qualification"
+    }
+  ],
+  "final_output_elements_compared": 50176,
+  "production_changed": false,
+  "model_decode_gain_qualified": false,
+  "scope": "two seeds per shape,21 repetitions per variant and3warmups; four accepted warm component arms",
+  "provenance_scope": "binary/shader/runtime hashes measured in each result; C++/Metal sources bound by build-final; stricter post-measurement Python provenance checks not retroactively claimed"
+}

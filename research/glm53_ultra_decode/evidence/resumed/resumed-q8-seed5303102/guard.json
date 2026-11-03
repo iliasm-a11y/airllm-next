@@ -1,0 +1,58 @@
+{
+  "command": [
+    "$TESTENV/bin/python",
+    "-m",
+    "research.glm53_ultra_decode.components",
+    "--runtime",
+    "$RUNTIME",
+    "--build",
+    "$WORK/decode-build4",
+    "--output",
+    "$WORK/resumed-q8-seed5303102",
+    "--format",
+    "8",
+    "--rows",
+    "1536",
+    "--width",
+    "4096",
+    "--banks",
+    "1",
+    "--seed",
+    "5303102",
+    "--repetitions",
+    "21"
+  ],
+  "limits": {
+    "rss_bytes": 9126805504,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 33554432,
+    "admitted_payload_bytes": 268435456,
+    "timeout_seconds": 180,
+    "interval_seconds": 0.25,
+    "max_processes": 8
+  },
+  "before": {
+    "available_bytes": 6074351616,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2711814144,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 3,
+  "sampled_peak_rss_bytes": 67616768,
+  "minimum_available_bytes": 6074351616,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "sampled_peak_processes": 1,
+  "observed_descendant_count": 0,
+  "after": {
+    "available_bytes": 6074351616,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 2711814144,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 0.5335310829977971
+}
