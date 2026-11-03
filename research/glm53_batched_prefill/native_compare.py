@@ -40,34 +40,136 @@ def _record(value):
 
 
 def _guard(receipt):
+    """Require a conservative sufficient domain of the existing native policy.
+
+    Warning pressure alone is allowed only with full warning headroom and
+    bounded warning swap. Reserve shortfalls are refused without relying on
+    grace timestamps. The existing watchdog is replayed as a consistency
+    check; no native threshold or numeric-fidelity criterion is changed.
+    """
+    from air_llm.airllm.nextgen.glm_native import NativeGlmModel, NativeLimits
+
+    def number(value, name, *, minimum=0, maximum=2**53):
+        if (type(value) not in (int, float) or not minimum <= value <= maximum or
+                not math.isfinite(value)):
+            raise ValueError("missing or nonfinite numeric guard metadata: " + name)
+        return value
+
+    def byte_count(value, name, *, minimum=0, maximum=2**64 - 1):
+        if type(value) is not int or not minimum <= value <= maximum:
+            raise ValueError("missing or invalid integer guard metadata: " + name)
+        return value
+
     row = _record(receipt)
     if not isinstance(row, dict):
         raise ValueError("an explicit guard receipt is required")
-    if row.get("status") != "completed" or row.get("returncode") != 0 or row.get("guard_violation") is not None:
+    if (row.get("status") != "completed" or type(row.get("returncode")) is not int or
+            row["returncode"] != 0 or "guard_violation" not in row or row["guard_violation"] is not None):
         raise ValueError("native run did not exit successfully under clear guards")
     if row.get("power_context_passed") is not True or row.get("integrity_passed") is not True:
         raise ValueError("AC/lid/continuity and integrity receipts are required")
-    limits = row.get("limits", {})
-    rss, swap = limits.get("rss_bytes"), limits.get("swap_growth_bytes")
-    interval = row.get("sampling_interval_seconds")
-    if not isinstance(rss, (int, float)) or not 0 < rss <= 8.5 * GiB:
-        raise ValueError("RSS limit absent or relaxed")
-    if not isinstance(swap, (int, float)) or not 0 <= swap <= 32 * MiB:
-        raise ValueError("swap growth limit absent or relaxed")
-    if not isinstance(interval, (int, float)) or not 0 < interval <= .5:
-        raise ValueError("sampling interval absent or relaxed")
+    limits = row.get("limits")
+    if not isinstance(limits, dict):
+        raise ValueError("complete native resource limits are required")
+    native = limits.get("native")
+    defaults = vars(NativeLimits())
+    if not isinstance(native, dict) or set(native) != set(defaults):
+        raise ValueError("complete native watchdog limits are required")
+    for name, default in defaults.items():
+        value = native[name]
+        if type(default) is int:
+            byte_count(value, name, minimum=1)
+        else:
+            number(value, name, minimum=0)
+            if value <= 0:
+                raise ValueError("positive native watchdog limit required: " + name)
+        if name in ("reserve_bytes", "base_workspace_bytes", "warning_headroom_bytes"):
+            if value < default:
+                raise ValueError("native resource reserve was relaxed: " + name)
+        elif name not in ("max_rss_bytes", "max_swap_growth_bytes", "request_timeout_seconds") and value > default:
+            raise ValueError("native watchdog limit was relaxed: " + name)
+    if not 0 < native["request_timeout_seconds"] <= 2700:
+        raise ValueError("native request timeout exceeds the authorized ceiling")
+    rss = byte_count(limits.get("rss_bytes"), "limits.rss_bytes", minimum=1, maximum=int(8.5 * GiB))
+    swap = byte_count(limits.get("swap_growth_bytes"), "limits.swap_growth_bytes", minimum=1, maximum=32 * MiB)
+    if native["max_rss_bytes"] != rss or native["max_swap_growth_bytes"] != swap:
+        raise ValueError("native and reported hard resource limits differ")
+    selected_limits = NativeLimits(**native)
+    interval = number(row.get("sampling_interval_seconds"), "sampling_interval_seconds", maximum=.5)
+    if interval <= 0:
+        raise ValueError("positive sampling interval required")
+
+    policy_path = Path(NativeGlmModel._guard_resource_sample.__code__.co_filename).resolve()
+    policy_sha256 = hashlib.sha256(policy_path.read_bytes()).hexdigest()
+    preflight = row.get("preflight")
+    metadata = preflight.get("metadata") if isinstance(preflight, dict) else None
+    recorded_hashes = metadata.get("sha256") if isinstance(metadata, dict) else None
+    if not isinstance(recorded_hashes, dict):
+        raise ValueError("original native watchdog source identity is required")
+    policies = [value for name, value in recorded_hashes.items()
+                if isinstance(name, str) and name.replace("\\", "/").endswith("/airllm/nextgen/glm_native.py")]
+    if len(policies) != 1 or policies[0] != policy_sha256:
+        raise ValueError("native watchdog source identity missing or changed")
+
+    baseline = row.get("baseline")
+    if not isinstance(baseline, dict):
+        raise ValueError("native baseline metadata is required")
+    baseline_time = number(baseline.get("monotonic"), "baseline.monotonic")
+    byte_count(baseline.get("swap_used_bytes"), "baseline.swap_used_bytes")
+    byte_count(baseline.get("available_bytes"), "baseline.available_bytes")
+    if type(baseline.get("pressure_level")) is not int or baseline["pressure_level"] != 1:
+        raise ValueError("native startup requires normal pressure")
+    admission = row.get("admission")
+    if not isinstance(admission, dict) or admission.get("passed") is not True:
+        raise ValueError("successful native startup admission receipt required")
+    admitted_sample = admission.get("sample")
+    if not isinstance(admitted_sample, dict):
+        raise ValueError("native startup admission sample is required")
+    number(admitted_sample.get("monotonic"), "admission.sample.monotonic")
+    byte_count(admitted_sample.get("swap_used_bytes"), "admission.sample.swap_used_bytes")
+    byte_count(admitted_sample.get("available_bytes"), "admission.sample.available_bytes")
+    if (type(admitted_sample.get("pressure_level")) is not int or admitted_sample["pressure_level"] != 1 or
+            any(admitted_sample.get(key) != baseline[key] for key in
+                ("monotonic", "swap_used_bytes", "available_bytes", "pressure_level"))):
+        raise ValueError("native startup admission and baseline differ")
+    required = byte_count(admission.get("required_bytes_estimate"), "admission.required_bytes_estimate", minimum=1)
+    if required < selected_limits.reserve_bytes + selected_limits.base_workspace_bytes or baseline["available_bytes"] < required:
+        raise ValueError("native startup workspace and reserve admission failed")
+
     samples = row.get("samples")
     if not isinstance(samples, list) or not samples:
         raise ValueError("no guard observations")
-    for sample in samples:
-        sampled_rss, sampled_swap = sample.get("rss_bytes"), sample.get("swap_growth_bytes")
-        if (type(sampled_rss) not in (int, float) or not math.isfinite(sampled_rss) or
-                not 0 <= sampled_rss <= rss or
-                type(sampled_swap) not in (int, float) or not math.isfinite(sampled_swap) or
-                not 0 <= sampled_swap <= swap or sample.get("pressure_level") != 1):
-            raise ValueError("an observed resource guard failed")
+    guard = object.__new__(NativeGlmModel)
+    guard.limits = selected_limits
+    guard._warning_started = guard._headroom_low_started = None
+    guard._pressure_context = None
+    previous_time = None
+    for index, sample in enumerate(samples):
+        if not isinstance(sample, dict):
+            raise ValueError("structured native resource sample required")
+        now = number(sample.get("monotonic"), "sample.monotonic")
+        if now < baseline_time or previous_time is not None and now <= previous_time:
+            raise ValueError("native resource sample clocks are reversed or repeated")
+        previous_time = now
+        byte_count(sample.get("rss_bytes"), "sample.rss_bytes")
+        byte_count(sample.get("available_bytes"), "sample.available_bytes")
+        used = byte_count(sample.get("swap_used_bytes"), "sample.swap_used_bytes")
+        growth = byte_count(sample.get("swap_growth_bytes"), "sample.swap_growth_bytes")
+        if growth != max(0, used - baseline["swap_used_bytes"]):
+            raise ValueError("reported swap growth differs from baseline counters")
+        pressure = sample.get("pressure_level")
+        if type(pressure) is not int or pressure not in (1, 2):
+            raise ValueError("only observed normal/contextual-warning pressure is admitted")
+        if sample["available_bytes"] < selected_limits.reserve_bytes:
+            raise ValueError("reserve shortfall refused without inferring native grace timing")
+        if pressure == 2 and (
+                sample["available_bytes"] < selected_limits.reserve_bytes + selected_limits.warning_headroom_bytes or
+                growth > selected_limits.warning_swap_growth_bytes):
+            raise ValueError("warning-pressure sufficient headroom/swap bounds failed")
+        code = NativeGlmModel._guard_resource_sample(guard, sample, baseline, now)
+        if code is not None:
+            raise ValueError(f"existing native resource policy rejected sample{index}: {code}")
     return row
-
 
 def _payload(root, name, size, expected_hash):
     path = safe_file(root, name)
@@ -82,12 +184,12 @@ def _payload(root, name, size, expected_hash):
     return path
 
 
-def _read_writes(root):
-    path = safe_file(root, "state_hashes.jsonl")
+def _read_writes(root, filename="state_hashes.jsonl", *, allow_empty=False):
+    path = safe_file(root, filename)
     if path.stat().st_size > 64 * MiB:
         raise ValueError("observed state-write metadata exceeds64MiB bound")
     rows = json_lines(path)
-    if not rows or len(rows) > 262144:
+    if (not rows and not allow_empty) or len(rows) > 262144:
         raise ValueError("observed state-write records empty or exceed bound")
     for row in rows:
         if (not isinstance(row, dict) or row.get("status") != "hashed" or
@@ -114,6 +216,142 @@ def _read_writes(root):
             raise ValueError("unexpected observed state-write target")
         row["canonical_target"] = canonical.group(1)
     return rows
+
+
+def _read_continuation(root, report):
+    expected = set()
+    expected_logits = set()
+    for request, row in enumerate(report["requests"]):
+        samples = row.get("continuation")
+        if (row.get("continuation_complete") is not True or not isinstance(samples, list) or
+                not 1 <= len(samples) <= 4):
+            raise ValueError("four greedy diagnostic samples or a natural EOS are required")
+        for step, sample in enumerate(samples):
+            if (not isinstance(sample, dict) or type(sample.get("step")) is not int or sample["step"] != step or
+                    type(sample.get("token")) is not int or not 0 <= sample["token"] < report["vocab_size"] or
+                    type(sample.get("native_eog")) is not bool or
+                    (sample["native_eog"] and step != len(samples) - 1)):
+                raise ValueError("invalid greedy continuation token sequence")
+            path = _payload(root, f"continuation-logits-{request}-{step}.f32",
+                            report["vocab_size"] * 4, sample.get("logits_sha256"))
+            expected_logits.add(path.name)
+            logits = np.memmap(path, dtype="<f4", mode="r")
+            if not np.all(np.isfinite(logits)):
+                raise ValueError("nonfinite greedy continuation full logits")
+            if int(np.argmax(logits)) != sample["token"]:
+                raise ValueError("greedy continuation token differs from full-logit argmax")
+            if step == 0 and sample["logits_sha256"] != row["logits_sha256"]:
+                raise ValueError("continuation step0 differs from the final prefill logits")
+            if step:
+                expected.add((request, step))
+        eos = samples[-1]["native_eog"]
+        if ((eos and row.get("continuation_stop") != "eos") or
+                (not eos and (len(samples) != 4 or row.get("continuation_stop") != "diagnostic_budget"))):
+            raise ValueError("greedy diagnostic stop is incomplete or misclassified")
+        if row.get("continuation_next_position") != row["prompt_tokens"] + len(samples) - 1:
+            raise ValueError("continuation state position differs from actually fed diagnostic tokens")
+        if type(row.get("continuation_state_bytes")) is not int or not 0 < row["continuation_state_bytes"] <= 256 * MiB:
+            raise ValueError("post-continuation sequence size is missing or exceeds256MiB")
+        _payload(root, f"continuation-state-{request}.bin", row["continuation_state_bytes"],
+                 row.get("continuation_state_sha256"))
+    if {p.name for p in root.glob("continuation-logits-*.f32")} != expected_logits:
+        raise ValueError("continuation full-logit files are missing or extra")
+    tensors, occurrences, coverage = {}, {}, {}
+    for row in json_lines(safe_file(root, "continuation_tensors.jsonl")):
+        label = family(row["name"])
+        request, step = row.get("request"), row.get("offset")
+        if (type(request) is not int or type(step) is not int or (request, step) not in expected or row.get("phase") != "continuation" or
+                row.get("input_tokens") != 1 or row.get("batch_index") != step or
+                row.get("type") != (26 if label == "routes" else 0)):
+            raise ValueError("invalid continuation tensor descriptor or step")
+        key = request, step, row["name"]
+        occurrence = occurrences.get(key, 0)
+        occurrences[key] = occurrence + 1
+        tensors[(*key, occurrence)] = row
+        _payload(root, row["file"], row["bytes"], row.get("sha256"))
+        coverage.setdefault((request, step), set()).add(row["name"])
+        if label == "result_output":
+            values = tensor_view(root, row)
+            if values.shape != (report["vocab_size"], 1, 1, 1):
+                raise ValueError("continuation result_output is not a complete vocabulary")
+            logits = np.memmap(root / f"continuation-logits-{request}-{step}.f32", dtype="<f4", mode="r")
+            if not compare_arrays(values[:, 0, 0, 0], logits, CRITERIA["cpu"])["passed"]:
+                raise ValueError("captured continuation output differs from its complete sampled logits")
+    if set(coverage) != expected or any(not EXPECTED_NAMES | {"result_output"} <= names for names in coverage.values()):
+        raise ValueError("continuation route/router/KDA/output layer coverage is incomplete")
+    writes = _read_writes(root, "continuation_states.jsonl", allow_empty=True)
+    for row in writes:
+        if ((row["request"], row["offset"]) not in expected or row.get("phase") != "continuation" or
+                row.get("input_tokens") != 1 or row.get("batch_index") != row["offset"]):
+            raise ValueError("invalid continuation observed-write step")
+    _compare_writes(writes, writes, sorted(expected), False)
+    return {"tensors": tensors, "writes": writes}
+
+
+def _compare_continuation(a_root, b_root, a_report, b_report, a_capture, b_capture, pairs=((0, 0), (1, 1), (2, 2))):
+    result = {"passed": True, "requests": [], "scope":
+              "at most4 native greedy diagnostic samples and their finite logits, captured tensors, observed writes and post-state; no useful EOS or functional agent qualification"}
+    for a_request, b_request in pairs:
+        ar, br = a_report["requests"][a_request], b_report["requests"][b_request]
+        a_samples, b_samples = ar["continuation"], br["continuation"]
+        tokens_equal = ([(r["token"], r["native_eog"]) for r in a_samples] ==
+                        [(r["token"], r["native_eog"]) for r in b_samples] and
+                        ar["continuation_stop"] == br["continuation_stop"])
+        row = {"reference_request": a_request, "candidate_request": b_request,
+               "tokens_equal": tokens_equal, "full_logits": [], "tensors_identical": True,
+               "post_state_identical": ar["continuation_state_bytes"] == br["continuation_state_bytes"] and
+                                       ar["continuation_state_sha256"] == br["continuation_state_sha256"]}
+        if len(a_samples) == len(b_samples):
+            for step in range(len(a_samples)):
+                row["full_logits"].append(compare_arrays(
+                    np.memmap(a_root / f"continuation-logits-{a_request}-{step}.f32", dtype="<f4", mode="r"),
+                    np.memmap(b_root / f"continuation-logits-{b_request}-{step}.f32", dtype="<f4", mode="r"), CRITERIA["cpu"]))
+        selected = lambda data, request: {key[1:]: value for key, value in data["tensors"].items() if key[0] == request}
+        at, bt = selected(a_capture, a_request), selected(b_capture, b_request)
+        row["tensors_identical"] = set(at) == set(bt)
+        if row["tensors_identical"]:
+            for key, av in at.items():
+                if not compare_arrays(tensor_view(a_root, av), tensor_view(b_root, bt[key]), CRITERIA["cpu"],
+                                      integer=family(av["name"]) == "routes")["passed"]:
+                    row["tensors_identical"] = False
+                    break
+        selected_writes = lambda data, request: [{**r, "request": 0} for r in data["writes"] if r["request"] == request]
+        try:
+            row["observed_writes"] = _compare_writes(selected_writes(a_capture, a_request), selected_writes(b_capture, b_request),
+                                                     [(0, n) for n in range(1, len(a_samples))], False)
+        except ValueError as error:
+            row["observed_writes"] = {"passed": False, "error": str(error)}
+        row["passed"] = bool(tokens_equal and len(row["full_logits"]) == len(a_samples) and
+            all(r["passed"] for r in row["full_logits"]) and row["post_state_identical"] and
+            row["tensors_identical"] and row["observed_writes"]["passed"])
+        result["passed"] &= row["passed"]
+        result["requests"].append(row)
+    return result
+
+
+def _direct_restore(reference_root, reference, candidate):
+    if 208 % reference["microbatch"]:
+        raise ValueError("direct full/restore comparison requires an aligned208 boundary")
+    path = safe_file(reference_root, "state_checkpoints.jsonl")
+    if path.stat().st_size > MiB:
+        raise ValueError("direct-restore checkpoint metadata exceeds1MiB")
+    rows = [r for r in json_lines(path) if r.get("token_end") == 208]
+    if len(rows) != 3 or {r.get("request") for r in rows} != {0, 1, 2}:
+        raise ValueError("three reference208 checkpoints are required for direct restore")
+    for row in rows:
+        if (row.get("status") != "hashed" or row.get("state_seq_flags") != 0 or row.get("next_position") != 208 or
+                type(row.get("bytes")) is not int or not 0 < row["bytes"] <= 256 * MiB or
+                not isinstance(row.get("sha256"), str) or re.fullmatch("[0-9a-f]{64}", row["sha256"]) is None):
+            raise ValueError("invalid full reference208 checkpoint")
+    first = next(row for row in rows if row["request"] == 0)
+    if any(row["bytes"] != first["bytes"] or row["sha256"] != first["sha256"] for row in rows):
+        raise ValueError("reference208 states differ between the three complete prompts")
+    snapshot = candidate.get("snapshot", {})
+    if snapshot.get("bytes") != first["bytes"] or snapshot.get("sha256") != first["sha256"]:
+        raise ValueError("immutable snapshot differs from the common full reference208 state")
+    return {"passed": True, "boundary": 208, "reference_checkpoints": 3,
+            "snapshot_bytes": first["bytes"], "snapshot_sha256": first["sha256"],
+            "scope": "same physical microbatch boundaries plus exact complete-state serialization at208; alignment alone does not qualify restore"}
 
 
 def _compare_writes(a, b, expected_batches, suffix_only):
@@ -182,8 +420,9 @@ def _read(root, guard):
         raise ValueError("one model and one physical slot required")
     if report.get("gpu_layers") != 0 or report.get("threads") != 10:
         raise ValueError("this comparator requires the CPU10/GPU0 snapshot path")
-    if report.get("generation_performed") is not False:
-        raise ValueError("this comparator covers prefill continuation only")
+    if (report.get("generation_performed") is not True or report.get("functional_agents_qualified") is not False or
+            report.get("continuation_policy") != "fresh native greedy sampler; max4; diagnostic only"):
+        raise ValueError("explicit fresh greedy diagnostic continuation is required, without functional qualification")
     requests = report.get("requests", [])
     if len(requests) != 3 or [r.get("agent_id") for r in requests] != [1, 600, 1]:
         raise ValueError("complete agent 1,600,1 prefill sequence required")
@@ -234,7 +473,7 @@ def _read(root, guard):
             start += tokens
         if start != row["prompt_tokens"]:
             raise ValueError("microbatch receipts do not cover the complete prompt")
-    return report, tensors, batches, receipt, _read_writes(root)
+    return report, tensors, batches, receipt, _read_writes(root), _read_continuation(root, report)
 
 
 def compare(reference_root, candidate_root, reference_guard, candidate_guard):
@@ -244,8 +483,13 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
               "criteria": CRITERIA["cpu"], "errors": [], "logits": [],
               "sequence_states": [], "coverage": {k: 0 for k in FAMILIES}}
     try:
-        a, at, ab, _, aw = _read(reference_root, reference_guard)
-        b, bt, bb, _, bw = _read(candidate_root, candidate_guard)
+        a, at, ab, _, aw, a_cont = _read(reference_root, reference_guard)
+        b, bt, bb, _, bw, b_cont = _read(candidate_root, candidate_guard)
+        result["continuation"] = _compare_continuation(reference_root, candidate_root, a, b, a_cont, b_cont)
+        result["continuation_replays"] = {
+            "reference": _compare_continuation(reference_root, reference_root, a, a, a_cont, a_cont, ((0, 2),)),
+            "candidate": _compare_continuation(candidate_root, candidate_root, b, b, b_cont, b_cont, ((0, 2),)),
+        }
         result["same_agent_replays"] = {
             "reference": _check_replay(reference_root, a, at, ab, aw),
             "candidate": _check_replay(candidate_root, b, bt, bb, bw),
@@ -253,8 +497,11 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
         for name in ("microbatch", "logical_batch", "threads", "gpu_layers", "physical_slots", "vocab_size", "snapshot_key_sha256"):
             if name not in a or name not in b or a[name] != b[name]:
                 raise ValueError("incompatible dependency/profile: " + name)
-        if (a["mode"], b["mode"]) not in (("full", "split"), ("split", "restore"), ("full", "full")):
-            raise ValueError("compare full/split before split/restore")
+        pair = a["mode"], b["mode"]
+        if pair not in (("full", "split"), ("split", "restore"), ("full", "full"), ("full", "restore")):
+            raise ValueError("unsupported complete prefill/restore comparison")
+        if pair == ("full", "restore"):
+            result["direct_restore_boundary"] = _direct_restore(reference_root, a, b)
         suffix_only = b["mode"] == "restore"
         def selected_batches(rows):
             return [(r["request"], r["offset"], r["tokens"]) for r in rows
@@ -296,7 +543,8 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
             raise ValueError("routes/router/KDA coverage missing at a compared microbatch")
         if any(not EXPECTED_NAMES <= names for names in per_batch_names.values()):
             raise ValueError("one or more original GLM layer captures are missing")
-        result["passed"] = bool(all(r["passed"] for r in result["same_agent_replays"].values()) and
+        result["passed"] = bool(result["continuation"]["passed"] and all(r["passed"] for r in result["continuation_replays"].values()) and
+                                all(r["passed"] for r in result["same_agent_replays"].values()) and
                                 result["observed_state_writes"]["passed"] and all(checks) and all(r["passed"] for r in result["logits"]) and
                                 all(r["passed"] for r in result["sequence_states"]))
         result["compared_tensor_captures"] = len(checks)

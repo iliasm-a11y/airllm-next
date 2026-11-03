@@ -23,7 +23,9 @@ RONIN en production et aucune fusion dans `main` n'est demandée.
   de vitesse. [Audit des états](snapshot_audit.md).
 - `native_compare.py` exige des captures et des reçus valides avant de
   comparer tous les logits finis, routes ordonnées, routeurs, sorties KDA
-  et séquences finales sérialisées. Il ne transforme pas un essai incomplet
+  et séquences finales sérialisées. Quatre tokens natifs greedy, leurs logits,
+  captures et post-états testent aussi la continuité. Ils ne qualifient pas
+  une réponse utile jusqu’à EOS. Il ne transforme pas un essai incomplet
   en comparaison favorable.
 - `campaign.py` réutilise le cycle surveillé PR #22, expose séparément batch
   logique et microbatch, l'admission adaptative, les prompts complets et la
@@ -97,12 +99,16 @@ $PYTHON -m research.glm53_batched_prefill.native_run \
   --microbatch 8 --mode full --diagnostic --max-seconds 5400
 ```
 
-Répéter séparément avec `--mode split`, puis `--mode restore`, uniquement
-après admission et sans autre moteur physique. Comparer d'abord full/split,
-puis split/restore avec leurs reçus `guard.json`. Le diagnostic écrit les
+Pour 8/16, comparer directement `full` puis `restore` : le comparateur exige
+les trois états à 208 identiques et la correspondance SHA256/taille du snapshot,
+ainsi que les suffixes et continuations. L’alignement seul ne suffit pas.
+Pour les autres découpages, `full/split` précède `split/restore`. Les reçus
+`guard.json` doivent être complets et valides. Aucun second moteur physique
+ne doit être lancé en parallèle. Le diagnostic écrit les
 états et peut consommer de l'espace disque ; il ne fournit pas une mesure
-non instrumentée de performance. Ne comparer des microbatchs différents que
-par un protocole qui conserve les frontières et justifie les formes.
+non instrumentée de performance. Le comparateur `batch_compare.py` aligne les valeurs par position de token
+et exige les checkpoints 128/256/384/512/final communs, sans confondre des
+écritures de tailles différentes.
 
 Pour la qualification fonctionnelle indépendante du cache :
 
@@ -122,3 +128,22 @@ secteur, couvercle, horloges, identité PID et annulation sont conservés.
 Un passage en production exige les preuves matérielles indépendantes A/B/C,
 la revue des réponses utiles et des sorties jusqu'à EOS. Les fixtures et
 la CI ne qualifient ni ces décisions ni l'efficacité de 600 agents.
+
+## Premier essai fonctionnel clôturé
+
+Le [témoin CPU8 natif Max](evidence/agents-cpu8-timeout/summary.json) traite
+522 tokens réels en 1 238,016 s puis conserve 171 IDs avant `REQUEST_TIMEOUT`
+à 45 min, sans fermeture du raisonnement ni EOS. L’agent 600 n’est pas lancé.
+La décision reste `failed`, avec sortie partielle ; le retour natif−9 est
+observé pendant le nettoyage après délai. Le pic RSS échantillonné est
+5,616 Gio et la croissance de swap observée est nulle. Les alertes de pression 2
+restent dans le domaine accepté du watchdog existant avec réserve/marge/swap.
+Les sources mesurées et preuves brutes sélectionnées sont archivées séparément
+du pilote durci publié. Aucun gain n’est calculé entre ce prompt et les UUID
+différents du diagnostic natif.
+
+Le comparateur de reçus réutilise le watchdog existant. Il accepte uniquement
+une réserve permanente, et en pression 2 la réserve augmentée de la marge
+d’alerte ainsi qu’un swap sous le seuil d’alerte ; les grâces ne servent pas
+à contourner ces bornes conservatrices. RSS 8,5 Gio, swap 32 Mio et les critères
+numériques restent identiques.

@@ -205,7 +205,7 @@ def run(config_path, binary, helper_source, prompts, libraries, output, *, micro
         "limits":{"rss_bytes":limits.max_rss_bytes,"swap_growth_bytes":limits.max_swap_growth_bytes,"native":vars(limits)},
         "sampling_interval_seconds":poll_seconds,"max_seconds":max_seconds,"guard_violation":None,"samples":[],
         "peak_rss_bytes":0,"peak_swap_growth_bytes":0,"returncode":None,"power_context_passed":False,"integrity_passed":False,
-        "generation_performed":False,"functional_agents_qualified":False,"snapshot_qualified":False,"environment":knobs}
+        "diagnostic_continuation_requested":diagnostic,"generation_performed":False,"functional_agents_qualified":False,"snapshot_qualified":False,"environment":knobs}
     child=awake=identity=None
     gate=(gate_factory or PowerGate)("ac")
     handlers={}
@@ -292,6 +292,14 @@ def run(config_path, binary, helper_source, prompts, libraries, output, *, micro
                 report.update(status="failed",power_cleanup_error=str(error))
             metadata=report.get("preflight")
             report["integrity_passed"]=bool(metadata) and identities_pass(metadata["tracked_identities"])
+            capture_report=output/"capture/report.json"
+            if capture_report.is_file():
+                try:
+                    captured=json.loads(capture_report.read_text())
+                    report["generation_performed"]=any(bool(row.get("continuation")) for row in captured.get("requests",[]))
+                    report["observed_continuation_token_count"]=sum(len(row.get("continuation",[])) for row in captured.get("requests",[]))
+                except (OSError,ValueError,TypeError) as error:
+                    report["capture_report_error"]=str(error)
             report["elapsed_seconds"]=time.perf_counter()-started
             if report["status"]=="completed" and (not report["power_context_passed"] or not report["integrity_passed"] or not report["samples"]):
                 report.update(status="failed",error_code="FINAL_EVIDENCE_REJECTED")

@@ -87,6 +87,14 @@ coïncider. Pour les restaurations, les comparaisons concernent les suffixes
 et les trois états/logits finaux ; le préfixe commun n'est pas recompté comme
 trois calculs indépendants. Le comparateur exige notamment :
 
+Une comparaison directe complet/restauré évite un recalcul découpé redondant
+uniquement pour les microbatches8/16, où208 est déjà une frontière native.
+Elle exige en plus les trois checkpoints complets de référence à208,
+identiques entre les requêtes, puis l'égalité du snapshot immuable avec leur
+taille et SHA256. L'alignement sans cette preuve ne suffit pas. Le comparateur
+de tailles de batch conserve ses checkpoints128/256/384/512/final ;208 est
+comparé en supplément seulement lorsqu'il est présent dans les deux bras.
+
 - Trois préfills complets dans l'ordre1,600,1, un modèle et un slot.
 - Des reçus de gardes claires, limites RSS8,5Gio/swap32Mio, sorties natives0,
   intégrité et continuité secteur/couvercle explicitement établies.
@@ -108,6 +116,16 @@ restore, seules les captures du suffixe effectivement recalculé sont
 comparées. Ce rejeu du même input natif évite de qualifier deux bras qui
 reproduiraient le même défaut de reset. Il ne qualifie pas l'isolation des
 historiques ou mémoires privées d'une session RONIN complète.
+Une continuation diagnostique doit aussi échantillonner jusqu'à4 vrais tokens
+avec un sampler natif greedy neuf, ou s'arrêter sur un EOG natif antérieur.
+Chaque étape fournit ses logits complets finis ; le token doit correspondre
+à leur argmax et la première étape doit retrouver les logits de fin du
+préfill. Les décodes des étapes1..3 fournissent routes/routeurs/KDA,
+`result_output`, écritures observées et un état final brut. Les comparateurs
+exigent leur parité entre bras ainsi qu'entre les requêtes0 et2 de chaque
+bras. Un arrêt au budget4 reste `diagnostic_budget`, jamais une mission
+terminée. Même un EOG natif sur cette courte continuation ne qualifie pas
+une réponse finale utile ni l'objectif fonctionnel des deux agents.
 Des reçus incomplets, un trou de microbatch, NaN, payload tronqué, absence de
 source brute ou arrêt par garde produisent un refus. Cette qualification
 finie n'inclut pas les états/opérations non capturés, une génération jusqu'à
@@ -126,10 +144,9 @@ dce7b42ecdba028d7c7ee2b979eedcf2277a129b4f0d8738fcf42b929c3a00b9  ggml/src/ggml-
 f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91  include/llama.h
 ```
 
-Validation locale de cette contribution : **12 tests snapshot** passent,
-dont une fixture C++ qui remplace les API natives par des états factices ;
-**39 tests du comparateur** passent après ajout des écritures observées et
-du rejeu intra-bras. Ils couvrent notamment ordre, empreinte, statut,
-valeurs finies et un même défaut de reset reproduit par les deux bras.
-Ces51 tests ne comptent aucun chargement du vrai modèle ni aucune mesure
-de temps GLM.
+Les tests portables emploient des états factices, y compris la fixture C++
+qui remplace les API natives. Ils couvrent notamment ordre, empreinte,
+statut, valeurs finies, continuation incomplète et un même défaut de reset
+reproduit par les deux bras. Aucun chargement du vrai modèle ni temps GLM
+n'est compté dans cette validation portable ; le journal de tests conserve
+le nombre final après les extensions du comparateur.

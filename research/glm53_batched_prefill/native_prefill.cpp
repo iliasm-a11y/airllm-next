@@ -46,7 +46,7 @@ static json usage() {
         {"os_storage_read_bytes",u.ri_diskio_bytesread},{"pageins",u.ri_pageins}};
 }
 struct observer {
-    std::ofstream operations, captures, batches, states, checkpoints;
+    std::ofstream operations, captures, batches, states, checkpoints, continuation_captures, continuation_states;
     std::filesystem::path root;
     bool diagnostic=false;
     size_t serial=0;
@@ -59,7 +59,10 @@ static bool evaluate(ggml_tensor * node,bool ask,void * user) {
     auto & o=*static_cast<observer *>(user);
     const std::string name=ggml_get_name(node);
     const bool matrix=node->op==GGML_OP_MUL_MAT || node->op==GGML_OP_MUL_MAT_ID;
-    const bool selected=name.rfind("ffn_moe_topk-",0)==0 || name.rfind("ffn_moe_logits-",0)==0 || name.rfind("kda_scan_out-",0)==0;
+    const bool continuation=o.phase=="continuation";
+    const bool selected=name.rfind("ffn_moe_topk-",0)==0 || name.rfind("ffn_moe_logits-",0)==0 || name.rfind("kda_scan_out-",0)==0 || (continuation && name=="result_output");
+    auto & captures=continuation?o.continuation_captures:o.captures;
+    auto & states=continuation?o.continuation_states:o.states;
     const bool write=o.diagnostic && state_target(node);
     if(ask && matrix) {
         json row={{"request",o.request},{"offset",o.offset},{"phase",o.phase},{"name",name},{"op",ggml_op_name(node->op)},
@@ -74,7 +77,8 @@ static bool evaluate(ggml_tensor * node,bool ask,void * user) {
         if(rss>cap || 1024*1024>cap-rss)throw std::runtime_error("state hash scratch RSS admission refused");
         auto event=json::parse(state_event(node,o.offset));
         event["request"]=o.request;event["offset"]=o.offset;event["phase"]=o.phase;
-        o.states<<event.dump()<<'\n';o.states.flush();
+        event["input_tokens"]=o.input_tokens;event["batch_index"]=o.batch_index;
+        states<<event.dump()<<'\n';states.flush();
     }
     if(!selected || !o.diagnostic) return true;
     const size_t bytes=ggml_nbytes(node);
@@ -85,11 +89,11 @@ static bool evaluate(ggml_tensor * node,bool ask,void * user) {
     const auto file="tensor-"+std::to_string(o.serial++)+".bin";
     std::ofstream binary(o.root/file,std::ios::binary);binary.exceptions(std::ios::badbit|std::ios::failbit);
     binary.write(reinterpret_cast<const char *>(data.data()),bytes);
-    o.captures<<json({{"request",o.request},{"offset",o.offset},{"input_tokens",o.input_tokens},{"batch_index",o.batch_index},
+    captures<<json({{"request",o.request},{"offset",o.offset},{"input_tokens",o.input_tokens},{"batch_index",o.batch_index},
         {"phase",o.phase},{"name",name},{"type",int(node->type)},
         {"shape",{node->ne[0],node->ne[1],node->ne[2],node->ne[3]}},{"strides",{node->nb[0],node->nb[1],node->nb[2],node->nb[3]}},
         {"bytes",bytes},{"file",file},{"sha256",hash_bytes(data.data(),bytes)}}).dump()<<'\n';
-    o.captures.flush(); return true;
+    captures.flush(); return true;
 }
 static void save(const std::filesystem::path & p,const json & j) {
     std::ofstream f(p); f.exceptions(std::ios::badbit|std::ios::failbit); f<<j.dump(2)<<'\n';
@@ -137,12 +141,15 @@ int main(int argc,char ** argv) {
         std::filesystem::create_directories(root);
         observer o; o.root=root;o.diagnostic=std::getenv("RONIN_PREFILL_DIAGNOSTIC")!=nullptr;
         o.operations.open(root/"operations.jsonl");o.captures.open(root/"tensors.jsonl");o.batches.open(root/"batches.jsonl");o.states.open(root/"state_hashes.jsonl");o.checkpoints.open(root/"state_checkpoints.jsonl");
-        for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints})stream->exceptions(std::ios::badbit|std::ios::failbit);
+        o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
+        for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
-            {"generation_performed",false},{"requests",json::array()},{"state_parameters",parameter_description(ub)},
+            {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
+            {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
+            {"requests",json::array()},{"state_parameters",parameter_description(ub)},
             {"output_policy","logits only for the final token of each complete private prompt; no unused vocabulary products per microbatch"},
-            {"scope","prefill and snapshot diagnostic; no sampler, generation or functional EOS qualification"}};
+            {"scope","prefill/snapshot and bounded greedy continuity diagnostic; no functional agent EOS qualification"}};
         save(root/"report.json",report);
         ggml_backend_load_all();llama_backend_init(); auto mp=llama_model_default_params();
         mp.n_gpu_layers=0;mp.load_mode=LLAMA_LOAD_MODE_MMAP;mp.use_extra_bufts=false;
@@ -157,6 +164,12 @@ int main(int argc,char ** argv) {
         const std::string key=prompts.at("snapshot_key_sha256");
         report["snapshot_key_sha256"]=key;
         glm53_prefill::prefix_snapshot snapshot;
+        auto snapshot_metrics=[&]() {
+            const auto t=snapshot.metrics();
+            return json({{"bytes",t.bytes},{"reserved_bytes",t.reserved_bytes},{"size_seconds",t.size_seconds},
+                {"save_seconds",t.save_seconds},{"restore_seconds_total",t.restore_seconds},{"successful_restores",t.successful_restores},
+                {"sha256",snapshot.ready()?json(snapshot.checksum_sha256()):json(nullptr)}});
+        };
         // Caller supplied conservative native read/write scratch bound, audited
         // separately; zero or unavailable means restore mode cannot be admitted.
         const size_t scratch=prompts.value("native_snapshot_scratch_bound_bytes",size_t(0));
@@ -183,7 +196,7 @@ int main(int argc,char ** argv) {
                 o.batches<<json({{"request",request},{"phase",phase},{"offset",offset},{"tokens",take},
                     {"seconds",seconds(start)},{"returncode",rc},{"before",before},{"after",usage()}}).dump()<<'\n';o.batches.flush();
                 if(rc)throw std::runtime_error("native decode failed");offset+=take;
-                if(o.diagnostic && (offset%128==0 || offset==int(ids[request].size()))) {
+                if(o.diagnostic && (offset%128==0 || offset==208 || offset==int(ids[request].size()))) {
                     const auto checkpoint_start=steady::now();
                     const size_t n=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
                     const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
@@ -198,9 +211,11 @@ int main(int argc,char ** argv) {
         };
         if(mode=="restore") {
             auto start=steady::now();decode(0,0,208,"common_prefix");report["common_prefix_seconds"]=seconds(start);
+            save(root/"report.json",report);
             start=steady::now();
             snapshot.capture(ctx,key,208,scratch,budget);
             report["snapshot_capture_total_seconds"]=seconds(start);
+            report["snapshot"]=snapshot_metrics();save(root/"report.json",report);
         }
         for(int r=0;r<3;++r) {
             const auto start=steady::now();const auto before=usage();size_t restored=0;
@@ -208,6 +223,7 @@ int main(int argc,char ** argv) {
             if(mode=="restore") restored=snapshot.restore(ctx,key,ids[r].size()-208,budget);
             else llama_memory_clear(llama_get_memory(ctx),true);
             const double reset_restore_seconds=seconds(restore_start);
+            if(mode=="restore") {report["snapshot"]=snapshot_metrics();save(root/"report.json",report);}
             if(mode=="split") {decode(r,0,208,"prefix");decode(r,208,ids[r].size(),"suffix");}
             else decode(r,restored,ids[r].size(),mode=="restore"?"suffix":"full");
             const float * logits=llama_get_logits_ith(ctx,-1);if(!logits)throw std::runtime_error("missing continuation logits");
@@ -235,10 +251,47 @@ int main(int argc,char ** argv) {
                 state_file.exceptions(std::ios::badbit|std::ios::failbit);
                 state_file.write(reinterpret_cast<const char *>(state.data()),state.size());
             }
+            row["continuation_complete"]=false;row["continuation"]=json::array();
             report["requests"].push_back(row);save(root/"report.json",report);
+            if(o.diagnostic) {
+                const auto continuation_start=steady::now();
+                std::unique_ptr<llama_sampler,decltype(&llama_sampler_free)> sampler(llama_sampler_chain_init(llama_sampler_chain_default_params()),llama_sampler_free);
+                if(!sampler)throw std::runtime_error("fresh native sampler unavailable");
+                llama_sampler_chain_add(sampler.get(),llama_sampler_init_greedy());
+                for(int step=0;step<4;++step) {
+                    const float * next_logits=llama_get_logits_ith(ctx,-1);
+                    if(!next_logits || !std::all_of(next_logits,next_logits+nv,[](float x){return std::isfinite(x);}))throw std::runtime_error("continuation logits unavailable or nonfinite");
+                    const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
+                    if(rss>cap || size_t(nv)*sizeof(llama_token_data)>cap-rss)throw std::runtime_error("sampler scratch RSS admission refused");
+                    const auto token=llama_sampler_sample(sampler.get(),ctx,-1);
+                    if(token<0 || token>=nv)throw std::runtime_error("invalid native greedy token");
+                    const bool eog=llama_vocab_is_eog(vocab,token);
+                    std::ofstream vector_file(root/("continuation-logits-"+std::to_string(r)+"-"+std::to_string(step)+".f32"),std::ios::binary);
+                    vector_file.exceptions(std::ios::badbit|std::ios::failbit);vector_file.write(reinterpret_cast<const char *>(next_logits),nv*sizeof(float));vector_file.close();
+                    row["continuation"].push_back({{"step",step},{"token",token},{"native_eog",eog},{"logits_sha256",hash_bytes(next_logits,nv*sizeof(float))}});
+                    report["generation_performed"]=true;
+                    row["continuation_stop"]=eog?"eos":"diagnostic_budget";
+                    report["requests"][r]=row;save(root/"report.json",report);
+                    if(eog || step==3)break;
+                    auto input_token=token;auto one=llama_batch_get_one(&input_token,1);
+                    o.request=r;o.offset=step+1;o.batch_index=step+1;o.input_tokens=1;o.phase="continuation";
+                    if(llama_decode(ctx,one))throw std::runtime_error("continuation decode failed");llama_synchronize(ctx);
+                }
+                row["continuation_seconds"]=seconds(continuation_start);
+                row["continuation_complete"]=true;
+                const size_t n=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
+                const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
+                if(!n || n>256*1024*1024 || rss>cap || scratch>cap || n>cap-scratch || n+scratch>cap-rss)throw std::runtime_error("continuation-state admission refused");
+                std::vector<uint8_t> state(n);
+                if(llama_state_seq_get_data_ext(ctx,state.data(),n,0,LLAMA_STATE_SEQ_FLAGS_NONE)!=n)throw std::runtime_error("short continuation state");
+                row["continuation_state_bytes"]=n;row["continuation_state_sha256"]=hash_bytes(state.data(),n);
+                row["continuation_next_position"]=llama_memory_seq_pos_max(llama_get_memory(ctx),0)+1;
+                std::ofstream state_file(root/("continuation-state-"+std::to_string(r)+".bin"),std::ios::binary);
+                state_file.exceptions(std::ios::badbit|std::ios::failbit);state_file.write(reinterpret_cast<const char *>(state.data()),n);
+                report["requests"][r]=row;save(root/"report.json",report);
+            }
         }
-        const auto t=snapshot.metrics();report["snapshot"]={{"bytes",t.bytes},{"reserved_bytes",t.reserved_bytes},{"size_seconds",t.size_seconds},
-            {"save_seconds",t.save_seconds},{"restore_seconds_total",t.restore_seconds},{"successful_restores",t.successful_restores}};
+        report["snapshot"]=snapshot_metrics();
         report["complete"]=true;save(root/"report.json",report);
         llama_free(ctx);ctx=nullptr;llama_model_free(model);model=nullptr;llama_backend_free();return 0;
     } catch(const std::exception & e) {

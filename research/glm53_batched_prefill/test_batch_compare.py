@@ -13,7 +13,7 @@ from research.glm53_batched_prefill.batch_compare import (
 from research.glm53_batched_prefill.native_compare import EXPECTED_NAMES, EXPECTED_STATE_TARGETS
 from research.glm53_batched_prefill.snapshot_key import canonical_key
 from research.glm53_batched_prefill.test_snapshot import manifest
-from research.glm53_batched_prefill.test_native_compare import guard
+from research.glm53_batched_prefill.test_native_compare import guard, add_continuation
 
 
 def sha(data):
@@ -78,6 +78,7 @@ def capture(root, ub):
     report = {"complete": True, "diagnostic": True, "model_loads": 1, "physical_slots": 1, "gpu_layers": 0,
               "threads": 10, "generation_performed": False, "requests": requests, "vocab_size": 4, "mode": "full",
               "microbatch": ub, "logical_batch": ub, "snapshot_key_sha256": key, "state_parameters": model["state_parameters"]}
+    add_continuation(root, report)
     (root / "report.json").write_text(json.dumps(report))
     lines(root / "tensors.jsonl", tensors)
     lines(root / "batches.jsonl", batches)
@@ -172,3 +173,18 @@ def test_common_checkpoint_coverage_and_same_agent_replay_are_required(tmp_path,
     else:
         with pytest.raises(ValueError):
             _checkpoints(root, report)
+
+
+def test_optional208_checkpoint_does_not_replace_required_common_boundaries(tmp_path):
+    root = tmp_path / "a"
+    capture(root, 16)
+    report = json.loads((root / "report.json").read_text())
+    rows = [json.loads(r) for r in (root / "state_checkpoints.jsonl").read_text().splitlines()]
+    rows += [{"request": r, "token_end": 208, "bytes": 32, "sha256": "a" * 64,
+              "state_seq_flags": 0, "status": "hashed", "next_position": 208} for r in range(3)]
+    lines(root / "state_checkpoints.jsonl", rows)
+    assert len(_checkpoints(root, report)) == 9
+    rows = [r for r in rows if r["token_end"] != 128]
+    lines(root / "state_checkpoints.jsonl", rows)
+    with pytest.raises(ValueError):
+        _checkpoints(root, report)

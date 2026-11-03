@@ -17,7 +17,7 @@ import numpy as np
 
 from research.glm53_m5.compare_fidelity import CRITERIA, compare_arrays, family, json_lines, safe_file, tensor_view
 from research.glm53_batched_prefill.native_compare import (
-    EXPECTED_NAMES, MiB, _read, _check_replay, _compare_writes,
+    EXPECTED_NAMES, MiB, _read, _check_replay, _compare_writes, _compare_continuation,
 )
 from research.glm53_batched_prefill.snapshot_key import canonical_key
 
@@ -65,8 +65,12 @@ def _checkpoints(root, report):
         result[key] = row
     expected = {(r, end) for r, request in enumerate(report["requests"])
                 for end in {*[n for n in CHECKPOINTS if n <= request["prompt_tokens"]], request["prompt_tokens"]}}
-    if set(result) != expected:
+    optional208 = {(r, 208) for r, request in enumerate(report["requests"])
+                   if request["prompt_tokens"] >= 208 and 208 % report["microbatch"] == 0}
+    if not expected <= set(result) or not set(result) <= expected | optional208:
         raise ValueError("complete-sequence checkpoints missing or extra")
+    if (set(result) - expected) and not optional208 <= set(result):
+        raise ValueError("optional208 checkpoints must cover all complete requests")
     for request, row in enumerate(report["requests"]):
         final = result[request, row["prompt_tokens"]]
         if final["bytes"] != row["sequence_bytes"] or final["sha256"] != row["sequence_sha256"]:
@@ -163,12 +167,17 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
               "cross_batch_write_event_parity": "not asserted: physical chunks differ; require per-batch target coverage and complete states at common token boundaries",
               "logits": [], "final_states": [], "checkpoints": [], "tensors": [], "coverage": {k: 0 for k in TOKEN_AXES}}
     try:
-        a, at, ab, ag, aw = _read(reference_root, reference_guard)
-        b, bt, bb, bg, bw = _read(candidate_root, candidate_guard)
+        a, at, ab, ag, aw, a_cont = _read(reference_root, reference_guard)
+        b, bt, bb, bg, bw, b_cont = _read(candidate_root, candidate_guard)
         if a["mode"] != "full" or b["mode"] != "full":
             raise ValueError("cross-batch comparison requires full/full uncached prefill")
         if _dependencies(a, ag) != _dependencies(b, bg):
             raise ValueError("model/runtime/state dependencies differ beyond n_batch/n_ubatch")
+        result["continuation"] = _compare_continuation(reference_root, candidate_root, a, b, a_cont, b_cont)
+        result["continuation_replays"] = {
+            "reference": _compare_continuation(reference_root, reference_root, a, a, a_cont, a_cont, ((0, 2),)),
+            "candidate": _compare_continuation(candidate_root, candidate_root, b, b, b_cont, b_cont, ((0, 2),)),
+        }
         for field in ("vocab_size", "threads", "gpu_layers", "physical_slots"):
             if a[field] != b[field]:
                 raise ValueError("incompatible native profile: " + field)
@@ -183,11 +192,11 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
             "reference": _compare_writes(aw, aw, [(r["request"], r["offset"]) for r in ab], False),
             "candidate": _compare_writes(bw, bw, [(r["request"], r["offset"]) for r in bb], False),
         }
-        if set(ac) != set(bc):
-            raise ValueError("common complete-state checkpoint positions differ")
-        for key in sorted(ac):
+        common_checkpoints = set(ac) & set(bc)
+        for key in sorted(common_checkpoints):
             result["checkpoints"].append({"request": key[0], "token_end": key[1],
                 "passed": ac[key]["bytes"] == bc[key]["bytes"] and ac[key]["sha256"] == bc[key]["sha256"]})
+        result["checkpoint208_compared"] = any(end == 208 for _, end in common_checkpoints)
         for request, (ar, br) in enumerate(zip(a["requests"], b["requests"])):
             for field in ("prompt_tokens", "prompt_ids_sha256", "next_position"):
                 if ar[field] != br[field]:
@@ -202,7 +211,8 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
             check = _token_compare(reference_root, candidate_root, a_series[request, name], b_series[request, name], name)
             result["tensors"].append({"request": request, "name": name, **check})
             result["coverage"][family(name)] += check["elements"]
-        result["passed"] = bool(all(r["passed"] for r in result["same_agent_replays"].values()) and
+        result["passed"] = bool(result["continuation"]["passed"] and all(r["passed"] for r in result["continuation_replays"].values()) and
+            all(r["passed"] for r in result["same_agent_replays"].values()) and
             all(result["checkpoint_replays"].values()) and all(r["passed"] for r in result["observed_write_coverage"].values()) and
             all(r["passed"] for r in result["logits"] + result["final_states"] + result["checkpoints"] + result["tensors"]))
         result["reference_microbatch"], result["candidate_microbatch"] = a["microbatch"], b["microbatch"]
