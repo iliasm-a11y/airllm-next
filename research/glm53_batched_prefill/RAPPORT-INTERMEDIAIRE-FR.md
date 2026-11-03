@@ -9,7 +9,7 @@
 | RONIN fonctionnel CPU10/GPU0, batch8, Max | Agent 1 : 522 tokens, préfill 1238,015911 s, 171 IDs puis délai 2700 s ; aucun EOS ni réponse finale utile. Agent 600 et retour1 non lancés. |
 | Témoin natif CPU8 sans cache | Trois prompts gelés 1 → 600 → 1 : 521/542/521 tokens, préfills 1285,763678 / 1322,539045 / 1314,183277 s ; quatre vrais échantillons greedy diagnostiques par requête. Code 0, secteur/intégrité validés ; aucune qualification fonctionnelle EOS. |
 | Rejeu numérique du témoin | Agent 1 request0 contre2 : 154 880 logits finis, état sérialisé, captures, 15 642 écritures observées, continuations et post-état exacts. Rejeu intra-bras, pas comparaison indépendante de variantes. |
-| Préfixe commun | 600 identités natives Max, 211 IDs communs. Trois sérialisations complètes à208 identiques : 156 739 588 octets (149,478519 Mio). Première requête après restauration exacte sur logits/état/continuation ; bras complet encore en cours. |
+| Préfixe commun | 600 identités natives Max, 211 IDs communs. Trois sérialisations complètes à208 identiques : 156 739 588 octets (149,478519 Mio). Première requête après restauration exacte sur logits/état/continuation ; bras arrêté ensuite sur le swap global, cache non qualifié. |
 | Q8 Metal représentatif | M1536/K4096, N8/16/32/64/128 : 380 928 sorties bit à bit face à ARM nrc2 et au graphe CPU10. Poids/activations synthétiques, pas un préfill GLM complet. |
 | Q2_K Metal représentatif | M2048/K4096, N8/16/32 : 114 688 sorties bit à bit face au dot ARM nrc1. Poids synthétiques, quantification d’activation CPU native. Pas de routes/logits/états de modèle mesurés. |
 
@@ -17,19 +17,21 @@ Les tolérances Metal existantes sont aussi satisfaites sur ces composants. Elle
 
 ## Ressources et provenance
 
-Les deux campagnes GLM closes respectent les gardes de ressources observées : RSS échantillonnée maximale6029656064 octets pour la tentative fonctionnelle, 5 608 177 664 pour le témoin natif ; croissance de swap observée0 dans les deux cas. Les alertes de pression 2 sont conservées et admises seulement dans le domaine contextuel du watchdog existant. Cela ne signifie pas que la pression est restée normale. Les limites 8, 5 Gio/32 Mio, les réserves, contrôles secteur/couvercle/horloges, intégrité et identitéPID ne sont pas désactivés.
+Les deux premières campagnes GLM closes respectent les gardes de ressources observées : RSS échantillonnée maximale6029656064 octets pour la tentative fonctionnelle, 5 608 177 664 pour le témoin natif ; croissance de swap observée0 dans les deux cas. Les alertes de pression 2 sont conservées et admises seulement dans le domaine contextuel du watchdog existant. Cela ne signifie pas que la pression est restée normale. Les limites 8, 5 Gio/32 Mio, les réserves, contrôles secteur/couvercle/horloges, intégrité et identitéPID ne sont pas désactivés.
 
 Le verrou UID du premier témoin natif a été acquis tardivement et n’a pas été transmis rétroactivement au helper. Cette limite est conservée dans son reçu. Le nouveau superviseur acquiert la propriété avant lancement et transmet son descripteur ; ses tests synthétiques couvrent également split. CPU16 et restore8 ont en plus une observation OS du descripteur réel dans le helper.
 
 Le modèle original Q2_K_S reste externe et inchangé. Le runtimeV4 hérité est épinglé à llama.cpp 3f8af15a76ac8675812e856da45454bafc90f12c avec16 patches. Une reconstruction de sources isolée a retrouvé l’ordre et les16 SHA des patches, puis les13 empreintes finales du build. Aucun runtime natif n’a été reconstruit pour cette vérification. Les bibliothèques effectivement mesurées et les en-têtes du helper restent identifiés séparément ; une copie de sources ne constitue pas une validation d’un nouveau binaire.
 
-## CPU16 rejeté et cache CPU8 en cours
+## CPU16 et restore8 refusés ; correction CPU16 isolée
 
 L’alimentation secteur a été rétablie après le refus sur batterie. Le premier prompt CPU16 de 521 tokens se termine en 820,050836167 s mais échoue au critère CPU bit à bit : 154 880 logits différents, écart maximal 1,61790836 et état final différent. Les quatre tokens greedy sont identiques. Le contrôleur a donc arrêté le bras pendant la requête suivante ; le wrapper reste `cancelled`, le natif `-15` et le superviseur `failed`, sans violation mémoire. Aucun gain n’est retenu.
 
 Les contrôles précoces 32/128 tokens et les checkpoints 128/208/256/384/512 étaient exacts. La première divergence capturée est au token 512, KDA couche 0, avec un écart maximal de 9,31e-10 ; des routes ordonnées changent couche 4, puis l’ensemble d’experts change au token 513. La queue 9 contre 8+1 explique une hypothèse forte de changement de chemin nrc1/nrc2 ; elle reste à vérifier par une correction isolée et de nouvelles captures complètes. Les seuils ne sont pas élargis. [Preuves du rejet](evidence/cpu16-rejected/README.md).
 
-La qualification du cache poursuit indépendamment le chemin CPU8 inchangé. Les 208 tokens communs ont été calculés une fois en 449,387450125 s, puis le snapshot complet de 156 739 588 octets a été capturé en 0,061756958 s au total. Son SHA correspond aux trois checkpoints de référence. La première lecture native prend 0,004909917 s, et le reset/restauration/vérification complet 0,067238 s. Pour la première requête terminée, les fichiers bruts des 154 880 logits, de l’état final, des quatre vecteurs de continuation et du post-état sont exacts. Ce contrôle partiel n’est pas la comparaison complète des captures, écritures et trois requêtes : le bras reste en cours et non qualifié.
+L’essai de cache a employé indépendamment le chemin CPU8 inchangé. Les 208 tokens communs ont été calculés une fois en 449,387450125 s, puis le snapshot complet de 156 739 588 octets a été capturé en 0,061756958 s au total. Son SHA correspond aux trois checkpoints de référence. La première lecture native prend 0,004909917 s, et le reset/restauration/vérification complet 0,067238 s. Pour la première requête terminée, les fichiers bruts des 154 880 logits, de l’état final, des quatre vecteurs de continuation et du post-état sont exacts. Ce contrôle partiel n’est pas la comparaison complète des captures, écritures et trois requêtes. Le 3 novembre à 15:17:02 UTC, après 1955,907108334 s, la croissance du swap global atteint 41 025 536 octets (39,125 Mio), au-delà des 32 Mio autorisés. Le watchdog arrête le helper par SIGTERM (natif -15, wrapper/superviseur failed). La deuxième requête reste à 536/542 tokens ; la troisième n’est pas lancée. RSS au déclenchement 3 092 217 856 octets ; secteur/intégrité passent. Tous les processus possédés sont ensuite absents et le verrou UID est libéré. Cette mesure globale n’établit pas une cause exclusivement liée au modèle. Aucun cache ni gain total n’est retenu. [Preuves de l’arrêt](evidence/restore8-swap-limit/README.md).
+
+La correction de la queue CPU16 a maintenant un exécutable isolé réellement compilé (`b2404d7d82d4c857c292c5f8cab7f7c697d1d638528dd682695adf0687db43b8`). Les cinq smokes de paramètres 8/16/32/64/128 passent sans chargement de modèle ; les en-têtes, sources et bibliothèques sont vérifiés avant/après. Les 18 tests de géométrie/refus/provenance passent. Cela ne qualifie aucune arithmétique de modèle : les nouvelles captures restent à exécuter. Le helper, wrapper et runtime du témoin restent inchangés.
 
 Le snapshot reste unique, immuable, complet (`NONE`) et limité à 256 Mio ; scratch, états actifs et captures sont budgétés séparément. La séquence native ne sauvegarde ni sampler ni logits : suffixe privé non vide et sampler neuf sont obligatoires. `PARTIAL_ONLY` n’est pas une base autonome après reset.
 
@@ -38,14 +40,14 @@ Pour 32+, les frontières du helper `split` à 208 diffèrent de `full` et certa
 ## Verdicts aux douze questions
 
 1. GPU plus rapide sur GLM complet : non démontré ; composants multi-token exacts seulement.
-2. Meilleur batch : inconnu ; CPU8 témoin clos ; CPU16 original rejeté, correction non qualifiée.
+2. Meilleur batch : inconnu ; CPU8 témoin clos ; CPU16 original rejeté, correction compilée, non qualifiée.
 3. Économie de préfill : non mesurée, pas de ratio entre UUID/instrumentations différents.
-4. Réutilisation exacte208 : non qualifiée ; sérialisation identique, première restauration native acceptée ; comparaison complète encore en cours.
-5. Coût : points de contrôle208 en 0,121350125 / 0,114084291 / 0,195911333 s ; capture de cache totale 0,061756958 s, première lecture native 0,004909917 s et remise en état complète 0,067238 s ; comparaison du bras complet encore en cours.
+4. Réutilisation exacte208 : non qualifiée ; première requête exacte puis arrêt SWAP_LIMIT avant la fin du bras.
+5. Coût : points de contrôle208 en 0,121350125 / 0,114084291 / 0,195911333 s ; capture de cache totale 0,061756958 s, première lecture native 0,004909917 s et remise en état complète 0,067238 s ; bras complet refusé, aucun gain net qualifié.
 6. BénéficeGPU+cache : non mesuré.
 7. Deux EOS utiles : non obtenus ; 171 IDs partiels dans la tentative fonctionnelle.
 8. Isolation : rejeu natif gelé exact ; historiques complets et isolation après restore non qualifiés.
-9. Gardes : ressources/secteur/intégrité validés pour les runs clos ; couvertureUID tardive explicitement limitée.
+9. Gardes : les deux premiers runs clos respectent les ressources ; restore8 est arrêté par SWAP_LIMIT. Secteur/intégrité passent ; couverture UID tardive du premier témoin explicitement limitée.
 10. ConfigurationRONIN : CPU10/GPU0, slot1 conservé ; aucune nouvelle sélection production.
 11. Pilote fonctionnel : pas prêt sans les deux EOS utiles et le reste de la qualification.
 12. Limites600 : modèle110 Go/16 Gio, 20–22min de préfill CPU8, décodage de progression≈0,117 token/s, un slot, GPU/cache complets non qualifiés. Aucune performance600 n’est extrapolée.

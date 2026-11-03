@@ -66,7 +66,9 @@ distinct des observations de diagnostic.
 Le CPU16 original est [rejeté numériquement](evidence/cpu16-rejected/README.md) :
 sa première requête termine, mais tous ses logits diffèrent malgré quatre
 tokens greedy identiques. Le contrôleur a arrêté le bras suivant ; aucun gain
-n’est retenu. La restauration CPU8 poursuit sa qualification indépendamment.
+n’est retenu. La restauration CPU8 a retrouvé exactement une première requête, puis a été
+[arrêtée sur le swap global](evidence/restore8-swap-limit/README.md) avant la fin du bras.
+Aucun cache ni gain net n’est retenu.
 Les champs non mesurés restent `null`. Les 937,169 secondes historiques et
 les essais GPU des PR #17 à #21 gardent leur périmètre d'origine.
 
