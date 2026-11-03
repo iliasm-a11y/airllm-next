@@ -50,7 +50,8 @@ def capture(root, ub):
     model["state_parameters"].update(n_batch=ub, n_ubatch=ub)
     key, _ = canonical_key(model)
     receipt = guard()
-    receipt["preflight"] = {"snapshot_manifest": model, "snapshot_key_sha256": key}
+    # Preserve the verified native watchdog identity supplied by guard().
+    receipt["preflight"].update(snapshot_manifest=model, snapshot_key_sha256=key)
     logits = struct.pack("<4f", 1, 2, 3, 4)
     requests, tensors, batches, writes, checkpoints = [], [], [], [], []
     for request, agent in enumerate((1, 600, 1)):
