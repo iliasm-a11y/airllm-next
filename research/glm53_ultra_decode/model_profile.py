@@ -156,6 +156,19 @@ def run(args):
             report['worker']=json.loads((output/'worker.json').read_text())
             report['native_process_launched']='native_identity' in report['worker']
     finally:
+        # A worker can stop for power/disk/ownership while the outer sampler
+        # raises on its nonzero exit. Preserve that sampler and recheck pinned
+        # inputs even on this failed path; never turn an abort into success.
+        guard_file=output/'supervision.guard.json'
+        if guard_file.is_file() and 'guard' not in report:
+            report['guard']=json.loads(guard_file.read_text())
+        try:
+            report['weight_identities_unchanged']=all(_identity(p)==identity for p,identity in identities.items())
+            report['native_artifacts_unchanged']=binaries=={args.probe.name:sha(args.probe)} and libraries=={p.name:sha(p) for p in args.runtime.glob('*.dylib') if not p.is_symlink()}
+            if not report['weight_identities_unchanged'] or not report['native_artifacts_unchanged']:
+                report['status']='failed'
+        except (OSError,ValueError) as error:
+            report.update(status='failed',postrun_verification_error=type(error).__name__+': '+str(error))
         report['finished_at_utc']=datetime.now(timezone.utc).isoformat()
         (output/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
     print(json.dumps({k:report[k] for k in ('status','native_process_launched','performance_measured')}))

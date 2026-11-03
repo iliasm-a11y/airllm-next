@@ -78,3 +78,29 @@ def test_component_guard_retains_only_the_unspent_campaign_allowance(tmp_path, m
     assert limits.swap_growth_bytes == 12 << 20
     assert limits.rss_bytes == int(8.5 * (1 << 30))
     assert limits.reserve_bytes == 3 << 30
+
+
+def test_worker_disk_abort_retains_outer_guard_and_input_checks(tmp_path, monkeypatch):
+    from . import model_profile as m
+    model=tmp_path/'model';model.mkdir()
+    weights=model/'fixture.gguf';weights.write_bytes(b'not model weights; never executed')
+    runtime=tmp_path/'runtime';runtime.mkdir()
+    probe=tmp_path/'probe';probe.write_bytes(b'never executed')
+    monkeypatch.setattr(m,'system_snapshot',lambda:{'pressure_level':1,'available_bytes':REQUIRED_MEMORY,'swap_used_bytes':0})
+    monkeypatch.setattr(m,'PowerGate',lambda **kw:SimpleNamespace(sample=lambda:{'passed':True}))
+    monkeypatch.setattr(m.shutil,'disk_usage',lambda p:SimpleNamespace(free=REQUIRED_DISK))
+    monkeypatch.setattr(m,'inspect_native_checkpoint',lambda *a:{'integrity_verified':True,
+        'architecture_matches':True,'files':[{'name':weights.name,'identity':m._identity(weights)}]})
+    def stopped(command, output, *, limits):
+        output.with_suffix('.guard.json').write_text(json.dumps({'violation':None,'exit_code':2,'maximum_swap_growth_bytes':0}))
+        (output.parent/'worker.json').write_text(json.dumps({'status':'failed','error':'disk reserve fell below32GiB'}))
+        raise RuntimeError('owned worker stopped')
+    monkeypatch.setattr(m,'supervise',stopped)
+    args=SimpleNamespace(worker=False,output=tmp_path/'out',model=model,runtime=runtime,
+        probe=probe,receipt=tmp_path/'receipt',tokens=32,diagnostic=True,prompt='test')
+    assert m.run(args)==2
+    report=json.loads((args.output/'report.json').read_text())
+    assert report['status']=='failed' and report['worker']['status']=='failed'
+    assert report['guard']['exit_code']==2 and report['guard']['violation'] is None
+    assert report['weight_identities_unchanged'] and report['native_artifacts_unchanged']
+    assert not report['performance_measured']
