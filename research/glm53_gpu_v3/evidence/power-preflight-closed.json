@@ -1,0 +1,101 @@
+{
+  "scope": "read-only actual Mac snapshot and direct benchmark preflight; no native process launched",
+  "result": {
+    "schema_version": 1,
+    "status": "failed",
+    "error": "Awake/power preflight declined",
+    "power_gate": {
+      "passed": false,
+      "finalized": false,
+      "expected_power_source": null,
+      "clock_samples": 1,
+      "power_samples": 1,
+      "first": {
+        "clock": {
+          "wall_time_seconds": 1793669487.560389,
+          "perf_counter_seconds": 20294.471867375,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.0,
+          "timestamp_utc": "2026-11-03T01:31:27.560389+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": false,
+          "reasons": [
+            "target Mac lid is closed or unknown"
+          ],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T01:31:27.560612+00:00",
+            "wall_time_seconds": 1793669487.5606132,
+            "perf_counter_seconds": 20294.472091833,
+            "lid_closed": true,
+            "power_source": "battery",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 20294.489106958
+          }
+        },
+        "passed": false
+      },
+      "last": {
+        "clock": {
+          "wall_time_seconds": 1793669487.560389,
+          "perf_counter_seconds": 20294.471867375,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.0,
+          "timestamp_utc": "2026-11-03T01:31:27.560389+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": false,
+          "reasons": [
+            "target Mac lid is closed or unknown"
+          ],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T01:31:27.560612+00:00",
+            "wall_time_seconds": 1793669487.5606132,
+            "perf_counter_seconds": 20294.472091833,
+            "lid_closed": true,
+            "power_source": "battery",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 20294.489106958
+          }
+        },
+        "passed": false
+      },
+      "violation": {
+        "clock": {
+          "wall_time_seconds": 1793669487.560389,
+          "perf_counter_seconds": 20294.471867375,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.0,
+          "timestamp_utc": "2026-11-03T01:31:27.560389+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": false,
+          "reasons": [
+            "target Mac lid is closed or unknown"
+          ],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-03T01:31:27.560612+00:00",
+            "wall_time_seconds": 1793669487.5606132,
+            "perf_counter_seconds": 20294.472091833,
+            "lid_closed": true,
+            "power_source": "battery",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 20294.489106958
+          }
+        },
+        "passed": false
+      },
+      "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+    },
+    "model_launched": false
+  }
+}

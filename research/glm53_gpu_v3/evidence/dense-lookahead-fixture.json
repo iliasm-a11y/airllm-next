@@ -1,0 +1,19 @@
+{
+  "returncode": 0,
+  "stdout": "{\"status\":\"passed\",\"checks\":26,\"real_advice_result\":0,\"max_fixture_advice_bytes\":16384,\"cpu_outputs_bit_identical\":true,\"gpu_initialized\":false,\"model_loaded\":false}\n",
+  "stderr": "AIRLLM_DENSE_LOOKAHEAD status=concurrent_graph_skipped\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=1 calls=1 advised_bytes=16384 failures=0 first_error=0 busy_skips=0 admission_skips=0 cancelled=0 syscall_seconds=0.000002292 join_seconds=0.000022291 window_cap=16384 hard_cap=134217728 baseline_compressor=0 compressor_growth=0 min_available=0 pressure=0 headroom_floor=2147483648\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=0 calls=0 advised_bytes=0 failures=0 first_error=0 busy_skips=0 admission_skips=1 cancelled=0 syscall_seconds=0.000000000 join_seconds=0.000018333 window_cap=16384 hard_cap=134217728 baseline_compressor=0 compressor_growth=0 min_available=0 pressure=0 headroom_floor=2147483648\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=1 calls=1 advised_bytes=16384 failures=1 first_error=5 busy_skips=0 admission_skips=0 cancelled=0 syscall_seconds=0.000001250 join_seconds=0.000016542 window_cap=16384 hard_cap=134217728 baseline_compressor=0 compressor_growth=0 min_available=0 pressure=0 headroom_floor=2147483648\nAIRLLM_DENSE_LOOKAHEAD status=concurrent_graph_skipped\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=1 calls=1 advised_bytes=16384 failures=0 first_error=0 busy_skips=0 admission_skips=0 cancelled=0 syscall_seconds=0.025085209 join_seconds=0.025090791 window_cap=16384 hard_cap=134217728 baseline_compressor=0 compressor_growth=0 min_available=0 pressure=0 headroom_floor=2147483648\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=1 calls=1 advised_bytes=16384 failures=0 first_error=0 busy_skips=0 admission_skips=0 cancelled=0 syscall_seconds=0.000005875 join_seconds=0.000025791 window_cap=16384 hard_cap=134217728 baseline_compressor=0 compressor_growth=0 min_available=0 pressure=0 headroom_floor=2147483648\nAIRLLM_DENSE_LOOKAHEAD planned=2 queued=1 calls=1 advised_bytes=16384 failures=0 first_error=0 busy_skips=0 admission_skips=0 cancelled=0 syscall_seconds=0.000005500 join_seconds=0.000021542 window_cap=33554432 hard_cap=134217728 baseline_compressor=5089525760 compressor_growth=0 min_available=5936660480 pressure=1 headroom_floor=2147483648\n",
+  "fixture_source_sha256": "e7d9fd0202a5712331f8ab8ea0b1aae3fa276a5f8119b9ea3f7babd16b068e67",
+  "helper_source_sha256": "cc1bf5055a33f306c3dc684c7921c854b4eb61dbcd1f83d1a13d71cb2c171685",
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "456ccbdbbc81992f2df70c7ab91fb2c7c543937345bb6982d398933c65f2a9bf",
+    "libllama-server-impl.dylib": "e539925513e3aed22fa6f4fbc4f7f36f6b33e6c9e9c3c90dd94be6a7dd1fbbeb",
+    "libllama-common.0.8.0.dylib": "8dcc0828d3c1404595e698c67b1c49458a922e69b4075b77743e4ff7161826d0",
+    "libllama.0.8.0.dylib": "4050129cdd5746c64d738519724167ddd4f30f7614039c30364ca3d21be11347",
+    "libmtmd.0.8.0.dylib": "7b4272843ed61e0e52328212d406d2d3fecfc1ab08000374b4d5edc23d3ae015",
+    "libggml-blas.0.28.0.dylib": "8c65151c05b93f4325900e9f524482c0b1cfccebf147a76662216f5246b2e325",
+    "libggml-metal.0.28.0.dylib": "5af5fed4e3e98dff0fb85263b9638e97faf9019bc47f90354e66083425b2cc09",
+    "libggml.0.28.0.dylib": "12b8143ccb19ecabfb7954f32975b6ba90da9f805862a6cfcc2847538d4ab457",
+    "libggml-cpu.0.28.0.dylib": "95e775aa2de66443ac9f5b956f2cc07b7dba6c50d1cb2f29f9d5bd899047164d"
+  },
+  "earlier_fixture_failure": "Initial unaligned stack input triggered native GGML buffer pointer alignment assertion; fixture corrected with alignas(64), no native-runtime change."
+}

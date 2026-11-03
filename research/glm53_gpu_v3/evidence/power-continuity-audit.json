@@ -1,0 +1,867 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-11-03T01:26:20.560447+00:00",
+  "scope": "Post-hoc read-only audit of 16 closed timed JSON reports against saved selected macOS Sleep/DarkWake/Wake text. No originals rewritten; no benchmark, model, build, test or checkpoint payload access.",
+  "method": {
+    "utc_span": "system_after.timestamp_utc minus started_at",
+    "recorded_counter": "total_seconds, produced with time.perf_counter by recorded benchmark source",
+    "drift": "utc_span_seconds minus total_seconds",
+    "clock_consistency_threshold_seconds": 2.0,
+    "threshold_scope": "audit screening criterion, not a predeclared throughput qualification criterion",
+    "limitations": "UTC span includes short startup/teardown outside perf_counter interval; UTC changes or missing power-log entries can affect inference. Clock consistency and absence of selected sleep entries establish no detected discontinuity, not proof of thermals, all power states, long-run stability or general performance."
+  },
+  "power_source": {
+    "path": "work/v3/power/sleep-wake-selected.txt",
+    "sha256": "5823ed4800e80309c8a832292935ebe7aa4bd54b020436ee306acfe4c8a5a027",
+    "bytes": 180489,
+    "mtime_utc": "2026-11-03T01:23:25.183145+00:00",
+    "first_selected_event": "2026-10-27T01:29:43+00:00",
+    "last_selected_event": "2026-11-03T01:13:18+00:00",
+    "selected_event_count": 1106,
+    "scope": "Saved selected text only; log recording/extraction completeness not independently proven."
+  },
+  "campaigns": [
+    {
+      "name": "campaign-cpu-stream8",
+      "source": {
+        "path": "work/v3/campaign-cpu-stream8/campaign.json",
+        "sha256": "53a63a5f5ea2d6992cafdfcb51d7dc70b7858590926a17ed6fc343e1375df002",
+        "mtime_utc": "2026-11-02T22:18:57.557555+00:00"
+      },
+      "original_status": "complete",
+      "original_comparison_valid_on_stated_scope": true,
+      "original_optimization_qualified": false,
+      "original_decode_relative_change_percent": -0.32390733390721405,
+      "raw_summary_is_performance_evidence_after_audit": true,
+      "audit_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_ON_8_TOKEN_SCOPE",
+      "runs": [
+        {
+          "index": 0,
+          "arm": "A",
+          "path": "work/v3/campaign-cpu-stream8/runs/00-A.json",
+          "sha256": "aec3941ab3437cae603fa6bb46324a92b0f2d33973db96a673e1a88e8095df99",
+          "mtime_utc": "2026-11-02T22:14:41.603401+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:13:20.445481+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:14:41.597567+00:00",
+          "utc_span_seconds": 81.152086,
+          "total_seconds": 81.10868095899968,
+          "utc_minus_counter_seconds": 0.043405041000312394,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 1,
+          "arm": "B",
+          "path": "work/v3/campaign-cpu-stream8/runs/01-B.json",
+          "sha256": "af1318768644e86db2f70050aaa346f354a2b674d8a7242d47878f9de9a1077b",
+          "mtime_utc": "2026-11-02T22:16:03.512316+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:14:41.720818+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:16:03.506240+00:00",
+          "utc_span_seconds": 81.785422,
+          "total_seconds": 81.73315354099759,
+          "utc_minus_counter_seconds": 0.05226845900240562,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 2,
+          "arm": "B",
+          "path": "work/v3/campaign-cpu-stream8/runs/02-B.json",
+          "sha256": "0e38734ef9886f65ed804f37d9e82a3f036299a6608a34536a20baf363100f52",
+          "mtime_utc": "2026-11-02T22:17:29.500502+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:16:03.629110+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:17:29.493884+00:00",
+          "utc_span_seconds": 85.864774,
+          "total_seconds": 85.81380337500013,
+          "utc_minus_counter_seconds": 0.050970624999862935,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 3,
+          "arm": "A",
+          "path": "work/v3/campaign-cpu-stream8/runs/03-A.json",
+          "sha256": "88927efda24cf676248fdc5943c531be93c3602b047daf353940fa621ee805bc",
+          "mtime_utc": "2026-11-02T22:18:57.533048+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:17:29.621865+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:18:57.526616+00:00",
+          "utc_span_seconds": 87.904751,
+          "total_seconds": 87.84955750000154,
+          "utc_minus_counter_seconds": 0.05519349999846668,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        }
+      ]
+    },
+    {
+      "name": "campaign-head-stream8",
+      "source": {
+        "path": "work/v3/campaign-head-stream8/campaign.json",
+        "sha256": "a4131a636d793cac74c50bb7a03b2e9cdc9147586ea24678350d2d603a769c6b",
+        "mtime_utc": "2026-11-02T22:36:06.278294+00:00"
+      },
+      "original_status": "complete",
+      "original_comparison_valid_on_stated_scope": true,
+      "original_optimization_qualified": false,
+      "original_decode_relative_change_percent": 4.813534075128656,
+      "raw_summary_is_performance_evidence_after_audit": true,
+      "audit_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_ON_8_TOKEN_SCOPE",
+      "runs": [
+        {
+          "index": 0,
+          "arm": "A",
+          "path": "work/v3/campaign-head-stream8/runs/00-A.json",
+          "sha256": "d76f0bb287a64dd2e996b119f0130d576288077ec7626d20dbefd24f7b665d19",
+          "mtime_utc": "2026-11-02T22:32:01.705421+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:30:39.996423+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:32:01.698474+00:00",
+          "utc_span_seconds": 81.702051,
+          "total_seconds": 81.6575106249984,
+          "utc_minus_counter_seconds": 0.04454037500160268,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 1,
+          "arm": "B",
+          "path": "work/v3/campaign-head-stream8/runs/01-B.json",
+          "sha256": "6e3b012fac8a9e01ceabac15b504bfb16756f548febbb7145de432f4ae7da9e6",
+          "mtime_utc": "2026-11-02T22:33:21.605512+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:32:01.814840+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:33:21.599215+00:00",
+          "utc_span_seconds": 79.784375,
+          "total_seconds": 79.73171645899856,
+          "utc_minus_counter_seconds": 0.052658541001434855,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 2,
+          "arm": "B",
+          "path": "work/v3/campaign-head-stream8/runs/02-B.json",
+          "sha256": "de118ff4683c55ece0cd2ea21b33eeea49f6cc3a567c10f145c469b619ff5e06",
+          "mtime_utc": "2026-11-02T22:34:42.504092+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:33:21.702402+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:34:42.498610+00:00",
+          "utc_span_seconds": 80.796208,
+          "total_seconds": 80.74672779100001,
+          "utc_minus_counter_seconds": 0.049480208999980846,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 3,
+          "arm": "A",
+          "path": "work/v3/campaign-head-stream8/runs/03-A.json",
+          "sha256": "9c88c0fff071b92ac4a0de3c5995ad0dde9c8c8b89b6c41bd317a0115724801a",
+          "mtime_utc": "2026-11-02T22:36:06.252696+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:34:42.625380+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:36:06.246388+00:00",
+          "utc_span_seconds": 83.621008,
+          "total_seconds": 83.57192824999947,
+          "utc_minus_counter_seconds": 0.04907975000053,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        }
+      ]
+    },
+    {
+      "name": "campaign-tail5-stream8",
+      "source": {
+        "path": "work/v3/campaign-tail5-stream8/campaign.json",
+        "sha256": "c36c8dc921f3bb8522648af441f61d1bfa1753ba7729cf461a8967fd65abc6b8",
+        "mtime_utc": "2026-11-02T22:41:34.893708+00:00"
+      },
+      "original_status": "complete",
+      "original_comparison_valid_on_stated_scope": true,
+      "original_optimization_qualified": false,
+      "original_decode_relative_change_percent": 9.135547596621386,
+      "raw_summary_is_performance_evidence_after_audit": true,
+      "audit_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_ON_8_TOKEN_SCOPE",
+      "runs": [
+        {
+          "index": 0,
+          "arm": "A",
+          "path": "work/v3/campaign-tail5-stream8/runs/00-A.json",
+          "sha256": "99829907498c4e5c958b8f7732ffa1e90003fd6e2ecdf4a8e6f4902f9d4ae8b0",
+          "mtime_utc": "2026-11-02T22:37:33.250078+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:36:09.965549+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:37:33.244090+00:00",
+          "utc_span_seconds": 83.278541,
+          "total_seconds": 83.23300991599899,
+          "utc_minus_counter_seconds": 0.0455310840010128,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 1,
+          "arm": "B",
+          "path": "work/v3/campaign-tail5-stream8/runs/01-B.json",
+          "sha256": "73f64167ac98cc71e5cdaac641fef9688ded580f7e79f569a2dfcd41e357494b",
+          "mtime_utc": "2026-11-02T22:38:51.691884+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:37:33.370800+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:38:51.683697+00:00",
+          "utc_span_seconds": 78.312897,
+          "total_seconds": 78.25757358299961,
+          "utc_minus_counter_seconds": 0.05532341700039467,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 2,
+          "arm": "B",
+          "path": "work/v3/campaign-tail5-stream8/runs/02-B.json",
+          "sha256": "66f44fe6005bde64315da14e8d4653222f5724bb6470b4eefbfc35f5ed12b845",
+          "mtime_utc": "2026-11-02T22:40:09.914162+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:38:51.817122+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:40:09.906779+00:00",
+          "utc_span_seconds": 78.089657,
+          "total_seconds": 78.03464779099886,
+          "utc_minus_counter_seconds": 0.05500920900114181,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        },
+        {
+          "index": 3,
+          "arm": "A",
+          "path": "work/v3/campaign-tail5-stream8/runs/03-A.json",
+          "sha256": "31f35a2bc284bebe92f24452d5e8329f96472fa09fb408cf5b5e37d601fd4758",
+          "mtime_utc": "2026-11-02T22:41:34.865034+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T22:40:10.039871+00:00",
+          "system_after_timestamp_utc": "2026-11-02T22:41:34.859355+00:00",
+          "utc_span_seconds": 84.819484,
+          "total_seconds": 84.77162079100162,
+          "utc_minus_counter_seconds": 0.047863208998379037,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1074,
+            "timestamp_local": "2026-11-02T15:13:57+01:00",
+            "timestamp_utc": "2026-11-02T14:13:57+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 15:13:57 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:86%)           "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "b76e2a4dfc9e2df4f0f316f3faf612ffdde6bff0d034c13ff953f7ad0fc192be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "4deaf2ff1620610da1e086d9d7e04a17cae27ac0ce58a94c1f8efc317bc67dc1"
+        }
+      ]
+    },
+    {
+      "name": "campaign-v4-tail5-lock256-8",
+      "source": {
+        "path": "work/v3/campaign-v4-tail5-lock256-8/campaign.json",
+        "sha256": "946e069aff60e9cb3be9ad5f4038e1dd8faa77e69192e1e98c244fbe62fe76f6",
+        "mtime_utc": "2026-11-03T01:22:36.401611+00:00"
+      },
+      "original_status": "complete",
+      "original_comparison_valid_on_stated_scope": true,
+      "original_optimization_qualified": false,
+      "original_decode_relative_change_percent": -23.943670618940473,
+      "raw_summary_is_performance_evidence_after_audit": false,
+      "audit_verdict": "INVALID_FOR_PERFORMANCE_SLEEP_INTERRUPTED_ABBA",
+      "runs": [
+        {
+          "index": 0,
+          "arm": "A",
+          "path": "work/v3/campaign-v4-tail5-lock256-8/runs/00-A.json",
+          "sha256": "6bb927c7c95e6d086aecfbb0a2cec97131db0d842c26c4a54387cdffccf386ba",
+          "mtime_utc": "2026-11-02T23:11:37.522665+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T23:09:40.262540+00:00",
+          "system_after_timestamp_utc": "2026-11-02T23:11:37.515342+00:00",
+          "utc_span_seconds": 117.252802,
+          "total_seconds": 117.2015809580007,
+          "utc_minus_counter_seconds": 0.05122104199929822,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1078,
+            "timestamp_local": "2026-11-02T23:55:27+01:00",
+            "timestamp_utc": "2026-11-02T22:55:27+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 23:55:27 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:38%) 1041 secs "
+          },
+          "run_continuity_verdict": "NO_CONTINUITY_ANOMALY_DETECTED_IN_SELECTED_EVIDENCE",
+          "runner_source_sha256_recorded": "18e5cb088ed5c2e246161206c76a97c1e019e71f4aa3835f84ad2a013c9563be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83"
+        },
+        {
+          "index": 1,
+          "arm": "B",
+          "path": "work/v3/campaign-v4-tail5-lock256-8/runs/01-B.json",
+          "sha256": "6f3d00ea9410e9b3b820156f20a3a6fe771dc7acb1e7e5226d296c65073a9cdf",
+          "mtime_utc": "2026-11-03T00:50:09.677662+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-02T23:11:37.654228+00:00",
+          "system_after_timestamp_utc": "2026-11-03T00:50:09.619404+00:00",
+          "utc_span_seconds": 5911.965176,
+          "total_seconds": 163.38395391700033,
+          "utc_minus_counter_seconds": 5748.581222082999,
+          "clock_consistent_within_2s": false,
+          "sleep_events_within_span": 10,
+          "darkwake_events_within_span": 10,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [
+            1079,
+            1080,
+            1081,
+            1082,
+            1083,
+            1084,
+            1085,
+            1086,
+            1087,
+            1088,
+            1089,
+            1090,
+            1091,
+            1092,
+            1093,
+            1094,
+            1095,
+            1096,
+            1097,
+            1098
+          ],
+          "last_power_event_before_span": {
+            "line": 1078,
+            "timestamp_local": "2026-11-02T23:55:27+01:00",
+            "timestamp_utc": "2026-11-02T22:55:27+00:00",
+            "event": "Wake",
+            "text": "2026-11-02 23:55:27 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:38%) 1041 secs "
+          },
+          "run_continuity_verdict": "CLOCK_DISCONTINUITY_WITH_LOGGED_SLEEP",
+          "runner_source_sha256_recorded": "18e5cb088ed5c2e246161206c76a97c1e019e71f4aa3835f84ad2a013c9563be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83"
+        },
+        {
+          "index": 2,
+          "arm": "B",
+          "path": "work/v3/campaign-v4-tail5-lock256-8/runs/02-B.json",
+          "sha256": "b8902f1380f7dee5acc428bf387a3fca490b51c6401a5996e8618f2d77722df0",
+          "mtime_utc": "2026-11-03T01:17:30.540720+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-03T00:50:10.224784+00:00",
+          "system_after_timestamp_utc": "2026-11-03T01:17:30.509759+00:00",
+          "utc_span_seconds": 1640.284975,
+          "total_seconds": 287.48893687500095,
+          "utc_minus_counter_seconds": 1352.796038124999,
+          "clock_consistent_within_2s": false,
+          "sleep_events_within_span": 4,
+          "darkwake_events_within_span": 4,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [
+            1099,
+            1100,
+            1101,
+            1102,
+            1103,
+            1104,
+            1105,
+            1106
+          ],
+          "last_power_event_before_span": {
+            "line": 1098,
+            "timestamp_local": "2026-11-03T01:50:04+01:00",
+            "timestamp_utc": "2026-11-03T00:50:04+00:00",
+            "event": "DarkWake",
+            "text": "2026-11-03 01:50:04 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_UNEXPECT_TCP_FLAG ARPT/ Using BATT (Charge:27%) 20 secs   "
+          },
+          "run_continuity_verdict": "CLOCK_DISCONTINUITY_WITH_LOGGED_SLEEP",
+          "runner_source_sha256_recorded": "18e5cb088ed5c2e246161206c76a97c1e019e71f4aa3835f84ad2a013c9563be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83"
+        },
+        {
+          "index": 3,
+          "arm": "A",
+          "path": "work/v3/campaign-v4-tail5-lock256-8/runs/03-A.json",
+          "sha256": "4df82be999cf47a2163078f8e7204fc6fedc7b110ff54cef8c0c6b0362abd30b",
+          "mtime_utc": "2026-11-03T01:22:36.310636+00:00",
+          "embedded_report_identical": true,
+          "started_at": "2026-11-03T01:17:30.758928+00:00",
+          "system_after_timestamp_utc": "2026-11-03T01:22:36.292033+00:00",
+          "utc_span_seconds": 305.533105,
+          "total_seconds": 305.42909591699936,
+          "utc_minus_counter_seconds": 0.10400908300061928,
+          "clock_consistent_within_2s": true,
+          "sleep_events_within_span": 0,
+          "darkwake_events_within_span": 0,
+          "full_wake_events_within_span": 0,
+          "power_event_source_lines": [],
+          "last_power_event_before_span": {
+            "line": 1106,
+            "timestamp_local": "2026-11-03T02:13:18+01:00",
+            "timestamp_utc": "2026-11-03T01:13:18+00:00",
+            "event": "DarkWake",
+            "text": "2026-11-03 02:13:18 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:27%)           "
+          },
+          "run_continuity_verdict": "CLOCK_CONSISTENT_BUT_DARKWAKE_CONTEXT_AND_INVALID_ABBA",
+          "runner_source_sha256_recorded": "18e5cb088ed5c2e246161206c76a97c1e019e71f4aa3835f84ad2a013c9563be",
+          "runner_lifecycle_source_sha256_recorded": "730d8fd4a873abe353fc20c404919de6316051ca84a75f1da0d55340ae4cbc5a",
+          "binary_sha256_recorded": "a0c7632523ae199f576b8b63e423f0b0dc80068545a62d45d2132ceb765a9f83"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "closed_timed_report_count": 16,
+    "raw_embedded_reports_all_equal": true,
+    "clock_discontinuous_run_count": 2,
+    "v3_clock_drift_range_seconds": [
+      0.043405041000312394,
+      0.05532341700039467
+    ],
+    "v3_sleep_events_within_runs": 0,
+    "v4_e8_audit_valid_for_performance": false,
+    "v4_e8_raw_percent_must_not_be_interpreted_as_gain_or_regression": true
+  },
+  "power_events_during_audited_time_window": [
+    {
+      "line": 1075,
+      "timestamp_local": "2026-11-02T23:42:35+01:00",
+      "timestamp_utc": "2026-11-02T22:42:35+00:00",
+      "event": "Sleep",
+      "text": "2026-11-02 23:42:35 +0100 Sleep               \tEntering Sleep state due to 'Clamshell Sleep':TCPKeepAlive=active Using Batt (Charge:38%) 595 secs  "
+    },
+    {
+      "line": 1076,
+      "timestamp_local": "2026-11-02T23:52:30+01:00",
+      "timestamp_utc": "2026-11-02T22:52:30+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-02 23:52:30 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:38%) 5 secs    "
+    },
+    {
+      "line": 1077,
+      "timestamp_local": "2026-11-02T23:52:35+01:00",
+      "timestamp_utc": "2026-11-02T22:52:35+00:00",
+      "event": "Sleep",
+      "text": "2026-11-02 23:52:35 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:38%) 172 secs  "
+    },
+    {
+      "line": 1078,
+      "timestamp_local": "2026-11-02T23:55:27+01:00",
+      "timestamp_utc": "2026-11-02T22:55:27+00:00",
+      "event": "Wake",
+      "text": "2026-11-02 23:55:27 +0100 Wake                \tWake from Deep Idle [CDNVA] : due to smc.sysState.Wake(0x70070000) lid SMC.OutboxNotEmpty RTP.multi-touch/HID Activity Using BATT (Charge:38%) 1041 secs "
+    },
+    {
+      "line": 1079,
+      "timestamp_local": "2026-11-03T00:12:48+01:00",
+      "timestamp_utc": "2026-11-02T23:12:48+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:12:48 +0100 Sleep               \tEntering Sleep state due to 'Clamshell Sleep':TCPKeepAlive=active Using Batt (Charge:28%) 570 secs  "
+    },
+    {
+      "line": 1080,
+      "timestamp_local": "2026-11-03T00:22:18+01:00",
+      "timestamp_utc": "2026-11-02T23:22:18+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:22:18 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:28%) 10 secs   "
+    },
+    {
+      "line": 1081,
+      "timestamp_local": "2026-11-03T00:22:28+01:00",
+      "timestamp_utc": "2026-11-02T23:22:28+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:22:28 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:28%) 34 secs   "
+    },
+    {
+      "line": 1082,
+      "timestamp_local": "2026-11-03T00:23:02+01:00",
+      "timestamp_utc": "2026-11-02T23:23:02+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:23:02 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_SEQ_NUM_INVALID ARPT/ Using BATT (Charge:28%) 11 secs   "
+    },
+    {
+      "line": 1083,
+      "timestamp_local": "2026-11-03T00:23:13+01:00",
+      "timestamp_utc": "2026-11-02T23:23:13+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:23:13 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:28%) 936 secs  "
+    },
+    {
+      "line": 1084,
+      "timestamp_local": "2026-11-03T00:38:49+01:00",
+      "timestamp_utc": "2026-11-02T23:38:49+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:38:49 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:28%) 2 secs    "
+    },
+    {
+      "line": 1085,
+      "timestamp_local": "2026-11-03T00:38:51+01:00",
+      "timestamp_utc": "2026-11-02T23:38:51+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:38:51 +0100 Sleep               \tEntering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 672 secs  "
+    },
+    {
+      "line": 1086,
+      "timestamp_local": "2026-11-03T00:50:03+01:00",
+      "timestamp_utc": "2026-11-02T23:50:03+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:50:03 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:27%) 8 secs    "
+    },
+    {
+      "line": 1087,
+      "timestamp_local": "2026-11-03T00:50:11+01:00",
+      "timestamp_utc": "2026-11-02T23:50:11+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:50:11 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 544 secs  "
+    },
+    {
+      "line": 1088,
+      "timestamp_local": "2026-11-03T00:59:15+01:00",
+      "timestamp_utc": "2026-11-02T23:59:15+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:59:15 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:27%) 8 secs    "
+    },
+    {
+      "line": 1089,
+      "timestamp_local": "2026-11-03T00:59:23+01:00",
+      "timestamp_utc": "2026-11-02T23:59:23+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:59:23 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 4 secs    "
+    },
+    {
+      "line": 1090,
+      "timestamp_local": "2026-11-03T00:59:27+01:00",
+      "timestamp_utc": "2026-11-02T23:59:27+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 00:59:27 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_SEQ_NUM_INVALID ARPT/ Using BATT (Charge:27%) 5 secs    "
+    },
+    {
+      "line": 1091,
+      "timestamp_local": "2026-11-03T00:59:32+01:00",
+      "timestamp_utc": "2026-11-02T23:59:32+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 00:59:32 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 766 secs  "
+    },
+    {
+      "line": 1092,
+      "timestamp_local": "2026-11-03T01:12:18+01:00",
+      "timestamp_utc": "2026-11-03T00:12:18+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:12:18 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:27%) 16 secs   "
+    },
+    {
+      "line": 1093,
+      "timestamp_local": "2026-11-03T01:12:34+01:00",
+      "timestamp_utc": "2026-11-03T00:12:34+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:12:34 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 1056 secs "
+    },
+    {
+      "line": 1094,
+      "timestamp_local": "2026-11-03T01:30:10+01:00",
+      "timestamp_utc": "2026-11-03T00:30:10+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:30:10 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:27%) 2 secs    "
+    },
+    {
+      "line": 1095,
+      "timestamp_local": "2026-11-03T01:30:12+01:00",
+      "timestamp_utc": "2026-11-03T00:30:12+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:30:12 +0100 Sleep               \tEntering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 907 secs  "
+    },
+    {
+      "line": 1096,
+      "timestamp_local": "2026-11-03T01:45:19+01:00",
+      "timestamp_utc": "2026-11-03T00:45:19+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:45:19 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:27%) 2 secs    "
+    },
+    {
+      "line": 1097,
+      "timestamp_local": "2026-11-03T01:45:21+01:00",
+      "timestamp_utc": "2026-11-03T00:45:21+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:45:21 +0100 Sleep               \tEntering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 283 secs  "
+    },
+    {
+      "line": 1098,
+      "timestamp_local": "2026-11-03T01:50:04+01:00",
+      "timestamp_utc": "2026-11-03T00:50:04+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:50:04 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_UNEXPECT_TCP_FLAG ARPT/ Using BATT (Charge:27%) 20 secs   "
+    },
+    {
+      "line": 1099,
+      "timestamp_local": "2026-11-03T01:50:24+01:00",
+      "timestamp_utc": "2026-11-03T00:50:24+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:50:24 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 2 secs    "
+    },
+    {
+      "line": 1100,
+      "timestamp_local": "2026-11-03T01:50:26+01:00",
+      "timestamp_utc": "2026-11-03T00:50:26+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:50:26 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_UNEXPECT_TCP_FLAG ARPT/ Using BATT (Charge:27%) 5 secs    "
+    },
+    {
+      "line": 1101,
+      "timestamp_local": "2026-11-03T01:50:31+01:00",
+      "timestamp_utc": "2026-11-03T00:50:31+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:50:31 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 2 secs    "
+    },
+    {
+      "line": 1102,
+      "timestamp_local": "2026-11-03T01:50:33+01:00",
+      "timestamp_utc": "2026-11-03T00:50:33+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 01:50:33 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty centauri-alpha E_TKO_SEQ_NUM_INVALID ARPT/ Using BATT (Charge:27%) 5 secs    "
+    },
+    {
+      "line": 1103,
+      "timestamp_local": "2026-11-03T01:50:38+01:00",
+      "timestamp_utc": "2026-11-03T00:50:38+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 01:50:38 +0100 Sleep               \tEntering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 1007 secs "
+    },
+    {
+      "line": 1104,
+      "timestamp_local": "2026-11-03T02:07:25+01:00",
+      "timestamp_utc": "2026-11-03T01:07:25+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 02:07:25 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:27%) 2 secs    "
+    },
+    {
+      "line": 1105,
+      "timestamp_local": "2026-11-03T02:07:27+01:00",
+      "timestamp_utc": "2026-11-03T01:07:27+00:00",
+      "event": "Sleep",
+      "text": "2026-11-03 02:07:27 +0100 Sleep               \tEntering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:27%) 351 secs  "
+    },
+    {
+      "line": 1106,
+      "timestamp_local": "2026-11-03T02:13:18+01:00",
+      "timestamp_utc": "2026-11-03T01:13:18+00:00",
+      "event": "DarkWake",
+      "text": "2026-11-03 02:13:18 +0100 DarkWake            \tDarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:27%)           "
+    }
+  ],
+  "independent_fidelity_controls": [
+    {
+      "name": "v4-cpu-control16",
+      "experiment_path": "work/v3/v4-cpu-control16/experiment.json",
+      "experiment_sha256": "0f30e48a06adcf6921052dba43c6d94bd7cdad063fda20ea002c3f0656cbd032",
+      "guard_path": "work/v3/v4-cpu-control16/guard.json",
+      "guard_sha256": "8043d1a5feac136efb0ad6366a784d2c731d804aa4123cddabdc9819b8cfd4d3",
+      "started_at_utc": "2026-11-02T23:02:47.435019+00:00",
+      "finished_at_utc": "2026-11-02T23:06:21.185091+00:00",
+      "full_numeric_fidelity_passed": true,
+      "full_logits_elements": 2478080,
+      "observed_state_writes_passed": true,
+      "compared_state_events": 3792,
+      "power_event_source_lines_within_interval": [],
+      "unaffected_by_later_e8_sleep_interruption": true,
+      "throughput_proof": false
+    },
+    {
+      "name": "v4-tail5-lock256-fidelity16",
+      "experiment_path": "work/v3/v4-tail5-lock256-fidelity16/experiment.json",
+      "experiment_sha256": "6771947d1c588f61ed2f126ca633358a56155baabd5cca912f4101ee6a1c555a",
+      "guard_path": "work/v3/v4-tail5-lock256-fidelity16/guard.json",
+      "guard_sha256": "8b09a97b853a09a8a14d7456df7d03b07383ed90208e01682965a3b8a4558249",
+      "started_at_utc": "2026-11-02T23:06:31.273510+00:00",
+      "finished_at_utc": "2026-11-02T23:09:16.623408+00:00",
+      "full_numeric_fidelity_passed": true,
+      "full_logits_elements": 2478080,
+      "observed_state_writes_passed": true,
+      "compared_state_events": 3792,
+      "power_event_source_lines_within_interval": [],
+      "unaffected_by_later_e8_sleep_interruption": true,
+      "throughput_proof": false
+    }
+  ],
+  "current_source_inspection": {
+    "path": "work/airllm-next/research/glm53_gpu_v3/benchmark_native.py",
+    "sha256": "c44cf139f5cf96e4f8e790470283576a11a6853732af180a83e5a3286d7a5576",
+    "mtime_utc": "2026-11-03T01:25:09.770321+00:00",
+    "timing_lines": {
+      "started_at_utc": 114,
+      "counter_start": 134,
+      "counter_total": 312,
+      "system_after": 316
+    },
+    "scope": "Current source inspected only; historical-run provenance is the per-report recorded source SHA. Current code is not silently substituted for either historical recorded version."
+  }
+}

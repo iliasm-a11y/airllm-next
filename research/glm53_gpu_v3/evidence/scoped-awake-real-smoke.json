@@ -1,0 +1,26 @@
+{
+  "dummy_child_exit": 0,
+  "idle_assertion": {
+    "started": true,
+    "cleaned_up": true,
+    "command": [
+      "/usr/bin/caffeinate",
+      "-i",
+      "-w",
+      "63893"
+    ],
+    "helper_pid": 63894,
+    "helper_create_time": 1793670162.271896,
+    "target_pid": 63893,
+    "target_create_time": 1793670162.270722,
+    "owner_signal": "SIGTERM",
+    "helper_alive_before_owner_signal": true,
+    "helper_exit_code": -15,
+    "cleanup_kind": "owner_term",
+    "target_exited_at_cleanup": false,
+    "exit_qualified": true
+  },
+  "model_launched": false,
+  "gpu_used": false,
+  "passed": true
+}

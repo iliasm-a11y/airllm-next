@@ -1,0 +1,14 @@
+--- a/src/llama-mmap.cpp
++++ b/src/llama-mmap.cpp
+@@ -485,6 +485,11 @@
+         int flags = MAP_SHARED;
+         if (numa) { prefetch = 0; }
+ #if defined(__APPLE__)
++        const char * streaming = std::getenv("AIRLLM_MMAP_NOCACHE");
++        if (streaming && std::strcmp(streaming, "1") == 0) {
++            flags |= MAP_NOCACHE;
++            LLAMA_LOG_INFO("%s: AIRLLM_MMAP_NOCACHE=1, low-locality mapping hint enabled\n", __func__);
++        }
+         const char * mmap_demand = std::getenv("AIRLLM_MMAP_DEMAND");
+         if (prefetch > 0 && mmap_demand && std::strcmp(mmap_demand, "1") == 0) {
+             LLAMA_LOG_INFO("%s: AIRLLM_MMAP_DEMAND=1, full-file prefetch disabled\n", __func__);
