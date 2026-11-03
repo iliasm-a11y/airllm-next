@@ -1,63 +1,55 @@
-# RONIN M5 — résultats clos et validation en cours
+# RONIN M5 — résultats mesurés et qualification en cours
 
-État du 3 novembre 2026. Les objectifs A (GPU complet), B (cache exact utile) et C (deux agents utiles jusqu’à EOS) restent indépendants et non qualifiés à cette étape. Les composants synthétiques, les captures de fidélité et les tâches fonctionnelles ne sont pas interchangeables.
+État du 2026-11-03T16:43:14.321334+00:00. Les objectifs A (préfill GPU complet plus rapide), B (cache exact avec gain net) et C (deux agents utiles jusqu’à EOS) restent **non qualifiés**. Le CPU10/GPU0 et le slot unique de production sont conservés.
 
-## Résultats matériels clos
+## Résultats clos sur le Mac
 
-| Essai | Résultat et portée |
+| Essai | Mesure et verdict |
 |---|---|
-| RONIN fonctionnel CPU10/GPU0, batch8, Max | Agent 1 : 522 tokens, préfill 1238,015911 s, 171 IDs puis délai 2700 s ; aucun EOS ni réponse finale utile. Agent 600 et retour1 non lancés. |
-| Témoin natif CPU8 sans cache | Trois prompts gelés 1 → 600 → 1 : 521/542/521 tokens, préfills 1285,763678 / 1322,539045 / 1314,183277 s ; quatre vrais échantillons greedy diagnostiques par requête. Code 0, secteur/intégrité validés ; aucune qualification fonctionnelle EOS. |
-| Rejeu numérique du témoin | Agent 1 request0 contre2 : 154 880 logits finis, état sérialisé, captures, 15 642 écritures observées, continuations et post-état exacts. Rejeu intra-bras, pas comparaison indépendante de variantes. |
-| Préfixe commun | 600 identités natives Max, 211 IDs communs. Trois sérialisations complètes à208 identiques : 156 739 588 octets (149,478519 Mio). Première requête après restauration exacte sur logits/état/continuation ; bras arrêté ensuite sur le swap global, cache non qualifié. |
-| Q8 Metal représentatif | M1536/K4096, N8/16/32/64/128 : 380 928 sorties bit à bit face à ARM nrc2 et au graphe CPU10. Poids/activations synthétiques, pas un préfill GLM complet. |
-| Q2_K Metal représentatif | M2048/K4096, N8/16/32 : 114 688 sorties bit à bit face au dot ARM nrc1. Poids synthétiques, quantification d’activation CPU native. Pas de routes/logits/états de modèle mesurés. |
+| Agent1 RONIN CPU8, Max | Prompt complet522 tokens, préfill1238,015911s,171 IDs de sortie puis délai2700s. Pas de réponse finale utile ni EOS. Agent600 et retour1 non lancés. |
+| Témoin natif CPU8 | Trois prompts gelés521/542/521 tokens, préfills1285,763678 /1322,539045 /1314,183277s. Un modèle/slot, quatre vrais échantillons greedy diagnostiques par requête, code0. Ce diagnostic ne qualifie pas les tâches fonctionnelles. |
+| Rejeu CPU8 | Les154880 logits finis, états sérialisés, routes/routeurs/KDA, écritures observées, continuations et post-état sont exacts pour request0→2. Il s’agit d’un rejeu dans le témoin. |
+| CPU16 original | Premier préfill820,050836167s, mais154880 logits différents, maxabs1,61790836 et état final différent. Première différence capturée token512/KDA0. Annulation contrôlée, native−15. Aucun gain retenu. |
+| CPU16 avec queue corrigée | Deux requêtes terminées en823,460549791 /876,08467325s, logits/états/continuations bruts exacts. Arrêt pendant retour1 à2231,936556s : croissance globale du swap216727552B (206,6875Mio)>32Mio. Bras incomplet non qualifié, native−15. |
+| CPU32 avec frontières absolues | Nouveau helper réellement compilé et lié au témoin. La fenêtre complète128 tokens diverge dans les118 séries capturées. KDA0/token0 :8192 valeurs différentes, maxabs6,379559636e−6. Annulation contrôlée à≈278,4s ; aucun prompt terminé, swap observé0. Ni batch32 ni cache de ce profil qualifiés. |
+| Préfixe commun | 600 identités avec template natif et Max ;211 IDs communs, frontière208. Trois sérialisations complètes à208 identiques :156739588B (149,478519Mio), SHA256 `4c4d6f24b2cf3c4f30a7894b8609035960a3ec5687521c942aa6a578e2e5a3cd`. |
+| Restore8 | Préfixe208 calculé une fois en449,387450125s. Première requête restaurée exacte sur logits/état/continuations. Arrêt à1955,907108334s sur41025536B de croissance globale de swap (39,125Mio)>32Mio, avant la fin du deuxième prompt. Bras incomplet, cache non qualifié. |
 
-Les tolérances Metal existantes sont aussi satisfaites sur ces composants. Elles ne sont pas élargies. Les premiers petits tests Q8 M10/14/32 avaient montré des différences avec certains chemins du dispatcherCPU : celles-ci ne constituent pas à elles seules un rejet global GPU. Aucune mesure de composant n’établit un gain CPU/GPU sur les prompts complets. Les poids préparés sont chauds ; aucune accélération du SSD n’en est déduite.
+Le CPU32 atteint les frontières128/208/256/384/512 et préserve les petites queues CPU8. Cela corrige la géométrie du protocole32+, mais pas sa fidélité numérique. L’écart capturé dans KDA ne prouve pas que KDA est sa cause : une projection ou réduction en amont reste une hypothèse à instrumenter. Les captures et les reçus d’arrêt sont conservés.
 
-## Ressources et provenance
+## GPU réellement exécuté
 
-Les deux premières campagnes GLM closes respectent les gardes de ressources observées : RSS échantillonnée maximale6029656064 octets pour la tentative fonctionnelle, 5 608 177 664 pour le témoin natif ; croissance de swap observée0 dans les deux cas. Les alertes de pression 2 sont conservées et admises seulement dans le domaine contextuel du watchdog existant. Cela ne signifie pas que la pression est restée normale. Les limites 8, 5 Gio/32 Mio, les réserves, contrôles secteur/couvercle/horloges, intégrité et identitéPID ne sont pas désactivés.
+Le provider expérimental Q8 a été intégré au vrai dispatcher CPU et compilé dans un runtime isolé. Les poids restent dans leur buffer CPU original ; quatre buffers Metal fixes totalisent8028160B. Q2_K/MoE, KDA, mHC et les autres opérations restent CPU. La présence de `n_gpu_layers=0` n’est pas utilisée pour nier les commandes GPU observées.
 
-Le verrou UID du premier témoin natif a été acquis tardivement et n’a pas été transmis rétroactivement au helper. Cette limite est conservée dans son reçu. Le nouveau superviseur acquiert la propriété avant lancement et transmet son descripteur ; ses tests synthétiques couvrent également split. CPU16 et restore8 ont en plus une observation OS du descripteur réel dans le helper.
+La première suite23 cas a été refusée avant tout enfant sous pression2. Après retour réel à1, huit paires CPU/GPU ont terminé :2490368 sorties finies bit à bit et48 commandes GPU terminales. Le neuvième cas M8192/K4096/N64 a dépassé le plafond de composant128Mio (138133504B observés) et a été arrêté. Ce bras reste un échec ; ses formes64/128 les plus grandes ne sont pas qualifiées.
 
-Le modèle original Q2_K_S reste externe et inchangé. Le runtimeV4 hérité est épinglé à llama.cpp 3f8af15a76ac8675812e856da45454bafc90f12c avec16 patches. Une reconstruction de sources isolée a retrouvé l’ordre et les16 SHA des patches, puis les13 empreintes finales du build. Aucun runtime natif n’a été reconstruit pour cette vérification. Les bibliothèques effectivement mesurées et les en-têtes du helper restent identifiés séparément ; une copie de sources ne constitue pas une validation d’un nouveau binaire.
+Une suite distincte de21 cas exclut explicitement ces deux grandes formes. Elle exécute cinq fois chaque graphe avec les mêmes poids synthétiques résidents, distingue la première opération des quatre suivantes et exige le même SHA pour chaque répétition. Elle a terminé en11,519106209s :20 comparaisons finales,2903040 sorties finies bit à bit,60 opérations GPU publiées et266 commandes terminales, dont une tuile avant un refus fatal délibéré. Ce refus ne publie aucune sortie partielle et ne repart pas sur CPU après soumission. Pics observés : enfant133070848B, contrôleur42909696B, allocations Metal8486912B ; croissance globale de swap0, secteur et intégrité des sources validés.
 
-## CPU16 et restore8 refusés ; correction CPU16 isolée
+Sur les12 paires normales GPU, la médiane des quatre répétitions résidentes est **3,7675 à38,9248 fois plus lente que le CPU10**. Exemple M8192/K4096/N32 : CPU0,0031958755s, GPU0,05952525s. Ces temps incluent les coûts du graphe et du provider, pas seulement le timestamp GPU. Aucun débit SSD ou gain GLM n’en est déduit. Le provider scalaire reste OFF et n’est pas retenu pour un essai GLM coûteux.
 
-L’alimentation secteur a été rétablie après le refus sur batterie. Le premier prompt CPU16 de 521 tokens se termine en 820,050836167 s mais échoue au critère CPU bit à bit : 154 880 logits différents, écart maximal 1,61790836 et état final différent. Les quatre tokens greedy sont identiques. Le contrôleur a donc arrêté le bras pendant la requête suivante ; le wrapper reste `cancelled`, le natif `-15` et le superviseur `failed`, sans violation mémoire. Aucun gain n’est retenu.
+Une variante séparée Metal4/TensorOps int8×int8→int32 a également été réellement exécutée. Après deux refus du compilateur (arguments temporaires puis type `char` distinct de `int8_t`), la version corrigée compile son shader et son pipeline. Elle garde un dot entier par bloc32 et une FMA FP32 dans l’ordre CPU. La suite21 cas termine en10,632500917s avec2903040 sorties finies bit à bit,60 publications et266 commandes terminales. Pic enfant133103616B, allocations Metal8486912B, swap0 ; secteur/intégrité validés. Les graphes résidents normaux restent **2,3524 à25,3694 fois plus lents que le CPU**. Exemple M8192/K4096/N32 : CPU0,0027420415s, TensorOps0,0251155625s. Le temps GPU cumulé des265 commandes normales passe à0,139173248s, mais ce compteur isolé ne mesure pas le coût total du graphe. La même restriction des deux plus grandes formes reste explicite. Aucun préfill GLM complet ni bénéfice de bout en bout n’est qualifié.
 
-Les contrôles précoces 32/128 tokens et les checkpoints 128/208/256/384/512 étaient exacts. La première divergence capturée est au token 512, KDA couche 0, avec un écart maximal de 9,31e-10 ; des routes ordonnées changent couche 4, puis l’ensemble d’experts change au token 513. La queue 9 contre 8+1 explique une hypothèse forte de changement de chemin nrc1/nrc2 ; elle reste à vérifier par une correction isolée et de nouvelles captures complètes. Les seuils ne sont pas élargis. [Preuves du rejet](evidence/cpu16-rejected/README.md).
+Les métadonnées de backend peuvent soumettre des commandes Metal vides d’initialisation. Les champs historiques «0 commandes» signifient0 dispatch de matrice du provider, sans garantir l’absence de toute activité du périphérique.
 
-L’essai de cache a employé indépendamment le chemin CPU8 inchangé. Les 208 tokens communs ont été calculés une fois en 449,387450125 s, puis le snapshot complet de 156 739 588 octets a été capturé en 0,061756958 s au total. Son SHA correspond aux trois checkpoints de référence. La première lecture native prend 0,004909917 s, et le reset/restauration/vérification complet 0,067238 s. Pour la première requête terminée, les fichiers bruts des 154 880 logits, de l’état final, des quatre vecteurs de continuation et du post-état sont exacts. Ce contrôle partiel n’est pas la comparaison complète des captures, écritures et trois requêtes. Le 3 novembre à 15:17:02 UTC, après 1955,907108334 s, la croissance du swap global atteint 41 025 536 octets (39,125 Mio), au-delà des 32 Mio autorisés. Le watchdog arrête le helper par SIGTERM (natif -15, wrapper/superviseur failed). La deuxième requête reste à 536/542 tokens ; la troisième n’est pas lancée. RSS au déclenchement 3 092 217 856 octets ; secteur/intégrité passent. Tous les processus possédés sont ensuite absents et le verrou UID est libéré. Cette mesure globale n’établit pas une cause exclusivement liée au modèle. Aucun cache ni gain total n’est retenu. [Preuves de l’arrêt](evidence/restore8-swap-limit/README.md).
+## Réponses aux douze questions
 
-La correction de la queue CPU16 a maintenant un exécutable isolé réellement compilé (`b2404d7d82d4c857c292c5f8cab7f7c697d1d638528dd682695adf0687db43b8`). Les cinq smokes de paramètres 8/16/32/64/128 passent sans chargement de modèle ; les en-têtes, sources et bibliothèques sont vérifiés avant/après. Les 18 tests de géométrie/refus/provenance passent. Cela ne qualifie aucune arithmétique de modèle : les nouvelles captures restent à exécuter. Le helper, wrapper et runtime du témoin restent inchangés.
+1. **Le GPU accélère-t-il GLM complet ?** Non démontré. Les providers scalaire et TensorOps sont fidèles sur les composants admissibles, mais plus lents que le CPU pour le coût total mesuré. Aucun des deux n’est retenu pour un long essai GLM en l’état.
+2. **Meilleur batch fidèle ?** Inconnu. CPU8 est le témoin complet ; CPU16 corrigé reste incomplet et CPU32 est rejeté numériquement.64/128 ne sont pas qualifiés sur GLM.
+3. **Préfill économisé ?** Aucun gain qualifié. Les durées partielles CPU16 ne constituent pas une sélection stable ni un gain de décodage.
+4. **208 tokens réutilisables exactement ?** Snapshot complet autonome construit et première restauration exacte ; bras complet et gain net non qualifiés. Cache désactivé.
+5. **Coût sauvegarde/restauration ?** Capture totale0,061756958s ; sauvegarde native0,009878666s ; première lecture native0,004909917s ; reset/restauration/vérification0,067238s. Taille149,478519Mio, sous plafond256Mio. Points de contrôle du témoin :0,121350125 /0,114084291 /0,195911333s. Ces opérations ne sont pas toutes le même chronométrage.
+6. **Gain GPU+cache ?** Non mesuré, aucune addition de gains supposée.
+7. **Deux EOS utiles ?** Non obtenus. Agent1 a produit171 IDs partiels ; aucun succès agent600 revendiqué.
+8. **Isolation correcte ?** Identités/prompts et rejeu natif gelé contrôlés. Les historiques fonctionnels et la séquence complète après restauration restent non qualifiés.
+9. **Protections respectées ?** RSS8,5Gio, swap32Mio, pression/réserves, secteur/continuité/intégrité et contrôle des processus restent appliqués. Les deux bras swap sont des échecs arrêtés, pas des succès sans dépassement. La suite GPU initiale a également déclenché son plafond additionnel128Mio. Tous les processus possédés clos sont absents. Le verrou UID du témoin CPU8 fut acquis tardivement ; cette limite historique reste explicite.
+10. **Configuration RONIN retenue ?** CPU10/GPU0, un modèle/slot ; aucune nouvelle optimisation en production.
+11. **Prêt pour le pilote fonctionnel ?** Non, deux réponses utiles jusqu’à EOS et la validation complète manquent.
+12. **Limites pour600 agents ?** Modèle≈110Go/16Gio, préfill CPU8≈21–22min sur les prompts gelés, décodage lent, un slot physique, gros lots divergents ou instables et cache complet non qualifié. Aucune performance600 n’est extrapolée.
 
-Le snapshot reste unique, immuable, complet (`NONE`) et limité à 256 Mio ; scratch, états actifs et captures sont budgétés séparément. La séquence native ne sauvegarde ni sampler ni logits : suffixe privé non vide et sampler neuf sont obligatoires. `PARTIAL_ONLY` n’est pas une base autonome après reset.
+Les hausses de swap sont des compteurs système globaux ; elles ne sont pas attribuées exclusivement au modèle. Les lectures physiques du SSD et les décompositions de temps non instrumentées restent inconnues. Les annulations gardent leur classification native et les réponses partielles ne sont jamais reclassées EOS.
 
-Pour 32+, les frontières du helper `split` à 208 diffèrent de `full` et certains checkpoints requis ne sont jamais atteints. [L’audit statique](split32_protocol_audit.md) décrit ce blocage structurel. L’admission de `split` par le lanceur ne corrige pas le protocole numérique. Aucun essai long de ce chemin ne doit être lancé comme s’il était qualifiable en l’état.
+## Livraison et intégration
 
-## Verdicts aux douze questions
+[PR23 en brouillon](https://github.com/iliasm-a11y/airllm-next/pull/23), sans merge de main ni basculement de production. Les dernières preuves de reprise sont dans [Preuves-reprise-M5.json](../glm53_m5_candidates/resumed-summary.json) et les [métriques](../glm53_m5_candidates/metrics-resumed.json). Les archives CPU8 et les anciens candidats restent des instantanés historiques explicitement gelés ; leur CI ne qualifie pas les nouveaux shaders.
 
-1. GPU plus rapide sur GLM complet : non démontré ; composants multi-token exacts seulement.
-2. Meilleur batch : inconnu ; CPU8 témoin clos ; CPU16 original rejeté, correction compilée, non qualifiée.
-3. Économie de préfill : non mesurée, pas de ratio entre UUID/instrumentations différents.
-4. Réutilisation exacte208 : non qualifiée ; première requête exacte puis arrêt SWAP_LIMIT avant la fin du bras.
-5. Coût : points de contrôle208 en 0,121350125 / 0,114084291 / 0,195911333 s ; capture de cache totale 0,061756958 s, première lecture native 0,004909917 s et remise en état complète 0,067238 s ; bras complet refusé, aucun gain net qualifié.
-6. BénéficeGPU+cache : non mesuré.
-7. Deux EOS utiles : non obtenus ; 171 IDs partiels dans la tentative fonctionnelle.
-8. Isolation : rejeu natif gelé exact ; historiques complets et isolation après restore non qualifiés.
-9. Gardes : les deux premiers runs clos respectent les ressources ; restore8 est arrêté par SWAP_LIMIT. Secteur/intégrité passent ; couverture UID tardive du premier témoin explicitement limitée.
-10. ConfigurationRONIN : CPU10/GPU0, slot1 conservé ; aucune nouvelle sélection production.
-11. Pilote fonctionnel : pas prêt sans les deux EOS utiles et le reste de la qualification.
-12. Limites600 : modèle110 Go/16 Gio, 20–22min de préfill CPU8, décodage de progression≈0,117 token/s, un slot, GPU/cache complets non qualifiés. Aucune performance600 n’est extrapolée.
-
-## Preuves et intégration
-
-- [Tentative fonctionnelle interrompue](evidence/agents-cpu8-timeout/summary.json).
-- [Témoin natif clos](evidence/native-full8-closed/README.md).
-- [Composants Q8/Q2 mesurés](evidence/metal-representative-closed/README.md).
-- [Reconstruction des sourcesV4](evidence/source-reconstruction/README.md).
-- [LanceurUID](UID_SUPERVISOR.md), [audit snapshot](snapshot_audit.md), [audit Metal](metal_audit.md).
-
-Les sources et benchmarks restent expérimentaux. Aucun merge dans main, aucune activation automatique en production, aucun poids ou secret publié. Les métriques non mesurées restent null et les arrêts partiels/error/cancelled conservent leur classification.
+Le cache commun reste unique/immuable, avec sérialisation complète `NONE`. `PARTIAL_ONLY` n’est pas un snapshot autonome. Le sampler et les logits ne sont pas sauvegardés ; un suffixe privé non vide et un sampler neuf restent nécessaires. Les adaptateurs HTTP/RONIN préparés restent désactivés tant que leurs preuves natives et leur transport propre ne sont pas qualifiés.

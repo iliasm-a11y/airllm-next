@@ -1,0 +1,60 @@
+--- a/research/glm53_batched_prefill/native_prefill.cpp
++++ b/research/glm53_batched_prefill/native_prefill.cpp
+@@ -1,3 +1,4 @@
++// ISOLATED UNQUALIFIED candidate: preserve the CPU8 odd-tail parity domain.
+ // Research diagnostic: real multi-token prefill and full sequence snapshots.
+ // No production routing or arithmetic changes. The Python owner enforces guards.
+ #include "llama.h"
+@@ -25,6 +26,16 @@
+ 
+ using json = nlohmann::json;
+ using steady = std::chrono::steady_clock;
++static const char * const prefill_chunk_policy = "cpu8-tail-compatible-v1";
++// Full8/16/32/64/128 chunks stay unchanged. A short odd tail>8 becomes its
++// multiple-of8 prefix then its odd1/3/5/7 remainder, matching CPU8 parity.
++// An odd tail<=8 stays whole. This preserves eligibility, not actual nrc.
++static int prefill_take(int ub, int remaining) {
++    if ((ub != 8 && ub != 16 && ub != 32 && ub != 64 && ub != 128) || remaining <= 0)
++        throw std::runtime_error("candidate requires an admitted positive microbatch");
++    const int take = std::min(ub, remaining);
++    return remaining < ub && take > 8 && take % 2 != 0 ? take - take % 8 : take;
++}
+ #include "../glm53_gpu_v3/state_capture.inc"
+ static double seconds(steady::time_point a) { return std::chrono::duration<double>(steady::now()-a).count(); }
+ static std::string hash_bytes(const void * data, size_t bytes) {
+@@ -113,7 +124,8 @@
+         {"yarn_ext_factor",cp.yarn_ext_factor},{"yarn_attn_factor",cp.yarn_attn_factor},{"yarn_beta_fast",cp.yarn_beta_fast},
+         {"yarn_beta_slow",cp.yarn_beta_slow},{"yarn_orig_ctx",cp.yarn_orig_ctx},{"swa_full",cp.swa_full},{"kv_unified",cp.kv_unified},
+         {"ctx_type",int(cp.ctx_type)},{"pooling_type",int(cp.pooling_type)},{"attention_type",int(cp.attention_type)},
+-        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers}};
++        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers},
++        {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",1},{"tail_reference_microbatch",8}};
+ }
+ 
+ int main(int argc,char ** argv) {
+@@ -144,6 +156,7 @@
+         o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
+         for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
+         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
++            {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_qualified",false},{"tail_reference_microbatch",8},
+             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
+             {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
+             {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
+@@ -186,7 +199,8 @@
+         auto decode=[&](int request,int first,int end,const char * phase) {
+             o.request=request;o.phase=phase;
+             for(int offset=first;offset<end;) {
+-                o.offset=offset;const int take=std::min(ub,end-offset);auto start=steady::now();const auto before=usage();
++                o.offset=offset;const int unadjusted_take=std::min(ub,end-offset);
++                const int take=prefill_take(ub,end-offset);auto start=steady::now();const auto before=usage();
+                 o.input_tokens=take;o.batch_index=o.next_batch[request]++;
+                 auto batch=llama_batch_get_one(ids[request].data()+offset,take);
+                 std::vector<int8_t> output_flags(take,0);
+@@ -194,6 +208,7 @@
+                 batch.logits=output_flags.data();
+                 const int rc=llama_decode(ctx,batch);llama_synchronize(ctx);
+                 o.batches<<json({{"request",request},{"phase",phase},{"offset",offset},{"tokens",take},
++                    {"unadjusted_take",unadjusted_take},{"odd_tail_split",take!=unadjusted_take},{"prefill_chunk_policy",prefill_chunk_policy},
+                     {"seconds",seconds(start)},{"returncode",rc},{"before",before},{"after",usage()}}).dump()<<'\n';o.batches.flush();
+                 if(rc)throw std::runtime_error("native decode failed");offset+=take;
+                 if(o.diagnostic && (offset%128==0 || offset==208 || offset==int(ids[request].size()))) {

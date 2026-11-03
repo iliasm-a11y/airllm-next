@@ -1,0 +1,151 @@
+--- a/research/glm53_batched_prefill/native_prefill.cpp
++++ b/research/glm53_batched_prefill/native_prefill.cpp
+@@ -1,6 +1,8 @@
++// ISOLATED UNQUALIFIED candidate: preserve the CPU8 odd-tail parity domain.
+ // Research diagnostic: real multi-token prefill and full sequence snapshots.
+ // No production routing or arithmetic changes. The Python owner enforces guards.
+ #include "llama.h"
++#include <mach-o/dyld.h>
+ #include "ggml-backend.h"
+ #include "snapshot.h"
+ #include <nlohmann/json.hpp>
+@@ -25,6 +27,16 @@
+ 
+ using json = nlohmann::json;
+ using steady = std::chrono::steady_clock;
++static const char * const prefill_chunk_policy = "cpu8-tail-compatible-v1";
++// Full8/16/32/64/128 chunks stay unchanged. A short odd tail>8 becomes its
++// multiple-of8 prefix then its odd1/3/5/7 remainder, matching CPU8 parity.
++// An odd tail<=8 stays whole. This preserves eligibility, not actual nrc.
++static int prefill_take(int ub, int remaining) {
++    if ((ub != 8 && ub != 16 && ub != 32 && ub != 64 && ub != 128) || remaining <= 0)
++        throw std::runtime_error("candidate requires an admitted positive microbatch");
++    const int take = std::min(ub, remaining);
++    return remaining < ub && take > 8 && take % 2 != 0 ? take - take % 8 : take;
++}
+ #include "../glm53_gpu_v3/state_capture.inc"
+ static double seconds(steady::time_point a) { return std::chrono::duration<double>(steady::now()-a).count(); }
+ static std::string hash_bytes(const void * data, size_t bytes) {
+@@ -103,9 +115,48 @@
+     cp.n_threads=cp.n_threads_batch=10;cp.op_offload=false;cp.offload_kqv=false;cp.moe_cache_size=0;
+     return cp;
+ }
++static json bridge_description() {
++    ggml_backend_load_all();
++    auto * reg=ggml_backend_reg_by_name("CPU");
++    auto features=reg ? (ggml_backend_get_features_t)ggml_backend_reg_get_proc_address(reg,"ggml_backend_get_features") : nullptr;
++    bool compiled=false;
++    if(features) for(auto * item=features(reg);item && item->name;++item) {
++        if(std::string(item->name)=="CPU_METAL_Q8_BRIDGE_COMPILED" && item->value && std::string(item->value)=="1")compiled=true;
++    }
++    const char * flag=std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++    const bool requested=flag && std::string(flag)=="1";
++    const char * key=std::getenv("AIRLLM_CPU_METAL_Q8_CANONICAL_SHA256");
++    return {{"execution_backend",requested ? "native_cpu_with_metal_q8_bridge" : "native_cpu"},
++        {"cpu_metal_q8_bridge_compiled",compiled},{"gpu_execution_possible",requested && compiled},
++        {"gpu_bridge_requested",requested},{"gpu_policy_sha256",key ? key : ""},
++        {"weight_storage_policy","cpu_originals_bounded_row_tiles"},{"permanent_gpu_weight_bytes",0}};
++}
++static json native_linkage_description() {
++    ggml_backend_load_all();json images=json::array();
++    for(uint32_t index=0;index<_dyld_image_count();++index) {
++        const char * name=_dyld_get_image_name(index);if(!name)continue;
++        const std::filesystem::path image=name;const auto base=image.filename().string();
++        if(base.rfind("libggml",0)!=0 && base.rfind("libllama",0)!=0)continue;
++        const auto canonical=std::filesystem::weakly_canonical(image).string();
++        if(std::find(images.begin(),images.end(),canonical)==images.end())images.push_back(canonical);
++    }
++    return {{"loaded_native_images",images}};
++}
++static json native_resource_context() {
++    const char * flag=std::getenv("AIRLLM_CPU_METAL_Q8_BRIDGE");
++    const bool requested=flag && std::string(flag)=="1";
++    json baseline=nullptr;
++    if(requested) {
++        const char * raw=std::getenv("AIRLLM_CPU_METAL_Q8_SWAP_BASELINE_BYTES");
++        if(!raw || !*raw || std::strlen(raw)>20 || std::strspn(raw,"0123456789")!=std::strlen(raw))
++            throw std::runtime_error("explicit initial watchdog swap baseline required");
++        baseline=uint64_t(std::stoull(raw));
++    }
++    return {{"schema",1},{"gpu_bridge_requested",requested},{"native_guard_swap_baseline_bytes",baseline}};
++}
+ static json parameter_description(int ub) {
+     const auto cp=context_parameters(ub);
+-    return {{"n_ctx",cp.n_ctx},{"n_batch",cp.n_batch},{"n_ubatch",cp.n_ubatch},{"n_seq_max",cp.n_seq_max},
++    json described={{"n_ctx",cp.n_ctx},{"n_batch",cp.n_batch},{"n_ubatch",cp.n_ubatch},{"n_seq_max",cp.n_seq_max},
+         {"n_rs_seq",cp.n_rs_seq},{"n_outputs_max",cp.n_outputs_max},{"n_outputs_max_per_seq",cp.n_outputs_max_per_seq},
+         {"n_threads",cp.n_threads},{"n_threads_batch",cp.n_threads_batch},{"type_k",int(cp.type_k)},{"type_v",int(cp.type_v)},
+         {"flash_attn",int(cp.flash_attn_type)},{"offload_kqv",cp.offload_kqv},{"op_offload",cp.op_offload},{"n_gpu_layers",0},
+@@ -113,7 +164,9 @@
+         {"yarn_ext_factor",cp.yarn_ext_factor},{"yarn_attn_factor",cp.yarn_attn_factor},{"yarn_beta_fast",cp.yarn_beta_fast},
+         {"yarn_beta_slow",cp.yarn_beta_slow},{"yarn_orig_ctx",cp.yarn_orig_ctx},{"swa_full",cp.swa_full},{"kv_unified",cp.kv_unified},
+         {"ctx_type",int(cp.ctx_type)},{"pooling_type",int(cp.pooling_type)},{"attention_type",int(cp.attention_type)},
+-        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers}};
++        {"embeddings",cp.embeddings},{"moe_cache_size",cp.moe_cache_size},{"n_samplers",cp.n_samplers},
++        {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_version",1},{"tail_reference_microbatch",8}};
++    described.update(bridge_description());return described;
+ }
+ 
+ int main(int argc,char ** argv) {
+@@ -122,10 +175,16 @@
+         if(argc==3 && std::string(argv[1])=="--state-parameters") {
+             const int ub=std::stoi(argv[2]);
+             if(ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128)throw std::runtime_error("invalid microbatch");
+-            std::cout<<parameter_description(ub).dump()<<'\n';return 0;
++            auto descriptor=parameter_description(ub);
++            descriptor["native_linkage"]=native_linkage_description();
++            descriptor["native_resource_context"]=native_resource_context();
++            std::cout<<descriptor.dump()<<'\n';return 0;
+         }
+         if(argc!=6) throw std::runtime_error("usage: native-prefill FIRST_GGUF PROMPTS_JSON OUTPUT_DIR MICROBATCH full|split|restore");
+         const int ub=std::stoi(argv[4]); const std::string mode=argv[5];
++        const auto bridge=bridge_description();
++        if(!bridge.at("gpu_bridge_requested").get<bool>() || !bridge.at("gpu_execution_possible").get<bool>())
++            throw std::runtime_error("GPU profile requires the newly compiled CPU Metal Q8 provider; no CPU-only fallback run");
+         if((ub!=8 && ub!=16 && ub!=32 && ub!=64 && ub!=128) || (mode!="full" && mode!="split" && mode!="restore")) throw std::runtime_error("invalid bounded profile");
+         const std::filesystem::path root=argv[3];if(std::filesystem::exists(root))throw std::runtime_error("output exists");
+         std::ifstream input(argv[2]);if(!input || std::filesystem::file_size(argv[2])>16*1024*1024)throw std::runtime_error("invalid prompt file");
+@@ -144,12 +203,16 @@
+         o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
+         for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
+         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
++            {"prefill_chunk_policy",prefill_chunk_policy},{"prefill_chunk_policy_qualified",false},{"tail_reference_microbatch",8},
+             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
+             {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
+             {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
+             {"requests",json::array()},{"state_parameters",parameter_description(ub)},
+             {"output_policy","logits only for the final token of each complete private prompt; no unused vocabulary products per microbatch"},
+             {"scope","prefill/snapshot and bounded greedy continuity diagnostic; no functional agent EOS qualification"}};
++        report.update(bridge);
++        report["native_linkage"]=native_linkage_description();
++        report["native_resource_context"]=native_resource_context();
+         save(root/"report.json",report);
+         ggml_backend_load_all();llama_backend_init(); auto mp=llama_model_default_params();
+         mp.n_gpu_layers=0;mp.load_mode=LLAMA_LOAD_MODE_MMAP;mp.use_extra_bufts=false;
+@@ -186,7 +249,8 @@
+         auto decode=[&](int request,int first,int end,const char * phase) {
+             o.request=request;o.phase=phase;
+             for(int offset=first;offset<end;) {
+-                o.offset=offset;const int take=std::min(ub,end-offset);auto start=steady::now();const auto before=usage();
++                o.offset=offset;const int unadjusted_take=std::min(ub,end-offset);
++                const int take=prefill_take(ub,end-offset);auto start=steady::now();const auto before=usage();
+                 o.input_tokens=take;o.batch_index=o.next_batch[request]++;
+                 auto batch=llama_batch_get_one(ids[request].data()+offset,take);
+                 std::vector<int8_t> output_flags(take,0);
+@@ -194,6 +258,7 @@
+                 batch.logits=output_flags.data();
+                 const int rc=llama_decode(ctx,batch);llama_synchronize(ctx);
+                 o.batches<<json({{"request",request},{"phase",phase},{"offset",offset},{"tokens",take},
++                    {"unadjusted_take",unadjusted_take},{"odd_tail_split",take!=unadjusted_take},{"prefill_chunk_policy",prefill_chunk_policy},
+                     {"seconds",seconds(start)},{"returncode",rc},{"before",before},{"after",usage()}}).dump()<<'\n';o.batches.flush();
+                 if(rc)throw std::runtime_error("native decode failed");offset+=take;
+                 if(o.diagnostic && (offset%128==0 || offset==208 || offset==int(ids[request].size()))) {
+@@ -292,6 +357,8 @@
+             }
+         }
+         report["snapshot"]=snapshot_metrics();
++        report["native_linkage"]=native_linkage_description();
++        report["native_resource_context"]=native_resource_context();
+         report["complete"]=true;save(root/"report.json",report);
+         llama_free(ctx);ctx=nullptr;llama_model_free(model);model=nullptr;llama_backend_free();return 0;
+     } catch(const std::exception & e) {

@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "status": "prepared_not_compiled_not_executed",
+  "created_at_utc": "2026-11-03T15:50:59.333954+00:00",
+  "command": [
+    "/Library/Developer/CommandLineTools/usr/bin/clang++",
+    "-isysroot",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "-std=c++17",
+    "-O3",
+    "-Wno-deprecated-declarations",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/source/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/source/ggml/include",
+    "-I",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/source/vendor",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp",
+    "-L",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/runtime/bin",
+    "-Wl,-rpath,/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/runtime/bin",
+    "-lllama",
+    "-lggml",
+    "-lggml-base",
+    "-lggml-cpu",
+    "-o",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/provider-fixture"
+  ],
+  "binary": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1/provider-fixture",
+  "package_build": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/build-run1",
+  "input_roles": {
+    "fixture_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp",
+    "build_script": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py",
+    "controller_source": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py"
+  },
+  "inputs_sha256": {
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.cpp": "afbee548048a14408437729ca555feea82d4c34352473385d608e5d5c88ddb5d",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/build_fixture.py": "81818bf60ba5117920c5f6f5b5891783876b3d18414a66af1107600b456839b3",
+    "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/fixtures/provider_fixture.py": "f66dc8de5471c6b669ca9d9ac26563817dd540e999a0221f4004aa9960c89751"
+  },
+  "planned_headers": {
+    "include/llama.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/include/llama.h",
+      "sha256": "f07ffbabd3fbe9ef21d97b4d4ce8328d9c2a123ccbf5266f04a3146d70ce4f91"
+    },
+    "ggml/include/ggml.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/ggml/include/ggml.h",
+      "sha256": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91"
+    },
+    "ggml/include/ggml-backend.h": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-cpu-q8-bridge/source/ggml/include/ggml-backend.h",
+      "sha256": "07fd47be0722ac2d121a3dcaa35a2e7062fcc6af4ef362d4829f267fd9f302f3"
+    },
+    "vendor/nlohmann/json.hpp": {
+      "path": "/Users/macbook/Documents/Codex/2026-11-03/files-pasted-by-the-user-mission-2/work/metal-integration-v4-source/source/vendor/nlohmann/json.hpp",
+      "sha256": "08f19bbcc66ff3082f5caf58867b1232987dba98d82e2b29d870722fce42776b"
+    }
+  },
+  "native_libraries_sha256": null,
+  "compile_timeout_seconds": 120,
+  "metadata_smoke_timeout_seconds": 15,
+  "model_loaded": false,
+  "gpu_commands": 0,
+  "build_performed": false,
+  "measured_compile_seconds": null
+}
