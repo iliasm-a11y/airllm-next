@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "total_unique_tests": 143,
+  "new_tests": 17,
+  "existing_regression_tests": 126,
+  "scope": "portable tests only; native metadata helper exercised separately, no successful full inference qualification",
+  "suites": [
+    {
+      "command": "python -m unittest discover -s research/glm53_shared_prefill -v",
+      "tests": 17,
+      "exit_code": 0,
+      "log": "shared-prefill-tests.log",
+      "sha256": "bd3b874b59a83590d52c959be25159545cc2d9a42b0bf93d4dded153cb96c3b0"
+    },
+    {
+      "command": "python -m unittest discover -s integrations/ronin/tests -v",
+      "tests": 56,
+      "exit_code": 0,
+      "log": "ronin-tests.log",
+      "sha256": "b9ab34a65fd75e2928d48e5adca18dd58673e0107b6fabbe1fda15dbbbece5a7"
+    },
+    {
+      "command": "python -m unittest discover -s tests_next -p 'test_glm_native*.py' -v",
+      "tests": 70,
+      "exit_code": 0,
+      "log": "native-tests.log",
+      "sha256": "8801531e4744d3b57a353e696ac031e03c559b7e76c9e775c3ab17a9bd313582"
+    }
+  ]
+}

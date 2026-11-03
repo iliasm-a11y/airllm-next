@@ -1,0 +1,121 @@
+{
+  "status": "not_measured",
+  "shared_prefill_enabled": false,
+  "functional_two_agents_qualified": false,
+  "exact_state_qualified": false,
+  "reason": "Resource guards prevented any completed native model load or agent request; exact snapshot path not implemented or activated.",
+  "reference": {
+    "cpu_threads": 10,
+    "gpu_layers": 0,
+    "physical_slots": 1,
+    "logical_identities": 600,
+    "context_tokens": 1024,
+    "batch_tokens": 8,
+    "max_new_tokens_each": 256,
+    "cache_ram_mib": 0,
+    "context_checkpoints": 0,
+    "cache_prompt": false,
+    "mmap_nocache": true,
+    "guards_rss_bytes": 9126805504,
+    "guards_swap_growth_bytes": 33554432
+  },
+  "candidate": {
+    "native_token_lcp": 211,
+    "microbatch8_boundary_candidate": 208,
+    "snapshot_policy": "not allocated or enabled; prospective one immutable full-state snapshot <=256MiB plus global active/scratch/copy budget",
+    "metrics": {
+      "prefill_seconds": null,
+      "decode_seconds": null,
+      "tokens_per_second": null,
+      "snapshot_bytes": null,
+      "serialize_seconds": null,
+      "restore_seconds": null,
+      "inference_os_storage_read_bytes": null,
+      "net_wall_time_gain_seconds": null,
+      "net_wall_time_gain_percent": null
+    }
+  },
+  "runs": [
+    {
+      "name": "two-agents-cpu10-1",
+      "report_sha256": "4e34f108922369b24d6d78f3500abd5bcfd2e435b542b65fbf3aa5756cb9b549",
+      "status": "failed",
+      "error_code": "SWAP_LIMIT",
+      "total_host_seconds": 8.006216750000021,
+      "native_counters": {
+        "loads": 0,
+        "requests": 0,
+        "generated_tokens": 0
+      },
+      "peak_sampled_rss_bytes": 3829415936,
+      "failure": {
+        "code": "SWAP_LIMIT",
+        "message": "Native inference stopped by resource guard",
+        "sample": {
+          "monotonic": 32644.440036416,
+          "available_bytes": 2832711680,
+          "total_bytes": 17179869184,
+          "swap_used_bytes": 1341849600,
+          "rss_bytes": 3829415936,
+          "cpu_seconds": 12.602669056,
+          "pressure_level": 2
+        },
+        "pressure_context": {
+          "pressure_level": 2,
+          "warning_seconds": 4.0224393749995215,
+          "available_bytes": 2832711680,
+          "reserve_bytes": 805306368,
+          "warning_headroom_floor_bytes": 1342177280,
+          "swap_growth_bytes": 39845888,
+          "warning_swap_growth_bytes": 33554432,
+          "warning_headroom_low": false,
+          "warning_swap_high": true,
+          "headroom_low_seconds": 0,
+          "action": "stop",
+          "stop_code": "SWAP_LIMIT",
+          "evidence_scope": "M5 16 GiB, same pinned GLM, CPU4/context512/batch8: stable mmap warning pressure observed; other workloads unqualified"
+        }
+      },
+      "stable_ac_sampled": true,
+      "metrics": {
+        "prefill_seconds": null,
+        "decode_seconds": null,
+        "tokens_per_second": null,
+        "snapshot_bytes": null,
+        "serialize_seconds": null,
+        "restore_seconds": null,
+        "inference_os_storage_read_bytes": null,
+        "net_wall_time_gain_seconds": null,
+        "net_wall_time_gain_percent": null
+      }
+    },
+    {
+      "name": "two-agents-cpu10-2",
+      "report_sha256": "f9d91917c675a25ea405e8cd8b89637ab283d98ce9d9629182d8eba4873cbb3c",
+      "status": "failed",
+      "error_code": "MEMORY_ADMISSION",
+      "total_host_seconds": 1.9030521250024321,
+      "native_counters": {
+        "loads": 0,
+        "requests": 0,
+        "generated_tokens": 0
+      },
+      "peak_sampled_rss_bytes": null,
+      "failure": null,
+      "stable_ac_sampled": true,
+      "metrics": {
+        "prefill_seconds": null,
+        "decode_seconds": null,
+        "tokens_per_second": null,
+        "snapshot_bytes": null,
+        "serialize_seconds": null,
+        "restore_seconds": null,
+        "inference_os_storage_read_bytes": null,
+        "net_wall_time_gain_seconds": null,
+        "net_wall_time_gain_percent": null
+      }
+    }
+  ],
+  "historical_comparison_admissible": false,
+  "historical_note": "Prior 447-token/937.169s prefill used a different prompt and native cache defaults; no current A/B gain can be inferred."
+}
