@@ -111,6 +111,30 @@ class QualificationTests(unittest.TestCase):
         self.assertFalse(qa.answer_checks(qa.TASKS[0], leaked)["peer_marker_absent"])
         self.assertFalse(qa.answer_checks(qa.TASKS[0], valid.replace("</think>", ""))["nonempty_final_answer"])
 
+    def test_correct_numbers_do_not_hide_wrong_or_negated_conclusions(self):
+        wrong = (
+            (0, "RONIN-ALPHA-713 : 17×24=408 ; 420-408=12. Le stock ne suffit pas."),
+            (0, "RONIN-ALPHA-713 : 17×24=408 ; 420-408=12. Le stock est suffisant. Le stock est insuffisant."),
+            (1, "RONIN-OMEGA-962 : A=131, B=142, écart=11. B est moins cher."),
+            (1, "RONIN-OMEGA-962 : A=131, B=142, écart=11. A est le moins cher. Je choisis B."),
+            (1, "RONIN-OMEGA-962 : A=131, B=142, écart=11. Je ne choisis pas A."),
+        )
+        for index, text in wrong:
+            with self.subTest(text=text):
+                self.assertFalse(qa.answer_checks(qa.TASKS[index], "</think>" + text)["correct_conclusion"])
+
+    def test_explicit_correct_french_conclusions_pass_bounded_checks(self):
+        valid = (
+            (0, "RONIN-ALPHA-713 : 17×24=408 ; 420-408=12. Le stock est donc suffisant."),
+            (0, "RONIN-ALPHA-713 : 17×24=408 ; 420-408=12. Le stock disponible suffit largement."),
+            (1, "RONIN-OMEGA-962 : A=131, B=142, économie=11. A est le moins cher."),
+            (1, "RONIN-OMEGA-962 : A=131, B=142, économie=11. Je choisis le fournisseur A."),
+        )
+        for index, text in valid:
+            with self.subTest(text=text):
+                checks = qa.answer_checks(qa.TASKS[index], "</think>" + text)
+                self.assertTrue(all(value for key, value in checks.items() if key != "scope"))
+
     def test_prompt_capture_observes_existing_calls_without_retokenizing(self):
         observed = []
         def http(method, path, payload=None, timeout=30):

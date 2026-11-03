@@ -91,7 +91,9 @@ def observe_owned_argv(process, expected_executable, *, process_factory=psutil.P
         return {"available": False, "pid": process.pid, "reason": type(error).__name__ + ": " + str(error)}
 
 
-def configuration(path, tokens):
+def configuration(path, tokens, *, request_seconds=1800):
+    if type(request_seconds) is not int or request_seconds not in (1800, 2700):
+        raise ValueError("Explicit request budget must be 1800s or 2700s")
     path = Path(path).expanduser().resolve()
     raw = path.read_bytes()
     config = json.loads(raw)
@@ -117,7 +119,7 @@ def configuration(path, tokens):
             raise ValueError("A positive integer guard is required: " + key)
         limits[key] = min(cap, value)
     config["limits"] = limits
-    defaults = vars(NativeLimits())
+    defaults = {**vars(NativeLimits()), "request_timeout_seconds": request_seconds}
     if set(limits) - defaults.keys():
         raise ValueError("Unknown resource guard settings")
     # Preserve every existing pressure/identity-watchdog protection. More
@@ -180,19 +182,39 @@ def final_answer(text):
     return text.strip()
 
 
+def explicit_conclusion(agent_id, final):
+    """Require an affirmative bounded clause; raw answers still need review."""
+    clauses = re.split(r"[.!?;,\n]+", " ".join(final.casefold().split()))
+    negated = re.compile(r"\b(?:ne|pas|jamais|aucun|aucune)\b|\bn['’]")
+    affirmative = [clause for clause in clauses if not negated.search(clause)]
+    if agent_id == 1:
+        stock = r"\bstock(?:\s+(?:actuel|disponible))?\s+(?:(?:est|reste|sera)\s+(?:donc\s+)?)?(?:suffit|suffisant)\b"
+        contradicted = any("stock" in clause and (negated.search(clause) or "insuffisant" in clause)
+                          and re.search(r"suffi", clause) for clause in clauses)
+        return not contradicted and any(re.search(stock, clause) for clause in affirmative)
+
+    def chooses(supplier, clause):
+        label = r"\b" + supplier + r"\b"
+        cheaper = label + r"\s*(?:est|reste|revient|:)\s*(?:donc\s+)?(?:le\s+)?(?:moins\s+cher|moins\s+coûteux|plus\s+économique)\b"
+        choice = (r"\b(?:chois(?:is|issons|it)|reti(?:ens|ent)|retenons|privilégi(?:e|ons)|recommand(?:e|ons))"
+                  r"\s+(?:donc\s+)?(?:(?:le\s+)?fournisseur\s+)?" + label)
+        return bool(re.search(cheaper, clause) or re.search(choice, clause))
+
+    return (any(chooses("a", clause) for clause in affirmative)
+            and not any(chooses("b", clause) for clause in affirmative))
+
+
 def answer_checks(task, text):
     final = final_answer(text)
     other = next(t["marker"] for t in TASKS if t["agent_id"] != task["agent_id"])
     numbers = set(re.findall(r"(?<!\d)\d+(?!\d)", final))
     expected = {"408", "12"} if task["agent_id"] == 1 else {"131", "142", "11"}
     rationale = bool(re.search(r"[=×*]|(?:calcul|car |donc|reste|suffi|économ|moins cher|marge)", final, re.I))
-    conclusion = (bool(re.search(r"(?:stock.{0,20}suffi|suffi.{0,20}stock|reste.{0,15}12|marge.{0,15}12)", final, re.I))
-                  if task["agent_id"] == 1 else
-                  bool(re.search(r"(?:A.{0,45}(?:moins cher|économ|choix|reten)|(?:choisi|choix|reten|privilégi).{0,25}\bA\b)", final, re.I)))
+    conclusion = explicit_conclusion(task["agent_id"], final)
     return {"nonempty_final_answer": bool(final), "own_marker_in_final": task["marker"] in final,
             "peer_marker_absent": other not in text, "expected_result_numbers": expected <= numbers,
             "visible_calculation_or_justification": rationale, "correct_conclusion": conclusion,
-            "scope": "conservative bounded task checks; raw native answer retained for human review, not universal reasoning quality"}
+            "scope": "conservative bounded heuristics; raw native final answer requires human review, not universal reasoning quality"}
 
 
 def capture_native(model, row, output, observer):
@@ -235,9 +257,17 @@ def capture_native(model, row, output, observer):
     return lambda: (setattr(model, "_http_json", original_http), setattr(model, "_events", original_events))
 
 
-def run_campaign(config_path, output, tokens=256, *, max_seconds=7200, runtime_factory=None,
+def run_campaign(config_path, output, tokens=256, *, max_seconds=7200, request_seconds=1800,
+                 agent_order=(1, 600), runtime_factory=None,
                  gate_factory=None, awake_factory=None, io_factory=None, monitor_interval=.5):
-    config, config_hash = configuration(config_path, tokens)
+    if (tuple(agent_order) not in ((1, 600), (600, 1))
+            or any(type(agent) is not int for agent in agent_order)):
+        raise ValueError("Both agents1/600 exactly once required")
+    tasks_by_id = {task["agent_id"]: task for task in TASKS}
+    planned_tasks = tuple(tasks_by_id[agent] for agent in agent_order)
+    config, config_hash = configuration(config_path, tokens, request_seconds=request_seconds)
+    if request_seconds == 2700 and max_seconds > 7200:
+        raise ValueError("45-minute requests retain a hard 7200s campaign ceiling")
     if not 0 < monitor_interval <= .5 or not 1 <= max_seconds <= 10800:
         raise ValueError("Sampling<=0.5s and campaign deadline1..10800s required")
     output = Path(output).expanduser().resolve()
@@ -246,7 +276,8 @@ def run_campaign(config_path, output, tokens=256, *, max_seconds=7200, runtime_f
     started = time.perf_counter()
     report = {"schema_version": 1, "started_at_utc": datetime.now(timezone.utc).isoformat(),
               "status": "running", "config_sha256": config_hash, "guard_limits": config["limits"],
-              "planned_agents": list(TASKS), "requested_tokens_each": tokens, "max_campaign_seconds": max_seconds,
+              "planned_agents": list(planned_tasks), "requested_tokens_each": tokens, "max_campaign_seconds": max_seconds,
+              "explicit_request_budget_seconds": request_seconds,
               "context_tokens": config["context_tokens"], "prompt_policy": "full original RONIN identity/instructions/memory and task; no truncation or summarization",
               "functional_two_agents_qualified": False, "exact_state_qualified": False,
               "full_qualification": False, "requests": [],
@@ -336,7 +367,7 @@ def run_campaign(config_path, output, tokens=256, *, max_seconds=7200, runtime_f
                           constructed_native_command=getattr(model, "research_constructed_command", None),
                           load_seconds=time.perf_counter()-started)
             observer = (io_factory or ProcessIOObserver)(process.pid)
-            for task in TASKS:
+            for task in planned_tasks:
                 if monitor_errors:
                     raise QualificationError("SUPERVISION_REJECTED", "Campaign supervision already rejected")
                 mission = runtime.create({"prompt": task["prompt"]})
@@ -421,7 +452,7 @@ def run_campaign(config_path, output, tokens=256, *, max_seconds=7200, runtime_f
 
 
 def campaign_checks(report):
-    rows = report.get("requests", [])
+    rows = sorted(report.get("requests", []), key=lambda row: str(row.get("agent_id", "")))
     native = report.get("engine_after_stream", {}).get("native", {})
     final_native = report.get("engine_after_cleanup", {}).get("native", {})
     decisions = [row.get("decision", {}) for row in rows]
@@ -462,9 +493,14 @@ def main():
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--tokens", type=int, default=256)
+    parser.add_argument("--agent-order", choices=("1,600", "600,1"), default="1,600")
     parser.add_argument("--max-seconds", type=int, default=7200)
+    parser.add_argument("--request-seconds", type=int, choices=(1800, 2700), default=1800,
+                        help="Explicit bounded request time; memory/PID/cancel guards unchanged")
     args = parser.parse_args()
-    report = run_campaign(args.config, args.output, args.tokens, max_seconds=args.max_seconds)
+    report = run_campaign(args.config, args.output, args.tokens, max_seconds=args.max_seconds,
+                          request_seconds=args.request_seconds,
+                          agent_order=tuple(map(int, args.agent_order.split(","))))
     print(json.dumps({"status": report["status"], "functional_two_agents_qualified": report["functional_two_agents_qualified"],
                       "full_qualification": report["full_qualification"], "report": str(args.output / "report.json")}))
     return 0 if report["functional_two_agents_qualified"] else 2

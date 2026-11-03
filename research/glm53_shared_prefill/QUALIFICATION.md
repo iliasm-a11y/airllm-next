@@ -26,8 +26,11 @@ existants. Il s'agit d'observations échantillonnées, pas d'une preuve de chaqu
 Les plafonds sont **8,5 Gio de RSS** et **32 Mio de croissance de swap**.
 L'ensemble des réserves mémoire, seuils de pression, délais de grâce et
 intervalles du watchdog est conservé à sa valeur existante ou rendu plus
-strict. Les délais de chargement et de requête restent au maximum respectivement
-900 et 1 800 secondes. Une limite globale de 7 200 secondes est ajoutée ; elle
+strict. Le chargement reste limité à 900 secondes. La requête reste à
+1 800 secondes par défaut ; une option explicite `--request-seconds 2700`
+permet le plafond de recherche de 45 minutes, en conservant une configuration
+plus stricte déjà fournie. Cette option refuse un plafond global supérieur
+à 7 200 secondes. La limite globale de 7 200 secondes est conservée ; elle
 ne transforme jamais une annulation ou une sortie sur limite en réussite.
 Aucun rejeu automatique n'est effectué. L'arrêt conserve les événements
 d'annulation et les fonctions de fermeture du backend existant, avec tentative
@@ -115,3 +118,8 @@ Le dossier de sortie doit être nouveau. Le code de retour est non nul lorsque
 les deux décisions fonctionnelles ne sont pas qualifiées. Les résultats
 matériels effectivement obtenus sont fournis dans le rapport de livraison et
 ses preuves, séparément de ce protocole.
+
+L’option `--agent-order 600,1` inverse uniquement l’ordre des deux tâches
+complètes. Le défaut reste `1,600`, et les contrôles exigent toujours les deux
+identités exactement une fois. La reprise mémoire et ses résultats réels sont
+détaillés dans [MEMORY_RECOVERY.md](MEMORY_RECOVERY.md).

@@ -5,6 +5,11 @@ deux agents ne sont pas qualifiés jusqu'à EOS.** La campagne réelle a été
 arrêtée par les protections mémoire, avant toute requête d'agent. Aucun gain
 de latence, de lectures ou de débit n'est revendiqué.
 
+La [reprise après réduction mémoire](MEMORY_RECOVERY.md) identifie et libère
+26 outils inactifs et leurs lanceurs. Ses trois nouveaux essais restent sans
+EOS qualifié (délai, swap, puis bascule sur batterie). Les preuves initiales
+ci-dessous restent historiques et ne sont pas réécrites.
+
 Le travail apporte une mesure native du vrai préfixe, l'audit des états, un
 témoin de recherche explicitement sans cache et un pilote de qualification
 conservant les échecs. Il part de PR #20 `a980f69c40e9170aef411fb4333613d2f7c6415a`,
