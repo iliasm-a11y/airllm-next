@@ -1,0 +1,34 @@
+--- a/ggml/src/ggml-cpu/ggml-cpu.c
++++ b/ggml/src/ggml-cpu/ggml-cpu.c
+@@ -1756,6 +1756,17 @@
+ 
+     const enum ggml_type type = src0->type;
+ 
++    // Private schedule experiment. All native Q2_K nrc=1 dots stay unchanged.
++#if defined(__APPLE__) && defined(__aarch64__)
++    const char * batch_reuse_env = getenv("AIRLLM_CPU_Q2_BATCH_REUSE");
++    const bool batch_weight_major = batch_reuse_env && strcmp(batch_reuse_env, "1") == 0 &&
++        type == GGML_TYPE_Q2_K && ids->ne[1] > 8 && ids->ne[1] <= 128 &&
++        ne01 >= 16 && ne01 % 16 == 0 && ne01 / 16 >= nth && src0->buffer &&
++        ggml_backend_buffer_get_usage(src0->buffer) == GGML_BACKEND_BUFFER_USAGE_WEIGHTS;
++#else
++    const bool batch_weight_major = false;
++#endif
++
+     const bool src1_cont = ggml_is_contiguous(src1);
+ 
+     enum ggml_type    const vec_dot_type    = type_traits_cpu[type].vec_dot_type;
+@@ -1901,6 +1912,13 @@
+         if (nchunk0 * nchunk1 < nth * 4 || disable_chunking) {
+             nchunk0 = nr0 > nr1 ? nth : 1;
+             nchunk1 = nr0 > nr1 ? 1 : nth;
++        }
++
++        if (batch_weight_major && cne1 > 16) {
++            // A worker processes one 16-row expert tile across its selected tokens.
++            // Each result still calls the original vec_dot with nrc=1.
++            nchunk0 = nr0 / 16;
++            nchunk1 = 1;
+         }
+ 
+         const int64_t dr0 = (nr0 + nchunk0 - 1) / nchunk0;

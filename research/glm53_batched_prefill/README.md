@@ -1,0 +1,124 @@
+# Préfill par lots et snapshot GLM sur M5
+
+Cette branche de recherche part de PR #22 au commit
+`64d01af445b620253209319d43a812d1ed07cd13`. Elle conserve le checkpoint
+GLM-5.3 Flash Q2_K_S original, les 600 identités logiques, un seul slot et
+les protections existantes. Les objectifs GPU, cache exact et deux agents
+jusqu'à EOS sont évalués séparément. Aucun chemin nouveau n'est activé dans
+RONIN en production et aucune fusion dans `main` n'est demandée.
+
+## Implémentations
+
+- `metal_q8.metal` exécute un produit matriciel réellement multi-token avec
+  réutilisation de tuiles. `metal_probe.py` le compare à la routine ARM puis
+  au dispatcher GGML CPU10. [Audit Metal](metal_audit.md).
+- `snapshot.h` stocke une seule séquence complète avec les flags natifs
+  `NONE`, sous plafond de 256 Mio, empreinte et clé de provenance. Il refuse
+  les états partiels, les clés incompatibles et les suffixes vides. Les
+  erreurs invalident le snapshot et vident le contexte.
+- `native_prefill.cpp` offre trois diagnostics CPU : calcul complet,
+  découpage explicite à 208, puis préfixe calculé une fois et restauré pour
+  `1 → 600 → 1`. Les matrices et tailles de microbatch sont observées dans
+  `operations.jsonl`. Les captures numériques sont distinctes des mesures
+  de vitesse. [Audit des états](snapshot_audit.md).
+- `native_compare.py` exige des captures et des reçus valides avant de
+  comparer tous les logits finis, routes ordonnées, routeurs, sorties KDA
+  et séquences finales sérialisées. Il ne transforme pas un essai incomplet
+  en comparaison favorable.
+- `campaign.py` réutilise le cycle surveillé PR #22, expose séparément batch
+  logique et microbatch, l'admission adaptative, les prompts complets et la
+  séquence de missions `1 → 600 → 1`. Le retour à l'agent 1 conserve sa
+  mission et son historique. Les missions de recherche sont neuves et
+  isolées ; elles n'importent pas d'historique personnel de l'application.
+- `prompts.py` reconstruit les 600 prompts complets et applique le template
+  et le tokenizer natifs sans forcer l'effort de raisonnement.
+
+## Contrat et résultats établis
+
+L'effort habituel du template GLM est **Max** lorsqu'aucun argument n'est
+fourni. Le pilote PR #22 imposait `low` ; ses temps ne sont donc pas des
+témoins directs de la présente campagne native Max.
+
+La nouvelle tokenisation native des 600 identités confirme **211 tokens
+communs** et une frontière candidate de **208**. Les deux nouveaux prompts
+complets comptent **521 / 542 tokens**. L'alignement ne prouve aucune
+restauration exacte. Le calcul du préfixe est encore nécessaire pour chaque
+agent tant que le diagnostic complet ne passe pas.
+
+Le composant Metal reproduit **13 888 valeurs** bit à bit contre la routine
+ARM `nrc=2`. Le dispatcher CPU10 change toutefois de chemin selon la forme,
+et les lots 64/128 présentent des différences sur les fixtures mesurées.
+Ce résultat ne qualifie ni la fidélité globale GLM ni un gain de préfill.
+Les petits lots 8/16/32 sont identiques sur ces seules fixtures, sans
+qualification sur les dimensions complètes du modèle.
+
+La sérialisation de séquence couvre la mémoire hybride, mais **pas les
+logits ni le sampler**. Le snapshot est limité à la fin d'un préfixe avant
+génération ; un suffixe privé non vide et un sampler neuf sont obligatoires.
+Il ne sert pas de sauvegarde universelle d'une génération interrompue.
+Le budget temporaire de sérialisation de 16 Mio est une enveloppe prudente
+d'admission, pas une mesure de son pic réel. Le budget global charge aussi
+le snapshot, les états actifs et les captures temporaires éventuelles.
+
+La campagne réelle et le verdict final seront indexés dans `evidence/`.
+Les champs non mesurés restent `null`. Les 937,169 secondes historiques et
+les essais GPU des PR #17 à #21 gardent leur périmètre d'origine.
+
+## Reproduction et intégration de recherche
+
+Le modèle reste externe. Utiliser une configuration CPU10/GPU0 avec reçu SHA
+des shards inchangés et manifeste du runtime épinglé à
+`3f8af15a76ac8675812e856da45454bafc90f12c` plus les 16 patches V4. Les sources
+des patches et les empreintes des bibliothèques doivent correspondre au
+binaire employé. Le helper nouveau doit être recompilé après modification.
+
+```sh
+# Répertoire racine du dépôt ; PYTHON dispose de psutil/numpy.
+$PYTHON -m research.glm53_batched_prefill.campaign \
+  --config /absolute/research-config.json --output /absolute/new-plan \
+  --mode plan --microbatch 128
+
+$PYTHON -m research.glm53_batched_prefill.prompts \
+  --config /absolute/research-config.json --source /absolute/llama-source \
+  --output /absolute/new-prompts
+
+clang++ -std=c++17 -O2 -Wno-deprecated-declarations \
+  -I /absolute/llama-source/include -I /absolute/llama-source/ggml/include \
+  -I /absolute/llama-source/vendor \
+  research/glm53_batched_prefill/native_prefill.cpp \
+  -L /absolute/runtime/bin -Wl,-rpath,/absolute/runtime/bin \
+  -lllama -lggml -lggml-base -o /absolute/native-prefill
+
+$PYTHON -m research.glm53_batched_prefill.native_run \
+  --config /absolute/research-config.json --binary /absolute/native-prefill \
+  --helper-source research/glm53_batched_prefill/native_prefill.cpp \
+  --prompts /absolute/new-prompts/native-prompts.json \
+  --runtime-libraries /absolute/runtime/bin --output /absolute/new-full \
+  --microbatch 8 --mode full --diagnostic --max-seconds 5400
+```
+
+Répéter séparément avec `--mode split`, puis `--mode restore`, uniquement
+après admission et sans autre moteur physique. Comparer d'abord full/split,
+puis split/restore avec leurs reçus `guard.json`. Le diagnostic écrit les
+états et peut consommer de l'espace disque ; il ne fournit pas une mesure
+non instrumentée de performance. Ne comparer des microbatchs différents que
+par un protocole qui conserve les frontières et justifie les formes.
+
+Pour la qualification fonctionnelle indépendante du cache :
+
+```sh
+$PYTHON -m research.glm53_batched_prefill.campaign \
+  --config /absolute/research-config.json --output /absolute/new-agents \
+  --mode agents --microbatch 8 --tokens 512 --reasoning-effort native \
+  --agent-order 1,600,1 --request-seconds 2700 --max-seconds 7200
+```
+
+Le contexte doit couvrir chaque prompt complet et son budget de sortie.
+La campagne courante utilise 2 048 tokens, y compris tous les témoins
+comparables. Le slot ne tronque pas les historiques pour faire passer un
+essai. RSS 8,5 Gio, croissance de swap 32 Mio, pression, réserves système,
+secteur, couvercle, horloges, identité PID et annulation sont conservés.
+
+Un passage en production exige les preuves matérielles indépendantes A/B/C,
+la revue des réponses utiles et des sorties jusqu'à EOS. Les fixtures et
+la CI ne qualifient ni ces décisions ni l'efficacité de 600 agents.
