@@ -62,7 +62,8 @@ Le budget temporaire de sérialisation de 16 Mio est une enveloppe prudente
 d'admission, pas une mesure de son pic réel. Le budget global charge aussi
 le snapshot, les états actifs et les captures temporaires éventuelles.
 
-La campagne réelle et le verdict final seront indexés dans `evidence/`.
+Les campagnes closes sont indexées dans `evidence/` ; le verdict final reste
+distinct des observations de diagnostic.
 Les champs non mesurés restent `null`. Les 937,169 secondes historiques et
 les essais GPU des PR #17 à #21 gardent leur périmètre d'origine.
 
@@ -91,13 +92,20 @@ clang++ -std=c++17 -O2 -Wno-deprecated-declarations \
   -L /absolute/runtime/bin -Wl,-rpath,/absolute/runtime/bin \
   -lllama -lggml -lggml-base -o /absolute/native-prefill
 
-$PYTHON -m research.glm53_batched_prefill.native_run \
+$PYTHON -m research.glm53_batched_prefill.uid_supervisor \
+  --wrapper research/glm53_batched_prefill/native_run.py \
+  --receipt /absolute/new-full-uid.json -- \
   --config /absolute/research-config.json --binary /absolute/native-prefill \
   --helper-source research/glm53_batched_prefill/native_prefill.cpp \
   --prompts /absolute/new-prompts/native-prompts.json \
   --runtime-libraries /absolute/runtime/bin --output /absolute/new-full \
   --microbatch 8 --mode full --diagnostic --max-seconds 5400
 ```
+
+Le [lanceur UID](UID_SUPERVISOR.md) acquiert le verrou du modèle avant le
+wrapper et transmet son descripteur au helper. Ses tests utilisent des processus
+synthétiques ; aucune exécution matérielle de ce nouveau lanceur n'est encore
+revendiquée. Il conserve les sources et la clé du wrapper gelé.
 
 Pour 8/16, comparer directement `full` puis `restore` : le comparateur exige
 les trois états à 208 identiques et la correspondance SHA256/taille du snapshot,
@@ -134,7 +142,7 @@ la CI ne qualifient ni ces décisions ni l'efficacité de 600 agents.
 Le [témoin CPU8 natif Max](evidence/agents-cpu8-timeout/summary.json) traite
 522 tokens réels en 1 238,016 s puis conserve 171 IDs avant `REQUEST_TIMEOUT`
 à 45 min, sans fermeture du raisonnement ni EOS. L’agent 600 n’est pas lancé.
-La décision reste `failed`, avec sortie partielle ; le retour natif−9 est
+La décision reste `failed`, avec sortie partielle ; le retour natif −9 est
 observé pendant le nettoyage après délai. Le pic RSS échantillonné est
 5,616 Gio et la croissance de swap observée est nulle. Les alertes de pression 2
 restent dans le domaine accepté du watchdog existant avec réserve/marge/swap.
@@ -147,3 +155,29 @@ une réserve permanente, et en pression 2 la réserve augmentée de la marge
 d’alerte ainsi qu’un swap sous le seuil d’alerte ; les grâces ne servent pas
 à contourner ces bornes conservatrices. RSS 8,5 Gio, swap 32 Mio et les critères
 numériques restent identiques.
+
+## Témoin natif CPU8 clos et rejeu exact
+
+Le [témoin complet](evidence/native-full8-closed/README.md) termine les trois
+préfills gelés `1 → 600 → 1` en 1 285,763678 / 1 322,539045 / 1 314,183277 s,
+avec quatre vrais tokens greedy diagnostiques par requête. Le code de sortie
+est 0 ; secteur, intégrité et gardes sont validés à la clôture. Le pic RSS
+échantillonné est de 5 608 177 664 octets et la croissance de swap observée est nulle.
+
+Le rejeu de l'agent 1 compare exactement ses 154 880 logits finis, son état
+sérialisé, ses captures et ses 15 642 écritures d'état observées ; la continuation
+et son post-état sont aussi identiques. Cette vérification interne au même bras
+ne remplace pas une comparaison indépendante avec un cache ou un autre batch.
+Les trois états complets à 208 sont identiques et mesurent 156 739 588 octets.
+Aucune restauration n'a encore été exécutée.
+
+Le verrou UID de ce témoin a été acquis par un guardian externe après le
+lancement, sans héritage rétroactif de descripteur. Son reçu conserve cette
+limite. Le nouveau lanceur apporte une protection avant lancement pour les
+prochains essais, sans modifier cette chronologie historique.
+
+Les composants Q8 représentatifs et le [candidat Q2](metal_q2_audit.md) restent
+préparés, non mesurés : leur contrôle externe préalable a refusé le démarrage
+lorsque le Mac est repassé sur batterie après la clôture du témoin. Aucun appel
+GPU, oracle natif ou build Q2 n'a été exécuté pendant ce refus. Les objectifs
+GPU, snapshot réutilisé et deux réponses utiles jusqu'à EOS restent non qualifiés.
