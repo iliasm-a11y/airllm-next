@@ -1,19 +1,30 @@
 {
-  "phase1_source_audit": "completed",
-  "phase1_adapter_compilation": "completed",
-  "phase1_native_component_execution": "blocked_ENGINE_BUSY",
-  "contemporary_cpu32": "admission_refused_RAM",
-  "new_complete_model_speedup_qualified": false,
-  "native_kernel_commands_executed_this_run": 0,
-  "new_decode_tokens_per_second": null,
-  "new_inter_agent_cache_reuse": null,
+  "utc": "2026-11-04T09:26:09.826474+00:00",
+  "prior_commit": "2074e7b13714e9365cd4aae1976f6ce946cb11c1",
+  "contemporary_cpu32": "completed",
+  "new_decode_intervals_per_second": 0.16149664235056013,
+  "decode_intervals": 31,
+  "decode_call_seconds": 191.954455206,
+  "prefill_excluded": true,
+  "natural_eos": false,
+  "observed_cpu32_swap_growth_bytes": 0,
+  "native_component_cases_completed": 4,
+  "native_entrypoints_executed": [
+    "kernel_mul_mv_q2_K_f32",
+    "kernel_mul_mv_q8_0_f32"
+  ],
+  "native_standard_component_tolerance_passed": false,
+  "adapter_component_tolerance_passed": true,
+  "adapter_component_bit_exact": false,
+  "adapter_over_cpu10_range": [
+    6.195023706625268,
+    9.318762053448435
+  ],
+  "new_complete_model_gpu_speedup_qualified": false,
+  "new_inter_agent_reuse": null,
   "new_pipeline_overlap_seconds": null,
-  "phase2_cache": "deferred",
-  "phase3_pipeline": "deferred",
-  "phase4_combination": "not_executed",
-  "pilot_ready": false,
+  "cache_and_pipeline": "deferred",
   "production_changed": false,
   "main_modified": false,
-  "physical_slots": 1,
-  "logical_agents_preserved": 600
+  "pilot_ready": false
 }

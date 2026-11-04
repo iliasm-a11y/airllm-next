@@ -1,13 +1,23 @@
 # GLM-5.3 Flash : dispatch quantifié natif, M5 / 16 Gio
 
-**Travail de recherche en attente d'exécution native. Aucun nouveau gain de
-décodage complet n'est mesuré ou qualifié.** Base : PR #24, commit
+**CPU32 contemporain terminé après nettoyage des outils inactifs ; kernels
+Metal natifs réellement exécutés sur quatre composants originaux. Aucun
+nouveau gain GPU de décodage complet n'est qualifié.** Base : PR #24, commit
 `6cfa76930626520c15246286b3baa2a58c0cf952`.
 
 Le [rapport français](RAPPORT-FR.md) distingue le code compilé, les tests
 portables, l'audit des sources, les refus réels et les mesures historiques.
 Les [preuves sélectionnées](evidence/selection.json) ne contiennent aucun
 poids, vecteur d'activation ou état privé.
+
+La reprise mesure 31 appels de décodage CPU en 191,954455206 s, soit
+0,161496642 intervalle/s, préfill exclu, sans croissance du swap. Les kernels
+Metal standards Q2_K/Q8_0 échouent aux tolérances de composant. L'adaptateur
+d'activation les respecte sans égalité bit à bit, mais coûte 6,20 à 9,32 fois
+le temps CPU10 synchronisé sur les deux formes et deux graines testées.
+Les [preuves de reprise](evidence/recovery-20261104/selection.json) conservent
+le nettoyage, CPU32, les quatre essais finaux et la série initiale dont le
+temps CPU était biaisé par la recréation de threads.
 
 ## Ce qui est ajouté
 

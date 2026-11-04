@@ -19,6 +19,7 @@ static double seconds(clock_type::time_point a, clock_type::time_point b) {
 struct component {
     ggml_context * ctx = nullptr;
     ggml_backend_t backend = nullptr;
+    ggml_threadpool_t pool = nullptr;
     ggml_backend_buffer_t buffer = nullptr;
     ggml_cgraph * graph = nullptr;
     ggml_tensor * x = nullptr;
@@ -30,6 +31,8 @@ struct component {
     std::vector<float> decoded;
     ~component() {
         if (backend) ggml_backend_synchronize(backend);
+        // The backend borrows this pool. Join workers before releasing graph data.
+        if (pool) ggml_threadpool_free(pool);
         if (buffer) ggml_backend_buffer_free(buffer);
         if (ctx) ggml_free(ctx);
         if (backend) ggml_backend_free(backend);
@@ -52,7 +55,13 @@ extern "C" void * native_quant_create(int format, const void * packed,
         c->decoded.resize(width);
         c->backend = gpu ? ggml_backend_metal_init() : ggml_backend_cpu_init();
         if (!c->backend) return nullptr;
-        if (!gpu) ggml_backend_cpu_set_n_threads(c->backend, threads);
+        if (!gpu) {
+            auto params = ggml_threadpool_params_default(threads);
+            c->pool = ggml_threadpool_new(&params);
+            if (!c->pool) return nullptr;
+            ggml_backend_cpu_set_n_threads(c->backend, threads);
+            ggml_backend_cpu_set_threadpool(c->backend, c->pool);
+        }
         ggml_init_params params = {ggml_graph_overhead()+8*ggml_tensor_overhead()+(64 << 10), nullptr, true};
         c->ctx = ggml_init(params);
         if (!c->ctx) return nullptr;

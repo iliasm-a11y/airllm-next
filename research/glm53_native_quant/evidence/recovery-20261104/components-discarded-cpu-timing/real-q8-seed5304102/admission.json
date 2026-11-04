@@ -1,0 +1,155 @@
+{
+  "utc": "2026-11-04T09:10:40.499736+00:00",
+  "status": "completed",
+  "component_worker_started": true,
+  "model_process_started": false,
+  "model_decode_gain_qualified": false,
+  "preflight": {
+    "sample": {
+      "available_bytes": 5137989632,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 372572160,
+      "pressure_level": 1
+    },
+    "disk_free_bytes": 37198675968,
+    "power": {
+      "clock": {
+        "wall_time_seconds": 1793783440.086659,
+        "perf_counter_seconds": 38967.605406083,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-04T09:10:40.086659+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T09:10:40.086775+00:00",
+          "wall_time_seconds": 1793783440.086777,
+          "perf_counter_seconds": 38967.605524,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 38967.621588625
+        }
+      },
+      "passed": true
+    },
+    "checkpoint": {
+      "path": "$MODEL",
+      "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+      "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+      "quantization": "Q2_K_S",
+      "exists": true,
+      "architecture_matches": true,
+      "weights_present": true,
+      "integrity_verified": true,
+      "errors": [],
+      "files": [
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+          "expected_bytes": 9430112,
+          "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34853271,
+            9430112,
+            1793220986088562812,
+            1793221180120865439
+          ],
+          "bytes": 9430112,
+          "verification": "unchanged SHA256 receipt"
+        },
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+          "expected_bytes": 110017922752,
+          "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34874104,
+            110017922752,
+            1793630405545465080,
+            1793652319576112639
+          ],
+          "bytes": 110017922752,
+          "verification": "unchanged SHA256 receipt"
+        }
+      ]
+    },
+    "blockers": []
+  },
+  "guard": {
+    "command": [
+      "$PYTHON",
+      "-m",
+      "research.glm53_native_quant.probe",
+      "--model",
+      "$MODEL",
+      "--receipt",
+      "$PR24_WORK/reboot-recovery6/model-verification.json",
+      "--runtime",
+      "$V4_RUNTIME",
+      "--build",
+      "../native-build",
+      "--legacy-build",
+      "$PR24_WORK/decode-build4",
+      "--campaign-swap-used-bytes",
+      "372572160",
+      "--output",
+      "../recovery-20261104/real-q8-seed5304102",
+      "--format",
+      "8",
+      "--tensor",
+      "blk.3.attn_q_a.weight",
+      "--rows",
+      "1536",
+      "--seed",
+      "5304102",
+      "--worker"
+    ],
+    "limits": {
+      "rss_bytes": 9126805504,
+      "reserve_bytes": 3221225472,
+      "swap_growth_bytes": 33554432,
+      "admitted_payload_bytes": 268435456,
+      "timeout_seconds": 180,
+      "interval_seconds": 0.1,
+      "max_processes": 8
+    },
+    "before": {
+      "available_bytes": 5137989632,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 372572160,
+      "pressure_level": 1
+    },
+    "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+    "swap_scope": "system wide; other applications can cause a conservative stop",
+    "violation": null,
+    "exit_code": 0,
+    "sample_count": 8,
+    "sampled_peak_rss_bytes": 158138368,
+    "minimum_available_bytes": 5137989632,
+    "maximum_swap_growth_bytes": 0,
+    "peak_pressure_level": 1,
+    "sampled_peak_processes": 3,
+    "observed_descendant_count": 2,
+    "after": {
+      "available_bytes": 5248778240,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 372572160,
+      "pressure_level": 1
+    },
+    "elapsed_seconds": 0.7784867910013418
+  },
+  "after": {
+    "available_bytes": 5248778240,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 372572160,
+    "pressure_level": 1
+  }
+}

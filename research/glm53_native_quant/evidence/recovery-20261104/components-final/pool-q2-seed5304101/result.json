@@ -1,0 +1,918 @@
+{
+  "schema": 1,
+  "utc": "2026-11-04T09:13:22.053081+00:00",
+  "status": "completed",
+  "scope": "original GGUF packed weights, warm single-token component; no model generation",
+  "uid_lock": {
+    "path": "/var/folders/fh/6v8xcd_n429ck9yz5mnb2h_m0000gn/T/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+    "uid": 501,
+    "model_key": "f7ed7077cbc8482dac0d3711",
+    "fd": 3,
+    "device": 16777229,
+    "inode": 36444893,
+    "acquired_at_utc": "2026-11-04T09:13:22.002734+00:00",
+    "acquired_before_wrapper_spawn": true
+  },
+  "format": "Q2_K",
+  "seed": 5304101,
+  "model_decode_gain_qualified": false,
+  "inter_agent_reuse_measured": false,
+  "initial": {
+    "sample": {
+      "available_bytes": 5099945984,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 372572160,
+      "pressure_level": 1
+    },
+    "disk_free_bytes": 37197099008,
+    "power": {
+      "clock": {
+        "wall_time_seconds": 1793783601.594155,
+        "perf_counter_seconds": 39129.111685458,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-04T09:13:21.594155+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T09:13:21.594259+00:00",
+          "wall_time_seconds": 1793783601.59426,
+          "perf_counter_seconds": 39129.11179025,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 39129.127732333
+        }
+      },
+      "passed": true
+    },
+    "checkpoint": {
+      "path": "$MODEL",
+      "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+      "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+      "quantization": "Q2_K_S",
+      "exists": true,
+      "architecture_matches": true,
+      "weights_present": true,
+      "integrity_verified": true,
+      "errors": [],
+      "files": [
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+          "expected_bytes": 9430112,
+          "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34853271,
+            9430112,
+            1793220986088562812,
+            1793221180120865439
+          ],
+          "bytes": 9430112,
+          "verification": "unchanged SHA256 receipt"
+        },
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+          "expected_bytes": 110017922752,
+          "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34874104,
+            110017922752,
+            1793630405545465080,
+            1793652319576112639
+          ],
+          "bytes": 110017922752,
+          "verification": "unchanged SHA256 receipt"
+        }
+      ]
+    },
+    "blockers": []
+  },
+  "numpy_version": "2.5.4",
+  "cpu_threadpool_policy": "one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal",
+  "probe_source_sha256": {
+    "$REPO/research/glm53_native_quant/probe.py": "8b4fdd32ccec5e653a5a6b02717277e5a04000a45afc922a9df700c508b68b0c",
+    "$REPO/research/glm53_native_quant/build.py": "4d33421e3d6d37485a585b7b82d129f8cb7c288a9f031440901154947efb8d2d",
+    "$REPO/research/glm53_batched_prefill/metal_probe.py": "564e0c7d7fb4d39beb97673bf2afb394b96737dedb070b22f254b4ed9c3c12d0",
+    "$REPO/research/glm53_gpu_v2/q8_reader.py": "da35857645ce9e21e72709f1e2a9a06bf7e296b581e2211628c11842fc4c4d4d",
+    "$REPO/research/glm53_gpu/quantized_probe.py": "91d44f0034dcfc01b2b84059f5c08b4bf5d45f1f97208d4d943a7ab62617fba1",
+    "$REPO/research/glm53_ultra_decode/components.py": "fc8c61c9ae5fe71c48fab6e150cbbc0d5071343d84013f5a56595baf396395d9"
+  },
+  "weights": {
+    "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+    "file_bytes": 110017922752,
+    "tensor": "blk.40.ffn_gate_exps.weight",
+    "dims": [
+      4096,
+      2048,
+      288
+    ],
+    "expert": 0,
+    "first_row": 0,
+    "rows": 2048,
+    "absolute_offset": 85169447104,
+    "selected_bytes": 2752512,
+    "sha256_selected_bytes": "aaf29d834e619e00d59b9a23c106f5285a10253c3a69cd9a1baf7c6c1b26c496"
+  },
+  "activation": {
+    "kind": "synthetic deterministic FP32; not a captured GLM activation",
+    "seed": 5304101,
+    "sha256": "c7af98fd50fce27809c1e35cd3fec2938e80c4963f43eeccded38ae755383a64"
+  },
+  "build_receipt_sha256": {
+    "native": "ec66cb4aab419e0edc54023a4648ebbfc1fd168bb1f95e673e10a21ffbeb554a",
+    "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+  },
+  "cpu": {
+    "1": {
+      "timing": {
+        "seconds": [
+          0.000455666,
+          0.000468084,
+          0.000455583,
+          0.000474,
+          0.000455167,
+          0.000417917,
+          0.00040625,
+          0.000403833,
+          0.00041275,
+          0.000526042,
+          0.000517834,
+          0.000506417,
+          0.000420667,
+          0.00042025,
+          0.00042,
+          0.000420291,
+          0.000419959,
+          0.000419625,
+          0.0004195,
+          0.000435292,
+          0.000431084
+        ],
+        "median_seconds": 0.000420667,
+        "min_seconds": 0.000403833,
+        "max_seconds": 0.000526042
+      },
+      "comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 2048,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "all_repetitions_bit_identical": true,
+      "backend_allocated_bytes": 2777088
+    },
+    "10": {
+      "timing": {
+        "seconds": [
+          4.7917e-05,
+          4.8416e-05,
+          4.7834e-05,
+          4.7958e-05,
+          4.8167e-05,
+          4.7709e-05,
+          4.7916e-05,
+          4.7666e-05,
+          4.7792e-05,
+          4.7208e-05,
+          4.7416e-05,
+          4.7583e-05,
+          4.7792e-05,
+          4.7e-05,
+          4.6833e-05,
+          4.7792e-05,
+          4.7167e-05,
+          4.6875e-05,
+          4.7e-05,
+          4.7166e-05,
+          4.725e-05
+        ],
+        "median_seconds": 4.7666e-05,
+        "min_seconds": 4.6833e-05,
+        "max_seconds": 4.8416e-05
+      },
+      "comparison": {
+        "finite": true,
+        "bit_identical": true,
+        "bit_mismatches": 0,
+        "elements": 2048,
+        "max_abs": 0.0,
+        "rmse": 0.0,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "all_repetitions_bit_identical": true,
+      "backend_allocated_bytes": 2777088
+    }
+  },
+  "graph_vs_native_dot": {
+    "finite": true,
+    "bit_identical": true,
+    "bit_mismatches": 0,
+    "elements": 16,
+    "max_abs": 0.0,
+    "rmse": 0.0,
+    "metal_tolerance": {
+      "atol": 0.001,
+      "rtol": 0.0001,
+      "reference": "native CPU",
+      "passed": true,
+      "elements_outside_tolerance": 0,
+      "scope": "component outputs only; no routes, model logits or recurrent states"
+    }
+  },
+  "metal_setup_upload_seconds": 0.0566242080021766,
+  "metal_backend_allocated_bytes": 2777088,
+  "metal": {
+    "native": {
+      "timing": {
+        "total": {
+          "seconds": [
+            0.000328333,
+            0.000320792,
+            0.000299416,
+            0.000322625,
+            0.000281209,
+            0.000279416,
+            0.000289417,
+            0.000263042,
+            0.000277333,
+            0.000298,
+            0.000322083,
+            0.0003095,
+            0.000306125,
+            0.000280791,
+            0.000319791,
+            0.000323625,
+            0.000378708,
+            0.000297541,
+            0.000304792,
+            0.000364333,
+            0.000315458
+          ],
+          "median_seconds": 0.000306125,
+          "min_seconds": 0.000263042,
+          "max_seconds": 0.000378708
+        },
+        "prepare_import": {
+          "seconds": [
+            2.08e-07,
+            1.67e-07,
+            1.66e-07,
+            1.66e-07,
+            2.5e-07,
+            1.66e-07,
+            1.67e-07,
+            1.67e-07,
+            1.66e-07,
+            1.66e-07,
+            1.66e-07,
+            1.66e-07,
+            1.66e-07,
+            2.08e-07,
+            2.5e-07,
+            1.66e-07,
+            1.66e-07,
+            1.66e-07,
+            1.67e-07,
+            1.66e-07,
+            1.67e-07
+          ],
+          "median_seconds": 1.66e-07,
+          "min_seconds": 1.66e-07,
+          "max_seconds": 2.5e-07
+        },
+        "submit": {
+          "seconds": [
+            1.2958e-05,
+            1.0958e-05,
+            9.5e-06,
+            9.5e-06,
+            8.875e-06,
+            9.25e-06,
+            9.083e-06,
+            9.167e-06,
+            9.042e-06,
+            9.209e-06,
+            9.125e-06,
+            1.2167e-05,
+            9.25e-06,
+            1.0417e-05,
+            9.208e-06,
+            9.167e-06,
+            9.292e-06,
+            9.167e-06,
+            8.75e-06,
+            8.834e-06,
+            8.875e-06
+          ],
+          "median_seconds": 9.208e-06,
+          "min_seconds": 8.75e-06,
+          "max_seconds": 1.2958e-05
+        },
+        "terminal_wait": {
+          "seconds": [
+            0.000315,
+            0.000309417,
+            0.0002895,
+            0.00031275,
+            0.000271792,
+            0.000269792,
+            0.000279959,
+            0.0002535,
+            0.000267875,
+            0.000288375,
+            0.000312417,
+            0.000296875,
+            0.000296459,
+            0.000269916,
+            0.000310125,
+            0.000314083,
+            0.000368917,
+            0.000287958,
+            0.000295583,
+            0.000355041,
+            0.000306166
+          ],
+          "median_seconds": 0.000296459,
+          "min_seconds": 0.0002535,
+          "max_seconds": 0.000368917
+        },
+        "output_read": {
+          "seconds": [
+            1.67e-07,
+            2.5e-07,
+            2.5e-07,
+            2.09e-07,
+            2.92e-07,
+            2.08e-07,
+            2.08e-07,
+            2.08e-07,
+            2.5e-07,
+            2.5e-07,
+            3.75e-07,
+            2.92e-07,
+            2.5e-07,
+            2.5e-07,
+            2.08e-07,
+            2.09e-07,
+            3.33e-07,
+            2.5e-07,
+            2.92e-07,
+            2.92e-07,
+            2.5e-07
+          ],
+          "median_seconds": 2.5e-07,
+          "min_seconds": 1.67e-07,
+          "max_seconds": 3.75e-07
+        }
+      },
+      "comparison": {
+        "finite": true,
+        "bit_identical": false,
+        "bit_mismatches": 2048,
+        "elements": 2048,
+        "max_abs": 0.03036433458328247,
+        "rmse": 0.008799146664954152,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": false,
+          "elements_outside_tolerance": 1846,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "all_repetitions_bit_identical": false,
+      "all_repetitions_within_existing_tolerance": false
+    },
+    "activation_adapter": {
+      "timing": {
+        "total": {
+          "seconds": [
+            0.0003305,
+            0.000303834,
+            0.00028625,
+            0.000292167,
+            0.00031325,
+            0.000287292,
+            0.000301083,
+            0.000308166,
+            0.000306458,
+            0.000291875,
+            0.000268958,
+            0.000298,
+            0.000295292,
+            0.000285708,
+            0.000292167,
+            0.00026525,
+            0.000280584,
+            0.000335834,
+            0.000288042,
+            0.000308666,
+            0.00031725
+          ],
+          "median_seconds": 0.000295292,
+          "min_seconds": 0.00026525,
+          "max_seconds": 0.000335834
+        },
+        "prepare_import": {
+          "seconds": [
+            5e-06,
+            5e-06,
+            5.041e-06,
+            5.084e-06,
+            5.125e-06,
+            5e-06,
+            5e-06,
+            5.041e-06,
+            5.042e-06,
+            5.083e-06,
+            5e-06,
+            5.083e-06,
+            5.042e-06,
+            5.75e-06,
+            5e-06,
+            5.041e-06,
+            5e-06,
+            4.959e-06,
+            4.959e-06,
+            4.958e-06,
+            4.958e-06
+          ],
+          "median_seconds": 5e-06,
+          "min_seconds": 4.958e-06,
+          "max_seconds": 5.75e-06
+        },
+        "submit": {
+          "seconds": [
+            1.5125e-05,
+            1.0167e-05,
+            9.5e-06,
+            9.375e-06,
+            9.625e-06,
+            1.0333e-05,
+            9.125e-06,
+            8.959e-06,
+            9.083e-06,
+            9.208e-06,
+            8.958e-06,
+            9.292e-06,
+            8.875e-06,
+            9.791e-06,
+            9e-06,
+            9.167e-06,
+            9.084e-06,
+            9.25e-06,
+            9.083e-06,
+            8.792e-06,
+            8.917e-06
+          ],
+          "median_seconds": 9.167e-06,
+          "min_seconds": 8.792e-06,
+          "max_seconds": 1.5125e-05
+        },
+        "terminal_wait": {
+          "seconds": [
+            0.000310083,
+            0.000288333,
+            0.000271542,
+            0.000277458,
+            0.00029825,
+            0.000271792,
+            0.00028675,
+            0.000293916,
+            0.000292,
+            0.000277334,
+            0.000254834,
+            0.000283375,
+            0.000281083,
+            0.000269917,
+            0.000277875,
+            0.000250792,
+            0.000266208,
+            0.000321375,
+            0.00027375,
+            0.000294625,
+            0.000303083
+          ],
+          "median_seconds": 0.000281083,
+          "min_seconds": 0.000250792,
+          "max_seconds": 0.000321375
+        },
+        "output_read": {
+          "seconds": [
+            2.92e-07,
+            3.34e-07,
+            1.67e-07,
+            2.5e-07,
+            2.5e-07,
+            1.67e-07,
+            2.08e-07,
+            2.5e-07,
+            3.33e-07,
+            2.5e-07,
+            1.66e-07,
+            2.5e-07,
+            2.92e-07,
+            2.5e-07,
+            2.92e-07,
+            2.5e-07,
+            2.92e-07,
+            2.5e-07,
+            2.5e-07,
+            2.91e-07,
+            2.92e-07
+          ],
+          "median_seconds": 2.5e-07,
+          "min_seconds": 1.66e-07,
+          "max_seconds": 3.34e-07
+        }
+      },
+      "comparison": {
+        "finite": true,
+        "bit_identical": false,
+        "bit_mismatches": 1836,
+        "elements": 2048,
+        "max_abs": 1.1920928955078125e-06,
+        "rmse": 3.4482939505759334e-07,
+        "metal_tolerance": {
+          "atol": 0.001,
+          "rtol": 0.0001,
+          "reference": "native CPU",
+          "passed": true,
+          "elements_outside_tolerance": 0,
+          "scope": "component outputs only; no routes, model logits or recurrent states"
+        }
+      },
+      "all_repetitions_bit_identical": false,
+      "all_repetitions_within_existing_tolerance": true
+    }
+  },
+  "metal_mode_order": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "historical": {
+    "timer": {
+      "device": "Apple M5",
+      "randomized_order": [
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ],
+        [
+          "historical_tile1"
+        ]
+      ],
+      "payload_bytes": 2781772,
+      "scope": "resident original-format synthetic component; total wall includes native CPU quantization, submission and wait; setup/uploads excluded",
+      "math_mode": "safe",
+      "experiments": {
+        "historical_tile1": {
+          "cpu_quantize_seconds": [
+            1.7542e-05,
+            1.6417e-05,
+            4.125e-06,
+            5.375e-06,
+            5.333e-06,
+            5.375e-06,
+            5.375e-06,
+            5.292e-06,
+            4.292e-06,
+            5.375e-06,
+            2.1958e-05,
+            1.7208e-05,
+            1.4084e-05,
+            1.4083e-05,
+            5.167e-06,
+            1.4084e-05,
+            1.4042e-05,
+            1.7666e-05,
+            1.4083e-05,
+            1.4125e-05,
+            1.375e-05
+          ],
+          "total_wall_seconds": [
+            0.000730959,
+            0.000633959,
+            0.000688959,
+            0.000632209,
+            0.0006365,
+            0.000641875,
+            0.000639667,
+            0.000641458,
+            0.000668667,
+            0.000815333,
+            0.000694375,
+            0.000772666,
+            0.000753083,
+            0.000635584,
+            0.000781417,
+            0.000744375,
+            0.000678208,
+            0.000773709,
+            0.000744875,
+            0.000695625,
+            0.000816792
+          ],
+          "command_buffers_per_invocation": 1,
+          "median_gpu_seconds": 0.000375000003259629,
+          "dispatches_per_invocation": 1,
+          "median_cpu_quantize_seconds": 1.4042e-05,
+          "median_total_wall_seconds": 0.000694375,
+          "gpu_seconds": [
+            0.00037199999496806413,
+            0.000375000003259629,
+            0.00037287500163074583,
+            0.00037304167199181393,
+            0.0003724999987753108,
+            0.00037324999721022323,
+            0.00037275000067893416,
+            0.00037312500353436917,
+            0.00037470833194674924,
+            0.00037687500298488885,
+            0.00037295833317330107,
+            0.00037850000080652535,
+            0.00038120833050925285,
+            0.0003756666701519862,
+            0.0003751250042114407,
+            0.00037687500298488885,
+            0.00037387499469332397,
+            0.0003765833316720091,
+            0.0003760416657314636,
+            0.0003783749998547137,
+            0.0003767916714423336
+          ]
+        }
+      },
+      "warmups": 3
+    },
+    "comparison": {
+      "finite": true,
+      "bit_identical": true,
+      "bit_mismatches": 0,
+      "elements": 2048,
+      "max_abs": 0.0,
+      "rmse": 0.0,
+      "metal_tolerance": {
+        "atol": 0.001,
+        "rtol": 0.0001,
+        "reference": "native CPU",
+        "passed": true,
+        "elements_outside_tolerance": 0,
+        "scope": "component outputs only; no routes, model logits or recurrent states"
+      }
+    }
+  },
+  "checkpoint_identities_unchanged": true,
+  "build_binding_unchanged": true,
+  "probe_sources_unchanged": true,
+  "cpu_reference_valid": true,
+  "awake": {
+    "started": true,
+    "cleaned_up": true,
+    "command": [
+      "/usr/bin/caffeinate",
+      "-i",
+      "-w",
+      "81945"
+    ],
+    "helper_pid": 81953,
+    "helper_create_time": 1793783602.053939,
+    "target_pid": 81945,
+    "target_create_time": 1793783601.544074,
+    "owner_signal": "SIGTERM",
+    "helper_alive_before_owner_signal": true,
+    "helper_exit_code": -15,
+    "cleanup_kind": "owner_term",
+    "target_exited_at_cleanup": false,
+    "exit_qualified": true
+  },
+  "power": {
+    "passed": true,
+    "finalized": true,
+    "expected_power_source": "ac",
+    "clock_samples": 3,
+    "power_samples": 3,
+    "first": {
+      "clock": {
+        "wall_time_seconds": 1793783602.0364401,
+        "perf_counter_seconds": 39129.553966291,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-04T09:13:22.036440+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T09:13:22.036453+00:00",
+          "wall_time_seconds": 1793783602.036454,
+          "perf_counter_seconds": 39129.553980833,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 39129.570547916
+        }
+      },
+      "passed": true
+    },
+    "last": {
+      "clock": {
+        "wall_time_seconds": 1793783602.6028302,
+        "perf_counter_seconds": 39130.120352291,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 4.037538019474596e-06,
+        "timestamp_utc": "2026-11-04T09:13:22.602830+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T09:13:22.602848+00:00",
+          "wall_time_seconds": 1793783602.602849,
+          "perf_counter_seconds": 39130.120371333,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 39130.137794
+        }
+      },
+      "passed": true
+    },
+    "violation": null,
+    "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+  },
+  "continuity_errors": [],
+  "uid_fd_closed": true,
+  "finished_at_utc": "2026-11-04T09:13:22.620297+00:00"
+}

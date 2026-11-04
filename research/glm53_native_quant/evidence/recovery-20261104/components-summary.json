@@ -1,0 +1,842 @@
+{
+  "scope": "four warm original-weight components; activations synthetic; no GLM routes/states or token-rate qualification",
+  "final_pool_runs": [
+    {
+      "run": "pool-q2-seed5304101",
+      "format": "Q2_K",
+      "seed": 5304101,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.40.ffn_gate_exps.weight",
+        "dims": [
+          4096,
+          2048,
+          288
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 2048,
+        "absolute_offset": 85169447104,
+        "selected_bytes": 2752512,
+        "sha256_selected_bytes": "aaf29d834e619e00d59b9a23c106f5285a10253c3a69cd9a1baf7c6c1b26c496"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304101,
+        "sha256": "c7af98fd50fce27809c1e35cd3fec2938e80c4963f43eeccded38ae755383a64"
+      },
+      "cpu10_median_seconds": 4.7666e-05,
+      "native": {
+        "total_median_seconds": 0.000306125,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 2048,
+          "elements": 2048,
+          "max_abs": 0.03036433458328247,
+          "rmse": 0.008799146664954152,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1846,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000295292,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1836,
+          "elements": 2048,
+          "max_abs": 1.1920928955078125e-06,
+          "rmse": 3.4482939505759334e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000694375,
+        "gpu_median_seconds": 0.000375000003259629,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 2048,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q2_K_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 162545664,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "ec66cb4aab419e0edc54023a4648ebbfc1fd168bb1f95e673e10a21ffbeb554a",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 6.4222926194771945,
+      "adapter_over_cpu10": 6.195023706625268
+    },
+    {
+      "run": "pool-q2-seed5304102",
+      "format": "Q2_K",
+      "seed": 5304102,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.40.ffn_gate_exps.weight",
+        "dims": [
+          4096,
+          2048,
+          288
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 2048,
+        "absolute_offset": 85169447104,
+        "selected_bytes": 2752512,
+        "sha256_selected_bytes": "aaf29d834e619e00d59b9a23c106f5285a10253c3a69cd9a1baf7c6c1b26c496"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304102,
+        "sha256": "22e0a3589a4dc46ddd383f148b1701efa25a93651b70d10527318d11fe376aa9"
+      },
+      "cpu10_median_seconds": 4.4792e-05,
+      "native": {
+        "total_median_seconds": 0.000311167,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 2048,
+          "elements": 2048,
+          "max_abs": 0.03281259536743164,
+          "rmse": 0.00863511383026975,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1848,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000297458,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1821,
+          "elements": 2048,
+          "max_abs": 1.0728836059570312e-06,
+          "rmse": 2.8206142149292425e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000750666,
+        "gpu_median_seconds": 0.0003771249976125546,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 2048,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q2_K_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 157220864,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "ec66cb4aab419e0edc54023a4648ebbfc1fd168bb1f95e673e10a21ffbeb554a",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 6.9469324879442755,
+      "adapter_over_cpu10": 6.6408733702446865
+    },
+    {
+      "run": "pool-q8-seed5304101",
+      "format": "Q8_0",
+      "seed": 5304101,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.3.attn_q_a.weight",
+        "dims": [
+          4096,
+          1536
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 1536,
+        "absolute_offset": 56124245824,
+        "selected_bytes": 6684672,
+        "selected_sha256": "de1b6997695ffcc5e58eee191e032d8df7cdae0eb345352026ece7fff47cac0d"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304101,
+        "sha256": "c7af98fd50fce27809c1e35cd3fec2938e80c4963f43eeccded38ae755383a64"
+      },
+      "cpu10_median_seconds": 3.3333e-05,
+      "native": {
+        "total_median_seconds": 0.000306542,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1536,
+          "elements": 1536,
+          "max_abs": 0.02351248264312744,
+          "rmse": 0.005361018319729938,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1278,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000303625,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1292,
+          "elements": 1536,
+          "max_abs": 5.960464477539062e-07,
+          "rmse": 1.7605332762040888e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000558708,
+        "gpu_median_seconds": 0.00024537499848520383,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 1536,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q8_0_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 160448512,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "ec66cb4aab419e0edc54023a4648ebbfc1fd168bb1f95e673e10a21ffbeb554a",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 9.196351963519634,
+      "adapter_over_cpu10": 9.108841088410884
+    },
+    {
+      "run": "pool-q8-seed5304102",
+      "format": "Q8_0",
+      "seed": 5304102,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.3.attn_q_a.weight",
+        "dims": [
+          4096,
+          1536
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 1536,
+        "absolute_offset": 56124245824,
+        "selected_bytes": 6684672,
+        "selected_sha256": "de1b6997695ffcc5e58eee191e032d8df7cdae0eb345352026ece7fff47cac0d"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304102,
+        "sha256": "22e0a3589a4dc46ddd383f148b1701efa25a93651b70d10527318d11fe376aa9"
+      },
+      "cpu10_median_seconds": 3.2667e-05,
+      "native": {
+        "total_median_seconds": 0.000293875,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1536,
+          "elements": 1536,
+          "max_abs": 0.017113924026489258,
+          "rmse": 0.00492168997970692,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1249,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000304416,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1294,
+          "elements": 1536,
+          "max_abs": 5.662441253662109e-07,
+          "rmse": 1.714377052675604e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000570583,
+        "gpu_median_seconds": 0.0002472916603437625,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 1536,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q8_0_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 164265984,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "ec66cb4aab419e0edc54023a4648ebbfc1fd168bb1f95e673e10a21ffbeb554a",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 8.996081672635993,
+      "adapter_over_cpu10": 9.318762053448435
+    }
+  ],
+  "discarded_initial_runs": [
+    {
+      "run": "real-q2-seed5304101",
+      "format": "Q2_K",
+      "seed": 5304101,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.40.ffn_gate_exps.weight",
+        "dims": [
+          4096,
+          2048,
+          288
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 2048,
+        "absolute_offset": 85169447104,
+        "selected_bytes": 2752512,
+        "sha256_selected_bytes": "aaf29d834e619e00d59b9a23c106f5285a10253c3a69cd9a1baf7c6c1b26c496"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304101,
+        "sha256": "c7af98fd50fce27809c1e35cd3fec2938e80c4963f43eeccded38ae755383a64"
+      },
+      "cpu10_median_seconds": 0.000153125,
+      "native": {
+        "total_median_seconds": 0.000301834,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 2048,
+          "elements": 2048,
+          "max_abs": 0.03036433458328247,
+          "rmse": 0.008799146664954152,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1846,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000305208,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1836,
+          "elements": 2048,
+          "max_abs": 1.1920928955078125e-06,
+          "rmse": 3.4482939505759334e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000658333,
+        "gpu_median_seconds": 0.00037275000067893416,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 2048,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q2_K_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 150388736,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "dd9734e72b6b3a1482d9731c485e641c0ddf9a1691eec6eb838185f4ad1d2fa4",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "not attached; rebuilt per compute",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 1.9711608163265308,
+      "adapter_over_cpu10": 1.9931951020408165
+    },
+    {
+      "run": "real-q2-seed5304102",
+      "format": "Q2_K",
+      "seed": 5304102,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.40.ffn_gate_exps.weight",
+        "dims": [
+          4096,
+          2048,
+          288
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 2048,
+        "absolute_offset": 85169447104,
+        "selected_bytes": 2752512,
+        "sha256_selected_bytes": "aaf29d834e619e00d59b9a23c106f5285a10253c3a69cd9a1baf7c6c1b26c496"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304102,
+        "sha256": "22e0a3589a4dc46ddd383f148b1701efa25a93651b70d10527318d11fe376aa9"
+      },
+      "cpu10_median_seconds": 0.000145292,
+      "native": {
+        "total_median_seconds": 0.000312584,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 2048,
+          "elements": 2048,
+          "max_abs": 0.03281259536743164,
+          "rmse": 0.00863511383026975,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1848,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000317167,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1821,
+          "elements": 2048,
+          "max_abs": 1.0728836059570312e-06,
+          "rmse": 2.8206142149292425e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000697708,
+        "gpu_median_seconds": 0.0003753749988391064,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 2048,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q2_K_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 163020800,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "dd9734e72b6b3a1482d9731c485e641c0ddf9a1691eec6eb838185f4ad1d2fa4",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "not attached; rebuilt per compute",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 2.151419210968257,
+      "adapter_over_cpu10": 2.182962585689508
+    },
+    {
+      "run": "real-q8-seed5304101",
+      "format": "Q8_0",
+      "seed": 5304101,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.3.attn_q_a.weight",
+        "dims": [
+          4096,
+          1536
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 1536,
+        "absolute_offset": 56124245824,
+        "selected_bytes": 6684672,
+        "selected_sha256": "de1b6997695ffcc5e58eee191e032d8df7cdae0eb345352026ece7fff47cac0d"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304101,
+        "sha256": "c7af98fd50fce27809c1e35cd3fec2938e80c4963f43eeccded38ae755383a64"
+      },
+      "cpu10_median_seconds": 0.0001365,
+      "native": {
+        "total_median_seconds": 0.000513125,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1536,
+          "elements": 1536,
+          "max_abs": 0.02351248264312744,
+          "rmse": 0.005361018319729938,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1278,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.0005255,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1292,
+          "elements": 1536,
+          "max_abs": 5.960464477539062e-07,
+          "rmse": 1.7605332762040888e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000569417,
+        "gpu_median_seconds": 0.00013162499817553908,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 1536,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q8_0_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 178798592,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "dd9734e72b6b3a1482d9731c485e641c0ddf9a1691eec6eb838185f4ad1d2fa4",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "not attached; rebuilt per compute",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 3.759157509157509,
+      "adapter_over_cpu10": 3.84981684981685
+    },
+    {
+      "run": "real-q8-seed5304102",
+      "format": "Q8_0",
+      "seed": 5304102,
+      "weights": {
+        "file": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "file_bytes": 110017922752,
+        "tensor": "blk.3.attn_q_a.weight",
+        "dims": [
+          4096,
+          1536
+        ],
+        "expert": 0,
+        "first_row": 0,
+        "rows": 1536,
+        "absolute_offset": 56124245824,
+        "selected_bytes": 6684672,
+        "selected_sha256": "de1b6997695ffcc5e58eee191e032d8df7cdae0eb345352026ece7fff47cac0d"
+      },
+      "activation": {
+        "kind": "synthetic deterministic FP32; not a captured GLM activation",
+        "seed": 5304102,
+        "sha256": "22e0a3589a4dc46ddd383f148b1701efa25a93651b70d10527318d11fe376aa9"
+      },
+      "cpu10_median_seconds": 0.00014575,
+      "native": {
+        "total_median_seconds": 0.000298334,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1536,
+          "elements": 1536,
+          "max_abs": 0.017113924026489258,
+          "rmse": 0.00492168997970692,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": false,
+            "elements_outside_tolerance": 1249,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": false
+      },
+      "adapter": {
+        "total_median_seconds": 0.000292917,
+        "comparison": {
+          "finite": true,
+          "bit_identical": false,
+          "bit_mismatches": 1294,
+          "elements": 1536,
+          "max_abs": 5.662441253662109e-07,
+          "rmse": 1.714377052675604e-07,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        },
+        "all_repetitions_within_tolerance": true
+      },
+      "historical": {
+        "total_median_seconds": 0.000561541,
+        "gpu_median_seconds": 0.00024625000514788553,
+        "comparison": {
+          "finite": true,
+          "bit_identical": true,
+          "bit_mismatches": 0,
+          "elements": 1536,
+          "max_abs": 0.0,
+          "rmse": 0.0,
+          "metal_tolerance": {
+            "atol": 0.001,
+            "rtol": 0.0001,
+            "reference": "native CPU",
+            "passed": true,
+            "elements_outside_tolerance": 0,
+            "scope": "component outputs only; no routes, model logits or recurrent states"
+          }
+        }
+      },
+      "native_pipeline_bases": [
+        "dummy_kernel",
+        "kernel_mul_mv_q8_0_f32"
+      ],
+      "completed_command_buffers": 96,
+      "command_buffer_time_scope": "both modes and warmups; includes empty command buffers, not a count of matvecs; no per-mode device median inferred",
+      "max_rss_bytes": 158138368,
+      "swap_growth_bytes": 0,
+      "peak_pressure_level": 1,
+      "build_receipt_sha256": {
+        "native": "dd9734e72b6b3a1482d9731c485e641c0ddf9a1691eec6eb838185f4ad1d2fa4",
+        "historical": "f69bef3fa7239f1dde82bebe0bfbf8add44575ec791e23bca851036f9f9406ed"
+      },
+      "cpu_threadpool_policy": "not attached; rebuilt per compute",
+      "model_speedup_qualified": false,
+      "native_over_cpu10": 2.0468885077186965,
+      "adapter_over_cpu10": 2.0097221269296743
+    }
+  ],
+  "discard_reason": "CPU backend had no explicit persistent threadpool and recreated workers per compute; arithmetic evidence retained, initial CPU timing excluded from final comparison",
+  "native_entrypoints_executed": [
+    "kernel_mul_mv_q2_K_f32",
+    "kernel_mul_mv_q8_0_f32"
+  ],
+  "new_complete_model_gpu_speedup_qualified": false,
+  "cache_or_pipeline_activated": false
+}

@@ -190,6 +190,7 @@ def worker(args):
         'uid_lock':lock,'format':'Q2_K' if args.format==2 else 'Q8_0','seed':args.seed,
         'model_decode_gain_qualified':False,'inter_agent_reuse_measured':False,
         'initial':initial,'numpy_version':np.__version__}
+    report['cpu_threadpool_policy'] = 'one explicit persistent pool per CPU handle; CPU1/CPU10 handles closed successively before Metal'
     sources = [Path(__file__),Path(__file__).with_name('build.py'),
         Path(__file__).parents[1]/'glm53_batched_prefill/metal_probe.py',
         Path(__file__).parents[1]/'glm53_gpu_v2/q8_reader.py',

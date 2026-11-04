@@ -1,0 +1,162 @@
+ggml_metal_device_init: testing tensor API for f16 support
+ggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'
+ggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x1051822b0 | th_max = 1024 | th_width =   32
+ggml_metal_device_init: testing tensor API for bfloat support
+ggml_metal_library_compile_pipeline: compiling pipeline: base = 'dummy_kernel', name = 'dummy_kernel'
+ggml_metal_library_compile_pipeline: loaded dummy_kernel                                  0x105182c20 | th_max = 1024 | th_width =   32
+ggml_metal_library_init: using embedded metal library
+ggml_metal_library_compile_all: compiled 'fa_aux' library in 0.000 sec
+ggml_metal_library_compile_all: compiled 'fa_f16' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'fa_f32' library in 0.001 sec
+ggml_metal_library_compile_all: compiled 'fa_q4_0' library in 0.001 sec
+ggml_metal_library_compile_all: compiled 'fa_q4_1' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'fa_q5_0' library in 0.011 sec
+ggml_metal_library_compile_all: compiled 'fa_q5_1' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'fa_q8_0' library in 0.009 sec
+ggml_metal_library_compile_all: compiled 'fa_tensor' library in 0.001 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_f16' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_f32' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_q4_0' library in 0.009 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_q4_1' library in 0.011 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_q5_0' library in 0.010 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_q5_1' library in 0.007 sec
+ggml_metal_library_compile_all: compiled 'fa_vec_q8_0' library in 0.008 sec
+ggml_metal_library_compile_all: compiled 'mul_mv' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'mul_mv_mma' library in 0.006 sec
+ggml_metal_library_compile_all: compiled 'mul_mm' library in 0.005 sec
+ggml_metal_library_compile_all: compiled 'quantize' library in 0.005 sec
+ggml_metal_library_compile_all: compiled 'softmax' library in 0.007 sec
+ggml_metal_library_compile_all: compiled 'norm' library in 0.008 sec
+ggml_metal_library_compile_all: compiled 'unary' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'binbcast' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'reduce' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'tri' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'ssm' library in 0.002 sec
+ggml_metal_library_compile_all: compiled 'wkv' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'gated_delta_net' library in 0.006 sec
+ggml_metal_library_compile_all: compiled 'solve_tri' library in 0.005 sec
+ggml_metal_library_compile_all: compiled 'rope' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'conv' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'upscale' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'argsort' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'pool' library in 0.003 sec
+ggml_metal_library_compile_all: compiled 'misc' library in 0.003 sec
+ggml_metal_library_compile_all: loaded 36 libraries from embedded data in 0.012 sec (max single = 0.011 sec)
+ggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)
+ggml_metal_device_init: GPU name:   MTL0 (Apple M5)
+ggml_metal_device_init: GPU family: MTLGPUFamilyApple10  (1010)
+ggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)
+ggml_metal_device_init: simdgroup reduction   = true
+ggml_metal_device_init: simdgroup matrix mul. = true
+ggml_metal_device_init: has unified memory    = true
+ggml_metal_device_init: has bfloat            = true
+ggml_metal_device_init: has tensor            = true
+ggml_metal_device_init: use residency sets    = true
+ggml_metal_device_init: use shared buffers    = true
+ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+ggml_metal_init: allocating
+ggml_metal_init: found device: Apple M5
+ggml_metal_init: picking default device: Apple M5
+ggml_metal_init: use fusion         = true
+ggml_metal_init: use concurrency    = true
+ggml_metal_init: use graph optimize = true
+ggml_metal_library_compile_pipeline: compiling pipeline: base = 'kernel_mul_mv_q8_0_f32', name = 'kernel_mul_mv_q8_0_f32_nsg=4_ne12=1_r2=1_r3=1_split=0'
+ggml_metal_library_compile_pipeline: loaded kernel_mul_mv_q8_0_f32_nsg=4_ne12=1_r2=1_r3=1_split=0      0x1051885a0 | th_max = 1024 | th_width =   32
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.806734500 end=39133.806842667 seconds=0.000108167 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.806896167 end=39133.806896375 seconds=0.000000208 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.807194250 end=39133.807302500 seconds=0.000108250 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.807369167 end=39133.807369250 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.807596542 end=39133.807706250 seconds=0.000109708 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.807770625 end=39133.807770667 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.808047667 end=39133.808157292 seconds=0.000109625 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.808221500 end=39133.808221542 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.808425500 end=39133.808532875 seconds=0.000107375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.808598750 end=39133.808598750 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.808832625 end=39133.808943000 seconds=0.000110375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809009792 end=39133.809009875 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809214250 end=39133.809324625 seconds=0.000110375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809393375 end=39133.809393375 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809618625 end=39133.809723167 seconds=0.000104542 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809779917 end=39133.809780000 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.809990125 end=39133.810100250 seconds=0.000110125 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.810156250 end=39133.810156250 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.810354792 end=39133.810459667 seconds=0.000104875 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.810523667 end=39133.810523750 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.810743917 end=39133.810851125 seconds=0.000107208 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.810916125 end=39133.810916250 seconds=0.000000125 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.811146917 end=39133.811257125 seconds=0.000110208 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.811321792 end=39133.811321875 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.811533167 end=39133.811643500 seconds=0.000110333 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.811710125 end=39133.811710167 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.811926375 end=39133.812034750 seconds=0.000108375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.812100167 end=39133.812100250 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.812303500 end=39133.812413250 seconds=0.000109750 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.812477000 end=39133.812477042 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.812684875 end=39133.812792500 seconds=0.000107625 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.812857250 end=39133.812857292 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813060250 end=39133.813167417 seconds=0.000107167 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813234875 end=39133.813234875 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813426042 end=39133.813531292 seconds=0.000105250 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813594250 end=39133.813594292 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813788125 end=39133.813897500 seconds=0.000109375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.813956875 end=39133.813956875 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.814161000 end=39133.814270500 seconds=0.000109500 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.814337250 end=39133.814337292 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.814576917 end=39133.814682250 seconds=0.000105333 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.814744625 end=39133.814744667 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.814977000 end=39133.815082375 seconds=0.000105375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.815133500 end=39133.815133542 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.815356042 end=39133.815463792 seconds=0.000107750 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.815524167 end=39133.815524250 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.815751042 end=39133.815859042 seconds=0.000108000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.815926125 end=39133.815926250 seconds=0.000000125 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.816158292 end=39133.816268292 seconds=0.000110000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.816337125 end=39133.816337167 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.816576667 end=39133.816684042 seconds=0.000107375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.816759125 end=39133.816759125 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.816973667 end=39133.817083292 seconds=0.000109625 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.817151542 end=39133.817151625 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.817373625 end=39133.817479625 seconds=0.000106000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.817535917 end=39133.817536000 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.817771375 end=39133.817878792 seconds=0.000107417 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.817957792 end=39133.817957792 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.818196417 end=39133.818306750 seconds=0.000110333 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.818374375 end=39133.818374375 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.818597167 end=39133.818707375 seconds=0.000110208 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.818770042 end=39133.818770125 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.818978500 end=39133.819088042 seconds=0.000109542 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.819151625 end=39133.819151667 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.819372875 end=39133.819480292 seconds=0.000107417 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.819543542 end=39133.819543625 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.819783375 end=39133.819888125 seconds=0.000104750 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.819949042 end=39133.819949125 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.820187375 end=39133.820292250 seconds=0.000104875 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.820344625 end=39133.820344625 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.820551667 end=39133.820656417 seconds=0.000104750 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.820708500 end=39133.820708542 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.820903875 end=39133.821009292 seconds=0.000105417 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.821063917 end=39133.821064000 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.821264667 end=39133.821369792 seconds=0.000105125 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.821422500 end=39133.821422500 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.821633000 end=39133.821790750 seconds=0.000157750 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.821846375 end=39133.821846500 seconds=0.000000125 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.822024542 end=39133.822278917 seconds=0.000254375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.822323750 end=39133.822323750 seconds=0.000000000 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.822505917 end=39133.822621167 seconds=0.000115250 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.822670500 end=39133.822670542 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.822846542 end=39133.823056750 seconds=0.000210208 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.823115292 end=39133.823115375 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.823313417 end=39133.823426875 seconds=0.000113458 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.823484875 end=39133.823484917 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.823799500 end=39133.823909875 seconds=0.000110375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.823979375 end=39133.823979417 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.824173667 end=39133.824281167 seconds=0.000107500 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.824348625 end=39133.824348667 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.824555750 end=39133.824665250 seconds=0.000109500 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.824732375 end=39133.824732417 seconds=0.000000042 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.824931125 end=39133.825036500 seconds=0.000105375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.825090917 end=39133.825091000 seconds=0.000000083 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.825310625 end=39133.825421000 seconds=0.000110375 status=4
+AIRLLM_GPU_TIME origin=ggml_metal_set_n_cb_block_invoke start=39133.825488292 end=39133.825488375 seconds=0.000000083 status=4
+ggml_metal_free: deallocating
+{"status": "completed", "model_decode_gain_qualified": false}
