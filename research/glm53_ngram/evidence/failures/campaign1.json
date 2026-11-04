@@ -1,0 +1,58 @@
+{
+  "utc": "2026-11-04T10:51:51.637084+00:00",
+  "status": "failed",
+  "config": {
+    "mode": "ngram",
+    "tokens": 32,
+    "ngram_size": 2,
+    "draft_tokens": 2,
+    "prompt": "La capitale de la France est"
+  },
+  "order": [
+    "A1",
+    "B1",
+    "B2",
+    "A2"
+  ],
+  "arms": [
+    {
+      "label": "A1",
+      "mode": "reference",
+      "status": "preparing"
+    }
+  ],
+  "artifacts": {
+    "probe": "9370cae97f52ebfbb9be4b4ae5f6d30db6801266b0e4ce5464557e3f8102c35f",
+    "libraries": {
+      "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+      "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+      "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+      "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+      "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+      "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+      "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+      "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+      "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+      "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+    }
+  },
+  "sources_sha256": {
+    "$REPO/research/glm53_ngram/build.py": "1366b2954de2fe0cef351a701fbc6003ac0395d54f8f63805bc24c0732668975",
+    "$REPO/research/glm53_ngram/run.py": "6322175135105c043c1276cd201e1c7689d59eef44f61b58948abec6603b3c25",
+    "$REPO/research/glm53_ngram/log_bridge.cpp": "7c9f97d530f38c3d8c8b1e30337e17adb9221f6bf21c3af1f306330bbb64fc25",
+    "$REPO/research/glm53_ngram/__init__.py": "f7a12bb442a6196f7a8c914a0cc97b3e279665f13813c4df70f18b8bb558d0de",
+    "$REPO/research/glm53_ngram/native.cpp": "42d2f5d3f3d4173605eb8b8c8df7a5c3099d67f131d8313d10cbb96806970738",
+    "$REPO/research/glm53_ngram/campaign.py": "4fe5d1e143892462151286014cf77da03ec8f26360353f9cc2fc0640c42042b8",
+    "$REPO/research/glm53_ngram/opportunities.py": "c51c74bf0ed40bdf29c5f183389a5cb88dcde3005f8c22011e2880a66579d76f",
+    "$REPO/research/glm53_ngram/test_ngram.py": "039ad4eb15e97d080eab654f99ab22ce042ec774e7310c062ac9966f84958c5e",
+    "$REPO/research/glm53_ngram/test_compare.py": "4bfe2e1873ffada2b01158a13a34ad9f45a2ea664363e07d34aba46c5b2bf45e",
+    "$REPO/research/glm53_ngram/compare.py": "93f7ee02a4cfb4b270554857099eef702b686e3591f4cdc47781dc3344341096",
+    "$REPO/research/glm53_ngram/prepare.py": "9331de76657751b709cfd73207cfd0e0cf427fba5fab2d8250ec2277e56b60d7"
+  },
+  "campaign_swap_used_bytes": 364183552,
+  "qualification": "$WORK/ngram-audit2-run2/report.json",
+  "production_changed": false,
+  "reproducible_gain_qualified": false,
+  "error": "ValueError: too many values to unpack (expected 2, got 3)",
+  "finished_at_utc": "2026-11-04T10:51:52.046117+00:00"
+}

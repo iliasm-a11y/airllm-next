@@ -1,0 +1,309 @@
+{
+  "utc": "2026-11-04T10:44:51.623225+00:00",
+  "config": {
+    "mode": "audit",
+    "tokens": 32,
+    "ngram_size": 2,
+    "draft_tokens": 2,
+    "prompt": "La capitale de la France est"
+  },
+  "status": "failed",
+  "blockers": [],
+  "native_process_launched": true,
+  "performance_measured": false,
+  "resource_sample": {
+    "available_bytes": 7918698496,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 364183552,
+    "pressure_level": 1
+  },
+  "disk_free_bytes": 37443620864,
+  "artifacts": {
+    "probe": "98a227e0975ba8cd031ad1538194f89e62b55e261fb4f31588c88a80970947ea",
+    "libraries": {
+      "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+      "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+      "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+      "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+      "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+      "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+      "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+      "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+      "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+      "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+    }
+  },
+  "qualification": null,
+  "checkpoint": {
+    "path": "$MODEL",
+    "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+    "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+    "quantization": "Q2_K_S",
+    "exists": true,
+    "architecture_matches": true,
+    "weights_present": true,
+    "integrity_verified": true,
+    "errors": [],
+    "files": [
+      {
+        "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+        "expected_bytes": 9430112,
+        "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+        "integrity_verified": true,
+        "identity": [
+          16777229,
+          34853271,
+          9430112,
+          1793220986088562812,
+          1793221180120865439
+        ],
+        "bytes": 9430112,
+        "verification": "unchanged SHA256 receipt"
+      },
+      {
+        "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+        "expected_bytes": 110017922752,
+        "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+        "integrity_verified": true,
+        "identity": [
+          16777229,
+          34874104,
+          110017922752,
+          1793630405545465080,
+          1793652319576112639
+        ],
+        "bytes": 110017922752,
+        "verification": "unchanged SHA256 receipt"
+      }
+    ],
+    "metadata": {
+      "general.architecture": "glm5-next",
+      "general.type": "model",
+      "general.sampling.top_p": 0.949999988079071,
+      "general.sampling.temp": 1.0,
+      "general.name": "GLM-5.3-Flash",
+      "general.size_label": "288x10B",
+      "general.license": "mit",
+      "general.tags": {
+        "element_type": 8,
+        "count": 1
+      },
+      "general.languages": {
+        "element_type": 8,
+        "count": 2
+      },
+      "glm5-next.block_count": 45,
+      "glm5-next.context_length": 1048576,
+      "glm5-next.embedding_length": 4096,
+      "glm5-next.feed_forward_length": 12288,
+      "glm5-next.attention.head_count": 64,
+      "glm5-next.attention.head_count_kv": {
+        "element_type": 5,
+        "count": 45
+      },
+      "glm5-next.attention.layer_norm_rms_epsilon": 9.999999747378752e-06,
+      "glm5-next.expert_count": 288,
+      "glm5-next.expert_used_count": 8,
+      "glm5-next.expert_group_count": 1,
+      "glm5-next.expert_group_used_count": 1,
+      "glm5-next.expert_gating_func": 2,
+      "glm5-next.vocab_size": 154880,
+      "glm5-next.attention.layer_norm_epsilon": 9.999999974752427e-07,
+      "glm5-next.ssm.conv_kernel": 4,
+      "glm5-next.kda.head_dim": 128,
+      "glm5-next.kda.gate_lower_bound": -5.0,
+      "glm5-next.attention.q_lora_rank": 1536,
+      "glm5-next.attention.kv_lora_rank": 512,
+      "glm5-next.rope.dimension_count": 0,
+      "glm5-next.attention.key_length": 512,
+      "glm5-next.attention.value_length": 512,
+      "glm5-next.attention.key_length_mla": 256,
+      "glm5-next.attention.value_length_mla": 256,
+      "glm5-next.attention.indexer.head_count": 32,
+      "glm5-next.attention.indexer.key_length": 128,
+      "glm5-next.attention.indexer.top_k": 2048,
+      "glm5-next.attention.indexer.kpool": 4,
+      "glm5-next.attention.indexer.kpool_select_tail": true,
+      "glm5-next.attention.indexer.types": {
+        "element_type": 7,
+        "count": 45
+      },
+      "glm5-next.hyper_connection.count": 4,
+      "glm5-next.hyper_connection.sinkhorn_iterations": 20,
+      "glm5-next.hyper_connection.epsilon": 9.999999974752427e-07,
+      "glm5-next.leading_dense_block_count": 3,
+      "glm5-next.expert_feed_forward_length": 2048,
+      "glm5-next.expert_shared_count": 1,
+      "glm5-next.expert_weights_scale": 2.5,
+      "glm5-next.expert_weights_norm": true,
+      "glm5-next.swiglu_clamp_exp": {
+        "element_type": 6,
+        "count": 45
+      },
+      "glm5-next.swiglu_clamp_shexp": {
+        "element_type": 6,
+        "count": 45
+      },
+      "general.quantization_version": 2,
+      "general.file_type": 10,
+      "quantize.imatrix.file": "./upload-GLM_5.3_Flash/imatrix.gguf",
+      "quantize.imatrix.dataset": "/mnt/srv/host/resources/KLD/calibration_datav5.txt",
+      "quantize.imatrix.entries_count": 126,
+      "quantize.imatrix.chunks_count": 50,
+      "split.no": 0,
+      "split.count": 2,
+      "split.tensors.count": 1383
+    }
+  },
+  "policy": {
+    "required_available_memory_bytes": 5905580032,
+    "disk_reserve_bytes": 34359738368,
+    "max_rss_bytes": 9126805504,
+    "max_system_swap_growth_bytes": 33554432,
+    "campaign_swap_used_bytes": 364183552
+  },
+  "production_changed": false,
+  "error": "RuntimeError: Experiment stopped (2); see $WORK/ngram-audit2-run1/supervision.guard.json",
+  "worker": {
+    "uid_lock": {
+      "path": "/$TMP/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+      "uid": 501,
+      "model_key": "f7ed7077cbc8482dac0d3711",
+      "fd": 3,
+      "device": 16777229,
+      "inode": 36444893,
+      "acquired_at_utc": "2026-11-04T10:44:51.680657+00:00",
+      "acquired_before_wrapper_spawn": true
+    },
+    "native_process_launched": true,
+    "finalized": true,
+    "status": "failed",
+    "native_spawned_pid": 1404,
+    "native_identity": {
+      "pid": 1404,
+      "create_time": 1793789092.09363,
+      "executable": "$BUILD3/ngram-probe"
+    },
+    "native_returncode": 2,
+    "power": {
+      "passed": false,
+      "finalized": false,
+      "expected_power_source": "ac",
+      "clock_samples": 109,
+      "power_samples": 109,
+      "first": {
+        "clock": {
+          "wall_time_seconds": 1793789091.6809962,
+          "perf_counter_seconds": 44619.169059708,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.0,
+          "timestamp_utc": "2026-11-04T10:44:51.680996+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": true,
+          "reasons": [],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-04T10:44:51.681003+00:00",
+            "wall_time_seconds": 1793789091.681004,
+            "perf_counter_seconds": 44619.169067458,
+            "lid_closed": false,
+            "power_source": "ac",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 44619.185114958
+          }
+        },
+        "passed": true
+      },
+      "last": {
+        "clock": {
+          "wall_time_seconds": 1793789149.562433,
+          "perf_counter_seconds": 44677.050192625,
+          "threshold_seconds": 2,
+          "wall_minus_perf_elapsed_seconds": 0.00030390780011657625,
+          "timestamp_utc": "2026-11-04T10:45:49.562433+00:00",
+          "passed": true,
+          "reason": null
+        },
+        "power": {
+          "passed": true,
+          "reasons": [],
+          "snapshot": {
+            "available": true,
+            "timestamp_utc": "2026-11-04T10:45:49.562468+00:00",
+            "wall_time_seconds": 1793789149.562471,
+            "perf_counter_seconds": 44677.050230958,
+            "lid_closed": false,
+            "power_source": "ac",
+            "atomic_snapshot": false,
+            "perf_counter_end_seconds": 44677.07341775
+          }
+        },
+        "passed": true
+      },
+      "violation": null,
+      "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+    },
+    "uid_parent_fd_closed": true,
+    "surviving_child_retains_uid_fd": true
+  },
+  "worker_report_finalized": true,
+  "guard": {
+    "command": [
+      "$PYTHON",
+      "-m",
+      "research.glm53_ngram.run",
+      "--worker",
+      "--model",
+      "$MODEL",
+      "--receipt",
+      "$PR24_WORK/reboot-recovery6/model-verification.json",
+      "--runtime",
+      "$RUNTIME",
+      "--probe",
+      "$BUILD3/ngram-probe",
+      "--output",
+      "$WORK/ngram-audit2-run1",
+      "--campaign-swap-used-bytes",
+      "364183552"
+    ],
+    "limits": {
+      "rss_bytes": 9126805504,
+      "reserve_bytes": 3221225472,
+      "swap_growth_bytes": 33554432,
+      "admitted_payload_bytes": 2684354560,
+      "timeout_seconds": 2400,
+      "interval_seconds": 0.5,
+      "max_processes": 8
+    },
+    "before": {
+      "available_bytes": 7896989696,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+    "swap_scope": "system wide; other applications can cause a conservative stop",
+    "violation": null,
+    "exit_code": 2,
+    "sample_count": 117,
+    "sampled_peak_rss_bytes": 7407534080,
+    "minimum_available_bytes": 4198006784,
+    "maximum_swap_growth_bytes": 0,
+    "peak_pressure_level": 1,
+    "sampled_peak_processes": 4,
+    "observed_descendant_count": 6,
+    "after": {
+      "available_bytes": 5523554304,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    "elapsed_seconds": 58.90243470900168
+  },
+  "weight_identities_unchanged": true,
+  "native_artifacts_unchanged": true,
+  "finished_at_utc": "2026-11-04T10:45:50.557418+00:00"
+}

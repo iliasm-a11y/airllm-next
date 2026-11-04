@@ -1,0 +1,53 @@
+{
+  "command": [
+    "$PYTHON",
+    "-m",
+    "research.glm53_ngram.run",
+    "--worker",
+    "--model",
+    "$MODEL",
+    "--receipt",
+    "$PR24_WORK/reboot-recovery6/model-verification.json",
+    "--runtime",
+    "$RUNTIME",
+    "--probe",
+    "$BUILD4/ngram-probe",
+    "--output",
+    "$WORK/ngram-abba32-run3/A2",
+    "--campaign-swap-used-bytes",
+    "364183552"
+  ],
+  "limits": {
+    "rss_bytes": 9126805504,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 33554432,
+    "admitted_payload_bytes": 2684354560,
+    "timeout_seconds": 2400,
+    "interval_seconds": 0.5,
+    "max_processes": 8
+  },
+  "before": {
+    "available_bytes": 7278231552,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 355794944,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 426,
+  "sampled_peak_rss_bytes": 7474610176,
+  "minimum_available_bytes": 3608494080,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "sampled_peak_processes": 4,
+  "observed_descendant_count": 18,
+  "after": {
+    "available_bytes": 4857331712,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 355794944,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 217.65119270799914
+}

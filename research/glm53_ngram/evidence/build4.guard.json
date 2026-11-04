@@ -1,0 +1,46 @@
+{
+  "command": [
+    "$PYTHON",
+    "-m",
+    "research.glm53_ngram.build",
+    "--source",
+    "$LLAMA_SOURCE",
+    "--runtime",
+    "$RUNTIME",
+    "--output",
+    "$BUILD4"
+  ],
+  "limits": {
+    "rss_bytes": 2147483648,
+    "reserve_bytes": 3221225472,
+    "swap_growth_bytes": 33554432,
+    "admitted_payload_bytes": 536870912,
+    "timeout_seconds": 120,
+    "interval_seconds": 0.25,
+    "max_processes": 8
+  },
+  "before": {
+    "available_bytes": 5315624960,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 364183552,
+    "pressure_level": 1
+  },
+  "sampling_scope": "sum of owned process and descendant RSS; shared pages may be counted twice",
+  "swap_scope": "system wide; other applications can cause a conservative stop",
+  "violation": null,
+  "exit_code": 0,
+  "sample_count": 12,
+  "sampled_peak_rss_bytes": 344440832,
+  "minimum_available_bytes": 5269471232,
+  "maximum_swap_growth_bytes": 0,
+  "peak_pressure_level": 1,
+  "sampled_peak_processes": 3,
+  "observed_descendant_count": 4,
+  "after": {
+    "available_bytes": 5453348864,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 364183552,
+    "pressure_level": 1
+  },
+  "elapsed_seconds": 2.896324041998014
+}

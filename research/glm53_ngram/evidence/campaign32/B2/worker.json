@@ -1,0 +1,85 @@
+{
+  "uid_lock": {
+    "path": "/$TMP/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+    "uid": 501,
+    "model_key": "f7ed7077cbc8482dac0d3711",
+    "fd": 3,
+    "device": 16777229,
+    "inode": 36444893,
+    "acquired_at_utc": "2026-11-04T11:04:02.682029+00:00",
+    "acquired_before_wrapper_spawn": true
+  },
+  "native_process_launched": true,
+  "finalized": true,
+  "status": "completed",
+  "native_spawned_pid": 5253,
+  "native_identity": {
+    "pid": 5253,
+    "create_time": 1793790243.09848,
+    "executable": "$BUILD4/ngram-probe"
+  },
+  "native_returncode": 0,
+  "power": {
+    "passed": true,
+    "finalized": true,
+    "expected_power_source": "ac",
+    "clock_samples": 399,
+    "power_samples": 399,
+    "first": {
+      "clock": {
+        "wall_time_seconds": 1793790242.682372,
+        "perf_counter_seconds": 45770.164393208,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-04T11:04:02.682372+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T11:04:02.682379+00:00",
+          "wall_time_seconds": 1793790242.68238,
+          "perf_counter_seconds": 45770.164401125,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 45770.180591208
+        }
+      },
+      "passed": true
+    },
+    "last": {
+      "clock": {
+        "wall_time_seconds": 1793790457.01514,
+        "perf_counter_seconds": 45984.496037208,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0011239634040975943,
+        "timestamp_utc": "2026-11-04T11:07:37.015140+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T11:07:37.015245+00:00",
+          "wall_time_seconds": 1793790457.015253,
+          "perf_counter_seconds": 45984.496149208,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 45984.5375345
+        }
+      },
+      "passed": true
+    },
+    "violation": null,
+    "scope": "open lid and constant known power at sampled times; wall/perf drift<=2s, not proof of every hardware power event"
+  },
+  "uid_parent_fd_closed": true,
+  "surviving_child_retains_uid_fd": true
+}
