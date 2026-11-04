@@ -1,0 +1,88 @@
+{
+  "utc": "2026-11-04T08:24:27.712999+00:00",
+  "status": "admission_refused",
+  "component_worker_started": false,
+  "model_process_started": false,
+  "model_decode_gain_qualified": false,
+  "preflight": {
+    "sample": {
+      "available_bytes": 3915448320,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 372572160,
+      "pressure_level": 1
+    },
+    "disk_free_bytes": 36187332608,
+    "power": {
+      "clock": {
+        "wall_time_seconds": 1793780667.023746,
+        "perf_counter_seconds": 36194.564751333,
+        "threshold_seconds": 2,
+        "wall_minus_perf_elapsed_seconds": 0.0,
+        "timestamp_utc": "2026-11-04T08:24:27.023746+00:00",
+        "passed": true,
+        "reason": null
+      },
+      "power": {
+        "passed": true,
+        "reasons": [],
+        "snapshot": {
+          "available": true,
+          "timestamp_utc": "2026-11-04T08:24:27.029443+00:00",
+          "wall_time_seconds": 1793780667.0294452,
+          "perf_counter_seconds": 36194.570449708,
+          "lid_closed": false,
+          "power_source": "ac",
+          "atomic_snapshot": false,
+          "perf_counter_end_seconds": 36194.598183583
+        }
+      },
+      "passed": true
+    },
+    "checkpoint": {
+      "path": "$MODEL",
+      "model_id": "ggml-org/GLM-5.3-Flash-GGUF",
+      "revision": "119034bc3d9d76eb41f91508e6f9fb19fde42672",
+      "quantization": "Q2_K_S",
+      "exists": true,
+      "architecture_matches": true,
+      "weights_present": true,
+      "integrity_verified": true,
+      "errors": [],
+      "files": [
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+          "expected_bytes": 9430112,
+          "sha256": "22e3599ff1cac02e854269b610030800e319151e1ed01838d7087f20b187091d",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34853271,
+            9430112,
+            1793220986088562812,
+            1793221180120865439
+          ],
+          "bytes": 9430112,
+          "verification": "unchanged SHA256 receipt"
+        },
+        {
+          "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+          "expected_bytes": 110017922752,
+          "sha256": "61ed849acb67dc7832eda82e9fad0f0257edcd20ced1fc7640e5e329ed6951b4",
+          "integrity_verified": true,
+          "identity": [
+            16777229,
+            34874104,
+            110017922752,
+            1793630405545465080,
+            1793652319576112639
+          ],
+          "bytes": 110017922752,
+          "verification": "unchanged SHA256 receipt"
+        }
+      ]
+    },
+    "blockers": [
+      "ENGINE_BUSY: UID model lock already held; no wrapper or native helper started"
+    ]
+  }
+}

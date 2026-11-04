@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "$REPO/research/glm53_batched_prefill/uid_supervisor.py", line 78, in acquire_uid_lock
+    try:fcntl.flock(holder,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BlockingIOError: [Errno 35] Resource temporarily unavailable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "$REPO/research/glm53_native_quant/probe.py", line 360, in <module>
+    raise SystemExit(run(p.parse_args()))
+                     ~~~^^^^^^^^^^^^^^^^
+  File "$REPO/research/glm53_native_quant/probe.py", line 310, in run
+    return worker(args)
+  File "$REPO/research/glm53_native_quant/probe.py", line 162, in worker
+    holder, lock = acquire_uid_lock()
+                   ~~~~~~~~~~~~~~~~^^
+  File "$REPO/research/glm53_batched_prefill/uid_supervisor.py", line 80, in acquire_uid_lock
+    holder.close();raise RuntimeError('ENGINE_BUSY: UID model lock already held; no wrapper or native helper started') from error
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ENGINE_BUSY: UID model lock already held; no wrapper or native helper started
