@@ -1,0 +1,79 @@
+{
+  "utc": "2026-11-04T09:02:23.857294+00:00",
+  "before": {
+    "available_bytes": 6471909376,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 372572160,
+    "pressure_level": 1
+  },
+  "after": {
+    "available_bytes": 7057227776,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 372572160,
+    "pressure_level": 1
+  },
+  "signals": [
+    {
+      "pid": 5765,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 5786,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 26028,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 26049,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 53455,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 53476,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 60500,
+      "signal": "SIGTERM",
+      "role": "worker"
+    },
+    {
+      "pid": 60558,
+      "signal": "SIGTERM",
+      "role": "worker"
+    }
+  ],
+  "worker_survivors": [],
+  "launcher_survivors": [],
+  "forcekill_used": false,
+  "files_deleted": false,
+  "observed_prior_footprint_bytes": 1164662776,
+  "available_memory_change_bytes": 585318400,
+  "physical_memory_caveat": "process footprints and global available-memory delta differ; other system activity is not isolated",
+  "worker_count": 8,
+  "launcher_count": 8,
+  "tools": {
+    "firebase": 4,
+    "playwright": 4
+  },
+  "observed_idle_seconds": 30,
+  "observation_samples": 3,
+  "minimum_age_seconds": 1800,
+  "identity_and_activity_rechecked_before_signals": true,
+  "lock_files_removed": false,
+  "model_signals_sent": [],
+  "uid_lock_probe_free_before_cleanup": true,
+  "benchmark_lock_probe_free_before_cleanup": true,
+  "private_inventory_published": false
+}

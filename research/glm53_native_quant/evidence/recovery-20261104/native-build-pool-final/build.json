@@ -1,0 +1,53 @@
+{
+  "utc": "2026-11-04T09:13:21.011369+00:00",
+  "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "command": [
+    "clang++",
+    "-std=c++17",
+    "-O2",
+    "-dynamiclib",
+    "-I",
+    "$LLAMA_HEADERS/ggml/include",
+    "$REPO/research/glm53_native_quant/native.cpp",
+    "-L",
+    "$V4_RUNTIME",
+    "-Wl,-rpath,$V4_RUNTIME",
+    "-lggml-metal",
+    "-lggml-cpu",
+    "-lggml-base",
+    "-o",
+    "$RECOVERY/native-build-pool-final/native.dylib"
+  ],
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "inputs_sha256": {
+    "$REPO/research/glm53_native_quant/native.cpp": "a3f35a43a448d29b73949206f664f014209e3ff26f47903a618a56583e77e6cd",
+    "$REPO/research/glm53_native_quant/build.py": "4d33421e3d6d37485a585b7b82d129f8cb7c288a9f031440901154947efb8d2d",
+    "$LLAMA_HEADERS/ggml/include/ggml.h": "61d3ab0de171dc5c5d2b8d627c1d59224c28fc1b759d5a4a24c7d122f9f11b91",
+    "$LLAMA_HEADERS/ggml/include/ggml-cpu.h": "316279e004cdeb8e6ef78599acb602bf79a8abdf897fed9fd1914808c1518c6e",
+    "$LLAMA_HEADERS/ggml/include/ggml-metal.h": "322f36cd30f3e9e7aad7b5b9bc63078012fd0b7706ac4e24f5721b604f3d8980",
+    "$LLAMA_HEADERS/ggml/include/ggml-backend.h": "6926bee0487ed349cce290466bbd4b24e2f9af2758f6fac3cd77adef3a421799",
+    "$LLAMA_HEADERS/ggml/include/ggml-alloc.h": "d114067f9099c4a0e2bbc0625c676d4894d9cf0ea27168ee072c7de0e71bb51d"
+  },
+  "native_libraries_sha256": {
+    "libggml-base.0.28.0.dylib": "d519d8c541c9da24a9dfe7536361ce3cbbf15c11a3b31f92350cd1e3fbc11c48",
+    "libllama-server-impl.dylib": "89185216aaec7f649513ce08e22c380da678aa0d6f54376b4eebd21e6fe710b5",
+    "libllama-completion-impl.dylib": "2fa83beaf6924a41ac254fc639d2d3a9675572e8d8a67ad3cd48f3bc83091f25",
+    "libllama-common.0.8.0.dylib": "62a82dcc74894e35991338a76a57ffd53113f5d992231ae9c2e77259ac382a1e",
+    "libllama.0.8.0.dylib": "b388064409553ea80447a09c78e91c884a7dd2dd8bd0cbf351e34b96939cef06",
+    "libmtmd.0.8.0.dylib": "d08915aac26857608e6bd8cfdb3a17b485b06eb215a7ac56930422edbfeaa21b",
+    "libggml-blas.0.28.0.dylib": "73effa1336f899df24cfff6c41f45ea23bc8d828f736cee225c4057ca1dcc31a",
+    "libggml-metal.0.28.0.dylib": "83a61379a816d15976adcc712694608e0e62728091c3fb623e690ed810725d28",
+    "libggml.0.28.0.dylib": "b812d36746173d8814cb86cfea1e3f4c6d565bbdb64ebcb2583fd21aeaada3f8",
+    "libggml-cpu.0.28.0.dylib": "a9e001f4941d939fd0d6115edf0684aee9172fb0906058f2dbc0e5877722c6cf"
+  },
+  "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.2.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "scope": "component adapter only; no native model library rebuilt, no inherited model qualification",
+  "inputs_unchanged": true,
+  "libraries_unchanged": true,
+  "passed": true,
+  "binaries_sha256": {
+    "native.dylib": "9c1dd957049049c78a379c65df19af49accbb9e1ad57fc0e815c6b98164f24c3"
+  }
+}

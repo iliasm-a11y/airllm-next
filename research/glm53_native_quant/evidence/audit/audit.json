@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "utc": "2026-11-04T08:33:22.062585+00:00",
+  "airllm_base": "6cfa76930626520c15246286b3baa2a58c0cf952",
+  "llama_revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+  "scope": "source and historical metadata audit only; no device execution or new model fidelity",
+  "pristine_sources": {
+    "ggml/src/ggml-metal/ggml-metal-device.cpp": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "c7a05fc1e3a98d16e2989100963ab13445047d1d91411e40b0d51bf67485e100",
+      "evidence": [
+        {
+          "label": "native Q8/Q2 dispatch",
+          "first_line": 1096,
+          "last_line": 1118
+        }
+      ]
+    },
+    "ggml/src/ggml-metal/ggml-metal-device.m": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "3d0ce6d247d06a5d06274c20b1cd1836f9011c0404bd4d68be693eae6216162d",
+      "evidence": [
+        {
+          "label": "opportunistic offload threshold",
+          "first_line": 1285,
+          "last_line": 1286
+        },
+        {
+          "label": "mHC support constraints",
+          "first_line": 1825,
+          "last_line": 1839
+        },
+        {
+          "label": "KDA and matrix support constraints",
+          "first_line": 1855,
+          "last_line": 1873
+        }
+      ]
+    },
+    "ggml/src/ggml-metal/ggml-metal.cpp": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "93aebaa53a09d81bd204d5c6b98759dc55c71947a3b62e77d1788674cc33387e",
+      "evidence": [
+        {
+          "label": "buffer backend compatibility",
+          "first_line": 828,
+          "last_line": 838
+        },
+        {
+          "label": "opportunistic matrix offload",
+          "first_line": 849,
+          "last_line": 857
+        }
+      ]
+    },
+    "ggml/src/ggml-metal/ggml-metal-common.cpp": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "ade4f77559e687901f84c17cf4411a35fb1bc0500818dd27cab74905fecf5978",
+      "evidence": [
+        {
+          "label": "few-row MMA constraints",
+          "first_line": 143,
+          "last_line": 158
+        }
+      ]
+    },
+    "ggml/src/ggml-metal/ggml-metal-ops.cpp": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "74da1b352b8ce195cd6c0703db20e888a056321dd60524b29728085bf68684cd",
+      "evidence": [
+        {
+          "label": "native graph matrix dispatch",
+          "first_line": 2720,
+          "last_line": 2741
+        }
+      ]
+    },
+    "ggml/src/ggml-metal/kernels/mul_mv.metal": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "67d12dfe7a12fa4b042089c89ed5a7096dc6a2c12840e6c3ba11799b3b239578",
+      "evidence": [
+        {
+          "label": "Q8 native FP32 activation",
+          "first_line": 514,
+          "last_line": 586
+        },
+        {
+          "label": "Q2 native FP32 activation",
+          "first_line": 1241,
+          "last_line": 1343
+        },
+        {
+          "label": "Q2 ID entry",
+          "first_line": 3416,
+          "last_line": 3416
+        }
+      ]
+    },
+    "ggml/src/ggml-cpu/ggml-cpu.c": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "e857ca9f6bf99d194a24c9d29dd58ae7fabd7b83f57fcadb792c9dd7de0f3db8",
+      "evidence": [
+        {
+          "label": "CPU Q8 activation and accumulation",
+          "first_line": 275,
+          "last_line": 285
+        },
+        {
+          "label": "CPU Q2 requires Q8_K",
+          "first_line": 308,
+          "last_line": 314
+        }
+      ]
+    },
+    "src/models/glm5-next.cpp": {
+      "revision": "3f8af15a76ac8675812e856da45454bafc90f12c",
+      "sha256": "ccc312dce38e8386dd215b5e3eaf417340265274cfc2bd7e9a2cc92bfed2560a",
+      "evidence": [
+        {
+          "label": "mHC fused graph",
+          "first_line": 502,
+          "last_line": 523
+        },
+        {
+          "label": "KDA dependencies",
+          "first_line": 809,
+          "last_line": 833
+        }
+      ]
+    }
+  },
+  "local_sources": {
+    "air_llm/airllm/nextgen/glm_native.py": {
+      "sha256": "a9d8a058e97c6cb47019df774e3e1a1c705da5a66879766ea1efe103c15a9ed0"
+    }
+  },
+  "v4_source_manifest_sha256": "339b07abe8a9d76d664413d293dd35e2e77d6cac1f36f494be366013fd72e5b8",
+  "v4_current_source_matches": {
+    "ggml/src/ggml-backend.cpp": true,
+    "ggml/src/ggml-cpu/ggml-cpu-dense-lookahead.h": true,
+    "ggml/src/ggml-cpu/ggml-cpu.c": true,
+    "ggml/src/ggml-cpu/ggml-cpu.cpp": true,
+    "ggml/src/ggml-metal/ggml-metal-context.m": true,
+    "ggml/src/ggml-metal/ggml-metal-device.cpp": true,
+    "ggml/src/ggml-metal/ggml-metal-device.m": true,
+    "ggml/src/ggml-metal/kernels/mul_mv.metal": true,
+    "src/llama-context.cpp": true,
+    "src/llama-dense-lock.h": true,
+    "src/llama-mmap.cpp": true,
+    "src/llama-model.cpp": true,
+    "src/models/glm5-next.cpp": true
+  },
+  "all_v4_sources_match": true,
+  "native_entrypoints_present": {
+    "kernel_mul_mv_q2_K_f32": true,
+    "kernel_mul_mv_q8_0_f32": true,
+    "kernel_mul_mv_id_q2_K_f32": true,
+    "kernel_mul_mv_id_q8_0_f32": true
+  },
+  "checkpoint_tensor_types": {
+    "Q8_0": 306,
+    "F32": 726,
+    "BF16": 225,
+    "Q2_K": 126
+  },
+  "q2_banks": 126,
+  "q2_banks_all_experts": true,
+  "historical_dense_codecs": {
+    "Q8_0": {
+      "matrices": 305,
+      "logical_bytes": 8278966272
+    },
+    "F32": {
+      "matrices": 154,
+      "logical_bytes": 368574464
+    },
+    "BF16": {
+      "matrices": 225,
+      "logical_bytes": 796917760
+    }
+  },
+  "logical_bytes_per_decode": {
+    "dense": 9444458496,
+    "selected_experts": 2774532096,
+    "total": 12218990592
+  },
+  "conditional_perfect_moe_cache_io_speedup": 1.293773549555551,
+  "bound_assumptions": "uniform service cost per logical byte, unchanged accesses, zero cache overhead; not a bound on NAND or complete model runtime",
+  "historical_decode_cache_replay": [
+    {
+      "policy": "lru",
+      "capacity_bytes": 67108864,
+      "hits": 0,
+      "misses": 1008,
+      "logical_miss_bytes": 8323596288,
+      "selected_groups": 126
+    },
+    {
+      "policy": "slru",
+      "capacity_bytes": 67108864,
+      "hits": 0,
+      "misses": 1008,
+      "logical_miss_bytes": 8323596288,
+      "selected_groups": 126
+    },
+    {
+      "policy": "lfu",
+      "capacity_bytes": 67108864,
+      "hits": 0,
+      "misses": 1008,
+      "logical_miss_bytes": 8323596288,
+      "selected_groups": 126
+    },
+    {
+      "policy": "lru",
+      "capacity_bytes": 134217728,
+      "hits": 0,
+      "misses": 1008,
+      "logical_miss_bytes": 8323596288,
+      "selected_groups": 126
+    },
+    {
+      "policy": "slru",
+      "capacity_bytes": 134217728,
+      "hits": 15,
+      "misses": 993,
+      "logical_miss_bytes": 8199733248,
+      "selected_groups": 126
+    },
+    {
+      "policy": "lfu",
+      "capacity_bytes": 134217728,
+      "hits": 0,
+      "misses": 1008,
+      "logical_miss_bytes": 8323596288,
+      "selected_groups": 126
+    }
+  ],
+  "historical_cache_scope": "Metadata-only phase split of one captured trajectory; no model, GPU or weight reads",
+  "cross_agent_cache_reuse_measured_this_run": false,
+  "new_pipeline_implemented": false,
+  "production_changed": false,
+  "saved_evidence_sha256": {
+    "research/glm53_m5/sources/gguf-headers.json": "6df42734bd114544a043794a157c6222ef05325f90c7d72100d69ff5449650b4",
+    "research/glm53_gpu_v3/evidence/dense-inventory.json": "6b5520fcb7a891a48b75e28106e16bcd4a576987223012e0c655d08c928eab72",
+    "research/glm53_gpu_v2/evidence/cache-policy-phase-replay.json": "3199e878d0bb3a11978ca7c09a475bbc931a4a89792c2ca13f897b49c7f73e58"
+  },
+  "phase_order": "native complete-model fidelity and speed precede new inter-agent cache; stable memory precedes pipeline"
+}

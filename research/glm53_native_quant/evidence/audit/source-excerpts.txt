@@ -1,0 +1,517 @@
+ggml/src/ggml-metal/ggml-metal-device.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / native Q8/Q2 dispatch
+1096:         case GGML_TYPE_Q8_0:
+1097:             {
+1098:                 nsg = N_SG_Q8_0;
+1099:                 nr0 = N_R0_Q8_0;
+1100:                 smem = 32*sizeof(float)*N_R0_Q8_0;
+1101:             } break;
+1102:         case GGML_TYPE_MXFP4:
+1103:             {
+1104:                 nsg = N_SG_MXFP4;
+1105:                 nr0 = N_R0_MXFP4;
+1106:             } break;
+1107:         case GGML_TYPE_Q2_K:
+1108:             {
+1109:                 nsg = N_SG_Q2_K;
+1110:                 nr0 = N_R0_Q2_K;
+1111:             } break;
+1112:         case GGML_TYPE_Q3_K:
+1113:             {
+1114:                 nsg = N_SG_Q3_K;
+1115:                 nr0 = N_R0_Q3_K;
+1116:             } break;
+1117:         case GGML_TYPE_Q4_K:
+1118:             {
+
+ggml/src/ggml-metal/ggml-metal-device.m @ 3f8af15a76ac8675812e856da45454bafc90f12c / opportunistic offload threshold
+1285:                 dev->props.op_offload_min_batch_size  = getenv("GGML_OP_OFFLOAD_MIN_BATCH") ? atoi(getenv("GGML_OP_OFFLOAD_MIN_BATCH")) : 32;
+1286:
+
+ggml/src/ggml-metal/ggml-metal-device.m @ 3f8af15a76ac8675812e856da45454bafc90f12c / mHC support constraints
+1825:         case GGML_OP_DSV4_HC_POST:
+1826:             return has_simdgroup_reduction &&
+1827:                 op->src[0]->type == GGML_TYPE_F32 &&
+1828:                 op->src[1]->type == GGML_TYPE_F32 &&
+1829:                 op->src[2]->type == GGML_TYPE_F32 &&
+1830:                 (op->src[3] == NULL || op->src[3]->type == GGML_TYPE_F32) &&
+1831:                 op->type         == GGML_TYPE_F32 &&
+1832:                 op->src[1]->ne[1] == 4 &&
+1833:                 op->src[2]->ne[0] == 4 &&
+1834:                 (op->src[3] == NULL || (op->src[3]->ne[0] == 4 && op->src[3]->ne[1] == 4)) &&
+1835:                 ggml_is_contiguous_rows(op->src[0]) &&
+1836:                 ggml_is_contiguous_rows(op->src[1]) &&
+1837:                 ggml_is_contiguous_rows(op->src[2]) &&
+1838:                 (op->src[3] == NULL || ggml_is_contiguous_rows(op->src[3]));
+1839:         case GGML_OP_TOP_K_MASK:
+
+ggml/src/ggml-metal/ggml-metal-device.m @ 3f8af15a76ac8675812e856da45454bafc90f12c / KDA and matrix support constraints
+1855:         case GGML_OP_GATED_DELTA_NET:
+1856:             return has_simdgroup_reduction && op->src[2]->ne[0] % 32 == 0;
+1857:         case GGML_OP_SOLVE_TRI:
+1858:             return has_simdgroup_reduction && op->src[0]->type == GGML_TYPE_F32;
+1859:         case GGML_OP_MUL_MAT:
+1860:             // the FWHT kernels read an F16 source directly; every other F16 src1 path
+1861:             // still goes through ggml_metal_supports_mul_mat_op
+1862:             if (op->src[0]->type == GGML_TYPE_F32 && op->src[1]->type == GGML_TYPE_F16 &&
+1863:                 ggml_metal_op_mul_mat_use_fwht(op, dev->props.max_theadgroup_memory_size)) {
+1864:                 return has_simdgroup_reduction;
+1865:             }
+1866:             return ggml_metal_supports_mul_mat_op(
+1867:                     has_simdgroup_reduction, op, true,
+1868:                     ggml_metal_op_mul_mat_use_mm(op, has_simdgroup_mm));
+1869:         case GGML_OP_MUL_MAT_ID:
+1870:             return ggml_metal_supports_mul_mat_op(
+1871:                     has_simdgroup_reduction, op, false,
+1872:                     ggml_metal_op_mul_mat_id_use_mm(op, has_simdgroup_mm));
+1873:         case GGML_OP_SET:
+
+ggml/src/ggml-metal/ggml-metal.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / buffer backend compatibility
+828: static bool ggml_backend_metal_device_supports_buft(ggml_backend_dev_t dev, ggml_backend_buffer_type_t buft) {
+829:     return
+830:         buft->device == dev && (
+831:         buft->iface.get_name == ggml_backend_metal_buffer_type_shared_get_name ||
+832:         buft->iface.get_name == ggml_backend_metal_buffer_type_private_get_name ||
+833:         buft->iface.get_name == ggml_backend_metal_buffer_type_mapped_get_name);
+834:
+835:     GGML_UNUSED(dev);
+836: }
+837:
+838: static int64_t get_op_batch_size(const ggml_tensor * op) {
+
+ggml/src/ggml-metal/ggml-metal.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / opportunistic matrix offload
+849: static bool ggml_backend_metal_device_offload_op(ggml_backend_dev_t dev, const ggml_tensor * op) {
+850:     ggml_metal_device_t ctx_dev = (ggml_metal_device_t)dev->context;
+851:
+852:     return (op->op == GGML_OP_MUL_MAT ||
+853:             op->op == GGML_OP_MUL_MAT_ID) &&
+854:             get_op_batch_size(op) >= ggml_metal_device_get_props(ctx_dev)->op_offload_min_batch_size;
+855: }
+856:
+857: static ggml_backend_event_t ggml_backend_metal_device_event_new(ggml_backend_dev_t dev) {
+
+ggml/src/ggml-metal/ggml-metal-common.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / few-row MMA constraints
+143: bool ggml_metal_op_mul_mat_use_mma(const struct ggml_tensor * op) {
+144:     const ggml_tensor * src0 = op->src[0];
+145:     const ggml_tensor * src1 = op->src[1];
+146:
+147:     // the batch shape goes into int16 function constants
+148:     const bool batch_ok = src1->ne[2] <= INT16_MAX && src1->ne[2]/src0->ne[2] <= INT16_MAX && src1->ne[3]/src0->ne[3] <= INT16_MAX;
+149:
+150:     return ggml_metal_mul_mat_mma_type_ok(op) && batch_ok &&
+151:         src1->type == GGML_TYPE_F32 && src1->ne[1] >= ggml_metal_mul_mv_mma_rows_min(src0->type) && src1->ne[1] <= GGML_METAL_MMA_ROWS_MAX &&
+152:         !ggml_is_transposed(src0) && !ggml_is_transposed(src1) &&
+153:         src1->nb[0] == sizeof(float) && src1->nb[1] % 16 == 0 && src1->nb[2] % 16 == 0 && src1->nb[3] % 16 == 0;
+154: }
+155:
+156: bool ggml_metal_op_mul_mat_may_use_mma(const struct ggml_tensor * op) {
+157:     return ggml_metal_mul_mv_mma_type_supported(op->src[0]->type) && op->src[1]->type == GGML_TYPE_F32;
+158: }
+
+ggml/src/ggml-metal/ggml-metal-ops.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / native graph matrix dispatch
+2720: int ggml_metal_op_mul_mat(ggml_metal_op_t ctx, int idx) {
+2721:     ggml_tensor * op = ctx->node(idx);
+2722:
+2723:     ggml_metal_library_t lib = ctx->lib;
+2724:     ggml_metal_encoder_t enc = ctx->enc;
+2725:
+2726:     const ggml_metal_device_props * props_dev = ggml_metal_device_get_props(ctx->dev);
+2727:
+2728:     if (ggml_metal_op_mul_mat_use_fwht(op, props_dev->max_theadgroup_memory_size)) {
+2729:         return ggml_metal_op_fwht(ctx, idx);
+2730:     }
+2731:
+2732:     if (props_dev->has_simdgroup_mm && ggml_metal_op_mul_mat_use_mma(op)) {
+2733:         return ggml_metal_op_mul_mat_mma(ctx, idx);
+2734:     }
+2735:
+2736:     GGML_TENSOR_LOCALS( int32_t, ne0, op->src[0], ne);
+2737:     GGML_TENSOR_LOCALS(uint64_t, nb0, op->src[0], nb);
+2738:     GGML_TENSOR_LOCALS( int32_t, ne1, op->src[1], ne);
+2739:     GGML_TENSOR_LOCALS(uint64_t, nb1, op->src[1], nb);
+2740:     GGML_TENSOR_LOCALS( int32_t, ne,  op,         ne);
+2741:     GGML_TENSOR_LOCALS(uint64_t, nb,  op,         nb);
+
+ggml/src/ggml-metal/kernels/mul_mv.metal @ 3f8af15a76ac8675812e856da45454bafc90f12c / Q8 native FP32 activation
+514: void kernel_mul_mv_q8_0_f32_impl(
+515:         args_t args,
+516:         device const char * src0,
+517:         device const char * src1,
+518:         device       char * dst,
+519:         threadgroup  char * shmem,
+520:         uint3  tgpig,
+521:         ushort tiisg,
+522:         ushort sgitg) {
+523:     const short NSG = FC_mul_mv_nsg;
+524:
+525:     constexpr short NW = N_SIMDWIDTH;
+526:     constexpr short NQ = 8;
+527:
+528:     const int nb = args.ne00/QK8_0;
+529:
+530:     const int r0 = tgpig.x*NR0;
+531:     const int r1 = tgpig.y;
+532:     const int im = tgpig.z;
+533:
+534:     const uint i12 = im%FC_mul_mv_ne12;
+535:     const uint i13 = im/FC_mul_mv_ne12;
+536:
+537:   //const uint64_t offset0 = r0*args.nb01 + (i12/FC_mul_mv_r2)*args.nb02 + (i13/FC_mul_mv_r3)*args.nb03;
+538:     const uint64_t offset1 = r1*args.nb11 + (i12        )*args.nb12 + (i13        )*args.nb13;
+539:
+540:   //device const block_q8_0 * x = (device const block_q8_0 *) (src0 + offset0);
+541:     device const float      * y = (device const float      *) (src1 + offset1);
+542:
+543:     // pointers to src0 rows
+544:     device const block_q8_0 * ax[NR0];
+545:     FOR_UNROLL (short row = 0; row < NR0; ++row) {
+546:         const uint64_t offset0 = (r0 + row)*args.nb01 + (i12/FC_mul_mv_r2)*args.nb02 + (i13/FC_mul_mv_r3)*args.nb03;
+547:
+548:         ax[row] = (device const block_q8_0 *) ((device char *) src0 + offset0);
+549:     }
+550:
+551:     float sumf[NR0] = { 0.f };
+552:
+553:     const short ix = tiisg/(NW/NQ);
+554:     const short il = tiisg%(NW/NQ);
+555:
+556:     const int ib0 = sgitg*NQ + ix;
+557:
+558:     float yl[NQ];
+559:
+560:     device const float * yb = y + ib0*QK8_0 + il*NQ;
+561:
+562:     // each thread in a SIMD group deals with NQ quants at a time
+563:     for (int ib = ib0; ib < nb; ib += NSG*NQ) {
+564:         for (short i = 0; i < NQ; ++i) {
+565:             yl[i] = yb[i];
+566:         }
+567:
+568:         for (short row = 0; row < NR0; row++) {
+569:             device const int8_t * qs = ax[row][ib].qs + il*NQ;
+570:
+571:             float sumq = 0.f;
+572:             FOR_UNROLL (short i = 0; i < NQ; ++i) {
+573:                 sumq += qs[i] * yl[i];
+574:             }
+575:
+576:             sumf[row] += sumq*ax[row][ib].d;
+577:         }
+578:
+579:         yb += NSG*NQ*QK8_0;
+580:     }
+581:
+582:     device float * dst_f32 = (device float *) dst + (uint64_t)im*args.ne0*args.ne1 + (uint64_t)r1*args.ne0;
+583:
+584:     helper_mv_reduce_and_write<NR0>(dst_f32, sumf, r0, args.ne01, tiisg, sgitg, shmem);
+585: }
+586:
+
+ggml/src/ggml-metal/kernels/mul_mv.metal @ 3f8af15a76ac8675812e856da45454bafc90f12c / Q2 native FP32 activation
+1241: void kernel_mul_mv_q2_K_f32_impl(
+1242:         args_t args,
+1243:         device const char * src0,
+1244:         device const char * src1,
+1245:         device       char * dst,
+1246:         threadgroup  char * shmem,
+1247:         uint3  tgpig,
+1248:         ushort tiisg,
+1249:         ushort sgitg) {
+1250:     const short NSG = FC_mul_mv_nsg;
+1251:
+1252:     const int nb = args.ne00/QK_K;
+1253:
+1254:     const int r0 = tgpig.x;
+1255:     const int r1 = tgpig.y;
+1256:     const int im = tgpig.z;
+1257:
+1258:     const int first_row = (r0 * NSG + sgitg) * nr0;
+1259:
+1260:     const uint i12 = im%FC_mul_mv_ne12;
+1261:     const uint i13 = im/FC_mul_mv_ne12;
+1262:
+1263:     const uint64_t offset0 = first_row*args.nb01 + (i12/FC_mul_mv_r2)*args.nb02 + (i13/FC_mul_mv_r3)*args.nb03;
+1264:     const uint64_t offset1 =        r1*args.nb11 + (i12        )*args.nb12 + (i13        )*args.nb13;
+1265:
+1266:     device const block_q2_K * x = (device const block_q2_K *) (src0 + offset0);
+1267:     device const float      * y = (device const float      *) (src1 + offset1);
+1268:
+1269:     float yl[32];
+1270:     float sumf[nr0]={0.f};
+1271:
+1272:     const short ix = tiisg/8;  // 0...3
+1273:     const short it = tiisg%8;  // 0...7
+1274:     const short iq = it/4;     // 0 or 1
+1275:     const short ir = it%4;     // 0...3
+1276:     const short is = (8*ir)/16;// 0 or 1
+1277:
+1278:     device const float * y4 = y + ix * QK_K + 128 * iq + 8 * ir;
+1279:
+1280:     for (int ib = ix; ib < nb; ib += 4) {
+1281:         float4 sumy = {0.f, 0.f, 0.f, 0.f};
+1282:         for (short i = 0; i < 8; ++i) {
+1283:             yl[i+ 0] = y4[i+ 0]; sumy[0] += yl[i+ 0];
+1284:             yl[i+ 8] = y4[i+32]; sumy[1] += yl[i+ 8];
+1285:             yl[i+16] = y4[i+64]; sumy[2] += yl[i+16];
+1286:             yl[i+24] = y4[i+96]; sumy[3] += yl[i+24];
+1287:         }
+1288:
+1289:         device const uint8_t  * sc = (device const uint8_t  *)x[ib].scales + 8*iq + is;
+1290:         device const uint16_t * qs = (device const uint16_t *)x[ib].qs + 16 * iq + 4 * ir;
+1291:         device const half     * dh = &x[ib].d;
+1292:
+1293:         for (short row = 0; row < nr0; row++) {
+1294:             float4 acc1 = {0.f, 0.f, 0.f, 0.f};
+1295:             float4 acc2 = {0.f, 0.f, 0.f, 0.f};
+1296:             for (int i = 0; i < 8; i += 2) {
+1297:                 acc1[0] += yl[i+ 0] * (qs[i/2] & 0x0003);
+1298:                 acc2[0] += yl[i+ 1] * (qs[i/2] & 0x0300);
+1299:                 acc1[1] += yl[i+ 8] * (qs[i/2] & 0x000c);
+1300:                 acc2[1] += yl[i+ 9] * (qs[i/2] & 0x0c00);
+1301:                 acc1[2] += yl[i+16] * (qs[i/2] & 0x0030);
+1302:                 acc2[2] += yl[i+17] * (qs[i/2] & 0x3000);
+1303:                 acc1[3] += yl[i+24] * (qs[i/2] & 0x00c0);
+1304:                 acc2[3] += yl[i+25] * (qs[i/2] & 0xc000);
+1305:             }
+1306:             float dall = dh[0];
+1307:             float dmin = dh[1] * 1.f/16.f;
+1308:             sumf[row] += dall * ((acc1[0] + 1.f/256.f * acc2[0]) * (sc[0] & 0xF) * 1.f/ 1.f +
+1309:                                  (acc1[1] + 1.f/256.f * acc2[1]) * (sc[2] & 0xF) * 1.f/ 4.f +
+1310:                                  (acc1[2] + 1.f/256.f * acc2[2]) * (sc[4] & 0xF) * 1.f/16.f +
+1311:                                  (acc1[3] + 1.f/256.f * acc2[3]) * (sc[6] & 0xF) * 1.f/64.f) -
+1312:                          dmin * (sumy[0] * (sc[0] & 0xF0) + sumy[1] * (sc[2] & 0xF0) + sumy[2] * (sc[4] & 0xF0) + sumy[3] * (sc[6] & 0xF0));
+1313:
+1314:             qs += args.nb01/2;
+1315:             sc += args.nb01;
+1316:             dh += args.nb01/2;
+1317:         }
+1318:
+1319:         y4 += 4 * QK_K;
+1320:     }
+1321:
+1322:     device float * dst_f32 = (device float *) dst + (uint64_t)im*args.ne0*args.ne1 + (uint64_t)r1*args.ne0;
+1323:
+1324:     for (int row = 0; row < nr0 && first_row + row < args.ne0; ++row) {
+1325:         float sum_all = simd_sum(sumf[row]);
+1326:         if (tiisg == 0) {
+1327:             dst_f32[first_row + row] = sum_all;
+1328:         }
+1329:     }
+1330: }
+1331:
+1332: [[host_name("kernel_mul_mv_q2_K_f32")]]
+1333: kernel void kernel_mul_mv_q2_K_f32(
+1334:         constant ggml_metal_kargs_mul_mv & args,
+1335:         device const char * src0,
+1336:         device const char * src1,
+1337:         device       char * dst,
+1338:         uint3  tgpig[[threadgroup_position_in_grid]],
+1339:         ushort tiisg[[thread_index_in_simdgroup]],
+1340:         ushort sgitg[[simdgroup_index_in_threadgroup]]) {
+1341:
+1342:     kernel_mul_mv_q2_K_f32_impl<N_R0_Q2_K, constant ggml_metal_kargs_mul_mv &>(args, src0, src1, dst, nullptr, tgpig, tiisg, sgitg);
+1343: }
+
+ggml/src/ggml-metal/kernels/mul_mv.metal @ 3f8af15a76ac8675812e856da45454bafc90f12c / Q2 ID entry
+3416: template [[host_name("kernel_mul_mv_id_q2_K_f32")]]    kernel kernel_mul_mv_id_t kernel_mul_mv_id<mmv_fn<kernel_mul_mv_q2_K_f32_impl   <N_R0_Q2_K>>>;
+
+ggml/src/ggml-cpu/ggml-cpu.c @ 3f8af15a76ac8675812e856da45454bafc90f12c / CPU Q8 activation and accumulation
+275:     [GGML_TYPE_Q8_0] = {
+276:         .from_float               = quantize_row_q8_0,
+277:         .vec_dot                  = ggml_vec_dot_q8_0_q8_0,
+278:         .vec_dot_type             = GGML_TYPE_Q8_0,
+279: #if defined (__ARM_FEATURE_MATMUL_INT8)
+280:         .nrows                    = 2,
+281: #else
+282:         .nrows                    = 1,
+283: #endif
+284:     },
+285:     [GGML_TYPE_Q8_1] = {
+
+ggml/src/ggml-cpu/ggml-cpu.c @ 3f8af15a76ac8675812e856da45454bafc90f12c / CPU Q2 requires Q8_K
+308:     [GGML_TYPE_Q2_K] = {
+309:         .from_float               = quantize_row_q2_K,
+310:         .vec_dot                  = ggml_vec_dot_q2_K_q8_K,
+311:         .vec_dot_type             = GGML_TYPE_Q8_K,
+312:         .nrows                    = 1,
+313:     },
+314:     [GGML_TYPE_Q3_K] = {
+
+src/models/glm5-next.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / mHC fused graph
+502: ggml_tensor * llama_model_glm5_next::graph::build_hc_post(
+503:         ggml_tensor * x,
+504:         ggml_tensor * residual,
+505:         ggml_tensor * post,
+506:         ggml_tensor * comb,
+507:         int il) const {
+508:     GGML_ASSERT(x->ne[0] == n_embd);
+509:     GGML_ASSERT(residual->ne[1] == hparams.dsv4_hc_mult);
+510:
+511:     if (cparams.fused_dsv4_hc_post) {
+512:         ggml_tensor * result = ggml_dsv4_hc_post(ctx0, x, residual, post, comb);
+513:         res->add_fused_node({LLM_FUSED_OP_DSV4_HC_POST, result, il});
+514:         return result;
+515:     }
+516:
+517:     const int64_t hc = hparams.dsv4_hc_mult;
+518:     const int64_t nt = x->ne[1];
+519:
+520:     ggml_tensor * out = nullptr;
+521:     for (int64_t dst = 0; dst < hc; ++dst) {
+522:         ggml_tensor * post_dst = ggml_view_2d(ctx0, post, 1, nt, post->nb[1], dst*post->nb[0]);
+523:         ggml_tensor * cur = ggml_mul(ctx0, x, post_dst);
+
+src/models/glm5-next.cpp @ 3f8af15a76ac8675812e856da45454bafc90f12c / KDA dependencies
+809: ggml_tensor * llama_model_glm5_next::graph::build_kda_layer(
+810:         ggml_tensor * cur, const llama_layer & layer, llm_graph_input_rs * inp_rs,
+811:         int64_t d_conv, int64_t head_dim, int64_t n_head_kda,
+812:         int64_t d_inner, int64_t n_seq_tokens, int64_t n_seqs, int il) {
+813:
+814:     const auto * mctx_cur = inp_rs->mctx;
+815:     const auto   kv_head  = mctx_cur->get_head();
+816:
+817:     ggml_tensor * conv_states_all = mctx_cur->get_r_l(il);
+818:     ggml_tensor * conv_state_all  = build_rs(inp_rs, conv_states_all, hparams.n_embd_r(), n_seqs);
+819:
+820:     const int64_t mem_size = mctx_cur->get_size();
+821:     const int64_t K_rs     = (int64_t) cparams.n_rs_seq + 1;
+822:
+823:     ggml_tensor * Qcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 0, cur, layer.wq, layer.ssm_q_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
+824:     ggml_tensor * Kcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 1, cur, layer.wk, layer.ssm_k_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
+825:     ggml_tensor * Vcur = glm5_conv1d(gf, ctx0, conv_states_all, conv_state_all, 2, cur, layer.wv, layer.ssm_v_conv, d_conv, head_dim, n_head_kda, n_seq_tokens, n_seqs, n_tokens, kv_head, mem_size, K_rs);
+826:     cb(Qcur, "kda_q_conv", il);
+827:     cb(Kcur, "kda_k_conv", il);
+828:     cb(Vcur, "kda_v_conv", il);
+829:
+830:     // Decay gate, ssm_a holds -exp(A_log)
+831:     ggml_tensor * f_a = ggml_mul_mat(ctx0, layer.ssm_f_a, cur);
+832:     ggml_tensor * g1  = ggml_mul_mat(ctx0, layer.ssm_f_b, f_a);
+833:     g1 = ggml_add(ctx0, g1, layer.ssm_dt_b);
+
+src/llama-context.cpp / V4 restored, not pristine upstream
+27: static void airllm_glm_q8_only_assign(
+28:         const llama_model & model, ggml_backend_sched_t sched, ggml_backend_t cpu,
+29:         const std::vector<ggml_backend_t> & backends, ggml_cgraph * gf, bool training) {
+30:     const char * enabled = std::getenv("AIRLLM_GLM_Q8_ONLY");
+31:     if (!enabled || std::strcmp(enabled, "1") != 0 || gf == nullptr) {
+32:         return;
+33:     }
+34:     const char * mode = std::getenv("AIRLLM_METAL_Q8_CPU_ARITH");
+35:     if (model.arch != LLM_ARCH_GLM5_NEXT || model.n_gpu_layers() != 0 || !cpu || training ||
+36:             !mode || std::strcmp(mode, "2") != 0) {
+37:         GGML_ABORT("AIRLLM_GLM_Q8_ONLY requires GLM inference, GPU layers 0, CPU backend and Q8 mode 2");
+38:     }
+39:     size_t n_cpu = 0;
+40:     size_t n_gpu = 0;
+41:     for (int i = 0; i < ggml_graph_n_nodes(gf); ++i) {
+42:         ggml_tensor * node = ggml_graph_node(gf, i);
+43:         if (node->op == GGML_OP_NONE) {
+44:             continue;
+45:         }
+46:         ggml_backend_t target = cpu;
+47:         const ggml_tensor * w = node->src[0];
+48:         const ggml_tensor * x = node->src[1];
+49:         const bool eligible = node->op == GGML_OP_MUL_MAT && w && x &&
+50:             w->type == GGML_TYPE_Q8_0 && x->type == GGML_TYPE_F32 && node->type == GGML_TYPE_F32 &&
+51:             w->ne[0] >= 64 && w->ne[0] <= 65536 && w->ne[0] % 64 == 0 && w->ne[1] > 0 && w->ne[1] % 8 == 0 &&
+52:             w->ne[2] == 1 && w->ne[3] == 1 && x->ne[1] == 1 && x->ne[2] == 1 && x->ne[3] == 1 &&
+53:             ggml_is_contiguous(w) && ggml_is_contiguous(x);
+54:         if (eligible && w->buffer && ggml_backend_buffer_get_usage(w->buffer) == GGML_BACKEND_BUFFER_USAGE_WEIGHTS) {
+55:             auto * device = ggml_backend_buft_get_device(ggml_backend_buffer_get_type(w->buffer));
+56:             if (device && std::strncmp(ggml_backend_dev_name(device), "MTL", 3) == 0) {
+57:                 target = nullptr;
+58:                 for (auto * backend : backends) {
+59:                     if (ggml_backend_get_device(backend) == device) {
+60:                         target = backend;
+61:                         break;
+62:                     }
+63:                 }
+64:             }
+65:         }
+66:         if (!target || !ggml_backend_supports_op(target, node)) {
+67:             GGML_ABORT("AIRLLM_GLM_Q8_ONLY cannot place %s (%s) on its required backend", node->name, ggml_op_name(node->op));
+68:         }
+69:         ggml_backend_sched_set_tensor_backend(sched, node, target);
+70:         if (target == cpu) {
+71:             ++n_cpu;
+72:         } else {
+73:             ++n_gpu;
+74:         }
+75:     }
+76:     LLAMA_LOG_INFO("%s: experimental selective Q8 policy: %zu CPU ops, %zu Metal Q8 matvecs\n", __func__, n_cpu, n_gpu);
+77: }
+78:
+
+ggml/src/ggml-metal/ggml-metal-device.cpp / V4 restored, not pristine upstream
+1045:     const char * cpu_arith = std::getenv("AIRLLM_METAL_Q8_CPU_ARITH");
+1046:     const bool mode_head = cpu_arith && std::strcmp(cpu_arith, "1") == 0;
+1047:     const bool mode_selective = cpu_arith && std::strcmp(cpu_arith, "2") == 0;
+1048:     const bool head = ne00 == 4096 && ne01 == 154880 && std::strcmp(op->src[0]->name, "output.weight") == 0;
+1049:     if ((mode_selective || (mode_head && head)) && op->op == GGML_OP_MUL_MAT &&
+1050:             tsrc0 == GGML_TYPE_Q8_0 && tsrc1 == GGML_TYPE_F32 && op->type == GGML_TYPE_F32 &&
+1051:             ne00 >= 64 && ne00 <= 65536 && ne00 % 64 == 0 && ne01 > 0 && ne01 % 8 == 0 &&
+1052:             ne02 == 1 && ne03 == 1 && ne11 == 1 && ne12 == 1 && ne13 == 1 &&
+1053:             ggml_is_contiguous(op->src[0]) && ggml_is_contiguous(op->src[1])) {
+1054:         const char * shared_flag = std::getenv("AIRLLM_METAL_Q8_SHARED");
+1055:         const bool shared_head = std::strcmp(cpu_arith, "1") == 0 && shared_flag && std::strcmp(shared_flag, "1") == 0 &&
+1056:             ne00 == 4096 && ne01 == 154880 && std::strcmp(op->src[0]->name, "output.weight") == 0;
+1057:         const char * kernel = shared_head ? "kernel_mul_mv_q8_0_f32_cpuarith_shared" : "kernel_mul_mv_q8_0_f32_cpuarith";
+1058:         ggml_metal_pipeline_with_params res = ggml_metal_library_get_pipeline(lib, kernel);
+1059:         if (!res.pipeline) {
+1060:             GGML_LOG_INFO("%s: experimental CPU-compatible Q8_0 matvec\n", __func__);
+1061:             res = ggml_metal_library_compile_pipeline(lib, kernel, kernel, nullptr);
+1062:         }
+1063:         res.nr0 = 8;
+1064:         res.nr1 = 1;
+1065:         res.nsg = 1;
+1066:         res.smem = 0;
+1067:         return res;
+1068:     }
+1069:
+1070:     const char * suffix = "";
+1071:
+1072:     bool split = false;
+1073:
+
+air_llm/airllm/nextgen/glm_native.py / production CPU command
+461:     def _build_command(self, port):
+462:         args = [str(self.runtime_binary), "--offline", "--fit", "off", "--model",
+463:                 str(self.model_path / FILES[0][0]), "--load-mode", "mmap", "--no-repack",
+464:                 "--no-warmup", "--ctx-size", str(self.context_tokens), "--batch-size", str(self.batch_size),
+465:                 "--ubatch-size", str(self.batch_size), "--threads", str(self.threads),
+466:                 "--gpu-layers", str(self.gpu_layers), "--parallel", "1", "--host", "127.0.0.1",
+467:                 "--port", str(port), "--no-webui", "--no-context-shift", "--sse-ping-interval", "1",
+468:                 "--log-colors", "off", "--perf", "--cors-origins", "localhost", "--no-cors-credentials"]
+469:         if self._key_file is not None:
+470:             args.extend(["--api-key-file", str(self._key_file)])
+471:         if self.gpu_layers == 0:
+472:             args.extend(["--device", "none", "--no-op-offload"])
+473:         if self.cpu_moe:
+474:             args.append("--cpu-moe")
+475:         if self.moe_cache_mib:
+476:             args.extend(["--moe-cache-mib", str(self.moe_cache_mib)])
+477:         return args
+478:
+479:     def _runtime_environment(self):
+480:         env = {k: v for k, v in os.environ.items()
+481:                if not k.startswith(("LLAMA_ARG_", "AIRLLM_", "DYLD_")) and k != "LLAMA_API_KEY"}
+482:         if self.mmap_demand:
+483:             env["AIRLLM_MMAP_DEMAND"] = "1"
+484:         if self.mmap_nocache:
+485:             env["AIRLLM_MMAP_NOCACHE"] = "1"
+486:         if self.expert_prefetch:
+487:             env["AIRLLM_EXPERT_PREFETCH"] = "1"
+488:         if self.dense_prefetch:
+489:             env["AIRLLM_DENSE_PREFETCH"] = "1"
+490:         return env
+491:
+492:     def _verify_runtime_manifest(self, cancel=None):
+493:         self._runtime_artifacts_verified = False
+494:         self._runtime_artifact_identities = {}
+495:         self._runtime_manifest_info = None
+496:         if self.runtime_manifest_file is None:
+497:             return
+498:         manifest_path = self.runtime_manifest_file
+499:         try:
+500:             before_manifest = _identity(manifest_path)
+501:             if before_manifest[2] > 2 * MiB:
+502:                 raise ValueError("Runtime manifest exceeds size limit")
