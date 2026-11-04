@@ -535,3 +535,16 @@ def test_stronger_reserve_and_shorter_graces_remain_admissible():
     receipt["limits"]["native"].update(reserve_bytes=1024**3,
         headroom_grace_seconds=1, warning_grace_seconds=10)
     assert _guard(receipt) is receipt
+def test_direct_restore_accepts_a_declared_aligned192_boundary(tmp_path):
+    from research.glm53_batched_prefill.native_compare import _direct_restore
+    payload = b"complete-state-fixture"
+    digest = hashlib.sha256(payload).hexdigest()
+    rows = [{"request": request, "token_end": 192, "status": "hashed", "state_seq_flags": 0,
+             "next_position": 192, "bytes": len(payload), "sha256": digest} for request in range(3)]
+    (tmp_path / "state_checkpoints.jsonl").write_text("".join(json.dumps(row) + "\n" for row in rows))
+    profile = {"microbatch": 32, "prefix_boundary": 192, "boundary_policy": "native-lcp-aligned-v1"}
+    candidate = {**profile, "snapshot": {"bytes": len(payload), "sha256": digest}}
+    assert _direct_restore(tmp_path, profile, candidate)["boundary"] == 192
+    candidate["prefix_boundary"] = 128
+    with pytest.raises(ValueError):
+        _direct_restore(tmp_path, profile, candidate)

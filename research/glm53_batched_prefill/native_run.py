@@ -28,6 +28,7 @@ from research.glm53_shared_prefill import qualify_agents as qa
 from research.glm53_gpu_v3.power_state import PowerGate, ScopedAwake, power_evidence_matches
 from research.glm53_gpu_v3.process_io import ProcessIOObserver
 from research.glm53_batched_prefill.snapshot_key import canonical_key
+from research.glm53_batched_prefill.prefix_boundary import choose_boundary
 
 MiB, GiB = 1024**2, 1024**3
 SCRATCH_POLICY = 16 * MiB
@@ -147,27 +148,31 @@ def prepare(config, binary, helper_source, prompts_path, libraries, microbatch, 
     agents = {row["agent_id"]:row for row in prompts["agents"]}
     if not {1,600} <= agents.keys() or not isinstance(prompts.get("template"),str):
         raise ValueError("Full native-rendered prompts and raw native template required")
-    prefix = agents[1]["token_ids"][:208]
-    if len(prefix) != 208 or prefix != agents[600]["token_ids"][:208]:
-        raise ValueError("The208-token common boundary must match native IDs")
+    boundary = choose_boundary([agents[1]["token_ids"], agents[600]["token_ids"]], microbatch,
+                               config.get("prefill_prefix_boundary"))
+    prefix = agents[1]["token_ids"][:boundary]
     state = json.loads(subprocess.run([str(binary),"--state-parameters",str(microbatch)],env=env,capture_output=True,text=True,check=True,timeout=15).stdout)
     if state.get("n_ctx") != 2048 or state.get("n_batch") != microbatch or state.get("n_ubatch") != microbatch:
         raise ValueError("Native helper context/microbatch descriptor differs from the requested profile")
     hashes = {"helper":sha(binary), **{p.name:sha(p) for p in libraries.glob("*.dylib") if not p.is_symlink()}}
     auxiliary=helper_source.parent.parent/"glm53_gpu_v3/state_capture.inc"
     sources = {"helper_source":sha(helper_source), "snapshot_source":sha(helper_source.with_name("snapshot.h")),"state_capture_source":sha(auxiliary),
+               "boundary_policy_source":sha(Path(__file__).with_name("prefix_boundary.py")),
                "native_manifest":sha(config["runtime_manifest_file"]), "wrapper_source":sha(__file__)}
     tokenizer = Path(config["model_path"]) / "tokenizer.json"
     manifest = {"schema":1,"model_shards":[{"sha256":row["sha256"],"size_bytes":row["bytes"]} for row in checkpoint["files"]],
         "tokenizer_sha256":sha(tokenizer),"template_sha256":hashlib.sha256(prompts["template"].encode()).hexdigest(),
         "runtime_source_sha256":hashlib.sha256(json.dumps(sources,sort_keys=True,separators=(",",":")).encode()).hexdigest(),
-        "runtime_binaries":hashes,"prefix_tokens":prefix,"prefix_positions":list(range(208)),
+        "runtime_binaries":hashes,"prefix_tokens":prefix,"prefix_positions":list(range(boundary)),
         "state_parameters":state,"render_options":{"native_environment":knobs,"reasoning_effort_override":None,
+            "prefix_boundary":boundary,"boundary_policy":"native-lcp-aligned-v1",
             "native_add_special":prompts.get("add_special"),"native_parse_special":prompts.get("parse_special"),
             "tokenizer_scope":"tokenizer.json hash plus original GGUF shards identify native tokenizer container"}}
     key,canonical = canonical_key(manifest)
-    prompts.update(snapshot_key_sha256=key,native_snapshot_scratch_bound_bytes=SCRATCH_POLICY)
-    tracked = [binary,helper_source,helper_source.with_name("snapshot.h"),auxiliary,Path(__file__).resolve(),Path(prompts_path).resolve(),tokenizer]
+    prompts.update(snapshot_key_sha256=key,native_snapshot_scratch_bound_bytes=SCRATCH_POLICY,
+                   prefix_boundary=boundary,boundary_policy="native-lcp-aligned-v1")
+    tracked = [binary,helper_source,helper_source.with_name("snapshot.h"),auxiliary,Path(__file__).resolve(),
+               Path(__file__).with_name("prefix_boundary.py"),Path(prompts_path).resolve(),tokenizer]
     tracked += [Path(config["model_path"])/row["name"] for row in checkpoint["files"]]
     tracked += list(native._runtime_artifact_identities)
     identities = {str(p):_identity(p) for p in tracked}

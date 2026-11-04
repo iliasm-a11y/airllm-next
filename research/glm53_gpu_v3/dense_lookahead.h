@@ -21,6 +21,14 @@
 namespace airllm_dense {
 constexpr size_t max_window = size_t(128) << 20;
 constexpr size_t default_window = size_t(32) << 20;
+inline int max_columns() {
+    const char * value = std::getenv("AIRLLM_DENSE_LOOKAHEAD_MAX_COLS");
+    if (!value || !std::strcmp(value, "1")) return 1;
+    if (!std::strcmp(value, "2")) return 2;
+    if (!std::strcmp(value, "4")) return 4;
+    if (!std::strcmp(value, "8")) return 8;
+    return 0;
+}
 struct entry { int node; void * address; size_t bytes; };
 struct stats {
     size_t queued=0, calls=0, advised_bytes=0, failures=0, busy_skips=0, admission_skips=0, cancelled=0;
@@ -136,6 +144,8 @@ public:
     explicit scope(ggml_cgraph * graph,hooks injected={},size_t limit=0):graph_(graph),hooks_(injected) {
         const char * flag=std::getenv("AIRLLM_DENSE_LOOKAHEAD");
         if(!flag||std::strcmp(flag,"1")||!graph)return;
+        const int columns = max_columns();
+        if (!columns) return;
         if(!limit){
             limit=default_window;
             const char * mib=std::getenv("AIRLLM_DENSE_LOOKAHEAD_MIB");
@@ -154,7 +164,7 @@ public:
             entries_.reserve(1024);
             for(int i=0;i<n;++i){
                 const auto * node=ggml_graph_node(graph,i);
-                if(node->op!=GGML_OP_MUL_MAT||!node->src[1]||node->src[1]->ne[1]!=1||
+                if(node->op!=GGML_OP_MUL_MAT||!node->src[1]||node->src[1]->ne[1]<1||node->src[1]->ne[1]>columns||
                    !(node->flags&GGML_TENSOR_FLAG_COMPUTE))continue;
                 entry e{i,nullptr,0};if(!window_for(node->src[0],limit,e))continue;
                 if(entries_.size()==1024){entries_.clear();return;}entries_.push_back(e);

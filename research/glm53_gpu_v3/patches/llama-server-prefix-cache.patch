@@ -1,0 +1,157 @@
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+index 9377e3c..d754fcd 100644
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -4,6 +4,7 @@
+ #include "base64.hpp"
+ #include "server-chat.h"
+ #include "server-common.h"
++#include "server-prefix-cache.h"
+ #include "server-decision.h"
+ #include "server-http.h"
+ #include "server-task.h"
+@@ -258,6 +259,7 @@ struct server_batch {
+ 
+ struct server_slot {
+     int id;
++    bool airllm_shared_prefix = false;
+ 
+     llama_context * ctx_tgt = nullptr;
+     llama_context * ctx_dft = nullptr;
+@@ -422,6 +424,7 @@ struct server_slot {
+     void reset() {
+         SLT_DBG(*this, "%s", "\n");
+ 
++        airllm_shared_prefix = false;
+         spec_is_replay = false;
+ 
+         last_nl_pos    = 0;
+@@ -1040,6 +1043,7 @@ public:
+     }
+ 
+     server_decision_context decision;
++    server_prefix_cache airllm_prefix_cache;
+ 
+     server_queue    queue_tasks;
+     server_response queue_results;
+@@ -1133,6 +1137,7 @@ private:
+     int64_t t_last_load_progress_ms = 0;
+ 
+     void destroy() {
++        airllm_prefix_cache.reset();
+         spec.reset();
+         spec_init.reset();
+ 
+@@ -4035,6 +4040,30 @@ private:
+ 
+                         // keep track how many tokens we can reuse from the previous state
+                         int n_past = 0;
++                        slot.airllm_shared_prefix = false;
++                        airllm_prefix_cache.cancel_pending();
++                        try {
++                            if (airllm_prefix_cache.enabled()) {
++                                char arch[32] = {};
++                                llama_model_meta_val_str(model_tgt, "general.architecture", arch, sizeof(arch));
++                                arch[sizeof(arch) - 1] = 0;
++                                if (slots.size() != 1 || slot.id != 0 || mctx || spec || ctx_dft ||
++                                    params_base.n_gpu_layers != 0 || params_base.ctx_shift ||
++                                    params_base.cpuparams.n_threads != 10 || params_base.cpuparams_batch.n_threads != 10 ||
++                                    params_base.cache_ram_mib != 0 || params_base.n_ctx_checkpoints != 0 ||
++                                    !slot.lora.empty() || std::strcmp(arch, "glm5-next") ||
++                                    llama_n_batch(ctx_tgt) != 8 || llama_n_ubatch(ctx_tgt) != 8 || llama_n_seq_max(ctx_tgt) != 1)
++                                    throw std::runtime_error("shared prefix requires the isolated CPU10/GPU0 batch8 profile");
++                                slot.airllm_shared_prefix = slot.task->type == SERVER_TASK_TYPE_COMPLETION &&
++                                    slot.task->params.cache_prompt && !slot.task->is_stateless() &&
++                                    !input_tokens.has_mtmd && !slot.task->is_child() && !slot.task->is_parent() &&
++                                    airllm_prefix_cache.matches(input_tokens);
++                            }
++                        } catch (const std::exception & error) {
++                            send_error(slot, error.what(), ERROR_TYPE_SERVER);
++                            slot.release();
++                            return;
++                        }
+ 
+                         // empty prompt passed -> release the slot and send empty response
+                         if (input_tokens.empty()) {
+@@ -4100,7 +4129,7 @@ private:
+                                 return;
+                             }
+ 
+-                            if (slot.task->params.cache_prompt && !slot.task->is_stateless()) {
++                            if (slot.task->params.cache_prompt && !slot.task->is_stateless() && !airllm_prefix_cache.enabled()) {
+                                 // reuse any previously computed tokens that are common with the new prompt
+                                 n_past = slot.prompt.tokens.get_common_prefix(input_tokens);
+ 
+@@ -4312,6 +4341,25 @@ private:
+                             }
+                         }
+ 
++                        if (airllm_prefix_cache.enabled()) {
++                            llama_synchronize(ctx_tgt);
++                            slot.prompt.clear();
++                            try {
++                                if (slot.airllm_shared_prefix) {
++                                    n_past = static_cast<int>(airllm_prefix_cache.begin(ctx_tgt));
++                                    for (int i = 0; i < n_past; ++i) slot.prompt.tokens.push_back(input_tokens[i]);
++                                } else {
++                                    llama_memory_clear(llama_get_memory(ctx_tgt), true);
++                                }
++                            } catch (const std::exception & error) {
++                                airllm_prefix_cache.reset();
++                                llama_memory_clear(llama_get_memory(ctx_tgt), true);
++                                send_error(slot, error.what(), ERROR_TYPE_SERVER);
++                                slot.release();
++                                return;
++                            }
++                        }
++
+                         // [TAG_PROMPT_LOGITS]
+                         if (n_past == slot.task->n_tokens() && n_past > 0) {
+                             SLT_WRN(slot, "need to evaluate at least 1 token for each active slot (n_past = %d, task.n_tokens() = %d)\n", n_past, slot.task->n_tokens());
+@@ -4354,7 +4402,7 @@ private:
+ 
+                     SLT_TRC(slot, "cached n_tokens = %d, memory_seq_rm [%d, end)\n", slot.prompt.n_tokens(), p0);
+ 
+-                    slot.mem.seq_rm(slot.id, p0, -1);
++                    if (!slot.airllm_shared_prefix) slot.mem.seq_rm(slot.id, p0, -1);
+ 
+                     // shared prompt prefix: once it is processed, the children continue from it with their own prompt
+                     bool wait_shared = false;
+@@ -4462,6 +4510,8 @@ private:
+ 
+                     // add prompt tokens for processing in the current batch
+                     while (slot.prompt.n_tokens() < slot.task->n_tokens() && batch.size() < n_batch) {
++                        if (slot.airllm_shared_prefix && airllm_prefix_cache.pending() &&
++                            slot.prompt.n_tokens() == airllm_prefix_cache.boundary()) break;
+                         // get next token to process
+                         llama_token cur_tok = input_tokens[slot.prompt.n_tokens()];
+                         if (cur_tok == LLAMA_TOKEN_NULL) {
+@@ -4697,6 +4747,10 @@ private:
+         });
+ 
+         if (ret != 0) {
++            if (airllm_prefix_cache.enabled()) {
++                airllm_prefix_cache.reset();
++                throw std::runtime_error("shared-prefix decode failed; smaller-batch retry is forbidden");
++            }
+             {
+                 std::string err;
+ 
+@@ -4749,6 +4803,17 @@ private:
+             metrics_post_decode(off, batch.view.size(), has_output);
+         }
+ 
++        if (slots.size() == 1 && slots[0].airllm_shared_prefix && airllm_prefix_cache.pending() &&
++            slots[0].prompt.n_tokens() == airllm_prefix_cache.boundary()) {
++            try {
++                airllm_prefix_cache.capture(ctx_tgt);
++            } catch (...) {
++                airllm_prefix_cache.reset();
++                llama_memory_clear(llama_get_memory(ctx_tgt), true);
++                throw;
++            }
++        }
++
+         // TODO: avoid restoring the draft context and re-evaluating the drafted tokens when not needed [TAG_SPEC_AVOID_DRAFT_REEVAL]
+         //       for now, always re-evaluate for simplicity
+         //       ref: https://github.com/ggml-org/llama.cpp/pull/22728#issuecomment-4400925384

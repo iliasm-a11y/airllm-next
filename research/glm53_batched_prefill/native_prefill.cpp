@@ -130,20 +130,25 @@ int main(int argc,char ** argv) {
         const std::filesystem::path root=argv[3];if(std::filesystem::exists(root))throw std::runtime_error("output exists");
         std::ifstream input(argv[2]);if(!input || std::filesystem::file_size(argv[2])>16*1024*1024)throw std::runtime_error("invalid prompt file");
         const auto prompts=json::parse(input);
+        const int boundary=prompts.at("prefix_boundary").get<int>();
+        if(boundary<=0 || boundary%ub || prompts.value("boundary_policy",std::string())!="native-lcp-aligned-v1")
+            throw std::runtime_error("missing or unaligned common prefix boundary");
         std::vector<std::vector<llama_token>> ids;
         for(int agent:{1,600,1}) {
             const auto it=std::find_if(prompts.at("agents").begin(),prompts.at("agents").end(),[&](const auto & a){return a.at("agent_id")==agent;});
             if(it==prompts.at("agents").end())throw std::runtime_error("missing agent");
             ids.push_back(it->at("token_ids").template get<std::vector<llama_token>>());
-            if(ids.back().size()<=208 || ids.back().size()>1800)throw std::runtime_error("invalid full prompt size");
+            if(ids.back().size()<=size_t(boundary) || ids.back().size()>1800)throw std::runtime_error("invalid full prompt size");
         }
-        if(!std::equal(ids[0].begin(),ids[0].begin()+208,ids[1].begin()))throw std::runtime_error("prefix differs");
+        for(size_t i=1;i<ids.size();++i)
+            if(!std::equal(ids[0].begin(),ids[0].begin()+boundary,ids[i].begin()))throw std::runtime_error("prefix differs");
         std::filesystem::create_directories(root);
         observer o; o.root=root;o.diagnostic=std::getenv("RONIN_PREFILL_DIAGNOSTIC")!=nullptr;
         o.operations.open(root/"operations.jsonl");o.captures.open(root/"tensors.jsonl");o.batches.open(root/"batches.jsonl");o.states.open(root/"state_hashes.jsonl");o.checkpoints.open(root/"state_checkpoints.jsonl");
         o.continuation_captures.open(root/"continuation_tensors.jsonl");o.continuation_states.open(root/"continuation_states.jsonl");
         for(auto * stream:{&o.operations,&o.captures,&o.batches,&o.states,&o.checkpoints,&o.continuation_captures,&o.continuation_states})stream->exceptions(std::ios::badbit|std::ios::failbit);
         json report={{"schema_version",1},{"mode",mode},{"microbatch",ub},{"logical_batch",ub},{"threads",10},
+            {"prefix_boundary",boundary},{"boundary_policy","native-lcp-aligned-v1"},
             {"gpu_layers",0},{"physical_slots",1},{"model_loads",0},{"diagnostic",o.diagnostic},{"complete",false},
             {"generation_requested",o.diagnostic},{"generation_performed",false},{"functional_agents_qualified",false},
             {"continuation_policy","fresh native greedy sampler; max4; diagnostic only"},
@@ -196,7 +201,7 @@ int main(int argc,char ** argv) {
                 o.batches<<json({{"request",request},{"phase",phase},{"offset",offset},{"tokens",take},
                     {"seconds",seconds(start)},{"returncode",rc},{"before",before},{"after",usage()}}).dump()<<'\n';o.batches.flush();
                 if(rc)throw std::runtime_error("native decode failed");offset+=take;
-                if(o.diagnostic && (offset%128==0 || offset==208 || offset==int(ids[request].size()))) {
+                if(o.diagnostic && (offset%128==0 || offset==boundary || offset==int(ids[request].size()))) {
                     const auto checkpoint_start=steady::now();
                     const size_t n=llama_state_seq_get_size_ext(ctx,0,LLAMA_STATE_SEQ_FLAGS_NONE);
                     const size_t rss=usage().at("rss_bytes"),cap=size_t(8.5*1024*1024*1024);
@@ -210,21 +215,21 @@ int main(int argc,char ** argv) {
             }
         };
         if(mode=="restore") {
-            auto start=steady::now();decode(0,0,208,"common_prefix");report["common_prefix_seconds"]=seconds(start);
+            auto start=steady::now();decode(0,0,boundary,"common_prefix");report["common_prefix_seconds"]=seconds(start);
             save(root/"report.json",report);
             start=steady::now();
-            snapshot.capture(ctx,key,208,scratch,budget);
+            snapshot.capture(ctx,key,boundary,scratch,budget);
             report["snapshot_capture_total_seconds"]=seconds(start);
             report["snapshot"]=snapshot_metrics();save(root/"report.json",report);
         }
         for(int r=0;r<3;++r) {
             const auto start=steady::now();const auto before=usage();size_t restored=0;
             const auto restore_start=steady::now();
-            if(mode=="restore") restored=snapshot.restore(ctx,key,ids[r].size()-208,budget);
+            if(mode=="restore") restored=snapshot.restore(ctx,key,ids[r].size()-boundary,budget);
             else llama_memory_clear(llama_get_memory(ctx),true);
             const double reset_restore_seconds=seconds(restore_start);
             if(mode=="restore") {report["snapshot"]=snapshot_metrics();save(root/"report.json",report);}
-            if(mode=="split") {decode(r,0,208,"prefix");decode(r,208,ids[r].size(),"suffix");}
+            if(mode=="split") {decode(r,0,boundary,"prefix");decode(r,boundary,ids[r].size(),"suffix");}
             else decode(r,restored,ids[r].size(),mode=="restore"?"suffix":"full");
             const float * logits=llama_get_logits_ith(ctx,-1);if(!logits)throw std::runtime_error("missing continuation logits");
             if(!std::all_of(logits,logits+nv,[](float x){return std::isfinite(x);}))throw std::runtime_error("nonfinite logits");
