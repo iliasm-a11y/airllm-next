@@ -1,0 +1,34 @@
+{
+  "accepted_draft_tokens": 0,
+  "actual_target_calls": 31,
+  "actual_target_positions": 31,
+  "cases": [],
+  "complete": true,
+  "config": {
+    "draft_tokens": 2,
+    "mode": "reference",
+    "ngram_size": 2,
+    "prompt": "La capitale de la France est",
+    "tokens": 32
+  },
+  "decode_intervals": 31,
+  "decode_intervals_per_second": 0.15246316754684608,
+  "draft_proposals": 0,
+  "eog": false,
+  "generated_tokens": 32,
+  "generation_seconds_excluding_prefill_first_token": 203.327797125,
+  "parameters": {
+    "gpu_layers": 0,
+    "n_batch": 8,
+    "n_ctx": 512,
+    "n_rs_seq": 0,
+    "n_ubatch": 8,
+    "physical_slots": 1,
+    "second_model": false,
+    "threads": 10
+  },
+  "performance_measured": true,
+  "production_changed": false,
+  "replay_calls": 0,
+  "scope": "raw greedy single-request decode; proposal, snapshot, restore and replay costs included; no RONIN usefulness qualification"
+}

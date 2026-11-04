@@ -1,0 +1,185 @@
+{
+  "status": "completed",
+  "order": [
+    "A1",
+    "B1",
+    "B2",
+    "A2"
+  ],
+  "arms": [
+    {
+      "label": "A1",
+      "mode": "reference",
+      "status": "completed",
+      "returncode": 0,
+      "total_process_seconds": 194.28716779200477,
+      "generated_tokens": 32,
+      "decode_intervals": 31,
+      "generation_seconds_excluding_prefill_first_token": 178.656467125,
+      "decode_intervals_per_second": 0.1735173682703035,
+      "draft_proposals": 0,
+      "accepted_draft_tokens": 0,
+      "replay_calls": 0,
+      "actual_target_calls": 31,
+      "actual_target_positions": 31,
+      "eog": false
+    },
+    {
+      "label": "B1",
+      "mode": "ngram",
+      "status": "completed",
+      "returncode": 0,
+      "total_process_seconds": 211.9740700830007,
+      "generated_tokens": 32,
+      "decode_intervals": 31,
+      "generation_seconds_excluding_prefill_first_token": 196.90369175,
+      "decode_intervals_per_second": 0.15743737318729067,
+      "draft_proposals": 2,
+      "accepted_draft_tokens": 0,
+      "replay_calls": 1,
+      "actual_target_calls": 32,
+      "actual_target_positions": 34,
+      "eog": false
+    },
+    {
+      "label": "B2",
+      "mode": "ngram",
+      "status": "completed",
+      "returncode": 0,
+      "total_process_seconds": 215.32636779199674,
+      "generated_tokens": 32,
+      "decode_intervals": 31,
+      "generation_seconds_excluding_prefill_first_token": 199.942865709,
+      "decode_intervals_per_second": 0.1550442917284075,
+      "draft_proposals": 2,
+      "accepted_draft_tokens": 0,
+      "replay_calls": 1,
+      "actual_target_calls": 32,
+      "actual_target_positions": 34,
+      "eog": false
+    },
+    {
+      "label": "A2",
+      "mode": "reference",
+      "status": "completed",
+      "returncode": 0,
+      "total_process_seconds": 218.24115883299964,
+      "generated_tokens": 32,
+      "decode_intervals": 31,
+      "generation_seconds_excluding_prefill_first_token": 203.327797125,
+      "decode_intervals_per_second": 0.15246316754684608,
+      "draft_proposals": 0,
+      "accepted_draft_tokens": 0,
+      "replay_calls": 0,
+      "actual_target_calls": 31,
+      "actual_target_positions": 31,
+      "eog": false
+    }
+  ],
+  "pairs": [
+    {
+      "tokens_equal": true,
+      "decode_intervals": 31,
+      "reference_generation_seconds": 178.656467125,
+      "ngram_generation_seconds": 196.90369175,
+      "single_pair_speedup": 0.9073291899058566,
+      "ngram_offers": 1,
+      "proposed_tokens": 2,
+      "accepted_tokens": 0,
+      "replay_calls": 1,
+      "reproducible_gain_qualified": false,
+      "scope": "single guarded pair; complete decode costs included; alternating repeats and useful RONIN outputs remain required"
+    },
+    {
+      "tokens_equal": true,
+      "decode_intervals": 31,
+      "reference_generation_seconds": 203.327797125,
+      "ngram_generation_seconds": 199.942865709,
+      "single_pair_speedup": 1.0169294933529986,
+      "ngram_offers": 1,
+      "proposed_tokens": 2,
+      "accepted_tokens": 0,
+      "replay_calls": 1,
+      "reproducible_gain_qualified": false,
+      "scope": "single guarded pair; complete decode costs included; alternating repeats and useful RONIN outputs remain required"
+    }
+  ],
+  "performance_scope": "31 intervals per arm, prefill and first token excluded; all speculation costs included",
+  "useful_ronin_or_eos_qualified": false,
+  "production_changed": false,
+  "next_configuration": "CPU10/GPU0, speculation off",
+  "statistics": {
+    "reference": {
+      "runs": 2,
+      "decode_seconds_mean": 190.992132125,
+      "decode_seconds_min": 178.656467125,
+      "decode_seconds_max": 203.327797125,
+      "pooled_intervals_per_second": 0.16231035098195146,
+      "proposed_tokens_total": 0,
+      "accepted_tokens_total": 0,
+      "actual_target_calls_total": 62,
+      "actual_target_positions_total": 62
+    },
+    "ngram": {
+      "runs": 2,
+      "decode_seconds_mean": 198.4232787295,
+      "decode_seconds_min": 196.90369175,
+      "decode_seconds_max": 199.942865709,
+      "pooled_intervals_per_second": 0.15623166897801677,
+      "proposed_tokens_total": 4,
+      "accepted_tokens_total": 0,
+      "actual_target_calls_total": 64,
+      "actual_target_positions_total": 68
+    }
+  },
+  "guards": {
+    "A1": {
+      "exit_code": 0,
+      "violation": null,
+      "sampled_peak_rss_bytes": 7392509952,
+      "minimum_available_bytes": 4493361152,
+      "maximum_swap_growth_bytes": 0,
+      "power_passed": true,
+      "artifacts_unchanged": true
+    },
+    "B1": {
+      "exit_code": 0,
+      "violation": null,
+      "sampled_peak_rss_bytes": 7405240320,
+      "minimum_available_bytes": 4418109440,
+      "maximum_swap_growth_bytes": 0,
+      "power_passed": true,
+      "artifacts_unchanged": true
+    },
+    "B2": {
+      "exit_code": 0,
+      "violation": null,
+      "sampled_peak_rss_bytes": 7441481728,
+      "minimum_available_bytes": 4382851072,
+      "maximum_swap_growth_bytes": 0,
+      "power_passed": true,
+      "artifacts_unchanged": true
+    },
+    "A2": {
+      "exit_code": 0,
+      "violation": null,
+      "sampled_peak_rss_bytes": 7474610176,
+      "minimum_available_bytes": 3608494080,
+      "maximum_swap_growth_bytes": 0,
+      "power_passed": true,
+      "artifacts_unchanged": true
+    }
+  },
+  "all_ids_equal": true,
+  "matches_prior_cpu32_ids": true,
+  "observed_mean_time_change_percent": 3.890812947015254,
+  "reference_time_range_percent": 13.80936855912318,
+  "postflight_uid_lock_free": true,
+  "postflight_resources": {
+    "available_bytes": 5331763200,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 355794944,
+    "pressure_level": 1
+  },
+  "verdict": "no_reproducible_gain_on_this_short_prompt; zero accepted proposals; keep classic CPU"
+}

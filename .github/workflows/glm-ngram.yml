@@ -1,0 +1,20 @@
+name: GLM n-gram research contracts
+on:
+  push:
+    branches: [research/glm53-ngram-speculation-m5]
+  pull_request:
+    paths:
+      - research/glm53_ngram/**
+      - .github/workflows/glm-ngram.yml
+jobs:
+  model-free-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy psutil pytest
+      - run: python -m pytest -q research/glm53_ngram research/glm53_ultra_decode/test_campaign_limits.py research/glm53_ultra_decode/test_completion.py
+        env:
+          PYTHONPATH: .:air_llm

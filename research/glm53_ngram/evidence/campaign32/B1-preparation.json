@@ -1,0 +1,83 @@
+{
+  "utc": "2026-11-04T11:00:24.761576+00:00",
+  "before": {
+    "available_bytes": 4774428672,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 364183552,
+    "pressure_level": 1
+  },
+  "uid_lock": {
+    "path": "/$TMP/airllm-native-locks-501/f7ed7077cbc8482dac0d3711.lock",
+    "uid": 501,
+    "model_key": "f7ed7077cbc8482dac0d3711",
+    "fd": 3,
+    "device": 16777229,
+    "inode": 36444893,
+    "acquired_at_utc": "2026-11-04T11:00:24.761553+00:00",
+    "acquired_before_wrapper_spawn": true
+  },
+  "advice": "MADV_DONTNEED",
+  "files": [
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00001-of-00002.gguf",
+      "read_only": true,
+      "identity_unchanged": true,
+      "self_rss_before": 42205184,
+      "self_rss_after": 42254336
+    },
+    {
+      "name": "GLM-5.3-Flash-Q2_K_S-00002-of-00002.gguf",
+      "read_only": true,
+      "identity_unchanged": true,
+      "self_rss_before": 42254336,
+      "self_rss_after": 42254336
+    }
+  ],
+  "model_inference_started": false,
+  "performance_measured": false,
+  "scope": "read-only file-backed cache advice; no payload traversal; no cold-cache or causal RAM-release claim",
+  "settle_samples": [
+    {
+      "elapsed_seconds": 3.7500285543501377e-07,
+      "available_bytes": 8068874240,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    {
+      "elapsed_seconds": 0.5101344579961733,
+      "available_bytes": 8041201664,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    {
+      "elapsed_seconds": 1.0118296250002459,
+      "available_bytes": 7967227904,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    {
+      "elapsed_seconds": 1.5156459999998333,
+      "available_bytes": 7548157952,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    },
+    {
+      "elapsed_seconds": 2.0237150419998216,
+      "available_bytes": 7538737152,
+      "physical_bytes": 17179869184,
+      "swap_used_bytes": 364183552,
+      "pressure_level": 1
+    }
+  ],
+  "after": {
+    "available_bytes": 7538638848,
+    "physical_bytes": 17179869184,
+    "swap_used_bytes": 364183552,
+    "pressure_level": 1
+  },
+  "global_available_change_bytes": 2764210176
+}

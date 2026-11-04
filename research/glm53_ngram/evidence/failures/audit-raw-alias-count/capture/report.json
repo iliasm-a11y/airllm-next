@@ -1,0 +1,3252 @@
+{
+  "cases": [
+    {
+      "accepted_draft_tokens": 2,
+      "batched_write_target_coverage": 169,
+      "draft_tokens": 2,
+      "full_logits": [
+        {
+          "argmax_equal": true,
+          "bit_mismatches": 0,
+          "elements": 154880,
+          "max_abs": 0.0,
+          "passed": true,
+          "position": 0
+        },
+        {
+          "argmax_equal": true,
+          "bit_mismatches": 0,
+          "elements": 154880,
+          "max_abs": 0.0,
+          "passed": true,
+          "position": 1
+        },
+        {
+          "argmax_equal": true,
+          "bit_mismatches": 0,
+          "elements": 154880,
+          "max_abs": 0.0,
+          "passed": true,
+          "position": 2
+        }
+      ],
+      "full_sequence_state_exact": true,
+      "initial_restore_exact": true,
+      "label": "draft2/all-accepted",
+      "passed": false,
+      "replay_calls": 0,
+      "serial_write_target_coverage": 169,
+      "snapshot_bytes": 152752925,
+      "tensor_comparisons": [
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-0",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-0",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-0",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-1",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-1",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-1",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-2",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-2",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-2",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-3",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-3",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-3",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-3",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-3",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-3",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-4",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-4",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-4",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-4",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-4",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-4",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-4",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-4",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-4",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-5",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-5",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-5",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-5",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-5",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-5",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-5",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-5",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-5",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-6",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-6",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-6",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-6",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-6",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-6",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-6",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-6",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-6",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-7",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-7",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-7",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-7",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-7",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-7",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-8",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-8",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-8",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-8",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-8",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-8",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-8",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-8",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-8",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-9",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-9",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-9",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-9",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-9",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-9",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-9",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-9",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-9",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-10",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-10",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-10",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-10",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-10",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-10",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-10",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-10",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-10",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-11",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-11",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-11",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-11",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-11",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-11",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-12",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-12",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-12",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-12",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-12",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-12",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-12",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-12",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-12",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-13",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-13",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-13",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-13",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-13",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-13",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-13",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-13",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-13",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-14",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-14",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-14",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-14",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-14",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-14",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-14",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-14",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-14",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-15",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-15",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-15",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-15",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-15",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-15",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-16",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-16",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-16",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-16",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-16",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-16",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-16",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-16",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-16",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-17",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-17",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-17",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-17",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-17",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-17",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-17",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-17",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-17",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-18",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-18",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-18",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-18",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-18",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-18",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-18",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-18",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-18",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-19",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-19",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-19",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-19",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-19",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-19",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-20",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-20",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-20",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-20",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-20",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-20",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-20",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-20",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-20",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-21",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-21",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-21",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-21",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-21",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-21",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-21",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-21",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-21",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-22",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-22",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-22",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-22",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-22",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-22",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-22",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-22",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-22",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-23",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-23",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-23",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-23",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-23",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-23",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-24",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-24",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-24",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-24",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-24",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-24",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-24",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-24",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-24",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-25",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-25",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-25",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-25",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-25",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-25",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-25",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-25",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-25",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-26",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-26",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-26",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-26",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-26",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-26",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-26",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-26",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-26",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-27",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-27",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-27",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-27",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-27",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-27",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-28",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-28",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-28",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-28",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-28",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-28",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-28",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-28",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-28",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-29",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-29",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-29",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-29",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-29",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-29",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-29",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-29",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-29",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-30",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-30",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-30",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-30",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-30",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-30",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-30",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-30",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-30",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-31",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-31",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-31",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-31",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-31",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-31",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-32",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-32",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-32",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-32",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-32",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-32",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-32",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-32",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-32",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-33",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-33",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-33",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-33",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-33",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-33",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-33",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-33",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-33",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-34",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-34",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-34",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-34",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-34",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-34",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-34",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-34",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-34",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-35",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-35",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-35",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-35",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-35",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-35",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-36",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-36",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-36",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-36",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-36",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-36",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-36",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-36",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-36",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-37",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-37",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-37",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-37",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-37",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-37",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-37",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-37",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-37",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-38",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-38",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-38",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-38",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-38",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-38",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-38",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-38",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-38",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-39",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-39",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-39",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-39",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-39",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-39",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-40",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-40",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-40",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-40",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-40",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-40",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-40",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-40",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-40",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-41",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-41",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-41",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-41",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-41",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-41",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-41",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-41",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-41",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-42",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-42",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-42",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-42",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-42",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-42",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-42",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-42",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-42",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-43",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-43",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-43",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-43",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-43",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-43",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-44",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-44",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8192,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "kda_scan_out-44",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-44",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-44",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 288,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_logits-44",
+          "passed": true,
+          "position": 2
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-44",
+          "passed": true,
+          "position": 0
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-44",
+          "passed": true,
+          "position": 1
+        },
+        {
+          "bit_mismatches": 0,
+          "elements": 8,
+          "finite": true,
+          "max_abs": 0.0,
+          "name": "ffn_moe_topk-44",
+          "passed": true,
+          "position": 2
+        }
+      ],
+      "verification_tokens": 3
+    }
+  ],
+  "complete": false,
+  "config": {
+    "draft_tokens": 2,
+    "mode": "audit",
+    "ngram_size": 2,
+    "prompt": "La capitale de la France est",
+    "tokens": 32
+  },
+  "error": "strict CPU fidelity failed; timed speculation is forbidden",
+  "parameters": {
+    "gpu_layers": 0,
+    "n_batch": 8,
+    "n_ctx": 512,
+    "n_rs_seq": 0,
+    "n_ubatch": 8,
+    "physical_slots": 1,
+    "second_model": false,
+    "threads": 10
+  },
+  "performance_measured": false,
+  "production_changed": false
+}
