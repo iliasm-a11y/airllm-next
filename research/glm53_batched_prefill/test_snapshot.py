@@ -71,6 +71,16 @@ def test_incomplete_or_incompatible_key_refused(mutation):
         canonical_key(candidate)
 
 
+def test_boundary_policy_is_keyed_and_cannot_disagree_with_native_ids():
+    candidate = manifest()
+    old_key, _ = canonical_key(candidate)
+    candidate["render_options"].update(prefix_boundary=208, boundary_policy="native-lcp-aligned-v1")
+    assert canonical_key(candidate)[0] != old_key
+    candidate["render_options"]["prefix_boundary"] = 192
+    with pytest.raises(ValueError):
+        canonical_key(candidate)
+
+
 def test_native_snapshot_contract_fixture(tmp_path):
     if sys.platform != "darwin":
         pytest.skip("CommonCrypto fixture requires Darwin")

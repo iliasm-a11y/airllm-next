@@ -20,6 +20,7 @@ from research.glm53_batched_prefill.native_compare import (
     EXPECTED_NAMES, MiB, _read, _check_replay, _compare_writes, _compare_continuation,
 )
 from research.glm53_batched_prefill.snapshot_key import canonical_key
+from research.glm53_batched_prefill.prefix_boundary import report_boundary
 
 TOKEN_AXES = {"routes": 1, "router": 1, "kda": 2}
 CHECKPOINTS = (128, 256, 384, 512)
@@ -65,12 +66,15 @@ def _checkpoints(root, report):
         result[key] = row
     expected = {(r, end) for r, request in enumerate(report["requests"])
                 for end in {*[n for n in CHECKPOINTS if n <= request["prompt_tokens"]], request["prompt_tokens"]}}
-    optional208 = {(r, 208) for r, request in enumerate(report["requests"])
-                   if request["prompt_tokens"] >= 208 and 208 % report["microbatch"] == 0}
-    if not expected <= set(result) or not set(result) <= expected | optional208:
+    boundary = report_boundary(report)
+    optional_prefix = {(r, boundary) for r, request in enumerate(report["requests"])
+                       if request["prompt_tokens"] >= boundary and boundary % report["microbatch"] == 0}
+    if "prefix_boundary" in report:
+        expected |= optional_prefix
+    if not expected <= set(result) or not set(result) <= expected | optional_prefix:
         raise ValueError("complete-sequence checkpoints missing or extra")
-    if (set(result) - expected) and not optional208 <= set(result):
-        raise ValueError("optional208 checkpoints must cover all complete requests")
+    if (set(result) - expected) and not optional_prefix <= set(result):
+        raise ValueError("optional prefix checkpoints must cover all complete requests")
     for request, row in enumerate(report["requests"]):
         final = result[request, row["prompt_tokens"]]
         if final["bytes"] != row["sequence_bytes"] or final["sha256"] != row["sequence_sha256"]:
@@ -197,6 +201,7 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
             result["checkpoints"].append({"request": key[0], "token_end": key[1],
                 "passed": ac[key]["bytes"] == bc[key]["bytes"] and ac[key]["sha256"] == bc[key]["sha256"]})
         result["checkpoint208_compared"] = any(end == 208 for _, end in common_checkpoints)
+        result["prefix_boundary_compared"] = any(end == report_boundary(a) for _, end in common_checkpoints)
         for request, (ar, br) in enumerate(zip(a["requests"], b["requests"])):
             for field in ("prompt_tokens", "prompt_ids_sha256", "next_position"):
                 if ar[field] != br[field]:

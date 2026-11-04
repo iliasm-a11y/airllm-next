@@ -13,6 +13,8 @@ from pathlib import Path
 import re
 
 import numpy as np
+from research.glm53_batched_prefill.prefix_boundary import report_boundary
+from research.glm53_batched_prefill.snapshot_key import canonical_key
 
 from research.glm53_m5.compare_fidelity import (
     CRITERIA, compare_arrays, family, json_lines, safe_file, tensor_view,
@@ -330,32 +332,33 @@ def _compare_continuation(a_root, b_root, a_report, b_report, a_capture, b_captu
 
 
 def _direct_restore(reference_root, reference, candidate):
-    if 208 % reference["microbatch"]:
-        raise ValueError("direct full/restore comparison requires an aligned208 boundary")
+    boundary = report_boundary(reference)
+    if boundary != report_boundary(candidate) or boundary % reference["microbatch"]:
+        raise ValueError("direct full/restore comparison requires the same aligned boundary")
     path = safe_file(reference_root, "state_checkpoints.jsonl")
     if path.stat().st_size > MiB:
         raise ValueError("direct-restore checkpoint metadata exceeds1MiB")
-    rows = [r for r in json_lines(path) if r.get("token_end") == 208]
+    rows = [r for r in json_lines(path) if r.get("token_end") == boundary]
     if len(rows) != 3 or {r.get("request") for r in rows} != {0, 1, 2}:
-        raise ValueError("three reference208 checkpoints are required for direct restore")
+        raise ValueError("three reference prefix checkpoints are required for direct restore")
     for row in rows:
-        if (row.get("status") != "hashed" or row.get("state_seq_flags") != 0 or row.get("next_position") != 208 or
+        if (row.get("status") != "hashed" or row.get("state_seq_flags") != 0 or row.get("next_position") != boundary or
                 type(row.get("bytes")) is not int or not 0 < row["bytes"] <= 256 * MiB or
                 not isinstance(row.get("sha256"), str) or re.fullmatch("[0-9a-f]{64}", row["sha256"]) is None):
-            raise ValueError("invalid full reference208 checkpoint")
+            raise ValueError("invalid full reference prefix checkpoint")
     first = next(row for row in rows if row["request"] == 0)
     if any(row["bytes"] != first["bytes"] or row["sha256"] != first["sha256"] for row in rows):
-        raise ValueError("reference208 states differ between the three complete prompts")
+        raise ValueError("reference prefix states differ between the three complete prompts")
     snapshot = candidate.get("snapshot", {})
     if snapshot.get("bytes") != first["bytes"] or snapshot.get("sha256") != first["sha256"]:
-        raise ValueError("immutable snapshot differs from the common full reference208 state")
-    return {"passed": True, "boundary": 208, "reference_checkpoints": 3,
+        raise ValueError("immutable snapshot differs from the common full reference prefix state")
+    return {"passed": True, "boundary": boundary, "reference_checkpoints": 3,
             "snapshot_bytes": first["bytes"], "snapshot_sha256": first["sha256"],
-            "scope": "same physical microbatch boundaries plus exact complete-state serialization at208; alignment alone does not qualify restore"}
+            "scope": "same physical microbatch boundaries plus exact complete-state serialization at the declared prefix; alignment alone does not qualify restore"}
 
 
-def _compare_writes(a, b, expected_batches, suffix_only):
-    selected = lambda rows: [r for r in rows if not suffix_only or r["offset"] >= 208]
+def _compare_writes(a, b, expected_batches, suffix_only, boundary=208):
+    selected = lambda rows: [r for r in rows if not suffix_only or r["offset"] >= boundary]
     a, b = selected(a), selected(b)
     for rows in (a, b):
         groups = {}
@@ -384,6 +387,7 @@ def _compare_writes(a, b, expected_batches, suffix_only):
 
 def _check_replay(root, report, tensors, batches, writes):
     """Identical native input replay, not a private-history isolation test."""
+    boundary = report_boundary(report)
     a, b = report["requests"][0], report["requests"][2]
     suffix_only = report["mode"] == "restore"
     same_prompt = all(a[name] == b[name] for name in ("prompt_tokens", "prompt_ids_sha256", "next_position"))
@@ -391,7 +395,7 @@ def _check_replay(root, report, tensors, batches, writes):
                             np.memmap(root / "logits-2.f32", dtype="<f4", mode="r"), CRITERIA["cpu"])
     same_state = a["sequence_bytes"] == b["sequence_bytes"] and a["sequence_sha256"] == b["sequence_sha256"]
     selected = lambda request: {key[1:]: row for key, row in tensors.items()
-                                if key[0] == request and (not suffix_only or key[1] >= 208)}
+                                if key[0] == request and (not suffix_only or key[1] >= boundary)}
     at, bt = selected(0), selected(2)
     same_captures = bool(at) and set(at) == set(bt)
     if same_captures:
@@ -402,8 +406,8 @@ def _check_replay(root, report, tensors, batches, writes):
                 same_captures = False
                 break
     normalized = lambda request: [{**r, "request": 0} for r in writes if r["request"] == request]
-    expected = [(0, r["offset"]) for r in batches if r["request"] == 0 and (not suffix_only or r["offset"] >= 208)]
-    write_check = _compare_writes(normalized(0), normalized(2), expected, suffix_only)
+    expected = [(0, r["offset"]) for r in batches if r["request"] == 0 and (not suffix_only or r["offset"] >= boundary)]
+    write_check = _compare_writes(normalized(0), normalized(2), expected, suffix_only, boundary)
     return {"passed": bool(same_prompt and logits["passed"] and same_state and same_captures and write_check["passed"]),
             "same_native_prompt": same_prompt, "full_logits": logits,
             "serialized_sequence_identical": same_state, "captured_tensors_identical": same_captures,
@@ -414,6 +418,16 @@ def _check_replay(root, report, tensors, batches, writes):
 def _read(root, guard):
     receipt = _guard(guard)
     report = json.loads(safe_file(root, "report.json").read_text())
+    boundary = report_boundary(report)
+    if "prefix_boundary" in report:
+        manifest = receipt["preflight"]["snapshot_manifest"]
+        key, _ = canonical_key(manifest)
+        if (key != report.get("snapshot_key_sha256") or
+                key != receipt["preflight"].get("snapshot_key_sha256") or
+                len(manifest["prefix_tokens"]) != boundary or
+                manifest["render_options"].get("prefix_boundary") != boundary or
+                report.get("state_parameters") != manifest["state_parameters"]):
+            raise ValueError("declared boundary is not bound to native dependencies")
     if report.get("complete") is not True or report.get("diagnostic") is not True:
         raise ValueError("complete diagnostic capture required")
     if report.get("model_loads") != 1 or report.get("physical_slots") != 1:
@@ -464,7 +478,7 @@ def _read(root, guard):
         raise ValueError("successful native microbatch receipts required")
     for request, row in enumerate(requests):
         selected = [r for r in batches if r.get("request") == request]
-        start = 208 if report["mode"] == "restore" and request else 0
+        start = boundary if report["mode"] == "restore" and request else 0
         for batch in selected:
             tokens = batch.get("tokens")
             if (batch.get("offset") != start or type(tokens) is not int or
@@ -485,6 +499,9 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
     try:
         a, at, ab, _, aw, a_cont = _read(reference_root, reference_guard)
         b, bt, bb, _, bw, b_cont = _read(candidate_root, candidate_guard)
+        boundary = report_boundary(a)
+        if boundary != report_boundary(b) or a.get("boundary_policy") != b.get("boundary_policy"):
+            raise ValueError("prefix boundary policies differ")
         result["continuation"] = _compare_continuation(reference_root, candidate_root, a, b, a_cont, b_cont)
         result["continuation_replays"] = {
             "reference": _compare_continuation(reference_root, reference_root, a, a, a_cont, a_cont, ((0, 2),)),
@@ -505,11 +522,11 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
         suffix_only = b["mode"] == "restore"
         def selected_batches(rows):
             return [(r["request"], r["offset"], r["tokens"]) for r in rows
-                    if not suffix_only or r["offset"] >= 208]
+                    if not suffix_only or r["offset"] >= boundary]
         if selected_batches(ab) != selected_batches(bb):
             raise ValueError("microbatch boundaries differ; forms are not comparable")
         result["observed_state_writes"] = _compare_writes(
-            aw, bw, [(r, offset) for r, offset, _ in selected_batches(ab)], suffix_only)
+            aw, bw, [(r, offset) for r, offset, _ in selected_batches(ab)], suffix_only, boundary)
         for index, (ar, br) in enumerate(zip(a["requests"], b["requests"])):
             for name in ("prompt_tokens", "prompt_ids_sha256", "next_position"):
                 if ar[name] != br[name]:
@@ -520,7 +537,7 @@ def compare(reference_root, candidate_root, reference_guard, candidate_guard):
             result["sequence_states"].append({"request": index,
                 "passed": ar["sequence_bytes"] == br["sequence_bytes"] and ar["sequence_sha256"] == br["sequence_sha256"],
                 "reference_bytes": ar["sequence_bytes"], "candidate_bytes": br["sequence_bytes"]})
-        selected = lambda rows: {k: v for k, v in rows.items() if not suffix_only or k[1] >= 208}
+        selected = lambda rows: {k: v for k, v in rows.items() if not suffix_only or k[1] >= boundary}
         at, bt = selected(at), selected(bt)
         if not at or set(at) != set(bt):
             raise ValueError("missing tensors or capture key sets differ")

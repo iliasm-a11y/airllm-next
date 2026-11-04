@@ -264,6 +264,13 @@ Le compteur `requests_in_flight` inclut les requêtes en attente ; le compteur
 
 ## Vérification portable
 
+L'[intégration source des accès denses et du préfill](../../research/glm53_gpu_v3/INTEGRATION-DENSE-PREFILL-FR.md)
+ajoute des réglages explicites et un prototype natif de préfixe partagé.
+Les options d'accélération restent désactivées par défaut et non qualifiées.
+Cette intégration ne reconstruit ni ne remplace le runtime installé.
+Les tests ci-dessous n'ont pas été exécutés pour cette intégration pendant
+le travail de l'agent actif.
+
 ```sh
 python3 -m unittest discover -s integrations/ronin/tests -v
 ```

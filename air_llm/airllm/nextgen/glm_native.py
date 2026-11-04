@@ -315,15 +315,51 @@ class NativeGlmModel:
     def __init__(self, model_path, *, runtime_binary, verification_file=None,
                  context_tokens=512, threads=4, batch_size=8, gpu_layers=0,
                  cpu_moe=False, moe_cache_mib=0, mmap_demand=False, expert_prefetch=False, dense_prefetch=False, mmap_nocache=False, state_dir=None, limits=None,
-                 expected_runtime_sha256=None, runtime_manifest_file=None, allow_unqualified_gpu=False):
+                 expected_runtime_sha256=None, runtime_manifest_file=None, allow_unqualified_gpu=False,
+                 ubatch_size=None, threads_batch=None, dense_lookahead=False,
+                 dense_lookahead_mib=32, dense_lookahead_max_cols=1,
+                 dense_prefetch_max_cols=1, shared_prefix_tokens=None,
+                 shared_prefix_render_options=None, shared_prefix_scratch_mib=None,
+                 dense_lock_names=None, dense_lock_mib=128):
         if type(context_tokens) is not int or not 64 <= context_tokens <= 8192:
             raise ValueError("Validated integration context must be between 64 and 8192")
         if type(threads) is not int or not 1 <= threads <= (os.cpu_count() or 1):
             raise ValueError("Invalid thread count")
         if type(batch_size) is not int or not 1 <= batch_size <= 512:
             raise ValueError("Invalid batch size")
+        if ubatch_size is not None and (type(ubatch_size) is not int or not 1 <= ubatch_size <= batch_size):
+            raise ValueError("Microbatch must be between 1 and batch_size")
+        if threads_batch is not None and (type(threads_batch) is not int or not 1 <= threads_batch <= (os.cpu_count() or 1)):
+            raise ValueError("Invalid prefill thread count")
+        if type(dense_lookahead) is not bool:
+            raise ValueError("dense_lookahead must be an explicit boolean")
+        if type(dense_lookahead_mib) is not int or dense_lookahead_mib not in (16, 32, 64, 128):
+            raise ValueError("Invalid dense lookahead window")
+        for name, value in (("dense_lookahead_max_cols", dense_lookahead_max_cols),
+                            ("dense_prefetch_max_cols", dense_prefetch_max_cols)):
+            if type(value) is not int or value not in (1, 2, 4, 8):
+                raise ValueError("Invalid dense column limit: " + name)
+        if dense_lookahead_max_cols > 1 and not dense_lookahead:
+            raise ValueError("Multicolumn lookahead requires dense_lookahead")
+        if dense_prefetch_max_cols > 1 and not dense_prefetch:
+            raise ValueError("Multicolumn prefetch requires dense_prefetch")
+        if type(dense_lock_mib) is not int or dense_lock_mib not in (128, 256):
+            raise ValueError("Dense retention is limited to 128 or 256 MiB")
+        self.dense_lock_mib = dense_lock_mib
+        self.dense_lock_names = None
+        if dense_lock_names is not None:
+            family = (r"(?:hc_attn_fn|hc_ffn_fn|ffn_gate_inp|ssm_beta|ssm_f_a|ssm_f_b|ssm_g_a|ssm_g_b|"
+                      r"attn_k_b|attn_v_b|attn_kv_a_mqa|indexer\.attn_q_b|indexer\.attn_k|indexer\.proj|indexer_compressor_gate)\.weight")
+            pattern = re.compile(r"blk\.(?:[0-9]|[1-3][0-9]|4[0-4])\." + family)
+            if (not isinstance(dense_lock_names, list) or not 1 <= len(dense_lock_names) <= 128 or
+                    any(not isinstance(n, str) or pattern.fullmatch(n) is None for n in dense_lock_names) or
+                    len(set(dense_lock_names)) != len(dense_lock_names)):
+                raise ValueError("An explicit unique list of original GLM dense weight names is required")
+            self.dense_lock_names = tuple(dense_lock_names)
         if type(gpu_layers) is not int or not 0 <= gpu_layers <= 46:
             raise ValueError("Invalid GPU layer count")
+        if self.dense_lock_names is not None and gpu_layers:
+            raise ValueError("Dense retention research requires GPU0")
         if type(moe_cache_mib) is not int or not 0 <= moe_cache_mib <= 4096:
             raise ValueError("Invalid expert cache budget")
         if moe_cache_mib and not cpu_moe:
@@ -335,6 +371,37 @@ class NativeGlmModel:
         self.runtime_binary = Path(runtime_binary).expanduser().resolve()
         self.verification_file = verification_file
         self.context_tokens, self.threads, self.batch_size = context_tokens, threads, batch_size
+        self.ubatch_size = batch_size if ubatch_size is None else ubatch_size
+        self.threads_batch = threads_batch
+        self.dense_lookahead = dense_lookahead
+        self.dense_lookahead_mib = dense_lookahead_mib
+        self.dense_lookahead_max_cols = dense_lookahead_max_cols
+        self.dense_prefetch_max_cols = dense_prefetch_max_cols
+        self.shared_prefix_tokens = None
+        self.shared_prefix_render_options = {}
+        self.shared_prefix_scratch_mib = shared_prefix_scratch_mib
+        self._prefix_file = None
+        self._prefix_key = None
+        if shared_prefix_tokens is not None:
+            if (not isinstance(shared_prefix_tokens, list) or not shared_prefix_tokens or
+                    len(shared_prefix_tokens) >= context_tokens or len(shared_prefix_tokens) % self.ubatch_size or
+                    any(type(t) is not int or not 0 <= t < 154880 for t in shared_prefix_tokens)):
+                raise ValueError("An aligned native GLM prefix with a private suffix is required")
+            if gpu_layers or threads != 10 or batch_size != 8 or self.ubatch_size != 8 or cpu_moe or moe_cache_mib:
+                raise ValueError("Shared prefix research is limited to CPU10/GPU0 and batch/ubatch8")
+            if threads_batch is not None and threads_batch != 10:
+                raise ValueError("Shared prefix research requires prefill threads10")
+            if type(shared_prefix_scratch_mib) is not int or not 1 <= shared_prefix_scratch_mib <= 64:
+                raise ValueError("Shared prefix requires an explicit serialization scratch policy budget")
+            rendering = {} if shared_prefix_render_options is None else shared_prefix_render_options
+            if (not isinstance(rendering, dict) or set(rendering) - {"reasoning_effort"} or
+                    ("reasoning_effort" in rendering and rendering["reasoning_effort"] not in ("low", "high", "max"))):
+                raise ValueError("Unsupported shared prefix template options")
+            self.shared_prefix_tokens = tuple(shared_prefix_tokens)
+            self.shared_prefix_render_options = dict(rendering)
+            self.threads_batch = threads if threads_batch is None else threads_batch
+        elif shared_prefix_render_options is not None or shared_prefix_scratch_mib is not None:
+            raise ValueError("Shared prefix options require native prefix tokens")
         if type(mmap_demand) is not bool:
             raise ValueError("mmap_demand must be explicit boolean")
         if type(mmap_nocache) is not bool:
@@ -349,6 +416,9 @@ class NativeGlmModel:
             raise ValueError("dense_prefetch must be explicit boolean")
         self.dense_prefetch = dense_prefetch
         self.limits = limits or NativeLimits()
+        if self.shared_prefix_tokens is not None and (
+                self.limits.max_rss_bytes > 17 * GiB // 2 or self.limits.max_swap_growth_bytes > 32 * MiB):
+            raise ValueError("Shared prefix research requires RSS<=8.5GiB and swap growth<=32MiB")
         self.state_dir = Path(state_dir or (Path(tempfile.gettempdir()) / ("airllm-glm-" + str(os.getuid()))))
         self.expected_runtime_sha256 = expected_runtime_sha256
         self.runtime_manifest_file = Path(runtime_manifest_file).expanduser().resolve() if runtime_manifest_file else None
@@ -393,6 +463,16 @@ class NativeGlmModel:
                 "scheduler": self.scheduler.status(), "counters": dict(self._counters),
                 "configuration": {"context_tokens": self.context_tokens, "threads": self.threads,
                                   "batch_size": self.batch_size, "gpu_layers": self.gpu_layers,
+                                  "ubatch_size": self.ubatch_size, "threads_batch": self.threads_batch,
+                                  "dense_lookahead": self.dense_lookahead,
+                                  "dense_lookahead_mib": self.dense_lookahead_mib,
+                                  "dense_lookahead_max_cols": self.dense_lookahead_max_cols,
+                                  "dense_prefetch_max_cols": self.dense_prefetch_max_cols,
+                                  "dense_lock": {"requested": self.dense_lock_names is not None,
+                                      "names": list(self.dense_lock_names or ()), "budget_mib": self.dense_lock_mib},
+                                  "shared_prefix": {"requested": self.shared_prefix_tokens is not None,
+                                      "tokens": len(self.shared_prefix_tokens or ()), "key_sha256": self._prefix_key,
+                                      "numerically_qualified": False},
                                   "cpu_moe": self.cpu_moe, "moe_cache_mib": self.moe_cache_mib,
                                   "mmap_demand": self.mmap_demand,
                                   "mmap_nocache": self.mmap_nocache,
@@ -442,7 +522,10 @@ class NativeGlmModel:
             self._check_running()
         workspace = self.limits.base_workspace_bytes + self.context_tokens * 64 * 1024 + self.batch_size * 4 * MiB
         resident_gpu = self._gpu_weight_bytes() + self.moe_cache_mib * MiB if loading else 0
-        required = self.limits.reserve_bytes + workspace + resident_gpu
+        retained_dense = self.dense_lock_mib * MiB if loading and self.dense_lock_names is not None else 0
+        required = self.limits.reserve_bytes + workspace + resident_gpu + retained_dense
+        if loading and self.shared_prefix_tokens is not None:
+            required = max(required, 11 * GiB // 2)
         pressure = sample.get("pressure_level", 0)
         baseline = self._resource_baseline or sample
         swap_growth = max(0, sample.get("swap_used_bytes", 0) - baseline.get("swap_used_bytes", 0))
@@ -453,6 +536,7 @@ class NativeGlmModel:
             raise NativeGlmError("MEMORY_ADMISSION", "Insufficient safe mmap workspace", {
                 "sample": sample, "required_bytes": required, "workspace_estimate_bytes": workspace,
                 "gpu_weight_and_cache_bytes": resident_gpu, "loading": loading,
+                "retained_dense_reservation_bytes": retained_dense,
                 "swap_growth_bytes": swap_growth, "pressure_blocked": pressure_blocked,
                 "swap_blocked": swap_blocked,
                 "reason": "cold startup rejects warning pressure; warm requests require workspace headroom and bounded swap"})
@@ -462,12 +546,16 @@ class NativeGlmModel:
         args = [str(self.runtime_binary), "--offline", "--fit", "off", "--model",
                 str(self.model_path / FILES[0][0]), "--load-mode", "mmap", "--no-repack",
                 "--no-warmup", "--ctx-size", str(self.context_tokens), "--batch-size", str(self.batch_size),
-                "--ubatch-size", str(self.batch_size), "--threads", str(self.threads),
+                "--ubatch-size", str(self.ubatch_size), "--threads", str(self.threads),
                 "--gpu-layers", str(self.gpu_layers), "--parallel", "1", "--host", "127.0.0.1",
                 "--port", str(port), "--no-webui", "--no-context-shift", "--sse-ping-interval", "1",
                 "--log-colors", "off", "--perf", "--cors-origins", "localhost", "--no-cors-credentials"]
         if self._key_file is not None:
             args.extend(["--api-key-file", str(self._key_file)])
+        if self.threads_batch is not None:
+            args.extend(["--threads-batch", str(self.threads_batch)])
+        if self.shared_prefix_tokens is not None:
+            args.extend(["--cache-ram", "0", "--ctx-checkpoints", "0"])
         if self.gpu_layers == 0:
             args.extend(["--device", "none", "--no-op-offload"])
         if self.cpu_moe:
@@ -487,7 +575,62 @@ class NativeGlmModel:
             env["AIRLLM_EXPERT_PREFETCH"] = "1"
         if self.dense_prefetch:
             env["AIRLLM_DENSE_PREFETCH"] = "1"
+            env["AIRLLM_DENSE_PREFETCH_MAX_COLS"] = str(self.dense_prefetch_max_cols)
+        if self.dense_lookahead:
+            env["AIRLLM_DENSE_LOOKAHEAD"] = "1"
+            env["AIRLLM_DENSE_LOOKAHEAD_MIB"] = str(self.dense_lookahead_mib)
+            env["AIRLLM_DENSE_LOOKAHEAD_MAX_COLS"] = str(self.dense_lookahead_max_cols)
+        if self._prefix_file is not None:
+            env["AIRLLM_SHARED_PREFIX_MANIFEST"] = str(self._prefix_file)
+        if self.dense_lock_names is not None:
+            env["AIRLLM_DENSE_LOCK"] = "1"
+            env["AIRLLM_DENSE_LOCK_MIB"] = str(self.dense_lock_mib)
+            env["AIRLLM_DENSE_LOCK_NAMES"] = ",".join(self.dense_lock_names)
         return env
+
+    def _check_requested_features(self):
+        if not (self.dense_lookahead or self.dense_prefetch_max_cols > 1 or self.shared_prefix_tokens is not None or self.dense_lock_names is not None):
+            return
+        if not self._runtime_artifacts_verified or not self._runtime_manifest_info:
+            raise NativeGlmError("RUNTIME_FEATURE_UNVERIFIED", "Dense experiments require a verified runtime manifest")
+        patches = set(self._runtime_manifest_info.get("patch_names", []))
+        required = set()
+        if self.dense_lookahead:
+            required.add("llama-dense-lookahead.patch")
+        if self.dense_prefetch_max_cols > 1:
+            required.add("llama-dense-prefetch-columns.patch")
+        if self.dense_lock_names is not None:
+            required.add("llama-dense-lock.patch")
+        if not required <= patches:
+            raise NativeGlmError("RUNTIME_FEATURE_UNAVAILABLE", "Selected runtime lacks the requested dense patches")
+        features = self._runtime_manifest_info.get("airllm_runtime_features", [])
+        if self.dense_lookahead_max_cols > 1 and "dense_lookahead_multicolumn_v1" not in features:
+            raise NativeGlmError("RUNTIME_FEATURE_UNAVAILABLE", "Multicolumn lookahead requires a newly built runtime")
+        if self.shared_prefix_tokens is not None and "shared_prefix_snapshot_v1" not in features:
+            raise NativeGlmError("RUNTIME_FEATURE_UNAVAILABLE", "Shared prefix requires a newly built research runtime")
+
+    def _prepare_prefix_manifest(self):
+        if self.shared_prefix_tokens is None:
+            return
+        dependencies = {"model_revision": MODEL_REVISION,
+            "shards": [{"sha256": digest, "bytes": size} for _, size, digest in FILES],
+            "tokenizer_and_template_identity": "original pinned GGUF shards",
+            "runtime_revision": RUNTIME_REVISION, "runtime_sha256": self._runtime_sha256,
+            "runtime_artifacts": self._runtime_manifest_info["artifact_sha256"],
+            "context": self.context_tokens, "batch": self.batch_size, "ubatch": self.ubatch_size,
+            "threads": self.threads, "threads_batch": self.threads_batch,
+            "gpu_layers": 0, "prefix_tokens": self.shared_prefix_tokens,
+            "prefix_positions": list(range(len(self.shared_prefix_tokens))),
+            "render_options": self.shared_prefix_render_options}
+        canonical = json.dumps(dependencies, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+        self._prefix_key = hashlib.sha256(canonical).hexdigest()
+        value = {"schema": 1, "key_sha256": self._prefix_key,
+                 "prefix_tokens": self.shared_prefix_tokens,
+                 "scratch_bytes": self.shared_prefix_scratch_mib * MiB}
+        self._prefix_file = self.state_dir / (".native-prefix-" + secrets.token_hex(8) + ".json")
+        fd = os.open(self._prefix_file, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, "w") as stream:
+            json.dump(value, stream, separators=(",", ":"), allow_nan=False)
 
     def _verify_runtime_manifest(self, cancel=None):
         self._runtime_artifacts_verified = False
@@ -503,6 +646,9 @@ class NativeGlmModel:
             manifest = json.loads(manifest_path.read_text())
             if not isinstance(manifest, dict):
                 raise ValueError("Runtime manifest must be an object")
+            features = manifest.get("airllm_runtime_features", [])
+            if not isinstance(features, list) or any(not isinstance(f, str) for f in features):
+                raise ValueError("Runtime feature list must contain strings")
             if manifest.get("status") != "built" or manifest.get("source_revision") != RUNTIME_REVISION:
                 raise ValueError("Runtime manifest is not a built package of the pinned source revision")
             artifacts = manifest.get("artifacts")
@@ -568,6 +714,10 @@ class NativeGlmModel:
             self._runtime_artifact_identities = identities
             self._runtime_manifest_info = {"path": str(manifest_path), "source_revision": RUNTIME_REVISION,
                 "artifact_count": len(rows), "verified_bytes": total,
+                "artifact_sha256": {row["path"]: row["sha256"] for row, _ in rows if "sha256" in row},
+                "patch_names": [p["name"] for p in manifest.get("patches", [])
+                                if isinstance(p, dict) and isinstance(p.get("name"), str)],
+                "airllm_runtime_features": manifest.get("airllm_runtime_features", []),
                 "experiment_defaults": manifest.get("experiment_defaults", {}),
                 "scope": "local package integrity; source/build claims are those of the supplied manifest"}
             self._runtime_artifacts_verified = True
@@ -610,6 +760,7 @@ class NativeGlmModel:
             if not self.runtime_binary.is_file() or not os.access(self.runtime_binary, os.X_OK):
                 raise NativeGlmError("RUNTIME_MISSING", "Native llama-server binary is missing")
             self._verify_runtime_manifest(cancel)
+            self._check_requested_features()
             self._runtime_sha256 = _sha256_file(self.runtime_binary, cancel)
             if self.expected_runtime_sha256 and self._runtime_sha256 != self.expected_runtime_sha256:
                 raise NativeGlmError("RUNTIME_INTEGRITY", "Native runtime hash mismatch")
@@ -649,6 +800,7 @@ class NativeGlmModel:
                 fd = os.open(self._key_file, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
                 with os.fdopen(fd, "w") as key_stream:
                     key_stream.write(self._api_key + "\n")
+                self._prepare_prefix_manifest()
                 self._log_file = (self.state_dir / "native-server.log").open("ab")
                 env = self._runtime_environment()
                 self._check_runtime_identity()
@@ -886,6 +1038,10 @@ class NativeGlmModel:
             if self._key_file is not None:
                 self._key_file.unlink(missing_ok=True)
                 self._key_file = None
+            if self._prefix_file is not None:
+                self._prefix_file.unlink(missing_ok=True)
+                self._prefix_file = None
+            self._prefix_key = None
         return {"loaded": False}
 
     unload = close
@@ -1024,7 +1180,7 @@ class NativeGlmModel:
             self.load(cancel=cancel)
             self._admit()
             self._check_identity()
-            payload = self._payload(prompt, max_new_tokens, cache_prompt, n_probs)
+            payload = self._payload(prompt, max_new_tokens, False if self.shared_prefix_tokens is not None else cache_prompt, n_probs)
             yield from self._events(payload, cancel)
 
     def stream_chat(self, messages, max_new_tokens=128, *, cancel=None, cache_prompt=False,
@@ -1035,17 +1191,44 @@ class NativeGlmModel:
             if (not isinstance(message, dict) or message.get("role") not in ("system", "user", "assistant")
                     or not isinstance(message.get("content"), str)):
                 raise ValueError("Only text system/user/assistant messages are supported")
+        requested = time.monotonic()
         with self.scheduler.slot(cancel):
+            acquired = time.monotonic()
             self.load(cancel=cancel)
+            loaded = time.monotonic()
             self._admit()
             self._check_identity()
+            admitted = time.monotonic()
             body = {"messages": messages}
             if chat_template_kwargs is not None:
                 if not isinstance(chat_template_kwargs, dict):
                     raise ValueError("Invalid chat template options")
                 body["chat_template_kwargs"] = chat_template_kwargs
             prompt = self._http_json("POST", "/apply-template", body)["prompt"]
-            yield from self._events(self._payload(prompt, max_new_tokens, cache_prompt, n_probs), cancel)
+            rendered = time.monotonic()
+            if self.shared_prefix_tokens is not None:
+                cache_prompt = (chat_template_kwargs or {}) == self.shared_prefix_render_options
+            payload = self._payload(prompt, max_new_tokens, cache_prompt, n_probs)
+            tokenized = time.monotonic()
+            first_output = None
+            native_stream = self._events(payload, cancel)
+            try:
+                for event in native_stream:
+                    if first_output is None and (event.get("tokens") or event.get("content")):
+                        first_output = time.monotonic()
+                    yield event
+            finally:
+                close = getattr(native_stream, "close", None)
+                if close is not None:
+                    close()
+            if self.last_request is not None:
+                phases = {"queue_seconds": acquired - requested, "load_seconds": loaded - acquired,
+                          "admission_seconds": admitted - loaded, "template_seconds": rendered - admitted,
+                          "tokenize_seconds": tokenized - rendered}
+                phases["request_seconds_including_queue"] = time.monotonic() - requested
+                self.last_request["host_phases"] = phases
+                self.last_request["ttft_including_queue_seconds"] = (
+                    first_output - requested if first_output is not None else None)
 
     def __enter__(self):
         self.load()

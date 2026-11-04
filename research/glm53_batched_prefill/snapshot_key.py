@@ -72,6 +72,13 @@ def canonical_key(manifest: dict) -> tuple[str, bytes]:
         raise ValueError("context must admit a suffix and batch must admit microbatch")
     if not isinstance(manifest["render_options"], dict):
         raise ValueError("native template rendering options are required")
+    rendering = manifest["render_options"]
+    if "prefix_boundary" in rendering or "boundary_policy" in rendering:
+        boundary = rendering.get("prefix_boundary")
+        if (type(boundary) is not int or boundary != len(tokens) or
+                rendering.get("boundary_policy") != "native-lcp-aligned-v1" or
+                boundary % params["n_ubatch"]):
+            raise ValueError("prefix boundary does not match the keyed IDs and microbatch")
     data = json.dumps(manifest, sort_keys=True, separators=(",", ":"),
                       ensure_ascii=False, allow_nan=False).encode("utf-8")
     return hashlib.sha256(data).hexdigest(), data

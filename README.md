@@ -130,6 +130,7 @@ inference.
 - [Candidate architecture](docs/RELEASE_ARCHITECTURE.md)
 - [Model compatibility](docs/RELEASE_COMPATIBILITY.md)
 - [Technical and scientific limits](docs/TECHNICAL_LIMITS.md)
+- [GLM dense I/O and prefill source integration, experimental and default-off](research/glm53_gpu_v3/INTEGRATION-DENSE-PREFILL-FR.md)
 - [Final validation](FINAL_VALIDATION.md) and [release notes](RELEASE_NOTES.md)
 
 Raw results: `evidence-final/`. Original archive, earlier reports, experiments and

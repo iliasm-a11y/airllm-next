@@ -64,6 +64,11 @@ class Engine:
                 options[key] = os.environ[env]
         for key, env in (("context_tokens", "RONIN_GLM_CONTEXT"),
                          ("threads", "RONIN_GLM_THREADS"),
+                         ("threads_batch", "RONIN_GLM_THREADS_BATCH"),
+                         ("ubatch_size", "RONIN_GLM_UBATCH"),
+                         ("dense_lookahead_mib", "RONIN_GLM_DENSE_LOOKAHEAD_MIB"),
+                         ("dense_lookahead_max_cols", "RONIN_GLM_DENSE_LOOKAHEAD_MAX_COLS"),
+                         ("dense_prefetch_max_cols", "RONIN_GLM_DENSE_PREFETCH_MAX_COLS"),
                          ("gpu_layers", "RONIN_GLM_GPU_LAYERS"),
                          ("moe_cache_mib", "RONIN_GLM_MOE_CACHE_MIB")):
             if key not in options and os.environ.get(env):
@@ -78,6 +83,11 @@ class Engine:
             options["expert_prefetch"] = os.environ["RONIN_GLM_EXPERT_PREFETCH"] == "1"
         if "dense_prefetch" not in options and os.environ.get("RONIN_GLM_DENSE_PREFETCH"):
             options["dense_prefetch"] = os.environ["RONIN_GLM_DENSE_PREFETCH"] == "1"
+        if "dense_lookahead" not in options and os.environ.get("RONIN_GLM_DENSE_LOOKAHEAD"):
+            value = os.environ["RONIN_GLM_DENSE_LOOKAHEAD"]
+            if value not in ("0", "1"):
+                raise ValueError("RONIN_GLM_DENSE_LOOKAHEAD must be 0 or 1")
+            options["dense_lookahead"] = value == "1"
         if isinstance(options.get("limits"), dict):
             options["limits"] = NativeLimits(**options["limits"])
         return options

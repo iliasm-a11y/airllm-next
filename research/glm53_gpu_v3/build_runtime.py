@@ -42,7 +42,7 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def build(source, destination, jobs=3, dense_lock_experiment=False):
+def build(source, destination, jobs=3, dense_lock_experiment=False, prefix_cache_experiment=False):
     if platform.system() != "Darwin" or platform.machine() != "arm64":
         raise ValueError("This qualified build recipe requires Apple Silicon macOS")
     if type(jobs) is not int or not 1 <= jobs <= (os.cpu_count() or 1):
@@ -58,6 +58,12 @@ def build(source, destination, jobs=3, dense_lock_experiment=False):
         if destination == source or destination.is_relative_to(source):
             raise ValueError("The destination must be outside the source checkout")
     patches = PATCHES + ((ROOT / 'patches/llama-dense-lock.patch',) if dense_lock_experiment else ())
+    if prefix_cache_experiment:
+        patches += (ROOT / "patches/llama-server-prefix-cache.patch",)
+    prefix_header = ROOT / "server-prefix-cache.h"
+    if prefix_cache_experiment and not prefix_header.is_file():
+        raise ValueError("Missing private server prefix-cache header")
+    frozen_prefix_header = prefix_header.read_bytes() if prefix_cache_experiment else None
     for path in (*patches, PROBE, *AUXILIARIES):
         if not path.is_file():
             raise ValueError("Missing build input: " + str(path))
@@ -76,6 +82,10 @@ def build(source, destination, jobs=3, dense_lock_experiment=False):
                 "source_url": UPSTREAM, "source_revision": REVISION, "status": "building",
                 "source_checkout_modified": False, "jobs": jobs,
                 "dense_lock_experiment_built": bool(dense_lock_experiment),
+                "airllm_runtime_features": ["dense_lookahead_multicolumn_v1"] +
+                    (["shared_prefix_snapshot_v1"] if prefix_cache_experiment else []),
+                "prefix_cache_experiment_built": bool(prefix_cache_experiment),
+                "prefix_cache_header_sha256": hashlib.sha256(frozen_prefix_header).hexdigest() if frozen_prefix_header is not None else None,
                 "removed_environment_names": removed_environment_names,
                 "platform": {"system": platform.system(), "release": platform.release(),
                              "machine": platform.machine()},
@@ -83,7 +93,7 @@ def build(source, destination, jobs=3, dense_lock_experiment=False):
                 "probe_source_sha256": hashlib.sha256(frozen_probe).hexdigest(),
                 "probe_auxiliaries": [{"name":n,"sha256":hashlib.sha256(b).hexdigest()} for n,b in frozen_aux], "commands": commands,
                 "experiment_defaults": {"mmap_demand": False, "expert_prefetch": False, "dense_prefetch": False,
-                                        "mmap_nocache": False, "dense_lookahead": False, "dense_lookahead_mib": 32, "dense_lock": False, "dense_prefetch_max_cols": 1, "q8_cpu_arith": False, "q8_only": False, "mapped_cpu_weights": False, "q8_shared": False, "expert_drop": False}}
+                                        "mmap_nocache": False, "dense_lookahead": False, "dense_lookahead_mib": 32, "dense_lookahead_max_cols": 1, "dense_lock": False, "dense_prefetch_max_cols": 1, "q8_cpu_arith": False, "q8_only": False, "mapped_cpu_weights": False, "q8_shared": False, "expert_drop": False}}
     manifest_path = destination / "manifest.json"
 
     def save():
@@ -136,6 +146,8 @@ def build(source, destination, jobs=3, dense_lock_experiment=False):
                     patch = inputs / name
                     run(["git", "apply", "--check", patch], cwd=checkout)
                     run(["git", "apply", patch], cwd=checkout)
+                if frozen_prefix_header is not None:
+                    (checkout / "tools/server/server-prefix-cache.h").write_bytes(frozen_prefix_header)
                 manifest["applied_source_diff_sha256"] = hashlib.sha256(
                     run(["git", "diff", "--binary", "HEAD"], cwd=checkout, capture=True).encode()).hexdigest()
                 compiler_c = run(["xcrun", "--find", "clang"], capture=True).strip()
@@ -208,9 +220,10 @@ def main():
     parser.add_argument("--destination", required=True, type=Path, help="Empty directory for bin/, manifest.json and build.log")
     parser.add_argument("--jobs", type=int, default=3)
     parser.add_argument('--dense-lock-experiment', action='store_true', help='Include16th default-off bounded dense mlock research patch')
+    parser.add_argument('--prefix-cache-experiment', action='store_true', help='Include default-off single-slot complete prefix snapshots; unqualified research')
     args = parser.parse_args()
     try:
-        result = build(args.source, args.destination, args.jobs, args.dense_lock_experiment)
+        result = build(args.source, args.destination, args.jobs, args.dense_lock_experiment, args.prefix_cache_experiment)
     except (ValueError, RuntimeError, OSError, subprocess.SubprocessError) as error:
         parser.exit(2, str(error) + "\n")
     print(json.dumps({"status": result["status"], "destination": str(args.destination.resolve()),
